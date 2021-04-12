@@ -2,7 +2,6 @@
 using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Suppliers;
-using Infrastructure.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
 using Service.Suppliers;
 
@@ -12,7 +11,6 @@ namespace BE.Controllers
     [ApiController]
     public class SupplierController : BaseController
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly ISupplierService _supplierService;
 
 
@@ -22,10 +20,10 @@ namespace BE.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery] SerachPaginationDTO<SupplierDTO> serachPaganation)
+        public IActionResult Get([FromQuery] SerachPaginationDTO<SupplierDTO> serachPagination)
         {
 
-            var result = _supplierService.SearchPagination(serachPaganation);
+            var result = _supplierService.SearchPagination(serachPagination);
             return CommonResponse(result);
         }
 
