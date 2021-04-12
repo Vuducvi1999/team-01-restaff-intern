@@ -1,6 +1,8 @@
-﻿using Infrastructure.EntityFramework;
+﻿using Domain.Entities;
+using Infrastructure.EntityFramework;
 using Infrastructure.EntityFramework.Factories;
 using Microsoft.Extensions.DependencyInjection;
+using Service.SocialMedias;
 using Service.Suppliers;
 
 namespace Service
@@ -19,6 +21,7 @@ namespace Service
 
             //scoped
             services.AddScoped<ISupplierService, SupplierService>();
+            services.AddScoped<ISocialMediaService, SocialMediaService>();
         }
     }
 }
