@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Domain.DTOs.BaseDTOs;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Domain.DTOs.Banners
 {
-    public class BannerDTO
+    public class BannerDTO : BaseDTO
     {
         public string Title { get; set; }
         public int DisplayOrder { get; set; }

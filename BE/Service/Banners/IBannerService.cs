@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Service.Banners
 {
-    interface IBannerService : ICommonCRUDService<BannerDTO, CreateBannerDTO, UpdateBannerDTO, DeleteBannerDTO>
+    public interface IBannerService : ICommonCRUDService<BannerDTO, CreateBannerDTO, UpdateBannerDTO, DeleteBannerDTO>
     {
         ReturnMessage<PaginatedList<BannerDTO>> SearchPagination(SerachPaginationDTO<BannerDTO> search);
     }
