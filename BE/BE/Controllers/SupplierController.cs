@@ -46,7 +46,7 @@ namespace BE.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Deletemodel([FromQuery] DeleteSupplierDTO model)
+        public IActionResult Delete([FromQuery] DeleteSupplierDTO model)
         {
             var result = _supplierService.Delete(model);
             return CommonResponse(result);
