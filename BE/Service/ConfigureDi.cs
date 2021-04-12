@@ -1,6 +1,7 @@
 ﻿using Infrastructure.EntityFramework;
 using Infrastructure.EntityFramework.Factories;
 using Microsoft.Extensions.DependencyInjection;
+using Service.Categories;
 using Service.Suppliers;
 
 namespace Service
@@ -19,6 +20,7 @@ namespace Service
 
             //scoped
             services.AddScoped<ISupplierService, SupplierService>();
+            services.AddScoped<ICategoryService, CategoryService>();
         }
     }
 }
