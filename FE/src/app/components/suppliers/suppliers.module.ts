@@ -17,6 +17,6 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     ReactiveFormsModule,
     NgbModule,
     Ng2SmartTableModule
-  ]
+  ],
 })
 export class SuppliersModule { }

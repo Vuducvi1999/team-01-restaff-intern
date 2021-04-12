@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Data } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AuthLoginModel, ReturnMessage } from 'src/app/lib/data/models';
+import { AuthService } from 'src/app/lib/data/services';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +15,7 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public registerForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private api: AuthService) {
     this.createLoginForm();
     this.createRegisterForm();
   }
@@ -38,24 +42,29 @@ export class LoginComponent implements OnInit {
 
   createLoginForm() {
     this.loginForm = this.formBuilder.group({
-      userName: [''],
-      password: [''],
+      username: [null, [Validators.required]],
+      password: [null, [Validators.required]],
     })
   }
   createRegisterForm() {
     this.registerForm = this.formBuilder.group({
-      userName: [''],
-      password: [''],
-      confirmPassword: [''],
+      username: [null, [Validators.required]],
+      password: [null, [Validators.required]],
+      confirmPassword: [null, [Validators.required]],
     })
   }
 
 
   ngOnInit() {
+
   }
 
-  onSubmit() {
-    
+  onLogin() {
+    if(this.loginForm.valid)
+    {
+      var data : AuthLoginModel = this.loginForm.value;
+      this.api.saveAccount(data);
+    }
   }
 
 }
