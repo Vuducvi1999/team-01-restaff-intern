@@ -15,7 +15,11 @@ namespace Infrastructure.EntityFramework
 
         public bool HasPreviousPage => PageIndex > 1;
         public bool HasNextPage => PageIndex < TotalPage;
-        public PaginatedList(IQueryable<T> items, int skip = 1, int take = 50)
+
+        public PaginatedList()
+        {
+        }
+        public PaginatedList(IQueryable<T> items, int skip = 0, int take = 50)
         {
             if (items.IsNotNullOrEmpty())
             {
@@ -29,7 +33,7 @@ namespace Infrastructure.EntityFramework
 
         public void GetPageData(IQueryable<T> items)
         {
-            Results = items?.Skip(PageSize * (PageIndex - 1)).Take(PageSize).ToList() ?? new List<T>();
+            Results = items?.Skip(PageSize * PageIndex).Take(PageSize).ToList() ?? new List<T>();
         }
     }
 }
