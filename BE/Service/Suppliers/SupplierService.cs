@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Common.Constants;
 using Common.Http;
-using Common.Paganation;
+using Common.Pagination;
 using Domain.DTOs.Suppliers;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
@@ -80,7 +80,7 @@ namespace Service.Suppliers
                 return new ReturnMessage<SupplierDTO>(true, null, ex.Message);
             }
         }
-        public ReturnMessage<PaginatedList<SupplierDTO>> SearchPagination(SerachPaganationDTO<SupplierDTO> search)
+        public ReturnMessage<PaginatedList<SupplierDTO>> SearchPagination(SerachPaginationDTO<SupplierDTO> search)
         {
             if (search == null)
             {

@@ -1,6 +1,6 @@
-﻿namespace Common.Paganation
+﻿namespace Common.Pagination
 {
-    public class SerachPaganationDTO<T>
+    public class SerachPaginationDTO<T>
     {
 
         public T Search { get; set; }

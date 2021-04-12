@@ -1,6 +1,6 @@
 ﻿using Common.Constants;
 using Common.Http;
-using Common.Paganation;
+using Common.Pagination;
 using Domain.DTOs.Suppliers;
 using Infrastructure.EntityFramework;
 using Microsoft.AspNetCore.Mvc;
@@ -15,16 +15,14 @@ namespace BE.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly ISupplierService _supplierService;
 
-        public IUnitOfWork UnitOfWork => _unitOfWork;
 
-        public SupplierController(IUnitOfWork unitOfWork, ISupplierService supplierService)
+        public SupplierController(ISupplierService supplierService)
         {
-            _unitOfWork = unitOfWork;
             _supplierService = supplierService;
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery] SerachPaganationDTO<SupplierDTO> serachPaganation)
+        public IActionResult Get([FromQuery] SerachPaginationDTO<SupplierDTO> serachPaganation)
         {
 
             var result = _supplierService.SearchPagination(serachPaganation);
