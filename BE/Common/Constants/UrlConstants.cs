@@ -5,5 +5,7 @@
         public const string BaseApi = "/api";
 
         public const string BaseSupplier = BaseApi + "/supplier";
+
+        public const string BaseAuth = BaseApi + "/auth";
     }
 }
