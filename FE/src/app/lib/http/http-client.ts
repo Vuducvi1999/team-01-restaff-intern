@@ -17,7 +17,9 @@ export class HttpClientService {
     private http: HttpClient,
     private routerHelperService: RouterHelperService,
     private location: Location,
-    private activeModal: NgbModal, @Inject('BASE_URL') private baseUrl: string) { }
+    private activeModal: NgbModal,
+     @Inject('BASE_URL') private baseUrl: string
+  ) { }
 
   handleError(err: any) {
     if (err) {
@@ -48,7 +50,7 @@ export class HttpClientService {
         headers = headers.append(item.name, item.value);
       });
     }
-    const authToken = {token : ""};
+    const authToken = { token: "" };
     if (authToken && authToken.token && isSetToken) {
       headers = headers.append('Authorization', `Bearer ${authToken.token}` || '');
     }

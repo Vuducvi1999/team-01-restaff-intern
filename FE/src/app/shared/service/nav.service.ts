@@ -43,6 +43,12 @@ export class NavService {
 				{ path: '/suppliers/list-suppliers', title: 'Supplier List', type: 'link' },
 				{ path: '/suppliers/create-suppliers', title: 'Create Supplier', type: 'link' },
 			]
+		},
+		{
+			title: 'Banners', icon: 'users', type: 'sub', active: false, children: [
+				{ path: '/banners/list-banners', title: 'Banners List', type: 'link' },
+				{ path: '/banners/create-banners', title: 'Create Banner', type: 'link' },
+			]
 		}
 	]
 	// Array
