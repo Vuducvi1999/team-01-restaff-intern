@@ -21,7 +21,7 @@ export class menuDB {
             "created on": "2018-04-18T00:00:00",
         },
         {
-            name: "Vendor Menu",
+            name: "Supplier Menu",
             status: "<i class=\"fa fa-circle font-success f-12\"></i>",
             "created on": "2018-04-18T00:00:00",
         },

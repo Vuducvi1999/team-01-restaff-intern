@@ -1,4 +1,4 @@
-export class vendorsDB  {
+export class suppliersDB  {
     static data = [
         {
             vendor : "<img src='assets/images/team/3.jpg' class='imgTable'> <span>Anna Mull</span>",
