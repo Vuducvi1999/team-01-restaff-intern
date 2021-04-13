@@ -9,5 +9,7 @@
 
         public const string Error = "Save fail";
 
+        public const string InvalidAuthInfoMsg = "Invalid email or password";
+        public const string LoginSuccess = "Login successfully";
     }
 }

@@ -7,5 +7,7 @@
         public const string BaseSupplier = BaseApi + "/supplier";
 
         public const string BaseSocialMedia = BaseApi + "/socialmedia";
+
+        public const string BaseAuth = BaseApi + "/auth";
     }
 }
