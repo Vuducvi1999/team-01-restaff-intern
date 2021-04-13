@@ -6,4 +6,5 @@ export const environment = {
   name: 'dev',
   production: false,
   iswithCredentials: true,
+  host: 'https://localhost:44309',
 };

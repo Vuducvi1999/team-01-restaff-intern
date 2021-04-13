@@ -1,6 +1,7 @@
 ﻿using Infrastructure.EntityFramework;
 using Infrastructure.EntityFramework.Factories;
 using Microsoft.Extensions.DependencyInjection;
+using Service.Auth;
 using Service.Suppliers;
 
 namespace Service
@@ -16,9 +17,10 @@ namespace Service
             services.AddScoped(typeof(IRepositoryAsync<>), typeof(BaseRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
 
-
-            //scoped
             services.AddScoped<ISupplierService, SupplierService>();
+
+            services.AddScoped<IJwtManager, JwtManager>();
+            services.AddScoped<IAuthService, AuthService>();
         }
     }
 }
