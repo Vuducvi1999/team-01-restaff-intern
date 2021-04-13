@@ -22,7 +22,7 @@ namespace BE.Controllers
             _authService = authService;
         }
 
-        [HttpPost]
+        [HttpPost(UrlConstants.BaseLogin)]
         public IActionResult Login([FromBody] UserLoginDTO data)
         {
             var result = _authService.CheckLogin(data);
