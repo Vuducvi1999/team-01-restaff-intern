@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Domain.DTOs.Categories;
+using Domain.DTOs.Banners;
 using Domain.DTOs.Suppliers;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
