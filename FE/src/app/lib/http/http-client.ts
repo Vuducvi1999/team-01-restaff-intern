@@ -108,7 +108,8 @@ export class HttpClientService {
     }
   }
 
-  getSync(url: any, params?: any): Promise<any | undefined> {
+  getSync(apiUrl: any, params?: any): Promise<any | undefined> {
+    const url = this.getFullUrl(apiUrl);
     return new Promise((resolve, reject) => {
       const options = this.getHeader(params);
       this.http.get(url, { ...options, withCredentials: true }).subscribe(
@@ -130,7 +131,8 @@ export class HttpClientService {
     });
   }
 
-  deleteSync(url: any, params?: any): Promise<any | undefined> {
+  deleteSync(apiUrl: any, params?: any): Promise<any | undefined> {
+    const url = this.getFullUrl(apiUrl);
     return new Promise((resolve, reject) => {
       this.http.delete(url, this.getHeader(params)).subscribe(
         (res: any) => {
@@ -147,7 +149,8 @@ export class HttpClientService {
     });
   }
 
-  postSync(url: string, data?: any, params: any = {}, isOption = false): Promise<any | undefined> {
+  postSync(apiUrl: string, data?: any, params: any = {}, isOption = false): Promise<any | undefined> {
+    const url = this.getFullUrl(apiUrl);
     if (!isOption) {
       this.setUserInfo(params);
     }
@@ -168,7 +171,8 @@ export class HttpClientService {
     });
   }
 
-  async putSync(url: string, data?: any, params?: any, isOption = false): Promise<any | undefined> {
+  async putSync(apiUrl: string, data?: any, params?: any, isOption = false): Promise<any | undefined> {
+    const url = this.getFullUrl(apiUrl);
     if (!isOption) {
       this.setUserInfo(params);
     }
@@ -188,27 +192,31 @@ export class HttpClientService {
     });
   }
 
-  get(url: any, params?: any) {
+  get(apiUrl: any, params?: any) {
+    const url = this.getFullUrl(apiUrl);
     return this.http.get(url, this.getHeader(params)).toPromise();
   }
 
-  delete(url: any, params?: any) {
+  delete(apiUrl: any, params?: any) {
+    const url = this.getFullUrl(apiUrl);
     return this.http.delete(url, this.getHeader(params)).toPromise();
   }
 
-  post(url: string, data?: any, params: any = {}) {
+  post(apiUrl: string, data?: any, params: any = {}) {
+    const url = this.getFullUrl(apiUrl);
     this.setUserInfo(params);
     return this.http.post(url, data, this.getHeader(params)).toPromise();
   }
 
-  put(url: string, data?: any, params: any = {}) {
+  put(apiUrl: string, data?: any, params: any = {}) {
+    const url = this.getFullUrl(apiUrl);
     this.setUserInfo(params);
     return this.http.put(url, data, this.getHeader(params)).toPromise();
   }
 
   getObservable(apiUrl: string, params: any = {}, isLoading = true) {
     const url = this.getFullUrl(apiUrl);
-    let httpOptions = this.getHeader({ params });
+    let httpOptions = this.getHeader(params);
     httpOptions = this.getLoadingHeader(isLoading, httpOptions);
 
     return this.http.get(url, httpOptions).pipe(

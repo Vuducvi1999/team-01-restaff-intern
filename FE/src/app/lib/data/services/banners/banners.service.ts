@@ -10,7 +10,7 @@ export class BannersService {
   constructor(private httpClient: HttpClientService) { }
 
   get(request: any) {
-    return this.httpClient.getObservable(this.url, request).toPromise();
+    return  this.httpClient.getObservable(this.url, request).toPromise();
   }
 
   create(model: FormData) {

@@ -13,10 +13,10 @@ import { CreateBannersComponent } from '../create-banners/create-banners.compone
 export class ListBannersComponent implements OnInit {
   public banners = [];
   constructor(private modalService: NgbModal,private service:BannersService) { 
-    console.log("hello");
     this.service.get(null).then((res : ReturnMessage<BannerModel[]>) => {
       if(!res.hasError)
       {
+        console.log("banner",res.data);
         this.banners = res.data;
       }
     }).catch((er) => {
