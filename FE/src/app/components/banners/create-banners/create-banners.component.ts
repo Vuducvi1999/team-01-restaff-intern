@@ -20,8 +20,8 @@ export class CreateBannersComponent implements OnInit {
 
 
   constructor(private formBuilder: FormBuilder,
-    private ngbActiveModal: NgbActiveModal
-    //  private service: BannersService
+    private ngbActiveModal: NgbActiveModal,
+    private service: BannersService
   ) {
     this.createBannerForm();
     this.createPermissionForm();
@@ -42,7 +42,7 @@ export class CreateBannersComponent implements OnInit {
     })
   }
 
-  createBanner() {
+  createBanner(event:any) {
     this.banner = {
       title: this.bannersForm.controls.title.value,
       description: this.bannersForm.controls.description.value,
@@ -51,12 +51,12 @@ export class CreateBannersComponent implements OnInit {
       displayOrder: this.bannersForm.controls.displayOrder.value,
       id: ""
     }
-    // this.service.create(this.banner).then(res => console.log(res));
+    this.service.create(this.banner).then(res => console.log(res));
   }
 
   createModal() {
     this.modalHeader = new ModalHeaderModel();
-    // this.modalHeader.title = `[Add]`;
+    this.modalHeader.title = "Add Banner";
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
   }
@@ -66,7 +66,7 @@ export class CreateBannersComponent implements OnInit {
     this.ngbActiveModal.close();
   }
 
-  save(event:any){}
+  save(event: any) { }
 
   ngOnInit() { }
 

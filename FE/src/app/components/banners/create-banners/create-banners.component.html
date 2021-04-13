@@ -4,9 +4,7 @@
   <div class="row">
     <div class="col-sm-12">
       <div class="card tab2-card">
-        <div class="card-header">
-          <h5> Add Banner</h5>
-        </div>
+
         <div class="card-body">
           <ngb-tabset class="tab-coupon">
             <ngb-tab title="Banners">
@@ -202,9 +200,6 @@
               </ng-template>
             </ngb-tab>
           </ngb-tabset>
-          <div class="pull-right">
-            <button type="button" class="btn btn-primary" (click)="createBanner()">Save</button>
-          </div>
         </div>
       </div>
     </div>
@@ -213,5 +208,5 @@
 <!-- Container-fluid Ends-->
 <app-modal-footer
   [data]="modalFooter"
-  (onAction)="save($event)"
+  (onAction)="createBanner($event)"
 ></app-modal-footer>

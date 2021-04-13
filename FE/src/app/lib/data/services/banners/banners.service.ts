@@ -5,7 +5,7 @@ import { BannerModel } from "../../models";
 @Injectable()
 export class BannersService {
 
-  private url = '/api/banners';
+  private url = '/api/banner';
 
   constructor(private httpClient: HttpClientService) { }
 
