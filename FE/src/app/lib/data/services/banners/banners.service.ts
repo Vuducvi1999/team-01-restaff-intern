@@ -17,7 +17,7 @@ export class BannersService {
     return this.httpClient.postObservable(this.url, model).toPromise();
   }
 
-  update(model: BannerModel) {
+  update(model: FormData) {
     return this.httpClient.putObservable(this.url, model).toPromise();
   }
 

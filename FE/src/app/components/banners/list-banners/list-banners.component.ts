@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ServerDataSource } from 'ng2-smart-table';
-import { BannerModel, PageModel, ReturnMessage, SearchPaganationDTO } from 'src/app/lib/data/models';
+import { BannerModel, PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { BannersService } from 'src/app/lib/data/services';
 import { CreateBannersComponent } from '../create-banners/create-banners.component';
+import { UpdateBannersComponent } from '../update-banners/update-banners.component';
 
 @Component({
   selector: 'app-list-banners',
@@ -12,19 +13,14 @@ import { CreateBannersComponent } from '../create-banners/create-banners.compone
   providers: []
 })
 export class ListBannersComponent implements OnInit {
-  public banners = [];
+  public banners: BannerModel[];
   constructor(private modalService: NgbModal, private bannersService: BannersService) {
     this.getBanners();
   }
   source: ServerDataSource;
 
   public settings = {
-    // add: {
-    //   addButtonContent: '<i class="nb-plus"></i>',
-    //   createButtonContent: '<i class="nb-checkmark"></i>',
-    //   cancelButtonContent: '<i class="nb-close"></i>',
-    //   createConfirm: true,
-    // },
+
     mode: 'external',
     actions: {
       position: 'right',
@@ -43,7 +39,7 @@ export class ListBannersComponent implements OnInit {
       link: {
         title: 'Link'
       },
-      imageURL: {
+      imageUrl: {
         title: 'Image URL',
       },
       displayOrder: {
@@ -53,7 +49,6 @@ export class ListBannersComponent implements OnInit {
   };
 
   getBanners() {
-    
     this.bannersService.get(null).then((res: ReturnMessage<PageModel<BannerModel>>) => {
       if (!res.hasError) {
         this.banners = res.data.results;
@@ -66,6 +61,7 @@ export class ListBannersComponent implements OnInit {
         console.log(er.error.message)
       }
     });
+
   }
   openCreate(event: any) {
     var modalRef = this.modalService.open(CreateBannersComponent, {
@@ -83,7 +79,14 @@ export class ListBannersComponent implements OnInit {
       });
     }
   }
-
+  openUpdate(event: any) {
+    console.log(event.data);
+    var modalRef = this.modalService.open(UpdateBannersComponent, {
+      size: 'lg'
+    });
+    modalRef.componentInstance.item = event.data;
+    modalRef.result.then(() => this.getBanners());
+  }
 
   ngOnInit() {
   }

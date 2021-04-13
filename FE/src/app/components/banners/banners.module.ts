@@ -10,6 +10,7 @@ import { CreateBannersComponent } from './create-banners/create-banners.componen
 import { BannersRoutingModule } from './banners-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BannersService } from 'src/app/lib/data/services';
+import { UpdateBannersComponent } from './update-banners/update-banners.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { BannersService } from 'src/app/lib/data/services';
     BannersRoutingModule,
     SharedModule
   ],
-  declarations: [ListBannersComponent, CreateBannersComponent],
+  declarations: [ListBannersComponent, CreateBannersComponent,UpdateBannersComponent],
   providers:[BannersService]
 })
 export class BannersModule { }

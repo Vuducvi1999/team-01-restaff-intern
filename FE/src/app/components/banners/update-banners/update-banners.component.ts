@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BannerModel } from 'src/app/lib/data/models';
@@ -6,28 +6,28 @@ import { BannersService } from 'src/app/lib/data/services/banners/banners.servic
 import { ModalFooterModel, ModalHeaderModel } from 'src/app/shared/components/modals/models/modal.model';
 
 @Component({
-  selector: 'app-create-banners',
-  templateUrl: './create-banners.component.html',
-  styleUrls: ['./create-banners.component.scss'],
-  providers: []
+  selector: 'app-update-banners',
+  templateUrl: './update-banners.component.html',
+  styleUrls: ['./update-banners.component.scss'],
 })
-export class CreateBannersComponent implements OnInit {
+export class UpdateBannersComponent implements OnInit {
   public bannersForm: FormGroup;
   public permissionForm: FormGroup;
   public banner: BannerModel;
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
+  public item: any;
   submitted = false;
 
   constructor(private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
     private bannersService: BannersService
   ) {
-    this.createBannerForm();
+    this.updateBannerForm();
     this.createModal();
   }
 
-  createBannerForm() {
+  updateBannerForm() {
     this.bannersForm = this.formBuilder.group({
       title: ['', Validators.required],
       description: [''],
@@ -37,7 +37,7 @@ export class CreateBannersComponent implements OnInit {
     })
   }
 
-  createBanner(event: any) {
+  updateBanner(event: any) {
     this.banner = {
       title: this.bannersForm.controls.title.value,
       description: this.bannersForm.controls.description.value,
@@ -55,9 +55,9 @@ export class CreateBannersComponent implements OnInit {
     formData.append("displayOrder", this.banner.displayOrder.toString());
 
     this.submitted = true;
-    this.bannersService.create(formData).then(res => {
+    this.bannersService.update(formData).then(res => {
+      console.log(res);
       this.bannersForm.reset();
-      this.submitted = false;
     }).catch((er) => {
 
       if (er.error.hasError) {
@@ -68,7 +68,7 @@ export class CreateBannersComponent implements OnInit {
 
   createModal() {
     this.modalHeader = new ModalHeaderModel();
-    this.modalHeader.title = "Add Banner";
+    this.modalHeader.title = "Update Banner";
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
   }
