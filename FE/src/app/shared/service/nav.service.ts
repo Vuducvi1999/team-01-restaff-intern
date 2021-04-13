@@ -46,8 +46,7 @@ export class NavService {
 		},
 		{
 			title: 'Banners', icon: 'users', type: 'sub', active: false, children: [
-				{ path: '/banners/list-banners', title: 'Banners List', type: 'link' },
-				{ path: '/banners/create-banners', title: 'Create Banner', type: 'link' },
+				{ path: '/banners/list-banners', title: 'Banners List', type: 'link' }
 			]
 		}
 	]

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CreateBannersComponent } from '../create-banners/create-banners.component';
 
 @Component({
   selector: 'app-list-banners',
@@ -8,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class ListBannersComponent implements OnInit {
   public banners = [];
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
 
   public settings = {
@@ -38,6 +40,12 @@ export class ListBannersComponent implements OnInit {
     },
   };
 
+  openCreate() {
+    var modalRef = this.modalService.open(CreateBannersComponent, {
+      size: 'lg'
+    });
+    modalRef.result.then(res => console.log(res));
+  }
   ngOnInit() {
   }
 

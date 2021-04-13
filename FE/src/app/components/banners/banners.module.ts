@@ -8,13 +8,16 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ListBannersComponent } from './list-banners/list-banners.component';
 import { CreateBannersComponent } from './create-banners/create-banners.component';
 import { BannersRoutingModule } from './banners-routing.module';
+import { SharedModule } from 'src/app/shared/shared.module';
+
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     NgbModule,
     Ng2SmartTableModule,
-    BannersRoutingModule
+    BannersRoutingModule,
+    SharedModule
   ],
   declarations: [ListBannersComponent, CreateBannersComponent],
   providers:[]
