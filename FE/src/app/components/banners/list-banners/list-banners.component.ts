@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BannerModel, ReturnMessage } from 'src/app/lib/data/models';
+import {
+  BannerModel,
+  PageModel,
+  ReturnMessage,
+  SearchPaganationDTO,
+} from 'src/app/lib/data/models';
 import { BannersService } from 'src/app/lib/data/services';
 import { CreateBannersComponent } from '../create-banners/create-banners.component';
 
@@ -8,30 +13,29 @@ import { CreateBannersComponent } from '../create-banners/create-banners.compone
   selector: 'app-list-banners',
   templateUrl: './list-banners.component.html',
   styleUrls: ['./list-banners.component.scss'],
-  providers: [BannersService]
+  providers: [BannersService],
 })
 export class ListBannersComponent implements OnInit {
   public banners = [];
-  constructor(private modalService: NgbModal,private service:BannersService) { 
-    this.service.get(null).then((res : ReturnMessage<BannerModel[]>) => {
-      if(!res.hasError)
-      {
-        console.log("banner",res.data);
-        this.banners = res.data;
-      }
-    }).catch((er) => {
-      
-      if(er.error.hasError)
-      {
-        console.log(er.error.message)
-      }
-    });
+  constructor(private modalService: NgbModal, private service: BannersService) {
+    this.service
+      .get(null)
+      .then((res: ReturnMessage<PageModel<BannerModel>>) => {
+        if (!res.hasError) {
+          console.log('banner', res.data);
+          this.banners = res.data.results;
+        }
+      })
+      .catch((er) => {
+        if (er.error.hasError) {
+          console.log(er.error.message);
+        }
+      });
   }
-
 
   public settings = {
     actions: {
-      position: 'right'
+      position: 'right',
     },
     columns: {
       vendor: {
@@ -39,31 +43,28 @@ export class ListBannersComponent implements OnInit {
         type: 'html',
       },
       title: {
-        title: 'Title'
+        title: 'Title',
       },
       description: {
-        title: 'Description'
+        title: 'Description',
       },
       link: {
-        title: 'Link'
+        title: 'Link',
       },
       imageURL: {
         title: 'Image URL',
       },
       displayOrder: {
         title: 'Display Order',
-      }
+      },
     },
   };
 
   openCreate() {
     var modalRef = this.modalService.open(CreateBannersComponent, {
-      size: 'lg'
+      size: 'lg',
     });
-    modalRef.result.then(res => console.log(res));
+    modalRef.result.then((res) => console.log(res));
   }
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }
-

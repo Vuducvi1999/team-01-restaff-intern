@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '',
     children: [
       {
-        path: 'list-socialmedias',
+        path: 'list-social-medias',
         component: ListSocialMediasComponent,
         data: {
           title: 'Social Media List',
@@ -17,7 +17,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'create-socialmedias',
+        path: 'create-social-medias',
         component: CreateSocialMediasComponent,
         data: {
           title: 'Create Social Media',
@@ -25,7 +25,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'update-socialmedias',
+        path: 'update-social-medias',
         component: UpdateSocialMediasComponent,
         data: {
           title: 'Update Social Media',

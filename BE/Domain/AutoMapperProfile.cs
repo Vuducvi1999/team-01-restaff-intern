@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Domain.DTOs.Banners;
+using Domain.DTOs.SocialMedias;
 using Domain.DTOs.Suppliers;
 using Domain.Entities;
 using Infrastructure.EntityFramework;

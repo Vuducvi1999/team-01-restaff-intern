@@ -16,7 +16,7 @@ export class SocialMediaService {
     return this.httpClient.postObservable(this.url, model).toPromise();
   }
 
-  update(model: SocialMediaModel) {
+  update(model: FormData) {
     return this.httpClient.putObservable(this.url, model).toPromise();
   }
 

@@ -9,11 +9,10 @@
           <ng2-smart-table
             [settings]="settings"
             [source]="socialMedias"
+            (create)="openCreate($event)"
           ></ng2-smart-table>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<button (click)="openCreate()">Add</button>
