@@ -19,18 +19,20 @@ namespace Service.Auth
     public class AuthService : IAuthService
     {
         private IRepository<Domain.Entities.User> _repository;
-        private IJwtManager _jwtManager;
+        private IAuthManager _jwtManager;
+        private IMapper _mapper;
 
-        public AuthService(IJwtManager jwtManager, IRepository<Domain.Entities.User> repository)
+        public AuthService(IAuthManager jwtManager, IRepository<Domain.Entities.User> repository, IMapper mapper)
         {
             _jwtManager = jwtManager;
             _repository = repository;
+            _mapper = mapper;
         }
-        public ReturnMessage<string> CheckLogin(UserLoginDTO data)
+        public ReturnMessage<UserDataReturnDTO> CheckLogin(UserLoginDTO data)
         {
             if (data.Username.IsNullOrEmpty() || data.Password.IsNullOrEmpty())
             {
-                return new ReturnMessage<string>(true, null, MessageConstants.InvalidAuthInfoMsg);
+                return new ReturnMessage<UserDataReturnDTO>(true, null, MessageConstants.InvalidAuthInfoMsg);
             }
 
             try
@@ -38,7 +40,7 @@ namespace Service.Auth
                 var account = _repository.Queryable().Where(a => a.Username == data.Username && a.Password == MD5Helper.ToMD5Hash(data.Password)).FirstOrDefault();
                 if (account.IsNullOrEmpty())
                 {
-                    return new ReturnMessage<string>(true, null, MessageConstants.InvalidAuthInfoMsg);
+                    return new ReturnMessage<UserDataReturnDTO>(true, null, MessageConstants.InvalidAuthInfoMsg);
                 }
 
                 var claims = new Claim[]
@@ -49,11 +51,26 @@ namespace Service.Auth
 
                 // Generate JWT token
                 var token = _jwtManager.GenerateToken(claims, DateTime.UtcNow);
-                return new ReturnMessage<string>(false, token, MessageConstants.LoginSuccess);
+                var result = _mapper.Map<Domain.Entities.User, UserDataReturnDTO>(account);
+                result.Token = token;
+                return new ReturnMessage<UserDataReturnDTO>(false, result, MessageConstants.LoginSuccess);
             }
             catch (Exception ex)
             {
-                return new ReturnMessage<string>(true, null, ex.Message);
+                return new ReturnMessage<UserDataReturnDTO>(true, null, ex.Message);
+            }
+        }
+
+        public UserDataReturnDTO GetInformationAuth(Guid id)
+        {
+            try
+            {
+                var data = _repository.Find(id);
+                var result = _mapper.Map<Domain.Entities.User, UserDataReturnDTO>(data);
+                return result;
+            }catch(Exception ex)
+            {
+                return new UserDataReturnDTO();
             }
         }
     }

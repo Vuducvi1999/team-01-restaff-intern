@@ -19,7 +19,7 @@ namespace Service
 
             services.AddScoped<ISupplierService, SupplierService>();
 
-            services.AddScoped<IJwtManager, JwtManager>();
+            services.AddScoped<IAuthManager, AuthManager>();
             services.AddScoped<IAuthService, AuthService>();
         }
     }

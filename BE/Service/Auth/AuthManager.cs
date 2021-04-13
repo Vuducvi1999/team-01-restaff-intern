@@ -10,17 +10,17 @@ using System.Text;
 
 namespace Service.Auth
 {
-    public class JwtManager : IJwtManager
+    public class AuthManager : IAuthManager
     {
         private readonly JwtTokenConfig _jwtTokenConfig;
         private readonly byte[] _secret;
 
-        public JwtManager(JwtTokenConfig jwtTokenConfig) {
+        public AuthManager(JwtTokenConfig jwtTokenConfig) {
             _jwtTokenConfig = jwtTokenConfig;
             _secret = Encoding.ASCII.GetBytes(jwtTokenConfig.Secret); // Secret key
         }
 
-        public UserDecompileDTO DecompileToken(string token)
+        public UserDecompileDTO GetInformationToken(string token)
         {
             var stream = token;
             var handler = new JwtSecurityTokenHandler();
