@@ -1,7 +1,9 @@
+import { Injectable } from "@angular/core";
 import { AppConfig } from "src/app/lib/environments/config/appConfig";
 import { HttpClientService } from "src/app/lib/http/http-client";
 import { CategoryModel } from "../../models/categories/category.model";
 
+@Injectable()
 export class CategoriesService  {
 
     private url = '/api/category';
@@ -12,7 +14,7 @@ export class CategoriesService  {
       return this.httpClient.getObservable(this.url, request).toPromise();
     }
 
-    create(model: CategoryModel) {
+    create(model: FormData) {
       return this.httpClient.postObservable(this.url, model).toPromise();
     }
 

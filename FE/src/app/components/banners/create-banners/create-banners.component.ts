@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { BannerModel } from 'src/app/lib/data/models';
+import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
 import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
 import { ModalFooterModel, ModalHeaderModel } from 'src/app/shared/components/modals/models/modal.model';
 
