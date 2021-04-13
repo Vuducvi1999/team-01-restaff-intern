@@ -10,11 +10,13 @@ namespace Domain
     {
         public AutoMapperProfile()
         {
+            //Missing map in create supplier
+
             CreateMap<PaginatedList<Supplier>, PaginatedList<SupplierDTO>>().ReverseMap();
             CreateMap<Supplier, SupplierDTO>().ReverseMap();
             CreateMap<PaginatedList<SocialMedia>, PaginatedList<SocialMediaDTO>>().ReverseMap();
             CreateMap<SocialMedia, SocialMediaDTO>().ReverseMap();
-
+            CreateMap<CreateSocialMediaDTO, SocialMedia>().ReverseMap();
         }
     }
 }
