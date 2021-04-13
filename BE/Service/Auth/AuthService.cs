@@ -19,10 +19,10 @@ namespace Service.Auth
     public class AuthService : IAuthService
     {
         private IRepository<Domain.Entities.User> _repository;
-        private IAuthManager _jwtManager;
+        private IUserManager _jwtManager;
         private IMapper _mapper;
 
-        public AuthService(IAuthManager jwtManager, IRepository<Domain.Entities.User> repository, IMapper mapper)
+        public AuthService(IUserManager jwtManager, IRepository<Domain.Entities.User> repository, IMapper mapper)
         {
             _jwtManager = jwtManager;
             _repository = repository;

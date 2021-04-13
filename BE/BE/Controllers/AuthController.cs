@@ -16,9 +16,9 @@ namespace BE.Controllers
     public class AuthController : BaseController
     {
         private readonly IAuthService _authService;
-        private readonly IAuthManager _authManager;
+        private readonly IUserManager _authManager;
 
-        public AuthController(IAuthService authService, IAuthManager authManager)
+        public AuthController(IAuthService authService, IUserManager authManager) : base(authService, authManager)
         {
             _authService = authService;
             _authManager = authManager;
@@ -34,5 +34,5 @@ namespace BE.Controllers
 
         public string token { get; set; }
         public UserDataReturnDTO userDataReturnDTO { get; set; }
-}
+    }
 }

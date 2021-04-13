@@ -20,7 +20,7 @@ namespace Service
 
             services.AddScoped<ISupplierService, SupplierService>();
 
-            services.AddScoped<IAuthManager, AuthManager>();
+            services.AddScoped<IUserManager, AuthManager>();
             services.AddScoped<IAuthService, AuthService>();
             //scoped
             services.AddScoped<ISupplierService, SupplierService>();

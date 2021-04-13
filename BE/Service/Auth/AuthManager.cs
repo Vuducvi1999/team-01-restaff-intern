@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Service.Auth
 {
-    public class AuthManager : IAuthManager
+    public class AuthManager : IUserManager
     {
         private readonly JwtTokenConfig _jwtTokenConfig;
         private readonly byte[] _secret;
@@ -20,16 +20,12 @@ namespace Service.Auth
             _secret = Encoding.ASCII.GetBytes(jwtTokenConfig.Secret); // Secret key
         }
 
-        public UserDecompileDTO GetInformationToken(string token)
+        public UserDecompileDTO GetInformationToken(IEnumerable<Claim> claims)
         {
-            var stream = token;
-            var handler = new JwtSecurityTokenHandler();
-            var jsonToken = handler.ReadToken(stream);
-            var tokenS = jsonToken as JwtSecurityToken;
             var data = new UserDecompileDTO()
             {
-                Id = Guid.Parse(tokenS.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value),
-                Username = tokenS.Claims.First(claim => claim.Type == ClaimTypes.UserData).Value,
+                Id = Guid.Parse(claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value),
+                Username = claims.First(claim => claim.Type == ClaimTypes.UserData).Value,
             };
             return data;
         }

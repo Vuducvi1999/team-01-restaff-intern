@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Service.Auth
 {
-    public interface IAuthManager
+    public interface IUserManager
     {
         string GenerateToken(IEnumerable<Claim> claims, DateTime now);
-        UserDecompileDTO GetInformationToken(string token);
+        UserDecompileDTO GetInformationToken(IEnumerable<Claim> claims);
     }
 }
