@@ -20,6 +20,7 @@ export class ListBannersComponent implements OnInit {
         this.banners = res.data;
       }
     }).catch((er) => {
+      
       if(er.error.hasError)
       {
         console.log(er.error.message)

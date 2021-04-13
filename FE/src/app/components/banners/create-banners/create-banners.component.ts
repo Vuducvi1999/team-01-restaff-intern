@@ -51,7 +51,15 @@ export class CreateBannersComponent implements OnInit {
       displayOrder: this.bannersForm.controls.displayOrder.value,
       id: ""
     }
-    this.service.create(this.banner).then(res => console.log(res));
+    const formData = new FormData();
+    formData.append("title" , this.banner.title);
+    formData.append("description" , this.banner.description);
+    formData.append("link" , this.banner.link);
+    formData.append("imageURL" , this.banner.imageURL);
+    formData.append("displayOrder" , this.banner.displayOrder.toString());
+
+
+    this.service.create(formData).then(res => console.log(res));
   }
 
   createModal() {
