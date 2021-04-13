@@ -1,12 +1,14 @@
 ﻿using Common.Http;
 using Domain.DTOs.User;
 using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace Service.Auth
 {
     public interface IAuthService
     {
         public ReturnMessage<UserDataReturnDTO> CheckLogin(UserLoginDTO data);
-        public UserDataReturnDTO GetInformationAuth(Guid id);
+        UserDecompileDTO GetInformationToken(IEnumerable<Claim> claims);
     }
 }

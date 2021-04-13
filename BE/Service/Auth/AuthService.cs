@@ -61,17 +61,14 @@ namespace Service.Auth
             }
         }
 
-        public UserDataReturnDTO GetInformationAuth(Guid id)
+        public UserDecompileDTO GetInformationToken(IEnumerable<Claim> claims)
         {
-            try
+            var data = new UserDecompileDTO()
             {
-                var data = _repository.Find(id);
-                var result = _mapper.Map<Domain.Entities.User, UserDataReturnDTO>(data);
-                return result;
-            }catch(Exception ex)
-            {
-                return new UserDataReturnDTO();
-            }
+                Id = Guid.Parse(claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value),
+                Username = claims.First(claim => claim.Type == ClaimTypes.UserData).Value,
+            };
+            return data;
         }
     }
 }

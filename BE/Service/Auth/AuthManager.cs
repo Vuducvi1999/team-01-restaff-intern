@@ -1,5 +1,7 @@
-﻿using Domain.DTOs.User;
+﻿using AutoMapper;
+using Domain.DTOs.User;
 using Infrastructure.Auth;
+using Infrastructure.EntityFramework;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -12,22 +14,17 @@ namespace Service.Auth
 {
     public class AuthManager : IUserManager
     {
+        private IRepository<Domain.Entities.User> _repository;
+        private IMapper _mapper;
         private readonly JwtTokenConfig _jwtTokenConfig;
         private readonly byte[] _secret;
 
-        public AuthManager(JwtTokenConfig jwtTokenConfig) {
+        public AuthManager(JwtTokenConfig jwtTokenConfig, IMapper mapper, IRepository<Domain.Entities.User> repository)
+        {
             _jwtTokenConfig = jwtTokenConfig;
             _secret = Encoding.ASCII.GetBytes(jwtTokenConfig.Secret); // Secret key
-        }
-
-        public UserDecompileDTO GetInformationToken(IEnumerable<Claim> claims)
-        {
-            var data = new UserDecompileDTO()
-            {
-                Id = Guid.Parse(claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value),
-                Username = claims.First(claim => claim.Type == ClaimTypes.UserData).Value,
-            };
-            return data;
+            _mapper = mapper;
+            _repository = repository;
         }
 
         public string GenerateToken(IEnumerable<Claim> claims, DateTime now)
@@ -42,6 +39,20 @@ namespace Service.Auth
                 signingCredentials: new SigningCredentials(new SymmetricSecurityKey(_secret), SecurityAlgorithms.HmacSha256Signature));
             var accessToken = new JwtSecurityTokenHandler().WriteToken(jwtToken);
             return accessToken;
+        }
+
+        public UserDataReturnDTO GetInformationAuth(Guid id)
+        {
+            try
+            {
+                var data = _repository.Find(id);
+                var result = _mapper.Map<Domain.Entities.User, UserDataReturnDTO>(data);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new UserDataReturnDTO();
+            }
         }
     }
 }

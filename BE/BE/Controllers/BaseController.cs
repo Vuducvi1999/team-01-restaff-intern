@@ -26,8 +26,8 @@ namespace BE.Controllers
         public UserDataReturnDTO InformationUser
         {
             get{
-                var userId = _userManager.GetInformationToken(this.User.Claims).Id;
-                return _authService.GetInformationAuth(userId);
+                var userId = _authService.GetInformationToken(this.User.Claims).Id;
+                return _userManager.GetInformationAuth(userId);
             }
         }
     }

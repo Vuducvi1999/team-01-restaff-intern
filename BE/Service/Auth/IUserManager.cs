@@ -9,6 +9,6 @@ namespace Service.Auth
     public interface IUserManager
     {
         string GenerateToken(IEnumerable<Claim> claims, DateTime now);
-        UserDecompileDTO GetInformationToken(IEnumerable<Claim> claims);
+        public UserDataReturnDTO GetInformationAuth(Guid id);
     }
 }
