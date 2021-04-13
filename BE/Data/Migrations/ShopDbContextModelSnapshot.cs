@@ -114,6 +114,51 @@ namespace Data.Migrations
 
                     b.ToTable("Users");
                 });
+
+
+            modelBuilder.Entity("Domain.Entities.Category", b =>
+            {
+                b.Property<Guid>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uniqueidentifier");
+
+                b.Property<Guid>("CreatedBy")
+                    .HasColumnType("uniqueidentifier");
+
+                b.Property<string>("CreatedByName")
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<Guid>("DeletedBy")
+                    .HasColumnType("uniqueidentifier");
+
+                b.Property<string>("DeletedByName")
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<string>("Description")
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<string>("ImageUrl")
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<bool>("IsActive")
+                    .HasColumnType("bit");
+
+                b.Property<bool>("IsDeleted")
+                    .HasColumnType("bit");
+
+                b.Property<string>("Name")
+                    .HasColumnType("nvarchar(max)");
+
+                b.Property<Guid>("UpdatedBy")
+                    .HasColumnType("uniqueidentifier");
+
+                b.Property<string>("UpdatedByName")
+                    .HasColumnType("nvarchar(max)");
+
+                b.HasKey("Id");
+
+                b.ToTable("Categories");
+            });
 #pragma warning restore 612, 618
         }
     }
