@@ -8,7 +8,7 @@ export class PageModel<T> {
   hasNextPage: boolean;
 }
 
-export class SerachPaganationDTO<T> {
+export class SearchPaganationDTO<T> {
   search: T;
   pageIndex: number;
   pageSize: number;
