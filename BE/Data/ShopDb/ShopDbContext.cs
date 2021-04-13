@@ -13,7 +13,5 @@ namespace Data
         DbSet<Supplier> Suppliers { get; set; }
         DbSet<User> Users { get; set; }
         DbSet<Category> Categories { get; set; }
-        DbSet<User> Users { get; set; }
-        DbSet<Category> Categories { get; set; }
         }
 }

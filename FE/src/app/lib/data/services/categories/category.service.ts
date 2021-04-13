@@ -1,10 +1,10 @@
 import { AppConfig } from "src/app/lib/environments/config/appConfig";
 import { HttpClientService } from "src/app/lib/http/http-client";
-import { SupplierModel } from "../../models";
+import { CategoryModel } from "../../models/categories/category.model";
 
-class SuppliersService  {
+export class CategoriesService  {
 
-    private url = '/api/supplier';
+    private url = '/api/category';
 
     constructor(private httpClient: HttpClientService) { }
 
@@ -12,15 +12,15 @@ class SuppliersService  {
       return this.httpClient.getObservable(this.url, request).toPromise();
     }
 
-    create(model: SupplierModel) {
+    create(model: CategoryModel) {
       return this.httpClient.postObservable(this.url, model).toPromise();
     }
 
-    update(model: SupplierModel) {
+    update(model: CategoryModel) {
       return this.httpClient.putObservable(this.url, model).toPromise();
     }
 
-    delete(model: SupplierModel) {
+    delete(model: CategoryModel) {
       const url = `${this.url}/${model?.id}`;
       return this.httpClient.deleteObservable(url).toPromise();
     }
