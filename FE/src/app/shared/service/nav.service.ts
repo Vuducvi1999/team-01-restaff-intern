@@ -42,8 +42,11 @@ export class NavService {
 			title: 'Suppliers', icon: 'users', type: 'sub', active: false, children: [
 				{ path: '/suppliers/list-suppliers', title: 'Supplier List', type: 'link' },
 				{ path: '/suppliers/create-suppliers', title: 'Create Supplier', type: 'link' },
-			]
-		}
+			],
+		},
+		// {
+		// 	title: 'Login',path: '/auth/login', icon: 'log-in', type: 'link', active: false
+		// }
 	]
 	// Array
 	items = new BehaviorSubject<Menu[]>(this.MENUITEMS);

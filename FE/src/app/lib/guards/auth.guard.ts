@@ -1,7 +1,9 @@
-import { ActivatedRouteSnapshot, Route, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Route, Router, RouterStateSnapshot } from '@angular/router';
 
 import { Injectable } from '@angular/core';
 import { RouterHelperService } from '../helpers';
+import { isNull } from '@angular/compiler/src/output/output_ast';
+import { isEmpty } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -12,11 +14,12 @@ export class AuthGuardsAdminService {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // Constants.previousUrl = route;
     const user = route.data;
-    if (user) {
+    if (user && Object.keys(user).length !== 0) {
+      console.log(user);
       const url: string = this.getStateUrl(route, state.url);
       return true;
     }
-    return this.canActivate(route, state);
+    return this.routerHelperService.redirectToLogin();
   }
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
