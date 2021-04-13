@@ -9,8 +9,8 @@
           <ng2-smart-table
             [settings]="settings"
             [source]="socialMedias"
-            (create)="openCreate($event)"
-            (edit)="openUpdate($event)"
+            (create)="open(null)"
+            (edit)="open($event)"
             (delete)="delete($event)"
           ></ng2-smart-table>
         </div>

@@ -8,14 +8,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CreateSocialMediaComponent } from './create-social-media/create-social-media.component';
 import { ListSocialMediaComponent } from './list-social-media/list-social-media.component';
 import { SocialMediasRoutingModule } from './social-medias-routing.module';
-import { UpdateSocialMediaComponent } from './update-social-media/update-social-media.component';
 
 @NgModule({
-  declarations: [
-    ListSocialMediaComponent,
-    CreateSocialMediaComponent,
-    UpdateSocialMediaComponent,
-  ],
+  declarations: [ListSocialMediaComponent, CreateSocialMediaComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

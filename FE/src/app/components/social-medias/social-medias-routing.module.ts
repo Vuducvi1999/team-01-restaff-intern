@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CreateSocialMediaComponent } from './create-social-media/create-social-media.component';
 import { ListSocialMediaComponent } from './list-social-media/list-social-media.component';
-import { UpdateSocialMediaComponent } from './update-social-media/update-social-media.component';
 
 const routes: Routes = [
   {
@@ -22,14 +21,6 @@ const routes: Routes = [
         data: {
           title: 'Create Social Media',
           breadcrumb: 'Create Social Media',
-        },
-      },
-      {
-        path: 'update-social-medias',
-        component: UpdateSocialMediaComponent,
-        data: {
-          title: 'Update Social Media',
-          breadcrumb: 'Update Social Media',
         },
       },
     ],

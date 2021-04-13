@@ -4,7 +4,6 @@ import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { SocialMediaModel } from 'src/app/lib/data/models/social-medias/social-media.model';
 import { SocialMediaService } from 'src/app/lib/data/services/social-media/social-media.service';
 import { CreateSocialMediaComponent } from '../create-social-media/create-social-media.component';
-import { UpdateSocialMediaComponent } from '../update-social-media/update-social-media.component';
 
 @Component({
   selector: 'app-list-social-media',
@@ -63,11 +62,15 @@ export class ListSocialMediaComponent implements OnInit {
     },
   };
 
-  openCreate(event: any) {
+  open(event: any) {
     var modalRef = this.modalService.open(CreateSocialMediaComponent, {
       size: 'lg',
     });
-    modalRef.componentInstance.item = event;
+    if (event == null) {
+      modalRef.componentInstance.data = event;
+    } else {
+      modalRef.componentInstance.data = event.data;
+    }
     modalRef.result.then((res) => this.getSocialMedias());
   }
 
@@ -79,13 +82,6 @@ export class ListSocialMediaComponent implements OnInit {
       });
     }
   }
-  openUpdate(event: any) {
-    var modalRef = this.modalService.open(UpdateSocialMediaComponent, {
-      size: 'lg',
-    });
-    let a = (modalRef.componentInstance.item = event.data);
-    console.log(a);
-    modalRef.result.then((res) => this.getSocialMedias());
-  }
+
   ngOnInit(): void {}
 }
