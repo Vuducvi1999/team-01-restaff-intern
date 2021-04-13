@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClientService } from 'src/app/lib/http/http-client';
-import { SocialMediaModel } from '../../models/socialmedias/socialmedia.model';
+import { SocialMediaModel } from '../../models/social-medias/social-media.model';
 
 @Injectable()
 export class SocialMediaService {
-  private url = '/api/socialmedia';
+  private url = '/api/social-media';
 
   constructor(private httpClient: HttpClientService) {}
 
@@ -21,7 +21,7 @@ export class SocialMediaService {
   }
 
   delete(model: SocialMediaModel) {
-    const url = `${this.url}/${model?.id}`;
+    const url = `${this.url}/?id=${model?.id}`;
     return this.httpClient.deleteObservable(url).toPromise();
   }
 }

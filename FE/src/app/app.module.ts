@@ -28,7 +28,7 @@ import { AppConfig } from './lib/environments/config/appConfig';
     HttpClientModule,
     AuthModule,
     SharedModule,
-    HttpClientModule 
+    HttpClientModule,
   ],
   providers: [
     { provide: 'BASE_URL', useValue: environment.host },

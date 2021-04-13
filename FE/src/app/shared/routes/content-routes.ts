@@ -22,9 +22,9 @@ export const content: Routes = [
     },
   },
   {
-    path: 'socialmedias',
+    path: 'social-medias',
     loadChildren: () =>
-      import('../../components/socialmedias/socialmedias.module').then(
+      import('../../components/social-medias/social-medias.module').then(
         (m) => m.SocialMediasModule
       ),
     data: {

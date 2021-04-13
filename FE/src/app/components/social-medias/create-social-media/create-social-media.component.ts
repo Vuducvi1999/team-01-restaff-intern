@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { SocialMediaModel } from 'src/app/lib/data/models/socialmedias/socialmedia.model';
-import { SocialMediaService } from 'src/app/lib/data/services/socialmedia/socialmedia.service';
+import { SocialMediaModel } from 'src/app/lib/data/models/social-medias/social-media.model';
+import { SocialMediaService } from 'src/app/lib/data/services/social-media/social-media.service';
 import {
   ModalFooterModel,
   ModalHeaderModel,
 } from 'src/app/shared/components/modals/models/modal.model';
 
 @Component({
-  selector: 'app-create-socialmedias',
-  templateUrl: './create-socialmedias.component.html',
-  styleUrls: ['./create-socialmedias.component.scss'],
-  providers: [SocialMediaService],
+  selector: 'app-create-social-media',
+  templateUrl: './create-social-media.component.html',
+  styleUrls: ['./create-social-media.component.scss'],
 })
-export class CreateSocialMediasComponent implements OnInit {
+export class CreateSocialMediaComponent implements OnInit {
   public socialMediaForm: FormGroup;
   public permissionForm: FormGroup;
   public socialMedia: SocialMediaModel;
@@ -32,10 +31,10 @@ export class CreateSocialMediasComponent implements OnInit {
   }
   createSocialMediaForm() {
     this.socialMediaForm = this.formBuilder.group({
-      title: [''],
-      link: [''],
-      iconUrl: [''],
-      displayOrder: [''],
+      title: ['', Validators.required],
+      link: ['', Validators.required],
+      iconUrl: ['', Validators.required],
+      displayOrder: ['', Validators.required],
     });
   }
 

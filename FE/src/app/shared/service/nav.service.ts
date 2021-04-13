@@ -63,13 +63,13 @@ export class NavService {
       ],
     },
     {
-      title: 'SocialMedias',
+      title: 'Social Medias',
       icon: 'users',
       type: 'sub',
       active: false,
       children: [
         {
-          path: '/socialmedias/list-social-medias',
+          path: '/social-medias/list-social-medias',
           title: 'Social Media List',
           type: 'link',
         },

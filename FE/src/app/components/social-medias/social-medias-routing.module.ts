@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CreateSocialMediasComponent } from './create-socialmedias/create-socialmedias.component';
-import { ListSocialMediasComponent } from './list-socialmedias/list-socialmedias.component';
-import { UpdateSocialMediasComponent } from './update-socialmedias/update-socialmedias.component';
+import { CreateSocialMediaComponent } from './create-social-media/create-social-media.component';
+import { ListSocialMediaComponent } from './list-social-media/list-social-media.component';
+import { UpdateSocialMediaComponent } from './update-social-media/update-social-media.component';
 
 const routes: Routes = [
   {
@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: 'list-social-medias',
-        component: ListSocialMediasComponent,
+        component: ListSocialMediaComponent,
         data: {
           title: 'Social Media List',
           breadcrumb: 'Social Media List',
@@ -18,7 +18,7 @@ const routes: Routes = [
       },
       {
         path: 'create-social-medias',
-        component: CreateSocialMediasComponent,
+        component: CreateSocialMediaComponent,
         data: {
           title: 'Create Social Media',
           breadcrumb: 'Create Social Media',
@@ -26,7 +26,7 @@ const routes: Routes = [
       },
       {
         path: 'update-social-medias',
-        component: UpdateSocialMediasComponent,
+        component: UpdateSocialMediaComponent,
         data: {
           title: 'Update Social Media',
           breadcrumb: 'Update Social Media',

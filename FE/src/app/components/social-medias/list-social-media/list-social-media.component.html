@@ -10,6 +10,8 @@
             [settings]="settings"
             [source]="socialMedias"
             (create)="openCreate($event)"
+            (edit)="openUpdate($event)"
+            (delete)="delete($event)"
           ></ng2-smart-table>
         </div>
       </div>
