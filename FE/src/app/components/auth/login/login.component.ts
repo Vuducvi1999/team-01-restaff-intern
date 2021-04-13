@@ -15,9 +15,9 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private activedroute: ActivatedRoute,
+    private activedRoute: ActivatedRoute,
     private router: Router,
-    private api: AuthService
+    private authService: AuthService
   ) {
     this.createLoginForm();
     this.createRegisterForm();
@@ -68,11 +68,11 @@ export class LoginComponent implements OnInit {
     }
 
     var data: AuthLoginModel = this.loginForm.value;
-    await this.api
-      .saveAccount(data)
+    await this.authService
+      .login(data)
       .then((data: ReturnMessage<string>) => {
         alert(data.message);
-        sessionStorage.setItem('token', data.data);
+        localStorage.setItem('token', data.data);
         this.backUrl();
       })
       .catch((er) => {
@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit {
   }
 
   backUrl() {
-    var returnUrl = this.activedroute.snapshot.queryParams['returnUrl'] || '/';
+    var returnUrl = this.activedRoute.snapshot.queryParams['returnUrl'] || '/';
     this.router.navigateByUrl(returnUrl);
   }
 }

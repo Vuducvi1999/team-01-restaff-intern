@@ -21,9 +21,8 @@ namespace Service.Auth
         private IRepository<Domain.Entities.User> _repository;
         private IJwtManager _jwtManager;
 
-        public AuthService(IMapper mapper, IJwtManager jwtManager, IRepository<Domain.Entities.User> repository)
+        public AuthService(IJwtManager jwtManager, IRepository<Domain.Entities.User> repository)
         {
-            _mapper = mapper;
             _jwtManager = jwtManager;
             _repository = repository;
         }
