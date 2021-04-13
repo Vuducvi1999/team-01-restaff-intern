@@ -17,9 +17,9 @@ export class HttpClientService {
     private http: HttpClient,
     private routerHelperService: RouterHelperService,
     private location: Location,
-    private activeModal: NgbModal,
-     @Inject('BASE_URL') private baseUrl: string
-  ) { }
+    private activeModal: NgbModal, @Inject('BASE_URL') private baseUrl: string) {
+      AppConfig.settings.API_URL = baseUrl;
+    }
 
   handleError(err: any) {
     if (err) {
@@ -27,7 +27,7 @@ export class HttpClientService {
 
         this.activeModal.dismissAll();
 
-        if (window.location.pathname === '/login') {
+        if (window.location.pathname === '/auth/login') {
           return;
         }
         this.routerHelperService.redirectToLogin();
@@ -263,6 +263,7 @@ export class HttpClientService {
   }
 
   private getFullUrl(url: string) {
+    console.log(AppConfig.settings.API_URL);
     return `${AppConfig.settings.API_URL}${url}`;
   }
 

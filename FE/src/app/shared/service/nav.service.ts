@@ -49,7 +49,12 @@ export class NavService {
 				{ path: '/banners/list-banners', title: 'Banners List', type: 'link' }
 			]
 		}
-	]
+			]
+		
+		// {
+		// 	title: 'Login',path: '/auth/login', icon: 'log-in', type: 'link', active: false
+		// }
+	
 	// Array
 	items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 
