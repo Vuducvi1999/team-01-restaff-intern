@@ -1,1 +1,19 @@
-<p>list-socialmedias works!</p>
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header">
+      <h5>Social Media Details</h5>
+    </div>
+    <div class="card-body vendor-table">
+      <div id="batchDelete" class="custom-datatable vendor-list">
+        <div class="table-responsive">
+          <ng2-smart-table
+            [settings]="settings"
+            [source]="socialMedias"
+          ></ng2-smart-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button (click)="openCreate()">Add</button>

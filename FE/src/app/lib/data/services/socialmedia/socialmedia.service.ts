@@ -1,7 +1,9 @@
+import { Injectable } from '@angular/core';
 import { HttpClientService } from 'src/app/lib/http/http-client';
 import { SocialMediaModel } from '../../models/socialmedias/socialmedia.model';
 
-class SocialMediaService {
+@Injectable()
+export class SocialMediaService {
   private url = '/api/socialmedia';
 
   constructor(private httpClient: HttpClientService) {}
@@ -10,7 +12,7 @@ class SocialMediaService {
     return this.httpClient.getObservable(this.url, request).toPromise();
   }
 
-  create(model: SocialMediaModel) {
+  create(model: FormData) {
     return this.httpClient.postObservable(this.url, model).toPromise();
   }
 

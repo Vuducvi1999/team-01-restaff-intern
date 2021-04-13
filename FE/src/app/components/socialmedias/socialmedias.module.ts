@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { SuppliersRoutingModule } from '../suppliers/suppliers-routing.module';
 import { CreateSocialMediasComponent } from './create-socialmedias/create-socialmedias.component';
 import { ListSocialMediasComponent } from './list-socialmedias/list-socialmedias.component';
@@ -21,6 +22,8 @@ import { UpdateSocialMediasComponent } from './update-socialmedias/update-social
     ReactiveFormsModule,
     NgbModule,
     Ng2SmartTableModule,
+    SharedModule,
   ],
+  providers: [],
 })
 export class SocialMediasModule {}
