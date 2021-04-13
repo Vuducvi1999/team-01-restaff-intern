@@ -17,7 +17,7 @@ const routes: Routes = [
     component: ContentLayoutComponent,
     children: content,
     canActivate: [AuthGuardsAdminService],
-    data: { 'token' : '123456'}
+    data: { 'token' : sessionStorage.getItem('token')}
   },
   {
     path: 'auth/login',

@@ -23,13 +23,14 @@ import { AppConfig } from './lib/environments/config/appConfig';
   ],
   providers: [
     { provide: 'BASE_URL', useValue: environment.host },
-    // {
-    //   provide: APP_INITIALIZER,
-    //   multi: true,
-    //   deps: [AppConfig],
-    //   useFactory: (appConfigService: AppConfig) => () =>
-    //     appConfigService.load(),
-    // },
+    AppConfig,
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      deps: [AppConfig],
+      useFactory: (appConfigService: AppConfig) => () =>
+        appConfigService.load(),
+    },
   ],
   bootstrap: [AppComponent],
 })
