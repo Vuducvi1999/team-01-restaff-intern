@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Data } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { AuthLoginModel, ReturnMessage } from 'src/app/lib/data/models';
 import { AuthService } from 'src/app/lib/data/services';
 
@@ -16,8 +15,9 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private api: AuthService
+    private activedRoute: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService
   ) {
     this.createLoginForm();
     this.createRegisterForm();
@@ -68,18 +68,20 @@ export class LoginComponent implements OnInit {
     }
 
     var data: AuthLoginModel = this.loginForm.value;
-    var response: ReturnMessage<string>;
-    await this.api
-      .saveAccount(data)
-      .then((data: ReturnMessage<string>) => (response = data))
-      .catch((er) => (response = er.error));
+    await this.authService
+      .login(data)
+      .then((data: ReturnMessage<string>) => {
+        alert(data.message);
+        localStorage.setItem('token', data.data);
+        this.backUrl();
+      })
+      .catch((er) => {
+        alert(er.error.message);
+      });
+  }
 
-    if (response.hasError === true) {
-      alert(response.message);
-      return;
-    }
-
-    alert(response.message);
-    sessionStorage.setItem('token', response.data);
+  backUrl() {
+    var returnUrl = this.activedRoute.snapshot.queryParams['returnUrl'] || '/';
+    this.router.navigateByUrl(returnUrl);
   }
 }

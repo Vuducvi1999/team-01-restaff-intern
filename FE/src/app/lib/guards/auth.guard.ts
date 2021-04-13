@@ -13,9 +13,9 @@ export class AuthGuardsAdminService {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // Constants.previousUrl = route;
-    const user = route.data;
+    // const user = route.data?.token;
+    const user = localStorage.getItem('token');
     if (user && Object.keys(user).length !== 0) {
-      console.log(user);
       const url: string = this.getStateUrl(route, state.url);
       return true;
     }

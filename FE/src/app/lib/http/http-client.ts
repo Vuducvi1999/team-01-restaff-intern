@@ -27,7 +27,7 @@ export class HttpClientService {
 
         this.activeModal.dismissAll();
 
-        if (window.location.pathname === '/auth/login') {
+        if (window.location.pathname === '/login') {
           return;
         }
         this.routerHelperService.redirectToLogin();
@@ -50,7 +50,7 @@ export class HttpClientService {
         headers = headers.append(item.name, item.value);
       });
     }
-    const authToken = {token : ""};
+    const authToken = {token : localStorage.getItem("token")};
     if (authToken && authToken.token && isSetToken) {
       headers = headers.append('Authorization', `Bearer ${authToken.token}` || '');
     }

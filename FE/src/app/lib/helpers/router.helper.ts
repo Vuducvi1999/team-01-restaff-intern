@@ -46,9 +46,9 @@ export class RouterHelperService {
     }
 
     if (returnUrl) {
-      this.router.navigate([`/auth/login`], { queryParams: { returnUrl }, queryParamsHandling: 'merge' });
+      this.router.navigate([`/login`], { queryParams: { returnUrl }, queryParamsHandling: 'merge' });
     } else {
-      this.router.navigate([`/auth/login`]);
+      this.router.navigate([`/login`]);
     }
   }
 }

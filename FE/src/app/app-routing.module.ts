@@ -17,10 +17,10 @@ const routes: Routes = [
     component: ContentLayoutComponent,
     children: content,
     canActivate: [AuthGuardsAdminService],
-    data: { 'token' : sessionStorage.getItem('token')}
+    data: { 'token' : localStorage.getItem('token')}
   },
   {
-    path: 'auth/login',
+    path: 'login',
     component: LoginComponent,
   },
 ];
