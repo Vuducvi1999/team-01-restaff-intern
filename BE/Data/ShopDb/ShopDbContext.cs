@@ -12,5 +12,7 @@ namespace Data
 
         DbSet<Supplier> Suppliers { get; set; }
         DbSet<User> Users { get; set; }
+        DbSet<Banner> Banners { get; set; }
+
     }
 }

@@ -8,5 +8,14 @@ export const content: Routes = [
     data: {
       breadcrumb: "Suppliers"
     }
+
+  },
+  {
+    path: 'banners',
+    loadChildren: () => import('../../components/banners/banners.module').then(m => m.BannersModule),
+    data: {
+      breadcrumb: "Banners"
+    }
+
   }
 ];

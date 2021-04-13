@@ -14,6 +14,9 @@ import { NavService } from './service/nav.service';
 import { WINDOW_PROVIDERS } from './service/windows.service';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { RightSidebarComponent } from './components/right-sidebar/right-sidebar.component';
+import { ModalHeaderComponent } from './components/modals/modal-header/modal-header.component';
+import { ModalFooterComponent } from './components/modals/modal-footer/modal-footer.component';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -24,13 +27,16 @@ import { RightSidebarComponent } from './components/right-sidebar/right-sidebar.
     SidebarComponent,
     ContentLayoutComponent,
     BreadcrumbComponent,
-    RightSidebarComponent
+    RightSidebarComponent,
+    ModalHeaderComponent,
+    ModalFooterComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    NgbModalModule
   ],
   providers: [NavService, WINDOW_PROVIDERS],
-  exports: [FeatherIconsComponent, ToggleFullscreenDirective]
+  exports: [FeatherIconsComponent, ToggleFullscreenDirective,ModalFooterComponent,ModalHeaderComponent]
 })
 export class SharedModule { }
