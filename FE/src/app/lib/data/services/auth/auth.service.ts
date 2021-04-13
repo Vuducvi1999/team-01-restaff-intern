@@ -14,6 +14,6 @@ export class AuthService {
   ngOnInit(): void {}
 
   saveAccount(body: AuthLoginModel) {
-    return this.http.postObservable(this.url, body).toPromise();
+    return this.http.postObservable(`${this.url}/login`, body).toPromise();
   }
 }

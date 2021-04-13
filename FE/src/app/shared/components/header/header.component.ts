@@ -32,4 +32,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {  }
 
+  onLogout()
+  {
+    sessionStorage.removeItem('token');
+  }
 }

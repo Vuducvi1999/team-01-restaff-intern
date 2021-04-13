@@ -20,7 +20,7 @@ const routes: Routes = [
     data: { 'token' : sessionStorage.getItem('token')}
   },
   {
-    path: 'auth/login',
+    path: 'login',
     component: LoginComponent,
   },
 ];

@@ -27,7 +27,7 @@ export class HttpClientService {
 
         this.activeModal.dismissAll();
 
-        if (window.location.pathname === '/auth/login') {
+        if (window.location.pathname === '/login') {
           return;
         }
         this.routerHelperService.redirectToLogin();
