@@ -1,4 +1,5 @@
-﻿using Common.Http;
+﻿using Common.Constants;
+using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Categories;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BE.Controllers
 {
-    [Route("api/[controller]")]
+    [Route(UrlConstants.BaseCategory)]
     [ApiController]
     public class CategoryController : BaseController
     {

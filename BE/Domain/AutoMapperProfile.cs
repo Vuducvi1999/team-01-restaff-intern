@@ -18,6 +18,11 @@ namespace Domain
             CreateMap<PaginatedList<Category>, PaginatedList<CategoryDTO>>().ReverseMap();
             CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<CreateCategoryDTO, Category>().ReverseMap();
+
+
+            CreateMap<PaginatedList<Banner>, PaginatedList<BannerDTO>>().ReverseMap();
+            CreateMap<Banner, BannerDTO>().ReverseMap();
+            CreateMap<CreateBannerDTO, Banner>().ReverseMap();
         }
     }
 }

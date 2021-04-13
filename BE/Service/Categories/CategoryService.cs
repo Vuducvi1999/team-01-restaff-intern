@@ -64,7 +64,7 @@ namespace Service.Categories
             }
         }
 
-        public ReturnMessage<PaginatedList<CategoryDTO>> SearchPagination(SerachPaginationDTO<CategoryDTO> search)
+        public ReturnMessage<PaginatedList<CategoryDTO>> SearchPagination(SerachPaginationDTO <CategoryDTO> search)
         {
             if (search == null)
             {

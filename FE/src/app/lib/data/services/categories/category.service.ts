@@ -18,12 +18,12 @@ export class CategoriesService  {
       return this.httpClient.postObservable(this.url, model).toPromise();
     }
 
-    update(model: CategoryModel) {
+    update(model: FormData) {
       return this.httpClient.putObservable(this.url, model).toPromise();
     }
 
     delete(model: CategoryModel) {
-      const url = `${this.url}/${model?.id}`;
+      const url = `${this.url}/?Id=${model?.id}`;
       return this.httpClient.deleteObservable(url).toPromise();
     }
   }
