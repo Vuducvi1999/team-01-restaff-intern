@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { NavService } from '../../service/nav.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class HeaderComponent implements OnInit {
 
   @Output() rightSidebarEvent = new EventEmitter<boolean>();
 
-  constructor(public navServices: NavService) { }
+  constructor(public navServices: NavService, public router: Router) { }
 
   collapseSidebar() {
     this.open = !this.open;
@@ -32,4 +33,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {  }
 
+  onLogout()
+  {
+    localStorage.removeItem('token');
+    this.router.navigateByUrl('/login');
+  }
 }

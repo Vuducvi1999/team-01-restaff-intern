@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Domain.DTOs.SocialMedias;
 using Domain.DTOs.Suppliers;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
@@ -10,13 +9,21 @@ namespace Domain
     {
         public AutoMapperProfile()
         {
-            //Missing map in create supplier
-
             CreateMap<PaginatedList<Supplier>, PaginatedList<SupplierDTO>>().ReverseMap();
             CreateMap<Supplier, SupplierDTO>().ReverseMap();
             CreateMap<PaginatedList<SocialMedia>, PaginatedList<SocialMediaDTO>>().ReverseMap();
             CreateMap<SocialMedia, SocialMediaDTO>().ReverseMap();
             CreateMap<CreateSocialMediaDTO, SocialMedia>().ReverseMap();
+            CreateMap<Supplier, CreateSupplierDTO>().ReverseMap();
+            CreateMap<Supplier, DeleteSupplierDTO>().ReverseMap();
+            CreateMap<Supplier, UpdateSupplierDTO>().ReverseMap();
+
+            CreateMap<PaginatedList<Banner>, PaginatedList<BannerDTO>>().ReverseMap();
+            CreateMap<Banner, BannerDTO>().ReverseMap();
+            CreateMap<Banner, CreateBannerDTO>().ReverseMap();
+            CreateMap<Banner, UpdateBannerDTO>().ReverseMap();
+            CreateMap<Banner, DeleteBannerDTO>().ReverseMap();
+
         }
     }
 }

@@ -3,6 +3,7 @@ using Infrastructure.EntityFramework;
 using Infrastructure.EntityFramework.Factories;
 using Microsoft.Extensions.DependencyInjection;
 using Service.SocialMedias;
+using Service.Banners;
 using Service.Auth;
 using Service.Suppliers;
 
@@ -26,6 +27,10 @@ namespace Service
             services.AddScoped<ISocialMediaService, SocialMediaService>();
             services.AddScoped<IJwtManager, JwtManager>();
             services.AddScoped<IAuthService, AuthService>();
+            //scoped
+            services.AddScoped<ISupplierService, SupplierService>();
+            services.AddScoped<IBannerService, BannerService>();
+
         }
     }
 }

@@ -2,9 +2,9 @@ import { AppConfig } from 'src/app/lib/environments/config/appConfig';
 import { HttpClientService } from 'src/app/lib/http/http-client';
 import { SupplierModel } from '../../models';
 
-//SuppliersService
-class SupplliersService {
-  private url = '/api/supplier';
+class SuppliersService  {
+
+    private url = '/api/supplier';
 
   constructor(private httpClient: HttpClientService) {}
 
