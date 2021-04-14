@@ -27,7 +27,9 @@ namespace Service.Banners
         {
             try
             {
+
                 var entity = _mapper.Map<CreateBannerDTO, Banner>(model);
+
                 entity.Insert();
                 _bannerRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
