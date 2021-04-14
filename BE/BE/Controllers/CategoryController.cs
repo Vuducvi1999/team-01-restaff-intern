@@ -2,13 +2,9 @@
 using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Categories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Categories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace BE.Controllers
 {

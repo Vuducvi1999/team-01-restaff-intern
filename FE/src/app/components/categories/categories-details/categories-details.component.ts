@@ -1,6 +1,6 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalDismissReasons, NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {  NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { CategoryService } from 'src/app/lib/data/services/categories/category.service';
 
@@ -21,7 +21,6 @@ export class CategoryDetailComponent implements OnChanges {
   public item : any;
       
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("item change" + this.item.data);
   }
   constructor(private formBuilder: FormBuilder
     , private categoryService: CategoryService
@@ -63,7 +62,6 @@ export class CategoryDetailComponent implements OnChanges {
 
     
     close(event : any) {
-      console.log(event);
       this.ngbActiveModal.close();
     }
 
@@ -77,7 +75,6 @@ export class CategoryDetailComponent implements OnChanges {
         return;
       }
       this.categoryService.create(this.category).then(res => {
-        console.log(res)
         this.ngbActiveModal.close();
       }).catch((er) => {
 
@@ -97,7 +94,6 @@ export class CategoryDetailComponent implements OnChanges {
         return;
       }    
        this.categoryService.update(this.category).then(res => {
-         console.log(res)
          this.ngbActiveModal.close();
        }).catch((er) => {
  

@@ -47,7 +47,6 @@ export class ListCategoriesComponent implements OnInit {
 
 
   delete(event: any){
-    console.log(event);
     let category = event.data as CategoryModel;
     if (window.confirm("Are u sure?")) {
       this.service.delete(category).then(res => {
@@ -59,7 +58,6 @@ export class ListCategoriesComponent implements OnInit {
 
 
   openPopup(item:any){
-    console.log(item);
     var modalRef =  this.modalService.open(CategoryDetailComponent, {size: 'lg'});
     modalRef.componentInstance.item = item;
     modalRef.result.then((result) => {
@@ -75,7 +73,6 @@ export class ListCategoriesComponent implements OnInit {
     this.service.get(null).then((res : ReturnMessage<PageModel<CategoryModel>>) => {
       if(!res.hasError)
       {
-        console.log("category",res.data);
         this.categories = res.data.results;
       }
     }).catch((er) => {
