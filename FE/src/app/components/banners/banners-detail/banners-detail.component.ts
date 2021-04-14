@@ -77,16 +77,8 @@ export class BannersDetailComponent implements OnInit {
       displayOrder: this.bannersForm.controls.displayOrder.value,
       id: ""
     }
-
-    const formData = new FormData();
-    formData.append("title", this.banner.title);
-    formData.append("description", this.banner.description);
-    formData.append("link", this.banner.link);
-    formData.append("imageURL", this.banner.imageURL);
-    formData.append("displayOrder", this.banner.displayOrder.toString());
-
     this.submitted = true;
-    this.bannersService.create(formData).then(res => {
+    this.bannersService.create(this.banner).then(res => {
       this.bannersForm.reset();
       this.submitted = false;
     }).catch((er) => {
@@ -106,17 +98,8 @@ export class BannersDetailComponent implements OnInit {
       displayOrder: this.bannersForm.controls.displayOrder.value,
       id: this.item.id
     }
-
-    const formData = new FormData();
-    formData.append("title", this.banner.title);
-    formData.append("description", this.banner.description);
-    formData.append("link", this.banner.link);
-    formData.append("imageURL", this.banner.imageURL);
-    formData.append("displayOrder", this.banner.displayOrder.toString());
-    formData.append("id", this.banner.id);
-
     this.submitted = true;
-    this.bannersService.update(formData).then(res => {
+    this.bannersService.update(this.banner).then(res => {
       this.bannersForm.reset();
       this.submitted = false;
     }).catch((er) => {
@@ -136,7 +119,6 @@ export class BannersDetailComponent implements OnInit {
     }
   }
   close(event: any) {
-    console.log(event);
     this.ngbActiveModal.close();
   }
 

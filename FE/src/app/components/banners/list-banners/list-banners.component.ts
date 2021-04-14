@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ServerDataSource } from 'ng2-smart-table';
 import { BannerModel, PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { BannersService } from 'src/app/lib/data/services';
 import { BannersDetailComponent } from '../banners-detail/banners-detail.component';
@@ -13,14 +12,19 @@ import { BannersDetailComponent } from '../banners-detail/banners-detail.compone
 })
 export class ListBannersComponent implements OnInit {
   public banners: BannerModel[];
+
   constructor(private modalService: NgbModal, private bannersService: BannersService) {
     this.getBanners();
   }
-  source: ServerDataSource;
-
+  ngOnInit() {
+  }
   public settings = {
 
     mode: 'external',
+    pager: {
+      display: true,
+      perPage: 10,
+    },
     actions: {
       position: 'right',
     },
@@ -87,8 +91,6 @@ export class ListBannersComponent implements OnInit {
     modalRef.result.then(() => this.getBanners());
   }
 
-  ngOnInit() {
-  }
 
 }
 

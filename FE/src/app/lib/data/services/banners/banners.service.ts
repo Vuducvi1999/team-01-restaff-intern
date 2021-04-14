@@ -13,11 +13,11 @@ export class BannersService {
     return  this.httpClient.getObservable(this.url, request).toPromise();
   }
 
-  create(model: FormData) {
+  create(model: BannerModel) {
     return this.httpClient.postObservable(this.url, model).toPromise();
   }
 
-  update(model: FormData) {
+  update(model: BannerModel) {
     return this.httpClient.putObservable(this.url, model).toPromise();
   }
 
