@@ -34,33 +34,12 @@ export class NavService {
     this.screenWidth = window.innerWidth;
   }
 
-	MENUITEMS: Menu[] = [
+  // {
+  // 	title: 'Login',path: '/auth/login', icon: 'log-in', type: 'link', active: false
+  // }
 
-		{
-			title: 'Suppliers', icon: 'users', type: 'sub', active: false, children: [
-				{ path: '/suppliers/list-suppliers', title: 'Supplier List', type: 'link' },
-				{ path: '/suppliers/create-suppliers', title: 'Create Supplier', type: 'link' },
-			]
-		},
-		{
-			title: 'Banners', icon: 'users', type: 'sub', active: false, children: [
-				{ path: '/banners/list-banners', title: 'Banners List', type: 'link' }
-			]
-		},
-		{
-			title: 'Categories', icon: 'users', type: 'sub', active: false, children: [
-				{ path: '/categories/list-categories', title: 'Categories List', type: 'link' }
-			]
-		}
-			]
-		
-		// {
-		// 	title: 'Login',path: '/auth/login', icon: 'log-in', type: 'link', active: false
-		// }
-	
-	// Array
-	items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
-
+  // Array
+  // items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 
   MENUITEMS: Menu[] = [
     {
@@ -104,11 +83,5 @@ export class NavService {
       ],
     },
   ];
-
-  // {
-  // 	title: 'Login',path: '/auth/login', icon: 'log-in', type: 'link', active: false
-  // }
-
-  // Array
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 }

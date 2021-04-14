@@ -28,20 +28,17 @@ export const content: Routes = [
         (m) => m.SocialMediasModule
       ),
     data: {
-      breadcrumb: "Banners"
-    }
-
+      breadcrumb: 'Banners',
+    },
   },
   {
     path: 'categories',
-    loadChildren: () => import('../../components/categories/categories.module').then(m => m.CategoriesModule),
+    loadChildren: () =>
+      import('../../components/categories/categories.module').then(
+        (m) => m.CategoriesModule
+      ),
     data: {
-      breadcrumb: "Categories"
-    }
-
-  }
-
-      breadcrumb: 'Banners',
+      breadcrumb: 'Categories',
     },
   },
 ];

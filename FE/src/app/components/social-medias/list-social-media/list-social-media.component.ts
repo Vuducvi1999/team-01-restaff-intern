@@ -11,7 +11,7 @@ import { SocialMediaDetailComponent } from '../social-media-detail/social-media-
   styleUrls: ['./list-social-media.component.scss'],
 })
 export class ListSocialMediaComponent implements OnInit {
-  public socialMedias = [];
+  public socialMedias: SocialMediaModel[];
   public id: string = '';
 
   constructor(
@@ -39,6 +39,10 @@ export class ListSocialMediaComponent implements OnInit {
 
   public settings = {
     mode: 'external',
+    pager: {
+      display: true,
+      perPage: 10,
+    },
     action: {
       position: 'right',
     },
@@ -62,15 +66,10 @@ export class ListSocialMediaComponent implements OnInit {
     },
   };
 
-  open(event: any) {
+  openCreate(event: any) {
     var modalRef = this.modalService.open(SocialMediaDetailComponent, {
       size: 'lg',
     });
-    if (event == null) {
-      modalRef.componentInstance.data = event;
-    } else {
-      modalRef.componentInstance.data = event.data;
-    }
     modalRef.result.then(() => this.getSocialMedias());
   }
 
@@ -83,5 +82,13 @@ export class ListSocialMediaComponent implements OnInit {
     }
   }
 
+  openUpdate(event: any) {
+    console.log(event.data);
+    var modalRef = this.modalService.open(SocialMediaDetailComponent, {
+      size: 'lg',
+    });
+    modalRef.componentInstance.item = event?.data;
+    modalRef.result.then(() => this.getSocialMedias());
+  }
   ngOnInit(): void {}
 }

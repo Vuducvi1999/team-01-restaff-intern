@@ -3,13 +3,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
 import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
-import { ModalFooterModel, ModalHeaderModel } from 'src/app/shared/components/modals/models/modal.model';
+import {
+  ModalFooterModel,
+  ModalHeaderModel,
+} from 'src/app/shared/components/modals/models/modal.model';
 
 @Component({
   selector: 'app-banners-detail',
   templateUrl: './banners-detail.component.html',
   styleUrls: ['./banners-detail.component.scss'],
-  providers: []
+  providers: [],
 })
 export class BannersDetailComponent implements OnInit {
   public bannersForm: FormGroup;
@@ -19,10 +22,11 @@ export class BannersDetailComponent implements OnInit {
   public modalFooter: ModalFooterModel;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
     private bannersService: BannersService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.loadFormItem();
@@ -34,13 +38,17 @@ export class BannersDetailComponent implements OnInit {
       description: [this.item ? this.item.description : ''],
       link: [this.item ? this.item.link : '', Validators.required],
       imageURL: [this.item ? this.item.imageUrl : '', Validators.required],
-      displayOrder: [this.item ? this.item.displayOrder : '', Validators.required]
-    })
+      displayOrder: [
+        this.item ? this.item.displayOrder : '',
+        Validators.required,
+      ],
+    });
   }
 
   createModal() {
     this.modalHeader = new ModalHeaderModel();
-    this.modalHeader.title = this.item != null ? `Update ${this.item.title}` : `Add Banner`;
+    this.modalHeader.title =
+      this.item != null ? `Update ${this.item.title}` : `Add Banner`;
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
   }
@@ -56,38 +64,41 @@ export class BannersDetailComponent implements OnInit {
       link: this.bannersForm.controls.link.value,
       imageURL: this.bannersForm.controls.imageURL.value,
       displayOrder: this.bannersForm.controls.displayOrder.value,
-      id: this.item ? this.item.id : ""
-    }
+      id: this.item ? this.item.id : '',
+    };
 
     this.submitted = true;
 
     if (this.bannersForm.valid) {
       if (this.item) {
-        return this.bannersService.update(this.banner).then(res => {
-          this.bannersForm.reset();
-          this.submitted = false;
-        }).catch((er) => {
-
-          if (er.error.hasError) {
-            console.log(er.error.message)
-          }
-        });
+        return this.bannersService
+          .update(this.banner)
+          .then((res) => {
+            this.bannersForm.reset();
+            this.submitted = false;
+          })
+          .catch((er) => {
+            if (er.error.hasError) {
+              console.log(er.error.message);
+            }
+          });
       }
 
-      return this.bannersService.create(this.banner).then(res => {
-        this.bannersForm.reset();
-        this.submitted = false;
-      }).catch((er) => {
-
-        if (er.error.hasError) {
-          console.log(er.error.message)
-        }
-      });
+      return this.bannersService
+        .create(this.banner)
+        .then((res) => {
+          this.bannersForm.reset();
+          this.submitted = false;
+        })
+        .catch((er) => {
+          if (er.error.hasError) {
+            console.log(er.error.message);
+          }
+        });
     }
   }
 
   close(event: any) {
     this.ngbActiveModal.close();
   }
-
 }
