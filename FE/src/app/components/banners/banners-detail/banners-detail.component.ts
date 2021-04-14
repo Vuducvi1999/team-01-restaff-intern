@@ -25,36 +25,17 @@ export class BannersDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.createForm();
+    this.loadFormItem();
     this.createModal();
   }
-
-  createBannerForm() {
+  loadFormItem() {
     this.bannersForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      description: [''],
-      link: ['', Validators.required],
-      imageURL: ['', Validators.required],
-      displayOrder: ['', Validators.required]
-    })
-  }
-  updateBannerForm() {
-    this.bannersForm = this.formBuilder.group({
-      title: [this.item.title, Validators.required],
+      title: [this.item ? this.item.title : '', Validators.required],
       description: [this.item ? this.item.description : ''],
-      link: [this.item.link, Validators.required],
-      imageURL: [this.item.imageUrl, Validators.required],
-      displayOrder: [this.item.displayOrder, Validators.required]
+      link: [this.item ? this.item.link : '', Validators.required],
+      imageURL: [this.item ? this.item.imageUrl : '', Validators.required],
+      displayOrder: [this.item ? this.item.displayOrder : '', Validators.required]
     })
-  }
-
-  createForm() {
-    if (this.item) {
-      this.updateBannerForm();
-    }
-    if (!this.item) {
-      this.createBannerForm();
-    }
   }
 
   createModal() {
@@ -68,59 +49,45 @@ export class BannersDetailComponent implements OnInit {
     return this.bannersForm.controls;
   }
 
-  createBanner(event: any) {
+  saveBanner(event: any) {
     this.banner = {
       title: this.bannersForm.controls.title.value,
       description: this.bannersForm.controls.description.value,
       link: this.bannersForm.controls.link.value,
       imageURL: this.bannersForm.controls.imageURL.value,
       displayOrder: this.bannersForm.controls.displayOrder.value,
-      id: ""
+      id: this.item ? this.item.id : ""
     }
+
     this.submitted = true;
-    this.bannersService.create(this.banner).then(res => {
-      this.bannersForm.reset();
-      this.submitted = false;
-    }).catch((er) => {
 
-      if (er.error.hasError) {
-        console.log(er.error.message)
+    if (this.bannersForm.valid) {
+      if (this.item) {
+        return this.bannersService.update(this.banner).then(res => {
+          this.bannersForm.reset();
+          this.submitted = false;
+        }).catch((er) => {
+
+          if (er.error.hasError) {
+            console.log(er.error.message)
+          }
+        });
       }
-    });
-  }
 
-  updateBanner(event: any) {
-    this.banner = {
-      title: this.bannersForm.controls.title.value,
-      description: this.bannersForm.controls.description.value,
-      link: this.bannersForm.controls.link.value,
-      imageURL: this.bannersForm.controls.imageURL.value,
-      displayOrder: this.bannersForm.controls.displayOrder.value,
-      id: this.item.id
-    }
-    this.submitted = true;
-    this.bannersService.update(this.banner).then(res => {
-      this.bannersForm.reset();
-      this.submitted = false;
-    }).catch((er) => {
+      return this.bannersService.create(this.banner).then(res => {
+        this.bannersForm.reset();
+        this.submitted = false;
+      }).catch((er) => {
 
-      if (er.error.hasError) {
-        console.log(er.error.message)
-      }
-    });
-  }
-
-  onClick(event: any) {
-    if (this.item) {
-      this.updateBanner(event);
-    }
-    if (!this.item) {
-      this.createBanner(event);
+        if (er.error.hasError) {
+          console.log(er.error.message)
+        }
+      });
     }
   }
+
   close(event: any) {
     this.ngbActiveModal.close();
   }
-
 
 }
