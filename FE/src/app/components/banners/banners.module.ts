@@ -6,11 +6,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { ListBannersComponent } from './list-banners/list-banners.component';
-import { CreateBannersComponent } from './create-banners/create-banners.component';
 import { BannersRoutingModule } from './banners-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BannersService } from 'src/app/lib/data/services';
-import { UpdateBannersComponent } from './update-banners/update-banners.component';
+import { BannersDetailComponent } from './banners-detail/banners-detail.component';
 
 @NgModule({
   imports: [
@@ -21,8 +20,7 @@ import { UpdateBannersComponent } from './update-banners/update-banners.componen
     BannersRoutingModule,
     SharedModule
   ],
-  declarations: [ListBannersComponent, CreateBannersComponent, UpdateBannersComponent],
-  providers: [BannersService],
-  entryComponents: [ListBannersComponent]
+  declarations: [ListBannersComponent, BannersDetailComponent],
+  providers: [BannersService]
 })
 export class BannersModule { }

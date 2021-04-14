@@ -3,8 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ServerDataSource } from 'ng2-smart-table';
 import { BannerModel, PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { BannersService } from 'src/app/lib/data/services';
-import { CreateBannersComponent } from '../create-banners/create-banners.component';
-import { UpdateBannersComponent } from '../update-banners/update-banners.component';
+import { BannersDetailComponent } from '../banners-detail/banners-detail.component';
 
 @Component({
   selector: 'app-list-banners',
@@ -64,7 +63,7 @@ export class ListBannersComponent implements OnInit {
 
   }
   openCreate(event: any) {
-    var modalRef = this.modalService.open(CreateBannersComponent, {
+    var modalRef = this.modalService.open(BannersDetailComponent, {
       size: 'lg'
     });
     modalRef.result.then(() => this.getBanners());
@@ -81,7 +80,7 @@ export class ListBannersComponent implements OnInit {
   }
   openUpdate(event: any) {
     console.log(event.data);
-    var modalRef = this.modalService.open(UpdateBannersComponent, {
+    var modalRef = this.modalService.open(BannersDetailComponent, {
       size: 'lg'
     });
     modalRef.componentInstance.item = event?.data;
