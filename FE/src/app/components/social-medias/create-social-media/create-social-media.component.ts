@@ -20,18 +20,12 @@ export class CreateSocialMediaComponent implements OnInit {
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   public data: any;
+  submitted = false;
   constructor(
     private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
     private service: SocialMediaService
-  ) {
-    this.createModal();
-    console.log(this.data);
-    if (this.data == null) {
-      this.createSocialMediaForm();
-    }
-    this.createUpdateSocialMediaForm();
-  }
+  ) {}
   createSocialMediaForm() {
     this.socialMediaForm = this.formBuilder.group({
       title: ['', Validators.required],
@@ -39,11 +33,13 @@ export class CreateSocialMediaComponent implements OnInit {
       iconUrl: ['', Validators.required],
       displayOrder: ['', Validators.required],
     });
+    this.createModal();
+    console.log(this.data);
   }
 
   createUpdateSocialMediaForm() {
     this.socialMediaForm = this.formBuilder.group({
-      title: [this.data ? this.data.name : '', Validators.required],
+      title: [this.data ? this.data.title : '', Validators.required],
       link: [this.data ? this.data.link : '', Validators.required],
       iconUrl: [this.data ? this.data.iconUrl : '', Validators.required],
       displayOrder: [
@@ -51,6 +47,8 @@ export class CreateSocialMediaComponent implements OnInit {
         Validators.required,
       ],
     });
+    this.createModal();
+    console.log(this.data);
   }
 
   createPermissionForm() {}
@@ -69,14 +67,18 @@ export class CreateSocialMediaComponent implements OnInit {
     formData.append('iconUrl', this.socialMedia.iconUrl);
     formData.append('displayOrder', this.socialMedia.displayOrder.toString());
 
-    this.service.create(formData).then((res) => console.log(res));
+    if (this.socialMediaForm.dirty && this.socialMediaForm.valid) {
+      this.service.create(formData).then(() => {
+        this.socialMediaForm.reset();
+        this.ngbActiveModal.close();
+      });
+    }
   }
 
   createModal() {
     this.modalHeader = new ModalHeaderModel();
-    this.modalHeader.title = this.data
-      ? `[Update] ${this.data.name}`
-      : `[Add Social Media]`;
+    this.modalHeader.title =
+      this.data != null ? `Update ${this.data.title}` : `Add Social Media`;
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
   }
@@ -100,15 +102,31 @@ export class CreateSocialMediaComponent implements OnInit {
     formData.append('iconUrl', this.socialMedia.iconUrl);
     formData.append('displayOrder', this.socialMedia.displayOrder.toString());
     formData.append('id', this.socialMedia.id);
-    this.service.update(formData).then((res) => console.log(res));
+    if (this.socialMediaForm.dirty && this.socialMediaForm.valid) {
+      this.service.update(formData).then(() => {
+        this.socialMediaForm.reset();
+        this.ngbActiveModal.close();
+      });
+    }
   }
 
   save() {
+    this.submitted = true;
     if (this.data == null) {
       this.createSocialMedia();
     } else {
       this.updateSocialMedia();
     }
   }
-  ngOnInit(): void {}
+
+  get SocialMediaFormControl() {
+    return this.socialMediaForm.controls;
+  }
+  ngOnInit(): void {
+    if (this.data == null) {
+      this.createSocialMediaForm();
+    } else {
+      this.createUpdateSocialMediaForm();
+    }
+  }
 }

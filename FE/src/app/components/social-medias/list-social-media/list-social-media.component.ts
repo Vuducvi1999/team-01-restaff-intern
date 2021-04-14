@@ -71,13 +71,13 @@ export class ListSocialMediaComponent implements OnInit {
     } else {
       modalRef.componentInstance.data = event.data;
     }
-    modalRef.result.then((res) => this.getSocialMedias());
+    modalRef.result.then(() => this.getSocialMedias());
   }
 
   delete(event: any) {
     let socialMedia = event.data as SocialMediaModel;
     if (window.confirm('Are you sure to delete?')) {
-      this.service.delete(socialMedia).then((res) => {
+      this.service.delete(socialMedia).then(() => {
         this.getSocialMedias();
       });
     }

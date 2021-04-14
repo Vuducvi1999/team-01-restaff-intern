@@ -22,7 +22,7 @@
                     class="needs-validation user-add"
                     novalidate=""
                   >
-                    <h4>CreateSocial Media</h4>
+                    <h4>Create Social Media</h4>
                     <div class="form-group row">
                       <label for="validationCustom0" class="col-xl-3 col-md-4"
                         ><span>*</span> Title</label
@@ -34,6 +34,15 @@
                         required=""
                         formControlName="title"
                       />
+                      <span
+                        class="text-danger"
+                        *ngIf="
+                          (SocialMediaFormControl.title.touched || submitted) &&
+                          SocialMediaFormControl.title.errors.required
+                        "
+                      >
+                        Title Required
+                      </span>
                     </div>
                     <div class="form-group row">
                       <label for="validationCustom1" class="col-xl-3 col-md-4"
@@ -46,6 +55,15 @@
                         required=""
                         formControlName="link"
                       />
+                      <span
+                        class="text-danger"
+                        *ngIf="
+                          (SocialMediaFormControl.link.touched || submitted) &&
+                          SocialMediaFormControl.link.errors.required
+                        "
+                      >
+                        Link Required
+                      </span>
                     </div>
                     <div class="form-group row">
                       <label for="validationCustom2" class="col-xl-3 col-md-4"
@@ -58,6 +76,16 @@
                         required=""
                         formControlName="iconUrl"
                       />
+                      <span
+                        class="text-danger"
+                        *ngIf="
+                          (SocialMediaFormControl.iconUrl.touched ||
+                            submitted) &&
+                          SocialMediaFormControl.iconUrl.errors.required
+                        "
+                      >
+                        IconUrl Required
+                      </span>
                     </div>
                     <div class="form-group row">
                       <label for="validationCustom3" class="col-xl-3 col-md-4"
@@ -70,6 +98,16 @@
                         required=""
                         formControlName="displayOrder"
                       />
+                      <span
+                        class="text-danger"
+                        *ngIf="
+                          (SocialMediaFormControl.displayOrder.touched ||
+                            submitted) &&
+                          SocialMediaFormControl.displayOrder.errors.required
+                        "
+                      >
+                        DisplayOrder Required
+                      </span>
                     </div>
                   </form>
                 </div>
