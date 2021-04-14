@@ -22,8 +22,9 @@ export class ListCategoriesComponent implements OnInit {
 
    public settings = {
     mode :'external',
-    setPaging:{
-      
+    pager:{
+      display: true,
+      perPage: 5,
     },
     actions: {
       position: 'right'
@@ -49,7 +50,7 @@ export class ListCategoriesComponent implements OnInit {
   delete(event: any){
     let category = event.data as CategoryModel;
     if (window.confirm("Are u sure?")) {
-      this.service.delete(category).then(res => {
+      this.service.delete(category).then(() => {
         this.fetch();
       });
     }
@@ -58,14 +59,24 @@ export class ListCategoriesComponent implements OnInit {
 
 
   openPopup(item:any){
-    var modalRef =  this.modalService.open(CategoryDetailComponent, {size: 'lg'});
-    modalRef.componentInstance.item = item;
-    modalRef.result.then((result) => {
-      console.log(result);
-      this.fetch();
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    if(item){
+      var modalRef =  this.modalService.open(CategoryDetailComponent, {size: 'lg'});
+      modalRef.componentInstance.item = item.data;
+      modalRef.result.then(() => {
+        this.fetch();
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    }
+    if(!item){
+      var modalRef =  this.modalService.open(CategoryDetailComponent, {size: 'lg'});
+      modalRef.componentInstance.item = item as CategoryModel;
+      modalRef.result.then(() => {
+        this.fetch();
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    }
   }
 
 

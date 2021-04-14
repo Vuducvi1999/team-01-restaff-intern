@@ -32,9 +32,4 @@ export class CreateSuppliersComponent implements OnInit {
 
   ngOnInit() { }
 
-
-  get(){
-
-  }
-
 }

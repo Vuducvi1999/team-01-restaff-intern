@@ -11,7 +11,7 @@ import { ModalFooterModel, ModalHeaderModel } from 'src/app/shared/components/mo
   styleUrls: ['./categories-details.component.scss'],
   providers: [CategoryService]
 })
-export class CategoryDetailComponent implements OnChanges {
+export class CategoryDetailComponent implements OnInit {
 
   public categoriesForm: FormGroup;
   public permissionForm: FormGroup;
@@ -20,43 +20,66 @@ export class CategoryDetailComponent implements OnChanges {
   public category: CategoryModel;
   public item : any;
       
-  ngOnChanges(changes: SimpleChanges): void {
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
+
   constructor(private formBuilder: FormBuilder
     , private categoryService: CategoryService
-    , private ngbActiveModal: NgbActiveModal) {
-    }
+    , private ngbActiveModal: NgbActiveModal) {}
 
 
-    save(event:any){
-      if(this.item == null){
-        this.create();
+    save(){
+      if(this.modalHeader.title == "[Add]")
+      {
+        this.category = {name: this.categoriesForm.value.name, 
+                      description: this.categoriesForm.value.description,
+                      imageUrl: this.categoriesForm.value.imageUrl,
+                      id: ''};
+                  
+        if(this.categoriesForm.invalid){
+          return;
+        }
+        this.categoryService.create(this.category).then(() => {
+          this.ngbActiveModal.close();
+        }).catch((er) => {
+
+          if (er.error.hasError) {
+            console.log(er.error.message)
+          }
+        });
       }
-      this.update();
+      
+      if(this.modalHeader.title == "[Update] ${this.item.name}"){
+        this.category = {name: this.categoriesForm.value.name, 
+          description: this.categoriesForm.value.description,
+          imageUrl: this.categoriesForm.value.imageUrl,
+          id: this.item.id};
+                               
+        if(this.categoriesForm.invalid){
+          return;
+        }    
+         this.categoryService.update(this.category).then(() => {
+           this.ngbActiveModal.close();
+         }).catch((er) => {
+   
+           if (er.error.hasError) {
+             console.log(er.error.message)
+           }
+         });
+      }
     }
     loadItem(){
       this.categoriesForm = this.formBuilder.group({
-        name: ['', [Validators.required]],
-        description: ['', [Validators.required]],
-        imageUrl: ['', [Validators.required]]
+        name: [this.item ? this.item.name : '', [Validators.required]],
+        description: [this.item ? this.item.description : '', [Validators.required]],
+        imageUrl: [this.item ? this.item.imageUrl : '', [Validators.required]]
       });
+      
+
       this.modalHeader = new ModalHeaderModel();
       this.modalHeader.title = this.item ? `[Update] ${this.item.name}` : `[Add]`;
       this.modalFooter = new ModalFooterModel();
       this.modalFooter.title = "Save";
   
-    }
-
-    loadEditItem(){
-      this.categoriesForm = this.formBuilder.group({
-        name: [this.item.data.name, [Validators.required]],
-        description: [this.item.data.description, [Validators.required]],
-        imageUrl: [this.item.data.imageUrl, [Validators.required]]
-      });
-      this.modalHeader = new ModalHeaderModel();
-      this.modalHeader.title = this.item ? `[Update] ${this.item.data.name}` : `[Add]`;
-      this.modalFooter = new ModalFooterModel();
-      this.modalFooter.title = "Save";
     }
     
 
@@ -64,52 +87,8 @@ export class CategoryDetailComponent implements OnChanges {
     close(event : any) {
       this.ngbActiveModal.close();
     }
-
-    create(){
-      this.category = {name: this.categoriesForm.value.name, 
-                    description: this.categoriesForm.value.description,
-                    imageUrl: this.categoriesForm.value.imageUrl,
-                    id: this.item?.id};
-                
-      if(this.categoriesForm.invalid){
-        return;
-      }
-      this.categoryService.create(this.category).then(res => {
-        this.ngbActiveModal.close();
-      }).catch((er) => {
-
-        if (er.error.hasError) {
-          console.log(er.error.message)
-        }
-      });
-    }
-
-    update(){
-      this.category = {name: this.categoriesForm.value.name, 
-        description: this.categoriesForm.value.description,
-        imageUrl: this.categoriesForm.value.imageUrl,
-        id: this.item.data.id};
-                             
-      if(this.categoriesForm.invalid){
-        return;
-      }    
-       this.categoryService.update(this.category).then(res => {
-         this.ngbActiveModal.close();
-       }).catch((er) => {
- 
-         if (er.error.hasError) {
-           console.log(er.error.message)
-         }
-       });
-    }
-
-
+    
     ngOnInit(){
-      if(this.item == null){
-        this.loadItem();
-      }
-      this.loadEditItem();
+      this.loadItem();
     }
-
-
 }
