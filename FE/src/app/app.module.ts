@@ -10,17 +10,8 @@ import { AuthModule } from './components/auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from './lib/environments/environment';
 import { AppConfig } from './lib/environments/config/appConfig';
-// import { ListSocialMediasComponent } from './components/socialmedias/list-socialmedias/list-socialmedias.component';
-// import { CreateSocialMediasComponent } from './components/socialmedias/create-socialmedias/create-socialmedias.component';
-// import { UpdateSocialMediasComponent } from './components/socialmedias/update-socialmedias/update-socialmedias.component';
-
 @NgModule({
-  declarations: [
-    AppComponent,
-    // ListSocialMediasComponent,
-    // CreateSocialMediasComponent,
-    // UpdateSocialMediasComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

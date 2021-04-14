@@ -12,11 +12,11 @@ export class SocialMediaService {
     return this.httpClient.getObservable(this.url, request).toPromise();
   }
 
-  create(model: FormData) {
+  create(model: SocialMediaModel) {
     return this.httpClient.postObservable(this.url, model).toPromise();
   }
 
-  update(model: FormData) {
+  update(model: SocialMediaModel) {
     return this.httpClient.putObservable(this.url, model).toPromise();
   }
 

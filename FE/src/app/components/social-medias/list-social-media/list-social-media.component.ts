@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { SocialMediaModel } from 'src/app/lib/data/models/social-medias/social-media.model';
 import { SocialMediaService } from 'src/app/lib/data/services/social-media/social-media.service';
-import { CreateSocialMediaComponent } from '../create-social-media/create-social-media.component';
+import { SocialMediaDetailComponent } from '../social-media-detail/social-media-detail.component';
 
 @Component({
   selector: 'app-list-social-media',
@@ -16,13 +16,13 @@ export class ListSocialMediaComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private service: SocialMediaService
+    private socialService: SocialMediaService
   ) {
     this.getSocialMedias();
   }
 
   getSocialMedias() {
-    this.service
+    this.socialService
       .get(null)
       .then((res: ReturnMessage<PageModel<SocialMediaModel>>) => {
         if (!res.hasError) {
@@ -63,7 +63,7 @@ export class ListSocialMediaComponent implements OnInit {
   };
 
   open(event: any) {
-    var modalRef = this.modalService.open(CreateSocialMediaComponent, {
+    var modalRef = this.modalService.open(SocialMediaDetailComponent, {
       size: 'lg',
     });
     if (event == null) {
@@ -77,7 +77,7 @@ export class ListSocialMediaComponent implements OnInit {
   delete(event: any) {
     let socialMedia = event.data as SocialMediaModel;
     if (window.confirm('Are you sure to delete?')) {
-      this.service.delete(socialMedia).then(() => {
+      this.socialService.delete(socialMedia).then(() => {
         this.getSocialMedias();
       });
     }
