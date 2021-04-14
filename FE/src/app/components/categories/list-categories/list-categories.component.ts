@@ -2,26 +2,29 @@ import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
-import { CategoriesService } from 'src/app/lib/data/services/categories/category.service';
-import { CreateCategoriesComponent } from '../create-categories/create-categories.component';
+import { CategoryService } from 'src/app/lib/data/services/categories/category.service';
+import { CategoryDetailComponent } from '../categories-details/categories-details.component';
 
 @Component({
   selector: 'app-list-categories',
   templateUrl: './list-categories.component.html',
   styleUrls: ['./list-categories.component.scss'],
-  providers: [CategoriesService]
+  providers: [CategoryService]
 })
 export class ListCategoriesComponent implements OnInit {
 
   public categories = [];
   closeResult = '';
-  constructor(private modalService: NgbModal,private service:CategoriesService) {
+  constructor(private modalService: NgbModal,private service:CategoryService) {
     this.fetch();
    }
 
 
    public settings = {
     mode :'external',
+    setPaging:{
+      
+    },
     actions: {
       position: 'right'
     },
@@ -43,19 +46,6 @@ export class ListCategoriesComponent implements OnInit {
   };
 
 
-  edit(event: any){
-    console.log(event);
-    var modalRef =  this.modalService.open(CreateCategoriesComponent, {size: 'lg'});
-    modalRef.componentInstance.data = event.data;
-    modalRef.result.then((result) => {
-      console.log(result);
-      this.fetch();
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-
   delete(event: any){
     console.log(event);
     let category = event.data as CategoryModel;
@@ -68,10 +58,10 @@ export class ListCategoriesComponent implements OnInit {
   }
 
 
-  create(event:any){
-    console.log(event);
-    var modalRef =  this.modalService.open(CreateCategoriesComponent, {size: 'lg'});
-    modalRef.componentInstance.data = event;
+  openPopup(item:any){
+    console.log(item);
+    var modalRef =  this.modalService.open(CategoryDetailComponent, {size: 'lg'});
+    modalRef.componentInstance.item = item;
     modalRef.result.then((result) => {
       console.log(result);
       this.fetch();

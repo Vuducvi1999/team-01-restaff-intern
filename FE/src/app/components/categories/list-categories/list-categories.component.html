@@ -7,7 +7,7 @@
       <div class="card-body vendor-table">
           <div id="batchDelete" class="custom-datatable vendor-list">
               <div class="table-responsive ">
-                      <ng2-smart-table  [settings]="settings" (edit)="edit($event)" (create)="create(null)" (delete)="delete($event)" [(source)]="categories"></ng2-smart-table>
+                      <ng2-smart-table  [settings]="settings" (edit)="openPopup($event)" (create)="openPopup(null)" (delete)="delete($event)" [(source)]="categories"></ng2-smart-table>
               </div>
           </div>
       </div>

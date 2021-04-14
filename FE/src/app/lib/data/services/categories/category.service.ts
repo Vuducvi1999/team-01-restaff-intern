@@ -4,7 +4,7 @@ import { HttpClientService } from "src/app/lib/http/http-client";
 import { CategoryModel } from "../../models/categories/category.model";
 
 @Injectable()
-export class CategoriesService  {
+export class CategoryService  {
 
     private url = '/api/category';
 
@@ -14,11 +14,11 @@ export class CategoriesService  {
       return this.httpClient.getObservable(this.url, request).toPromise();
     }
 
-    create(model: FormData) {
+    create(model: CategoryModel) {
       return this.httpClient.postObservable(this.url, model).toPromise();
     }
 
-    update(model: FormData) {
+    update(model: CategoryModel) {
       return this.httpClient.putObservable(this.url, model).toPromise();
     }
 

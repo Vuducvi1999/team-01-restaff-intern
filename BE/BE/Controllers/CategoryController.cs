@@ -32,14 +32,14 @@ namespace BE.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromForm] CreateCategoryDTO model)
+        public IActionResult Create([FromBody] CreateCategoryDTO model)
         {
             var result = _categoryService.Create(model);
             return CommonResponse(result);
         }
 
         [HttpPut]
-        public IActionResult Update([FromForm] UpdateCategoryDTO model)
+        public IActionResult Update([FromBody] UpdateCategoryDTO model)
         {
             var result = _categoryService.Update(model);
             return CommonResponse(result);

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CreateCategoriesComponent } from './create-categories/create-categories.component';
+import { CategoryDetailComponent } from './categories-details/categories-details.component';
 import { ListCategoriesComponent } from './list-categories/list-categories.component';
 
 
@@ -18,7 +18,7 @@ const routes: Routes = [
         },
         {
           path: 'create-categories',
-          component: CreateCategoriesComponent,
+          component: CategoryDetailComponent,
           data: {
             title: "Create Category",
             breadcrumb: "Create Category"

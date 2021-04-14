@@ -6,12 +6,12 @@ import { NgbModal, NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { ListCategoriesComponent } from './list-categories/list-categories.component';
-import { CreateCategoriesComponent } from './create-categories/create-categories.component';
+import { CategoryDetailComponent } from './categories-details/categories-details.component';
 import { CategoriesRoutingModule } from './categories-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
-  declarations: [ListCategoriesComponent, CreateCategoriesComponent],
+  declarations: [ListCategoriesComponent, CategoryDetailComponent],
   imports: [
     CommonModule,
     CategoriesRoutingModule,
