@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BannerModel, PageModel, ReturnMessage } from 'src/app/lib/data/models';
-import { BannersService } from 'src/app/lib/data/services';
+import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
+import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
+
+import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
+
 import { BannersDetailComponent } from '../banners-detail/banners-detail.component';
 
 @Component({
