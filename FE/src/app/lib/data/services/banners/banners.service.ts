@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClientService } from "src/app/lib/http/http-client";
-import { BannerModel } from "../../models";
+import { BannerModel } from "../../models/banners/banner.model";
+
 
 @Injectable()
 export class BannersService {
