@@ -15,14 +15,6 @@ const routes: Routes = [
           breadcrumb: 'Social Media List',
         },
       },
-      {
-        path: 'social-medias-detail',
-        component: SocialMediaDetailComponent,
-        data: {
-          title: 'Social Media Detail',
-          breadcrumb: 'Social Media Detail',
-        },
-      },
     ],
   },
 ];

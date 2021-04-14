@@ -33,14 +33,14 @@ namespace BE.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromForm] CreateSocialMediaDTO model)
+        public IActionResult Create([FromBody] CreateSocialMediaDTO model)
         {
             var result = _socialMediaService.Create(model);
             return CommonResponse(result);
         }
 
         [HttpPut]
-        public IActionResult Update([FromForm] UpdateSocialMediaDTO model)
+        public IActionResult Update([FromBody] UpdateSocialMediaDTO model)
         {
             var result = _socialMediaService.Update(model);
             return CommonResponse(result);

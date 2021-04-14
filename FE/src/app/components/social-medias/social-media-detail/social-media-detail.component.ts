@@ -18,7 +18,7 @@ export class SocialMediaDetailComponent implements OnInit {
   public socialMedia: SocialMediaModel;
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
-  public data: any;
+  public item: any;
   submitted = false;
   constructor(
     private formBuilder: FormBuilder,
@@ -28,11 +28,11 @@ export class SocialMediaDetailComponent implements OnInit {
 
   loadItemForm() {
     this.socialMediaForm = this.formBuilder.group({
-      title: [this.data ? this.data.title : '', Validators.required],
-      link: [this.data ? this.data.link : '', Validators.required],
-      iconUrl: [this.data ? this.data.iconUrl : '', Validators.required],
+      title: [this.item ? this.item.title : '', Validators.required],
+      link: [this.item ? this.item.link : '', Validators.required],
+      iconUrl: [this.item ? this.item.iconUrl : '', Validators.required],
       displayOrder: [
-        this.data ? this.data.displayOrder : '',
+        this.item ? this.item.displayOrder : '',
         Validators.required,
       ],
     });
@@ -41,13 +41,9 @@ export class SocialMediaDetailComponent implements OnInit {
   createModal() {
     this.modalHeader = new ModalHeaderModel();
     this.modalHeader.title =
-      this.data != null ? `Update ${this.data.title}` : `Add Social Media`;
+      this.item != null ? `Update ${this.item.title}` : `Add Social Media`;
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
-  }
-
-  close(event: any) {
-    this.ngbActiveModal.close();
   }
 
   saveSocialMedia(event: any) {
@@ -56,17 +52,18 @@ export class SocialMediaDetailComponent implements OnInit {
       link: this.socialMediaForm.controls.link.value,
       iconUrl: this.socialMediaForm.controls.iconUrl.value,
       displayOrder: this.socialMediaForm.controls.displayOrder.value,
-      id: this.data ? this.data.id : '',
+      id: this.item ? this.item.id : '',
     };
     console.log(this.socialMedia);
     this.submitted = true;
     if (this.socialMediaForm.valid) {
-      if (this.data) {
+      if (this.item) {
         return this.socialService
           .update(this.socialMedia)
           .then((res) => {
             this.socialMediaForm.reset();
             this.submitted = false;
+            this.ngbActiveModal.close();
           })
           .catch((er) => {
             if (er.error.hasError) {
@@ -80,6 +77,7 @@ export class SocialMediaDetailComponent implements OnInit {
         .then((res) => {
           this.socialMediaForm.reset();
           this.submitted = false;
+          this.ngbActiveModal.close();
         })
         .catch((er) => {
           if (er.error.hasError) {
@@ -91,9 +89,13 @@ export class SocialMediaDetailComponent implements OnInit {
   get SocialMediaFormControl() {
     return this.socialMediaForm.controls;
   }
+
+  close(event: any) {
+    this.ngbActiveModal.close();
+  }
   ngOnInit(): void {
     this.loadItemForm();
     this.createModal();
-    console.log(this.data);
+    console.log(this.item);
   }
 }
