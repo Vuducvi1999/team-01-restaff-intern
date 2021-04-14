@@ -21,7 +21,8 @@ import { UpdateBannersComponent } from './update-banners/update-banners.componen
     BannersRoutingModule,
     SharedModule
   ],
-  declarations: [ListBannersComponent, CreateBannersComponent,UpdateBannersComponent],
-  providers:[BannersService]
+  declarations: [ListBannersComponent, CreateBannersComponent, UpdateBannersComponent],
+  providers: [BannersService],
+  entryComponents: [ListBannersComponent]
 })
 export class BannersModule { }

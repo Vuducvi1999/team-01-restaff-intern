@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BannerModel } from 'src/app/lib/data/models';
@@ -11,25 +11,30 @@ import { ModalFooterModel, ModalHeaderModel } from 'src/app/shared/components/mo
   styleUrls: ['./update-banners.component.scss'],
 })
 export class UpdateBannersComponent implements OnInit {
+  public item!: any;
   public bannersForm: FormGroup;
   public permissionForm: FormGroup;
   public banner: BannerModel;
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
-  public item: any;
   submitted = false;
 
   constructor(private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
     private bannersService: BannersService
   ) {
+
+  }
+  ngOnInit(): void {
+    console.log(this.item);
     this.updateBannerForm();
     this.createModal();
   }
 
+
   updateBannerForm() {
     this.bannersForm = this.formBuilder.group({
-      title: ['', Validators.required],
+      title: [this.item.title, Validators.required],
       description: [''],
       link: ['', Validators.required],
       imageURL: ['', Validators.required],
@@ -81,6 +86,5 @@ export class UpdateBannersComponent implements OnInit {
     this.ngbActiveModal.close();
   }
 
-  ngOnInit() { }
 
 }

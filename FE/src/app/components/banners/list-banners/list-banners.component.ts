@@ -84,7 +84,7 @@ export class ListBannersComponent implements OnInit {
     var modalRef = this.modalService.open(UpdateBannersComponent, {
       size: 'lg'
     });
-    modalRef.componentInstance.item = event.data;
+    modalRef.componentInstance.item = event?.data;
     modalRef.result.then(() => this.getBanners());
   }
 
