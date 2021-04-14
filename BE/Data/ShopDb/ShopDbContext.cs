@@ -13,6 +13,8 @@ namespace Data
         DbSet<Supplier> Suppliers { get; set; }
         DbSet<SocialMedia> SocialMedias { get; set; }
         DbSet<User> Users { get; set; }
+        DbSet<Category> Categories { get; set; }
+        
         DbSet<Banner> Banners { get; set; }
 
     }

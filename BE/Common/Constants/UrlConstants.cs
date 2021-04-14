@@ -10,5 +10,6 @@
         public const string BaseAuth = BaseApi + "/auth";
         public const string BaseBanner = BaseApi + "/banner";
         public const string BaseLogin = BaseAuth + "/login";
+        public const string BaseCategory = BaseApi + "/category";
     }
 }
