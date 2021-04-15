@@ -8,6 +8,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { ProfileService } from 'src/app/lib/data/services/profiles/profile.service';
+import { ProfileSettingsComponent } from './profile-settings/profile-settings.component';
 
 @NgModule({
     imports: [
@@ -18,7 +19,7 @@ import { ProfileService } from 'src/app/lib/data/services/profiles/profile.servi
         ProfileRoutingModule,
         SharedModule
     ],
-    declarations: [],
+    declarations: [ProfileSettingsComponent],
     providers: [ProfileService]
 })
 export class ProfilesModule { }

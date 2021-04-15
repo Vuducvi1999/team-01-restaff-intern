@@ -1,5 +1,5 @@
 import { Injectable, HostListener, Inject } from '@angular/core';
-import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
+import { BehaviorSubject, } from 'rxjs';
 import { WINDOW } from './windows.service';
 // Menu
 export interface Menu {
@@ -73,6 +73,19 @@ export class NavService {
         {
           path: '/social-medias/list-social-medias',
           title: 'Social Media List',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      title: 'Profiles',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/profiles/profile-settings',
+          title: 'Profiles',
           type: 'link',
         },
       ],
