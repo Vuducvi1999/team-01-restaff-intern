@@ -78,7 +78,7 @@ export class NavService {
       ],
     },
     {
-      title: 'Profiles',
+      title: 'Settings',
       icon: 'users',
       type: 'sub',
       active: false,

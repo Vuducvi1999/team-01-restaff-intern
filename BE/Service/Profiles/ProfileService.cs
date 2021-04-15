@@ -5,6 +5,7 @@ using Domain.DTOs.User;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
+using Service.Auth;
 using System;
 
 
@@ -15,13 +16,17 @@ namespace Service.Profiles
         private readonly IRepository<User> _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUserManager _userManager;
 
-        public ProfileService(IRepository<User> userRepository, IUnitOfWork unitOfWork, IMapper mapper)
+
+        public ProfileService(IRepository<User> userRepository, IUnitOfWork unitOfWork, IMapper mapper, IUserManager userManager)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userManager = userManager;
         }
+
         public ReturnMessage<UpdateUserDTO> Update(UpdateUserDTO model)
         {
             try

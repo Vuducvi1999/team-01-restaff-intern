@@ -7,8 +7,8 @@
           <div class="profile-details text-center">
             <img src="assets/images/dashboard/designer.jpg" alt=""
               class="img-fluid img-90 rounded-circle blur-up lazyloaded">
-            <h5 class="f-w-600 mb-0">John deo</h5>
-            <span>johndeo@gmail.com</span>
+            <h5 class="f-w-600 mb-0">{{userInfo.firstName}} {{userInfo.lastName}}</h5>
+            <span>{{userInfo.email}}</span>
             <div class="social">
               <div class="form-group btn-showcase">
                 <button class="btn social-btn btn-fb d-inline-block">
@@ -38,19 +38,19 @@
                       <tbody>
                         <tr>
                           <td>First Name:</td>
-                          <td>Johan</td>
+                          <td>{{userInfo.firstName}}</td>
                         </tr>
                         <tr>
                           <td>Last Name:</td>
-                          <td>Deo</td>
+                          <td>{{userInfo.lastName}}</td>
                         </tr>
                         <tr>
                           <td>Email:</td>
-                          <td>johndeo@gmail.com</td>
+                          <td>{{userInfo.email}}</td>
                         </tr>
                         <tr>
                           <td>Avatar:</td>
-                          <td>abc.img</td>
+                          <td>{{userInfo.imageUrl}}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -62,7 +62,53 @@
               <ng-template ngbTabTitle>
                 <i data-feather="settings"></i> Update Profile
               </ng-template>
+              <!-- Update profile FORM -->
               <ng-template ngbTabContent>
+                <form [formGroup]="profileForm" class="needs-validation user-add" novalidate="">
+                  <h5 class="f-w-600"> Profile</h5>
+                  <div class="form-group row">
+                    <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
+                      First name</label>
+                    <input class="form-control col-xl-8 col-md-7" id="validationCustom0" type="text" required
+                      formControlName="firstName">
+                    <span class="text-danger"
+                      *ngIf="(profileFormControl.firstName.touched || submitted) && profileFormControl.firstName.errors?.required">
+                      First name is required
+                    </span>
+                  </div>
+                  <div class="form-group row">
+                    <label for="" class="col-xl-3 col-md-4"><span>*</span>
+                      Last name</label>
+                    <input class="form-control col-xl-8 col-md-7" id="" type="text" formControlName="lastName">
+                  </div>
+                  <span class="text-danger"
+                    *ngIf="(profileFormControl.lastName.touched || submitted) && profileFormControl.lastName.errors?.required">
+                    Last name is required
+                  </span>
+                  <div class="form-group row">
+                    <label for="validationCustom1" class="col-xl-3 col-md-4"><span>*</span>
+                      Email</label>
+                    <input class="form-control col-xl-8 col-md-7" id="validationCustom1" type="text" required=""
+                      formControlName="email">
+                    <span class="text-danger"
+                      *ngIf="(profileFormControl.email.touched || submitted) && profileFormControl.email.errors?.required">
+                      Email is required
+                    </span>
+                  </div>
+                  <div class="form-group row">
+                    <label for="validationCustom2" class="col-xl-3 col-md-4"><span>*</span>
+                      Avatar</label>
+                    <input class="form-control col-xl-8 col-md-7" id="validationCustom2" type="text" required=""
+                      formControlName="imageUrl">
+                    <span class="text-danger"
+                      *ngIf="(profileFormControl.imageUrl.touched || submitted) && profileFormControl.imageUrl.errors?.required">
+                      Avatar is required
+                    </span>
+                  </div>
+                  <div class="pull-right" class="form-group">
+                    <button type="button" class="btn btn-primary" (click)="updateDetails()">SAVE</button>
+                  </div>
+                </form>
               </ng-template>
             </ngb-tab>
             <ngb-tab>

@@ -2,6 +2,7 @@
 using Common.Http;
 using Domain.DTOs.User;
 using Microsoft.AspNetCore.Mvc;
+using Service.Auth;
 using Service.Profiles;
 
 namespace BE.Controllers
@@ -11,7 +12,8 @@ namespace BE.Controllers
     public class ProfileController : BaseController
     {
         private readonly IProfileService _profileService;
-        public ProfileController(IProfileService profileService)
+
+        public ProfileController(IProfileService profileService, IAuthService authService, IUserManager userManager) : base(authService, userManager)
         {
             _profileService = profileService;
         }

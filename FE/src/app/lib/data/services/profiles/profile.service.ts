@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClientService } from "src/app/lib/http/http-client";
-import { BannerModel } from "../../models/banners/banner.model";
+import { ProfileModel } from "../../models";
 
 
 @Injectable()
@@ -10,11 +10,9 @@ export class ProfileService {
 
   constructor(private httpClient: HttpClientService) { }
 
-  get(request: any) {
-    return  this.httpClient.getObservable(this.url, request).toPromise();
-  }
-  update(model: BannerModel) {
+  update(model: ProfileModel) {
     return this.httpClient.putObservable(this.url, model).toPromise();
   }
+
 }
 
