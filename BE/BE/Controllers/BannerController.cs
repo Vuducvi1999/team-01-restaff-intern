@@ -30,14 +30,14 @@ namespace BE.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromForm] CreateBannerDTO model)
+        public IActionResult Create([FromBody] CreateBannerDTO model)
         {
             var result = _bannerService.Create(model);
             return CommonResponse(result);
         }
 
         [HttpPut]
-        public IActionResult Update([FromForm] UpdateBannerDTO model)
+        public IActionResult Update([FromBody] UpdateBannerDTO model)
         {
             var result = _bannerService.Update(model);
             return CommonResponse(result);

@@ -8,7 +8,6 @@ import { suppliersDB } from '../../../shared/tables/vendor-list';
 })
 export class ListSuppliersComponent implements OnInit {
   public suppliers = [];
-
   constructor() {
     this.suppliers = suppliersDB.data;
   }
@@ -36,6 +35,15 @@ export class ListSuppliersComponent implements OnInit {
       },
       revenue: {
         title: 'Revenue',
+      },
+      createBy: {
+        title: 'Create By',
+      },
+      updateBy: {
+        title: 'Update By',
+      },
+      deleteBy: {
+        title: 'Delete By',
       }
     },
   };

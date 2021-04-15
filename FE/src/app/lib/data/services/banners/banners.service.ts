@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClientService } from "src/app/lib/http/http-client";
-import { BannerModel } from "../../models";
+import { BannerModel } from "../../models/banners/banner.model";
+
 
 @Injectable()
 export class BannersService {
@@ -13,7 +14,7 @@ export class BannersService {
     return  this.httpClient.getObservable(this.url, request).toPromise();
   }
 
-  create(model: FormData) {
+  create(model: BannerModel) {
     return this.httpClient.postObservable(this.url, model).toPromise();
   }
 
@@ -22,7 +23,7 @@ export class BannersService {
   }
 
   delete(model: BannerModel) {
-    const url = `${this.url}/${model?.id}`;
+    const url = `${this.url}?id=${model?.id}`;
     return this.httpClient.deleteObservable(url).toPromise();
   }
 }

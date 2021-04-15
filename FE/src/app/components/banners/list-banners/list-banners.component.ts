@@ -1,37 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BannerModel, ReturnMessage } from 'src/app/lib/data/models';
-import { BannersService } from 'src/app/lib/data/services';
-import { CreateBannersComponent } from '../create-banners/create-banners.component';
+import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
+import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
+
+import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
+
+import { BannersDetailComponent } from '../banners-detail/banners-detail.component';
 
 @Component({
   selector: 'app-list-banners',
   templateUrl: './list-banners.component.html',
   styleUrls: ['./list-banners.component.scss'],
-  providers: [BannersService]
+  providers: []
 })
 export class ListBannersComponent implements OnInit {
-  public banners = [];
-  constructor(private modalService: NgbModal,private service:BannersService) { 
-    this.service.get(null).then((res : ReturnMessage<BannerModel[]>) => {
-      if(!res.hasError)
-      {
-        console.log("banner",res.data);
-        this.banners = res.data;
-      }
-    }).catch((er) => {
-      
-      if(er.error.hasError)
-      {
-        console.log(er.error.message)
-      }
-    });
+  public banners: BannerModel[];
+
+  constructor(private modalService: NgbModal, private bannersService: BannersService) {
+    this.getBanners();
   }
-
-
+  ngOnInit() {
+  }
   public settings = {
+
+    mode: 'external',
+    pager: {
+      display: true,
+      perPage: 10,
+    },
     actions: {
-      position: 'right'
+      position: 'right',
     },
     columns: {
       vendor: {
@@ -39,31 +37,62 @@ export class ListBannersComponent implements OnInit {
         type: 'html',
       },
       title: {
-        title: 'Title'
+        title: 'Title',
       },
       description: {
-        title: 'Description'
+        title: 'Description',
       },
       link: {
-        title: 'Link'
+        title: 'Link',
       },
-      imageURL: {
+      imageUrl: {
         title: 'Image URL',
       },
       displayOrder: {
         title: 'Display Order',
-      }
+      },
     },
   };
 
-  openCreate() {
-    var modalRef = this.modalService.open(CreateBannersComponent, {
+  getBanners() {
+    this.bannersService.get(null).then((res: ReturnMessage<PageModel<BannerModel>>) => {
+      if (!res.hasError) {
+        this.banners = res.data.results;
+        console.log("banner", this.banners);
+
+      }
+    }).catch((er) => {
+
+      if (er.error.hasError) {
+        console.log(er.error.message)
+      }
+    });
+
+  }
+  openCreate(event: any) {
+    var modalRef = this.modalService.open(BannersDetailComponent, {
       size: 'lg'
     });
-    modalRef.result.then(res => console.log(res));
+    modalRef.result.then(() => this.getBanners());
   }
-  ngOnInit() {
+
+  delete(event: any) {
+    console.log(event);
+    let banner = event.data as BannerModel;
+    if (window.confirm("Are u sure?")) {
+      this.bannersService.delete(banner).then(res => {
+        this.getBanners();
+      });
+    }
   }
+  openUpdate(event: any) {
+    console.log(event.data);
+    var modalRef = this.modalService.open(BannersDetailComponent, {
+      size: 'lg'
+    });
+    modalRef.componentInstance.item = event?.data;
+    modalRef.result.then(() => this.getBanners());
+  }
+
 
 }
-
