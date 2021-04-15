@@ -5,7 +5,6 @@ using Domain.DTOs.SocialMedias;
 using Domain.DTOs.Suppliers;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
-using Domain.DTOs.Coupon;
 using Domain.DTOs.Coupons;
 
 namespace Domain
