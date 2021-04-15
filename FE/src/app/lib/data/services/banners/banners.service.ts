@@ -22,7 +22,7 @@ export class BannersService {
   }
 
   delete(model: BannerModel) {
-    const url = `${this.url}/${model?.id}`;
+    const url = `${this.url}?id=${model?.id}`;
     return this.httpClient.deleteObservable(url).toPromise();
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BannerModel } from 'src/app/lib/data/models';
 import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
@@ -9,7 +9,7 @@ import { ModalFooterModel, ModalHeaderModel } from 'src/app/shared/components/mo
   selector: 'app-create-banners',
   templateUrl: './create-banners.component.html',
   styleUrls: ['./create-banners.component.scss'],
-  providers: [BannersService]
+  providers: []
 })
 export class CreateBannersComponent implements OnInit {
   public bannersForm: FormGroup;
@@ -17,32 +17,27 @@ export class CreateBannersComponent implements OnInit {
   public banner: BannerModel;
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
-
+  submitted = false;
 
   constructor(private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
-    private service: BannersService
+    private bannersService: BannersService
   ) {
     this.createBannerForm();
-    this.createPermissionForm();
     this.createModal();
   }
 
   createBannerForm() {
     this.bannersForm = this.formBuilder.group({
-      title: [''],
+      title: ['', Validators.required],
       description: [''],
-      link: [''],
-      imageURL: [''],
-      displayOrder: ['']
-    })
-  }
-  createPermissionForm() {
-    this.permissionForm = this.formBuilder.group({
+      link: ['', Validators.required],
+      imageURL: ['', Validators.required],
+      displayOrder: ['', Validators.required]
     })
   }
 
-  createBanner(event:any) {
+  createBanner(event: any) {
     this.banner = {
       title: this.bannersForm.controls.title.value,
       description: this.bannersForm.controls.description.value,
@@ -51,15 +46,24 @@ export class CreateBannersComponent implements OnInit {
       displayOrder: this.bannersForm.controls.displayOrder.value,
       id: ""
     }
+
     const formData = new FormData();
-    formData.append("title" , this.banner.title);
-    formData.append("description" , this.banner.description);
-    formData.append("link" , this.banner.link);
-    formData.append("imageURL" , this.banner.imageURL);
-    formData.append("displayOrder" , this.banner.displayOrder.toString());
+    formData.append("title", this.banner.title);
+    formData.append("description", this.banner.description);
+    formData.append("link", this.banner.link);
+    formData.append("imageURL", this.banner.imageURL);
+    formData.append("displayOrder", this.banner.displayOrder.toString());
 
+    this.submitted = true;
+    this.bannersService.create(formData).then(res => {
+      console.log(res);
+      this.bannersForm.reset();
+    }).catch((er) => {
 
-    this.service.create(formData).then(res => console.log(res));
+      if (er.error.hasError) {
+        console.log(er.error.message)
+      }
+    });
   }
 
   createModal() {
@@ -69,12 +73,13 @@ export class CreateBannersComponent implements OnInit {
     this.modalFooter.title = 'Save';
   }
 
+  get bannersFormControl() {
+    return this.bannersForm.controls;
+  }
   close(event: any) {
     console.log(event);
     this.ngbActiveModal.close();
   }
-
-  save(event: any) { }
 
   ngOnInit() { }
 
