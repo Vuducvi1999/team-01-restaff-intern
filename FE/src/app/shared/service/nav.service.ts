@@ -48,6 +48,11 @@ export class NavService {
 			title: 'Banners', icon: 'users', type: 'sub', active: false, children: [
 				{ path: '/banners/list-banners', title: 'Banners List', type: 'link' }
 			]
+		},
+		{
+			title: 'Settings', icon: 'settings', type: 'sub', children: [
+				{ path: 'profiles/profile-settings', title: 'Profile', type: 'link' },
+			]
 		}
 			]
 		

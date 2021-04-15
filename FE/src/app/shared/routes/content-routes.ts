@@ -18,4 +18,13 @@ export const content: Routes = [
     }
 
   }
+  ,
+  {
+    path: 'profiles',
+    loadChildren: () => import('../../components/profiles/profiles.module').then(m => m.ProfilesModule),
+    data: {
+      breadcrumb: "Profiles"
+    }
+
+  }
 ];

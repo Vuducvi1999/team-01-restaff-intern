@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.DTOs.User;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -16,5 +17,14 @@ namespace Domain.Entities
         public string LastName { get; set; }
         public string ImageUrl { get; set; }
 
+        public void Update(UpdateUserDTO model)
+        {
+            Email = model.Email;
+            FirstName = model.FirstName;
+            LastName = model.LastName;
+            ImageUrl = model.ImageUrl;
+            ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
+        }
     }
+
 }

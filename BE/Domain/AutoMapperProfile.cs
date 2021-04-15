@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Domain.DTOs.Banners;
 using Domain.DTOs.Suppliers;
+using Domain.DTOs.User;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 
@@ -21,6 +22,9 @@ namespace Domain
             CreateMap<Banner, CreateBannerDTO>().ReverseMap();
             CreateMap<Banner, UpdateBannerDTO>().ReverseMap();
             CreateMap<Banner, DeleteBannerDTO>().ReverseMap();
+
+
+            CreateMap<User, UpdateUserDTO>().ReverseMap();
 
         }
     }
