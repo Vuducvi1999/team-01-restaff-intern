@@ -1,0 +1,67 @@
+<app-modal-header [data]="modalHeader" (onAction)="close($event)"></app-modal-header>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card tab2-card">
+
+        <div class="card-body">
+
+          <div class="tab-pane fade active show" id="account" role="tabpanel" aria-labelledby="account-tab">
+            <form [formGroup]="bannersForm" class="needs-validation user-add" novalidate="">
+              <h4>Banner Details</h4>
+              <div class="form-group row">
+                <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
+                  Title</label>
+                <input class="form-control col-xl-8 col-md-7" id="validationCustom0" type="text" required
+                  formControlName="title">
+                <span class="text-danger"
+                  *ngIf="(bannersFormControl.title.touched || submitted) && bannersFormControl.title.errors?.required">
+                  Title is required
+                </span>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-xl-3 col-md-4"><span>&nbsp;</span>
+                  Description</label>
+                <input class="form-control col-xl-8 col-md-7" id="" type="text" formControlName="description">
+              </div>
+              <div class="form-group row">
+                <label for="validationCustom1" class="col-xl-3 col-md-4"><span>*</span>
+                  Link</label>
+                <input class="form-control col-xl-8 col-md-7" id="validationCustom1" type="text" required=""
+                  formControlName="link">
+                <span class="text-danger"
+                  *ngIf="(bannersFormControl.link.touched || submitted) && bannersFormControl.link.errors?.required">
+                  Link is required
+                </span>
+              </div>
+              <div class="form-group row">
+                <label for="validationCustom2" class="col-xl-3 col-md-4"><span>*</span>
+                  ImageUrl</label>
+                <input class="form-control col-xl-8 col-md-7" id="validationCustom2" type="text" required=""
+                  formControlName="imageURL">
+                <span class="text-danger"
+                  *ngIf="(bannersFormControl.imageURL.touched || submitted) && bannersFormControl.imageURL.errors?.required">
+                  ImageURL is required
+                </span>
+              </div>
+              <div class="form-group row">
+                <label for="validationCustom3" class="col-xl-3 col-md-4"><span>*</span>
+                  Display Order</label>
+                <input class="form-control col-xl-8 col-md-7" id="validationCustom3" type="number" required=""
+                  formControlName="displayOrder">
+                <span class="text-danger"
+                  *ngIf="(bannersFormControl.displayOrder.touched || submitted) && bannersFormControl.displayOrder.errors?.required">
+                  Display Order is required
+                </span>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends-->
+<app-modal-footer [data]="modalFooter" (onAction)="saveBanner($event)"></app-modal-footer>

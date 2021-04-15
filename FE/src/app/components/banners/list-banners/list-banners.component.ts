@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ServerDataSource } from 'ng2-smart-table';
-import { BannerModel, PageModel, ReturnMessage, SearchPaganationDTO } from 'src/app/lib/data/models';
-import { BannersService } from 'src/app/lib/data/services';
-import { CreateBannersComponent } from '../create-banners/create-banners.component';
+import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
+import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
+
+import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
+
+import { BannersDetailComponent } from '../banners-detail/banners-detail.component';
 
 @Component({
   selector: 'app-list-banners',
@@ -12,20 +14,20 @@ import { CreateBannersComponent } from '../create-banners/create-banners.compone
   providers: []
 })
 export class ListBannersComponent implements OnInit {
-  public banners = [];
+  public banners: BannerModel[];
+
   constructor(private modalService: NgbModal, private bannersService: BannersService) {
     this.getBanners();
   }
-  source: ServerDataSource;
-
+  ngOnInit() {
+  }
   public settings = {
-    // add: {
-    //   addButtonContent: '<i class="nb-plus"></i>',
-    //   createButtonContent: '<i class="nb-checkmark"></i>',
-    //   cancelButtonContent: '<i class="nb-close"></i>',
-    //   createConfirm: true,
-    // },
+
     mode: 'external',
+    pager: {
+      display: true,
+      perPage: 10,
+    },
     actions: {
       position: 'right',
     },
@@ -35,25 +37,24 @@ export class ListBannersComponent implements OnInit {
         type: 'html',
       },
       title: {
-        title: 'Title'
+        title: 'Title',
       },
       description: {
-        title: 'Description'
+        title: 'Description',
       },
       link: {
-        title: 'Link'
+        title: 'Link',
       },
-      imageURL: {
+      imageUrl: {
         title: 'Image URL',
       },
       displayOrder: {
         title: 'Display Order',
-      }
+      },
     },
   };
 
   getBanners() {
-    
     this.bannersService.get(null).then((res: ReturnMessage<PageModel<BannerModel>>) => {
       if (!res.hasError) {
         this.banners = res.data.results;
@@ -66,9 +67,10 @@ export class ListBannersComponent implements OnInit {
         console.log(er.error.message)
       }
     });
+
   }
   openCreate(event: any) {
-    var modalRef = this.modalService.open(CreateBannersComponent, {
+    var modalRef = this.modalService.open(BannersDetailComponent, {
       size: 'lg'
     });
     modalRef.result.then(() => this.getBanners());
@@ -83,10 +85,14 @@ export class ListBannersComponent implements OnInit {
       });
     }
   }
-
-
-  ngOnInit() {
+  openUpdate(event: any) {
+    console.log(event.data);
+    var modalRef = this.modalService.open(BannersDetailComponent, {
+      size: 'lg'
+    });
+    modalRef.componentInstance.item = event?.data;
+    modalRef.result.then(() => this.getBanners());
   }
 
-}
 
+}

@@ -10,7 +10,6 @@ import { AuthModule } from './components/auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from './lib/environments/environment';
 import { AppConfig } from './lib/environments/config/appConfig';
-
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -20,7 +19,7 @@ import { AppConfig } from './lib/environments/config/appConfig';
     HttpClientModule,
     AuthModule,
     SharedModule,
-    HttpClientModule 
+    HttpClientModule,
   ],
   providers: [
     { provide: 'BASE_URL', useValue: environment.host },
