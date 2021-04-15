@@ -3,6 +3,7 @@ using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Suppliers;
 using Microsoft.AspNetCore.Mvc;
+using Service.Auth;
 using Service.Suppliers;
 
 namespace BE.Controllers
@@ -14,7 +15,7 @@ namespace BE.Controllers
         private readonly ISupplierService _supplierService;
 
 
-        public SupplierController(ISupplierService supplierService)
+        public SupplierController(ISupplierService supplierService, IAuthService authService, IUserManager authManager) : base(authService, authManager)
         {
             _supplierService = supplierService;
         }

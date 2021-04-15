@@ -38,6 +38,11 @@ namespace Domain
             CreateMap<User, UpdateUserDTO>().ReverseMap();
 
             CreateMap<CreateBannerDTO, Banner>().ReverseMap();
+            CreateMap<Banner, CreateBannerDTO>().ReverseMap();
+            CreateMap<Banner, UpdateBannerDTO>().ReverseMap();
+            CreateMap<Banner, DeleteBannerDTO>().ReverseMap();
+
+            CreateMap<User, UserDataReturnDTO>().ReverseMap();
         }
     }
 }

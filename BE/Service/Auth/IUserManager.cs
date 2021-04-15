@@ -6,9 +6,9 @@ using System.Text;
 
 namespace Service.Auth
 {
-    public interface IJwtManager
+    public interface IUserManager
     {
         string GenerateToken(IEnumerable<Claim> claims, DateTime now);
-        UserDecompileDTO DecompileToken(string token);
+        public UserDataReturnDTO GetInformationAuth(Guid id);
     }
 }
