@@ -12,7 +12,7 @@ namespace Service.Files
 {
     public class FileManager : IFileManager
     {
-        public async Task<IActionResult> Download(string url)
+        public async Task<FileStreamResult> Download(string url)
         {
             var filePath = Path.Combine(Directory.GetCurrentDirectory(), url);
             if (!System.IO.File.Exists(filePath))
@@ -39,38 +39,38 @@ namespace Service.Files
             return contentType;
         }
 
-        public CreateFileDTO[] Save()
+        public async Task<List<FileDTO>> Save(List<CreateFileDTO> files)
         {
-            //IActionResult result;
-            //List<String> urls = new List<string>();
-            //var filePaths = UrlConstants.BaseLocalUrlFile;
-            //var urlPath = UrlConstants.BaseCloudUrlFile;
-            //if (!Directory.Exists(filePaths))
-            //{
-            //    //Directory.Delete(filePath, true);
-            //    Directory.CreateDirectory(filePaths);
-            //}
-            //if (files != null && files.Count > 0)
-            //{
-            //    foreach (var formFile in files)
-            //    {
-            //        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(formFile.FileName);
-            //        string filePath = Path.Combine(filePaths, fileName);
-            //        if (formFile.Length > 0)
-            //        {
-            //            using (var stream = System.IO.File.Create(filePath))
-            //            {
-            //                //stream.Write();
-            //                await formFile.CopyToAsync(stream);
+            IActionResult result;
+            List<String> urls = new List<string>();
+            var filePaths = UrlConstants.BaseLocalUrlFile;
+            var urlPath = UrlConstants.BaseCloudUrlFile;
+            if (!Directory.Exists(filePaths))
+            {
+                //Directory.Delete(filePath, true);
+                Directory.CreateDirectory(filePaths);
+            }
+            if (files != null && files.Count > 0)
+            {
+                foreach (var file in files)
+                {
+                    var formFile = file.File;
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(formFile.FileName);
+                    string filePath = Path.Combine(filePaths, fileName);
+                    if (formFile.Length > 0)
+                    {
+                        using (var stream = System.IO.File.Create(filePath))
+                        {
+                            //stream.Write();
+                            await formFile.CopyToAsync(stream);
 
-            //                urls.Add(Path.Combine(urlPath, fileName));
-            //            }
-            //        }
-            //    }
-            //}
-            //result = CommonResponse(0, urls);
-            //return result;
-            throw new Exception();
+                            urls.Add(Path.Combine(urlPath, fileName));
+                        }
+                    }
+                }
+            }
+            result = CommonResponse(0, urls);
+            return result;
         }
     }
 }

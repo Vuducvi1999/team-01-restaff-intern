@@ -1,4 +1,5 @@
 ﻿using Domain.DTOs.Files;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace Service.Files
 {
     public interface IFileManager
     {
-        CreateFileDTO[] Save();
-        Task<IActionResult> Download(String url);
+        Task<List<FileDTO>> Save(List<CreateFileDTO> files);
+        Task<FileStreamResult> Download(String url);
     }
 }
