@@ -82,6 +82,19 @@ export class NavService {
         },
       ],
     },
+    {
+      title: 'Coupon',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/coupons/list-coupons',
+          title: 'Coupon List',
+          type: 'link',
+        },
+      ],
+    },
   ];
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 }
