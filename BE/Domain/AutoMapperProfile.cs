@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Domain.DTOs.Categories;
 using Domain.DTOs.Banners;
+using Domain.DTOs.SocialMedias;
 using Domain.DTOs.Suppliers;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
@@ -19,6 +20,12 @@ namespace Domain
             CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<CreateCategoryDTO, Category>().ReverseMap();
 
+            CreateMap<PaginatedList<SocialMedia>, PaginatedList<SocialMediaDTO>>().ReverseMap();
+            CreateMap<SocialMedia, SocialMediaDTO>().ReverseMap();
+            CreateMap<CreateSocialMediaDTO, SocialMedia>().ReverseMap();
+            CreateMap<Supplier, CreateSupplierDTO>().ReverseMap();
+            CreateMap<Supplier, DeleteSupplierDTO>().ReverseMap();
+            CreateMap<Supplier, UpdateSupplierDTO>().ReverseMap();
 
             CreateMap<PaginatedList<Banner>, PaginatedList<BannerDTO>>().ReverseMap();
             CreateMap<Banner, BannerDTO>().ReverseMap();
