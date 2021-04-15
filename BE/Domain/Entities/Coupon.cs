@@ -1,4 +1,4 @@
-﻿using Domain.DTOs.Coupon;
+﻿using Domain.DTOs.Coupons;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
