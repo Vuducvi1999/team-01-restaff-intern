@@ -12,14 +12,14 @@ using System.Text;
 
 namespace Service.Auth
 {
-    public class AuthManager : IUserManager
+    public class UserManager : IUserManager
     {
         private IRepository<Domain.Entities.User> _repository;
         private IMapper _mapper;
         private readonly JwtTokenConfig _jwtTokenConfig;
         private readonly byte[] _secret;
 
-        public AuthManager(JwtTokenConfig jwtTokenConfig, IMapper mapper, IRepository<Domain.Entities.User> repository)
+        public UserManager(JwtTokenConfig jwtTokenConfig, IMapper mapper, IRepository<Domain.Entities.User> repository)
         {
             _jwtTokenConfig = jwtTokenConfig;
             _secret = Encoding.ASCII.GetBytes(jwtTokenConfig.Secret); // Secret key

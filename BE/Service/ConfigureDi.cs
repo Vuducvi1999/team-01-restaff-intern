@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Service.Banners;
 using Service.Auth;
 using Service.Suppliers;
+using Service.Files;
 
 namespace Service
 {
@@ -20,11 +21,14 @@ namespace Service
 
             services.AddScoped<ISupplierService, SupplierService>();
 
-            services.AddScoped<IUserManager, AuthManager>();
+            services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<IAuthService, AuthService>();
             //scoped
             services.AddScoped<ISupplierService, SupplierService>();
             services.AddScoped<IBannerService, BannerService>();
+
+            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IFileManager, FileManager>();
 
         }
     }

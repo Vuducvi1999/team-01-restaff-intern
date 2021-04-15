@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Domain.DTOs.Banners;
+using Domain.DTOs.Files;
 using Domain.DTOs.Suppliers;
 using Domain.DTOs.User;
 using Domain.Entities;
@@ -24,6 +25,12 @@ namespace Domain
             CreateMap<Banner, DeleteBannerDTO>().ReverseMap();
 
             CreateMap<User, UserDataReturnDTO>().ReverseMap();
+
+            CreateMap<PaginatedList<File>, PaginatedList<FileDTO>>().ReverseMap();
+            CreateMap<File, FileDTO>().ReverseMap();
+            CreateMap<File, CreateFileDTO>().ReverseMap();
+            CreateMap<File, UpdateFileDTO>().ReverseMap();
+            CreateMap<File, DeleteFileDTO>().ReverseMap();
         }
     }
 }
