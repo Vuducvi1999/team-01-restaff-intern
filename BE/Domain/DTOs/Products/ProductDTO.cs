@@ -20,5 +20,6 @@ namespace Domain.DTOs.Products
         public int DisplayOrder { get; set; }
 
         public Guid CategoryId { get; set; }
+        public string CategoryName { get; set; }
     }
 }
