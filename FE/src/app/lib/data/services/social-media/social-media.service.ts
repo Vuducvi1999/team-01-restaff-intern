@@ -1,10 +1,10 @@
-import { AppConfig } from 'src/app/lib/environments/config/appConfig';
+import { Injectable } from '@angular/core';
 import { HttpClientService } from 'src/app/lib/http/http-client';
-import { SupplierModel } from '../../models';
+import { SocialMediaModel } from '../../models/social-medias/social-media.model';
 
-class SuppliersService  {
-
-    private url = '/api/supplier';
+@Injectable()
+export class SocialMediaService {
+  private url = '/api/social-media';
 
   constructor(private httpClient: HttpClientService) {}
 
@@ -12,16 +12,16 @@ class SuppliersService  {
     return this.httpClient.getObservable(this.url, request).toPromise();
   }
 
-  create(model: SupplierModel) {
+  create(model: SocialMediaModel) {
     return this.httpClient.postObservable(this.url, model).toPromise();
   }
 
-  update(model: SupplierModel) {
+  update(model: SocialMediaModel) {
     return this.httpClient.putObservable(this.url, model).toPromise();
   }
 
-  delete(model: SupplierModel) {
-    const url = `${this.url}/${model?.id}`;
+  delete(model: SocialMediaModel) {
+    const url = `${this.url}/?id=${model?.id}`;
     return this.httpClient.deleteObservable(url).toPromise();
   }
 }

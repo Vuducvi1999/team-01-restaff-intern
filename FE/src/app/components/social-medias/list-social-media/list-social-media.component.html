@@ -1,24 +1,20 @@
-<!-- Container-fluid starts-->
 <div class="container-fluid">
   <div class="card">
     <div class="card-header">
-      <h5>Banner Details</h5>
+      <h5>Social Media Details</h5>
     </div>
     <div class="card-body vendor-table">
       <div id="batchDelete" class="custom-datatable vendor-list">
         <div class="table-responsive">
           <ng2-smart-table
             [settings]="settings"
-            [(source)]="banners"
-            (create)="openCreate($event)"
+            [(source)]="socialMedias"
+            (create)="open(null)"
+            (edit)="open($event)"
             (delete)="delete($event)"
-            (edit)="openUpdate($event)"
-          >
-          </ng2-smart-table>
+          ></ng2-smart-table>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<!-- Container-fluid Ends-->
