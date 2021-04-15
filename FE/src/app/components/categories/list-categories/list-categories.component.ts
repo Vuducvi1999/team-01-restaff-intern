@@ -24,7 +24,7 @@ export class ListCategoriesComponent implements OnInit {
     mode :'external',
     pager:{
       display: true,
-      perPage: 5,
+      perPage: 9,
     },
     actions: {
       position: 'right'
