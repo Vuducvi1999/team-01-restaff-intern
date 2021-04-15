@@ -5,6 +5,7 @@ using Domain.DTOs.SocialMedias;
 using Domain.DTOs.Suppliers;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
+using Domain.DTOs.Coupon;
 
 namespace Domain
 {
@@ -23,6 +24,7 @@ namespace Domain
             CreateMap<PaginatedList<SocialMedia>, PaginatedList<SocialMediaDTO>>().ReverseMap();
             CreateMap<SocialMedia, SocialMediaDTO>().ReverseMap();
             CreateMap<CreateSocialMediaDTO, SocialMedia>().ReverseMap();
+
             CreateMap<Supplier, CreateSupplierDTO>().ReverseMap();
             CreateMap<Supplier, DeleteSupplierDTO>().ReverseMap();
             CreateMap<Supplier, UpdateSupplierDTO>().ReverseMap();
@@ -30,6 +32,10 @@ namespace Domain
             CreateMap<PaginatedList<Banner>, PaginatedList<BannerDTO>>().ReverseMap();
             CreateMap<Banner, BannerDTO>().ReverseMap();
             CreateMap<CreateBannerDTO, Banner>().ReverseMap();
+
+            CreateMap<PaginatedList<Coupon>, PaginatedList<CouponDTO>>().ReverseMap();
+            CreateMap<Coupon, CouponDTO>().ReverseMap();
+            CreateMap<CreateCouponDTO, Coupon>().ReverseMap();
         }
     }
 }
