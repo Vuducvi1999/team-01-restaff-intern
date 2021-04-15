@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -18,9 +17,9 @@ import { BannersDetailComponent } from './banners-detail/banners-detail.componen
     NgbModule,
     Ng2SmartTableModule,
     BannersRoutingModule,
-    SharedModule
+    SharedModule,
   ],
   declarations: [ListBannersComponent, BannersDetailComponent],
-  providers: [BannersService]
+  providers: [BannersService],
 })
-export class BannersModule { }
+export class BannersModule {}

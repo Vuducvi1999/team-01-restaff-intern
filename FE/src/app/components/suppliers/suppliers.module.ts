@@ -16,7 +16,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
     SuppliersRoutingModule,
     ReactiveFormsModule,
     NgbModule,
-    Ng2SmartTableModule
+    Ng2SmartTableModule,
   ],
 })
-export class SuppliersModule { }
+export class SuppliersModule {}
