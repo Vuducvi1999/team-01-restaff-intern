@@ -16,10 +16,12 @@ namespace BE.Controllers
     public class AuthController : BaseController
     {
         private readonly IAuthService _authService;
+        private readonly IUserManager _authManager;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, IUserManager authManager) : base(authService, authManager)
         {
             _authService = authService;
+            _authManager = authManager;
         }
 
         [HttpPost(UrlConstants.BaseLogin)]
@@ -29,5 +31,8 @@ namespace BE.Controllers
             //var result = MD5Helper.ToMD5Hash(data.Password);
             return CommonResponse(result);
         }
+
+        public string token { get; set; }
+        public UserDataReturnDTO userDataReturnDTO { get; set; }
     }
 }

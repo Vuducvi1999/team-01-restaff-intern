@@ -3,6 +3,7 @@ using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Categories;
 using Microsoft.AspNetCore.Mvc;
+using Service.Auth;
 using Service.Categories;
 
 
@@ -14,7 +15,7 @@ namespace BE.Controllers
     {
         private readonly ICategoryService _categoryService;
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService, IAuthService authService, IUserManager userManager) : base(authService,userManager)
         {
             _categoryService = categoryService;
         }
