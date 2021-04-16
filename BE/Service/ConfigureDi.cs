@@ -7,6 +7,7 @@ using Service.Categories;
 using Service.Banners;
 using Service.Auth;
 using Service.Suppliers;
+using Service.Profiles;
 using Service.Users;
 
 namespace Service
@@ -31,6 +32,8 @@ namespace Service
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<IBannerService, BannerService>();
+            services.AddScoped<IProfileService, ProfileService>();
+
             services.AddScoped<IUserService, UserService>();
         }
     }

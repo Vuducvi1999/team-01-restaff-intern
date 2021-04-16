@@ -70,18 +70,7 @@ namespace Infrastructure.EntityFramework
         public virtual void Update(TEntity entity, List<Expression<Func<TEntity, object>>> updateProperties = null,
             List<Expression<Func<TEntity, object>>> excludeProperties = null)
         {
-            //if (updateProperties == null || updateProperties.Count == 0)
-            //{
-            //    DbContext.Entry(entity).State = EntityState.Modified;
-            //    if (excludeProperties != null && excludeProperties.Count > 0)
-            //    {
-            //        excludeProperties.ForEach(p => DbContext.Entry(entity).Property(p).IsModified = false);
-            //    }
-            //}
-            //else
-            //{
-            //    updateProperties.ForEach(p => DbContext.Entry(entity).Property(p).IsModified = true);
-            //}
+       
             entity.ObjectState = ObjectState.Modified;
             _dbSet.Attach(entity);
             _context.SyncObjectState(entity);
