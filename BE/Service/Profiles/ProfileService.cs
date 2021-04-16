@@ -58,8 +58,6 @@ namespace Service.Profiles
         {
             try
             {
-                model.Email.Trim();
-
                 var entity = _userRepository.Find(model.Id);
                 if (entity.IsNotNullOrEmpty())
                 {
