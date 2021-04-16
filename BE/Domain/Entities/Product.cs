@@ -9,6 +9,8 @@ namespace Domain.Entities
         public string Name { get; set; }
 
         public string Description { get; set; }
+        public string ImageUrl { get; set; }
+        public decimal Price { get; set; }
 
         public bool IsImportant { get; set; }
 
@@ -19,6 +21,7 @@ namespace Domain.Entities
         public int DisplayOrder { get; set; }
 
         public Guid CategoryId { get; set; }
+        public virtual Category Category { get; set; }
         public void Insert()
         {
             Id = Guid.NewGuid();
@@ -38,6 +41,8 @@ namespace Domain.Entities
             HasDisplayHomePage = model.HasDisplayHomePage;
             DisplayOrder = model.DisplayOrder;
             CategoryId = model.CategoryId;
+            ImageUrl = model.ImageUrl;
+            Price = model.Price;
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
     }

@@ -7,7 +7,7 @@ using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
 using System;
-
+using System.Linq;
 
 namespace Service.Categories
 {
@@ -26,6 +26,14 @@ namespace Service.Categories
 
         public ReturnMessage<CategoryDTO> Create(CreateCategoryDTO model)
         {
+            //var stringProperties = model.GetType().GetProperties()
+            //              .Where(p => p.PropertyType == typeof(string));
+
+            //foreach (var stringProperty in stringProperties)
+            //{
+            //    string currentValue = (string)stringProperty.GetValue(model, null);
+            //    stringProperty.SetValue(model, currentValue.Trim(), null);
+            //}
             try
             {
                 var entity = _mapper.Map<CreateCategoryDTO, Category>(model);
@@ -82,7 +90,7 @@ namespace Service.Categories
                 , t => t.Name
             );
             var data = _mapper.Map<PaginatedList<Category>, PaginatedList<CategoryDTO>>(resultEntity);
-            var result = new ReturnMessage<PaginatedList<CategoryDTO>>(false, data, MessageConstants.DeleteSuccess);
+            var result = new ReturnMessage<PaginatedList<CategoryDTO>>(false, data, MessageConstants.UpdateSuccess);
 
             return result;
         }

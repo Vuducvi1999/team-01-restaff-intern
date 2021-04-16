@@ -3,6 +3,7 @@ using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Products;
 using Microsoft.AspNetCore.Mvc;
+using Service.Auth;
 using Service.Products;
 
 
@@ -14,7 +15,7 @@ namespace BE.Controllers
     {
         private readonly IProductService _productService;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, IAuthService authService, IUserManager userManager) : base(authService, userManager)
         {
             _productService = productService;
         }

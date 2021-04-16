@@ -7,6 +7,7 @@ using Domain.DTOs.User;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Domain.DTOs.Products;
+using System.Linq;
 
 namespace Domain
 {
@@ -42,8 +43,10 @@ namespace Domain
 
             //product
             CreateMap<PaginatedList<Product>, PaginatedList<ProductDTO>>().ReverseMap();
-            CreateMap<Product, ProductDTO>().ReverseMap();
+            CreateMap<Product, ProductDTO>()
+                 .ForMember(t => t.CategoryName, k=>k.MapFrom(h=>h.Category.Name)).ReverseMap();
             CreateMap<CreateProductDTO, Product>().ReverseMap();
+            CreateMap<IQueryable<ProductDTO>, PaginatedList<Product>>().ReverseMap();
 
         }
     }

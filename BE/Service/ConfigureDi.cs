@@ -7,6 +7,7 @@ using Service.Categories;
 using Service.Banners;
 using Service.Auth;
 using Service.Suppliers;
+using Service.Products;
 
 namespace Service
 {
@@ -33,6 +34,7 @@ namespace Service
             services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IBannerService, BannerService>();
+            services.AddScoped<IProductService, ProductService>();
 
         }
     }

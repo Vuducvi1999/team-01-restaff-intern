@@ -23,6 +23,7 @@ namespace Infrastructure.EntityFramework
         {
             if (items.IsNotNullOrEmpty())
             {
+               
                 PageIndex = (int)Math.Round((decimal)skip / take, 0);
                 PageSize = take;
                 TotalItem = items.Count();

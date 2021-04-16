@@ -30,6 +30,7 @@ namespace Service.Products
 
             try
             {
+                
                 var entity = _mapper.Map<CreateProductDTO, Product>(model);
                 var category = _categoryRepository.Queryable().Where(it => it.Name == model.CategoryName).FirstOrDefault();
                 if (category == null)
@@ -74,9 +75,11 @@ namespace Service.Products
         {
             if (search == null)
             {
-                return new ReturnMessage<PaginatedList<ProductDTO>>(false, null, MessageConstants.DeleteSuccess);
+                return new ReturnMessage<PaginatedList<ProductDTO>>(false, null, MessageConstants.Error);
             }
-            var category = _categoryRepository.Queryable().Where(r => r.Name == search.Search.CategoryName);
+
+
+
             var resultEntity = _productRepository.GetPaginatedList(it => search.Search == null ||
                 (
                     (
@@ -89,12 +92,11 @@ namespace Service.Products
                 , search.PageSize
                 , search.PageIndex
                 , t => t.Name
+                , nameof(Category)
             );
-            
-            
-            var data = _mapper.Map<PaginatedList<Product>, PaginatedList<ProductDTO>>(resultEntity);
 
-            var result = new ReturnMessage<PaginatedList<ProductDTO>>(false, data, MessageConstants.DeleteSuccess);
+            var data = _mapper.Map<PaginatedList<Product>, PaginatedList<ProductDTO>>(resultEntity);
+            var result = new ReturnMessage<PaginatedList<ProductDTO>>(false, data, MessageConstants.ListSuccess);
 
             return result;
         }
@@ -109,7 +111,7 @@ namespace Service.Products
                     entity.Update(model);
                     _productRepository.Update(entity);
                     _unitOfWork.SaveChanges();
-                    var result = new ReturnMessage<ProductDTO>(false, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.DeleteSuccess);
+                    var result = new ReturnMessage<ProductDTO>(false, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.UpdateSuccess);
                     return result;
                 }
                 return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);

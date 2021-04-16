@@ -18,8 +18,9 @@ namespace Domain.DTOs.Products
         public bool HasDisplayHomePage { get; set; }
 
         public int DisplayOrder { get; set; }
-
         public Guid CategoryId { get; set; }
         public string CategoryName { get; set; }
+        public string ImageUrl { get; set; }
+        public decimal Price { get; set; }
     }
 }
