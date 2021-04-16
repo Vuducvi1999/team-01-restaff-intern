@@ -6,6 +6,7 @@ using Domain.DTOs.Suppliers;
 using Domain.DTOs.User;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
+using Domain.DTOs.Users;
 
 namespace Domain
 {
@@ -46,6 +47,12 @@ namespace Domain
             CreateMap<User, UserLoginDTO>().ReverseMap();
             CreateMap<User, ChangePasswordUserDTO>().ReverseMap();
             CreateMap<User, UserDataReturnDTO>().ReverseMap();
+
+            // Users
+            CreateMap<PaginatedList<User>, PaginatedList<UserDTO>>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<User, UpdateUserDTO>().ReverseMap();
+            CreateMap<User, CreateUserDTO>().ReverseMap();
 
         }
     }

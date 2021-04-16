@@ -13,5 +13,6 @@
         public const string BaseProfile = BaseApi + "/profile";
 
         public const string BaseCategory = BaseApi + "/category";
+        public const string BaseUser= BaseApi + "/user";
     }
 }
