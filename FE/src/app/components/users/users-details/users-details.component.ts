@@ -28,76 +28,24 @@ export class UserDetailComponent implements OnInit {
   public user: UserModel;
   @Input() item;
 
-  ngOnChanges(changes: SimpleChanges): void {}
-
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
     private ngbActiveModal: NgbActiveModal
   ) {}
 
-  save() {
-    if (this.modalHeader.title == 'Add') {
-      this.user = {
-        username: this.usersForm.value.username,
-        password: this.usersForm.value.password,
-        email: this.usersForm.value.email,
-        firstName: this.usersForm.value.firstName,
-        lastName: this.usersForm.value.lastName,
-        imageUrl: this.usersForm.value.email,
-        id: '',
-      };
-
-      if (this.usersForm.invalid) {
-        return;
-      }
-      this.userService
-        .create(this.user)
-        .then(() => {
-          this.ngbActiveModal.close();
-        })
-        .catch((er) => {
-          if (er.error.hasError) {
-            console.log(er.error.message);
-          }
-        });
-    }
-
-    if (this.modalHeader.title == `Update ${this.item.name}`) {
-      this.user = {
-        username: this.usersForm.value.username,
-        password: this.usersForm.value.password,
-        email: this.usersForm.value.email,
-        firstName: this.usersForm.value.firstName,
-        lastName: this.usersForm.value.lastName,
-        imageUrl: this.usersForm.value.email,
-        id: this.item.id,
-      };
-
-      if (this.usersForm.invalid) {
-        return;
-      }
-      this.userService
-        .update(this.user)
-        .then(() => {
-          this.ngbActiveModal.close();
-        })
-        .catch((er) => {
-          if (er.error.hasError) {
-            console.log(er.error.message);
-          }
-        });
-    }
+  ngOnInit() {
+    this.loadItem();
   }
 
   loadItem() {
     this.usersForm = this.formBuilder.group({
       username: [this.item ? this.item.username : '', [Validators.required]],
       password: [this.item ? this.item.password : '', [Validators.required]],
-      email: [this.item ? this.item.email : '', [Validators.required]],
-      firstName: [this.item ? this.item.firstName : '', [Validators.required]],
-      lastName: [this.item ? this.item.lastName : '', [Validators.required]],
-      imageUrl: [this.item ? this.item.imageUrl : '', [Validators.required]],
+      email: [this.item ? this.item.email : ''],
+      firstName: [this.item ? this.item.firstName : ''],
+      lastName: [this.item ? this.item.lastName : ''],
+      imageUrl: [this.item ? this.item.imageUrl : ''],
     });
 
     this.modalHeader = new ModalHeaderModel();
@@ -106,11 +54,40 @@ export class UserDetailComponent implements OnInit {
     this.modalFooter.title = 'Save';
   }
 
-  close(event: any) {
-    this.ngbActiveModal.close();
+  save() {
+    this.user = {
+      username: this.usersForm.value.username,
+      password: this.usersForm.value.password,
+      email: this.usersForm.value.email,
+      firstName: this.usersForm.value.firstName,
+      lastName: this.usersForm.value.lastName,
+      imageUrl: this.usersForm.value.email,
+      id: '',
+    };
+    if (!this.item.id) this.user.id = '';
+
+    if (this.item.id) this.user.id = this.item.id;
+
+    if (this.usersForm.invalid) {
+      return;
+    }
+    this.callServiceToSave();
   }
 
-  ngOnInit() {
-    this.loadItem();
+  callServiceToSave() {
+    this.userService
+      .update(this.user)
+      .then(() => {
+        this.ngbActiveModal.close();
+      })
+      .catch((er) => {
+        if (er.error.hasError) {
+          console.log(er.error.message);
+        }
+      });
+  }
+
+  close(event: any) {
+    this.ngbActiveModal.close();
   }
 }

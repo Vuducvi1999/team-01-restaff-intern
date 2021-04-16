@@ -66,12 +66,10 @@ export class ListUsersComponent implements OnInit {
       });
       modalRef.componentInstance.item = item.data;
       modalRef.result.then(
-        () => {
+        (close) => {
           this.getList();
         },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
+        (dismiss) => {}
       );
     }
     if (!item) {
@@ -80,12 +78,10 @@ export class ListUsersComponent implements OnInit {
       });
       modalRef.componentInstance.item = item as CategoryModel;
       modalRef.result.then(
-        () => {
+        (close) => {
           this.getList();
         },
-        (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
+        (dismiss) => {}
       );
     }
   }
@@ -104,16 +100,6 @@ export class ListUsersComponent implements OnInit {
           console.log(er.error.message);
         }
       });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
   }
 
   ngOnInit() {}
