@@ -29,6 +29,9 @@ namespace Service.Users
         {
             try
             {
+                if(model.Username.Trim() == "" || model.Password.Trim()=="")
+                    return new ReturnMessage<UserDTO>(false, null, MessageConstants.CreateSuccess);
+
                 var entity = _mapper.Map<CreateUserDTO, User>(model);
                 entity.Password = MD5Helper.ToMD5Hash(model.Password);
                 entity.Insert();
@@ -68,6 +71,8 @@ namespace Service.Users
         {
             try
             {
+                if (model.Username.Trim() == "" || model.Password.Trim() == "")
+                    return new ReturnMessage<UserDTO>(false, null, MessageConstants.CreateSuccess);
                 var entity = _userRepository.Find(model.Id);
                 if (entity.IsNotNullOrEmpty())
                 {
