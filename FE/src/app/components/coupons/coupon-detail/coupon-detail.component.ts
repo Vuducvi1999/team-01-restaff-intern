@@ -30,7 +30,7 @@ export class CouponDetailComponent implements OnInit {
     this.couponForm = this.formBuilder.group({
       code: [this.item ? this.item.code : '', Validators.required],
       name: [this.item ? this.item.name : '', Validators.required],
-      hasPercent: [false ? this.item.hasPercent : ''],
+      hasPercent: [this.item?.hasPercent ? true : false],
       value: [this.item ? this.item.value : '', Validators.required],
       startDate: [this.item ? this.item.startDate : '', Validators.required],
       endDate: [this.item ? this.item.endDate : '', Validators.required],
@@ -40,21 +40,22 @@ export class CouponDetailComponent implements OnInit {
   createModal() {
     this.modalHeader = new ModalHeaderModel();
     this.modalHeader.title =
-      this.item != null ? `Update ${this.item.title}` : `Add Coupon`;
+      this.item != null ? `Update ${this.item.name}` : `Add Coupon`;
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
   }
 
   saveCoupon(event: any) {
     this.coupon = {
-      code: this.couponForm.controls.title.value,
-      name: this.couponForm.controls.name.value,
-      hasPercent: this.checkBox(event) ? true : false,
-      value: this.couponForm.controls.value.value,
-      startDate: this.couponForm.controls.startDate.value,
-      endDate: this.couponForm.controls.endDate.value,
+      code: this.couponForm.controls.code?.value,
+      name: this.couponForm.controls.name?.value,
+      hasPercent: this.couponForm.controls.hasPercent?.value,
+      value: this.couponForm.controls.value?.value,
+      startDate: this.couponForm.controls.startDate?.value,
+      endDate: this.couponForm.controls.endDate?.value,
       id: this.item ? this.item.id : '',
     };
+    console.log(this.coupon);
     this.submitted = true;
     if (this.couponForm.valid) {
       if (this.item) {
@@ -87,12 +88,6 @@ export class CouponDetailComponent implements OnInit {
   }
   get CouponFormControl() {
     return this.couponForm.controls;
-  }
-  checkBox(event: any) {
-    if (event.target.checked) {
-      return true;
-    }
-    return false;
   }
 
   close(event: any) {

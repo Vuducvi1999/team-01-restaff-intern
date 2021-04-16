@@ -79,9 +79,9 @@ export class ListCouponComponent implements OnInit {
   }
 
   delete(event: any) {
-    let socialMedia = event.data as CouponModel;
+    let coupon = event.data as CouponModel;
     if (window.confirm('Are you sure to delete?')) {
-      this.couponService.delete(socialMedia).then(() => {
+      this.couponService.delete(coupon).then(() => {
         this.getCoupons();
       });
     }
