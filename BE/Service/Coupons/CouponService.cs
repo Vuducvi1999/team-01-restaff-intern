@@ -9,6 +9,7 @@ using Infrastructure.Extensions;
 using Service.Coupons;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Service.Coupons
@@ -31,7 +32,8 @@ namespace Service.Coupons
             try
             {
                 var entity = _mapper.Map<CreateCouponDTO, Coupon>(model);
-                if(DateTime.Compare(entity.StartDate, entity.EndDate) < 0)
+                TrimData(entity);
+                if (DateTime.Compare(entity.StartDate, entity.EndDate) < 0)
                 {
                     entity.Insert();
                     _couponRepository.Insert(entity);
@@ -68,13 +70,12 @@ namespace Service.Coupons
             }
         }
 
-        
-
         public ReturnMessage<CouponDTO> Update(UpdateCouponDTO model)
         {
             try
             {
                 var entity = _couponRepository.Find(model.Id);
+                TrimData(entity);
                 if (entity.IsNotNullOrEmpty() || DateTime.Compare(entity.StartDate, entity.EndDate) < 0)
                 {
                     entity.Update(model);
@@ -115,6 +116,12 @@ namespace Service.Coupons
             var result = new ReturnMessage<PaginatedList<CouponDTO>>(false, data, MessageConstants.DeleteSuccess);
 
             return result;
+        }
+
+        private void TrimData(Coupon coupon)
+        {
+            coupon.Code = coupon.Code.Trim();
+            coupon.Name = coupon.Name.Trim();
         }
     }
 }
