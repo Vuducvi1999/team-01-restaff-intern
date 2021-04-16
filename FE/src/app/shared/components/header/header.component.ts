@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   @Output() rightSidebarEvent = new EventEmitter<boolean>();
 
   constructor(public navServices: NavService, public router: Router) { }
+  public userInfo: any;
 
   collapseSidebar() {
     this.open = !this.open;
@@ -31,7 +32,9 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  ngOnInit() {  }
+  ngOnInit() { 
+    this.userInfo = JSON.parse(localStorage.getItem('user'));
+  }
 
   onLogout()
   {

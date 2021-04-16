@@ -1,10 +1,10 @@
 <img *ngIf="url" src="{{url}}" [style]="styleFile"/>
 <ng-container *ngIf="!url">
   <input
-    *ngIf="!data.listurl"
+    *ngIf="!data.listFile"
     type="file"
     accept="image/*"
     (change)="onChangeImg($event)"
   />
-  <img *ngIf="data.listurl" src="{{data.listurl[0].url}}" [style]="styleFile"/>
+  <img *ngIf="data.listFile" src="{{data.listFile[0].url}}" [style]="styleFile"/>
 </ng-container>

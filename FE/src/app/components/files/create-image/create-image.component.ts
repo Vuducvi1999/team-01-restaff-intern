@@ -5,20 +5,21 @@ import { FileService } from 'src/app/lib/data/services';
 import {
   ModalHeaderModel,
   ModalFooterModel,
-  ModalFileImage,
+  ModalFile,
 } from 'src/app/shared/components/modals/models/modal.model';
 
 @Component({
-  selector: 'app-create-single-image',
-  templateUrl: './create-single-image.component.html',
-  styleUrls: ['./create-single-image.component.scss'],
+  selector: 'app-create-image',
+  templateUrl: './create-image.component.html',
+  styleUrls: ['./create-image.component.scss'],
 })
-export class CreateSingleImageComponent implements OnInit {
+export class CreateImageComponent implements OnInit {
   modalHeader!: ModalHeaderModel;
   modalFooter!: ModalFooterModel;
-  modalSingleImage!: ModalFileImage;
+  modalSingleImage!: ModalFile;
   select: any;
   item!: FileDtoModel;
+  typeMulti: number;
 
   constructor(
     private ngbActiveModal: NgbActiveModal
@@ -31,7 +32,7 @@ export class CreateSingleImageComponent implements OnInit {
     this.modalHeader.title = this.item ? `[Update] ${this.item.id}` : `[Add]`;
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
-    this.modalSingleImage = new ModalFileImage();
+    this.modalSingleImage = new ModalFile();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -52,5 +53,7 @@ export class CreateSingleImageComponent implements OnInit {
     this.ngbActiveModal.close();
   }
 
-  save(event: any) {}
+  save(event: any) {
+    this.ngbActiveModal.close();
+  }
 }

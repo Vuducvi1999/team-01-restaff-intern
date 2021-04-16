@@ -13,7 +13,10 @@
     </option>
   </select>
   <br />
-  <app-modal-single-image [data]="modalSingleImage" styleFile="width: 200px; height: auto;"></app-modal-single-image>
+  <app-modal-single-image *ngIf="typeMulti == 1" [data]="modalSingleImage" styleFile="width: 200px; height: auto;"></app-modal-single-image>
+  <app-modal-multi-image *ngIf="typeMulti == 2" [data]="modalSingleImage" styleFile="width: 200px; height: auto;"></app-modal-multi-image>
+  <app-modal-file *ngIf="typeMulti == 3" [data]="modalSingleImage" styleFile="1"></app-modal-file>
+  <app-modal-file *ngIf="typeMulti == 4" [data]="modalSingleImage" styleFile="2"></app-modal-file>
 </div>
 <app-modal-footer
   [data]="modalFooter"

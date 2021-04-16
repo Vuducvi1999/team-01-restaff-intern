@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { AppConfig } from "src/app/lib/environments/config/appConfig";
 import { HttpClientService } from "src/app/lib/http/http-client";
 
 @Injectable()
@@ -23,7 +24,12 @@ export class FileService  {
       return this.httpClient.postObservable(this.url, model).toPromise();
     }
 
-    downloadFile(url: string) {
-      return this.httpClient.postObservable(this.urlDownload, url).toPromise();
+    downloadFile(request: any) {
+      return this.httpClient.getObservable(this.urlDownload, request).toPromise();
+    }
+
+    getLinkDownloadFile(url: string)
+    {
+      return `${AppConfig.settings.API_URL}${this.urlDownload}?url=${url}`;
     }
   }

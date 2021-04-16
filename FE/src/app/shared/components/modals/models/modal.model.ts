@@ -12,8 +12,8 @@ export class ModalFooterModel {
   constructor() {}
 }
 
-export class ModalFileImage {
-  public listurl: FileDtoModel[];
+export class ModalFile {
+  public listFile: FileDtoModel[];
   public enityType = '';
   public enityId = '';
   constructor() {}

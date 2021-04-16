@@ -2,13 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-
 import { FeatherIconsComponent } from './components/feather-icons/feather-icons.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 
-import { ToggleFullscreenDirective } from "./directives/fullscreen.directive";
+import { ToggleFullscreenDirective } from './directives/fullscreen.directive';
 import { ContentLayoutComponent } from './layout/content-layout/content-layout.component';
 import { NavService } from './service/nav.service';
 import { WINDOW_PROVIDERS } from './service/windows.service';
@@ -19,6 +18,8 @@ import { ModalFooterComponent } from './components/modals/modal-footer/modal-foo
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalSingleImageComponent } from './components/modals/modal-single-image/modal-single-image.component';
 import { FileService } from '../lib/data/services';
+import { ModalMultiImageComponent } from './components/modals/modal-multi-image/modal-multi-image.component';
+import { ModalFileComponent } from './components/modals/modal-file/modal-file.component';
 
 @NgModule({
   declarations: [
@@ -33,13 +34,19 @@ import { FileService } from '../lib/data/services';
     ModalHeaderComponent,
     ModalFooterComponent,
     ModalSingleImageComponent,
+    ModalMultiImageComponent,
+    ModalFileComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    NgbModalModule
-  ],
+  imports: [CommonModule, RouterModule, NgbModalModule],
   providers: [NavService, WINDOW_PROVIDERS, FileService],
-  exports: [FeatherIconsComponent, ToggleFullscreenDirective,ModalFooterComponent,ModalHeaderComponent, ModalSingleImageComponent]
+  exports: [
+    FeatherIconsComponent,
+    ToggleFullscreenDirective,
+    ModalFooterComponent,
+    ModalHeaderComponent,
+    ModalSingleImageComponent,
+    ModalMultiImageComponent,
+    ModalFileComponent,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import {
   FileDtoModel,
   PageModel,
@@ -8,7 +8,7 @@ import {
   SearchPaganationDTO,
 } from 'src/app/lib/data/models';
 import { FileService } from 'src/app/lib/data/services';
-import { CreateSingleImageComponent } from '../create-single-image/create-single-image.component';
+import { CreateImageComponent } from '../create-image/create-image.component';
 
 @Component({
   selector: 'app-list-files',
@@ -92,13 +92,14 @@ export class ListFilesComponent implements OnInit {
     });
   }
 
-  open(item: FileDtoModel | null) {
+  open(item: FileDtoModel | null, typeMulti: number) {
     // console.log(item);
-    var modalRef = this.modalService.open(CreateSingleImageComponent, {
+    var modalRef: NgbModalRef = this.modalService.open(CreateImageComponent, {
       ariaLabelledBy: 'modal-basic-title',
     });
     
     modalRef.componentInstance.select = this.type;
+    modalRef.componentInstance.typeMulti = typeMulti;
     modalRef.result.then(
       (result) => {
         console.log(result);

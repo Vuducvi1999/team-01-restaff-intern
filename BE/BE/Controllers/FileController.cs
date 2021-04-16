@@ -59,10 +59,10 @@ namespace BE.Controllers
             return CommonResponse(result);
         }
 
-        [HttpPost(UrlConstants.BaseFileDownload)]
-        public async Task<FileStreamResult> DownloadFile([FromForm] string value)
+        [HttpGet(UrlConstants.BaseFileDownload)]
+        public async Task<FileStreamResult> DownloadFile([FromQuery] string url)
         {
-            var fileDownload = await _fileManager.DownloadFile(value);
+            var fileDownload = await _fileManager.DownloadFile(url);
             return fileDownload;
         }
 

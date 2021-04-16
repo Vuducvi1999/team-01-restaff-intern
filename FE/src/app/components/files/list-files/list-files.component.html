@@ -8,10 +8,34 @@
       <button
         type="button"
         class="btn"
-        style="background-color: blue; color: white;"
-        (click)="open(null)"
+        style="background-color: blue; color: white"
+        (click)="open(null, 1)"
       >
         Add Single Image
+      </button>
+      <button
+        type="button"
+        class="btn"
+        style="background-color: darkcyan; color: white"
+        (click)="open(null, 2)"
+      >
+        Add Multi Image
+      </button>
+      <button
+        type="button"
+        class="btn"
+        style="background-color: rgb(76, 0, 139); color: white"
+        (click)="open(null, 3)"
+      >
+        Add Single File
+      </button>
+      <button
+        type="button"
+        class="btn"
+        style="background-color: rgb(139, 0, 120); color: white"
+        (click)="open(null, 4)"
+      >
+        Add Multi File
       </button>
       <div
         id="batchDelete"
