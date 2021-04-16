@@ -52,6 +52,16 @@ export const content: Routes = [
     },
   },
   {
+    path: 'coupons',
+    loadChildren: () =>
+      import('../../components/coupons/coupons.module').then(
+        (m) => m.CouponsModule
+      ),
+    data: {
+      breadcrumb: 'Coupons',
+    },
+  },
+  {
     path: 'users',
     loadChildren: () =>
       import('../../components/users/users.module').then((m) => m.UsersModule),

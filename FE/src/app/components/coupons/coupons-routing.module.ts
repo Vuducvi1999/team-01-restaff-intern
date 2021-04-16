@@ -1,25 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListSocialMediaComponent } from './list-social-media/list-social-media.component';
+import { ListCouponComponent } from './list-coupon/list-coupon.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'list-social-medias',
-        component: ListSocialMediaComponent,
+        path: 'list-coupons',
+        component: ListCouponComponent,
         data: {
-          title: 'Social Media List',
-          breadcrumb: 'Social Media List',
+          title: 'Coupon List',
+          breadcrumb: 'CouponList',
         },
       },
     ],
   },
 ];
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class SocialMediasRoutingModule {}
+export class CouponsRoutingModule {}

@@ -6,6 +6,7 @@ using Domain.DTOs.Suppliers;
 using Domain.DTOs.User;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
+using Domain.DTOs.Coupons;
 using Domain.DTOs.Profiles;
 using Domain.DTOs.Users;
 
@@ -26,6 +27,7 @@ namespace Domain
             CreateMap<PaginatedList<SocialMedia>, PaginatedList<SocialMediaDTO>>().ReverseMap();
             CreateMap<SocialMedia, SocialMediaDTO>().ReverseMap();
             CreateMap<CreateSocialMediaDTO, SocialMedia>().ReverseMap();
+
             CreateMap<Supplier, CreateSupplierDTO>().ReverseMap();
             CreateMap<Supplier, DeleteSupplierDTO>().ReverseMap();
             CreateMap<Supplier, UpdateSupplierDTO>().ReverseMap();

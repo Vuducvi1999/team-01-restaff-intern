@@ -78,6 +78,19 @@ export class NavService {
       ],
     },
     {
+      title: 'Coupon',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/coupons/list-coupons',
+          title: 'Coupon List',
+          type: 'link',
+        },
+      ],
+    },
+    {
       title: 'Settings',
       icon: 'users',
       type: 'sub',
