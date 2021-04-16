@@ -8,6 +8,8 @@ using Service.Banners;
 using Service.Auth;
 using Service.Suppliers;
 using Service.Coupons;
+using Service.Profiles;
+using Service.Users;
 
 namespace Service
 {
@@ -23,17 +25,15 @@ namespace Service
             services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
             services.AddScoped<ICouponService, CouponService>();
             //scoped
-            services.AddScoped<ISupplierService, SupplierService>();
             services.AddScoped<ISocialMediaService, SocialMediaService>();
-            services.AddScoped<IJwtManager, JwtManager>();
             services.AddScoped<IAuthService, AuthService>();
             //scoped
-            services.AddScoped<ISupplierService, SupplierService>();
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IJwtManager, JwtManager>();
-            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<IBannerService, BannerService>();
+            services.AddScoped<IProfileService, ProfileService>();
 
+            services.AddScoped<IUserService, UserService>();
         }
     }
 }

@@ -1,5 +1,5 @@
 import { Injectable, HostListener, Inject } from '@angular/core';
-import { BehaviorSubject, Observable, Subscriber } from 'rxjs';
+import { BehaviorSubject, } from 'rxjs';
 import { WINDOW } from './windows.service';
 // Menu
 export interface Menu {
@@ -34,12 +34,7 @@ export class NavService {
     this.screenWidth = window.innerWidth;
   }
 
-  // {
-  // 	title: 'Login',path: '/auth/login', icon: 'log-in', type: 'link', active: false
-  // }
 
-  // Array
-  // items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 
   MENUITEMS: Menu[] = [
     {
@@ -91,6 +86,19 @@ export class NavService {
         {
           path: '/coupons/list-coupons',
           title: 'Coupon List',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      title: 'Settings',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/profiles/profile-settings',
+          title: 'Profiles',
           type: 'link',
         },
       ],

@@ -3,7 +3,9 @@ using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Banners;
 using Domain.DTOs.Suppliers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Service.Auth;
 using Service.Banners;
 
 namespace BE.Controllers
@@ -15,7 +17,7 @@ namespace BE.Controllers
         private readonly IBannerService _bannerService;
 
 
-        public BannerController(IBannerService bannerService)
+        public BannerController(IBannerService bannerService, IAuthService authService, IUserManager userManager) : base(authService, userManager)
         {
             _bannerService = bannerService;
         }
@@ -23,7 +25,6 @@ namespace BE.Controllers
         [HttpGet]
         public IActionResult Get([FromQuery] SerachPaginationDTO<BannerDTO> serachPagination)
         {
-
             var result = _bannerService.SearchPagination(serachPagination);
             return CommonResponse(result);
         }

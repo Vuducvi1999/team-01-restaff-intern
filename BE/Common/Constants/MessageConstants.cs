@@ -11,5 +11,8 @@
 
         public const string InvalidAuthInfoMsg = "Invalid email or password";
         public const string LoginSuccess = "Login successfully";
+
+        public const string GetPaginationFail = "Get Pagination Fail";
+        public const string GetPaginationSuccess = "Get Pagination Success";
     }
 }
