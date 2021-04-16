@@ -55,28 +55,46 @@ export class UserDetailComponent implements OnInit {
   }
 
   save() {
+    if (this.usersForm.invalid) {
+      console.log(this.usersForm);
+      return;
+    }
     this.user = {
       username: this.usersForm.value.username,
       password: this.usersForm.value.password,
       email: this.usersForm.value.email,
       firstName: this.usersForm.value.firstName,
       lastName: this.usersForm.value.lastName,
-      imageUrl: this.usersForm.value.email,
+      imageUrl: this.usersForm.value.imageUrl,
       id: '',
     };
-    if (!this.item.id) this.user.id = '';
-
-    if (this.item.id) this.user.id = this.item.id;
-
-    if (this.usersForm.invalid) {
-      return;
+    if (!this.item?.id) {
+      this.user.id = '';
+      this.callServiceToCreate();
     }
-    this.callServiceToSave();
+
+    if (this.item?.id) {
+      this.user.id = this.item.id;
+      this.callServiceToUpdate();
+    }
   }
 
-  callServiceToSave() {
+  callServiceToUpdate() {
     this.userService
       .update(this.user)
+      .then(() => {
+        this.ngbActiveModal.close();
+      })
+      .catch((er) => {
+        if (er.error.hasError) {
+          console.log(er.error.message);
+        }
+      });
+  }
+
+  callServiceToCreate() {
+    this.userService
+      .create(this.user)
       .then(() => {
         this.ngbActiveModal.close();
       })

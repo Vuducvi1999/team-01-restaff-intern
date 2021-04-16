@@ -13,7 +13,7 @@ import { UserService } from './../../../lib/data/services/users/user.service';
   providers: [UserService],
 })
 export class ListUsersComponent {
-  public users = [];
+  public users: UserModel[];
   closeResult = '';
   constructor(private modalService: NgbModal, private service: UserService) {
     this.getList();
@@ -31,9 +31,6 @@ export class ListUsersComponent {
     columns: {
       username: {
         title: 'Username',
-      },
-      password: {
-        title: 'Password',
       },
       email: {
         title: 'Email',
@@ -78,7 +75,7 @@ export class ListUsersComponent {
   getList() {
     this.service
       .get(null)
-      .then((res: ReturnMessage<PageModel<CategoryModel>>) => {
+      .then((res: ReturnMessage<PageModel<UserModel>>) => {
         if (!res.hasError) {
           this.users = res.data.results;
         }
