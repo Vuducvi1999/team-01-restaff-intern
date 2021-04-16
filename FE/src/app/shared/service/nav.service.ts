@@ -1,5 +1,5 @@
 import { Injectable, HostListener, Inject } from '@angular/core';
-import { BehaviorSubject, } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { WINDOW } from './windows.service';
 // Menu
 export interface Menu {
@@ -33,8 +33,6 @@ export class NavService {
   onResize(event?) {
     this.screenWidth = window.innerWidth;
   }
-
-
 
   MENUITEMS: Menu[] = [
     {
@@ -99,6 +97,19 @@ export class NavService {
         {
           path: '/profiles/profile-settings',
           title: 'Profiles',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      title: 'Users',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/users/list-users',
+          title: 'User List',
           type: 'link',
         },
       ],
