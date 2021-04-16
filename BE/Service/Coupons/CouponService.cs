@@ -31,11 +31,15 @@ namespace Service.Coupons
             try
             {
                 var entity = _mapper.Map<CreateCouponDTO, Coupon>(model);
-                entity.Insert();
-                _couponRepository.Insert(entity);
-                _unitOfWork.SaveChanges();
-                var result = new ReturnMessage<CouponDTO>(false, _mapper.Map<Coupon, CouponDTO>(entity), MessageConstants.CreateSuccess);
-                return result;
+                if(DateTime.Compare(entity.StartDate, entity.EndDate) < 0)
+                {
+                    entity.Insert();
+                    _couponRepository.Insert(entity);
+                    _unitOfWork.SaveChanges();
+                    var result = new ReturnMessage<CouponDTO>(false, _mapper.Map<Coupon, CouponDTO>(entity), MessageConstants.CreateSuccess);
+                    return result;
+                }
+                return new ReturnMessage<CouponDTO>(true, null, MessageConstants.Error);
             }
             catch (Exception ex)
             {
@@ -71,13 +75,14 @@ namespace Service.Coupons
             try
             {
                 var entity = _couponRepository.Find(model.Id);
-                if (entity.IsNotNullOrEmpty())
+                if (entity.IsNotNullOrEmpty() || DateTime.Compare(entity.StartDate, entity.EndDate) < 0)
                 {
                     entity.Update(model);
                     _couponRepository.Update(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<CouponDTO>(false, _mapper.Map<Coupon, CouponDTO>(entity), MessageConstants.DeleteSuccess);
                     return result;
+                    
                 }
                 return new ReturnMessage<CouponDTO>(true, null, MessageConstants.Error);
             }

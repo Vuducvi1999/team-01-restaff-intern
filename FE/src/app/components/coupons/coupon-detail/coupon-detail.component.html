@@ -113,7 +113,7 @@
                     CouponFormControl.startDate.errors?.required
                   "
                 >
-                  Start Date is required
+                  Start Date is required or Invalid
                 </span>
               </div>
               <div class="form-group row">
@@ -131,10 +131,11 @@
                   class="text-danger"
                   *ngIf="
                     (CouponFormControl.endDate.touched || submitted) &&
-                    CouponFormControl.endDate.errors?.required
+                    (CouponFormControl.endDate.errors?.required ||
+                      CouponFormControl.endDate.errors?.compared)
                   "
                 >
-                  End Date is required
+                  End Date is required or Invalid
                 </span>
               </div>
             </form>

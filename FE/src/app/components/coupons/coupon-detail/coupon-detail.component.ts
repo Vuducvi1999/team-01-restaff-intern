@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CouponModel } from 'src/app/lib/data/models/coupons/coupon.model';
 import { CouponService } from 'src/app/lib/data/services/coupons/coupon.service';
@@ -33,8 +40,20 @@ export class CouponDetailComponent implements OnInit {
       hasPercent: [this.item?.hasPercent ? true : false],
       value: [this.item ? this.item.value : '', Validators.required],
       startDate: [this.item ? this.item.startDate : '', Validators.required],
-      endDate: [this.item ? this.item.endDate : '', Validators.required],
+      endDate: [
+        this.item ? this.item.endDate : '',
+        [Validators.required, this.compareDate('startDate')],
+      ],
     });
+  }
+
+  compareDate(matchTo: string): ValidatorFn {
+    console.log(matchTo);
+    return (control: AbstractControl) => {
+      return control?.value > control?.parent?.controls[matchTo].value
+        ? null
+        : { compared: true };
+    };
   }
 
   createModal() {
