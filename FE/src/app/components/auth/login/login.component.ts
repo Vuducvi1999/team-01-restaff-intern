@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Data, Router } from '@angular/router';
-import { AuthLoginModel, ReturnMessage } from 'src/app/lib/data/models';
+import { AuthLoginModel, ReturnMessage, UserDataReturnDTOModel } from 'src/app/lib/data/models';
 import { AuthService } from 'src/app/lib/data/services';
 
 @Component({
@@ -70,9 +70,10 @@ export class LoginComponent implements OnInit {
     var data: AuthLoginModel = this.loginForm.value;
     await this.authService
       .login(data)
-      .then((data: ReturnMessage<string>) => {
+      .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
         alert(data.message);
-        localStorage.setItem('token', data.data);
+        localStorage.setItem('token', data.data.token);
+        localStorage.setItem('user', JSON.stringify(data.data));
         this.backUrl();
       })
       .catch((er) => {

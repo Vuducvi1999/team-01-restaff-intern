@@ -45,9 +45,9 @@ namespace BE.AppConfig
                     ValidateAudience = true, // Validate audience, if true, must specify ValidAudience
                     ValidAudience = jwtConfig.Audience,
 
-                    ValidateLifetime = true, // Validate JWT lifetime, if false will not check nbf and exp
+                    ValidateLifetime = false, // Validate JWT lifetime, if false will not check nbf and exp
 
-                    ClockSkew = TimeSpan.FromMinutes(1) // Tolerance to validate JWT lifetime
+                    //ClockSkew = TimeSpan.FromMinutes(1) // Tolerance to validate JWT lifetime
                 };
             });
         }

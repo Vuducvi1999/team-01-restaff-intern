@@ -3,6 +3,7 @@ using Domain.DTOs.Categories;
 using Domain.DTOs.Banners;
 using Domain.DTOs.SocialMedias;
 using Domain.DTOs.Suppliers;
+using Domain.DTOs.User;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Domain.DTOs.Products;
@@ -32,6 +33,11 @@ namespace Domain
             CreateMap<PaginatedList<Banner>, PaginatedList<BannerDTO>>().ReverseMap();
             CreateMap<Banner, BannerDTO>().ReverseMap();
             CreateMap<CreateBannerDTO, Banner>().ReverseMap();
+            CreateMap<Banner, CreateBannerDTO>().ReverseMap();
+            CreateMap<Banner, UpdateBannerDTO>().ReverseMap();
+            CreateMap<Banner, DeleteBannerDTO>().ReverseMap();
+
+            CreateMap<User, UserDataReturnDTO>().ReverseMap();
 
 
             //product
