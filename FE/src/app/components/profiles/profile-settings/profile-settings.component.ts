@@ -15,7 +15,7 @@ export class ProfileSettingsComponent implements OnInit {
   submitted = false;
   public updateProfile: ProfileModel;
   public passwordProfile: ChangePasswordProfileModel
-  update=false;
+  update = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,8 +50,8 @@ export class ProfileSettingsComponent implements OnInit {
 
   }
 
-  updateSwitch(){
-    this.update= this.update ==true? false :true;
+  updateSwitch() {
+    this.update = this.update == true ? false : true;
     console.log(this.update)
   }
   updateDetails() {
@@ -93,14 +93,4 @@ export class ProfileSettingsComponent implements OnInit {
       });
     }
   }
-
-  comparePassword(matchTo: string): ValidatorFn {
-    console.log(matchTo);
-    return (control: AbstractControl) => {
-      return control?.value > control?.parent?.controls[matchTo].value
-        ? null
-        : { compared: true };
-    };
-  }
-
 }
