@@ -1,4 +1,5 @@
-﻿using Domain.DTOs.User;
+﻿using Common.MD5;
+using Domain.DTOs.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -25,6 +26,14 @@ namespace Domain.Entities
             ImageUrl = model.ImageUrl;
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
+
+        public void ChangePassword(ChangePasswordUserDTO model)
+        {
+            model.NewPassword = MD5Helper.ToMD5Hash(model.NewPassword);
+            Password = model.NewPassword;
+            ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
+        }
+
     }
 
 }

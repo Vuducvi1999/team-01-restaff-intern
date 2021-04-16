@@ -6,6 +6,8 @@ namespace Service.Profiles
 {
     public interface IProfileService
     {
-        ReturnMessage<UpdateUserDTO> Update(UpdateUserDTO model);
+        ReturnMessage<UserDataReturnDTO> Update(UpdateUserDTO model);
+        ReturnMessage<UpdateUserDTO> ChangePassword(ChangePasswordUserDTO model);
+
     }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClientService } from "src/app/lib/http/http-client";
-import { ProfileModel } from "../../models";
+import { ChangePasswordProfileModel, ProfileModel } from "../../models";
 
 
 @Injectable()
@@ -12,6 +12,9 @@ export class ProfileService {
 
   update(model: ProfileModel) {
     return this.httpClient.putObservable(this.url, model).toPromise();
+  }
+  changePassword(model: ChangePasswordProfileModel) {
+    return this.httpClient.putObservable(this.url + "/password", model).toPromise();
   }
 
 }

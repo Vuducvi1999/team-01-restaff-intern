@@ -5,3 +5,9 @@ export interface ProfileModel extends BaseModel {
     email: string;
     imageUrl: string;
 }
+export interface ChangePasswordProfileModel{
+    userName: string;
+    password: string;
+    newPassword: string;
+    confirmNewPassword: string;
+}

@@ -26,6 +26,13 @@ namespace BE.Controllers
             return CommonResponse(result);
         }
 
+        [HttpPut]
+        [Route("password")]
+        public IActionResult ChangePassword([FromBody] ChangePasswordUserDTO model)
+        {
+            var result = _profileService.ChangePassword(model);
+            return CommonResponse(result);
+        }
 
     }
 }

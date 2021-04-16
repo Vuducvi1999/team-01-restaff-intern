@@ -43,6 +43,10 @@ namespace Domain
             CreateMap<Banner, DeleteBannerDTO>().ReverseMap();
 
             CreateMap<User, UserDataReturnDTO>().ReverseMap();
+            CreateMap<User, UserLoginDTO>().ReverseMap();
+            CreateMap<User, ChangePasswordUserDTO>().ReverseMap();
+            CreateMap<User, UserDataReturnDTO>().ReverseMap();
+
         }
     }
 }
