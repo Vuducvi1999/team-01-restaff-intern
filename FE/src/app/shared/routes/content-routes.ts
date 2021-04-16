@@ -41,4 +41,12 @@ export const content: Routes = [
       breadcrumb: 'Categories',
     },
   },
+  {
+    path: 'users',
+    loadChildren: () =>
+      import('../../components/users/users.module').then((m) => m.UsersModule),
+    data: {
+      breadcrumb: 'Users',
+    },
+  },
 ];

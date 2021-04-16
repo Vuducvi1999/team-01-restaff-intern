@@ -82,6 +82,19 @@ export class NavService {
         },
       ],
     },
+    {
+      title: 'Users',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/users/list-users',
+          title: 'User List',
+          type: 'link',
+        },
+      ],
+    },
   ];
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 }
