@@ -2,12 +2,13 @@
 using Common.Constants;
 using Common.Http;
 using Common.Pagination;
-using Domain.DTOs.Users;
+using Domain.DTOs.User;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
 using Common.MD5;
 using System;
+using Domain.DTOs.Users;
 
 namespace Service.Users
 {
