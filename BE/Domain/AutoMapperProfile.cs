@@ -7,6 +7,8 @@ using Domain.DTOs.Suppliers;
 using Domain.DTOs.User;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -43,6 +45,8 @@ namespace Domain
             CreateMap<File, CreateFileDTO>().ReverseMap();
             CreateMap<File, UpdateFileDTO>().ReverseMap();
             CreateMap<File, DeleteFileDTO>().ReverseMap();
+            //CreateMap<CreateFileDTO, SaveFileDTO>().ReverseMap();
+            CreateMap<SaveFileDTO, CreateFileDTO>();
         }
     }
 }

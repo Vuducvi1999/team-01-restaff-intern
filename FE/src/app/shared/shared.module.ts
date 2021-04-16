@@ -17,6 +17,8 @@ import { RightSidebarComponent } from './components/right-sidebar/right-sidebar.
 import { ModalHeaderComponent } from './components/modals/modal-header/modal-header.component';
 import { ModalFooterComponent } from './components/modals/modal-footer/modal-footer.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalSingleImageComponent } from './components/modals/modal-single-image/modal-single-image.component';
+import { FileService } from '../lib/data/services';
 
 @NgModule({
   declarations: [
@@ -29,14 +31,15 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     BreadcrumbComponent,
     RightSidebarComponent,
     ModalHeaderComponent,
-    ModalFooterComponent
+    ModalFooterComponent,
+    ModalSingleImageComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     NgbModalModule
   ],
-  providers: [NavService, WINDOW_PROVIDERS],
-  exports: [FeatherIconsComponent, ToggleFullscreenDirective,ModalFooterComponent,ModalHeaderComponent]
+  providers: [NavService, WINDOW_PROVIDERS, FileService],
+  exports: [FeatherIconsComponent, ToggleFullscreenDirective,ModalFooterComponent,ModalHeaderComponent, ModalSingleImageComponent]
 })
 export class SharedModule { }

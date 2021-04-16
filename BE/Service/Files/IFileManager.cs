@@ -10,7 +10,7 @@ namespace Service.Files
 {
     public interface IFileManager
     {
-        Task<List<FileDTO>> Save(List<CreateFileDTO> files);
-        Task<FileStreamResult> Download(String url);
+        Task<List<CreateFileDTO>> SaveFile(SaveFileDTO saveFile);
+        Task<FileStreamResult> DownloadFile(String url);
     }
 }

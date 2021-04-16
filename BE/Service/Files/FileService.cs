@@ -7,6 +7,7 @@ using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Service.Files
@@ -37,6 +38,7 @@ namespace Service.Files
                 var entities = _mapper.Map<List<CreateFileDTO>, List<Domain.Entities.File>>(model);
                 _fileRepository.InsertRange(entities);
                 _unitOfWork.Commit();
+                _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<List<FileDTO>>(false, _mapper.Map<List<Domain.Entities.File>, List<FileDTO>>(entities), MessageConstants.CreateSuccess);
                 return result;
             }
@@ -49,17 +51,72 @@ namespace Service.Files
 
         public ReturnMessage<List<FileDTO>> Delete(List<DeleteFileDTO> model)
         {
-            throw new NotImplementedException();
+            if (model.IsNullOrEmpty())
+            {
+                return new ReturnMessage<List<FileDTO>>(true, null, MessageConstants.Error);
+            }
+
+            try
+            {
+
+                var entities = _fileRepository.Queryable().Where(it => model.IndexOf(_mapper.Map<Domain.Entities.File, DeleteFileDTO>(it)) > -1);
+                _unitOfWork.BeginTransaction();
+                _fileRepository.DeleteRange(entities);
+                _unitOfWork.Commit();
+                var result = new ReturnMessage<List<FileDTO>>(false, _mapper.Map<List<Domain.Entities.File>, List<FileDTO>>(entities.ToList()), MessageConstants.DeleteSuccess);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new ReturnMessage<List<FileDTO>>(true, null, ex.Message);
+            }
         }
 
         public ReturnMessage<PaginatedList<FileDTO>> SearchPagination(SerachPaginationDTO<FileDTO> search)
         {
-            throw new NotImplementedException();
+            if (search == null)
+            {
+                return new ReturnMessage<PaginatedList<FileDTO>>(false, null, MessageConstants.Error);
+            }
+
+            var resultEntity = _fileRepository.GetPaginatedList(it => search.Search == null ||
+                (
+                    (
+                        (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
+                        it.Name.Contains(search.Search.Name)
+                        //it.Description.Contains(search.Search.Description)
+                    )
+                )
+                , search.PageSize
+                , search.PageIndex
+                , t => t.Name
+            );
+            var data = _mapper.Map<PaginatedList<Domain.Entities.File>, PaginatedList<FileDTO>>(resultEntity);
+            var result = new ReturnMessage<PaginatedList<FileDTO>>(false, data, MessageConstants.SearchSuccess);
+
+            return result;
         }
 
         public ReturnMessage<List<FileDTO>> Update(List<UpdateFileDTO> model)
         {
-            throw new NotImplementedException();
+            if (model.IsNullOrEmpty())
+            {
+                return new ReturnMessage<List<FileDTO>>(true, null, MessageConstants.Error);
+            }
+
+            try
+            {
+                var entities = _mapper.Map<List<UpdateFileDTO>, List<Domain.Entities.File>>(model);
+                _unitOfWork.BeginTransaction();
+                _fileRepository.UpdateRange(entities);
+                _unitOfWork.Commit();
+                var result = new ReturnMessage<List<FileDTO>>(false, _mapper.Map<List<Domain.Entities.File>, List<FileDTO>>(entities.ToList()), MessageConstants.UpdateSuccess);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new ReturnMessage<List<FileDTO>>(true, null, ex.Message);
+            }
         }
     }
 }

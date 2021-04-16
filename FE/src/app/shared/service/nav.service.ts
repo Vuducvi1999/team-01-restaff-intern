@@ -82,6 +82,19 @@ export class NavService {
         },
       ],
     },
+    {
+      title: 'Files',
+      icon: 'camera',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/files/list-files',
+          title: 'File List',
+          type: 'link',
+        },
+      ],
+    },
   ];
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 }

@@ -25,5 +25,6 @@ namespace Common.Constants
 
         public const string BaseFile = BaseApi + "/file";
         public const string BaseFileDownload = BaseFile + "/download";
+        public const string BaseFileGetType = BaseFile + "/type";
     }
 }

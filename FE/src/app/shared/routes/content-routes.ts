@@ -41,4 +41,9 @@ export const content: Routes = [
       breadcrumb: 'Categories',
     },
   },
+  {
+    path: 'files',
+    loadChildren: () =>
+      import('../../components/files/files.module').then((m) => m.FilesModule),
+  },
 ];

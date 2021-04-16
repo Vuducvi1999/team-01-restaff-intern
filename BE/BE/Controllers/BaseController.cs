@@ -1,7 +1,9 @@
-﻿using Common.Http;
+﻿using Common.Constants;
+using Common.Http;
 using Domain.DTOs.User;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
+using System.Collections.Generic;
 
 namespace BE.Controllers
 {
@@ -28,6 +30,15 @@ namespace BE.Controllers
             get{
                 var userId = _authService.GetInformationToken(this.User.Claims).Id;
                 return _userManager.GetInformationAuth(userId);
+            }
+        }
+
+        public IDictionary<string,string> EnityType
+        {
+            get
+            {
+                var result = DataType.Type;
+                return result;
             }
         }
     }

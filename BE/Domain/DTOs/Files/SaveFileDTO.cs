@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Domain.DTOs.Files
 {
     public class SaveFileDTO
     {
-        public String Name { get; set; }
-        public String Url { get; set; }
-        public String FileExt { get; set; }
+        [Required]
         public String EntityType { get; set; }
+        [Required]
         public String EntityId { get; set; }
-        public IFormFile File { get; set; }
+        [Required]
+        public List<IFormFile> Files { get; set; }
     }
 }

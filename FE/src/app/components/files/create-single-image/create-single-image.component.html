@@ -1,0 +1,21 @@
+<app-modal-header
+  [data]="modalHeader"
+  (onAction)="close($event)"
+></app-modal-header>
+<div class="modal-body" class="card-body" style="margin: auto; width: 50%">
+  EnityID:
+  <input type="text" placeholder="ID" [(ngModel)]="modalSingleImage.enityId" />
+  <br />
+  EnityType:
+  <select *ngIf="select" [(ngModel)]="modalSingleImage.enityType">
+    <option *ngFor="let item of select" value="{{ item.key }}">
+      {{ item.value }}
+    </option>
+  </select>
+  <br />
+  <app-modal-single-image [data]="modalSingleImage" styleFile="width: 200px; height: auto;"></app-modal-single-image>
+</div>
+<app-modal-footer
+  [data]="modalFooter"
+  (onAction)="save($event)"
+></app-modal-footer>
