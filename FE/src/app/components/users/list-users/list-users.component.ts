@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { UserModel } from 'src/app/lib/data/models/users/user.model';
@@ -12,7 +12,7 @@ import { UserService } from './../../../lib/data/services/users/user.service';
   styleUrls: ['./list-users.component.scss'],
   providers: [UserService],
 })
-export class ListUsersComponent implements OnInit {
+export class ListUsersComponent {
   public users = [];
   closeResult = '';
   constructor(private modalService: NgbModal, private service: UserService) {
@@ -60,37 +60,25 @@ export class ListUsersComponent implements OnInit {
   }
 
   openPopup(item: any) {
-    if (item) {
-      var modalRef = this.modalService.open(UserDetailComponent, {
-        size: 'lg',
-      });
-      modalRef.componentInstance.item = item.data;
-      modalRef.result.then(
-        (close) => {
-          this.getList();
-        },
-        (dismiss) => {}
-      );
-    }
-    if (!item) {
-      var modalRef = this.modalService.open(UserDetailComponent, {
-        size: 'lg',
-      });
-      modalRef.componentInstance.item = item as CategoryModel;
-      modalRef.result.then(
-        (close) => {
-          this.getList();
-        },
-        (dismiss) => {}
-      );
-    }
+    var modalRef = this.modalService.open(UserDetailComponent, {
+      size: 'lg',
+    });
+    if (item) modalRef.componentInstance.item = item.data;
+
+    if (!item) modalRef.componentInstance.item = item as CategoryModel;
+
+    modalRef.result.then(
+      (close) => {
+        this.getList();
+      },
+      (dismiss) => {}
+    );
   }
 
   getList() {
     this.service
       .get(null)
       .then((res: ReturnMessage<PageModel<CategoryModel>>) => {
-        console.log('res', res);
         if (!res.hasError) {
           this.users = res.data.results;
         }
@@ -101,6 +89,4 @@ export class ListUsersComponent implements OnInit {
         }
       });
   }
-
-  ngOnInit() {}
 }
