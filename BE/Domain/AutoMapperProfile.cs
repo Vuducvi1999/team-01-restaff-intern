@@ -41,27 +41,15 @@ namespace Domain
             CreateMap<Banner, UpdateBannerDTO>().ReverseMap();
             CreateMap<Banner, DeleteBannerDTO>().ReverseMap();
 
-
-            CreateMap<User, UpdateProfileDTO>().ReverseMap();
-
-            CreateMap<CreateBannerDTO, Banner>().ReverseMap();
-            CreateMap<CreateBannerDTO, Banner>().ReverseMap();
-            CreateMap<Banner, CreateBannerDTO>().ReverseMap();
-            CreateMap<Banner, UpdateBannerDTO>().ReverseMap();
-            CreateMap<Banner, DeleteBannerDTO>().ReverseMap();
-
-            CreateMap<User, UserDataReturnDTO>().ReverseMap();
-            CreateMap<User, UserLoginDTO>().ReverseMap();
-            CreateMap<User, ChangePassworProfileDTO>().ReverseMap();
-            CreateMap<User, UserDataReturnDTO>().ReverseMap();
-
             // Users
             CreateMap<PaginatedList<User>, PaginatedList<UserDTO>>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<User, UpdateProfileDTO>().ReverseMap();
-            CreateMap<User, CreateUserDTO>().ReverseMap();
+            CreateMap<User, CreateUserDTO>().ReverseMap(); CreateMap<User, UserLoginDTO>().ReverseMap();
+            CreateMap<User, ChangePassworProfileDTO>().ReverseMap();
+            CreateMap<User, UserDataReturnDTO>().ReverseMap();
 
-
+            // Files
             CreateMap<PaginatedList<File>, PaginatedList<FileDTO>>().ReverseMap();
             CreateMap<File, FileDTO>().ReverseMap();
             CreateMap<File, CreateFileDTO>().ReverseMap();

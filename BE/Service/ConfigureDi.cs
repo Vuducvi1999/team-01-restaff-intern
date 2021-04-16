@@ -33,7 +33,6 @@ namespace Service
             services.AddScoped<IAuthService, AuthService>();
             //scoped
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<IBannerService, BannerService>();
             services.AddScoped<IProfileService, ProfileService>();
