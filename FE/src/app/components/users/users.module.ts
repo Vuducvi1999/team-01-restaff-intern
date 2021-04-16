@@ -2,24 +2,24 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgbModal, NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 
-import { ListCategoriesComponent } from './list-categories/list-categories.component';
-import { CategoryDetailComponent } from './categories-details/categories-details.component';
-import { CategoriesRoutingModule } from './categories-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ListUsersComponent } from './list-users/list-users.component';
+import { UserDetailComponent } from './users-details/users-details.component';
+import { UsersRoutingModule } from './users-routing.module';
 
 @NgModule({
-  declarations: [ListCategoriesComponent, CategoryDetailComponent],
+  declarations: [ListUsersComponent, UserDetailComponent],
   imports: [
     CommonModule,
-    CategoriesRoutingModule,
+    UsersRoutingModule,
     ReactiveFormsModule,
     NgbModule,
     SharedModule,
     NgbModalModule,
-    Ng2SmartTableModule
-  ]
+    Ng2SmartTableModule,
+  ],
 })
-export class CategoriesModule { }
+export class UsersModule {}

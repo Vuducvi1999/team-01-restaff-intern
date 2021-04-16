@@ -2,22 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
-import { CategoryService } from 'src/app/lib/data/services/categories/category.service';
-import { CategoryDetailComponent } from '../categories-details/categories-details.component';
+import { UserModel } from 'src/app/lib/data/models/users/user.model';
+import { UserDetailComponent } from '../users-details/users-details.component';
+import { UserService } from './../../../lib/data/services/users/user.service';
 
 @Component({
-  selector: 'app-list-categories',
-  templateUrl: './list-categories.component.html',
-  styleUrls: ['./list-categories.component.scss'],
-  providers: [CategoryService],
+  selector: 'app-list-users',
+  templateUrl: './list-users.component.html',
+  styleUrls: ['./list-users.component.scss'],
+  providers: [UserService],
 })
-export class ListCategoriesComponent implements OnInit {
+export class ListUsersComponent implements OnInit {
   public users = [];
   closeResult = '';
-  constructor(
-    private modalService: NgbModal,
-    private service: CategoryService
-  ) {
+  constructor(private modalService: NgbModal, private service: UserService) {
     this.getList();
   }
 
@@ -53,23 +51,23 @@ export class ListCategoriesComponent implements OnInit {
   };
 
   delete(event: any) {
-    let category = event.data as CategoryModel;
+    let category = event.data as UserModel;
     if (window.confirm('Are u sure?')) {
       this.service.delete(category).then(() => {
-        this.fetch();
+        this.getList();
       });
     }
   }
 
   openPopup(item: any) {
     if (item) {
-      var modalRef = this.modalService.open(CategoryDetailComponent, {
+      var modalRef = this.modalService.open(UserDetailComponent, {
         size: 'lg',
       });
       modalRef.componentInstance.item = item.data;
       modalRef.result.then(
         () => {
-          this.fetch();
+          this.getList();
         },
         (reason) => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -77,13 +75,13 @@ export class ListCategoriesComponent implements OnInit {
       );
     }
     if (!item) {
-      var modalRef = this.modalService.open(CategoryDetailComponent, {
+      var modalRef = this.modalService.open(UserDetailComponent, {
         size: 'lg',
       });
       modalRef.componentInstance.item = item as CategoryModel;
       modalRef.result.then(
         () => {
-          this.fetch();
+          this.getList();
         },
         (reason) => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -96,8 +94,9 @@ export class ListCategoriesComponent implements OnInit {
     this.service
       .get(null)
       .then((res: ReturnMessage<PageModel<CategoryModel>>) => {
+        console.log('res', res);
         if (!res.hasError) {
-          this.categories = res.data.results;
+          this.users = res.data.results;
         }
       })
       .catch((er) => {

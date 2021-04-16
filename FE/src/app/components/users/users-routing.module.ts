@@ -1,34 +1,25 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CategoryDetailComponent } from './categories-details/categories-details.component';
-import { ListCategoriesComponent } from './list-categories/list-categories.component';
-
+import { ListUsersComponent } from './list-users/list-users.component';
+import { UserDetailComponent } from './users-details/users-details.component';
 
 const routes: Routes = [
-    {
-      path: '',
-      children: [
-        {
-          path: 'list-categories',
-          component: ListCategoriesComponent,
-          data: {
-            title: "Category List",
-            breadcrumb: "Category List"
-          }
+  {
+    path: '',
+    children: [
+      {
+        path: 'list-users',
+        component: ListUsersComponent,
+        data: {
+          title: 'User List',
+          breadcrumb: 'User List',
         },
-        {
-          path: 'create-categories',
-          component: CategoryDetailComponent,
-          data: {
-            title: "Create Category",
-            breadcrumb: "Create Category"
-          }
-        }
-      ]
-    }
+      },
+    ],
+  },
 ];
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class CategoriesRoutingModule { }
+export class UsersRoutingModule {}
