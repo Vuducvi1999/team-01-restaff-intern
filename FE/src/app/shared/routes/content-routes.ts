@@ -18,8 +18,18 @@ export const content: Routes = [
         (m) => m.BannersModule
       ),
     data: {
-      breadcrumb: 'Banners',
-    },
+      breadcrumb: "Banners"
+    }
+
+  }
+  ,
+  {
+    path: 'profiles',
+    loadChildren: () => import('../../components/profiles/profiles.module').then(m => m.ProfilesModule),
+    data: {
+      breadcrumb: "Profiles"
+    }
+
   },
   {
     path: 'social-medias',
@@ -45,5 +55,23 @@ export const content: Routes = [
     path: 'files',
     loadChildren: () =>
       import('../../components/files/files.module').then((m) => m.FilesModule),
+  },
+  {
+    path: 'coupons',
+    loadChildren: () =>
+      import('../../components/coupons/coupons.module').then(
+        (m) => m.CouponsModule
+      ),
+    data: {
+      breadcrumb: 'Coupons',
+    },
+  },
+  {
+    path: 'users',
+    loadChildren: () =>
+      import('../../components/users/users.module').then((m) => m.UsersModule),
+    data: {
+      breadcrumb: 'Users',
+    },
   },
 ];

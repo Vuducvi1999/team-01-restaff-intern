@@ -21,10 +21,15 @@ namespace Common.Constants
 
         public const string BaseBanner = BaseApi + "/banner";
 
+        public const string BaseProfile = BaseApi + "/profile";
+
         public const string BaseCategory = BaseApi + "/category";
 
         public const string BaseFile = BaseApi + "/file";
         public const string BaseFileDownload = BaseFile + "/download";
         public const string BaseFileGetType = BaseFile + "/type";
+
+        public const string BaseCoupon = BaseApi + "/coupon";
+        public const string BaseUser= BaseApi + "/user";
     }
 }

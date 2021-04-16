@@ -11,7 +11,7 @@ export class BannersService {
   constructor(private httpClient: HttpClientService) { }
 
   get(request: any) {
-    return  this.httpClient.getObservable(this.url, request).toPromise();
+    return this.httpClient.getObservable(this.url, request).toPromise();
   }
 
   create(model: BannerModel) {
@@ -25,6 +25,12 @@ export class BannersService {
   delete(model: BannerModel) {
     const url = `${this.url}?id=${model?.id}`;
     return this.httpClient.deleteObservable(url).toPromise();
+  }
+  save(model: BannerModel) {
+    if (model.id) {
+      return this.httpClient.putObservable(this.url, model).toPromise();
+    }
+    return this.httpClient.postObservable(this.url, model).toPromise();
   }
 }
 
