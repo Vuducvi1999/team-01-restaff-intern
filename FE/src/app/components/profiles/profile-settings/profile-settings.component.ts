@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangePasswordProfileModel, ProfileModel, UserDataReturnDTOModel } from 'src/app/lib/data/models';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ProfileService } from 'src/app/lib/data/services';
 
 @Component({
@@ -15,6 +15,8 @@ export class ProfileSettingsComponent implements OnInit {
   submitted = false;
   public updateProfile: ProfileModel;
   public passwordProfile: ChangePasswordProfileModel
+  update=false;
+
   constructor(
     private formBuilder: FormBuilder,
     private profileService: ProfileService
@@ -46,6 +48,11 @@ export class ProfileSettingsComponent implements OnInit {
       confirmNewPassword: ['', Validators.required],
     });
 
+  }
+
+  updateSwitch(){
+    this.update= this.update ==true? false :true;
+    console.log(this.update)
   }
   updateDetails() {
     if (window.confirm("Are u sure?")) {
@@ -85,6 +92,15 @@ export class ProfileSettingsComponent implements OnInit {
         }
       });
     }
+  }
+
+  comparePassword(matchTo: string): ValidatorFn {
+    console.log(matchTo);
+    return (control: AbstractControl) => {
+      return control?.value > control?.parent?.controls[matchTo].value
+        ? null
+        : { compared: true };
+    };
   }
 
 }

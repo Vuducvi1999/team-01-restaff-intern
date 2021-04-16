@@ -1,5 +1,6 @@
 ﻿using Common.Constants;
 using Common.Http;
+using Domain.DTOs.Profiles;
 using Domain.DTOs.User;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
@@ -20,7 +21,7 @@ namespace BE.Controllers
 
 
         [HttpPut]
-        public IActionResult Update([FromBody] UpdateUserDTO model)
+        public IActionResult Update([FromBody] UpdateProfileDTO model)
         {
             var result = _profileService.Update(model);
             return CommonResponse(result);
@@ -28,7 +29,7 @@ namespace BE.Controllers
 
         [HttpPut]
         [Route("password")]
-        public IActionResult ChangePassword([FromBody] ChangePasswordUserDTO model)
+        public IActionResult ChangePassword([FromBody] ChangePassworProfileDTO model)
         {
             var result = _profileService.ChangePassword(model);
             return CommonResponse(result);

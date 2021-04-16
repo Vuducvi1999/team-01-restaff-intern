@@ -6,6 +6,7 @@ using Domain.DTOs.Suppliers;
 using Domain.DTOs.User;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
+using Domain.DTOs.Profiles;
 using Domain.DTOs.Users;
 
 namespace Domain
@@ -36,7 +37,7 @@ namespace Domain
             CreateMap<Banner, DeleteBannerDTO>().ReverseMap();
 
 
-            CreateMap<User, UpdateUserDTO>().ReverseMap();
+            CreateMap<User, UpdateProfileDTO>().ReverseMap();
 
             CreateMap<CreateBannerDTO, Banner>().ReverseMap();
             CreateMap<Banner, CreateBannerDTO>().ReverseMap();
@@ -45,13 +46,13 @@ namespace Domain
 
             CreateMap<User, UserDataReturnDTO>().ReverseMap();
             CreateMap<User, UserLoginDTO>().ReverseMap();
-            CreateMap<User, ChangePasswordUserDTO>().ReverseMap();
+            CreateMap<User, ChangePassworProfileDTO>().ReverseMap();
             CreateMap<User, UserDataReturnDTO>().ReverseMap();
 
             // Users
             CreateMap<PaginatedList<User>, PaginatedList<UserDTO>>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
-            CreateMap<User, UpdateUserDTO>().ReverseMap();
+            CreateMap<User, UpdateProfileDTO>().ReverseMap();
             CreateMap<User, CreateUserDTO>().ReverseMap();
 
         }

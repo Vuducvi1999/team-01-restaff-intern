@@ -2,7 +2,9 @@
 using Common.Constants;
 using Common.Http;
 using Common.MD5;
+using Domain.DTOs.Profiles;
 using Domain.DTOs.User;
+using Domain.DTOs.Users;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
@@ -31,7 +33,7 @@ namespace Service.Profiles
             _authService = authService;
         }
 
-        public ReturnMessage<UpdateUserDTO> ChangePassword(ChangePasswordUserDTO model)
+        public ReturnMessage<UpdateProfileDTO> ChangePassword(ChangePassworProfileDTO model)
         {
             try
             {
@@ -41,25 +43,27 @@ namespace Service.Profiles
                     entity.ChangePassword(model);
                     _userRepository.Update(entity);
                     _unitOfWork.SaveChanges();
-                    var result = new ReturnMessage<UpdateUserDTO>(false, _mapper.Map<User, UpdateUserDTO>(entity), MessageConstants.UpdateSuccess);
+                    var result = new ReturnMessage<UpdateProfileDTO>(false, _mapper.Map<User, UpdateProfileDTO>(entity), MessageConstants.UpdateSuccess);
                     return result;
                 }
-                return new ReturnMessage<UpdateUserDTO>(false, null, MessageConstants.InvalidAuthInfoMsg);
+                return new ReturnMessage<UpdateProfileDTO>(false, null, MessageConstants.InvalidAuthInfoMsg);
             }
             catch (Exception ex)
             {
-                return new ReturnMessage<UpdateUserDTO>(true, null, ex.Message);
+                return new ReturnMessage<UpdateProfileDTO>(true, null, ex.Message);
             }
         }
 
-        public ReturnMessage<UserDataReturnDTO> Update(UpdateUserDTO model)
+        public ReturnMessage<UserDataReturnDTO> Update(UpdateProfileDTO model)
         {
             try
             {
+                model.Email.Trim();
+
                 var entity = _userRepository.Find(model.Id);
                 if (entity.IsNotNullOrEmpty())
                 {
-                    entity.Update(model);
+                    entity.UpdateProfile(model);
                     _userRepository.Update(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<UserDataReturnDTO>(false, _mapper.Map<User, UserDataReturnDTO>(entity), MessageConstants.DeleteSuccess);

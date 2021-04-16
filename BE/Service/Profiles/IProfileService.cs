@@ -1,4 +1,5 @@
 ﻿using Common.Http;
+using Domain.DTOs.Profiles;
 using Domain.DTOs.User;
 
 
@@ -6,8 +7,8 @@ namespace Service.Profiles
 {
     public interface IProfileService
     {
-        ReturnMessage<UserDataReturnDTO> Update(UpdateUserDTO model);
-        ReturnMessage<UpdateUserDTO> ChangePassword(ChangePasswordUserDTO model);
+        ReturnMessage<UserDataReturnDTO> Update(UpdateProfileDTO model);
+        ReturnMessage<UpdateProfileDTO> ChangePassword(ChangePassworProfileDTO model);
 
     }
 }
