@@ -57,6 +57,13 @@ namespace Domain
             CreateMap<File, DeleteFileDTO>().ReverseMap();
             //CreateMap<CreateFileDTO, SaveFileDTO>().ReverseMap();
             CreateMap<SaveFileDTO, CreateFileDTO>();
+
+            //Coupon
+            CreateMap<PaginatedList<Coupon>, PaginatedList<CouponDTO>>().ReverseMap();
+            CreateMap<Coupon, CouponDTO>().ReverseMap();
+            CreateMap<Coupon, CreateCouponDTO>().ReverseMap();
+            CreateMap<Coupon, UpdateCouponDTO>().ReverseMap();
+            CreateMap<Coupon, DeleteCouponDTO>().ReverseMap();
         }
     }
 }

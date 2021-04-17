@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavService } from '../../service/nav.service';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { bounce, zoomOut, zoomIn, fadeIn, bounceIn } from 'ng-animate';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-content-layout',
@@ -19,11 +20,20 @@ export class ContentLayoutComponent implements OnInit {
   public right_side_bar: boolean;
   public layoutType: string = 'RTL';
   public layoutClass: boolean = false;
+  public userInfo: any;
 
-  constructor(public navServices: NavService) { }
+  constructor(public navServices: NavService, public activedRoute: ActivatedRoute) { }
 
   public getRouterOutletState(outlet) {
-    return outlet.isActivated ? outlet.activatedRoute : '';
+    if(!outlet.isActivated)
+    {
+      return '';
+    }
+    if(outlet.activatedRoute.snapshot.data.user)
+    {
+      this.userInfo = outlet.activatedRoute.snapshot.data.user;
+    }
+    return outlet.activatedRoute;
   }
 
   public rightSidebar($event) {
@@ -42,6 +52,8 @@ export class ContentLayoutComponent implements OnInit {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.userInfo = this.activedRoute.snapshot.data.user;
+  }
 
 }

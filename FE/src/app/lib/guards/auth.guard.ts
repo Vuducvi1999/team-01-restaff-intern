@@ -1,4 +1,10 @@
-import { ActivatedRouteSnapshot, CanActivate, Route, Router, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Route,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 
 import { Injectable } from '@angular/core';
 import { RouterHelperService } from '../helpers';
@@ -9,12 +15,23 @@ import { isEmpty } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthGuardsAdminService {
-  constructor(private router: Router, private routerHelperService: RouterHelperService) { }
+  constructor(
+    private router: Router,
+    private routerHelperService: RouterHelperService
+  ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // Constants.previousUrl = route;
     // const user = route.data?.token;
-    const user = localStorage.getItem('token');
+    // route.data = {
+    //   user: JSON.parse(localStorage.getItem('user')),
+    //   token: localStorage.getItem('token'),
+    // };
+    route.data = {
+      user: JSON.parse(localStorage.getItem('user')),
+      token: localStorage.getItem('token'),
+    };
+    const user = route.data?.token;
     if (user && Object.keys(user).length !== 0) {
       const url: string = this.getStateUrl(route, state.url);
       return true;
@@ -23,7 +40,7 @@ export class AuthGuardsAdminService {
   }
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-      const user = route.data;
+    const user = route.data;
     if (user) {
       const url: string = this.getStateUrl(route, state.url);
       return true;
@@ -49,6 +66,4 @@ export class AuthGuardsAdminService {
   canLoad(route: Route) {
     const url = `/${route.path}`;
   }
-
-
 }

@@ -12,7 +12,7 @@ const routes: Routes = [
                 component: ProfileSettingsComponent,
                 data: {
                     title: "Profile Settings",
-                    breadcrumb: "Profile Settings"
+                    breadcrumb: "Profile Settings",
                 }
             }
         ]

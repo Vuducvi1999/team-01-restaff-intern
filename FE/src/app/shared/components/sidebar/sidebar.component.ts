@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { NavService, Menu } from '../../service/nav.service';
 
 @Component({
@@ -13,7 +13,7 @@ export class SidebarComponent implements OnInit {
   public menuItems: Menu[];
   public url: any;
   public fileurl: any;
-  public userInfo: any;
+  @Input() userInfo: any;
 
   constructor(private router: Router, public navServices: NavService) {
     this.navServices.items.subscribe(menuItems => {
@@ -39,7 +39,7 @@ export class SidebarComponent implements OnInit {
     })
   }
   ngOnInit(): void {
-    this.userInfo = JSON.parse(localStorage.getItem('user'));
+
   }
 
   // Active Nave state
