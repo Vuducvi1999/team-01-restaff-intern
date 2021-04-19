@@ -26,7 +26,7 @@ export class BannersDetailComponent implements OnInit {
     private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
     private bannersService: BannersService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadFormItem();
@@ -70,25 +70,11 @@ export class BannersDetailComponent implements OnInit {
     this.submitted = true;
 
     if (this.bannersForm.valid) {
-      if (this.item) {
-        return this.bannersService
-          .update(this.banner)
-          .then((res) => {
-            this.bannersForm.reset();
-            this.submitted = false;
-          })
-          .catch((er) => {
-            if (er.error.hasError) {
-              console.log(er.error.message);
-            }
-          });
-      }
-
-      return this.bannersService
-        .create(this.banner)
+      this.bannersService.save(this.banner)
         .then((res) => {
           this.bannersForm.reset();
           this.submitted = false;
+          this.ngbActiveModal.close();
         })
         .catch((er) => {
           if (er.error.hasError) {
@@ -96,6 +82,33 @@ export class BannersDetailComponent implements OnInit {
           }
         });
     }
+
+    // if (this.item) {
+    //   return this.bannersService
+    //     .update(this.banner)
+    //     .then((res) => {
+    //       this.bannersForm.reset();
+    //       this.submitted = false;
+    //     })
+    //     .catch((er) => {
+    //       if (er.error.hasError) {
+    //         console.log(er.error.message);
+    //       }
+    //     });
+    // }
+
+    // return this.bannersService
+    //   .create(this.banner)
+    //   .then((res) => {
+    //     this.bannersForm.reset();
+    //     this.submitted = false;
+    //   })
+    //   .catch((er) => {
+    //     if (er.error.hasError) {
+    //       console.log(er.error.message);
+    //     }
+    //   });
+
   }
 
   close(event: any) {

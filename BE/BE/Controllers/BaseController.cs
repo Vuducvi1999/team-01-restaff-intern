@@ -1,4 +1,5 @@
-﻿using Common.Http;
+﻿using Common.Constants;
+using Common.Http;
 using Domain.DTOs.User;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
@@ -23,11 +24,12 @@ namespace BE.Controllers
             return Ok(data);
         }
 
-        public UserDataReturnDTO InformationUser
+        public ReturnMessage<UserDataReturnDTO> InformationUser
         {
-            get{
+            get
+            {
                 var userId = _authService.GetInformationToken(this.User.Claims).Id;
-                return _userManager.GetInformationAuth(userId);
+                return new ReturnMessage<UserDataReturnDTO>(true, _userManager.GetInformationAuth(userId), MessageConstants.DeleteSuccess);
             }
         }
     }

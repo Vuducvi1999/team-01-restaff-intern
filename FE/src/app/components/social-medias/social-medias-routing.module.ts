@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListSocialMediaComponent } from './list-social-media/list-social-media.component';
-import { SocialMediaDetailComponent } from './social-media-detail/social-media-detail.component';
 
 const routes: Routes = [
   {
