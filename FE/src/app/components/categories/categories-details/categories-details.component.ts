@@ -35,17 +35,7 @@ export class CategoryDetailComponent implements OnInit {
         description: this.categoriesForm.value.description,
         imageUrl: this.categoriesForm.value.imageUrl,
         id: this.item ? this.item.id : ''};
-      if(this.item){
-        return this.categoryService.update(this.category)
-                        .then(() => {
-                            this.ngbActiveModal.close();
-                        }).catch((er) => {
-                        if (er.error.hasError) {
-                          console.log(er.error.message)
-                        }});
-      }
-
-      return this.categoryService.create(this.category)
+      return this.categoryService.save(this.category)
                       .then(() => {
                           this.ngbActiveModal.close();
                       }).catch((er) => {
@@ -54,6 +44,7 @@ export class CategoryDetailComponent implements OnInit {
                         }
                       });
     }
+
 
     loadItem(){
       this.categoriesForm = this.formBuilder.group({

@@ -25,4 +25,10 @@ export class CategoryService  {
       const url = `${this.url}/?Id=${model?.id}`;
       return this.httpClient.deleteObservable(url).toPromise();
     }
+    save(model: CategoryModel) {
+      if (model.id) {
+        return this.update(model);
+      }
+      return this.create(model);
+    }
   }
