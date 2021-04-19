@@ -4,6 +4,7 @@ using Common.Pagination;
 using Domain.DTOs.Coupons;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Service.Auth;
 using Service.Coupons;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace BE.Controllers
     {
         private readonly ICouponService _couponService;
 
-        public CouponController(ICouponService couponService)
+        public CouponController(ICouponService couponService, IAuthService authService, IUserManager userManager) : base(authService, userManager)
         {
             _couponService = couponService;
         }
