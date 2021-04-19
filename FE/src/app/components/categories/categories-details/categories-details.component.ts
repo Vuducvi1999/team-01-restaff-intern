@@ -27,47 +27,6 @@ export class CategoryDetailComponent implements OnInit {
     , private ngbActiveModal: NgbActiveModal) {}
 
 
-    // save(){
-    //   if(this.modalHeader.title == "[Add]")
-    //   {
-    //     this.category = {name: this.categoriesForm.value.name, 
-    //                   description: this.categoriesForm.value.description,
-    //                   imageUrl: this.categoriesForm.value.imageUrl,
-    //                   id: ''};
-                  
-    //     if(this.categoriesForm.invalid){
-    //       return;
-    //     }
-    //     this.categoryService.create(this.category).then(() => {
-    //       this.ngbActiveModal.close();
-    //     }).catch((er) => {
-
-    //       if (er.error.hasError) {
-    //         console.log(er.error.message)
-    //       }
-    //     });
-    //   }
-      
-    //   if(this.modalHeader.title == "[Update] ${this.item.name}"){
-    //     this.category = {name: this.categoriesForm.value.name, 
-    //       description: this.categoriesForm.value.description,
-    //       imageUrl: this.categoriesForm.value.imageUrl,
-    //       id: this.item.id};
-                               
-    //     if(this.categoriesForm.invalid){
-    //       return;
-    //     }    
-    //      this.categoryService.update(this.category).then(() => {
-    //        this.ngbActiveModal.close();
-    //      }).catch((er) => {
-   
-    //        if (er.error.hasError) {
-    //          console.log(er.error.message)
-    //        }
-    //      });
-    //   }
-    // }
-
     save(){
       if(this.categoriesForm.invalid){
         return;
