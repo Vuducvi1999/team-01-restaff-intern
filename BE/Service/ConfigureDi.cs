@@ -10,6 +10,7 @@ using Service.Suppliers;
 using Service.Coupons;
 using Service.Profiles;
 using Service.Users;
+using Service.Products;
 
 namespace Service
 {

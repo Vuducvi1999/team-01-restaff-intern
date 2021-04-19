@@ -61,26 +61,49 @@ export class ListCategoriesComponent implements OnInit {
   }
 
 
+  // openPopup(item:any){
+  //   if(item){
+  //     var modalRef =  this.modalService.open(CategoryDetailComponent, {size: 'lg'});
+  //     modalRef.componentInstance.item = item.data;
+  //     return modalRef.result.then(() => {
+  //             this.fetch();
+  //           }, (reason) => {
+  //             this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+  //           });
+  //   }
+
+
+  //   if(!item){
+  //     var modalRef =  this.modalService.open(CategoryDetailComponent, {size: 'lg'});
+  //     modalRef.componentInstance.item = item as CategoryModel;
+    //   modalRef.result.then(() => {
+    //     this.fetch();
+    //   }, (reason) => {
+    //     this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    //   });
+    // }
+  // }
+
   openPopup(item:any){
     if(item){
       var modalRef =  this.modalService.open(CategoryDetailComponent, {size: 'lg'});
       modalRef.componentInstance.item = item.data;
-      modalRef.result.then(() => {
-        this.fetch();
-      }, (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      });
+      return modalRef.result.then(() => {
+              this.fetch();
+            }, (reason) => {
+              this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+            });
     }
-    if(!item){
-      var modalRef =  this.modalService.open(CategoryDetailComponent, {size: 'lg'});
-      modalRef.componentInstance.item = item as CategoryModel;
-      modalRef.result.then(() => {
-        this.fetch();
-      }, (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      });
-    }
+    var modalRef =  this.modalService.open(CategoryDetailComponent, {size: 'lg'});
+    modalRef.componentInstance.item = item as CategoryModel;
+    return modalRef.result.then(() => {
+                this.fetch();
+              }, (reason) => {
+                this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+              });
   }
+
+
 
 
   fetch() {

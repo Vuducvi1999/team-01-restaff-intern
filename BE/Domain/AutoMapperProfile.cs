@@ -9,6 +9,8 @@ using Infrastructure.EntityFramework;
 using Domain.DTOs.Coupons;
 using Domain.DTOs.Profiles;
 using Domain.DTOs.Users;
+using Domain.DTOs.Products;
+using System.Linq;
 
 namespace Domain
 {
