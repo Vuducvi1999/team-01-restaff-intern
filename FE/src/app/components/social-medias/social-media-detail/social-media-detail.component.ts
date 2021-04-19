@@ -28,12 +28,18 @@ export class SocialMediaDetailComponent implements OnInit {
 
   loadItemForm() {
     this.socialMediaForm = this.formBuilder.group({
-      title: [this.item ? this.item.title : '', Validators.required],
-      link: [this.item ? this.item.link : '', Validators.required],
-      iconUrl: [this.item ? this.item.iconUrl : '', Validators.required],
+      title: [
+        this.item ? this.item.title : '',
+        [
+          Validators.required,
+          Validators.pattern('^(?=.*[a-zA-Z0-9])([a-zA-Z0-9]+)$'),
+        ],
+      ],
+      link: [this.item ? this.item.link : '', [Validators.required]],
+      iconUrl: [this.item ? this.item.iconUrl : '', [Validators.required]],
       displayOrder: [
         this.item ? this.item.displayOrder : '',
-        Validators.required,
+        [Validators.required],
       ],
     });
   }

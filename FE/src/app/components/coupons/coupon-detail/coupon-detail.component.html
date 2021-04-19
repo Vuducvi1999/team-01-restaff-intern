@@ -35,7 +35,8 @@
                   class="text-danger"
                   *ngIf="
                     (CouponFormControl.code.touched || submitted) &&
-                    CouponFormControl.code.errors?.required
+                    (CouponFormControl.code.errors?.required ||
+                      CouponFormControl.code.errors?.pattern)
                   "
                 >
                   Code is required
@@ -57,7 +58,8 @@
                   class="text-danger"
                   *ngIf="
                     (CouponFormControl.name.touched || submitted) &&
-                    CouponFormControl.name.errors?.required
+                    (CouponFormControl.name.errors?.required ||
+                      CouponFormControl.name.errors?.pattern)
                   "
                 >
                   Name is required

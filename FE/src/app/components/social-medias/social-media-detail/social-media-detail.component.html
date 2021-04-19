@@ -35,7 +35,8 @@
                   class="text-danger"
                   *ngIf="
                     (SocialMediaFormControl.title.touched || submitted) &&
-                    SocialMediaFormControl.title.errors?.required
+                    (SocialMediaFormControl.title.errors?.required ||
+                      SocialMediaFormControl.title.errors?.pattern)
                   "
                 >
                   Title is required

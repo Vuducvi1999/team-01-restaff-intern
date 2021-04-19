@@ -35,8 +35,20 @@ export class CouponDetailComponent implements OnInit {
   ) {}
   loadItemForm() {
     this.couponForm = this.formBuilder.group({
-      code: [this.item ? this.item.code : '', Validators.required],
-      name: [this.item ? this.item.name : '', Validators.required],
+      code: [
+        this.item ? this.item.code : '',
+        [
+          Validators.required,
+          Validators.pattern('^(?=.*[a-zA-Z0-9])([a-zA-Z0-9]+)$'),
+        ],
+      ],
+      name: [
+        this.item ? this.item.name : '',
+        [
+          Validators.required,
+          Validators.pattern('^(?=.*[a-zA-Z0-9])([a-zA-Z0-9]+)$'),
+        ],
+      ],
       hasPercent: [this.item?.hasPercent ? true : false],
       value: [this.item ? this.item.value : '', Validators.required],
       startDate: [this.item ? this.item.startDate : '', Validators.required],
