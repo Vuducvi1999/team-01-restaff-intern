@@ -2,6 +2,7 @@
 using Common.Constants;
 using Common.Http;
 using Common.Pagination;
+using Domain.DTOs.Categories;
 using Domain.DTOs.Files;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
@@ -39,7 +40,7 @@ namespace Service.Files
                 _fileRepository.InsertRange(entities);
                 _unitOfWork.Commit();
                 _unitOfWork.SaveChanges();
-                var result = new ReturnMessage<List<FileDTO>>(false, _mapper.Map<List<Domain.Entities.File>, List<FileDTO>>(entities), MessageConstants.CreateSuccess);
+                var result = new ReturnMessage<List<FileDTO>>(false, _mapper.Map<List<Domain.Entities.File>, List<FileDTO>>(entities), MessageConstants.CreateSuccess + " " + model.Count + " files");
                 return result;
             }
             catch (Exception ex)
@@ -63,6 +64,7 @@ namespace Service.Files
                 _unitOfWork.BeginTransaction();
                 _fileRepository.DeleteRange(entities);
                 _unitOfWork.Commit();
+                _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<List<FileDTO>>(false, _mapper.Map<List<Domain.Entities.File>, List<FileDTO>>(entities.ToList()), MessageConstants.DeleteSuccess);
                 return result;
             }
@@ -84,7 +86,7 @@ namespace Service.Files
                     (
                         (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
                         it.Name.Contains(search.Search.Name)
-                        //it.Description.Contains(search.Search.Description)
+                    //it.Description.Contains(search.Search.Description)
                     )
                 )
                 , search.PageSize
@@ -110,8 +112,45 @@ namespace Service.Files
                 _unitOfWork.BeginTransaction();
                 _fileRepository.UpdateRange(entities);
                 _unitOfWork.Commit();
+                _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<List<FileDTO>>(false, _mapper.Map<List<Domain.Entities.File>, List<FileDTO>>(entities.ToList()), MessageConstants.UpdateSuccess);
                 return result;
+            }
+            catch (Exception ex)
+            {
+                return new ReturnMessage<List<FileDTO>>(true, null, ex.Message);
+            }
+        }
+
+        public ReturnMessage<List<FileDTO>> UpdateImageCategory(List<FileDTO> fileIds, Guid entityId)
+        {
+            if (fileIds.IsNullOrEmpty() || entityId.IsNullOrEmpty())
+            {
+                return new ReturnMessage<List<FileDTO>>(true, null, MessageConstants.Error);
+            }
+
+            var files = new List<Domain.Entities.File>();
+
+            try
+            {
+                foreach (var fileId in fileIds)
+                {
+                    var item = _fileRepository.Find(fileId.Id);
+                    {
+                        if (item.IsNotNullOrEmpty())
+                        {
+                            item.EntityId = entityId.ToString();
+                            files.Add(item);
+                        }
+                    }
+                }
+                _unitOfWork.BeginTransaction();
+                _fileRepository.UpdateRange(files);
+                _unitOfWork.Commit();
+                _unitOfWork.SaveChanges();
+                var result = new ReturnMessage<List<FileDTO>>(false, _mapper.Map<List<Domain.Entities.File>, List<FileDTO>>(files), MessageConstants.UpdateSuccess);
+                return result;
+
             }
             catch (Exception ex)
             {

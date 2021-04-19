@@ -70,10 +70,15 @@ namespace Service.Files
             {
                 foreach (var formFile in saveFile.Files)
                 {
-                    var item = _mapper.Map<SaveFileDTO, CreateFileDTO>(saveFile);
                     var ext = Path.GetExtension(formFile.FileName);
+                    if(!DataType.CheckTypeAccept(saveFile.EntityType, ext))
+                    {
+                        continue;
+                    }
                     var fileName = Guid.NewGuid().ToString() + ext;
                     var filePath = Path.Combine(filePaths, fileName);
+
+                    var item = _mapper.Map<SaveFileDTO, CreateFileDTO>(saveFile);
                     if (formFile.Length > 0)
                     {
                         using (var stream = System.IO.File.Create(filePath))

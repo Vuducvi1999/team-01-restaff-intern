@@ -1,5 +1,6 @@
 ﻿using Common.Http;
 using Common.Pagination;
+using Domain.DTOs.Categories;
 using Domain.DTOs.Files;
 using Infrastructure.EntityFramework;
 using Service.Common;
@@ -12,5 +13,6 @@ namespace Service.Files
     public interface IFileService : ICommonCRUDService<List<FileDTO>,List<CreateFileDTO>,List<UpdateFileDTO>,List<DeleteFileDTO>>
     {
         ReturnMessage<PaginatedList<FileDTO>> SearchPagination(SerachPaginationDTO<FileDTO> search);
+        ReturnMessage<List<FileDTO>> UpdateImageCategory(List<FileDTO> files, Guid entityId);
     }
 }

@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { FileDtoModel, ReturnMessage } from 'src/app/lib/data/models';
 import { FileService } from 'src/app/lib/data/services';
-import { ModalFile } from '../models/modal.model';
+import { ModalFile, TypeFile } from '../models/modal.model';
 
 @Component({
   selector: 'app-modal-single-image',
@@ -19,16 +19,47 @@ import { ModalFile } from '../models/modal.model';
 export class ModalSingleImageComponent implements OnInit, OnChanges {
   @Input() data = new ModalFile();
   @Input() url: string;
+  
   @Input() styleFile: string;
   @Output() onAction = new EventEmitter();
+
+  public file: File;
+  public imgURL: string | ArrayBuffer;
 
   constructor(private fileService: FileService) {}
   ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit() {}
 
+  // onUpdate()
+  // {
+  //   this.createImage(this.file);
+  // }
+
+  onRemove()
+  {
+    this.imgURL = null;
+    this.file = null;
+  }
+
   onChangeImg(event) {
-    this.createImage(event.target.files[0]);
+    var files = event.target.files;
+    this.file = files[0];
+    if (files.length === 0)
+      return;
+ 
+    var mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      alert("Only images are supported.");
+      return;
+    }
+ 
+    var reader = new FileReader();
+    reader.readAsDataURL(files[0]); 
+    reader.onload = (_event) => { 
+      this.imgURL = reader.result; 
+    }
+    this.createImage(this.file);
   }
 
   async createImage(file: File) {
@@ -41,6 +72,8 @@ export class ModalSingleImageComponent implements OnInit, OnChanges {
       .saveFile(formData)
       .then((res: ReturnMessage<FileDtoModel[]>) => {
         this.data.listFile = res.data;
+        alert(res.message);
+        this.onRemove();
       })
       .catch((er) => console.log(er.error));
   }

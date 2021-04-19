@@ -10,7 +10,6 @@ namespace Domain.DTOs.Files
     {
         [Required]
         public String EntityType { get; set; }
-        [Required]
         public String EntityId { get; set; }
         [Required]
         public List<IFormFile> Files { get; set; }

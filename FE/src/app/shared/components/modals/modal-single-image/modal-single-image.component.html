@@ -1,10 +1,17 @@
-<img *ngIf="url" src="{{url}}" [style]="styleFile"/>
+<img *ngIf="url" src="{{ url }}" [style]="styleFile" />
 <ng-container *ngIf="!url">
   <input
-    *ngIf="!data.listFile"
     type="file"
-    accept="image/*"
-    (change)="onChangeImg($event)"
+    accept="{{ data.typeFile }}"
+    (change)="onChangeImg($event)"/>
+  <!-- <button (click)="onUpdate()">Upload</button> -->
+  <div *ngIf="imgURL" style="position: relative;">
+    <img [src]="imgURL" [style]="styleFile" />
+    <button style="position: absolute;" (click)="onRemove()">x</button>
+  </div>
+  <img
+    *ngIf="data.listFile"
+    src="{{ data.listFile[0].url }}"
+    [style]="styleFile"
   />
-  <img *ngIf="data.listFile" src="{{data.listFile[0].url}}" [style]="styleFile"/>
 </ng-container>

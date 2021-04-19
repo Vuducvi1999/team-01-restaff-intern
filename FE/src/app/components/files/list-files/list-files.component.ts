@@ -1,6 +1,10 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ModalDismissReasons, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import {
+  ModalDismissReasons,
+  NgbModal,
+  NgbModalRef,
+} from '@ng-bootstrap/ng-bootstrap';
 import {
   FileDtoModel,
   PageModel,
@@ -25,7 +29,7 @@ export class ListFilesComponent implements OnInit {
     private fileService: FileService,
     private modalService: NgbModal
   ) {
-    this.params = { 'search.name': 'TTTN.pdf' };
+    this.params = { pageIndex: '3' };
     this.getFiles();
     this.getType();
   }
@@ -76,7 +80,7 @@ export class ListFilesComponent implements OnInit {
 
   async getFiles() {
     await this.fileService
-      .getFile(null)
+      .getFile({ oarams: this.params })
       .then(
         (res: ReturnMessage<PageModel<FileDtoModel>>) =>
           (this.media = res.data.results)
@@ -84,11 +88,10 @@ export class ListFilesComponent implements OnInit {
       .catch((er) => console.log(er.error));
   }
 
-  async getType()
-  {
+  async getType() {
     await this.fileService.getType().then((res: ReturnMessage<any>) => {
       console.log(res.data);
-       this.type = res.data;
+      this.type = res.data;
     });
   }
 
@@ -97,7 +100,7 @@ export class ListFilesComponent implements OnInit {
     var modalRef: NgbModalRef = this.modalService.open(CreateImageComponent, {
       ariaLabelledBy: 'modal-basic-title',
     });
-    
+
     modalRef.componentInstance.select = this.type;
     modalRef.componentInstance.typeMulti = typeMulti;
     modalRef.result.then(

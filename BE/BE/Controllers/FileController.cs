@@ -2,6 +2,7 @@
 using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Files;
+using Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Files;
@@ -19,10 +20,8 @@ namespace BE.Controllers
     public class FileController : BaseController
     {
         private readonly IFileManager _fileManager;
-        private readonly IFileService _fileService;
-        public FileController(IAuthService authService, IUserManager userManager, IFileService fileService, IFileManager fileManager) : base(authService, userManager)
+        public FileController(IAuthService authService, IUserManager userManager, IFileService fileService, IFileManager fileManager) : base(authService, userManager, fileService)
         {
-            _fileService = fileService;
             _fileManager = fileManager;
         }
 
@@ -36,7 +35,7 @@ namespace BE.Controllers
         [HttpGet(UrlConstants.BaseFileGetType)]
         public IActionResult GetFileType()
         {
-            var result = EnityType.ToArray();
+            var result = DataType.TypeName.ToArray();
             return CommonResponse(new ReturnMessage<KeyValuePair<string,string>[]>(false, result, MessageConstants.SearchSuccess));
         }
 
@@ -44,11 +43,11 @@ namespace BE.Controllers
         public async Task<IActionResult> SaveFile([FromForm] SaveFileDTO dto)
         {
 
-            if (!EnityType.ContainsKey(dto.EntityType))
+            if (!DataType.TypeName.ContainsKey(dto.EntityType))
             {
                 return CommonResponse(new ReturnMessage<List<FileDTO>>(true, null, MessageConstants.EnityTypeError));
             }
-            dto.EntityType = EnityType[dto.EntityType];
+            dto.EntityType = DataType.TypeName[dto.EntityType];
 
             var saveFiles = await _fileManager.SaveFile(dto);
             if (saveFiles.Count <= 0)
@@ -56,6 +55,13 @@ namespace BE.Controllers
                 return CommonResponse(new ReturnMessage<List<FileDTO>>(true, null, MessageConstants.Error));
             }
             var result = _fileService.Create(saveFiles);
+            return CommonResponse(result);
+        }
+
+        [HttpPut]
+        public IActionResult UpdateFile([FromForm] List<UpdateFileDTO> dto)
+        {
+            var result = _fileService.Update(dto);
             return CommonResponse(result);
         }
 

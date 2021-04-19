@@ -6,6 +6,7 @@ import {
   ModalHeaderModel,
   ModalFooterModel,
   ModalFile,
+  TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
 
 @Component({
@@ -16,7 +17,7 @@ import {
 export class CreateImageComponent implements OnInit {
   modalHeader!: ModalHeaderModel;
   modalFooter!: ModalFooterModel;
-  modalSingleImage!: ModalFile;
+  modalImage!: ModalFile;
   select: any;
   item!: FileDtoModel;
   typeMulti: number;
@@ -32,7 +33,15 @@ export class CreateImageComponent implements OnInit {
     this.modalHeader.title = this.item ? `[Update] ${this.item.id}` : `[Add]`;
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
-    this.modalSingleImage = new ModalFile();
+    this.modalImage = new ModalFile();
+    if(this.typeMulti == 1 || this.typeMulti == 2)
+    {
+    this.modalImage.typeFile = TypeFile.IMAGE;
+    }
+    if(this.typeMulti == 3 || this.typeMulti == 4)
+    {
+      this.modalImage.typeFile = TypeFile.FILE;
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
