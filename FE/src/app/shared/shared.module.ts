@@ -20,6 +20,7 @@ import { ModalSingleImageComponent } from './components/modals/modal-single-imag
 import { FileService } from '../lib/data/services';
 import { ModalMultiImageComponent } from './components/modals/modal-multi-image/modal-multi-image.component';
 import { ModalFileComponent } from './components/modals/modal-file/modal-file.component';
+import { UploadFileComponent } from './components/upload-file/upload-file.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ModalFileComponent } from './components/modals/modal-file/modal-file.co
     ModalSingleImageComponent,
     ModalMultiImageComponent,
     ModalFileComponent,
+    UploadFileComponent,
   ],
   imports: [CommonModule, RouterModule, NgbModalModule],
   providers: [NavService, WINDOW_PROVIDERS, FileService],
@@ -47,6 +49,7 @@ import { ModalFileComponent } from './components/modals/modal-file/modal-file.co
     ModalSingleImageComponent,
     ModalMultiImageComponent,
     ModalFileComponent,
+    UploadFileComponent,
   ],
 })
 export class SharedModule {}

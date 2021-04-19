@@ -105,7 +105,6 @@ export class ListFilesComponent implements OnInit {
     modalRef.componentInstance.typeMulti = typeMulti;
     modalRef.result.then(
       (result) => {
-        console.log(result);
         this.getFiles();
       },
       (reason) => {

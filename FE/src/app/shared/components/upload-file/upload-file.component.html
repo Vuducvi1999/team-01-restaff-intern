@@ -1,0 +1,22 @@
+<ng-container>
+  <input
+    *ngIf="data.multiBoolen"
+    multiple
+    type="file"
+    accept="{{ data.typeFile }}"
+    (change)="onChangeImg($event)"
+  />
+  <input
+    *ngIf="!data.multiBoolen"
+    type="file"
+    accept="{{ data.typeFile }}"
+    (change)="onChangeImg($event)"
+  />
+  <!-- <button (click)="onUpdate()">Upload</button> -->
+  <div *ngIf="data.listFile" style="position: relative">
+    <ng-container *ngFor="let item of data.listFile">
+      <img [src]="item.url" [style]="styleFile" />
+      <!-- <button style="position: absolute" (click)="onRemove()">x</button> -->
+    </ng-container>
+  </div>
+</ng-container>

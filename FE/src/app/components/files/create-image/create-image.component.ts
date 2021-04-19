@@ -34,6 +34,7 @@ export class CreateImageComponent implements OnInit {
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
     this.modalImage = new ModalFile();
+    this.modalImage.multiBoolen = true;
     if(this.typeMulti == 1 || this.typeMulti == 2)
     {
     this.modalImage.typeFile = TypeFile.IMAGE;
@@ -63,6 +64,7 @@ export class CreateImageComponent implements OnInit {
   }
 
   save(event: any) {
+    console.log(event);
     this.ngbActiveModal.close();
   }
 }

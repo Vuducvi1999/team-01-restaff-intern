@@ -17,10 +17,11 @@ export class ModalFile {
   public enityType = '';
   public enityId = '';
   public typeFile: TypeFile;
+  public multiBoolen : boolean;
   constructor() {}
 }
 
 export enum TypeFile {
   IMAGE = '.jpg, .jpeg, .png, .icon',
-  FILE = '.doc, .docx, .xls, .xlsx, .pdf, .pptx, .ppt, .txt',
+  FILE = '.jpg, .jpeg, .png, .icon, .doc, .docx, .xls, .xlsx, .pdf, .pptx, .ppt, .txt',
 }

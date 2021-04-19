@@ -35,7 +35,7 @@ namespace Common.Constants
         public static Dictionary<ETypeFile, string> TypeAccept = new Dictionary<ETypeFile, string>()
         {
             { ETypeFile.Image, ".jpg, .jpeg, .png, .icon" },
-            { ETypeFile.File, ".doc, .docx, .xls, .xlsx, .pdf, .pptx, .ppt, .txt" },
+            { ETypeFile.File, ".jpg, .jpeg, .png, .icon, .doc, .docx, .xls, .xlsx, .pdf, .pptx, .ppt, .txt" },
         };
 
         public static bool CheckTypeAccept(String typeFile, String ext)
