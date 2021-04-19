@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangePasswordProfileModel, ProfileModel, UserDataReturnDTOModel } from 'src/app/lib/data/models';
+import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from 'src/app/lib/data/services';
 import { ActivatedRoute } from '@angular/router';
@@ -55,10 +56,9 @@ export class ProfileSettingsComponent implements OnInit {
 
   updateSwitch() {
     this.update = this.update == true ? false : true;
-    console.log(this.update)
   }
   updateDetails() {
-    if (window.confirm("Are u sure?")) {
+    if (window.confirm("Do you want to update your profile?")) {
       this.updateProfile = {
         firstName: this.profileForm.controls.firstName.value,
         lastName: this.profileForm.controls.lastName.value,
@@ -78,7 +78,7 @@ export class ProfileSettingsComponent implements OnInit {
     }
   }
   changePassword() {
-    if (window.confirm("Are u sure?")) {
+    if (window.confirm("Do you want to change your password?")) {
       this.passwordProfile = {
         password: this.passwordForm.controls.password.value,
         newPassword: this.passwordForm.controls.newPassword.value,
