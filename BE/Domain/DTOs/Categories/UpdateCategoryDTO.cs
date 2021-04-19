@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Domain.DTOs.Files;
+using System;
+using System.Collections.Generic;
 
 namespace Domain.DTOs.Categories
 {
@@ -10,7 +12,6 @@ namespace Domain.DTOs.Categories
         public string ImageUrl { get; set; }
         public string UpdatedByName { get; set; }
         public Guid UpdatedBy { get; set; }
-
-
+        public List<FileDTO> Images { get; set; }
     }
 }

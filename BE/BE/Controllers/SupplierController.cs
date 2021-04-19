@@ -4,6 +4,7 @@ using Common.Pagination;
 using Domain.DTOs.Suppliers;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
+using Service.Files;
 using Service.Suppliers;
 
 namespace BE.Controllers
@@ -15,7 +16,7 @@ namespace BE.Controllers
         private readonly ISupplierService _supplierService;
 
 
-        public SupplierController(ISupplierService supplierService, IAuthService authService, IUserManager authManager) : base(authService, authManager)
+        public SupplierController(ISupplierService supplierService, IAuthService authService, IUserManager authManager, IFileService fileService) : base(authService, authManager, fileService)
         {
             _supplierService = supplierService;
         }

@@ -4,6 +4,7 @@ using Common.MD5;
 using Domain.DTOs.User;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
+using Service.Files;
 using System;
 using System.Diagnostics;
 
@@ -18,7 +19,7 @@ namespace BE.Controllers
         private readonly IAuthService _authService;
         private readonly IUserManager _authManager;
 
-        public AuthController(IAuthService authService, IUserManager authManager) : base(authService, authManager)
+        public AuthController(IAuthService authService, IUserManager authManager, IFileService fileService) : base(authService, authManager, fileService)
         {
             _authService = authService;
             _authManager = authManager;

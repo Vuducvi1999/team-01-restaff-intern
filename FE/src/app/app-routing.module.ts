@@ -17,7 +17,6 @@ const routes: Routes = [
     component: ContentLayoutComponent,
     children: content,
     canActivate: [AuthGuardsAdminService],
-    data: { 'token' : localStorage.getItem('token')}
   },
   {
     path: 'login',

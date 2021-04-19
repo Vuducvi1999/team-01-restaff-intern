@@ -10,6 +10,8 @@ import { AuthModule } from './components/auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from './lib/environments/environment';
 import { AppConfig } from './lib/environments/config/appConfig';
+import { FilesModule } from './components/files/files.module';
+import { ActivatedRouteSnapshot } from '@angular/router';
 @NgModule({
   declarations: [AppComponent],
   imports: [

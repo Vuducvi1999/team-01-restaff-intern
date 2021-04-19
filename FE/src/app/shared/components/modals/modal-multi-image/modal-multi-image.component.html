@@ -1,0 +1,4 @@
+<input multiple type="file" accept="{{data.typeFile}}" (change)="onChangeImg($event)" />
+<ng-container *ngIf="data.listFile">
+  <img *ngFor="let item of data.listFile" src="{{ item.url }}" [style]="styleFile" />
+</ng-container>
