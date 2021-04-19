@@ -18,18 +18,18 @@ export const content: Routes = [
         (m) => m.BannersModule
       ),
     data: {
-      breadcrumb: "Banners"
-    }
-
-  }
-  ,
+      breadcrumb: 'Banners',
+    },
+  },
   {
     path: 'profiles',
-    loadChildren: () => import('../../components/profiles/profiles.module').then(m => m.ProfilesModule),
+    loadChildren: () =>
+      import('../../components/profiles/profiles.module').then(
+        (m) => m.ProfilesModule
+      ),
     data: {
-      breadcrumb: "Profiles"
-    }
-
+      breadcrumb: 'Profiles',
+    },
   },
   {
     path: 'social-medias',
@@ -38,7 +38,7 @@ export const content: Routes = [
         (m) => m.SocialMediasModule
       ),
     data: {
-      breadcrumb: 'Banners',
+      breadcrumb: 'Social Medias',
     },
   },
   {

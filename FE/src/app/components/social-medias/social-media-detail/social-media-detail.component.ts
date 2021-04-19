@@ -54,26 +54,12 @@ export class SocialMediaDetailComponent implements OnInit {
       displayOrder: this.socialMediaForm.controls.displayOrder.value,
       id: this.item ? this.item.id : '',
     };
-    console.log(this.socialMedia);
-    this.submitted = true;
-    if (this.socialMediaForm.valid) {
-      if (this.item) {
-        return this.socialService
-          .update(this.socialMedia)
-          .then((res) => {
-            this.socialMediaForm.reset();
-            this.submitted = false;
-            this.ngbActiveModal.close();
-          })
-          .catch((er) => {
-            if (er.error.hasError) {
-              console.log(er.error.message);
-            }
-          });
-      }
 
+    this.submitted = true;
+
+    if (this.socialMediaForm.valid) {
       return this.socialService
-        .create(this.socialMedia)
+        .save(this.socialMedia)
         .then((res) => {
           this.socialMediaForm.reset();
           this.submitted = false;

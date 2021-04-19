@@ -74,25 +74,12 @@ export class CouponDetailComponent implements OnInit {
       endDate: this.couponForm.controls.endDate?.value,
       id: this.item ? this.item.id : '',
     };
-    console.log(this.coupon);
+
     this.submitted = true;
+
     if (this.couponForm.valid) {
-      if (this.item) {
-        return this.couponService
-          .update(this.coupon)
-          .then(() => {
-            this.couponForm.reset();
-            this.submitted = false;
-            this.ngbActiveModal.close();
-          })
-          .catch((er) => {
-            if (er.error.hasError) {
-              console.log(er.error.message);
-            }
-          });
-      }
       return this.couponService
-        .create(this.coupon)
+        .save(this.coupon)
         .then(() => {
           this.couponForm.reset();
           this.submitted = false;
