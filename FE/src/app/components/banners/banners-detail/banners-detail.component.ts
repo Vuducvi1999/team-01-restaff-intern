@@ -36,7 +36,7 @@ export class BannersDetailComponent implements OnInit {
     this.bannersForm = this.formBuilder.group({
       title: [this.item ? this.item.title : '', Validators.required],
       description: [this.item ? this.item.description : ''],
-      link: [this.item ? this.item.link : '', Validators.required],
+      link: [this.item ? this.item.link : ''],
       imageURL: [this.item ? this.item.imageUrl : '', Validators.required],
       displayOrder: [
         this.item ? this.item.displayOrder : '',
@@ -82,33 +82,6 @@ export class BannersDetailComponent implements OnInit {
           }
         });
     }
-
-    // if (this.item) {
-    //   return this.bannersService
-    //     .update(this.banner)
-    //     .then((res) => {
-    //       this.bannersForm.reset();
-    //       this.submitted = false;
-    //     })
-    //     .catch((er) => {
-    //       if (er.error.hasError) {
-    //         console.log(er.error.message);
-    //       }
-    //     });
-    // }
-
-    // return this.bannersService
-    //   .create(this.banner)
-    //   .then((res) => {
-    //     this.bannersForm.reset();
-    //     this.submitted = false;
-    //   })
-    //   .catch((er) => {
-    //     if (er.error.hasError) {
-    //       console.log(er.error.message);
-    //     }
-    //   });
-
   }
 
   close(event: any) {
