@@ -8,6 +8,7 @@
         public const string SearchSuccess = "Search successfully";
 
 
+        public const string ListSuccess = "List successfully";
         public const string Error = "Save fail";
 
         public const string InvalidAuthInfoMsg = "Invalid email or password";

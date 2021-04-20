@@ -7,7 +7,7 @@ using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
 using System;
-
+using System.Linq;
 
 namespace Service.Categories
 {
@@ -24,11 +24,36 @@ namespace Service.Categories
             _mapper = mapper;
         }
 
+        public bool CleanString(CategoryDTO model)
+        {
+            var stringProperties = model.GetType().GetProperties()
+                          .Where(p => p.PropertyType == typeof(string));
+
+            char[] charsToTrim = { '*', '.', ' '};
+            foreach (var stringPropertie in stringProperties)
+            {
+                string currentValue = (string)stringPropertie.GetValue(model);
+                stringPropertie.SetValue(model, currentValue.Trim(charsToTrim));
+                if(stringPropertie.GetValue(model).ToString() == "")
+                {
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
         public ReturnMessage<CategoryDTO> Create(CreateCategoryDTO model)
         {
+
+
             try
             {
                 var entity = _mapper.Map<CreateCategoryDTO, Category>(model);
+                //if (!CleanString(entity))
+                //{
+                //    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
+                //}
                 entity.Insert();
                 _categoryRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
@@ -41,11 +66,16 @@ namespace Service.Categories
             }
         }
 
+
         public ReturnMessage<CategoryDTO> Delete(DeleteCategoryDTO model)
         {
             try
             {
                 var entity = _categoryRepository.Find(model.Id);
+                //if (!CleanString(entity))
+                //{
+                //    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
+                //}
                 if (entity.IsNotNullOrEmpty())
                 {
                     entity.Delete();
@@ -82,7 +112,7 @@ namespace Service.Categories
                 , t => t.Name
             );
             var data = _mapper.Map<PaginatedList<Category>, PaginatedList<CategoryDTO>>(resultEntity);
-            var result = new ReturnMessage<PaginatedList<CategoryDTO>>(false, data, MessageConstants.DeleteSuccess);
+            var result = new ReturnMessage<PaginatedList<CategoryDTO>>(false, data, MessageConstants.UpdateSuccess);
 
             return result;
         }
@@ -93,6 +123,10 @@ namespace Service.Categories
             try
             {
                 var entity = _categoryRepository.Find(model.Id);
+                //if (!CleanString(entity))
+                //{
+                //    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
+                //}
                 if (entity.IsNotNullOrEmpty())
                 {
                     entity.Update(model);

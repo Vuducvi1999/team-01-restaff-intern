@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangePasswordProfileModel, ProfileModel, UserDataReturnDTOModel } from 'src/app/lib/data/models';
-import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { ProfileService } from 'src/app/lib/data/services';
 import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-profile-settings',

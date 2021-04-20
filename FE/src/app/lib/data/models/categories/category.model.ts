@@ -4,5 +4,5 @@ export interface CategoryModel extends BaseModel {
   name: string;
   description: string;
   imageUrl: string;
-  images: FileDtoModel[];
+  //images: FileDtoModel[];
 }
