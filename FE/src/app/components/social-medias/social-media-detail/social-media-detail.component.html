@@ -73,7 +73,14 @@
                   type="text"
                   required=""
                   formControlName="iconUrl"
+                  hidden
                 />
+                <app-upload-file
+                [data]="modalFile"
+                [fileURL]="fileURL"
+                styleFile="width: 200px; height: auto;"
+                (onChange)="onChangeData($event)"
+              ></app-upload-file>
                 <span
                   class="text-danger"
                   *ngIf="

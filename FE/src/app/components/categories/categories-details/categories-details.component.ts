@@ -1,7 +1,9 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { FileDtoModel } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
+import { FileService } from 'src/app/lib/data/services';
 import { CategoryService } from 'src/app/lib/data/services/categories/category.service';
 
 import {
@@ -9,6 +11,7 @@ import {
   ModalFile,
   ModalFooterModel,
   ModalHeaderModel,
+  TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
 @Component({
   selector: 'app-categories-details',
@@ -22,7 +25,9 @@ export class CategoryDetailComponent implements OnInit {
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   public category: CategoryModel;
-  public modalSingleImage: ModalFile;
+
+  public modalFile: ModalFile;
+  public fileURL : (String | ArrayBuffer)[];
 
   public item: any;
 
@@ -33,7 +38,10 @@ export class CategoryDetailComponent implements OnInit {
     private categoryService: CategoryService,
     private ngbActiveModal: NgbActiveModal
   ) {
-    
+    this.modalFile = new ModalFile();
+    this.modalFile.typeFile = TypeFile.IMAGE;
+    this.modalFile.multiBoolen = false;
+    this.modalFile.enityType = EntityType.CATEGORY;
   }
 
   save() {
@@ -41,13 +49,9 @@ export class CategoryDetailComponent implements OnInit {
       this.category = {
         name: this.categoriesForm.value.name,
         description: this.categoriesForm.value.description,
-        imageUrl: this.modalSingleImage.listFile
-          ? this.modalSingleImage.listFile[0].url
-          : null,
+        imageUrl: this.categoriesForm.value.imageUrl,
         id: '',
-        images: this.modalSingleImage.listFile
-          ? this.modalSingleImage.listFile
-          : null,
+        files: this.modalFile.listFile
       };
 
       // if (this.categoriesForm.invalid) {
@@ -70,13 +74,9 @@ export class CategoryDetailComponent implements OnInit {
       this.category = {
         name: this.categoriesForm.value.name,
         description: this.categoriesForm.value.description,
-        imageUrl: this.modalSingleImage.listFile
-          ? this.modalSingleImage.listFile[0].url
-          : null,
+        imageUrl: this.categoriesForm.value.imageUrl,
         id: this.item.id,
-        images: this.modalSingleImage.listFile
-          ? this.modalSingleImage.listFile
-          : null,
+        files: this.modalFile.listFile
       };
 
       // if (this.categoriesForm.invalid) {   return;
@@ -103,13 +103,6 @@ export class CategoryDetailComponent implements OnInit {
       ],
       imageUrl: [this.item ? this.item.imageUrl : '', [Validators.required]],
     });
-    this.modalSingleImage = new ModalFile();
-    this.modalSingleImage.enityType = EntityType.CATEGORY;
-    if (this.item?.imgeUrl) {
-      this.modalSingleImage.listFile = [];
-      console.log(this.item.imageUrl);
-      this.modalSingleImage.listFile.push(this.item.imageUrl);
-    }
 
     this.modalHeader = new ModalHeaderModel();
     this.modalHeader.title = this.item ? `[Update] ${this.item.name}` : `[Add]`;
@@ -123,5 +116,17 @@ export class CategoryDetailComponent implements OnInit {
 
   ngOnInit() {
     this.loadItem();
+    if(this.item)
+    {
+      this.fileURL = [];
+      this.fileURL.push(FileService.getLinkFile(this.item.imageUrl));
+    }
+  }
+
+  onChangeData(event: FileDtoModel[]) {
+    if (event || event.length > 0) {
+      this.fileURL = null;
+      this.categoriesForm.controls.imageUrl.setValue(event[0].url);
+    }
   }
 }

@@ -109,6 +109,7 @@ export class BannersDetailComponent implements OnInit {
 
   onChangeData(event: FileDtoModel[]) {
     if (event || event.length > 0) {
+      this.fileURL = null;
       this.bannersForm.controls.imageURL.setValue(event[0].url);
     }
   }
