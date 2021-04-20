@@ -38,7 +38,7 @@ export const content: Routes = [
         (m) => m.SocialMediasModule
       ),
     data: {
-      breadcrumb: 'Banners',
+      breadcrumb: 'Social Medias',
     },
   },
   {
