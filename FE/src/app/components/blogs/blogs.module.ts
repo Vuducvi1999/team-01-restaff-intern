@@ -1,25 +1,25 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { BlogService } from 'src/app/lib/data/services/blogs/blog.service';
 import { CouponService } from 'src/app/lib/data/services/coupons/coupon.service';
 import { SharedModule } from 'src/app/shared/shared.module';
-
-import { CouponDetailComponent } from './coupon-detail/coupon-detail.component';
-import { CouponsRoutingModule } from './coupons-routing.module';
-import { ListCouponComponent } from './list-coupon/list-coupon.component';
+import { BlogsDetailComponent } from './blogs-detail/blogs-detail.component';
+import { BlogsRoutingModule } from './blogs-routing.module';
+import { ListBlogsComponent } from './list-blogs/list-blogs.component';
 
 @NgModule({
-  declarations: [ListCouponComponent, CouponDetailComponent],
+  declarations: [ListBlogsComponent, BlogsDetailComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    CouponsRoutingModule,
+    BlogsRoutingModule,
     NgbModule,
     Ng2SmartTableModule,
     SharedModule,
   ],
-  providers: [CouponService, DatePipe],
+  providers: [BlogService],
 })
-export class CouponsModule {}
+export class BlogsModule {}

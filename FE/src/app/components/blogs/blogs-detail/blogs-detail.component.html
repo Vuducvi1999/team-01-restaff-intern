@@ -15,11 +15,11 @@
             aria-labelledby="account-tab"
           >
             <form
-              [formGroup]="socialMediaForm"
+              [formGroup]="blogForm"
               class="needs-validation user-add"
               novalidate=""
             >
-              <h4>Social Media Details</h4>
+              <h4>Banner Details</h4>
               <div class="form-group row">
                 <label for="validationCustom0" class="col-xl-3 col-md-4"
                   ><span>*</span> Title</label
@@ -34,84 +34,75 @@
                 <span
                   class="text-danger"
                   *ngIf="
-                    (SocialMediaFormControl.title.touched || submitted) &&
-                    (SocialMediaFormControl.title.errors?.required ||
-                      SocialMediaFormControl.title.errors?.pattern)
+                    (blogFormControl.title.touched || submitted) &&
+                    (blogFormControl.title.errors?.required ||
+                      blogFormControl.title.errors?.pattern)
                   "
                 >
-                  Title is required
+                  Title is required or invalid
                 </span>
               </div>
-
               <div class="form-group row">
-                <label for="validationCustom1" class="col-xl-3 col-md-4"
-                  ><span>*</span> Link</label
+                <label for="" class="col-xl-3 col-md-4"
+                  ><span>&nbsp;</span> ShortDes</label
+                >
+                <input
+                  class="form-control col-xl-8 col-md-7"
+                  id=""
+                  type="text"
+                  formControlName="shortDes"
+                />
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    (blogFormControl.shortDes.touched || submitted) &&
+                    (blogFormControl.shortDes.errors?.required ||
+                      blogFormControl.shortDes.errors?.pattern)
+                  "
+                >
+                  ShortDes is required or invalid
+                </span>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-xl-3 col-md-4"
+                  ><span>&nbsp;</span> Content Html</label
                 >
                 <input
                   class="form-control col-xl-8 col-md-7"
                   id="validationCustom1"
                   type="text"
                   required=""
-                  formControlName="link"
+                  formControlName="contentHTML"
                 />
                 <span
                   class="text-danger"
                   *ngIf="
-                    (SocialMediaFormControl.link.touched || submitted) &&
-                    SocialMediaFormControl.link.errors?.required
+                    (blogFormControl.contentHTML.touched || submitted) &&
+                    blogFormControl.contentHTML.errors?.required
                   "
                 >
-                  Link is required
+                  Content Html is required
                 </span>
               </div>
               <div class="form-group row">
                 <label for="validationCustom2" class="col-xl-3 col-md-4"
-                  ><span>*</span> IconUrl</label
+                  ><span>*</span>Image Url</label
                 >
                 <input
                   class="form-control col-xl-8 col-md-7"
                   id="validationCustom2"
                   type="text"
                   required=""
-                  formControlName="iconUrl"
-                  hidden
-                />
-                <app-upload-file
-                [data]="modalFile"
-                [fileURL]="fileURL"
-                styleFile="width: 200px; height: auto;"
-                (onChange)="onChangeData($event)"
-              ></app-upload-file>
-                <span
-                  class="text-danger"
-                  *ngIf="
-                    (SocialMediaFormControl.iconUrl.touched || submitted) &&
-                    SocialMediaFormControl.iconUrl.errors?.required
-                  "
-                >
-                  Icon URL is required
-                </span>
-              </div>
-              <div class="form-group row">
-                <label for="validationCustom3" class="col-xl-3 col-md-4"
-                  ><span>*</span> Display Order</label
-                >
-                <input
-                  class="form-control col-xl-8 col-md-7"
-                  id="validationCustom3"
-                  type="number"
-                  required=""
-                  formControlName="displayOrder"
+                  formControlName="imageUrl"
                 />
                 <span
                   class="text-danger"
                   *ngIf="
-                    (SocialMediaFormControl.displayOrder.touched ||
-                      submitted) &&
-                    SocialMediaFormControl.displayOrder.errors?.required
+                    (blogFormControl.imageUrl.touched || submitted) &&
+                    blogFormControl.imageUrl.errors?.required
                   "
                 >
-                  Display Order is required
+                  ImageURL is required
                 </span>
               </div>
             </form>
@@ -124,5 +115,5 @@
 <!-- Container-fluid Ends-->
 <app-modal-footer
   [data]="modalFooter"
-  (onAction)="saveSocialMedia($event)"
+  (onAction)="saveBlog($event)"
 ></app-modal-footer>
