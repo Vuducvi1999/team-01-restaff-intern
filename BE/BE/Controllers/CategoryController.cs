@@ -35,15 +35,15 @@ namespace BE.Controllers
         public IActionResult Create([FromBody] CreateCategoryDTO model)
         {
             var result = _categoryService.Create(model);
-            if(model.Images.IsNullOrEmpty())
+            if(model.IsNullOrEmpty())
             {
                 return CommonResponse(result);
             }
-            var uploadImage = _fileService.UpdateImageCategory(model.Images, result.Data.Id);
-            if (uploadImage.HasError)
-            {
-                return CommonResponse(uploadImage);
-            }
+            //var uploadImage = _fileService.UpdateImageCategory(model.Images, result.Data.Id);
+            //if (uploadImage.HasError)
+            //{
+            //    return CommonResponse(uploadImage);
+            //}
             return CommonResponse(result);
         }
 
@@ -51,15 +51,15 @@ namespace BE.Controllers
         public IActionResult Update([FromBody] UpdateCategoryDTO model)
         {
             var result = _categoryService.Update(model);
-            if (model.Images.IsNullOrEmpty())
+            if (model.IsNullOrEmpty())
             {
                 return CommonResponse(result);
             }
-            var uploadImage = _fileService.UpdateImageCategory(model.Images, model.Id);
-            if (uploadImage.HasError)
-            {
-                return CommonResponse(uploadImage);
-            }
+            //var uploadImage = _fileService.UpdateImageCategory(model.Images, model.Id);
+            //if (uploadImage.HasError)
+            //{
+            //    return CommonResponse(uploadImage);
+            //}
             return CommonResponse(result);
         }
 
