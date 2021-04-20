@@ -3,6 +3,7 @@ using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Banners;
 using Domain.DTOs.Suppliers;
+using Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
@@ -34,6 +35,15 @@ namespace BE.Controllers
         public IActionResult Create([FromBody] CreateBannerDTO model)
         {
             var result = _bannerService.Create(model);
+            if (model.Files.IsNullOrEmpty())
+            {
+                return CommonResponse(result);
+            }
+            var uploadImage = _fileService.UpdateImageCategory(model.Files, result.Data.Id);
+            if (uploadImage.HasError)
+            {
+                return CommonResponse(uploadImage);
+            }
             return CommonResponse(result);
         }
 
@@ -41,6 +51,15 @@ namespace BE.Controllers
         public IActionResult Update([FromBody] UpdateBannerDTO model)
         {
             var result = _bannerService.Update(model);
+            if (model.Files.IsNullOrEmpty())
+            {
+                return CommonResponse(result);
+            }
+            var uploadImage = _fileService.UpdateImageCategory(model.Files, result.Data.Id);
+            if (uploadImage.HasError)
+            {
+                return CommonResponse(uploadImage);
+            }
             return CommonResponse(result);
         }
 

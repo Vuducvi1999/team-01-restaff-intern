@@ -12,6 +12,6 @@ namespace Domain.DTOs.Categories
         public string ImageUrl { get; set; }
         public string UpdatedByName { get; set; }
         public Guid UpdatedBy { get; set; }
-        public List<FileDTO> Images { get; set; }
+        public List<FileDTO> Files { get; set; }
     }
 }

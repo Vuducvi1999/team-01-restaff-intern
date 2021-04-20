@@ -90,7 +90,7 @@ namespace Service.Files
                     )
                 )
                 , search.PageSize
-                , search.PageIndex
+                , search.PageIndex * search.PageSize
                 , t => t.Name
             );
             var data = _mapper.Map<PaginatedList<Domain.Entities.File>, PaginatedList<FileDTO>>(resultEntity);

@@ -22,11 +22,7 @@ export class CreateImageComponent implements OnInit {
   item!: FileDtoModel;
   typeMulti: number;
 
-  constructor(
-    private ngbActiveModal: NgbActiveModal
-  ) {
-    
-  }
+  constructor(private ngbActiveModal: NgbActiveModal) {}
 
   install() {
     this.modalHeader = new ModalHeaderModel();
@@ -34,14 +30,20 @@ export class CreateImageComponent implements OnInit {
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
     this.modalImage = new ModalFile();
-    this.modalImage.multiBoolen = true;
-    if(this.typeMulti == 1 || this.typeMulti == 2)
-    {
-    this.modalImage.typeFile = TypeFile.IMAGE;
+
+    if (this.typeMulti == 1 || this.typeMulti == 2) {
+      this.modalImage.typeFile = TypeFile.IMAGE;
     }
-    if(this.typeMulti == 3 || this.typeMulti == 4)
-    {
+    if (this.typeMulti == 3 || this.typeMulti == 4) {
       this.modalImage.typeFile = TypeFile.FILE;
+    }
+
+    if (this.typeMulti == 1 || this.typeMulti == 3) {
+      this.modalImage.multiBoolen = false;
+    }
+
+    if (this.typeMulti == 2 || this.typeMulti == 4) {
+      this.modalImage.multiBoolen = true;
     }
   }
 
@@ -49,9 +51,8 @@ export class CreateImageComponent implements OnInit {
     // console.log(this.item);
   }
 
-  onChangeData()
-  {
-
+  onChangeData(event: any) {
+    console.log(event);
   }
 
   ngOnInit() {

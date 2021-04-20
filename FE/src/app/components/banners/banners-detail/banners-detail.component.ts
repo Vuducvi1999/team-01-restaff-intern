@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { FileDtoModel } from 'src/app/lib/data/models';
 import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
 import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
 import {
+  ModalFile,
   ModalFooterModel,
   ModalHeaderModel,
+  TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
 
 @Component({
@@ -21,12 +24,18 @@ export class BannersDetailComponent implements OnInit {
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   submitted = false;
+  public modalFile: ModalFile;
 
   constructor(
     private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
     private bannersService: BannersService
-  ) { }
+  ) {
+    this.modalFile = new ModalFile();
+    this.modalFile.typeFile = TypeFile.IMAGE;
+    this.modalFile.multiBoolen = false;
+    this.modalFile.enityType = 'user';
+  }
 
   ngOnInit() {
     this.loadFormItem();
@@ -65,6 +74,7 @@ export class BannersDetailComponent implements OnInit {
       imageURL: this.bannersForm.controls.imageURL.value,
       displayOrder: this.bannersForm.controls.displayOrder.value,
       id: this.item ? this.item.id : '',
+      files: this.modalFile.listFile,
     };
 
     this.submitted = true;
@@ -86,5 +96,11 @@ export class BannersDetailComponent implements OnInit {
 
   close(event: any) {
     this.ngbActiveModal.close();
+  }
+
+  onChangeData(event: FileDtoModel[]) {
+    if (event || event.length > 0) {
+      this.bannersForm.controls.imageURL.setValue(event[0].url);
+    }
   }
 }
