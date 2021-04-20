@@ -1,31 +1,39 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {  NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { CategoryService } from 'src/app/lib/data/services/categories/category.service';
 
-import { ModalFooterModel, ModalHeaderModel } from 'src/app/shared/components/modals/models/modal.model';
+import {
+  ModalFile,
+  ModalFooterModel,
+  ModalHeaderModel,
+} from 'src/app/shared/components/modals/models/modal.model';
 @Component({
   selector: 'app-categories-details',
   templateUrl: './categories-details.component.html',
   styleUrls: ['./categories-details.component.scss'],
-  providers: [CategoryService]
+  providers: [CategoryService],
 })
 export class CategoryDetailComponent implements OnInit {
-
   public categoriesForm: FormGroup;
   public permissionForm: FormGroup;
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   public category: CategoryModel;
-  public item : any;
-      
+  public modalSingleImage: ModalFile;
+
+  public item: any;
+
   ngOnChanges(changes: SimpleChanges): void {}
 
-  constructor(private formBuilder: FormBuilder
-    , private categoryService: CategoryService
-    , private ngbActiveModal: NgbActiveModal) {}
-
+  constructor(
+    private formBuilder: FormBuilder,
+    private categoryService: CategoryService,
+    private ngbActiveModal: NgbActiveModal
+  ) {
+    
+  }
 
     save(){
       if(this.categoriesForm.invalid){
@@ -54,20 +62,17 @@ export class CategoryDetailComponent implements OnInit {
       });
       
 
-      this.modalHeader = new ModalHeaderModel();
-      this.modalHeader.title = this.item ? `[Update] ${this.item.name}` : `[Add]`;
-      this.modalFooter = new ModalFooterModel();
-      this.modalFooter.title = "Save";
-  
-    }
-    
+    this.modalHeader = new ModalHeaderModel();
+    this.modalHeader.title = this.item ? `[Update] ${this.item.name}` : `[Add]`;
+    this.modalFooter = new ModalFooterModel();
+    this.modalFooter.title = 'Save';
+  }
 
-    
-    close(event : any) {
-      this.ngbActiveModal.close();
-    }
-    
-    ngOnInit(){
-      this.loadItem();
-    }
+  close(event: any) {
+    this.ngbActiveModal.close();
+  }
+
+  ngOnInit() {
+    this.loadItem();
+  }
 }

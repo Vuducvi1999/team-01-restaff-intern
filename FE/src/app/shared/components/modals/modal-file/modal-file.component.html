@@ -1,0 +1,7 @@
+<input *ngIf="styleFile == 1" type="file" accept="{{data.typeFile}}" (change)="onChangeImg($event)" />
+<input *ngIf="styleFile == 2" multiple type="file" accept="{{data.typeFile}}" (change)="onChangeImg($event)" />
+<ng-container *ngIf="data.listFile">
+  <ng-container *ngFor="let item of data.listFile">
+    <a>{{item.name}}</a> <a [href]="onDownload(item)" [download]="item.name">Download</a> <br/>
+  </ng-container>
+</ng-container>

@@ -2,6 +2,7 @@ using AutoMapper;
 using Domain.DTOs.Categories;
 using Domain.DTOs.Banners;
 using Domain.DTOs.SocialMedias;
+using Domain.DTOs.Files;
 using Domain.DTOs.Suppliers;
 using Domain.DTOs.User;
 using Domain.Entities;
@@ -11,6 +12,8 @@ using Domain.DTOs.Profiles;
 using Domain.DTOs.Users;
 using Domain.DTOs.Products;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -44,24 +47,22 @@ namespace Domain
             CreateMap<Banner, UpdateBannerDTO>().ReverseMap();
             CreateMap<Banner, DeleteBannerDTO>().ReverseMap();
 
-
-            CreateMap<User, UpdateProfileDTO>().ReverseMap();
-
-            CreateMap<CreateBannerDTO, Banner>().ReverseMap();
-            CreateMap<Banner, CreateBannerDTO>().ReverseMap();
-            CreateMap<Banner, UpdateBannerDTO>().ReverseMap();
-            CreateMap<Banner, DeleteBannerDTO>().ReverseMap();
-
-            CreateMap<User, UserDataReturnDTO>().ReverseMap();
-            CreateMap<User, UserLoginDTO>().ReverseMap();
-            CreateMap<User, ChangePassworProfileDTO>().ReverseMap();
-            CreateMap<User, UserDataReturnDTO>().ReverseMap();
-
             // Users
             CreateMap<PaginatedList<User>, PaginatedList<UserDTO>>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<User, UpdateProfileDTO>().ReverseMap();
-            CreateMap<User, CreateUserDTO>().ReverseMap();
+            CreateMap<User, CreateUserDTO>().ReverseMap(); CreateMap<User, UserLoginDTO>().ReverseMap();
+            CreateMap<User, ChangePassworProfileDTO>().ReverseMap();
+            CreateMap<User, UserDataReturnDTO>().ReverseMap();
+
+            // Files
+            CreateMap<PaginatedList<File>, PaginatedList<FileDTO>>().ReverseMap();
+            CreateMap<File, FileDTO>().ReverseMap();
+            CreateMap<File, CreateFileDTO>().ReverseMap();
+            CreateMap<File, UpdateFileDTO>().ReverseMap();
+            CreateMap<File, DeleteFileDTO>().ReverseMap();
+            //CreateMap<CreateFileDTO, SaveFileDTO>().ReverseMap();
+            CreateMap<SaveFileDTO, CreateFileDTO>();
 
 
 
@@ -72,6 +73,12 @@ namespace Domain
             CreateMap<CreateProductDTO, Product>().ReverseMap();
             CreateMap<IQueryable<ProductDTO>, PaginatedList<Product>>().ReverseMap();
 
+            //Coupon
+            CreateMap<PaginatedList<Coupon>, PaginatedList<CouponDTO>>().ReverseMap();
+            CreateMap<Coupon, CouponDTO>().ReverseMap();
+            CreateMap<Coupon, CreateCouponDTO>().ReverseMap();
+            CreateMap<Coupon, UpdateCouponDTO>().ReverseMap();
+            CreateMap<Coupon, DeleteCouponDTO>().ReverseMap();
         }
     }
 }

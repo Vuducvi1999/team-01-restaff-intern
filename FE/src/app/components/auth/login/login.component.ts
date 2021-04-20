@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Data, Router } from '@angular/router';
-import { AuthLoginModel, ReturnMessage, UserDataReturnDTOModel } from 'src/app/lib/data/models';
+import {
+  AuthLoginModel,
+  ReturnMessage,
+  UserDataReturnDTOModel,
+} from 'src/app/lib/data/models';
 import { AuthService } from 'src/app/lib/data/services';
 
 @Component({
@@ -21,6 +25,10 @@ export class LoginComponent implements OnInit {
   ) {
     this.createLoginForm();
     this.createRegisterForm();
+    if(localStorage.getItem('token'))
+    {
+      this.backUrl();
+    }
   }
 
   owlcarousel = [
@@ -60,7 +68,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   async onLogin() {
     if (!this.loginForm.valid) {

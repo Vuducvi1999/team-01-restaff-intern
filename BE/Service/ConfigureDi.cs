@@ -7,6 +7,7 @@ using Service.Categories;
 using Service.Banners;
 using Service.Auth;
 using Service.Suppliers;
+using Service.Files;
 using Service.Coupons;
 using Service.Profiles;
 using Service.Users;
@@ -24,6 +25,9 @@ namespace Service
             services.AddScoped<IUnitOfWorkAsync, UnitOfWork>();
             services.AddScoped(typeof(IRepositoryAsync<>), typeof(BaseRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
+
+            services.AddScoped<ISupplierService, SupplierService>();
+
             services.AddScoped<ICouponService, CouponService>();
             //scoped
             services.AddScoped<ISocialMediaService, SocialMediaService>();
@@ -34,6 +38,9 @@ namespace Service
             services.AddScoped<IBannerService, BannerService>();
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IProductService, ProductService>();
+
+            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IFileManager, FileManager>();
 
             services.AddScoped<IUserService, UserService>();
         }
