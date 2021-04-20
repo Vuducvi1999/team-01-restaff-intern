@@ -38,7 +38,7 @@
               <div class="product-box">
                 <app-product-box-one 
                   [product]="product" 
-                  [currency]="productService?.Currency"
+                  [currency]="homeService?.Currency"
                   [thumbnail]="true"
                   [cartModal]="true">
                 </app-product-box-one>
@@ -89,7 +89,7 @@
                   <div class="product-box">
                     <app-product-box-one 
                       [product]="product" 
-                      [currency]="productService?.Currency"
+                      [currency]="homeService?.Currency"
                       [thumbnail]="true"
                       [cartModal]="true">
                     </app-product-box-one>
@@ -132,19 +132,6 @@
   </div>
 </section>
 <!-- blog section End -->
-
-<!-- Instagram section -->
-<section class="instagram">
-  <div class="container-fluid ">
-    <div class="row">
-      <div class="col-md-12 p-0">
-        <h2 class="title-borderless"># instagram</h2>
-        <app-instagram></app-instagram>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- Instagram section End -->
 
 <!--  logo section start-->
 <section class="section-b-space">
