@@ -68,10 +68,10 @@ namespace Domain
 
             //Blog
             CreateMap<PaginatedList<Blog>, PaginatedList<BlogDTO>>().ReverseMap();
-            CreateMap<Coupon, BlogDTO>().ReverseMap();
-            CreateMap<Coupon, CreateBlogDTO>().ReverseMap();
-            CreateMap<Coupon, UpdateBlogDTO>().ReverseMap();
-            CreateMap<Coupon, DeleteBlogDTO>().ReverseMap();
+            CreateMap<Blog, BlogDTO>().ReverseMap();
+            CreateMap<Blog, CreateBlogDTO>().ReverseMap();
+            CreateMap<Blog, UpdateBlogDTO>().ReverseMap();
+            CreateMap<Blog, DeleteBlogDTO>().ReverseMap();
         }
     }
 }
