@@ -60,8 +60,6 @@ export class ListCategoriesComponent implements OnInit {
 
   }
 
-
-
   openPopup(item:any){
     if(item){
       var modalRef =  this.modalService.open(CategoryDetailComponent, {size: 'lg'});

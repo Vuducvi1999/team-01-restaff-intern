@@ -24,7 +24,7 @@ namespace Service.Categories
             _mapper = mapper;
         }
 
-        public bool CleanString(Category model)
+        public bool CleanString(CategoryDTO model)
         {
             var stringProperties = model.GetType().GetProperties()
                           .Where(p => p.PropertyType == typeof(string));
@@ -50,10 +50,10 @@ namespace Service.Categories
             try
             {
                 var entity = _mapper.Map<CreateCategoryDTO, Category>(model);
-                if (!CleanString(entity))
-                {
-                    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
-                }
+                //if (!CleanString(entity))
+                //{
+                //    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
+                //}
                 entity.Insert();
                 _categoryRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
@@ -72,6 +72,10 @@ namespace Service.Categories
             try
             {
                 var entity = _categoryRepository.Find(model.Id);
+                //if (!CleanString(entity))
+                //{
+                //    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
+                //}
                 if (entity.IsNotNullOrEmpty())
                 {
                     entity.Delete();
@@ -119,6 +123,10 @@ namespace Service.Categories
             try
             {
                 var entity = _categoryRepository.Find(model.Id);
+                //if (!CleanString(entity))
+                //{
+                //    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
+                //}
                 if (entity.IsNotNullOrEmpty())
                 {
                     entity.Update(model);
