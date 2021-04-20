@@ -17,6 +17,8 @@ namespace Data
         DbSet<Coupon> Coupons { get; set; }
         DbSet<Banner> Banners { get; set; }
         DbSet<File> Files { get; set; }
+        DbSet<Blog> Blogs { get; set; }
+
 
     }
 }

@@ -12,6 +12,7 @@ using Domain.DTOs.Profiles;
 using Domain.DTOs.Users;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using Domain.DTOs.Blogs;
 
 namespace Domain
 {
@@ -64,6 +65,13 @@ namespace Domain
             CreateMap<Coupon, CreateCouponDTO>().ReverseMap();
             CreateMap<Coupon, UpdateCouponDTO>().ReverseMap();
             CreateMap<Coupon, DeleteCouponDTO>().ReverseMap();
+
+            //Blog
+            CreateMap<PaginatedList<Blog>, PaginatedList<BlogDTO>>().ReverseMap();
+            CreateMap<Coupon, BlogDTO>().ReverseMap();
+            CreateMap<Coupon, CreateBlogDTO>().ReverseMap();
+            CreateMap<Coupon, UpdateBlogDTO>().ReverseMap();
+            CreateMap<Coupon, DeleteBlogDTO>().ReverseMap();
         }
     }
 }

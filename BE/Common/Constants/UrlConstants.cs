@@ -31,5 +31,7 @@ namespace Common.Constants
 
         public const string BaseCoupon = BaseApi + "/coupon";
         public const string BaseUser= BaseApi + "/user";
+
+        public const string BaseBlog = BaseApi + "/blog";
     }
 }

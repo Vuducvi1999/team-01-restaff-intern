@@ -11,6 +11,7 @@ using Service.Files;
 using Service.Coupons;
 using Service.Profiles;
 using Service.Users;
+using Service.Blogs;
 
 namespace Service
 {
@@ -41,6 +42,8 @@ namespace Service
             services.AddScoped<IFileManager, FileManager>();
 
             services.AddScoped<IUserService, UserService>();
+
+            services.AddScoped<IBlogService, BlogService>();
         }
     }
 }
