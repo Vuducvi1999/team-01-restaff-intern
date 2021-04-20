@@ -5,6 +5,7 @@ import { CategoryModel } from 'src/app/lib/data/models/categories/category.model
 import { CategoryService } from 'src/app/lib/data/services/categories/category.service';
 
 import {
+  EntityType,
   ModalFile,
   ModalFooterModel,
   ModalHeaderModel,
@@ -103,7 +104,7 @@ export class CategoryDetailComponent implements OnInit {
       imageUrl: [this.item ? this.item.imageUrl : '', [Validators.required]],
     });
     this.modalSingleImage = new ModalFile();
-    this.modalSingleImage.enityType = 'category';
+    this.modalSingleImage.enityType = EntityType.CATEGORY;
     if (this.item?.imgeUrl) {
       this.modalSingleImage.listFile = [];
       console.log(this.item.imageUrl);

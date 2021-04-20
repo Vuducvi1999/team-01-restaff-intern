@@ -36,7 +36,7 @@
                   ImageUrl</label>
                 <input class="form-control col-xl-8 col-md-7" id="validationCustom2" type="text" required=""
                   formControlName="imageURL" hidden>
-                  <app-upload-file [data]="modalFile" styleFile="width: 200px; height: auto;" (onChange)="onChangeData($event)"></app-upload-file>
+                  <app-upload-file [data]="modalFile" [fileURL]="fileURL" styleFile="width: 200px; height: auto;" (onChange)="onChangeData($event)"></app-upload-file>
                 <span class="text-danger"
                   *ngIf="(bannersFormControl.imageURL.touched || submitted) && bannersFormControl.imageURL.errors?.required">
                   ImageURL is required

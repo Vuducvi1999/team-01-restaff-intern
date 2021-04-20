@@ -16,18 +16,21 @@ import { ModalFile, TypeFile } from '../modals/models/modal.model';
   styleUrls: ['./upload-file.component.scss'],
 })
 export class UploadFileComponent implements OnInit {
-  @Input() data = new ModalFile();
+  @Input() data : ModalFile;
   @Input() styleFile: string;
+  @Input() fileURL: (string | ArrayBuffer)[];
   @Output() onChange = new EventEmitter();
 
   public files: File[];
-  public fileURL: (string | ArrayBuffer)[];
 
   public typeIMAGE = TypeFile.IMAGE;
 
   constructor(private fileService: FileService) {
-    this.fileURL = [];
+    if (!this.fileURL) {
+      this.fileURL = [];
+    }
     this.files = [];
+    this.styleFile = "width: 200px; height: 200;";
   }
   ngOnChanges(changes: SimpleChanges): void {}
 
@@ -56,8 +59,7 @@ export class UploadFileComponent implements OnInit {
   }
 
   onChangeImg(event) {
-    if(!this.data.multiBoolen)
-    {
+    if (!this.data.multiBoolen) {
       this.onRemoveLocal();
     }
     var files = event.target.files;

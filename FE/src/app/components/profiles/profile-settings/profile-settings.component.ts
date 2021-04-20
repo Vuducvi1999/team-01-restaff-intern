@@ -3,12 +3,14 @@ import {
   ChangePasswordProfileModel,
   FileDtoModel,
   ProfileModel,
+  ReturnMessage,
   UserDataReturnDTOModel,
 } from 'src/app/lib/data/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FileService, ProfileService } from 'src/app/lib/data/services';
 import { ActivatedRoute } from '@angular/router';
 import {
+  EntityType,
   ModalFile,
   TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
@@ -28,6 +30,7 @@ export class ProfileSettingsComponent implements OnInit {
   update = false;
 
   public modalFile: ModalFile;
+  public fileURL : (String | ArrayBuffer)[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,13 +40,18 @@ export class ProfileSettingsComponent implements OnInit {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
     this.modalFile.multiBoolen = false;
-    this.modalFile.enityType = 'user';
+    this.modalFile.enityType = EntityType.USER;
   }
 
   ngOnInit() {
     // console.log(this.route.parent.parent.parent.snapshot.data);
     this.userInfo = this.route.parent.parent.parent.snapshot.data.user;
     this.loadFormItem();
+    if(this.userInfo)
+    {
+      this.fileURL = [];
+      this.fileURL.push(FileService.getLinkFile(this.userInfo.imageUrl));
+    }
   }
 
   get profileFormControl() {
@@ -77,6 +85,7 @@ export class ProfileSettingsComponent implements OnInit {
   }
 
   updateSwitch() {
+    this.modalFile.listFile = [];
     this.update = this.update == true ? false : true;
   }
   updateDetails() {
@@ -90,10 +99,14 @@ export class ProfileSettingsComponent implements OnInit {
       };
       this.profileService
         .update(this.updateProfile)
-        .then((resp) => {
+        .then((resp: ReturnMessage<UserDataReturnDTOModel>) => {
           localStorage.setItem('user', JSON.stringify(resp.data));
           this.userInfo = resp.data;
           this.route.snapshot.data.user = resp.data;
+          if(!resp.hasError)
+          {
+            this.updateSwitch();
+          }
         })
         .catch((er) => {
           if (er.error.hasError) {
@@ -127,6 +140,7 @@ export class ProfileSettingsComponent implements OnInit {
 
   onChangeData(event: FileDtoModel[]) {
     if (event || event.length > 0) {
+      this.fileURL[0] = FileService.getLinkFile(event[0].url);
       this.profileForm.controls.imageUrl.setValue(event[0].url);
     }
   }
