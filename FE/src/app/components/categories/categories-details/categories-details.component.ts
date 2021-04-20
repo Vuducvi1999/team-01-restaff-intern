@@ -17,11 +17,9 @@ import {
 })
 export class CategoryDetailComponent implements OnInit {
   public categoriesForm: FormGroup;
-  public permissionForm: FormGroup;
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   public category: CategoryModel;
-  public modalSingleImage: ModalFile;
 
   public item: any;
 

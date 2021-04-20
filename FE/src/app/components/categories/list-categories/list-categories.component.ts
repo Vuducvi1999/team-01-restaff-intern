@@ -20,30 +20,34 @@ export class ListCategoriesComponent implements OnInit {
    }
 
 
-   public settings = {
-    mode :'external',
-    pager:{
-      display: true,
-      perPage: 9,
-    },
-    actions: {
-      position: 'right'
-    },
-    columns: {
-      name: {
-        title: 'Name'
+   public settings = 
+   {
+      mode :'external',
+      pager:
+      {
+        display: true,
+        perPage: 9,
       },
-      description: {
-        title: 'Description'
+      actions: 
+      {
+        position: 'right'
       },
-      imageUrl: {
-        title: 'Image URL',
+      columns: 
+      {
+        name: {
+          title: 'Name'
+        },
+        description: {
+          title: 'Description'
+        },
+        imageUrl: {
+          title: 'Image URL',
+        },
+        id: {
+          title: 'Id',
+        }
       },
-      id: {
-        title: 'Id',
-      }
-    },
-  };
+    };
 
 
   delete(event: any){

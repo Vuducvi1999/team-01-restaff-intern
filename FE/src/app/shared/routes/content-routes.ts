@@ -74,4 +74,14 @@ export const content: Routes = [
       breadcrumb: 'Users',
     },
   },
+  {
+    path: 'products',
+    loadChildren: () =>
+      import('../../components/products/products.module').then(
+        (m) => m.ProductModule
+      ),
+    data: {
+      breadcrumb: 'Products',
+    },
+  },
 ];

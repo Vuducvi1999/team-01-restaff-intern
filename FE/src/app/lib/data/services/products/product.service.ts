@@ -26,4 +26,10 @@ export class ProductService  {
       const url = `${this.url}/?Id=${model?.id}`;
       return this.httpClient.deleteObservable(url).toPromise();
     }
+    save(model: ProductModel) {
+      if (model.id) {
+        return this.update(model);
+      }
+      return this.create(model);
+    }
   }
