@@ -16,7 +16,10 @@ export class ListProductsComponent implements OnInit {
   public products = [];
   closeResult = '';
 
-  constructor(private modalService: NgbModal,private productService: ProductService) { }
+  constructor(private modalService: NgbModal,private productService: ProductService)
+  {
+     this.fetch();
+  }
 
 
   public settings = 

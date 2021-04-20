@@ -12,7 +12,8 @@ import { ListCategoriesComponent } from '../../categories/list-categories/list-c
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
-  styleUrls: ['./product-details.component.scss']
+  styleUrls: ['./product-details.component.scss'],
+  providers: [ProductService, CategoryService]
 })
 export class ProductDetailsComponent implements OnInit {
   public productsForm: FormGroup;
@@ -22,7 +23,6 @@ export class ProductDetailsComponent implements OnInit {
   public categories = [];
   public item: any;
 
-
   constructor(
     private formBuilder: FormBuilder,
     private productService: ProductService,
@@ -30,7 +30,7 @@ export class ProductDetailsComponent implements OnInit {
     private categoryService: CategoryService
   ) 
   { 
-    this.fetchCategory();
+    this.loadItem();
   }
 
   
@@ -58,7 +58,7 @@ export class ProductDetailsComponent implements OnInit {
       contentHTML: this.productsForm.value.contentHTML,
       imageUrl: this.productsForm.value.imageUrl,
       price: this.productsForm.value.price,
-      categoryName: this.productsForm.value.categories,
+      categoryName: this.productsForm.value.categoryName,
       displayOrder: this.productsForm.value.displayOrder,
       hasDisplayHomePage: this.productsForm.value.hasDisplayHomePage,
       isImportant: this.productsForm.value.isImportant,
@@ -100,7 +100,7 @@ close(event: any) {
 }
 
 ngOnInit() {
-  this.loadItem();
+  this.fetchCategory();
 }
 
 }
