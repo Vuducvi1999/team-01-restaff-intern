@@ -33,8 +33,20 @@ export class BlogsDetailComponent implements OnInit {
   }
   loadFormItem() {
     this.blogForm = this.formBuilder.group({
-      title: [this.item ? this.item.title : '', Validators.required],
-      shortDes: [this.item ? this.item.shortDes : ''],
+      title: [
+        this.item ? this.item.title : '',
+        [
+          Validators.required,
+          Validators.pattern('^(?=.*[a-zA-Z0-9])([a-zA-Z0-9]+)$'),
+        ],
+      ],
+      shortDes: [
+        this.item ? this.item.shortDes : '',
+        [
+          Validators.required,
+          Validators.pattern('^(?=.*[a-zA-Z0-9])([a-zA-Z0-9]+)$'),
+        ],
+      ],
       contentHTML: [
         this.item ? this.item.contentHTML : '',
         Validators.required,
