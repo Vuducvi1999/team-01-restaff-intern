@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ChangePasswordProfileModel, ProfileModel, UserDataReturnDTOModel } from 'src/app/lib/data/models';
+import { ChangePasswordProfileModel, FileDtoModel, ProfileModel, ReturnMessage, UserDataReturnDTOModel } from 'src/app/lib/data/models';
 
-import { ProfileService } from 'src/app/lib/data/services';
+import { FileService, ProfileService } from 'src/app/lib/data/services';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalFile, TypeFile, EntityType } from 'src/app/shared/components/modals/models/modal.model';
 
 @Component({
   selector: 'app-profile-settings',
@@ -86,6 +87,7 @@ export class ProfileSettingsComponent implements OnInit {
         email: this.profileForm.controls.email.value,
         imageUrl: this.profileForm.controls.imageUrl.value,
         id: this.userInfo.id,
+        files: this.modalFile.listFile
       };
       this.profileService
         .update(this.updateProfile)

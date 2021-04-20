@@ -27,7 +27,7 @@ export class CategoryDetailComponent implements OnInit {
   public category: CategoryModel;
 
   public modalFile: ModalFile;
-  public fileURL : (String | ArrayBuffer)[];
+  public fileURL: (String | ArrayBuffer)[];
 
   public item: any;
 
@@ -44,49 +44,41 @@ export class CategoryDetailComponent implements OnInit {
     this.modalFile.enityType = EntityType.CATEGORY;
   }
 
-    save(){
-      if(this.categoriesForm.invalid){
-        return;
-      }
-      this.category = {name: this.categoriesForm.value.name, 
-        description: this.categoriesForm.value.description,
-        imageUrl: this.categoriesForm.value.imageUrl,
-          id: this.item ? this.item.id : '',
-          files: this.modalFile.listFile
-      };
-      return this.categoryService.save(this.category)
-                      .then(() => {
-                          this.ngbActiveModal.close();
-                      }).catch((er) => {
-                        if (er.error.hasError) {
-                          console.log(er.error.message)
-                        }
-                      });
+  save() {
+    if (this.categoriesForm.invalid) {
+      return;
     }
-
-    if (this.item.id) {
-      this.category = {
-        name: this.categoriesForm.value.name,
-        description: this.categoriesForm.value.description,
-        imageUrl: this.modalSingleImage.listFile
-          ? this.modalSingleImage.listFile[0].url
-          : null,
-        id: this.item.id,
-        images: this.modalSingleImage.listFile
-          ? this.modalSingleImage.listFile
-          : null,
-      };
-
-      // if (this.categoriesForm.invalid) {   return;
-      // }
-
-    loadItem(){
-      this.categoriesForm = this.formBuilder.group({
-        name: [this.item ? this.item.name : '', [Validators.required]],
-        description: [this.item ? this.item.description : '', [Validators.required]],
-        imageUrl: [this.item ? this.item.imageUrl : '', [Validators.required]]
+    this.category = {
+      name: this.categoriesForm.value.name,
+      description: this.categoriesForm.value.description,
+      imageUrl: this.categoriesForm.value.imageUrl,
+      id: this.item ? this.item.id : '',
+      files: this.modalFile.listFile,
+    };
+    return this.categoryService
+      .save(this.category)
+      .then(() => {
+        this.ngbActiveModal.close();
+      })
+      .catch((er) => {
+        if (er.error.hasError) {
+          console.log(er.error.message);
+        }
       });
-      
+  }
+
+  // if (this.categoriesForm.invalid) {   return;
+  // }
+
+  loadItem() {
+    this.categoriesForm = this.formBuilder.group({
+      name: [this.item ? this.item.name : '', [Validators.required]],
+      description: [
+        this.item ? this.item.description : '',
+        [Validators.required],
+      ],
+      imageUrl: [this.item ? this.item.imageUrl : '', [Validators.required]],
+    });
 
     this.modalHeader = new ModalHeaderModel();
     this.modalHeader.title = this.item ? `[Update] ${this.item.name}` : `[Add]`;
@@ -100,8 +92,7 @@ export class CategoryDetailComponent implements OnInit {
 
   ngOnInit() {
     this.loadItem();
-    if(this.item)
-    {
+    if (this.item) {
       this.fileURL = [];
       this.fileURL.push(FileService.getLinkFile(this.item.imageUrl));
     }
