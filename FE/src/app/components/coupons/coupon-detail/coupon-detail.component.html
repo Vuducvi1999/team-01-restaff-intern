@@ -35,7 +35,8 @@
                   class="text-danger"
                   *ngIf="
                     (CouponFormControl.code.touched || submitted) &&
-                    CouponFormControl.code.errors?.required
+                    (CouponFormControl.code.errors?.required ||
+                      CouponFormControl.code.errors?.pattern)
                   "
                 >
                   Code is required
@@ -57,7 +58,8 @@
                   class="text-danger"
                   *ngIf="
                     (CouponFormControl.name.touched || submitted) &&
-                    CouponFormControl.name.errors?.required
+                    (CouponFormControl.name.errors?.required ||
+                      CouponFormControl.name.errors?.pattern)
                   "
                 >
                   Name is required
@@ -68,7 +70,7 @@
                   ><span>*</span> HasPercent</label
                 >
                 <input
-                  class="form-control col-xl-8 col-md-7"
+                  class="form-control form-check-input col-xl-7 col-md-6"
                   id=""
                   type="checkbox"
                   formControlName="hasPercent"
@@ -102,7 +104,9 @@
                 <input
                   class="form-control col-xl-8 col-md-7"
                   id="validationCustom3"
-                  type="datetime-local"
+                  type="date"
+                  data-date=""
+                  data-date-format="dd MM yyyy"
                   formControlName="startDate"
                   required=""
                 />
@@ -123,7 +127,9 @@
                 <input
                   class="form-control col-xl-8 col-md-7"
                   id="validationCustom3"
-                  type="datetime-local"
+                  type="date"
+                  data-date=""
+                  data-date-format="dd MM yyyy"
                   formControlName="endDate"
                   required=""
                 />

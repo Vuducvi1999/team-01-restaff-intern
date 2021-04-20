@@ -6,6 +6,7 @@ using Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
+using Service.Files;
 using Service.SocialMedias;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace BE.Controllers
     {
         private readonly ISocialMediaService _socialMediaService;
 
-        public SocialMediaController(ISocialMediaService socialMediaService, IAuthService authService, IUserManager userManager) : base(authService, userManager)
+        public SocialMediaController(ISocialMediaService socialMediaService, IAuthService authService, IUserManager userManager, IFileService fileService) : base(authService,userManager, fileService)
         {
             _socialMediaService = socialMediaService;
         }

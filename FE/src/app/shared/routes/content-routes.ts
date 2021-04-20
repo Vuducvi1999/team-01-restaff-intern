@@ -18,18 +18,18 @@ export const content: Routes = [
         (m) => m.BannersModule
       ),
     data: {
-      breadcrumb: "Banners"
-    }
-
-  }
-  ,
+      breadcrumb: 'Banners',
+    },
+  },
   {
     path: 'profiles',
-    loadChildren: () => import('../../components/profiles/profiles.module').then(m => m.ProfilesModule),
+    loadChildren: () =>
+      import('../../components/profiles/profiles.module').then(
+        (m) => m.ProfilesModule
+      ),
     data: {
-      breadcrumb: "Profiles"
-    }
-
+      breadcrumb: 'Profiles',
+    },
   },
   {
     path: 'social-medias',
@@ -38,7 +38,7 @@ export const content: Routes = [
         (m) => m.SocialMediasModule
       ),
     data: {
-      breadcrumb: 'Banners',
+      breadcrumb: 'Social Medias',
     },
   },
   {
@@ -50,6 +50,11 @@ export const content: Routes = [
     data: {
       breadcrumb: 'Categories',
     },
+  },
+  {
+    path: 'files',
+    loadChildren: () =>
+      import('../../components/files/files.module').then((m) => m.FilesModule),
   },
   {
     path: 'coupons',
@@ -67,6 +72,14 @@ export const content: Routes = [
       import('../../components/users/users.module').then((m) => m.UsersModule),
     data: {
       breadcrumb: 'Users',
+    },
+  },
+  {
+    path: 'blogs',
+    loadChildren: () =>
+      import('../../components/blogs/blogs.module').then((m) => m.BlogsModule),
+    data: {
+      breadcrumb: 'Blogs',
     },
   },
 ];

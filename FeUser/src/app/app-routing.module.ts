@@ -1,15 +1,14 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "home",
+    redirectTo: "/home",
     pathMatch: "full",
   },
   {
     path: "home",
-    loadChildren: () => import("./home/home.module").then((m) => m.HomeModule),
+    loadChildren: () => import("./components/pages.module").then((m) => m.PagesModule),
   },
   {
     path: "**", // Navigate to Home Page if not found any page

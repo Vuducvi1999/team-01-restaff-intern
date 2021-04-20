@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { AppConfig } from "src/app/lib/environments/config/appConfig";
 import { HttpClientService } from "src/app/lib/http/http-client";
 import { CategoryModel } from "../../models/categories/category.model";
 
@@ -25,5 +24,11 @@ export class CategoryService  {
     delete(model: CategoryModel) {
       const url = `${this.url}/?Id=${model?.id}`;
       return this.httpClient.deleteObservable(url).toPromise();
+    }
+    save(model: CategoryModel) {
+      if (model.id) {
+        return this.update(model);
+      }
+      return this.create(model);
     }
   }

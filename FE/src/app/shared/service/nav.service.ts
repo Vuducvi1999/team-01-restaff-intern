@@ -76,6 +76,19 @@ export class NavService {
       ],
     },
     {
+      title: 'Files',
+      icon: 'camera',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/files/list-files',
+          title: 'File List',
+          type: 'link',
+        },
+      ],
+    },
+    {
       title: 'Coupon',
       icon: 'users',
       type: 'sub',
@@ -110,6 +123,32 @@ export class NavService {
         {
           path: '/users/list-users',
           title: 'User List',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      title: 'Blogs',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/blogs/list-blogs',
+          title: 'Blog List',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      title: 'Category',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/categories/list-categories',
+          title: 'Category List',
           type: 'link',
         },
       ],

@@ -5,12 +5,16 @@
         public const string CreateSuccess = "Create successfully";
         public const string UpdateSuccess = "Update successfully";
         public const string DeleteSuccess = "Delete successfully";
+        public const string SearchSuccess = "Search successfully";
 
 
+        public const string ListSuccess = "List successfully";
         public const string Error = "Save fail";
 
         public const string InvalidAuthInfoMsg = "Invalid email or password";
         public const string LoginSuccess = "Login successfully";
+
+        public const string EnityTypeError = "Don't find EnityType";
 
         public const string GetPaginationFail = "Get Pagination Fail";
         public const string GetPaginationSuccess = "Get Pagination Success";

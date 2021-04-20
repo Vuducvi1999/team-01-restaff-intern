@@ -28,9 +28,9 @@ export class BannersService {
   }
   save(model: BannerModel) {
     if (model.id) {
-      return this.httpClient.putObservable(this.url, model).toPromise();
+      return this.update(model);
     }
-    return this.httpClient.postObservable(this.url, model).toPromise();
+    return this.create(model);
   }
 }
 

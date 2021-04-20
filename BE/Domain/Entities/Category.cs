@@ -1,5 +1,6 @@
 ﻿using Domain.DTOs.Categories;
 using System;
+using System.Collections.Generic;
 
 namespace Domain.Entities
 {
@@ -8,6 +9,7 @@ namespace Domain.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public string ImageUrl { get; set; }
+        public ICollection<Product> Products { get; set; }
 
         public void Insert()
         {

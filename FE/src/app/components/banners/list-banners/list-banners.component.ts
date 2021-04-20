@@ -32,10 +32,6 @@ export class ListBannersComponent implements OnInit {
       position: 'right',
     },
     columns: {
-      vendor: {
-        title: 'Banner',
-        type: 'html',
-      },
       title: {
         title: 'Title',
       },
@@ -69,24 +65,8 @@ export class ListBannersComponent implements OnInit {
     });
 
   }
-  openCreate(event: any) {
-    var modalRef = this.modalService.open(BannersDetailComponent, {
-      size: 'lg'
-    });
-    modalRef.result.then(() => this.getBanners());
-  }
 
-  delete(event: any) {
-    console.log(event);
-    let banner = event.data as BannerModel;
-    if (window.confirm("Are u sure?")) {
-      this.bannersService.delete(banner).then(res => {
-        this.getBanners();
-      });
-    }
-  }
-  openUpdate(event: any) {
-    console.log(event.data);
+  openDetails(event: any) {
     var modalRef = this.modalService.open(BannersDetailComponent, {
       size: 'lg'
     });
@@ -94,5 +74,13 @@ export class ListBannersComponent implements OnInit {
     modalRef.result.then(() => this.getBanners());
   }
 
-
+  delete(event: any) {
+    console.log(event);
+    let banner = event.data as BannerModel;
+    if (window.confirm("Do you want to permanently delete this item?")) {
+      this.bannersService.delete(banner).then(res => {
+        this.getBanners();
+      });
+    }
+  }
 }
