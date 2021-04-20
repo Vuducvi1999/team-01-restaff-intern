@@ -30,10 +30,6 @@ export class ListCategoriesComponent implements OnInit {
       position: 'right'
     },
     columns: {
-      vendor: {
-        title: 'Category',
-        type: 'html',
-      },
       name: {
         title: 'Name'
       },
