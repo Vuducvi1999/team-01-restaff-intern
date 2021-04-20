@@ -10,6 +10,8 @@ using Infrastructure.EntityFramework;
 using Domain.DTOs.Coupons;
 using Domain.DTOs.Profiles;
 using Domain.DTOs.Users;
+using Domain.DTOs.Products;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using Domain.DTOs.Blogs;
@@ -20,14 +22,17 @@ namespace Domain
     {
         public AutoMapperProfile()
         {
+            //supplier
             CreateMap<PaginatedList<Supplier>, PaginatedList<SupplierDTO>>().ReverseMap();
             CreateMap<Supplier, SupplierDTO>().ReverseMap();
             CreateMap<CreateSupplierDTO, Supplier>().ReverseMap();
 
+            //category
             CreateMap<PaginatedList<Category>, PaginatedList<CategoryDTO>>().ReverseMap();
             CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<CreateCategoryDTO, Category>().ReverseMap();
 
+            //social media
             CreateMap<PaginatedList<SocialMedia>, PaginatedList<SocialMediaDTO>>().ReverseMap();
             CreateMap<SocialMedia, SocialMediaDTO>().ReverseMap();
             CreateMap<CreateSocialMediaDTO, SocialMedia>().ReverseMap();
@@ -36,6 +41,7 @@ namespace Domain
             CreateMap<Supplier, DeleteSupplierDTO>().ReverseMap();
             CreateMap<Supplier, UpdateSupplierDTO>().ReverseMap();
 
+            //banner
             CreateMap<PaginatedList<Banner>, PaginatedList<BannerDTO>>().ReverseMap();
             CreateMap<Banner, BannerDTO>().ReverseMap();
             CreateMap<Banner, CreateBannerDTO>().ReverseMap();
@@ -58,6 +64,15 @@ namespace Domain
             CreateMap<File, DeleteFileDTO>().ReverseMap();
             //CreateMap<CreateFileDTO, SaveFileDTO>().ReverseMap();
             CreateMap<SaveFileDTO, CreateFileDTO>();
+
+
+
+            //product
+            CreateMap<PaginatedList<Product>, PaginatedList<ProductDTO>>().ReverseMap();
+            CreateMap<Product, ProductDTO>()
+                 .ForMember(t => t.CategoryName, k=>k.MapFrom(h=>h.Category.Name)).ReverseMap();
+            CreateMap<CreateProductDTO, Product>().ReverseMap();
+            CreateMap<IQueryable<ProductDTO>, PaginatedList<Product>>().ReverseMap();
 
             //Coupon
             CreateMap<PaginatedList<Coupon>, PaginatedList<CouponDTO>>().ReverseMap();
