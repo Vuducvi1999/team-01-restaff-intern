@@ -24,19 +24,36 @@ namespace Service.Categories
             _mapper = mapper;
         }
 
+        public bool CleanString(Category model)
+        {
+            var stringProperties = model.GetType().GetProperties()
+                          .Where(p => p.PropertyType == typeof(string));
+
+            char[] charsToTrim = { '*', '.', ' '};
+            foreach (var stringPropertie in stringProperties)
+            {
+                string currentValue = (string)stringPropertie.GetValue(model);
+                stringPropertie.SetValue(model, currentValue.Trim(charsToTrim));
+                if(stringPropertie.GetValue(model).ToString() == "")
+                {
+                    return false;
+                }
+
+            }
+            return true;
+        }
+
         public ReturnMessage<CategoryDTO> Create(CreateCategoryDTO model)
         {
-            //var stringProperties = model.GetType().GetProperties()
-            //              .Where(p => p.PropertyType == typeof(string));
 
-            //foreach (var stringProperty in stringProperties)
-            //{
-            //    string currentValue = (string)stringProperty.GetValue(model, null);
-            //    stringProperty.SetValue(model, currentValue.Trim(), null);
-            //}
+
             try
             {
                 var entity = _mapper.Map<CreateCategoryDTO, Category>(model);
+                if (!CleanString(entity))
+                {
+                    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
+                }
                 entity.Insert();
                 _categoryRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
@@ -48,6 +65,7 @@ namespace Service.Categories
                 return new ReturnMessage<CategoryDTO>(true, null, ex.Message);
             }
         }
+
 
         public ReturnMessage<CategoryDTO> Delete(DeleteCategoryDTO model)
         {
