@@ -113,10 +113,6 @@ export class HomeComponent implements OnInit {
 
   // Product Tab collection
   getCollectionProducts(collection) {
-    return this.products.filter((item) => {
-      if (item.collection.find((i) => i === collection)) {
-        return item;
-      }
-    });
+    return null;
   }
 }
