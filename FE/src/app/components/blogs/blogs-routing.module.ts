@@ -10,8 +10,8 @@ const routes: Routes = [
         path: 'list-blogs',
         component: ListBlogsComponent,
         data: {
-          title: 'Coupon List',
-          breadcrumb: 'CouponList',
+          title: 'Blog List',
+          breadcrumb: 'BlogList',
         },
       },
     ],
