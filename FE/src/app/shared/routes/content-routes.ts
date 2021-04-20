@@ -52,6 +52,11 @@ export const content: Routes = [
     },
   },
   {
+    path: 'files',
+    loadChildren: () =>
+      import('../../components/files/files.module').then((m) => m.FilesModule),
+  },
+  {
     path: 'coupons',
     loadChildren: () =>
       import('../../components/coupons/coupons.module').then(

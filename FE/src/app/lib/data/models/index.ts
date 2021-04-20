@@ -6,3 +6,4 @@ export * from './social-medias/social-media.model';
 export * from './coupons/coupon.model';
 export * from './profile/profile.model';
 export * from './auth/auth.informationreturndto.model';
+export * from './files/file.model';

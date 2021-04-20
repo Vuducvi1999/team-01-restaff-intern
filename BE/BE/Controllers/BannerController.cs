@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Banners;
+using Service.Files;
 
 namespace BE.Controllers
 {
@@ -17,7 +18,7 @@ namespace BE.Controllers
         private readonly IBannerService _bannerService;
 
 
-        public BannerController(IBannerService bannerService, IAuthService authService, IUserManager userManager) : base(authService, userManager)
+        public BannerController(IBannerService bannerService, IAuthService authService, IUserManager userManager, IFileService fileService) : base(authService, userManager, fileService)
         {
             _bannerService = bannerService;
         }

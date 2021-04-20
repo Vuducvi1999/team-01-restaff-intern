@@ -3,6 +3,7 @@ using Common.Pagination;
 using Domain.DTOs.Users;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
+using Service.Files;
 using Service.Users;
 
 namespace BE.Controllers
@@ -13,7 +14,7 @@ namespace BE.Controllers
     {
         private readonly IUserService _userService;
 
-        public UserController(IUserService userService, IAuthService authService, IUserManager userManager) : base(authService, userManager)
+        public UserController(IUserService userService, IAuthService authService, IUserManager userManager, IFileService fileService) : base(authService, userManager, fileService)
         {
             _userService = userService;
         }

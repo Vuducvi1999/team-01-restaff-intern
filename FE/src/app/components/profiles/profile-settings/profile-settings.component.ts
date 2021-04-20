@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ChangePasswordProfileModel, ProfileModel, UserDataReturnDTOModel } from 'src/app/lib/data/models';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import {  FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from 'src/app/lib/data/services';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile-settings',
@@ -19,12 +21,14 @@ export class ProfileSettingsComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private route: ActivatedRoute,
 
   ) { }
 
   ngOnInit() {
-    this.userInfo = JSON.parse(localStorage.getItem('user'));
+    // console.log(this.route.parent.parent.parent.snapshot.data);
+    this.userInfo = this.route.parent.parent.parent.snapshot.data.user;
     this.loadFormItem();
   }
 
@@ -52,10 +56,9 @@ export class ProfileSettingsComponent implements OnInit {
 
   updateSwitch() {
     this.update = this.update == true ? false : true;
-    console.log(this.update)
   }
   updateDetails() {
-    if (window.confirm("Are u sure?")) {
+    if (window.confirm("Do you want to update your profile?")) {
       this.updateProfile = {
         firstName: this.profileForm.controls.firstName.value,
         lastName: this.profileForm.controls.lastName.value,
@@ -65,7 +68,8 @@ export class ProfileSettingsComponent implements OnInit {
       }
       this.profileService.update(this.updateProfile).then(resp => {
         localStorage.setItem('user', JSON.stringify(resp.data));
-        this.userInfo = JSON.parse(localStorage.getItem('user'));
+        this.userInfo = resp.data;
+        this.route.snapshot.data.user = resp.data;
       }).catch((er) => {
         if (er.error.hasError) {
           console.log(er.error.message);
@@ -74,7 +78,7 @@ export class ProfileSettingsComponent implements OnInit {
     }
   }
   changePassword() {
-    if (window.confirm("Are u sure?")) {
+    if (window.confirm("Do you want to change your password?")) {
       this.passwordProfile = {
         password: this.passwordForm.controls.password.value,
         newPassword: this.passwordForm.controls.newPassword.value,
