@@ -1,19 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  ChangePasswordProfileModel,
-  FileDtoModel,
-  ProfileModel,
-  ReturnMessage,
-  UserDataReturnDTOModel,
-} from 'src/app/lib/data/models';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FileService, ProfileService } from 'src/app/lib/data/services';
+import { ChangePasswordProfileModel, ProfileModel, UserDataReturnDTOModel } from 'src/app/lib/data/models';
+
+import { ProfileService } from 'src/app/lib/data/services';
 import { ActivatedRoute } from '@angular/router';
-import {
-  EntityType,
-  ModalFile,
-  TypeFile,
-} from 'src/app/shared/components/modals/models/modal.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-profile-settings',

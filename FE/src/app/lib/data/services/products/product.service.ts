@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClientService } from "src/app/lib/http/http-client";
-import { CategoryModel } from "../../models/categories/category.model";
+import { ProductModel } from "../../models/products/product.model";
+
 
 @Injectable()
-export class CategoryService  {
+export class ProductService  {
 
     private url = '/api/category';
 
@@ -13,22 +14,16 @@ export class CategoryService  {
       return this.httpClient.getObservable(this.url, request).toPromise();
     }
 
-    create(model: CategoryModel) {
+    create(model: ProductModel) {
       return this.httpClient.postObservable(this.url, model).toPromise();
     }
 
-    update(model: CategoryModel) {
+    update(model: ProductModel) {
       return this.httpClient.putObservable(this.url, model).toPromise();
     }
 
-    delete(model: CategoryModel) {
+    delete(model: ProductModel) {
       const url = `${this.url}/?Id=${model?.id}`;
       return this.httpClient.deleteObservable(url).toPromise();
-    }
-    save(model: CategoryModel) {
-      if (model.id) {
-        return this.update(model);
-      }
-      return this.create(model);
     }
   }

@@ -44,65 +44,49 @@ export class CategoryDetailComponent implements OnInit {
     this.modalFile.enityType = EntityType.CATEGORY;
   }
 
-  save() {
-    if (this.modalHeader.title == '[Add]') {
-      this.category = {
-        name: this.categoriesForm.value.name,
+    save(){
+      if(this.categoriesForm.invalid){
+        return;
+      }
+      this.category = {name: this.categoriesForm.value.name, 
         description: this.categoriesForm.value.description,
         imageUrl: this.categoriesForm.value.imageUrl,
-        id: '',
-        files: this.modalFile.listFile
+          id: this.item ? this.item.id : '',
+          files: this.modalFile.listFile
       };
-
-      // if (this.categoriesForm.invalid) {
-      //   console.log('asdasd');
-      //   return;
-      // }
-      this.categoryService
-        .create(this.category)
-        .then(() => {
-          this.ngbActiveModal.close();
-        })
-        .catch((er) => {
-          if (er.error.hasError) {
-            console.log(er.error.message);
-          }
-        });
+      return this.categoryService.save(this.category)
+                      .then(() => {
+                          this.ngbActiveModal.close();
+                      }).catch((er) => {
+                        if (er.error.hasError) {
+                          console.log(er.error.message)
+                        }
+                      });
     }
 
     if (this.item.id) {
       this.category = {
         name: this.categoriesForm.value.name,
         description: this.categoriesForm.value.description,
-        imageUrl: this.categoriesForm.value.imageUrl,
+        imageUrl: this.modalSingleImage.listFile
+          ? this.modalSingleImage.listFile[0].url
+          : null,
         id: this.item.id,
-        files: this.modalFile.listFile
+        images: this.modalSingleImage.listFile
+          ? this.modalSingleImage.listFile
+          : null,
       };
 
       // if (this.categoriesForm.invalid) {   return;
       // }
 
-      this.categoryService
-        .update(this.category)
-        .then(() => {
-          this.ngbActiveModal.close();
-        })
-        .catch((er) => {
-          if (er.error.hasError) {
-            console.log(er.error.message);
-          }
-        });
-    }
-  }
-  loadItem() {
-    this.categoriesForm = this.formBuilder.group({
-      name: [this.item ? this.item.name : '', [Validators.required]],
-      description: [
-        this.item ? this.item.description : '',
-        [Validators.required],
-      ],
-      imageUrl: [this.item ? this.item.imageUrl : '', [Validators.required]],
-    });
+    loadItem(){
+      this.categoriesForm = this.formBuilder.group({
+        name: [this.item ? this.item.name : '', [Validators.required]],
+        description: [this.item ? this.item.description : '', [Validators.required]],
+        imageUrl: [this.item ? this.item.imageUrl : '', [Validators.required]]
+      });
+      
 
     this.modalHeader = new ModalHeaderModel();
     this.modalHeader.title = this.item ? `[Update] ${this.item.name}` : `[Add]`;

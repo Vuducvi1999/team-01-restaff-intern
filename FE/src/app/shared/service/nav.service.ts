@@ -127,6 +127,19 @@ export class NavService {
         },
       ],
     },
+    {
+      title: 'Category',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/categories/list-categories',
+          title: 'Category List',
+          type: 'link',
+        },
+      ],
+    },
   ];
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 }
