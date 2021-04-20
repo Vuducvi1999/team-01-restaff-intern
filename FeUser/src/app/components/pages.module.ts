@@ -4,7 +4,7 @@ import { GalleryModule } from '@ks89/angular-modal-gallery';
 import { SharedModule } from '../shared/shared.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { HomeComponent } from './home/home.component';
-// Widgest Components
+// Widgets Components
 import { SliderComponent } from './home/widgets/slider/slider.component';
 import { BlogComponent } from './home/widgets/blog/blog.component';
 import { LogoComponent } from './home/widgets/logo/logo.component';

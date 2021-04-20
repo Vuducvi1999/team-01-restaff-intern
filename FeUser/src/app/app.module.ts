@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -15,6 +15,8 @@ import { AppComponent } from './app.component';
 import { ShopComponent } from './shop/shop.component';
 import { PagesComponent } from './pages/pages.component';
 import { ElementsComponent } from './elements/elements.component';
+import { environment } from './lib/environments/environment';
+import { AppConfig } from './lib/environments/config/appConfig';
 
 
 // AoT requires an exported function for factories
@@ -51,7 +53,17 @@ export function HttpLoaderFactory(http: HttpClient) {
     SharedModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    { provide: 'BASE_URL', useValue: environment.host },
+    AppConfig,
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      deps: [AppConfig],
+      useFactory: (appConfigService: AppConfig) => () =>
+        appConfigService.load(),
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

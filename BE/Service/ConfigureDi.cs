@@ -12,6 +12,8 @@ using Service.Coupons;
 using Service.Profiles;
 using Service.Users;
 using Service.Products;
+using Service.Header;
+using Service.Footer;
 
 namespace Service
 {
@@ -43,6 +45,9 @@ namespace Service
             services.AddScoped<IFileManager, FileManager>();
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IHeaderService, HeaderService>();
+            services.AddScoped<IFooterService, FooterService>();
+
         }
     }
 }

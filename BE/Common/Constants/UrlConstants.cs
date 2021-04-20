@@ -11,9 +11,12 @@ namespace Common.Constants
 
         public const string BaseApi = "/api";
 
+
+
         public const string BaseSupplier = BaseApi + "/supplier";
 
         public const string BaseSocialMedia = BaseApi + "/social-media";
+
 
 
         public const string BaseAuth = BaseApi + "/auth";
@@ -36,6 +39,11 @@ namespace Common.Constants
         public const string BaseUser= BaseApi + "/user";
 
         public const string BaseProduct = BaseApi + "/product";
+
+        public const string BaseHeader = BaseApi + "/header";
+        public const string BaseFooter = BaseApi + "/footer";
+
+
 
     }
 }
