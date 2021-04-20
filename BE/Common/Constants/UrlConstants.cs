@@ -22,7 +22,6 @@ namespace Common.Constants
 
         public const string BaseLogin = BaseAuth + "/login";
 
-        public const string BaseBanner = BaseApi + "/banner";
 
         public const string BaseProfile = BaseApi + "/profile";
 
