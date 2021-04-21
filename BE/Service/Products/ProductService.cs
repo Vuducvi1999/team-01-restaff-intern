@@ -2,6 +2,7 @@
 using Common.Constants;
 using Common.Http;
 using Common.Pagination;
+using Common.StringEx;
 using Domain.DTOs.Products;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
@@ -27,10 +28,13 @@ namespace Service.Products
 
         public ReturnMessage<ProductDTO> Create(CreateProductDTO model)
         {
-
+            var stringInput = StringExtension.CleanString(model);
+            if (!stringInput)
+            {
+                return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
+            }
             try
             {
-                
                 var entity = _mapper.Map<CreateProductDTO, Product>(model);
                 var category = _categoryRepository.Queryable().Where(it => it.Name == model.CategoryName).FirstOrDefault();
                 if (category == null)
@@ -101,6 +105,11 @@ namespace Service.Products
 
         public ReturnMessage<ProductDTO> Update(UpdateProductDTO model)
         {
+            var stringInput = StringExtension.CleanString(model);
+            if (!stringInput)
+            {
+                return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
+            }
             try
             {
                 var entity = _mapper.Map<UpdateProductDTO, Product>(model);

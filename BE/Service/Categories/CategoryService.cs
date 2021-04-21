@@ -8,7 +8,7 @@ using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
 using System;
 using System.Linq;
-
+using Common.StringEx;
 namespace Service.Categories
 {
     public class CategoryService : ICategoryService
@@ -26,36 +26,35 @@ namespace Service.Categories
             _productRepository = productRepository;
         }
 
-        public bool CleanString(CategoryDTO model)
-        {
-            var stringProperties = model.GetType().GetProperties()
-                          .Where(p => p.PropertyType == typeof(string));
 
-            char[] charsToTrim = { '*', '.', ' '};
-            foreach (var stringPropertie in stringProperties)
-            {
-                string currentValue = (string)stringPropertie.GetValue(model);
-                stringPropertie.SetValue(model, currentValue.Trim(charsToTrim));
-                if(stringPropertie.GetValue(model).ToString() == "")
-                {
-                    return false;
-                }
-
-            }
-            return true;
-        }
+        //public bool CleanString(UpdateCategoryDTO model)
+        //{
+        //    var stringItems = model.GetType().GetProperties()
+        //            .Where(p => p.PropertyType == typeof(string));
+        //    foreach (var stringItem in stringItems)
+        //    {
+        //        if (stringItem.GetValue(model).ToString() == ""
+        //            || stringItem.GetValue(model).ToString().Trim() == ""
+        //            || stringItem.GetValue(model).ToString().EndsWith("")
+        //            || stringItem.GetValue(model).ToString().StartsWith(""))
+        //        {
+        //            return false;
+        //        }
+        //        var currentItem = stringItem.GetValue(model).ToString().Trim();
+        //    }
+        //    return true;
+        //}
 
         public ReturnMessage<CategoryDTO> Create(CreateCategoryDTO model)
         {
-
-
+            var stringInput = StringExtension.CleanString(model);
+            if (!stringInput)
+            {
+                return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
+            }
             try
             {
                 var entity = _mapper.Map<CreateCategoryDTO, Category>(model);
-                //if (!CleanString(entity))
-                //{
-                //    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
-                //}
                 entity.Insert();
                 _categoryRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
@@ -134,6 +133,11 @@ namespace Service.Categories
 
         public ReturnMessage<CategoryDTO> Update(UpdateCategoryDTO model)
         {
+            var stringInput = StringExtension.CleanString(model);
+            if (!stringInput)
+            {
+                return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
+            }
             try
             {
                 var entity = _categoryRepository.Find(model.Id);
