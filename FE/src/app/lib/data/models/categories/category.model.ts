@@ -1,8 +1,8 @@
 import { BaseModel } from "../common";
-import { FileDtoModel } from "../files/file.model";
-export interface CategoryModel extends BaseModel {
+import { baseDTO } from "./baseDTO.model";
+
+export interface CategoryModel extends BaseModel, baseDTO{
   name: string;
   description: string;
   imageUrl: string;
-  //images: FileDtoModel[];
 }

@@ -13,7 +13,7 @@ import { CategoryDetailComponent } from '../categories-details/categories-detail
 })
 export class ListCategoriesComponent implements OnInit {
 
-  public categories = [];
+  public categories: CategoryModel[];
   closeResult = '';
   constructor(private modalService: NgbModal,private categoryService:CategoryService) {
     this.fetch();
@@ -42,9 +42,6 @@ export class ListCategoriesComponent implements OnInit {
         },
         imageUrl: {
           title: 'Image URL',
-        },
-        id: {
-          title: 'Id',
         }
       },
     };
@@ -86,7 +83,7 @@ export class ListCategoriesComponent implements OnInit {
     this.categoryService.get(null).then((res : ReturnMessage<PageModel<CategoryModel>>) => {
       if(!res.hasError)
       {
-        this.categories = res.data.results;
+        this.categories = res.data.results.filter(r => r.isDeleted == false);
       }
     }).catch((er) => {
       

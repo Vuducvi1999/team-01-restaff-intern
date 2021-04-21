@@ -13,15 +13,17 @@ namespace Service.Categories
 {
     public class CategoryService : ICategoryService
     {
+        private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Category> _categoryRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CategoryService(IRepository<Category> categoryRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public CategoryService(IRepository<Category> categoryRepository, IRepository<Product> productRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _productRepository = productRepository;
         }
 
         public bool CleanString(CategoryDTO model)
@@ -76,10 +78,20 @@ namespace Service.Categories
                 //{
                 //    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
                 //}
+               
+                var products = _productRepository.Queryable().Where(r => r.CategoryId == model.Id);
+
                 if (entity.IsNotNullOrEmpty())
                 {
+                    foreach (var product in products)
+                    {
+                        product.Delete();
+                        product.IsDeleted = true;
+                        _productRepository.Update(product);
+                    }
                     entity.Delete();
-                    _categoryRepository.Delete(entity);
+                    entity.IsDeleted = true;
+                    _categoryRepository.Update(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<CategoryDTO>(false, _mapper.Map<Category, CategoryDTO>(entity), MessageConstants.DeleteSuccess);
                     return result;
@@ -111,7 +123,9 @@ namespace Service.Categories
                 , search.PageIndex
                 , t => t.Name
             );
+            resultEntity.Results.Where(r => r.ObjectState == ObjectState.Added);
             var data = _mapper.Map<PaginatedList<Category>, PaginatedList<CategoryDTO>>(resultEntity);
+            
             var result = new ReturnMessage<PaginatedList<CategoryDTO>>(false, data, MessageConstants.UpdateSuccess);
 
             return result;

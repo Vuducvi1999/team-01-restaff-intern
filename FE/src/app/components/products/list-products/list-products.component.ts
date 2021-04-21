@@ -101,7 +101,7 @@ export class ListProductsComponent implements OnInit {
     this.productService.get(null).then((res : ReturnMessage<PageModel<ProductModel>>) => {
       if(!res.hasError)
       {
-        this.products = res.data.results;
+        this.products = res.data.results.filter(r => r.isDeleted == false);
       }
     }).catch((er) => {
       

@@ -40,6 +40,14 @@ export class CategoryDetailComponent implements OnInit {
       this.category = {name: this.categoriesForm.value.name, 
         description: this.categoriesForm.value.description,
         imageUrl: this.categoriesForm.value.imageUrl,
+        createdBy: this.item ? this.item.createdBy : this.item,
+        createdByName: this.item ? this.item.createdByName : this.item,
+        deletedBy: this.item ? this.item.deletedBy : this.item,
+        deletedByName: this.item ? this.item.deletedByName : this.item,
+        isActive: this.item ? this.item.isActive : this.item,
+        isDeleted: this.item ? this.item.isDeleted : this.item,
+        updatedBy: this.item ? this.item.updatedBy : this.item,
+        updatedByName: this.item ? this.item.updatedByName : this.item,
         id: this.item ? this.item.id : ''};
       return this.categoryService.save(this.category)
                       .then(() => {
