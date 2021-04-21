@@ -3,10 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Files;
 using Service.Header;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace BE.Controllers
 {
@@ -30,11 +27,19 @@ namespace BE.Controllers
             return CommonResponse(result);
         }
 
+        //[HttpGet]
+        //[Route("social-medias")]
+        //public IActionResult GetSocialMedias()
+        //{
+        //    var result = _headerService.GetSocialMedias();
+        //    return CommonResponse(result);
+        //}
+
         [HttpGet]
-        [Route("social-medias")]
-        public IActionResult GetSocialMedias()
+        [Route("blogs")]
+        public IActionResult GetBlogs()
         {
-            var result = _headerService.GetSocialMedias();
+            var result = _headerService.GetBlogs();
             return CommonResponse(result);
         }
 

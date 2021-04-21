@@ -30,13 +30,13 @@ namespace BE.Controllers
             return CommonResponse(result);
         }
 
-        [HttpGet]
-        [Route("social-medias")]
-        public IActionResult GetSocialMedias()
-        {
-            var result = _headerService.GetSocialMedias();
-            return CommonResponse(result);
-        }
+        //[HttpGet]
+        //[Route("social-medias")]
+        //public IActionResult GetSocialMedias()
+        //{
+        //    var result = _headerService.GetSocialMedias();
+        //    return CommonResponse(result);
+        //}
 
     }
 }

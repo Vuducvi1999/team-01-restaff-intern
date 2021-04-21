@@ -1,24 +1,13 @@
 import { Injectable, HostListener } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-
-// Menu
-export interface Menu {
-	path?: string;
-	title?: string;
-	type?: string;
-	megaMenu?: boolean;
-	image?: string;
-	active?: boolean;
-	badge?: boolean;
-	badgeText?: string;
-	children?: Menu[];
-}
+import { Menu } from 'src/app/lib/data/models/header/header.model';
 
 @Injectable({
 	providedIn: 'root'
 })
 
 export class NavService {
+	public menuItems :Menu[];
 
 	constructor() { }
 

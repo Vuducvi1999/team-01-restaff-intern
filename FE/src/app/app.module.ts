@@ -22,6 +22,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
     AuthModule,
     SharedModule,
     HttpClientModule,
+    FilesModule
   ],
   providers: [
     { provide: 'BASE_URL', useValue: environment.host },

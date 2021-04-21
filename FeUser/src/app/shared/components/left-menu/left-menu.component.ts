@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NavService, Menu } from '../../services/nav.service';
+import { NavService } from '../../services/nav.service';
 import { Router } from '@angular/router';
+import { Menu } from 'src/app/lib/data/models/header/header.model';
 
 @Component({
   selector: 'app-left-menu',
