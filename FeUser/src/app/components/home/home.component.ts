@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
       .getTopCollectionProducts()
       .then((data: ReturnMessage<HomeProductModel[]>) => {
         this.products = data.data;
+        console.log(this.products)
       });
   }
 
@@ -109,7 +110,7 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   // Product Tab collection
   getCollectionProducts(collection) {
