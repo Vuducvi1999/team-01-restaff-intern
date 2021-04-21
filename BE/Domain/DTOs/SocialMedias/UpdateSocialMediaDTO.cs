@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.DTOs.Files;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -14,6 +15,8 @@ namespace Domain.DTOs.SocialMedias
         public string IconUrl { get; set; }
 
         public int DisplayOrder { get; set; }
+
+        public List<FileDTO> Files { get; set; }
 
     }
 }

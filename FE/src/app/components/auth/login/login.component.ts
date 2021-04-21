@@ -81,7 +81,7 @@ export class LoginComponent implements OnInit {
     await this.authService
       .login(data)
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
-        alert(data.message);
+        // alert(data.message);
         localStorage.setItem('token', data.data.token);
         localStorage.setItem('user', JSON.stringify(data.data));
         this.backUrl();

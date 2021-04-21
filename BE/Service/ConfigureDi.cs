@@ -11,6 +11,7 @@ using Service.Files;
 using Service.Coupons;
 using Service.Profiles;
 using Service.Users;
+using Service.Blogs;
 using Service.Products;
 using Service.Header;
 using Service.Footer;
@@ -48,6 +49,8 @@ namespace Service
             services.AddScoped<IHeaderService, HeaderService>();
             services.AddScoped<IFooterService, FooterService>();
 
+
+            services.AddScoped<IBlogService, BlogService>();
         }
     }
 }

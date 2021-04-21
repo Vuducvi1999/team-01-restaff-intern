@@ -1,35 +1,70 @@
-<app-modal-header [data]="modalHeader" (onAction)="close($event)"></app-modal-header>
+<app-modal-header
+  [data]="modalHeader"
+  (onAction)="close($event)"
+></app-modal-header>
 <!-- Container-fluid starts-->
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-12">
       <div class="card tab2-card">
-
         <div class="card-body">
           <ngb-tabset class="tab-coupon">
             <ngb-tab title="Categories">
               <ng-template ngbTabContent>
-                <div class="tab-pane fade active show" id="account" role="tabpanel" aria-labelledby="account-tab">
-                  <form [formGroup]="categoriesForm" class="needs-validation user-add" novalidate="">
+                <div
+                  class="tab-pane fade active show"
+                  id="account"
+                  role="tabpanel"
+                  aria-labelledby="account-tab"
+                >
+                  <form
+                    [formGroup]="categoriesForm"
+                    class="needs-validation user-add"
+                    novalidate=""
+                  >
                     <h4>Category Details</h4>
                     <div class="form-group row">
-                      <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
-                        Name</label>
-                      <input class="form-control col-xl-8 col-md-7" id="validationCustom0" type="text" required=""
-                        formControlName="name">
+                      <label for="validationCustom0" class="col-xl-3 col-md-4"
+                        ><span>*</span> Name</label
+                      >
+                      <input
+                        class="form-control col-xl-8 col-md-7"
+                        id="validationCustom0"
+                        type="text"
+                        required=""
+                        formControlName="name"
+                      />
                     </div>
                     <div class="form-group row">
-                      <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
-                        Description</label>
-                      <input class="form-control col-xl-8 col-md-7" id="validationCustom1" type="text" required=""
-                        formControlName="description">
+                      <label for="validationCustom0" class="col-xl-3 col-md-4"
+                        ><span>*</span> Description</label
+                      >
+                      <input
+                        class="form-control col-xl-8 col-md-7"
+                        id="validationCustom1"
+                        type="text"
+                        required=""
+                        formControlName="description"
+                      />
                     </div>
                     <div class="form-group row">
-                      <!-- <label for="validationCustom2" class="col-xl-3 col-md-4"><span>*</span>
-                        ImageUrl</label>
-                      <input class="form-control col-xl-8 col-md-7" id="validationCustom2" type="text" required=""
-                        formControlName="imageUrl"> -->
-                        <app-modal-single-image [data]="modalSingleImage" styleFile="width: 200px; height: auto"></app-modal-single-image>
+                      <label for="validationCustom2" class="col-xl-3 col-md-4"
+                        ><span>*</span> ImageUrl</label
+                      >
+                      <input
+                        class="form-control col-xl-8 col-md-7"
+                        id="validationCustom2"
+                        type="text"
+                        required=""
+                        formControlName="imageUrl"
+                        hidden
+                      />
+                      <app-upload-file
+                        [data]="modalFile"
+                        [fileURL]="fileURL"
+                        styleFile="width: 200px; height: auto;"
+                        (onChange)="onChangeData($event)"
+                      ></app-upload-file>
                     </div>
                   </form>
                 </div>
@@ -42,7 +77,4 @@
   </div>
 </div>
 <!-- Container-fluid Ends-->
-<app-modal-footer
-  [data]="modalFooter"
-  (onAction)="save()"
-></app-modal-footer>
+<app-modal-footer [data]="modalFooter" (onAction)="save()"></app-modal-footer>

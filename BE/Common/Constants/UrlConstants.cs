@@ -45,5 +45,7 @@ namespace Common.Constants
 
 
 
+
+        public const string BaseBlog = BaseApi + "/blog";
     }
 }

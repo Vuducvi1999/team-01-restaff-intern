@@ -3,6 +3,7 @@ using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.SocialMedias;
 using Domain.Entities;
+using Infrastructure.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
@@ -38,6 +39,15 @@ namespace BE.Controllers
         public IActionResult Create([FromBody] CreateSocialMediaDTO model)
         {
             var result = _socialMediaService.Create(model);
+            if (model.Files.IsNullOrEmpty())
+            {
+                return CommonResponse(result);
+            }
+            var uploadImage = _fileService.UpdateImageCategory(model.Files, result.Data.Id);
+            if (uploadImage.HasError)
+            {
+                return CommonResponse(uploadImage);
+            }
             return CommonResponse(result);
         }
 
@@ -45,6 +55,15 @@ namespace BE.Controllers
         public IActionResult Update([FromBody] UpdateSocialMediaDTO model)
         {
             var result = _socialMediaService.Update(model);
+            if (model.Files.IsNullOrEmpty())
+            {
+                return CommonResponse(result);
+            }
+            var uploadImage = _fileService.UpdateImageCategory(model.Files, result.Data.Id);
+            if (uploadImage.HasError)
+            {
+                return CommonResponse(uploadImage);
+            }
             return CommonResponse(result);
         }
 

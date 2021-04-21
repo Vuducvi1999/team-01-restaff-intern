@@ -18,6 +18,8 @@ namespace Data
         DbSet<Banner> Banners { get; set; }
         DbSet<Product> Products { get; set; }
         DbSet<File> Files { get; set; }
+        DbSet<Blog> Blogs { get; set; }
+
 
     }
 }

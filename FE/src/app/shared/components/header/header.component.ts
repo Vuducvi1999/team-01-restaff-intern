@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FileService } from 'src/app/lib/data/services';
 import { NavService } from '../../service/nav.service';
 
 @Component({
@@ -35,13 +36,15 @@ export class HeaderComponent implements OnInit {
     this.openNav = !this.openNav;
   }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 
   onLogout() {
     localStorage.removeItem('token');
     // this.route.snapshot.data.removeItem('token');
     this.router.navigateByUrl('/login');
+  }
+
+  get getImage() {
+    return FileService.getLinkFile(this.userInfo.imageUrl);
   }
 }
