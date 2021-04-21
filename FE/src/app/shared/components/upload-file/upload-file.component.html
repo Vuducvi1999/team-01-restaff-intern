@@ -1,22 +1,51 @@
-<ng-container>
+<ng-container *ngFor="let item of fileURL">
+  <img [src]="item" [style]="styleFile" />
+</ng-container>
+<ng-container *ngIf="data">
+  <!-- <button (click)="onUpdate()">Upload</button> -->
+  <div *ngIf="data.listFile" style="position: relative">
+    <ng-container *ngIf="data.typeFile == typeIMAGE">
+      <ng-container *ngFor="let item of data.listFile">
+        <img [src]="getImage(item.url)" [style]="styleFile" />
+        <button style="position: absolute" (click)="onRemoveUpdate(item.id)">
+          x
+        </button>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="data.typeFile != typeIMAGE">
+      <ng-container *ngFor="let item of data.listFile">
+        <a>{{ item.name }}</a>
+        <a [href]="onDownload(item)" [download]="item.name">Download</a>
+        <button style="position: absolute" (click)="onRemoveUpdate(item.id)">
+          x
+        </button>
+        <br />
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <br />
+  <label for="btupload" style="cursor: pointer">
+    <h4 class="mb-0 f-w-600">
+      <i class="fa fa-cloud-upload"> Upload</i>
+    </h4>
+  </label>
   <input
     *ngIf="data.multiBoolen"
+    id="btupload"
     multiple
     type="file"
     accept="{{ data.typeFile }}"
     (change)="onChangeImg($event)"
+    hidden
   />
   <input
     *ngIf="!data.multiBoolen"
+    id="btupload"
     type="file"
     accept="{{ data.typeFile }}"
     (change)="onChangeImg($event)"
+    hidden
   />
-  <!-- <button (click)="onUpdate()">Upload</button> -->
-  <div *ngIf="data.listFile" style="position: relative">
-    <ng-container *ngFor="let item of data.listFile">
-      <img [src]="item.url" [style]="styleFile" />
-      <!-- <button style="position: absolute" (click)="onRemove()">x</button> -->
-    </ng-container>
-  </div>
 </ng-container>

@@ -42,7 +42,7 @@ namespace Common.Constants
         {
             var eTypeFile = TypeFile[typeFile];
             var typeAccept = TypeAccept[eTypeFile];
-            if (typeAccept.Contains(ext))
+            if (typeAccept.Contains(ext.ToLower()))
             {
                 return true;
             }

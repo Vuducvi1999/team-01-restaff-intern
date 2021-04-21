@@ -1,6 +1,7 @@
 ﻿using Common.Constants;
 using Common.Pagination;
 using Domain.DTOs.Users;
+using Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Files;
@@ -30,6 +31,15 @@ namespace BE.Controllers
         public IActionResult Create([FromBody] CreateUserDTO model)
         {
             var result = _userService.Create(model);
+            if (model.Files.IsNullOrEmpty())
+            {
+                return CommonResponse(result);
+            }
+            var uploadImage = _fileService.UpdateImageCategory(model.Files, result.Data.Id);
+            if (uploadImage.HasError)
+            {
+                return CommonResponse(uploadImage);
+            }
             return CommonResponse(result);
         }
 
@@ -37,6 +47,15 @@ namespace BE.Controllers
         public IActionResult Update([FromBody] UpdateUserDTO model)
         {
             var result = _userService.Update(model);
+            if (model.Files.IsNullOrEmpty())
+            {
+                return CommonResponse(result);
+            }
+            var uploadImage = _fileService.UpdateImageCategory(model.Files, result.Data.Id);
+            if (uploadImage.HasError)
+            {
+                return CommonResponse(uploadImage);
+            }
             return CommonResponse(result);
         }
 

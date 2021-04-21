@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { FileDtoModel } from 'src/app/lib/data/models';
 import { SocialMediaModel } from 'src/app/lib/data/models/social-medias/social-media.model';
+import { FileService } from 'src/app/lib/data/services';
 import { SocialMediaService } from 'src/app/lib/data/services/social-media/social-media.service';
 import {
+  EntityType,
+  ModalFile,
   ModalFooterModel,
   ModalHeaderModel,
+  TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
 
 @Component({
@@ -20,11 +25,20 @@ export class SocialMediaDetailComponent implements OnInit {
   public modalFooter: ModalFooterModel;
   public item: any;
   submitted = false;
+
+  public modalFile: ModalFile;
+  public fileURL : (String | ArrayBuffer)[];
+
   constructor(
     private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
     private socialService: SocialMediaService
-  ) {}
+  ) {
+    this.modalFile = new ModalFile();
+    this.modalFile.typeFile = TypeFile.IMAGE;
+    this.modalFile.multiBoolen = false;
+    this.modalFile.enityType = EntityType.SOCIALMEDIA;
+  }
 
   loadItemForm() {
     this.socialMediaForm = this.formBuilder.group({
@@ -59,6 +73,7 @@ export class SocialMediaDetailComponent implements OnInit {
       iconUrl: this.socialMediaForm.controls.iconUrl.value,
       displayOrder: this.socialMediaForm.controls.displayOrder.value,
       id: this.item ? this.item.id : '',
+      files: this.modalFile.listFile,
     };
 
     this.submitted = true;
@@ -88,6 +103,18 @@ export class SocialMediaDetailComponent implements OnInit {
   ngOnInit(): void {
     this.loadItemForm();
     this.createModal();
-    console.log(this.item);
+    
+    if(this.item)
+    {
+      this.fileURL = [];
+      this.fileURL.push(FileService.getLinkFile(this.item.iconUrl));
+    }
+  }
+
+  onChangeData(event: FileDtoModel[]) {
+    if (event || event.length > 0) {
+      this.fileURL = null;
+      this.socialMediaForm.controls.iconUrl.setValue(event[0].url);
+    }
   }
 }

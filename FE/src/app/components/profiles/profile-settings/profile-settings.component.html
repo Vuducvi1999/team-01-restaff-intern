@@ -5,7 +5,7 @@
       <div class="card">
         <div class="card-body">
           <div class="profile-details text-center">
-            <img src="{{userInfo.imageUrl}}"  alt=""
+            <img src="{{getImage}}"  alt=""
               class="img-fluid img-90 rounded-circle blur-up lazyloaded" width="90px" height="90px">
             <h5 class="f-w-600 mb-0">{{userInfo.firstName}} {{userInfo.lastName}}</h5>
             <span>{{userInfo.email}}</span>
@@ -54,7 +54,8 @@
                         </tr>
                         <tr>
                           <td>Avatar:</td>
-                          <td>{{userInfo.imageUrl}}</td>
+                          <!-- <td>{{userInfo.imageUrl}}</td> -->
+                          <app-upload-file [fileURL]="fileURL" styleFile="width: 200px; height: auto;"></app-upload-file>
                         </tr>
                       </tbody>
                     </table>
@@ -95,7 +96,8 @@
                       <label for="validationCustom2" class="col-xl-3 col-md-4"><span>*</span>
                         Avatar</label>
                       <input class="form-control col-xl-8 col-md-7" id="validationCustom2" type="text" required=""
-                        formControlName="imageUrl">
+                        formControlName="imageUrl" hidden>
+                      <app-upload-file [data]="modalFile" [fileURL]="fileURL" styleFile="width: 200px; height: auto;" (onChange)="onChangeData($event)"></app-upload-file>
                       <span class="text-danger"
                         *ngIf="(profileFormControl.imageUrl.touched || submitted) && profileFormControl.imageUrl.errors?.required">
                         This field is required

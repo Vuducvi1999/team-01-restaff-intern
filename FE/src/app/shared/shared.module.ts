@@ -16,10 +16,7 @@ import { RightSidebarComponent } from './components/right-sidebar/right-sidebar.
 import { ModalHeaderComponent } from './components/modals/modal-header/modal-header.component';
 import { ModalFooterComponent } from './components/modals/modal-footer/modal-footer.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { ModalSingleImageComponent } from './components/modals/modal-single-image/modal-single-image.component';
 import { FileService } from '../lib/data/services';
-import { ModalMultiImageComponent } from './components/modals/modal-multi-image/modal-multi-image.component';
-import { ModalFileComponent } from './components/modals/modal-file/modal-file.component';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 
 @NgModule({
@@ -34,9 +31,6 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
     RightSidebarComponent,
     ModalHeaderComponent,
     ModalFooterComponent,
-    ModalSingleImageComponent,
-    ModalMultiImageComponent,
-    ModalFileComponent,
     UploadFileComponent,
   ],
   imports: [CommonModule, RouterModule, NgbModalModule],
@@ -46,9 +40,6 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
     ToggleFullscreenDirective,
     ModalFooterComponent,
     ModalHeaderComponent,
-    ModalSingleImageComponent,
-    ModalMultiImageComponent,
-    ModalFileComponent,
     UploadFileComponent,
   ],
 })
