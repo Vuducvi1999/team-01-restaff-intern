@@ -24,4 +24,11 @@ export class SocialMediaService {
     const url = `${this.url}/?id=${model?.id}`;
     return this.httpClient.deleteObservable(url).toPromise();
   }
+
+  save(model: SocialMediaModel) {
+    if (model.id) {
+      return this.update(model);
+    }
+    return this.create(model);
+  }
 }

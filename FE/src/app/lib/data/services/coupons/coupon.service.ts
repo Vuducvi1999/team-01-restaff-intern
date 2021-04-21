@@ -24,4 +24,11 @@ export class CouponService {
     const url = `${this.url}/?id=${model?.id}`;
     return this.httpClient.deleteObservable(url).toPromise();
   }
+
+  save(model: CouponModel) {
+    if (model.id) {
+      return this.update(model);
+    }
+    return this.create(model);
+  }
 }

@@ -42,14 +42,10 @@ export class ListSocialMediaComponent implements OnInit {
       display: true,
       perPage: 10,
     },
-    action: {
+    actions: {
       position: 'right',
     },
     columns: {
-      vendor: {
-        title: 'Social Media',
-        type: 'html',
-      },
       title: {
         title: 'Title',
       },

@@ -29,7 +29,7 @@ export class ListFilesComponent implements OnInit {
     private fileService: FileService,
     private modalService: NgbModal
   ) {
-    this.params = { pageIndex: '3' };
+    this.params = { pageIndex: 0 };
     this.getFiles();
     this.getType();
   }
@@ -51,17 +51,17 @@ export class ListFilesComponent implements OnInit {
       url: {
         title: 'URL',
         type: 'html',
-        valuePrepareFunction: (images) => {
-          var fileExt = images.split('.').pop();
+        valuePrepareFunction: (file) => {
+          var fileExt = file.split('.').pop();
           if (
             fileExt == 'png' ||
             fileExt == 'jpg' ||
             fileExt == 'jpeg' ||
             fileExt == 'icon'
           ) {
-            return `<a href="${images}"><img width="50px" src="${images}"/></a>`;
+            return `<a href="${FileService.getLinkFile(file)}"><img width="50px" src="${FileService.getLinkFile(file)}"/></a>`;
           }
-          return `<a href="${images}">${images}</a>`;
+          return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
         },
       },
       fileExt: {
@@ -80,7 +80,7 @@ export class ListFilesComponent implements OnInit {
 
   async getFiles() {
     await this.fileService
-      .getFile({ oarams: this.params })
+      .getFile({ params: this.params })
       .then(
         (res: ReturnMessage<PageModel<FileDtoModel>>) =>
           (this.media = res.data.results)

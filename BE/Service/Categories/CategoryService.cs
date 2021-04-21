@@ -119,7 +119,7 @@ namespace Service.Categories
                     )
                 )
                 , search.PageSize
-                , search.PageIndex
+                , search.PageIndex * search.PageSize
                 , t => t.Name
             );
             resultEntity.Results.Where(r => r.ObjectState == ObjectState.Added);

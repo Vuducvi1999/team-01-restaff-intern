@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
@@ -14,7 +15,8 @@ export class ListCouponComponent implements OnInit {
   public coupons: CouponModel[];
   constructor(
     private modalService: NgbModal,
-    private couponService: CouponService
+    private couponService: CouponService,
+    private datePipe: DatePipe
   ) {
     this.getCoupons();
   }
@@ -39,14 +41,10 @@ export class ListCouponComponent implements OnInit {
       display: true,
       perPage: 10,
     },
-    action: {
+    actions: {
       position: 'right',
     },
     columns: {
-      vendor: {
-        title: 'Coupon',
-        type: 'html',
-      },
       code: {
         title: 'Code',
       },
@@ -61,9 +59,15 @@ export class ListCouponComponent implements OnInit {
       },
       startDate: {
         title: 'Start Date',
+        valuePrepareFunction: (created) => {
+          return this.datePipe.transform(new Date(created), 'dd MM yyyy');
+        },
       },
       endDate: {
         title: 'End Date',
+        valuePrepareFunction: (created) => {
+          return this.datePipe.transform(new Date(created), 'dd MM yyyy');
+        },
       },
     },
   };

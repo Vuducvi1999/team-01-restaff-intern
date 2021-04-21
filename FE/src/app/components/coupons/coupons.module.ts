@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -20,6 +20,6 @@ import { ListCouponComponent } from './list-coupon/list-coupon.component';
     Ng2SmartTableModule,
     SharedModule,
   ],
-  providers: [CouponService],
+  providers: [CouponService, DatePipe],
 })
 export class CouponsModule {}

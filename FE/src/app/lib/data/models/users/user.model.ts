@@ -1,3 +1,4 @@
+import { FileDtoModel } from '..';
 import { BaseModel } from '../common';
 export interface UserModel extends BaseModel {
   username: string;
@@ -6,4 +7,5 @@ export interface UserModel extends BaseModel {
   firstName: string;
   lastName: string;
   imageUrl: number;
+  files: FileDtoModel[];
 }

@@ -32,4 +32,9 @@ export class FileService  {
     {
       return `${AppConfig.settings.API_URL}${this.urlDownload}?url=${url}`;
     }
+
+    public static getLinkFile(fileName: String)
+    {
+      return `${AppConfig.settings.API_URL}/Files/${fileName}`;
+    }
   }

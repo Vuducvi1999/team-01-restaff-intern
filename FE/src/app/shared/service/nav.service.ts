@@ -128,6 +128,19 @@ export class NavService {
       ],
     },
     {
+      title: 'Blogs',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/blogs/list-blogs',
+          title: 'Blog List',
+          type: 'link',
+        },
+      ],
+    },
+    {
       title: 'Category',
       icon: 'users',
       type: 'sub',

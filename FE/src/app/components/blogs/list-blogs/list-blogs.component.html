@@ -1,0 +1,21 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header">
+      <h5>Blog Details</h5>
+    </div>
+    <div class="card-body vendor-table">
+      <div id="batchDelete" class="custom-datatable vendor-list">
+        <div class="table-responsive">
+          <ng2-smart-table
+            [settings]="settings"
+            [(source)]="blogs"
+            (create)="openDetails($event)"
+            (delete)="delete($event)"
+            (edit)="openDetails($event)"
+          >
+          </ng2-smart-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

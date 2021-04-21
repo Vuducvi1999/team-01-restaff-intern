@@ -81,7 +81,14 @@
                         class="form-control col-xl-8 col-md-7"
                         type="text"
                         formControlName="email"
+                        hidden
                       />
+                      <app-upload-file
+                        [data]="modalFile"
+                        [fileURL]="fileURL"
+                        styleFile="width: 200px; height: auto;"
+                        (onChange)="onChangeData($event)"
+                      ></app-upload-file>
                     </div>
                   </form>
                 </div>

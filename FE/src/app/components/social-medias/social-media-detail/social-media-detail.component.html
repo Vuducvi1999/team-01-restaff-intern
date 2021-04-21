@@ -35,7 +35,8 @@
                   class="text-danger"
                   *ngIf="
                     (SocialMediaFormControl.title.touched || submitted) &&
-                    SocialMediaFormControl.title.errors?.required
+                    (SocialMediaFormControl.title.errors?.required ||
+                      SocialMediaFormControl.title.errors?.pattern)
                   "
                 >
                   Title is required
@@ -73,7 +74,14 @@
                   type="text"
                   required=""
                   formControlName="iconUrl"
+                  hidden
                 />
+                <app-upload-file
+                [data]="modalFile"
+                [fileURL]="fileURL"
+                styleFile="width: 200px; height: auto;"
+                (onChange)="onChangeData($event)"
+              ></app-upload-file>
                 <span
                   class="text-danger"
                   *ngIf="

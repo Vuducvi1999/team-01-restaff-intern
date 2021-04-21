@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { FileService } from 'src/app/lib/data/services';
 import { UserMangermentService } from 'src/app/lib/data/services/users/user-mangerment.service';
 import { NavService, Menu } from '../../service/nav.service';
 
@@ -98,4 +99,7 @@ export class SidebarComponent implements OnInit {
     }
   }
 
+  get getImage() {
+    return FileService.getLinkFile(this.userInfo.imageUrl);
+  }
 }
