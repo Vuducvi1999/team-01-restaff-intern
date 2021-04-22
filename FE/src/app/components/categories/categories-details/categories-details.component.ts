@@ -1,13 +1,17 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { FileDtoModel } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
+import { FileService } from 'src/app/lib/data/services';
 import { CategoryService } from 'src/app/lib/data/services/categories/category.service';
 
 import {
+  EntityType,
   ModalFile,
   ModalFooterModel,
   ModalHeaderModel,
+  TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
 @Component({
   selector: 'app-categories-details',
@@ -21,7 +25,9 @@ export class CategoryDetailComponent implements OnInit {
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   public category: CategoryModel;
-  public modalSingleImage: ModalFile;
+
+  public modalFile: ModalFile;
+  public fileURL: (String | ArrayBuffer)[];
 
   public item: any;
 
@@ -32,35 +38,47 @@ export class CategoryDetailComponent implements OnInit {
     private categoryService: CategoryService,
     private ngbActiveModal: NgbActiveModal
   ) {
-    
+    this.modalFile = new ModalFile();
+    this.modalFile.typeFile = TypeFile.IMAGE;
+    this.modalFile.multiBoolen = false;
+    this.modalFile.enityType = EntityType.CATEGORY;
   }
 
-    save(){
-      if(this.categoriesForm.invalid){
-        return;
-      }
-      this.category = {name: this.categoriesForm.value.name, 
-        description: this.categoriesForm.value.description,
-        imageUrl: this.categoriesForm.value.imageUrl,
-        id: this.item ? this.item.id : ''};
-      return this.categoryService.save(this.category)
-                      .then(() => {
-                          this.ngbActiveModal.close();
-                      }).catch((er) => {
-                        if (er.error.hasError) {
-                          console.log(er.error.message)
-                        }
-                      });
+  save() {
+    if (this.categoriesForm.invalid) {
+      return;
     }
-
-
-    loadItem(){
-      this.categoriesForm = this.formBuilder.group({
-        name: [this.item ? this.item.name : '', [Validators.required]],
-        description: [this.item ? this.item.description : '', [Validators.required]],
-        imageUrl: [this.item ? this.item.imageUrl : '', [Validators.required]]
+    this.category = {
+      name: this.categoriesForm.value.name,
+      description: this.categoriesForm.value.description,
+      imageUrl: this.categoriesForm.value.imageUrl,
+      id: this.item ? this.item.id : '',
+      files: this.modalFile.listFile,
+    };
+    return this.categoryService
+      .save(this.category)
+      .then(() => {
+        this.ngbActiveModal.close();
+      })
+      .catch((er) => {
+        if (er.error.hasError) {
+          console.log(er.error.message);
+        }
       });
-      
+  }
+
+  // if (this.categoriesForm.invalid) {   return;
+  // }
+
+  loadItem() {
+    this.categoriesForm = this.formBuilder.group({
+      name: [this.item ? this.item.name : '', [Validators.required]],
+      description: [
+        this.item ? this.item.description : '',
+        [Validators.required],
+      ],
+      imageUrl: [this.item ? this.item.imageUrl : '', [Validators.required]],
+    });
 
     this.modalHeader = new ModalHeaderModel();
     this.modalHeader.title = this.item ? `[Update] ${this.item.name}` : `[Add]`;
@@ -74,5 +92,16 @@ export class CategoryDetailComponent implements OnInit {
 
   ngOnInit() {
     this.loadItem();
+    if (this.item) {
+      this.fileURL = [];
+      this.fileURL.push(FileService.getLinkFile(this.item.imageUrl));
+    }
+  }
+
+  onChangeData(event: FileDtoModel[]) {
+    if (event || event.length > 0) {
+      this.fileURL = null;
+      this.categoriesForm.controls.imageUrl.setValue(event[0].url);
+    }
   }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.DTOs.Files;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,5 +13,6 @@ namespace Domain.DTOs.Users
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ImageUrl { get; set; }
+        public List<FileDTO> Files { get; set; }
     }
 }

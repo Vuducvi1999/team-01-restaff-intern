@@ -59,7 +59,7 @@ namespace Service.Files
         public async Task<List<CreateFileDTO>> SaveFile(SaveFileDTO saveFile)
         {
             var filePaths = UrlConstants.BaseLocalUrlFile;
-            var urlPath = UrlConstants.BaseCloudUrlFile;
+            //var urlPath = UrlConstants.BaseCloudUrlFile;
             List<CreateFileDTO> createFileDTOs = new List<CreateFileDTO>();
             if (!Directory.Exists(filePaths))
             {
@@ -86,7 +86,8 @@ namespace Service.Files
                             //stream.Write();
                             await formFile.CopyToAsync(stream);
 
-                            item.Url = Path.Combine(urlPath, fileName);
+                            //item.Url = Path.Combine(urlPath, fileName);
+                            item.Url = fileName;
                             item.Name = formFile.FileName;
                             item.FileExt = ext;
                         }

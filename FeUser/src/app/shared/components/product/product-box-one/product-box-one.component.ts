@@ -4,6 +4,7 @@ import { CartModalComponent } from "../../modal/cart-modal/cart-modal.component"
 import { Product } from "../../../classes/product";
 import { ProductService } from "../../../services/product.service";
 import { HomeProductModel } from 'src/app/lib/data/models/home/product.model';
+import { AppConfig } from 'src/app/lib/environments/config/appConfig';
 
 @Component({
   selector: 'app-product-box-one',
@@ -18,6 +19,7 @@ export class ProductBoxOneComponent implements OnInit {
   @Input() onHowerChangeImage: boolean = false; // Default False
   @Input() cartModal: boolean = false; // Default False
   @Input() loader: boolean = false;
+  baseUrl = AppConfig.settings.API_URL;
 
   @ViewChild("quickView") QuickView: QuickViewComponent;
   @ViewChild("cartModal") CartModal: CartModalComponent;
