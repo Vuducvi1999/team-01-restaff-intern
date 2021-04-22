@@ -11,6 +11,7 @@ import { LogoComponent } from './home/widgets/logo/logo.component';
 import { InstagramComponent } from './home/widgets/instagram/instagram.component';
 import { ServicesComponent } from './home/widgets/services/services.component';
 import { CollectionComponent } from './home/widgets/collection/collection.component';
+import { ProductBoxThreeComponent } from '../shared/components/product/product-box-three/product-box-three.component';
 @NgModule({
 
   declarations: [
