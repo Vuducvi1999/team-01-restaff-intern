@@ -3,8 +3,9 @@ import { Component, OnInit, OnDestroy, ViewChild, TemplateRef, Input,
 import { isPlatformBrowser } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { Product } from "../../../classes/product";
 import { ProductService } from '../../../../shared/services/product.service';
+import { FileService } from 'src/app/lib/data/services';
+import { ProductModel } from 'src/app/lib/data/models';
 
 @Component({
   selector: 'app-quick-view',
@@ -13,7 +14,7 @@ import { ProductService } from '../../../../shared/services/product.service';
 })
 export class QuickViewComponent implements OnInit, OnDestroy  {
 
-  @Input() product: Product;
+  @Input() product: ProductModel;
   @Input() currency: any;  
   @ViewChild("quickView", { static: false }) QuickView: TemplateRef<any>;
 
@@ -114,4 +115,7 @@ export class QuickViewComponent implements OnInit, OnDestroy  {
     }
   }
 
+  getImage(fileName: string) {
+    return FileService.getLinkFile(fileName);
+  }
 }

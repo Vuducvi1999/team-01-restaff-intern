@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { PagesComponent } from "./components/pages.component";
 const routes: Routes = [
   {
     path: "",
@@ -7,7 +8,8 @@ const routes: Routes = [
     pathMatch: "full",
   },
   {
-    path: "home",
+    path: "",
+    component: PagesComponent,
     loadChildren: () => import("./components/pages.module").then((m) => m.PagesModule),
   },
   {
