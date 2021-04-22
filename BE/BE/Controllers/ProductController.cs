@@ -2,6 +2,7 @@
 using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Products;
+using Infrastructure.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Files;
@@ -32,6 +33,15 @@ namespace BE.Controllers
         public IActionResult Create([FromBody] CreateProductDTO model)
         {
             var result = _productService.Create(model);
+            if (model.Files.IsNullOrEmpty() || result.HasError)
+            {
+                return CommonResponse(result);
+            }
+            var uploadImage = _fileService.UpdateImageCategory(model.Files, result.Data.Id);
+            if (uploadImage.HasError)
+            {
+                return CommonResponse(uploadImage);
+            }
             return CommonResponse(result);
         }
 
@@ -39,6 +49,15 @@ namespace BE.Controllers
         public IActionResult Update([FromBody] UpdateProductDTO model)
         {
             var result = _productService.Update(model);
+            if (model.Files.IsNullOrEmpty() || result.HasError)
+            {
+                return CommonResponse(result);
+            }
+            var uploadImage = _fileService.UpdateImageCategory(model.Files, result.Data.Id);
+            if (uploadImage.HasError)
+            {
+                return CommonResponse(uploadImage);
+            }
             return CommonResponse(result);
         }
 
