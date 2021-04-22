@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NavService } from '../../services/nav.service';
-import { Router } from '@angular/router';
-import { Menu } from 'src/app/lib/data/models/header/header.model';
+import { HeaderModel, Menu } from 'src/app/lib/data/models/header/header.model';
+import { HeaderService } from 'src/app/lib/data/services';
 
 @Component({
   selector: 'app-left-menu',
@@ -10,22 +9,41 @@ import { Menu } from 'src/app/lib/data/models/header/header.model';
 })
 export class LeftMenuComponent implements OnInit {
 
-  public menuItems: Menu[];
-
-  constructor(private router: Router, public navServices: NavService) {
-    this.navServices.leftMenuItems.subscribe(menuItems => this.menuItems = menuItems );
-    this.router.events.subscribe((event) => {
-      this.navServices.mainMenuToggle = false;
-    });
+  public menuItems: Menu[]=[];
+  public leftMenu: boolean = false;
+  public headerModel: HeaderModel = {
+    categories: [],
+    blogs: []
+  };
+  constructor(public headerService: HeaderService) {
   }
 
   ngOnInit(): void {
+    this.loadMenu();
   }
 
   leftMenuToggle(): void {
-    this.navServices.leftMenuToggle = !this.navServices.leftMenuToggle;
+    this.leftMenu = !this.leftMenu;
   }
 
+  async loadHeaderModel() {
+    await this.headerService.getCategories(null).then((res: any) => {
+       this.headerModel.categories = (res.data);
+     })
+   }
+
+   async loadMenu() {
+    await this.loadHeaderModel();
+
+    this.headerModel.categories.forEach(item => {
+      this.menuItems.push(
+        {
+          title: item.name,
+          path: '/',
+          type: 'link'
+        })
+    });
+  }
   // Click Toggle menu (Mobile)
   toggletNavActive(item) {
     item.active = !item.active;
