@@ -1,7 +1,9 @@
 import { Injectable } from "@angular/core";
-import { HttpClientService } from "../../http/http-client";
+import { HttpClientService } from "../../../http/http-client";
 
-@Injectable()
+@Injectable({
+  providedIn: "root",
+})
 export class BlogService {
   private url = "/api/blog";
 
