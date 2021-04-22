@@ -1,25 +1,26 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
-import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
-import { ToastrModule } from 'ngx-toastr';
-import { TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import { TranslateHttpLoader} from '@ngx-translate/http-loader';
-import { SharedModule } from './shared/shared.module';
-import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule } from "@angular/platform-browser";
+import { APP_INITIALIZER, NgModule } from "@angular/core";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { LoadingBarHttpClientModule } from "@ngx-loading-bar/http-client";
+import { LoadingBarRouterModule } from "@ngx-loading-bar/router";
+import { ToastrModule } from "ngx-toastr";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { SharedModule } from "./shared/shared.module";
+import { AppRoutingModule } from "./app-routing.module";
 
-import { AppComponent } from './app.component';
-import { ShopComponent } from './shop/shop.component';
-import { PagesComponent } from './pages/pages.component';
-import { ElementsComponent } from './elements/elements.component';
-
+import { AppComponent } from "./app.component";
+import { ShopComponent } from "./shop/shop.component";
+import { PagesComponent } from "./components/pages.component";
+import { ElementsComponent } from "./elements/elements.component";
+import { environment } from "./lib/environments/environment";
+import { AppConfig } from "./lib/environments/config/appConfig";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
-   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
+  return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
 
 @NgModule({
@@ -27,10 +28,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     ShopComponent,
     PagesComponent,
-    ElementsComponent
+    ElementsComponent,
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserModule.withServerTransition({ appId: "serverApp" }),
     BrowserAnimationsModule,
     HttpClientModule,
     NgbModule,
@@ -42,16 +43,26 @@ export function HttpLoaderFactory(http: HttpClient) {
       enableHtml: true,
     }),
     TranslateModule.forRoot({
-        loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-        }
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
     }),
     SharedModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: "BASE_URL", useValue: environment.host },
+    AppConfig,
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      deps: [AppConfig],
+      useFactory: (appConfigService: AppConfig) => () =>
+        appConfigService.load(),
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

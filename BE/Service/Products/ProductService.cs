@@ -90,7 +90,7 @@ namespace Service.Products
                     )
                 )
                 , search.PageSize
-                , search.PageIndex
+                , search.PageIndex * search.PageSize
                 , t => t.Name
                 , nameof(Category)
             );

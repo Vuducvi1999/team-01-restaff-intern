@@ -1,4 +1,3 @@
-
-export * from './suppliers/supplier.service'
-export * from './banners/banners.service'
-export * from './auth/auth.service'
+export * from './suppliers/supplier.service';
+export * from './categories/category.service';
+export * from './files/file.service';
