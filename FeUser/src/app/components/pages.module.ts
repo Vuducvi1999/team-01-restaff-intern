@@ -11,10 +11,12 @@ import { LogoComponent } from './home/widgets/logo/logo.component';
 import { InstagramComponent } from './home/widgets/instagram/instagram.component';
 import { ServicesComponent } from './home/widgets/services/services.component';
 import { CollectionComponent } from './home/widgets/collection/collection.component';
+import { PagesComponent } from './pages.component';
 @NgModule({
 
   declarations: [
    HomeComponent,
+   PagesComponent,
    // Widgest Components
    SliderComponent,
    BlogComponent,
@@ -28,6 +30,9 @@ import { CollectionComponent } from './home/widgets/collection/collection.compon
     GalleryModule.forRoot(),
     SharedModule,
     PagesRoutingModule
+  ],
+  exports :  [
+    PagesComponent
   ]
 })
 export class PagesModule { }
