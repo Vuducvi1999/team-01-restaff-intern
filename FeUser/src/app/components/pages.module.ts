@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { GalleryModule } from '@ks89/angular-modal-gallery';
 import { SharedModule } from '../shared/shared.module';
 import { PagesRoutingModule } from './pages-routing.module';
-import { HomeComponent } from './home/home.component';
 // Widgest Components
 import { SliderComponent } from './home/widgets/slider/slider.component';
 import { BlogComponent } from './home/widgets/blog/blog.component';
@@ -12,11 +11,11 @@ import { InstagramComponent } from './home/widgets/instagram/instagram.component
 import { ServicesComponent } from './home/widgets/services/services.component';
 import { CollectionComponent } from './home/widgets/collection/collection.component';
 import { PagesComponent } from './pages.component';
+import { HomeComponent } from './home/home.component';
 @NgModule({
 
   declarations: [
    HomeComponent,
-   PagesComponent,
    // Widgest Components
    SliderComponent,
    BlogComponent,
@@ -32,7 +31,7 @@ import { PagesComponent } from './pages.component';
     PagesRoutingModule
   ],
   exports :  [
-    PagesComponent
+    HomeComponent
   ]
 })
 export class PagesModule { }

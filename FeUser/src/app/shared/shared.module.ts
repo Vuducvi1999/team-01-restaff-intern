@@ -47,6 +47,7 @@ import { TapToTopComponent } from './components/tap-to-top/tap-to-top.component'
 
 // Pipes
 import { DiscountPipe } from './pipes/discount.pipe';
+import { HomeComponent } from '../components/home/home.component';
 
 @NgModule({
   declarations: [
