@@ -12,9 +12,7 @@ import { SharedModule } from "./shared/shared.module";
 import { AppRoutingModule } from "./app-routing.module";
 
 import { AppComponent } from "./app.component";
-import { ShopComponent } from "./shop/shop.component";
 import { PagesComponent } from "./components/pages.component";
-import { ElementsComponent } from "./elements/elements.component";
 import { environment } from "./lib/environments/environment";
 import { AppConfig } from "./lib/environments/config/appConfig";
 
@@ -26,9 +24,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    ShopComponent,
     PagesComponent,
-    ElementsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "serverApp" }),
