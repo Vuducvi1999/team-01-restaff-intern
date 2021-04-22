@@ -153,6 +153,19 @@ export class NavService {
         },
       ],
     },
+    {
+      title: 'Product',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/products/list-products',
+          title: 'Product List',
+          type: 'link',
+        },
+      ],
+    },
   ];
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 }

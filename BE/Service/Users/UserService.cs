@@ -71,7 +71,7 @@ namespace Service.Users
         {
             try
             {
-                if (model.Username.Trim() == "" || model.Password.Trim() == "")
+                if (model.Username.Trim() == "")
                     return new ReturnMessage<UserDTO>(false, null, MessageConstants.CreateSuccess);
                 var entity = _userRepository.Find(model.Id);
                 if (entity.IsNotNullOrEmpty())

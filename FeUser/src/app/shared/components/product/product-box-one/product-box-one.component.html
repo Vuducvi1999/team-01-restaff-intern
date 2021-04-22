@@ -1,9 +1,5 @@
 <div *ngIf="!loader">
   <div class="img-wrapper">
-    <!-- <div class="lable-block">
-      <span class="lable3" *ngIf="product.new">new</span>
-      <span class="lable4" *ngIf="product.sale">on sale</span>
-    </div> -->
     <div class="front">
       <a [routerLink]="[]">
           <img 
@@ -18,13 +14,6 @@
         <img [src]="ImageSrc ? ImageSrc : product.imageUrl" class="img-fluid lazy-loading" alt="{{ product.name }}">
       </a>
     </div>
-    <!-- <ul class="product-thumb-list" *ngIf="thumbnail">
-      <li class="grid_thumb_img" [class.active]="ImageSrc == image.src" *ngFor="let image of product.images">
-        <a href="javascript:void(0)" (mouseover)="ChangeVariantsImage(image.src)">
-          <img [lazyLoad]="image.src">
-        </a>
-      </li>
-    </ul> -->
     <div class="cart-info cart-wrap">
       <a href="javascript:void(0)" title="Add to cart" (click)="CartModal.openModal(product)"
         *ngIf="cartModal">

@@ -4,18 +4,19 @@ import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductService } from "../../services/product.service";
 import { Product } from "../../classes/product";
+import { HomeService } from 'src/app/lib/data/services/home/home.service';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  styleUrls: ['./settings.component.scss'], providers: [HomeService]
 })
 export class SettingsComponent implements OnInit {
 
   public products: Product[] = [];
   public search: boolean = false;
-  
-  public languages = [{ 
+
+  public languages = [{
     name: 'English',
     code: 'en'
   }, {
@@ -43,18 +44,19 @@ export class SettingsComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private translate: TranslateService,
-    public productService: ProductService) {
+    public productService: ProductService,
+    private homeService: HomeService) {
     this.productService.cartItems.subscribe(response => this.products = response);
   }
 
   ngOnInit(): void {
   }
 
-  searchToggle(){
+  searchToggle() {
     this.search = !this.search;
   }
 
-  changeLanguage(code){
+  changeLanguage(code) {
     if (isPlatformBrowser(this.platformId)) {
       this.translate.use(code)
     }

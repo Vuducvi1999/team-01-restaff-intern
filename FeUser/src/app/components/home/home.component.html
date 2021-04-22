@@ -1,5 +1,3 @@
-
-
 <!-- Home slider start-->
 <section class="p-0">
   <app-slider 
@@ -10,7 +8,6 @@
   </app-slider>
 </section>
 <!-- Home slider End -->
-
 <!-- Product slider start-->
 <div class="title1 section-t-space">
   <h4>special offer</h4>
@@ -167,4 +164,40 @@
   </section>
 </div>
 <!-- services End -->
+
+<!-- blog section start-->
+<section class="blog p-t-0">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="title1 section-t-space">
+          <h4>Recent Story</h4>
+          <h2 class="title-inner1">from the blog</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <app-blog [blogs]="blog"></app-blog>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- blog section End -->
+
+<!-- Instagram section -->
+<section class="instagram">
+  <div class="container-fluid ">
+    <div class="row">
+      <div class="col-md-12 p-0">
+        <h2 class="title-borderless"># instagram</h2>
+        <app-instagram></app-instagram>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Instagram section End -->
+
+<app-newsletter></app-newsletter>
+
 

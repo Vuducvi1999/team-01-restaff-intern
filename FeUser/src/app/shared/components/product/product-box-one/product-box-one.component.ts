@@ -5,6 +5,7 @@ import { Product } from "../../../classes/product";
 import { ProductService } from "../../../services/product.service";
 import { HomeProductModel } from 'src/app/lib/data/models/home/product.model';
 import { AppConfig } from 'src/app/lib/environments/config/appConfig';
+import { HomeService } from 'src/app/lib/data/services/home/home.service';
 
 @Component({
   selector: 'app-product-box-one',
@@ -14,19 +15,18 @@ import { AppConfig } from 'src/app/lib/environments/config/appConfig';
 export class ProductBoxOneComponent implements OnInit {
 
   @Input() product: HomeProductModel;
-  @Input() currency: any = this.productService.Currency; // Default Currency 
+  @Input() currency: any = this.homeService.Currency; // Default Currency 
   @Input() thumbnail: boolean = false; // Default False 
   @Input() onHowerChangeImage: boolean = false; // Default False
   @Input() cartModal: boolean = false; // Default False
   @Input() loader: boolean = false;
-  baseUrl = AppConfig.settings.API_URL;
 
   @ViewChild("quickView") QuickView: QuickViewComponent;
   @ViewChild("cartModal") CartModal: CartModalComponent;
 
   public ImageSrc: string
 
-  constructor(private productService: ProductService) { }
+  constructor(private homeService: HomeService) { }
 
   ngOnInit(): void {
     if (this.loader) {
@@ -34,45 +34,16 @@ export class ProductBoxOneComponent implements OnInit {
     }
   }
 
-  // Get Product Color
-  Color(variants) {
-    const uniqColor = [];
-    for (let i = 0; i < Object.keys(variants).length; i++) {
-      if (uniqColor.indexOf(variants[i].color) === -1 && variants[i].color) {
-        uniqColor.push(variants[i].color)
-      }
-    }
-    return uniqColor
-  }
-
-  // Change Variants
-  ChangeVariants(color, product) {
-    product.variants.map((item) => {
-      if (item.color === color) {
-        product.images.map((img) => {
-          if (img.image_id === item.image_id) {
-            this.ImageSrc = img.src;
-          }
-        })
-      }
-    })
-  }
-
-  // Change Variants Image
-  ChangeVariantsImage(src) {
-    this.ImageSrc = src;
-  }
-
   addToCart(product: any) {
-    this.productService.addToCart(product);
+    this.homeService.addToCart(product);
   }
 
   addToWishlist(product: any) {
-    this.productService.addToWishlist(product);
+    this.homeService.addToWishlist(product);
   }
 
   addToCompare(product: any) {
-    this.productService.addToCompare(product);
+    this.homeService.addToCompare(product);
   }
 
 }

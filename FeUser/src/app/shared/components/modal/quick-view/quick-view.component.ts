@@ -28,7 +28,6 @@ export class QuickViewComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private router: Router, private modalService: NgbModal,
-    public productService: ProductService,
     private homeService: HomeService) { }
 
   ngOnInit(): void {

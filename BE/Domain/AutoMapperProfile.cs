@@ -72,7 +72,9 @@ namespace Domain
             CreateMap<PaginatedList<Product>, PaginatedList<ProductDTO>>().ReverseMap();
             CreateMap<Product, ProductDTO>()
                  .ForMember(t => t.CategoryName, k=>k.MapFrom(h=>h.Category.Name)).ReverseMap();
+
             CreateMap<CreateProductDTO, Product>().ReverseMap();
+            CreateMap<UpdateProductDTO, Product>().ReverseMap();
             CreateMap<IQueryable<ProductDTO>, PaginatedList<Product>>().ReverseMap();
 
             //Coupon

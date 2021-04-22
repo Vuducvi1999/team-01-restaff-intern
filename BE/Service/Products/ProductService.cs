@@ -2,6 +2,7 @@
 using Common.Constants;
 using Common.Http;
 using Common.Pagination;
+using Common.StringEx;
 using Domain.DTOs.Products;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
@@ -27,10 +28,13 @@ namespace Service.Products
 
         public ReturnMessage<ProductDTO> Create(CreateProductDTO model)
         {
-
+            var stringInput = StringExtension.CleanString(model);
+            if (!stringInput)
+            {
+                return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
+            }
             try
             {
-                
                 var entity = _mapper.Map<CreateProductDTO, Product>(model);
                 var category = _categoryRepository.Queryable().Where(it => it.Name == model.CategoryName).FirstOrDefault();
                 if (category == null)
@@ -58,7 +62,8 @@ namespace Service.Products
                 if (entity.IsNotNullOrEmpty())
                 {
                     entity.Delete();
-                    _productRepository.Delete(entity);
+                    entity.IsDeleted = true;
+                    _productRepository.Update(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<ProductDTO>(false, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.DeleteSuccess);
                     return result;
@@ -77,9 +82,6 @@ namespace Service.Products
             {
                 return new ReturnMessage<PaginatedList<ProductDTO>>(false, null, MessageConstants.Error);
             }
-
-
-
             var resultEntity = _productRepository.GetPaginatedList(it => search.Search == null ||
                 (
                     (
@@ -103,9 +105,22 @@ namespace Service.Products
 
         public ReturnMessage<ProductDTO> Update(UpdateProductDTO model)
         {
+            var stringInput = StringExtension.CleanString(model);
+            if (!stringInput)
+            {
+                return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
+            }
             try
             {
-                var entity = _productRepository.Find(model.Id);
+                var entity = _mapper.Map<UpdateProductDTO, Product>(model);
+                entity = _productRepository.Find(model.Id);
+                var category = _categoryRepository.Queryable().Where(it => it.Name == model.CategoryName).FirstOrDefault();
+                if (category == null)
+                {
+                    return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
+                }
+                model.CategoryId = category.Id;
+                entity.CategoryId = category.Id;
                 if (entity.IsNotNullOrEmpty())
                 {
                     entity.Update(model);

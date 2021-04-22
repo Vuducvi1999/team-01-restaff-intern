@@ -8,6 +8,8 @@ import {
   ModalHeaderModel,
 } from 'src/app/shared/components/modals/models/modal.model';
 
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 @Component({
   selector: 'app-blogs-detail',
   templateUrl: './blogs-detail.component.html',
@@ -20,12 +22,13 @@ export class BlogsDetailComponent implements OnInit {
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   submitted = false;
+  public editor = ClassicEditor;
 
   constructor(
     private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
     private blogService: BlogService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadFormItem();
@@ -58,7 +61,7 @@ export class BlogsDetailComponent implements OnInit {
   createModal() {
     this.modalHeader = new ModalHeaderModel();
     this.modalHeader.title =
-      this.item != null ? `Update ${this.item.title}` : `Add Banner`;
+      this.item != null ? `Update ${this.item.title}` : `Add Blog`;
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
   }
