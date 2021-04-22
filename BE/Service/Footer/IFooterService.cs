@@ -10,7 +10,5 @@ namespace Service.Footer
         ReturnMessage<List<SocialMediaDTO>> GetSocialMedias();
         ReturnMessage<List<CategoryDTO>> GetCategories();
 
-        //ReturnMessage<BlogDTO> GetBlogs();
-
     }
 }
