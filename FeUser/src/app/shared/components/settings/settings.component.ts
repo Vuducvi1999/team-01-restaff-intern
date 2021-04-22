@@ -46,8 +46,9 @@ export class SettingsComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private translate: TranslateService,
-    public productService: ProductService) {
+    public productService: ProductService, private homeService: HomeService) {
     // this.productService.cartItems.subscribe(response => this.products = response);
+    this.homeService.cartItems.subscribe(response => this.products = response);
   }
 
   ngOnInit(): void {

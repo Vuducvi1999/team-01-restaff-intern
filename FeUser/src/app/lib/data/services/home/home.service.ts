@@ -76,4 +76,13 @@ export class HomeService {
     }
     return true
   }
+
+  // Get Cart Items
+  public get cartItems(): Observable<ProductModel[]> {
+    const itemsStream = new Observable(observer => {
+      observer.next(state.cart);
+      observer.complete();
+    });
+    return <Observable<ProductModel[]>>itemsStream;
+  }
 }
