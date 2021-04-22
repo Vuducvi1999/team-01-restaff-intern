@@ -8,52 +8,53 @@ using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
 using System;
 using System.Linq;
-
+using Common.StringEx;
 namespace Service.Categories
 {
     public class CategoryService : ICategoryService
     {
+        private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Category> _categoryRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CategoryService(IRepository<Category> categoryRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public CategoryService(IRepository<Category> categoryRepository, IRepository<Product> productRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _productRepository = productRepository;
         }
 
-        public bool CleanString(CategoryDTO model)
-        {
-            var stringProperties = model.GetType().GetProperties()
-                          .Where(p => p.PropertyType == typeof(string));
 
-            char[] charsToTrim = { '*', '.', ' '};
-            foreach (var stringPropertie in stringProperties)
-            {
-                string currentValue = (string)stringPropertie.GetValue(model);
-                stringPropertie.SetValue(model, currentValue.Trim(charsToTrim));
-                if(stringPropertie.GetValue(model).ToString() == "")
-                {
-                    return false;
-                }
-
-            }
-            return true;
-        }
+        //public bool CleanString(UpdateCategoryDTO model)
+        //{
+        //    var stringItems = model.GetType().GetProperties()
+        //            .Where(p => p.PropertyType == typeof(string));
+        //    foreach (var stringItem in stringItems)
+        //    {
+        //        if (stringItem.GetValue(model).ToString() == ""
+        //            || stringItem.GetValue(model).ToString().Trim() == ""
+        //            || stringItem.GetValue(model).ToString().EndsWith("")
+        //            || stringItem.GetValue(model).ToString().StartsWith(""))
+        //        {
+        //            return false;
+        //        }
+        //        var currentItem = stringItem.GetValue(model).ToString().Trim();
+        //    }
+        //    return true;
+        //}
 
         public ReturnMessage<CategoryDTO> Create(CreateCategoryDTO model)
         {
-
-
+            var stringInput = StringExtension.CleanString(model);
+            if (!stringInput)
+            {
+                return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
+            }
             try
             {
                 var entity = _mapper.Map<CreateCategoryDTO, Category>(model);
-                //if (!CleanString(entity))
-                //{
-                //    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
-                //}
                 entity.Insert();
                 _categoryRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
@@ -76,10 +77,20 @@ namespace Service.Categories
                 //{
                 //    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
                 //}
+               
+                var products = _productRepository.Queryable().Where(r => r.CategoryId == model.Id);
+
                 if (entity.IsNotNullOrEmpty())
                 {
+                    foreach (var product in products)
+                    {
+                        product.Delete();
+                        product.IsDeleted = true;
+                        _productRepository.Update(product);
+                    }
                     entity.Delete();
-                    _categoryRepository.Delete(entity);
+                    entity.IsDeleted = true;
+                    _categoryRepository.Update(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<CategoryDTO>(false, _mapper.Map<Category, CategoryDTO>(entity), MessageConstants.DeleteSuccess);
                     return result;
@@ -111,7 +122,9 @@ namespace Service.Categories
                 , search.PageIndex * search.PageSize
                 , t => t.Name
             );
+            resultEntity.Results.Where(r => r.ObjectState == ObjectState.Added);
             var data = _mapper.Map<PaginatedList<Category>, PaginatedList<CategoryDTO>>(resultEntity);
+            
             var result = new ReturnMessage<PaginatedList<CategoryDTO>>(false, data, MessageConstants.UpdateSuccess);
 
             return result;
@@ -120,6 +133,11 @@ namespace Service.Categories
 
         public ReturnMessage<CategoryDTO> Update(UpdateCategoryDTO model)
         {
+            var stringInput = StringExtension.CleanString(model);
+            if (!stringInput)
+            {
+                return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
+            }
             try
             {
                 var entity = _categoryRepository.Find(model.Id);

@@ -35,7 +35,7 @@ namespace BE.Controllers
         public IActionResult Create([FromBody] CreateBannerDTO model)
         {
             var result = _bannerService.Create(model);
-            if (model.Files.IsNullOrEmpty())
+            if (model.Files.IsNullOrEmpty() || result.HasError)
             {
                 return CommonResponse(result);
             }
@@ -51,7 +51,7 @@ namespace BE.Controllers
         public IActionResult Update([FromBody] UpdateBannerDTO model)
         {
             var result = _bannerService.Update(model);
-            if (model.Files.IsNullOrEmpty())
+            if (model.Files.IsNullOrEmpty() || result.HasError)
             {
                 return CommonResponse(result);
             }

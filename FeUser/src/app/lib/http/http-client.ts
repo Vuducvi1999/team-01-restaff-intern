@@ -86,10 +86,10 @@ export class HttpClientService {
       if (param.options) {
         httpOptions = { ...httpOptions, ...param.options };
       }
-      if (environment.iswithCredentials) {
-        // tslint:disable-next-line: no-string-literal
-        httpOptions['withCredentials'] = true;
-      }
+      // if (environment.iswithCredentials) {
+      //   // tslint:disable-next-line: no-string-literal
+      //   httpOptions['withCredentials'] = true;
+      // }
     }
     return httpOptions;
   }
