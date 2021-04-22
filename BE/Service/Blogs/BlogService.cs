@@ -117,7 +117,6 @@ namespace Service.Blogs
         {
             blog.Title = blog.Title.Trim();
             blog.ShortDes = blog.ShortDes.Trim();
-            blog.ContentHTML = blog.ContentHTML.Trim();
         }
         
     }

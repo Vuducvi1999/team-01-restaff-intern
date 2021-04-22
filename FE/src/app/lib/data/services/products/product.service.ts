@@ -6,7 +6,7 @@ import { ProductModel } from "../../models/products/product.model";
 @Injectable()
 export class ProductService  {
 
-    private url = '/api/category';
+    private url = '/api/product';
 
     constructor(private httpClient: HttpClientService) { }
 
@@ -25,5 +25,11 @@ export class ProductService  {
     delete(model: ProductModel) {
       const url = `${this.url}/?Id=${model?.id}`;
       return this.httpClient.deleteObservable(url).toPromise();
+    }
+    save(model: ProductModel) {
+      if (model.id) {
+        return this.update(model);
+      }
+      return this.create(model);
     }
   }
