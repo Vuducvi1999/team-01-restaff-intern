@@ -11,11 +11,10 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { SharedModule } from "./shared/shared.module";
 import { AppRoutingModule } from "./app-routing.module";
 
-import { AppComponent } from './app.component';
-import { PagesComponent } from './components/pages.component';
-import { AppConfig } from "./lib/environments/config/appConfig";
+import { AppComponent } from "./app.component";
+import { PagesComponent } from "./components/pages.component";
 import { environment } from "./lib/environments/environment";
-
+import { AppConfig } from "./lib/environments/config/appConfig";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -25,7 +24,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    PagesComponent
+    PagesComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "serverApp" }),
@@ -62,4 +61,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.DTOs.Files;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -21,5 +22,7 @@ namespace Domain.DTOs.Products
         public decimal Price { get; set; }
         public Guid CategoryId { get; set; }
         public string CategoryName { get; set; }
+
+        public List<FileDTO> Files { get; set; }
     }
 }

@@ -5,31 +5,14 @@ import { HttpClientService } from "src/app/lib/http/http-client";
 @Injectable()
 export class FileService  {
 
-    private url = '/api/file';
+    private url = '/api/user/file';
     private urlDownload = this.url + '/download';
     private urlGetType = this.url +'/type';
 
     constructor(private httpClient: HttpClientService) { }
 
-    getFile(request: any) {
-      return this.httpClient.getObservable(this.url, request).toPromise();
-    }
-
-    getType()
+    public static getLinkFile(fileName: String)
     {
-        return this.httpClient.getObservable(this.urlGetType).toPromise();
-    }
-
-    saveFile(model: FormData) {
-      return this.httpClient.postObservable(this.url, model).toPromise();
-    }
-
-    downloadFile(request: any) {
-      return this.httpClient.getObservable(this.urlDownload, request).toPromise();
-    }
-
-    getLinkDownloadFile(url: string)
-    {
-      return `${AppConfig.settings.API_URL}${this.urlDownload}?url=${url}`;
+      return `${AppConfig.settings.API_URL}/Files/${fileName}`;
     }
   }

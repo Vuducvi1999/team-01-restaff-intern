@@ -8,14 +8,10 @@ const routes: Routes = [
     pathMatch: "full",
   },
   {
-    path: '',
+    path: "",
     component: PagesComponent,
-    children: [
-      {
-        path: "home",
-        loadChildren: () => import("./components/pages.module").then((m) => m.PagesModule),
-      }]
-    },
+    loadChildren: () => import("./components/pages.module").then((m) => m.PagesModule),
+  },
   {
     path: "**", // Navigate to Home Page if not found any page
     redirectTo: "",

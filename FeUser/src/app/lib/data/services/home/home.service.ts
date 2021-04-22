@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import { Observable } from "rxjs";
 import { HttpClientService } from "src/app/lib/http/http-client";
-import { HomeProductModel } from "../../models/home/product.model";
+import { ProductModel } from "../../models";
 
 const state = {
   products: JSON.parse(localStorage['products'] || '[]'),
@@ -13,41 +13,10 @@ const state = {
 
 @Injectable()
 export class HomeService {
-  private url = "/api/home";
   public Currency = { name: "Dollar", currency: "USD", price: 1 }; // Default Currency
   public OpenCart: boolean = false;
 
-  constructor(private httpClient: HttpClientService, private toastrService: ToastrService) { }
-
-  // Top Collection
-  getTopCollectionProducts(request: any = null,) {
-    const url = this.url + "/top-collection";
-    return this.httpClient.getObservable(url, request).toPromise();
-  }
-
-  // New Products
-  getNewProducts(request: any = null,) {
-    const url = this.url + "/new-products";
-    return this.httpClient.getObservable(url, request).toPromise();
-  }
-
-  // Best Seller
-  getBestSellerProducts(request: any = null,) {
-    const url = this.url + "/best-seller";
-    return this.httpClient.getObservable(url, request).toPromise();
-  }
-
-  // Featured Products
-  getFeaturedProducts(request: any = null,) {
-    const url = this.url + "/featured-products";
-    return this.httpClient.getObservable(url, request).toPromise();
-  }
-
-  // On Sale
-  getOnSaleProducts(request: any = null,) {
-    const url = this.url + "/on-sale";
-    return this.httpClient.getObservable(url, request).toPromise();
-  }
+  constructor(private httpClient: HttpClientService, private toastrService: ToastrService,) { }
 
   // Add to Wishlist
   public addToWishlist(product): any {
@@ -63,7 +32,7 @@ export class HomeService {
   }
 
   // Add to Compare
-  public addToCompare(product: HomeProductModel): any {
+  public addToCompare(product: ProductModel): any {
     const compareItem = state.compare.find(item => item.id === product.id)
     if (!compareItem) {
       state.compare.push({
@@ -76,7 +45,7 @@ export class HomeService {
   }
 
   // Add to Cart
-  public addToCart(product: HomeProductModel): any {
+  public addToCart(product: ProductModel): any {
     const cartItem = state.cart.find(item => item.id === product.id);
     const qty = 1;
     const items = cartItem ? cartItem : product;
@@ -106,14 +75,5 @@ export class HomeService {
       return false
     }
     return true
-  }
-
-  // Get Cart Items
-  public get cartItems(): Observable<HomeProductModel[]> {
-    const itemsStream = new Observable(observer => {
-      observer.next(state.cart);
-      observer.complete();
-    });
-    return <Observable<HomeProductModel[]>>itemsStream;
   }
 }

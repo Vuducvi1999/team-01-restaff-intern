@@ -3,9 +3,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductService } from "../../services/product.service";
-import { Product } from "../../classes/product";
+import { FileService } from 'src/app/lib/data/services';
+import { ProductModel } from 'src/app/lib/data/models';
 import { HomeService } from 'src/app/lib/data/services/home/home.service';
-import { HomeProductModel } from 'src/app/lib/data/models/home/product.model';
 
 @Component({
   selector: 'app-settings',
@@ -15,7 +15,7 @@ import { HomeProductModel } from 'src/app/lib/data/models/home/product.model';
 })
 export class SettingsComponent implements OnInit {
 
-  public products: HomeProductModel[] = [];
+  public products: ProductModel[] = [];
   public search: boolean = false;
 
   public languages = [{
@@ -46,10 +46,8 @@ export class SettingsComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private translate: TranslateService,
-    public productService: ProductService,
-    private homeService: HomeService) {
-    this.homeService.cartItems.subscribe(response => this.products = response);
-
+    public productService: ProductService) {
+    // this.productService.cartItems.subscribe(response => this.products = response);
   }
 
   ngOnInit(): void {
@@ -77,4 +75,7 @@ export class SettingsComponent implements OnInit {
     this.productService.Currency = currency
   }
 
+  getImage(fileName: string) {
+    return FileService.getLinkFile(fileName);
+  }
 }

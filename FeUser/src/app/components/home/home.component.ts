@@ -1,30 +1,21 @@
 import { Component, OnInit } from "@angular/core";
-import { ReturnMessage } from "src/app/lib/data/models";
-import { HomeProductModel } from "src/app/lib/data/models/home/product.model";
+import { PageModel, ProductModel, ReturnMessage } from "src/app/lib/data/models";
 import { HomeService } from "src/app/lib/data/services/home/home.service";
+import { ProductService } from "src/app/lib/data/services/products/product.service";
 import { Product } from "src/app/shared/classes/product";
 import { ProductSlider } from "src/app/shared/data/slider";
-import { ProductService } from "src/app/shared/services/product.service";
 
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"],
-  providers: [HomeService],
+  providers: [HomeService, ProductService],
 })
 export class HomeComponent implements OnInit {
-  products: HomeProductModel[] = [];
-  newProducts: HomeProductModel[] = [];
-  bestSellerProducts: HomeProductModel[] = []
-  featuredProducts: HomeProductModel[] = []
-  onSaleProducts: HomeProductModel[] = []
+  products: ProductModel[] = [];
 
-  constructor(public homeService: HomeService) {
-    this.getTopCollectionProducts()
-    this.getNewProducts()
-    this.getBestSellerProducts()
-    this.getFeaturedProducts()
-    this.getOnSaleProducts()
+  constructor(public homeService: HomeService, private productService: ProductService) {
+    this.getProducts()
   }
 
   public ProductSliderConfig: any = ProductSlider;
@@ -72,40 +63,12 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  // Top Collection
-  getTopCollectionProducts() {
-    this.homeService
-      .getTopCollectionProducts()
-      .then((data: ReturnMessage<HomeProductModel[]>) => {
-        this.products = data.data;
+  getProducts() {
+    this.productService
+      .get(null)
+      .then((data: ReturnMessage<PageModel<ProductModel>>) => {
+        this.products = data.data.results
+        console.log(this.products)
       }).catch(e => { console.log(e); });
-  }
-
-  // New Products
-  getNewProducts() {
-    this.homeService.getNewProducts().then((data: ReturnMessage<HomeProductModel[]>) => {
-      this.newProducts = data.data;
-    }).catch(e => { console.log(e); })
-  }
-
-  // Best Seller
-  getBestSellerProducts() {
-    this.homeService.getBestSellerProducts().then((data: ReturnMessage<HomeProductModel[]>) => {
-      this.bestSellerProducts = data.data;
-    }).catch(e => { console.log(e); })
-  }
-
-  // Featured Products
-  getFeaturedProducts() {
-    this.homeService.getFeaturedProducts().then((data: ReturnMessage<HomeProductModel[]>) => {
-      this.featuredProducts = data.data;
-    }).catch(e => { console.log(e); })
-  }
-
-  // ON sale
-  getOnSaleProducts() {
-    this.homeService.getOnSaleProducts().then((data: ReturnMessage<HomeProductModel[]>) => {
-      this.onSaleProducts = data.data;
-    }).catch(e => { console.log(e); })
   }
 }

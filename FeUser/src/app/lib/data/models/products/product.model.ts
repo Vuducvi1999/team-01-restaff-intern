@@ -7,7 +7,7 @@ export interface ProductModel extends BaseModel{
     contentHTML: string,
     displayOrder: number,
     categoryId: number,
+    categoryName: string,
     price: number,
     isImportant: boolean
-
 }

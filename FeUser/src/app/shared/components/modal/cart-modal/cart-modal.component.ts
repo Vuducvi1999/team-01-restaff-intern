@@ -4,11 +4,10 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProductService } from "../../../services/product.service";
-import { Product } from "../../../classes/product";
-import { HomeProductModel } from 'src/app/lib/data/models/home/product.model';
 import { HomeService } from 'src/app/lib/data/services/home/home.service';
-import { ReturnMessage } from 'src/app/lib/data/models';
+import { PageModel, ProductModel, ReturnMessage } from 'src/app/lib/data/models';
+import { FileService } from 'src/app/lib/data/services';
+import { ProductService } from 'src/app/lib/data/services/products/product.service';
 
 @Component({
   selector: 'app-cart-modal',
@@ -17,17 +16,18 @@ import { ReturnMessage } from 'src/app/lib/data/models';
 })
 export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Input() product: HomeProductModel;
+  @Input() product: ProductModel;
   @Input() currency: any;
 
   @ViewChild("cartModal", { static: false }) CartModal: TemplateRef<any>;
 
   public closeResult: string;
   public modalOpen: boolean = false;
-  public products: HomeProductModel[] = [];
+  public products: ProductModel[] = [];
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private modalService: NgbModal,
+    private productService: ProductService,
     private homeService: HomeService) {
   }
 
@@ -37,9 +37,9 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
   }
 
-  async openModal(product: HomeProductModel) {
-    await this.homeService.getNewProducts().then((response: ReturnMessage<HomeProductModel[]>) => this.products = response.data);
-    this.products = await this.products.filter((items: HomeProductModel) => items.categoryName == product.categoryName && items.id != product.id);
+  async openModal(product: ProductModel) {
+    await this.productService.get(null).then((response: ReturnMessage<PageModel<ProductModel>>) => this.products = response.data.results);
+    this.products = await this.products.filter((items: ProductModel) => items.categoryName == product.categoryName && items.id != product.id);
     const status = await this.homeService.addToCart(product);
     if (status) {
       this.modalOpen = true;
@@ -74,4 +74,7 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  getImage(fileName: string) {
+    return FileService.getLinkFile(fileName);
+  }
 }

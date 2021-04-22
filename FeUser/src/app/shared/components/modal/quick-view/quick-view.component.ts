@@ -5,9 +5,9 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { Product } from "../../../classes/product";
 import { ProductService } from '../../../../shared/services/product.service';
-import { HomeProductModel } from 'src/app/lib/data/models/home/product.model';
+import { FileService } from 'src/app/lib/data/services';
+import { ProductModel } from 'src/app/lib/data/models';
 import { HomeService } from 'src/app/lib/data/services/home/home.service';
 
 @Component({
@@ -17,7 +17,7 @@ import { HomeService } from 'src/app/lib/data/services/home/home.service';
 })
 export class QuickViewComponent implements OnInit, OnDestroy {
 
-  @Input() product: HomeProductModel;
+  @Input() product: ProductModel;
   @Input() currency: any;
   @ViewChild("quickView", { static: false }) QuickView: TemplateRef<any>;
 
@@ -118,4 +118,7 @@ export class QuickViewComponent implements OnInit, OnDestroy {
     }
   }
 
+  getImage(fileName: string) {
+    return FileService.getLinkFile(fileName);
+  }
 }
