@@ -7,6 +7,7 @@ import {
   ModalFooterModel,
   ModalHeaderModel,
 } from 'src/app/shared/components/modals/models/modal.model';
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-blogs-detail',
@@ -20,6 +21,7 @@ export class BlogsDetailComponent implements OnInit {
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   submitted = false;
+  public editor = ClassicEditor;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -58,7 +60,7 @@ export class BlogsDetailComponent implements OnInit {
   createModal() {
     this.modalHeader = new ModalHeaderModel();
     this.modalHeader.title =
-      this.item != null ? `Update ${this.item.title}` : `Add Banner`;
+      this.item != null ? `Update ${this.item.title}` : `Add Blog`;
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
   }
