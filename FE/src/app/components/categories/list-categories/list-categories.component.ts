@@ -13,37 +13,38 @@ import { CategoryDetailComponent } from '../categories-details/categories-detail
 })
 export class ListCategoriesComponent implements OnInit {
 
-  public categories = [];
+  public categories: CategoryModel[];
   closeResult = '';
   constructor(private modalService: NgbModal,private categoryService:CategoryService) {
     this.fetch();
    }
 
 
-   public settings = {
-    mode :'external',
-    pager:{
-      display: true,
-      perPage: 9,
-    },
-    actions: {
-      position: 'right'
-    },
-    columns: {
-      name: {
-        title: 'Name'
+   public settings = 
+   {
+      mode :'external',
+      pager:
+      {
+        display: true,
+        perPage: 9,
       },
-      description: {
-        title: 'Description'
+      actions: 
+      {
+        position: 'right'
       },
-      imageUrl: {
-        title: 'Image URL',
+      columns: 
+      {
+        name: {
+          title: 'Name'
+        },
+        description: {
+          title: 'Description'
+        },
+        imageUrl: {
+          title: 'Image URL',
+        }
       },
-      id: {
-        title: 'Id',
-      }
-    },
-  };
+    };
 
 
   delete(event: any){
@@ -82,7 +83,7 @@ export class ListCategoriesComponent implements OnInit {
     this.categoryService.get(null).then((res : ReturnMessage<PageModel<CategoryModel>>) => {
       if(!res.hasError)
       {
-        this.categories = res.data.results;
+        this.categories = res.data.results.filter(r => r.isDeleted == false);
       }
     }).catch((er) => {
       
