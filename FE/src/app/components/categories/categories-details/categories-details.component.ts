@@ -21,7 +21,6 @@ import {
 })
 export class CategoryDetailComponent implements OnInit {
   public categoriesForm: FormGroup;
-  public permissionForm: FormGroup;
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   public category: CategoryModel;
@@ -44,28 +43,32 @@ export class CategoryDetailComponent implements OnInit {
     this.modalFile.enityType = EntityType.CATEGORY;
   }
 
-  save() {
-    if (this.categoriesForm.invalid) {
-      return;
+    save(){
+      if(this.categoriesForm.invalid){
+        return;
+      }
+      this.category = {name: this.categoriesForm.value.name, 
+        description: this.categoriesForm.value.description,
+        imageUrl: this.categoriesForm.value.imageUrl,
+        createdBy: this.item ? this.item.createdBy : this.item,
+        createdByName: this.item ? this.item.createdByName : this.item,
+        deletedBy: this.item ? this.item.deletedBy : this.item,
+        deletedByName: this.item ? this.item.deletedByName : this.item,
+        isActive: this.item ? this.item.isActive : this.item,
+        isDeleted: this.item ? this.item.isDeleted : this.item,
+        updatedBy: this.item ? this.item.updatedBy : this.item,
+          updatedByName: this.item ? this.item.updatedByName : this.item,
+          files: this.modalFile.listFile,
+        id: this.item ? this.item.id : '',};
+      return this.categoryService.save(this.category)
+                      .then(() => {
+                          this.ngbActiveModal.close();
+                      }).catch((er) => {
+                        if (er.error.hasError) {
+                          console.log(er.error.message)
+                        }
+                      });
     }
-    this.category = {
-      name: this.categoriesForm.value.name,
-      description: this.categoriesForm.value.description,
-      imageUrl: this.categoriesForm.value.imageUrl,
-      id: this.item ? this.item.id : '',
-      files: this.modalFile.listFile,
-    };
-    return this.categoryService
-      .save(this.category)
-      .then(() => {
-        this.ngbActiveModal.close();
-      })
-      .catch((er) => {
-        if (er.error.hasError) {
-          console.log(er.error.message);
-        }
-      });
-  }
 
   // if (this.categoriesForm.invalid) {   return;
   // }
