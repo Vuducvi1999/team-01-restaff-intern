@@ -9,4 +9,6 @@ export interface HomeProductModel extends BaseModel {
   categoryId: number;
   price: number;
   isImportant: boolean;
+  categoryName: string;
+  hasDisplayHomePage: boolean;
 }

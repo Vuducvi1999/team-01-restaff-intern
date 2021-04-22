@@ -7,6 +7,8 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { Product } from "../../../classes/product";
 import { ProductService } from '../../../../shared/services/product.service';
+import { HomeProductModel } from 'src/app/lib/data/models/home/product.model';
+import { HomeService } from 'src/app/lib/data/services/home/home.service';
 
 @Component({
   selector: 'app-quick-view',
@@ -15,7 +17,7 @@ import { ProductService } from '../../../../shared/services/product.service';
 })
 export class QuickViewComponent implements OnInit, OnDestroy {
 
-  @Input() product: Product;
+  @Input() product: HomeProductModel;
   @Input() currency: any;
   @ViewChild("quickView", { static: false }) QuickView: TemplateRef<any>;
 
@@ -26,7 +28,8 @@ export class QuickViewComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private router: Router, private modalService: NgbModal,
-    public productService: ProductService) { }
+    public productService: ProductService,
+    private homeService: HomeService) { }
 
   ngOnInit(): void {
   }
@@ -105,7 +108,7 @@ export class QuickViewComponent implements OnInit, OnDestroy {
   // Add to cart
   async addToCart(product: any) {
     product.quantity = this.counter || 1;
-    const status = await this.productService.addToCart(product);
+    const status = await this.homeService.addToCart(product);
     if (status)
       this.router.navigate(['/shop/cart']);
   }

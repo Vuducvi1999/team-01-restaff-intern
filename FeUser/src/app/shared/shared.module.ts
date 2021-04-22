@@ -26,10 +26,6 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { ProductBoxOneComponent } from './components/product/product-box-one/product-box-one.component';
-import { ProductBoxTwoComponent } from './components/product/product-box-two/product-box-two.component';
-import { ProductBoxThreeComponent } from './components/product/product-box-three/product-box-three.component';
-import { ProductBoxFourComponent } from './components/product/product-box-four/product-box-four.component';
-import { ProductBoxFiveComponent } from './components/product/product-box-five/product-box-five.component';
 import { ProductBoxVerticalComponent } from './components/product/product-box-vertical/product-box-vertical.component';
 import { ProductBoxVerticalSliderComponent } from './components/product/product-box-vertical-slider/product-box-vertical-slider.component';
 
@@ -70,10 +66,6 @@ import { DiscountPipe } from './pipes/discount.pipe';
     BreadcrumbComponent,
     CategoriesComponent,
     ProductBoxOneComponent,
-    ProductBoxTwoComponent,
-    ProductBoxThreeComponent,
-    ProductBoxFourComponent,
-    ProductBoxFiveComponent,
     ProductBoxVerticalComponent,
     ProductBoxVerticalSliderComponent,
     NewsletterComponent,
@@ -123,10 +115,6 @@ import { DiscountPipe } from './pipes/discount.pipe';
     BreadcrumbComponent,
     CategoriesComponent,
     ProductBoxOneComponent,
-    ProductBoxTwoComponent,
-    ProductBoxThreeComponent,
-    ProductBoxFourComponent,
-    ProductBoxFiveComponent,
     ProductBoxVerticalComponent,
     ProductBoxVerticalSliderComponent,
     NewsletterComponent,

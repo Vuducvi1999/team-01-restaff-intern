@@ -1,32 +1,109 @@
 import { Injectable } from "@angular/core";
+import { ToastrService } from "ngx-toastr";
 import { HttpClientService } from "src/app/lib/http/http-client";
-import { ProductModel } from "../../models/products/product.model";
+import { HomeProductModel } from "../../models/home/product.model";
+
+const state = {
+  products: JSON.parse(localStorage['products'] || '[]'),
+  wishlist: JSON.parse(localStorage['wishlistItems'] || '[]'),
+  compare: JSON.parse(localStorage['compareItems'] || '[]'),
+  cart: JSON.parse(localStorage['cartItems'] || '[]')
+}
 
 @Injectable()
 export class HomeService {
   private url = "/api/home";
   public Currency = { name: "Dollar", currency: "USD", price: 1 }; // Default Currency
+  public OpenCart: boolean = false;
 
-  constructor(private httpClient: HttpClientService) {}
+  constructor(private httpClient: HttpClientService, private toastrService: ToastrService) { }
 
-  getTopCollectionProducts(request: any = null) {
+  // Top Collection
+  getTopCollectionProducts(request: any = null,) {
     const url = this.url + "/top-collection";
     return this.httpClient.getObservable(url, request).toPromise();
   }
-  getNewProducts(request: any = null) {
+
+  // New Products
+  getNewProducts(request: any = null,) {
     const url = this.url + "/new-products";
     return this.httpClient.getObservable(url, request).toPromise();
   }
-  getBestSellerProducts(request: any = null) {
+
+  // Best Seller
+  getBestSellerProducts(request: any = null,) {
     const url = this.url + "/best-seller";
     return this.httpClient.getObservable(url, request).toPromise();
   }
-  getFeaturedProducts(request: any = null) {
+
+  // Featured Products
+  getFeaturedProducts(request: any = null,) {
     const url = this.url + "/featured-products";
     return this.httpClient.getObservable(url, request).toPromise();
   }
-  getOnSaleProducts(request: any = null) {
+
+  // On Sale
+  getOnSaleProducts(request: any = null,) {
     const url = this.url + "/on-sale";
     return this.httpClient.getObservable(url, request).toPromise();
+  }
+
+  // Add to Wishlist
+  public addToWishlist(product): any {
+    const wishlistItem = state.wishlist.find(item => item.id === product.id)
+    if (!wishlistItem) {
+      state.wishlist.push({
+        ...product
+      })
+    }
+    this.toastrService.success('Product has been added in wishlist.');
+    localStorage.setItem("wishlistItems", JSON.stringify(state.wishlist));
+    return true
+  }
+
+  // Add to Compare
+  public addToCompare(product: HomeProductModel): any {
+    const compareItem = state.compare.find(item => item.id === product.id)
+    if (!compareItem) {
+      state.compare.push({
+        ...product
+      })
+    }
+    this.toastrService.success('Product has been added in compare.');
+    localStorage.setItem("compareItems", JSON.stringify(state.compare));
+    return true
+  }
+
+  // Add to Cart
+  public addToCart(product: HomeProductModel): any {
+    const cartItem = state.cart.find(item => item.id === product.id);
+    const qty = 1;
+    const items = cartItem ? cartItem : product;
+    const stock = this.calculateStockCounts(items, qty);
+
+    if (!stock) return false
+
+    if (cartItem) {
+      cartItem.quantity += qty
+    } else {
+      state.cart.push({
+        ...product,
+        quantity: qty
+      })
+    }
+
+    this.OpenCart = true; // If we use cart variation modal
+    localStorage.setItem("cartItems", JSON.stringify(state.cart));
+    return true;
+  }
+
+  public calculateStockCounts(product, quantity) {
+    const qty = product.quantity + quantity
+    const stock = product.stock
+    if (stock < qty || stock == 0) {
+      this.toastrService.error('You can not add more items than available. In stock ' + stock + ' items.');
+      return false
+    }
+    return true
   }
 }

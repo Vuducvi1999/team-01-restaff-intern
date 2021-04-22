@@ -13,16 +13,18 @@ import { ProductService } from "src/app/shared/services/product.service";
   providers: [HomeService],
 })
 export class HomeComponent implements OnInit {
-  public products: HomeProductModel[] = [];
-  public productCollections: any[] = [];
+  products: HomeProductModel[] = [];
+  newProducts: HomeProductModel[] = [];
+  bestSellerProducts: HomeProductModel[] = []
+  featuredProducts: HomeProductModel[] = []
+  onSaleProducts: HomeProductModel[] = []
 
   constructor(public homeService: HomeService) {
-    this.homeService
-      .getTopCollectionProducts()
-      .then((data: ReturnMessage<HomeProductModel[]>) => {
-        this.products = data.data;
-        console.log(this.products)
-      });
+    this.getTopCollectionProducts()
+    this.getNewProducts()
+    this.getBestSellerProducts()
+    this.getFeaturedProducts()
+    this.getOnSaleProducts()
   }
 
   public ProductSliderConfig: any = ProductSlider;
@@ -37,20 +39,6 @@ export class HomeComponent implements OnInit {
       title: "welcome to fashion",
       subTitle: "Women fashion",
       image: "assets/images/slider/2.jpg",
-    },
-  ];
-
-  // Collection banner
-  public collections = [
-    {
-      image: "assets/images/collection/fashion/1.jpg",
-      save: "save 50%",
-      title: "men",
-    },
-    {
-      image: "assets/images/collection/fashion/2.jpg",
-      save: "save 50%",
-      title: "women",
     },
   ];
 
@@ -82,38 +70,42 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  // Logo
-  public logo = [
-    {
-      image: "assets/images/logos/1.png",
-    },
-    {
-      image: "assets/images/logos/2.png",
-    },
-    {
-      image: "assets/images/logos/3.png",
-    },
-    {
-      image: "assets/images/logos/4.png",
-    },
-    {
-      image: "assets/images/logos/5.png",
-    },
-    {
-      image: "assets/images/logos/6.png",
-    },
-    {
-      image: "assets/images/logos/7.png",
-    },
-    {
-      image: "assets/images/logos/8.png",
-    },
-  ];
-
   ngOnInit(): void { }
 
-  // Product Tab collection
-  getCollectionProducts(collection) {
-    return null;
+  // Top Collection
+  getTopCollectionProducts() {
+    this.homeService
+      .getTopCollectionProducts()
+      .then((data: ReturnMessage<HomeProductModel[]>) => {
+        this.products = data.data;
+      }).catch(e => { console.log(e); });
+  }
+
+  // New Products
+  getNewProducts() {
+    this.homeService.getNewProducts().then((data: ReturnMessage<HomeProductModel[]>) => {
+      this.newProducts = data.data;
+    }).catch(e => { console.log(e); })
+  }
+
+  // Best Seller
+  getBestSellerProducts() {
+    this.homeService.getBestSellerProducts().then((data: ReturnMessage<HomeProductModel[]>) => {
+      this.bestSellerProducts = data.data;
+    }).catch(e => { console.log(e); })
+  }
+
+  // Featured Products
+  getFeaturedProducts() {
+    this.homeService.getFeaturedProducts().then((data: ReturnMessage<HomeProductModel[]>) => {
+      this.featuredProducts = data.data;
+    }).catch(e => { console.log(e); })
+  }
+
+  // ON sale
+  getOnSaleProducts() {
+    this.homeService.getOnSaleProducts().then((data: ReturnMessage<HomeProductModel[]>) => {
+      this.onSaleProducts = data.data;
+    }).catch(e => { console.log(e); })
   }
 }
