@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-lg-6  col-xs-12">
                     <div class="quick-view-img">
-                        <img [src]="ImageSrc ? ImageSrc : 'product.imageUrl'" [alt]="'product.name'" class="img-fluid">
+                        <img [src]="ImageSrc ? ImageSrc : 'product.imageUrl'" [alt]="product.name" class="img-fluid">
                     </div>
                 </div>
                 <div class="col-lg-6 rtl-text">
@@ -39,7 +39,7 @@
                         </div>
                         <div class="product-buttons">
                             <a href="javascript:void(0)" class="btn btn-solid" [class.disabled]="false" (click)="addToCart(product)">add to cart</a>
-                            <a [routerLink]="['']" class="btn btn-solid">view detail</a>
+                            <a href="javascript:void(0)" class="btn btn-solid">view detail</a>
                         </div>
                     </div>
                 </div>

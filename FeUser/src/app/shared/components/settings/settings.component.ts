@@ -5,15 +5,17 @@ import { TranslateService } from '@ngx-translate/core';
 import { ProductService } from "../../services/product.service";
 import { Product } from "../../classes/product";
 import { HomeService } from 'src/app/lib/data/services/home/home.service';
+import { HomeProductModel } from 'src/app/lib/data/models/home/product.model';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss'], providers: [HomeService]
+  styleUrls: ['./settings.component.scss'],
+  providers: [HomeService]
 })
 export class SettingsComponent implements OnInit {
 
-  public products: Product[] = [];
+  public products: HomeProductModel[] = [];
   public search: boolean = false;
 
   public languages = [{
@@ -46,7 +48,8 @@ export class SettingsComponent implements OnInit {
     private translate: TranslateService,
     public productService: ProductService,
     private homeService: HomeService) {
-    this.productService.cartItems.subscribe(response => this.products = response);
+    this.homeService.cartItems.subscribe(response => this.products = response);
+
   }
 
   ngOnInit(): void {
