@@ -1,5 +1,6 @@
 import { baseDTO } from "../categories/baseDTO.model";
 import { BaseModel } from "../common";
+import { FileDtoModel } from "../files/file.model";
 
 export interface ProductModel extends BaseModel, baseDTO{
     name: string,
@@ -8,7 +9,9 @@ export interface ProductModel extends BaseModel, baseDTO{
     contentHTML: string,
     displayOrder: number,
     hasDisplayHomePage: boolean,
-    categoryName: string[],
+    categoryName: string,
+    categoryId: string,
     price: number,
-    isImportant: boolean
+    isImportant: boolean,
+    files: FileDtoModel[],
 }

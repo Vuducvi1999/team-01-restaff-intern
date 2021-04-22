@@ -28,21 +28,21 @@ namespace Service.Products
 
         public ReturnMessage<ProductDTO> Create(CreateProductDTO model)
         {
-            var stringInput = StringExtension.CleanString(model);
-            if (!stringInput)
-            {
-                return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
-            }
+            //var stringInput = StringExtension.CleanString(model);
+            //if (!stringInput)
+            //{
+            //    return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
+            //}
             try
             {
                 var entity = _mapper.Map<CreateProductDTO, Product>(model);
-                var category = _categoryRepository.Queryable().Where(it => it.Name == model.CategoryName).FirstOrDefault();
+                var category = _categoryRepository.Find(model.CategoryId);
                 if (category == null)
                 {
                     return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
                 }
-                entity.CategoryId = category.Id;
-                entity.Insert();
+                //entity.CategoryId = category.Id;
+                //entity.Insert();
                 _productRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<ProductDTO>(false, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.CreateSuccess);
@@ -61,7 +61,7 @@ namespace Service.Products
                 var entity = _productRepository.Find(model.Id);
                 if (entity.IsNotNullOrEmpty())
                 {
-                    entity.Delete();
+                    //entity.Delete();
                     entity.IsDeleted = true;
                     _productRepository.Update(entity);
                     _unitOfWork.SaveChanges();
@@ -105,25 +105,25 @@ namespace Service.Products
 
         public ReturnMessage<ProductDTO> Update(UpdateProductDTO model)
         {
-            var stringInput = StringExtension.CleanString(model);
-            if (!stringInput)
-            {
-                return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
-            }
+            //var stringInput = StringExtension.CleanString(model);
+            //if (!stringInput)
+            //{
+            //    return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
+            //}
             try
             {
                 var entity = _mapper.Map<UpdateProductDTO, Product>(model);
-                entity = _productRepository.Find(model.Id);
+                //entity = _productRepository.Find(model.Id);
                 var category = _categoryRepository.Queryable().Where(it => it.Name == model.CategoryName).FirstOrDefault();
                 if (category == null)
                 {
                     return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
                 }
-                model.CategoryId = category.Id;
+                //model.CategoryId = category.Id;
                 entity.CategoryId = category.Id;
                 if (entity.IsNotNullOrEmpty())
                 {
-                    entity.Update(model);
+                    //entity.Update(model);
                     _productRepository.Update(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<ProductDTO>(false, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.UpdateSuccess);
