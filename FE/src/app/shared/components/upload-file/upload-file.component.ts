@@ -30,7 +30,7 @@ export class UploadFileComponent implements OnInit {
       this.fileURL = [];
     }
     this.files = [];
-    this.styleFile = "width: 200px; height: 200;";
+    this.styleFile = "width: 150px; height: 150px;";
   }
   ngOnChanges(changes: SimpleChanges): void {}
 
