@@ -12,9 +12,6 @@ import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { ShopComponent } from './shop/shop.component';
-import { PagesComponent } from './pages/pages.component';
-import { ElementsComponent } from './elements/elements.component';
 
 
 // AoT requires an exported function for factories
@@ -24,10 +21,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ShopComponent,
-    PagesComponent,
-    ElementsComponent
+    AppComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
