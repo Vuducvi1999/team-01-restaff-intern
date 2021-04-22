@@ -1,4 +1,6 @@
-﻿namespace Common.Pagination
+﻿using System.Linq;
+
+namespace Common.Pagination
 {
     public class SerachPaginationDTO<T>
     {
@@ -11,4 +13,5 @@
         public int PageSize { get; set; } = 10;
 
     }
+
 }

@@ -75,6 +75,16 @@ export const content: Routes = [
     },
   },
   {
+    path: 'products',
+    loadChildren: () =>
+      import('../../components/products/products.module').then(
+        (m) => m.ProductModule
+      ),
+    data: {
+      breadcrumb: 'Products',
+    },
+  },
+  {
     path: 'blogs',
     loadChildren: () =>
       import('../../components/blogs/blogs.module').then((m) => m.BlogsModule),
