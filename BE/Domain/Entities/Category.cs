@@ -11,18 +11,18 @@ namespace Domain.Entities
         public string ImageUrl { get; set; }
         public ICollection<Product> Products { get; set; }
 
-        public void Insert()
+        public override void Insert()
         {
-            Id = Guid.NewGuid();
-            ObjectState = Infrastructure.EntityFramework.ObjectState.Added;
+            base.Insert();
         }
-        public void Delete()
+        public override void Delete()
         {
-            ObjectState = Infrastructure.EntityFramework.ObjectState.Deleted;
+            base.Delete();
         }
 
         public void Update(UpdateCategoryDTO model)
         {
+            base.Update();
             Name = model.Name;
             Description = model.Description;
             ImageUrl = model.ImageUrl;

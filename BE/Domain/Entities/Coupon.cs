@@ -15,18 +15,18 @@ namespace Domain.Entities
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        public void Insert()
+        public override void Insert()
         {
-            Id = Guid.NewGuid();
-            ObjectState = Infrastructure.EntityFramework.ObjectState.Added;
+            base.Insert();
         }
-        public void Delete()
+        public override void Delete()
         {
-            ObjectState = Infrastructure.EntityFramework.ObjectState.Deleted;
+            base.Delete();
         }
 
         public void Update(UpdateCouponDTO model)
         {
+            base.Update();
             Code = model.Code;
             Name = model.Name;
             HasPercent = model.HasPercent;

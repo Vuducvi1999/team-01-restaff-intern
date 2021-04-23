@@ -21,19 +21,19 @@ namespace Domain.Entities
         public string ImageUrl { get; set; }
 
 
-        public void Insert()
+        public override void Insert()
         {
-            Id = Guid.NewGuid();
-            ObjectState = Infrastructure.EntityFramework.ObjectState.Added;
+            base.Insert();
         }
 
-        public void Delete()
+        public override void Delete()
         {
-            ObjectState = Infrastructure.EntityFramework.ObjectState.Deleted;
+            base.Delete();
         }
 
         public void Update(UpdateUserDTO model)
         {
+            base.Update();
             Username = model.Username;
             Password = MD5Helper.ToMD5Hash(model.Password);
             Email = model.Email;
@@ -44,6 +44,7 @@ namespace Domain.Entities
         }
         public void UpdateProfile(UpdateProfileDTO model)
         {
+            base.Update();
             Email = model.Email;
             FirstName = model.FirstName;
             LastName = model.LastName;
@@ -53,6 +54,7 @@ namespace Domain.Entities
 
         public void ChangePassword(ChangePassworProfileDTO model)
         {
+            base.Update();
             model.NewPassword = MD5Helper.ToMD5Hash(model.NewPassword);
             Password = model.NewPassword;
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;

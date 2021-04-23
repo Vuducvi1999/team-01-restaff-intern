@@ -22,6 +22,8 @@ export class CreateImageComponent implements OnInit {
   item!: FileDtoModel;
   typeMulti: number;
 
+  fileURL: string[];
+
   constructor(private ngbActiveModal: NgbActiveModal) {}
 
   install() {
@@ -51,12 +53,38 @@ export class CreateImageComponent implements OnInit {
     // console.log(this.item);
   }
 
-  onChangeData(event: any) {
-    console.log(event);
+  onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {
+    if (event == null) {
+      return;
+    }
+
+    if(!this.fileURL)
+    {
+      this.fileURL = [];
+    }
+
+    if (event.add) {
+      this.fileURL = [...this.fileURL, ...event.add];
+    }
+
+    if(event.remove)
+    {
+      this.fileURL.forEach((e, i) => {
+        if (e == event.remove) {
+          this.fileURL.splice(i, 1);
+        }
+      });
+    }
+
+    if(event.removeAll)
+    {
+      this.fileURL = [];
+    }
   }
 
   ngOnInit() {
     this.install();
+    
   }
 
   close(event: any) {

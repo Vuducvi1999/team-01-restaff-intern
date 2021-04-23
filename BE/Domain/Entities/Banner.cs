@@ -13,24 +13,23 @@ namespace Domain.Entities
         public string Description { get; set; }
 
 
-        public void Insert()
+        public override void Insert()
         {
-            Id = Guid.NewGuid();
-            ObjectState = Infrastructure.EntityFramework.ObjectState.Added;
+            base.Insert();
         }
-        public void Delete()
+        public override void Delete()
         {
-            ObjectState = Infrastructure.EntityFramework.ObjectState.Deleted;
+            base.Delete();
         }
 
         public void Update(UpdateBannerDTO model)
         {
+            base.Update();
             Title = model.Title;
             Description = model.Description;
             DisplayOrder = model.DisplayOrder;
             ImageUrl = model.ImageUrl;
             Link = model.Link;
-            ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
     }
 }

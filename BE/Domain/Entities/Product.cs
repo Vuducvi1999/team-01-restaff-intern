@@ -22,18 +22,18 @@ namespace Domain.Entities
 
         public Guid CategoryId { get; set; }
         public virtual Category Category { get; set; }
-        public void Insert()
+        public override void Insert()
         {
-            Id = Guid.NewGuid();
-            ObjectState = Infrastructure.EntityFramework.ObjectState.Added;
+            base.Insert();
         }
-        public void Delete()
+        public override void Delete()
         {
-            ObjectState = Infrastructure.EntityFramework.ObjectState.Deleted;
+            base.Delete();
         }
 
         public void Update(UpdateProductDTO model)
         {
+            base.Update();
             Name = model.Name;
             Description = model.Description;
             IsImportant = model.IsImportant;
