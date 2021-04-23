@@ -25,11 +25,11 @@ export class ListProductsComponent implements OnInit {
   public settings = 
   {
      mode :'external',
-     pager:
-     {
-       display: true,
-       perPage: 9,
-     },
+    //  pager:
+    //  {
+    //    display: true,
+    //    perPage: 9,
+    //  },
      actions: 
      {
        position: 'right'

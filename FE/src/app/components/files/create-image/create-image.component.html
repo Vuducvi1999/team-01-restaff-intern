@@ -13,7 +13,7 @@
     </option>
   </select>
   <br />
-  <app-upload-file [data]="modalImage" styleFile="width: 200px; height: auto;" (onChange)="onChangeData($event)"></app-upload-file>
+  <app-upload-file [data]="modalImage" styleFile="width: 200px; height: auto;" (onChange)="onChangeData($event)" [fileURL]="fileURL"></app-upload-file>
 </div>
 <app-modal-footer
   [data]="modalFooter"

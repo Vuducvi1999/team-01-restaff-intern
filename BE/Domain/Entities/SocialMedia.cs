@@ -15,19 +15,19 @@ namespace Domain.Entities
 
         public int DisplayOrder { get; set; }
 
-        public void Insert()
+        public override void Insert()
         {
-            Id = Guid.NewGuid();
-            ObjectState = Infrastructure.EntityFramework.ObjectState.Added;
+            base.Insert();
         }
 
-        public void Delete()
+        public override void Delete()
         {
-            ObjectState = Infrastructure.EntityFramework.ObjectState.Deleted;
+            base.Delete();
         }
 
         public void Update(UpdateSocialMediaDTO model)
         {
+            base.Update();
             Title = model.Title;
             Link = model.Link;
             IconUrl = model.IconUrl;
