@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { CartComponent } from './cart/cart.component';
-import { CheckoutComponent } from './checkout/checkout.component';
-import { HomeComponent } from './home/home.component';
-import { ProductListComponent } from './product/product-list/product-list.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { BlogsComponent } from "./blogs/blogs.component";
+import { CartComponent } from "./cart/cart.component";
+import { CheckoutComponent } from "./checkout/checkout.component";
+import { HomeComponent } from "./home/home.component";
+import { ProductListComponent } from "./product/product-list/product-list.component";
 
 const routes: Routes = [
   {
@@ -23,12 +24,12 @@ const routes: Routes = [
     component: ProductListComponent,
   },
   {
-    path: 'cart',
-    component: CartComponent
+    path: "cart",
+    component: CartComponent,
   },
   {
-    path: 'checkout',
-    component: CheckoutComponent
+    path: "checkout",
+    component: CheckoutComponent,
   },
 ];
 

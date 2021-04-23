@@ -69,7 +69,7 @@ export class BlogsDetailComponent implements OnInit {
         this.item ? this.item.contentHTML : '',
         Validators.required,
       ],
-      imageUrl: [this.item ? this.item.imageUrl : '', Validators.required],
+      imageUrl: [this.item ? this.item.imageUrl : ''],
     });
   }
 

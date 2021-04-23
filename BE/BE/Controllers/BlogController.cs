@@ -82,5 +82,13 @@ namespace BE.Controllers
             var result = _blogService.TopBlog(model);
             return CommonResponse(result);
         }
+
+        [Route(UrlConstants.RecentBlog)]
+        [HttpGet]
+        public IActionResult RecentBlog([FromQuery] List<BlogDTO> model)
+        {
+            var result = _blogService.RecentBlog(model);
+            return CommonResponse(result);
+        }
     }
 }

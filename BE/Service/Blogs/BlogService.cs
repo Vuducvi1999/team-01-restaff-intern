@@ -124,8 +124,14 @@ namespace Service.Blogs
 
         public ReturnMessage<List<BlogDTO>> RecentBlog(List<BlogDTO> model)
         {
-            throw new NotImplementedException();
-            //var result = _blogRepository.Queryable().Where(p=> p .)
+            if (model == null)
+            {
+                return new ReturnMessage<List<BlogDTO>>(false, null, MessageConstants.DeleteSuccess);
+            }
+            var resultRecent = _blogRepository.Queryable().OrderBy(p => p.CreateByDate).Take(5).ToList();
+            var data = _mapper.Map<List<Blog>, List<BlogDTO>>(resultRecent);
+            var result = new ReturnMessage<List<BlogDTO>>(false, data, MessageConstants.SearchSuccess);
+            return result;
         }
 
         public ReturnMessage<List<BlogDTO>>TopBlog(List<BlogDTO> model)
@@ -134,11 +140,10 @@ namespace Service.Blogs
             {
                 return new ReturnMessage<List<BlogDTO>>(false, null, MessageConstants.DeleteSuccess);
             }
-            var resultTop = _blogRepository.Queryable().OrderBy(p => p.Title).Take(3).ToList();
+            var resultTop = _blogRepository.Queryable().OrderBy(p => p.Title).Take(5).ToList();
             var data = _mapper.Map<List<Blog>, List<BlogDTO>>(resultTop);
             var result = new ReturnMessage<List<BlogDTO>>(false, data, MessageConstants.SearchSuccess);
             return result;
         }
-
     }
 }

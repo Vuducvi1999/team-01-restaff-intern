@@ -18,4 +18,8 @@ export class BlogService {
   getTop(request: any) {
     return this.httpClient.getObservable(this.top, request).toPromise();
   }
+
+  getRecent(request: any) {
+    return this.httpClient.getObservable(this.recent, request).toPromise();
+  }
 }

@@ -23,6 +23,7 @@ import { SliderComponent } from "./home/slider/slider.component";
 import { BlogsComponent } from "./blogs/blogs.component";
 import { CartComponent } from "./cart/cart.component";
 import { CheckoutComponent } from "./checkout/checkout.component";
+import { BlogDetailComponent } from "./blogs/blog-detail/blog-detail.component";
 @NgModule({
   declarations: [
     HomeComponent,
@@ -41,7 +42,8 @@ import { CheckoutComponent } from "./checkout/checkout.component";
     GridComponent,
     BlogsComponent,
     CartComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    BlogDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -52,6 +54,12 @@ import { CheckoutComponent } from "./checkout/checkout.component";
     Ng5SliderModule,
   ],
   providers: [],
-  exports: [BrandsComponent, ColorsComponent, SizeComponent, PriceComponent, GridComponent],
+  exports: [
+    BrandsComponent,
+    ColorsComponent,
+    SizeComponent,
+    PriceComponent,
+    GridComponent,
+  ],
 })
 export class PagesModule {}

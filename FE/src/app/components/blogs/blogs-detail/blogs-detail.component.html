@@ -87,7 +87,7 @@
               </div>
               <div class="form-group row">
                 <label for="validationCustom2" class="col-xl-3 col-md-4"
-                  ><span>*</span> Image Url</label
+                  >Image Url</label
                 >
                 <input
                   class="form-control col-xl-8 col-md-7"
@@ -97,16 +97,12 @@
                   formControlName="imageUrl"
                   hidden
                 />
-                <app-upload-file [data]="modalFile" [fileURL]="fileURL" styleFile="width: 200px; height: auto;" (onChange)="onChangeData($event)"></app-upload-file>
-                <span
-                  class="text-danger"
-                  *ngIf="
-                    (blogFormControl.imageUrl.touched || submitted) &&
-                    blogFormControl.imageUrl.errors?.required
-                  "
-                >
-                  ImageURL is required
-                </span>
+                <app-upload-file
+                  [data]="modalFile"
+                  [fileURL]="fileURL"
+                  styleFile="width: 200px; height: auto;"
+                  (onChange)="onChangeData($event)"
+                ></app-upload-file>
               </div>
             </form>
           </div>
