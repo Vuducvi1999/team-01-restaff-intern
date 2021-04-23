@@ -69,7 +69,7 @@ export class MenuComponent implements OnInit {
     this.menuItems.push(
       { title: 'home', type: 'link', path: '/home' },
       { title: 'categories', type: 'sub', active: false, children: this.categoriesChildren },
-      { title: 'products', type: 'link', path: '/products' },
+      { title: 'products', type: 'link', path: '/product' },
       { title: 'blogs', type: 'sub', active: false, children: this.blogsChildren },
     );
   }
