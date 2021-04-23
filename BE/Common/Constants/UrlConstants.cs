@@ -41,5 +41,7 @@ namespace Common.Constants
 
 
         public const string BaseBlog = BaseApi + "/blog";
+        public const string TopBlog = BaseBlog + "/topblog";
+        public const string RecentBlog = BaseBlog + "/recentblog";
     }
 }

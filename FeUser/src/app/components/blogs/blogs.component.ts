@@ -10,11 +10,13 @@ import { BlogService } from "src/app/lib/data/services/blogs/blog.service";
 })
 export class BlogsComponent implements OnInit {
   public blogs: BlogModel[];
+  public topBlogs: BlogModel[];
 
   // constructor() {}
 
   constructor(private blogService: BlogService) {
     this.getBlogs();
+    this.getTopBlogs();
   }
 
   getBlogs() {
@@ -23,6 +25,21 @@ export class BlogsComponent implements OnInit {
       .then((res: ReturnMessage<PageModel<BlogModel>>) => {
         if (!res.hasError) {
           this.blogs = res.data.results;
+        }
+      })
+      .catch((er) => {
+        if (er.error.hasError) {
+          console.log(er.error.message);
+        }
+      });
+  }
+  getTopBlogs() {
+    this.blogService
+      .getTop(null)
+      .then((res: ReturnMessage<BlogModel[]>) => {
+        if (!res.hasError) {
+          this.topBlogs = res.data;
+          console.log(res);
         }
       })
       .catch((er) => {

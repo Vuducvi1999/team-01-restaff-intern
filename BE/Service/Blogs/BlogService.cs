@@ -8,6 +8,7 @@ using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Service.Blogs
@@ -113,11 +114,31 @@ namespace Service.Blogs
             return result;
         }
 
+
+
         private void TrimData(Blog blog)
         {
             blog.Title = blog.Title.Trim();
             blog.ShortDes = blog.ShortDes.Trim();
         }
-        
+
+        public ReturnMessage<List<BlogDTO>> RecentBlog(List<BlogDTO> model)
+        {
+            throw new NotImplementedException();
+            //var result = _blogRepository.Queryable().Where(p=> p .)
+        }
+
+        public ReturnMessage<List<BlogDTO>>TopBlog(List<BlogDTO> model)
+        {
+            if(model == null)
+            {
+                return new ReturnMessage<List<BlogDTO>>(false, null, MessageConstants.DeleteSuccess);
+            }
+            var resultTop = _blogRepository.Queryable().OrderBy(p => p.Title).Take(3).ToList();
+            var data = _mapper.Map<List<Blog>, List<BlogDTO>>(resultTop);
+            var result = new ReturnMessage<List<BlogDTO>>(false, data, MessageConstants.SearchSuccess);
+            return result;
+        }
+
     }
 }

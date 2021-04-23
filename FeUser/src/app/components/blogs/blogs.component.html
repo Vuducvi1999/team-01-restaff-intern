@@ -66,14 +66,14 @@
           <div class="theme-card">
             <h4>Popular Blog</h4>
             <ul class="popular-blog">
-              <li>
+              <li *ngFor="let item of topBlogs">
                 <div class="media">
                   <div class="blog-date">
                     <span>03 </span>
                     <span>may</span>
                   </div>
                   <div class="media-body align-self-center">
-                    <h6>Injected humour the like</h6>
+                    <h6>{{ item.title }}</h6>
                     <p>0 hits</p>
                   </div>
                 </div>

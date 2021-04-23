@@ -12,5 +12,9 @@ namespace Service.Blogs
     public interface IBlogService : ICommonCRUDService<BlogDTO, CreateBlogDTO, UpdateBlogDTO, DeleteBlogDTO>
     {
         ReturnMessage<PaginatedList<BlogDTO>> SearchPagination(SerachPaginationDTO<BlogDTO> search);
+
+        ReturnMessage<List<BlogDTO>> TopBlog(List<BlogDTO> model);
+
+        ReturnMessage<List<BlogDTO>> RecentBlog(List<BlogDTO> model);
     }
 }
