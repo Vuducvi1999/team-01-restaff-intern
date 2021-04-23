@@ -33,4 +33,5 @@ export enum EntityType {
   PRODUCT = 'product',
   SOCIALMEDIA = 'socialmedia',
   USER = 'user',
+  BLOG = 'blog',
 }

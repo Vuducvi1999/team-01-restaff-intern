@@ -35,7 +35,7 @@ namespace BE.Controllers
             {
                 return CommonResponse(result);
             }
-            var uploadImage = _fileService.UpdateImageCategory(model.Files, result.Data.Id);
+            var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
             if (uploadImage.HasError)
             {
                 return CommonResponse(uploadImage);
@@ -51,7 +51,7 @@ namespace BE.Controllers
             {
                 return CommonResponse(result);
             }
-            var uploadImage = _fileService.UpdateImageCategory(model.Files, result.Data.Id);
+            var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
             if (uploadImage.HasError)
             {
                 return CommonResponse(uploadImage);

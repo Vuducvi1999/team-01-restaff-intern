@@ -41,7 +41,7 @@ export class ProfileSettingsComponent implements OnInit {
     if(this.userInfo)
     {
       this.fileURL = [];
-      this.fileURL.push(FileService.getLinkFile(this.userInfo.imageUrl));
+      this.fileURL.push(this.userInfo.imageUrl);
     }
   }
 
@@ -130,11 +130,35 @@ export class ProfileSettingsComponent implements OnInit {
     }
   }
 
-  onChangeData(event: FileDtoModel[]) {
-    if (event || event.length > 0) {
-      this.fileURL[0] = FileService.getLinkFile(event[0].url);
-      this.profileForm.controls.imageUrl.setValue(event[0].url);
+  onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {
+    if (event == null) {
+      return;
     }
+
+    if(!this.fileURL)
+    {
+      this.fileURL = [];
+    }
+
+    if (event.add) {
+      this.fileURL = [...this.fileURL, ...event.add];
+    }
+
+    if(event.remove)
+    {
+      this.fileURL.forEach((e, i) => {
+        if (e == event.remove) {
+          this.fileURL.splice(i, 1);
+        }
+      });
+    }
+
+    if(event.removeAll)
+    {
+      this.fileURL = [];
+    }
+
+    this.profileForm.controls.imageUrl.setValue(this.fileURL.toString());
   }
 
   get getImage() {

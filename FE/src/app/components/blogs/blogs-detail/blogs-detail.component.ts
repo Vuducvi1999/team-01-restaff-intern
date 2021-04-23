@@ -4,8 +4,11 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BlogModel } from 'src/app/lib/data/models/blogs/blog.model';
 import { BlogService } from 'src/app/lib/data/services/blogs/blog.service';
 import {
+  EntityType,
+  ModalFile,
   ModalFooterModel,
   ModalHeaderModel,
+  TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
@@ -23,15 +26,28 @@ export class BlogsDetailComponent implements OnInit {
   submitted = false;
   public editor = ClassicEditor;
 
+  public modalFile: ModalFile;
+  public fileURL: (string | ArrayBuffer)[];
+  
   constructor(
     private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
     private blogService: BlogService
-  ) {}
+  ) {
+    this.modalFile = new ModalFile();
+    this.modalFile.typeFile = TypeFile.IMAGE;
+    this.modalFile.multiBoolen = false;
+    this.modalFile.enityType = EntityType.BLOG;
+  }
 
   ngOnInit() {
     this.loadFormItem();
     this.createModal();
+    if(this.item)
+    {
+      this.fileURL = [];
+      this.fileURL.push(this.item.imageUrl);
+    }
   }
   loadFormItem() {
     this.blogForm = this.formBuilder.group({
@@ -97,5 +113,36 @@ export class BlogsDetailComponent implements OnInit {
   }
   get blogFormControl() {
     return this.blogForm.controls;
+  }
+
+  onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {
+    if (event == null) {
+      return;
+    }
+
+    if(!this.fileURL)
+    {
+      this.fileURL = [];
+    }
+
+    if (event.add) {
+      this.fileURL = [...this.fileURL, ...event.add];
+    }
+
+    if(event.remove)
+    {
+      this.fileURL.forEach((e, i) => {
+        if (e == event.remove) {
+          this.fileURL.splice(i, 1);
+        }
+      });
+    }
+
+    if(event.removeAll)
+    {
+      this.fileURL = [];
+    }
+
+    this.blogForm.controls.imageUrl.setValue(this.fileURL.toString());
   }
 }

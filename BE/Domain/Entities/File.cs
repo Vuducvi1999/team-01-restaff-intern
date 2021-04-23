@@ -11,5 +11,19 @@ namespace Domain.Entities
         public String FileExt { get; set; }
         public String EntityType { get; set; }
         public String EntityId { get; set; }
+
+        public override void Insert()
+        {
+            base.Insert();
+        }
+        public override void Delete()
+        {
+            base.Delete();
+        }
+
+        public override void Update()
+        {
+            base.Update();
+        }
     }
 }

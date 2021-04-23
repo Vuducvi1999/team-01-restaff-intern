@@ -97,14 +97,38 @@ export class CategoryDetailComponent implements OnInit {
     this.loadItem();
     if (this.item) {
       this.fileURL = [];
-      this.fileURL.push(FileService.getLinkFile(this.item.imageUrl));
+      this.fileURL.push(this.item.imageUrl);
     }
   }
 
-  onChangeData(event: FileDtoModel[]) {
-    if (event || event.length > 0) {
-      this.fileURL = null;
-      this.categoriesForm.controls.imageUrl.setValue(event[0].url);
+  onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {
+    if (event == null) {
+      return;
     }
+
+    if(!this.fileURL)
+    {
+      this.fileURL = [];
+    }
+
+    if (event.add) {
+      this.fileURL = [...this.fileURL, ...event.add];
+    }
+
+    if(event.remove)
+    {
+      this.fileURL.forEach((e, i) => {
+        if (e == event.remove) {
+          this.fileURL.splice(i, 1);
+        }
+      });
+    }
+
+    if(event.removeAll)
+    {
+      this.fileURL = [];
+    }
+
+    this.categoriesForm.controls.imageUrl.setValue(this.fileURL.toString());
   }
 }
