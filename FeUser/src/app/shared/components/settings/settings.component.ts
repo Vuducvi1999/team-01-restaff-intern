@@ -5,13 +5,13 @@ import { TranslateService } from '@ngx-translate/core';
 import { ProductService } from "../../services/product.service";
 import { FileService } from 'src/app/lib/data/services';
 import { ProductModel } from 'src/app/lib/data/models';
-import { HomeService } from 'src/app/lib/data/services/home/home.service';
+import { CartService } from 'src/app/lib/data/services/cart/cart.service';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
-  providers: [HomeService]
+  providers: [CartService]
 })
 export class SettingsComponent implements OnInit {
 
@@ -46,9 +46,8 @@ export class SettingsComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private translate: TranslateService,
-    public productService: ProductService, private homeService: HomeService) {
-    // this.productService.cartItems.subscribe(response => this.products = response);
-    this.homeService.cartItems.subscribe(response => this.products = response);
+    public cartService: CartService) {
+    this.cartService.cartItems.subscribe(response => this.products = response);
   }
 
   ngOnInit(): void {
@@ -67,15 +66,11 @@ export class SettingsComponent implements OnInit {
   }
 
   get getTotal(): Observable<number> {
-    return this.productService.cartTotalAmount();
+    return this.cartService.cartTotalAmount();
   }
 
   removeItem(product: any) {
-    this.productService.removeCartItem(product);
-  }
-
-  changeCurrency(currency: any) {
-    this.productService.Currency = currency
+    this.cartService.removeCartItem(product);
   }
 
   getImage(fileName: string) {

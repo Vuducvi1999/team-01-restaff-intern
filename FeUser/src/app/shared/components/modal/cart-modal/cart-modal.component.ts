@@ -4,15 +4,16 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { HomeService } from 'src/app/lib/data/services/home/home.service';
-import { PageModel, ProductModel, ReturnMessage } from 'src/app/lib/data/models';
+import { ProductModel } from 'src/app/lib/data/models/products/product.model';
+import { CartService } from 'src/app/lib/data/services/cart/cart.service';
 import { FileService } from 'src/app/lib/data/services';
 import { ProductService } from 'src/app/lib/data/services/products/product.service';
 
 @Component({
   selector: 'app-cart-modal',
   templateUrl: './cart-modal.component.html',
-  styleUrls: ['./cart-modal.component.scss']
+  styleUrls: ['./cart-modal.component.scss'],
+  providers: [CartService]
 })
 export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -28,7 +29,8 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private modalService: NgbModal,
     private productService: ProductService,
-    private homeService: HomeService) {
+    private cartService: CartService) {
+    { }
   }
 
   ngOnInit(): void {
@@ -37,10 +39,13 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
   }
 
-  async openModal(product: ProductModel) {
-    await this.productService.get(null).then((response: ReturnMessage<PageModel<ProductModel>>) => this.products = response.data.results);
-    this.products = await this.products.filter((items: ProductModel) => items.categoryName == product.categoryName && items.id != product.id);
-    const status = await this.homeService.addToCart(product);
+  async openModal(product) {
+    const getData = await this.productService.getByCategory(product.categoryId, null);
+    this.products = getData.data;
+
+    // this.products = await this.products.filter(items => items.categoryName == product.categoryName && items.id != product.id);
+
+    const status = await this.cartService.addToCart(product);
     if (status) {
       this.modalOpen = true;
       if (isPlatformBrowser(this.platformId)) { // For SSR 
@@ -73,8 +78,7 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
       this.modalService.dismissAll();
     }
   }
-
-  getImage(fileName: string) {
-    return FileService.getLinkFile(fileName);
+  getImage(image) {
+    return FileService.getLinkFile(image)
   }
 }

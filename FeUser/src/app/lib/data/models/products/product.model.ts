@@ -9,5 +9,6 @@ export interface ProductModel extends BaseModel{
     categoryId: number,
     categoryName: string,
     price: number,
-    isImportant: boolean
+    isImportant: boolean,
+    quantity?:number
 }

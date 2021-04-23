@@ -10,7 +10,7 @@
                         </button>
                         <div class="media">
                             <a [routerLink]="['/shop/product/left/sidebar/', product.name.replace(' ', '-')]">
-                                <img class="img-fluid pro-img" [src]="getImage(product.imageUrl)" [alt]="product.name">
+                                <img class="img-fluid pro-img" [src]="getImage(product.imageUrl)" [alt]="">
                             </a>
                             <div class="media-body align-self-center text-center">
                                 <a [routerLink]="['/shop/product/left/sidebar/', product.name.replace(' ', '-')]">
@@ -21,9 +21,9 @@
                                     </h6>
                                 </a>
                                 <div class="buttons">
-                                    <a [routerLink]="['/shop/cart']" class="view-cart btn btn-solid">Your cart</a>
-                                    <a [routerLink]="['/shop/checkout']" class="checkout btn btn-solid">Check out</a>
-                                    <a [routerLink]="['/shop/collection/left/sidebar']" class="continue btn btn-solid">Continue shopping</a>
+                                    <a [routerLink]="['../cart']" class="view-cart btn btn-solid">Your cart</a>
+                                    <a [routerLink]="['../checkout']" class="checkout btn btn-solid">Check out</a>
+                                    <a (click)="modal.dismiss('Cross click')" class="continue btn btn-solid">Continue shopping</a>
                                 </div>
 
                                 <div class="upsell_payment">
