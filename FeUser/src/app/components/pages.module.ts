@@ -5,7 +5,7 @@ import { SharedModule } from "../shared/shared.module";
 import { PagesRoutingModule } from "./pages-routing.module";
 import { HomeComponent } from "./home/home.component";
 // Widgest Components
-import { SliderComponent } from "./home/widgets/slider/slider.component";
+
 import { BlogComponent } from "./home/widgets/blog/blog.component";
 import { LogoComponent } from "./home/widgets/logo/logo.component";
 import { InstagramComponent } from "./home/widgets/instagram/instagram.component";
@@ -19,6 +19,8 @@ import { BrandsComponent } from "./product/widgets/brands/brands.component";
 import { ColorsComponent } from "./product/widgets/colors/colors.component";
 import { Ng5SliderModule } from "ng5-slider";
 import { GridComponent } from "./product/widgets/grid/grid.component";
+import { SliderComponent } from "./home/slider/slider.component";
+import { BlogsComponent } from "./blogs/blogs.component";
 @NgModule({
   declarations: [
     HomeComponent,
@@ -35,6 +37,7 @@ import { GridComponent } from "./product/widgets/grid/grid.component";
     SizeComponent,
     PriceComponent,
     GridComponent,
+    BlogsComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +48,12 @@ import { GridComponent } from "./product/widgets/grid/grid.component";
     Ng5SliderModule,
   ],
   providers: [],
-  exports: [BrandsComponent, ColorsComponent, SizeComponent, PriceComponent, GridComponent],
+  exports: [
+    BrandsComponent,
+    ColorsComponent,
+    SizeComponent,
+    PriceComponent,
+    GridComponent,
+  ],
 })
 export class PagesModule {}

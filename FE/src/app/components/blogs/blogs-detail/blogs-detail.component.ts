@@ -39,14 +39,14 @@ export class BlogsDetailComponent implements OnInit {
         this.item ? this.item.title : '',
         [
           Validators.required,
-          Validators.pattern('^(?=.*[a-zA-Z0-9])([a-zA-Z0-9]+)$'),
+          Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`),
         ],
       ],
       shortDes: [
         this.item ? this.item.shortDes : '',
         [
           Validators.required,
-          Validators.pattern('^(?=.*[a-zA-Z0-9])([a-zA-Z0-9]+)$'),
+          Validators.pattern(`^[A-Za-z0-9]+[A-Za-z0-9 ]{0,}$`),
         ],
       ],
       contentHTML: [

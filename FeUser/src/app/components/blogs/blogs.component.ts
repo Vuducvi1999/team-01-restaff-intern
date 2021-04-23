@@ -1,14 +1,14 @@
 import { Component, OnInit } from "@angular/core";
-import { BlogModel } from "src/app/lib/data/model/blogs/blog.model";
-import { PageModel, ReturnMessage } from "src/app/lib/data/model/common";
-import { BlogService } from "src/app/lib/data/services";
+import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
+import { PageModel, ReturnMessage } from "src/app/lib/data/models/common";
+import { BlogService } from "src/app/lib/data/services/blogs/blog.service";
 
 @Component({
-  selector: "app-blog",
-  templateUrl: "./blog.component.html",
-  styleUrls: ["./blog.component.scss"],
+  selector: "app-blogs",
+  templateUrl: "./blogs.component.html",
+  styleUrls: ["./blogs.component.scss"],
 })
-export class BlogComponent implements OnInit {
+export class BlogsComponent implements OnInit {
   public blogs: BlogModel[];
 
   // constructor() {}

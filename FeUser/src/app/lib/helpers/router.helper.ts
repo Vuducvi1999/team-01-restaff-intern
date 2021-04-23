@@ -1,7 +1,7 @@
 import { NavigationEnd, NavigationStart, Route, Router } from "@angular/router";
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
-import { RouterInfoModel } from "../data/model/common/router-info.model";
+import { RouterInfoModel } from "../data/models/common";
 
 @Injectable({
   providedIn: "root",
