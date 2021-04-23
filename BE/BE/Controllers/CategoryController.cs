@@ -35,7 +35,7 @@ namespace BE.Controllers
         public IActionResult Create([FromBody] CreateCategoryDTO model)
         {
             var result = _categoryService.Create(model);
-            if(model.Files.IsNullOrEmpty())
+            if (model.Files.IsNullOrEmpty() || result.HasError)
             {
                 return CommonResponse(result);
             }
@@ -51,7 +51,7 @@ namespace BE.Controllers
         public IActionResult Update([FromBody] UpdateCategoryDTO model)
         {
             var result = _categoryService.Update(model);
-            if (model.Files.IsNullOrEmpty())
+            if (model.Files.IsNullOrEmpty() || result.HasError)
             {
                 return CommonResponse(result);
             }
