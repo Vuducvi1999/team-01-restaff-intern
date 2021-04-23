@@ -2,18 +2,19 @@ import { ViewportScroller } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
+  ETypeSort,
   PageModel,
   ProductModel,
   ReturnMessage,
   SearchPaganationDTO,
 } from "src/app/lib/data/models";
-import { ProductService } from "src/app/lib/data/services/products/product.service";
+import { ProductListService } from "src/app/lib/data/services";
 
 @Component({
   selector: "app-product-list",
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.scss"],
-  providers: [ProductService],
+  providers: [ProductListService],
 })
 export class ProductListComponent implements OnInit {
   public grid: string = "col-xl-3 col-md-6";
@@ -25,13 +26,13 @@ export class ProductListComponent implements OnInit {
   // public brands: any[] = [];
   // public colors: any[] = [];
   // public size: any[] = [];
-  // public minPrice: number = 0;
-  // public maxPrice: number = 1200;
+  public minPrice: number = 0;
+  public maxPrice: number = 5000000;
   public tags: any[] = [];
   // public category: string;
   // public pageNo: number = 1;
   public paginate: any = {}; // Pagination use only
-  public sortBy: string; // Sorting Order
+  public sortBy: number = ETypeSort.NULL; // Sorting Order
   public mobileSidebar: boolean = false;
   // public loader: boolean = true;
   public finished: boolean = false; // boolean when end of data is reached
@@ -42,7 +43,7 @@ export class ProductListComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private viewScroller: ViewportScroller,
-    public productService: ProductService
+    public productListService: ProductListService
   ) {
     // Get Query params..
     this.route.queryParams.subscribe((params) => {
@@ -58,7 +59,7 @@ export class ProductListComponent implements OnInit {
       // 'search.categoryName': null,
       // 'search.price': null,
       // 'search.isImportant': null,
-      
+
       this.finished = false;
 
       if (params.category) {
@@ -112,8 +113,8 @@ export class ProductListComponent implements OnInit {
       return;
     }
 
-    this.productService
-      .get({ params: this.params })
+    this.productListService
+      .getPageProduct({ params: this.params })
       .then((res: ReturnMessage<PageModel<ProductModel>>) => {
         this.pageModel = res.data;
 
@@ -133,35 +134,51 @@ export class ProductListComponent implements OnInit {
     this.addItems();
   }
 
-  // // Append filter value to Url
-  // updateFilter(tags: any) {
-  //   tags.page = null; // Reset Pagination
-  //   this.router
-  //     .navigate([], {
-  //       relativeTo: this.route,
-  //       queryParams: tags,
-  //       queryParamsHandling: "merge", // preserve the existing query params in the route
-  //       skipLocationChange: false, // do trigger navigation
-  //     })
-  //     .finally(() => {
-  //       this.viewScroller.setOffset([120, 120]);
-  //       this.viewScroller.scrollToAnchor("products"); // Anchore Link
-  //     });
-  // }
+  // Append filter value to Url
+  updateFilter(tags: any) {
+    this.resetPage();
+
+    this.params.minPrice = tags.minPrice;
+    this.params.maxPrice = tags.maxPrice;
+
+    this.addItems();
+    // tags.page = null; // Reset Pagination
+    // this.router
+    //   .navigate([], {
+    //     relativeTo: this.route,
+    //     queryParams: tags,
+    //     queryParamsHandling: "merge", // preserve the existing query params in the route
+    //     skipLocationChange: false, // do trigger navigation
+    //   })
+    //   .finally(() => {
+    //     this.viewScroller.setOffset([120, 120]);
+    //     this.viewScroller.scrollToAnchor("products"); // Anchore Link
+    //   });
+  }
 
   // SortBy Filter
   sortByFilter(value) {
-    this.router
-      .navigate([], {
-        relativeTo: this.route,
-        queryParams: { sortBy: value ? value : null },
-        queryParamsHandling: "merge", // preserve the existing query params in the route
-        skipLocationChange: false, // do trigger navigation
-      })
-      .finally(() => {
-        this.viewScroller.setOffset([120, 120]);
-        this.viewScroller.scrollToAnchor("products"); // Anchore Link
-      });
+    this.sortBy = value;
+    this.resetPage();
+
+    this.params.typeSort = value;
+
+    if (value == ETypeSort.NULL) {
+      delete this.params.typeSort;
+    }
+
+    this.addItems();
+    // this.router
+    //   .navigate([], {
+    //     relativeTo: this.route,
+    //     queryParams: { sortBy: value ? value : null },
+    //     queryParamsHandling: "merge", // preserve the existing query params in the route
+    //     skipLocationChange: false, // do trigger navigation
+    //   })
+    //   .finally(() => {
+    //     this.viewScroller.setOffset([120, 120]);
+    //     this.viewScroller.scrollToAnchor("products"); // Anchore Link
+    //   });
   }
 
   // // Remove Tag
@@ -218,5 +235,27 @@ export class ProductListComponent implements OnInit {
   // Mobile sidebar
   toggleMobileSidebar() {
     this.mobileSidebar = !this.mobileSidebar;
+  }
+
+  onChangeTypeCate(event: string) {
+    this.resetPage();
+
+    this.params["search.categoryName"] = event;
+
+    if (event == "ALL") {
+      delete this.params["search.categoryName"];
+    }
+
+    this.addItems();
+  }
+
+  resetPage()
+  {
+    this.pageModel = null;
+    this.products = [];
+    this.finished = false;
+
+    delete this.params.pageIndex;
+    delete this.params.pageSize;
   }
 }

@@ -6,56 +6,95 @@
     </div> -->
     <div class="front">
       <a [routerLink]="['/shop/product/left/sidebar/', product?.name]">
-        <img 
-          [defaultImage]="ImageSrc ? ImageSrc : 'assets/images/product/placeholder.jpg'" 
-          [lazyLoad]="ImageSrc ? ImageSrc : getImage(product.imageUrl.split(',')[0])" 
-          class="img-fluid lazy-loading" 
-          alt="{{ product.categoryName }}" />
+        <img
+          [defaultImage]="
+            ImageSrc ? ImageSrc : 'assets/images/product/placeholder.jpg'
+          "
+          [lazyLoad]="
+            ImageSrc ? ImageSrc : getImage(product.imageUrl.split(',')[0])
+          "
+          class="img-fluid lazy-loading"
+          alt="{{ product.categoryName }}"
+          style="height: 260px; width: 180px;"
+        />
       </a>
     </div>
     <div class="back" *ngIf="onHowerChangeImage">
       <a [routerLink]="['/shop/product/left/sidebar/', product?.name]">
-        <img [src]="ImageSrc ? ImageSrc : getImage(product.imageUrl.split(',')[0])" class="img-fluid lazy-loading" alt="{{ product.categoryName }}">
+        <img
+          [src]="ImageSrc ? ImageSrc : getImage(product.imageUrl.split(',')[0])"
+          class="img-fluid lazy-loading"
+          alt="{{ product.categoryName }}"
+         
+        />
       </a>
     </div>
     <ul class="product-thumb-list" *ngIf="thumbnail">
-      <li class="grid_thumb_img" [class.active]="ImageSrc == getImage(image)" *ngFor="let image of product.imageUrl.split(',')">
-        <a href="javascript:void(0)" (mouseover)="ChangeVariantsImage(getImage(image))">
-          <img [lazyLoad]="getImage(image)">
+      <li
+        class="grid_thumb_img"
+        [class.active]="ImageSrc == getImage(image)"
+        *ngFor="let image of product.imageUrl.split(',')"
+      >
+        <a
+          href="javascript:void(0)"
+          (mouseover)="ChangeVariantsImage(getImage(image))"
+        >
+          <img [lazyLoad]="getImage(image)" />
         </a>
       </li>
     </ul>
-    <div class="cart-info cart-wrap">
-      <a href="javascript:void(0)" title="Add to cart" (click)="CartModal.openModal(product)"
-        *ngIf="cartModal">
+    <div class="cart-info cart-wrap" style="background-color: white">
+      <a
+        href="javascript:void(0)"
+        title="Add to cart"
+        (click)="CartModal.openModal(product)"
+        *ngIf="cartModal"
+      >
         <i class="ti-shopping-cart"></i>
       </a>
-      <a href="javascript:void(0)" title="Add to cart" (click)="addToCart(product)"
-        *ngIf="!cartModal">
+      <a
+        href="javascript:void(0)"
+        title="Add to cart"
+        (click)="addToCart(product)"
+        *ngIf="!cartModal"
+      >
         <i class="ti-shopping-cart"></i>
       </a>
-      <a href="javascript:void(0)" title="Add to Wishlist" (click)="addToWishlist(product)">
+      <a
+        href="javascript:void(0)"
+        title="Add to Wishlist"
+        (click)="addToWishlist(product)"
+      >
         <i class="ti-heart" aria-hidden="true"></i>
       </a>
-      <a href="javascript:void(0)" title="Quick View" (click)="QuickView.openModal()">
+      <a
+        href="javascript:void(0)"
+        title="Quick View"
+        (click)="QuickView.openModal()"
+      >
         <i class="ti-search" aria-hidden="true"></i>
       </a>
-      <a href="javascript:void(0)" title="Compare" (click)="addToCompare(product)">
+      <a
+        href="javascript:void(0)"
+        title="Compare"
+        (click)="addToCompare(product)"
+      >
         <i class="ti-reload" aria-hidden="true"></i>
       </a>
     </div>
   </div>
   <div class="product-detail">
     <div>
-      <bar-rating [rate]="5" [readOnly]="true"></bar-rating>
+      <!-- <bar-rating [rate]="5" [readOnly]="true"></bar-rating> -->
+      <br/>
       <a [routerLink]="['/shop/product/left/sidebar/', product?.name]">
         <h6>{{ product?.name | titlecase }}</h6>
       </a>
-      <p>{{ product?.description }}:
-        It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.
+      <p>
+        {{ product?.description }}
       </p>
       <h4>
-        {{ product?.price }}
+        {{ product?.price | currency:'VND'}}
         <!-- <del *ngIf="product?.discount"><span class="money"> {{ product?.price * currency?.price | currency:currency?.currency:'symbol' }}</span></del> -->
       </h4>
       <!-- <ul class="color-variant" *ngIf="Color(product?.variants).length">
@@ -67,6 +106,14 @@
   </div>
 </div>
 <app-skeleton-product-box *ngIf="loader"></app-skeleton-product-box>
-<app-quick-view #quickView [product]="product" [currency]="currency"></app-quick-view>
-<app-cart-modal #cartModal [product]="product" [currency]="currency" *ngIf="cartModal"></app-cart-modal>
-
+<app-quick-view
+  #quickView
+  [product]="product"
+  [currency]="currency"
+></app-quick-view>
+<app-cart-modal
+  #cartModal
+  [product]="product"
+  [currency]="currency"
+  *ngIf="cartModal"
+></app-cart-modal>

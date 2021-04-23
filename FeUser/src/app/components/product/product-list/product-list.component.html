@@ -14,12 +14,12 @@
                                 </span>
                             </div>
                             <!-- Category filter start -->
-                            <app-categories></app-categories>
+                            <app-categories (onChangeTypeCate)="onChangeTypeCate($event)"></app-categories>
                         </div>
                         <!-- silde-bar colleps block end here -->
                         <!-- side-bar colleps block stat -->
-                        <!-- <div class="collection-filter-block">
-                            brand filter start
+                        <div class="collection-filter-block">
+                            <!-- brand filter start
                             <app-brands [products]="products" [brands]="brands" (brandsFilter)="updateFilter($event)">
                             </app-brands>
                             color filter start here
@@ -28,10 +28,10 @@
                             size filter start here
                             <app-size [products]="products" [size]="size" (sizeFilter)="updateFilter($event)">
                             </app-size>
-                            price filter start here
+                            price filter start here -->
                             <app-price [min]="minPrice" [max]="maxPrice" (priceFilter)="updateFilter($event)">
                             </app-price>
-                        </div> -->
+                        </div>
                         <!-- silde-bar colleps block end here -->
                         <!-- side-bar single product slider start -->
                         <app-product-box-vertical-slider [title]="'New Products'">
@@ -91,9 +91,9 @@
                                     </app-grid>
                                     <div class="product-wrapper-grid" [ngClass]="layoutView">
                                         <div class="row">
-                                            <div class="col-grid-box" [ngClass]="grid" *ngFor="let product of products">
-                                                <div class="product-box">
-                                                    <app-product-box-one 
+                                            <div class="col-grid-box" [ngClass]="grid" *ngFor="let product of products" >
+                                                <div class="product-box" >
+                                                    <app-product-box-one style="width: 100%;"
                                                         [product]="product"
                                                         [thumbnail]="false"
                                                         [cartModal]="true">

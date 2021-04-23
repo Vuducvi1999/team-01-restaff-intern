@@ -11,3 +11,11 @@ export interface ProductModel extends BaseModel{
     price: number,
     isImportant: boolean
 }
+
+export enum ETypeSort {
+    NULL,
+    AZ,
+    ZA,
+    PRICELOW,
+    PRICEHIGH,
+}
