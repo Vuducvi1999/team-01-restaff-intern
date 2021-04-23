@@ -1,12 +1,9 @@
-<ng-container *ngFor="let item of fileURL">
-  <img [src]="item" [style]="styleFile" />
-</ng-container>
 <ng-container *ngIf="data">
   <!-- <button (click)="onUpdate()">Upload</button> -->
-  <div *ngIf="data.listFile" style="position: relative">
+  <!-- <div *ngIf="data.listFile" style="position: relative">
     <ng-container *ngIf="data.typeFile == typeIMAGE">
       <ng-container *ngFor="let item of data.listFile">
-        <img [src]="getImage(item.url)" [style]="styleFile" />
+        <img [src]="getImage(item.url)" style="height: 150px; width: 150px;" />
         <button style="position: absolute" (click)="onRemoveUpdate(item.id)">
           x
         </button>
@@ -23,9 +20,9 @@
         <br />
       </ng-container>
     </ng-container>
-  </div>
+  </div> -->
 
-  <br />
+  <!-- <br />
   <label for="btupload" style="cursor: pointer">
     <h4 class="mb-0 f-w-600">
       <i class="fa fa-cloud-upload"> Upload</i>
@@ -47,5 +44,34 @@
     accept="{{ data.typeFile }}"
     (change)="onChangeImg($event)"
     hidden
-  />
+  /> -->
+
+  <ngx-dropzone
+    multiple="{{ data.multiBoolen }}"
+    (change)="onSelect($event)"
+    accept="{{ data.typeFile }}"
+    [style]="styleFile"
+  >
+    <ngx-dropzone-label>Drop it, baby!</ngx-dropzone-label>
+    <ng-container *ngIf="data.typeFile != typeIMAGE">
+      <ngx-dropzone-preview
+        *ngFor="let f of files"
+        [removable]="true"
+        (removed)="onRemove(f)"
+      >
+        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+      </ngx-dropzone-preview>
+    </ng-container>
+    <ng-container *ngIf="data.typeFile == typeIMAGE">
+      <ngx-dropzone-image-preview
+        ngProjectAs="ngx-dropzone-preview"
+        *ngFor="let f of files"
+        [removable]="true"
+        (removed)="onRemove(f)"
+        [file]="f"
+      >
+        <!-- <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label> -->
+      </ngx-dropzone-image-preview>
+    </ng-container>
+  </ngx-dropzone>
 </ng-container>

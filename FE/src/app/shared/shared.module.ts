@@ -18,6 +18,7 @@ import { ModalFooterComponent } from './components/modals/modal-footer/modal-foo
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { FileService } from '../lib/data/services';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
     ModalFooterComponent,
     UploadFileComponent,
   ],
-  imports: [CommonModule, RouterModule, NgbModalModule],
+  imports: [CommonModule, RouterModule, NgbModalModule, NgxDropzoneModule ],
   providers: [NavService, WINDOW_PROVIDERS, FileService],
   exports: [
     FeatherIconsComponent,
