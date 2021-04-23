@@ -140,10 +140,24 @@ namespace Service.Blogs
             {
                 return new ReturnMessage<List<BlogDTO>>(false, null, MessageConstants.DeleteSuccess);
             }
-            var resultTop = _blogRepository.Queryable().OrderBy(p => p.Title).Take(5).ToList();
+            var resultTop = _blogRepository.Queryable().OrderBy(p => p.Title).Take(3).ToList();
             var data = _mapper.Map<List<Blog>, List<BlogDTO>>(resultTop);
             var result = new ReturnMessage<List<BlogDTO>>(false, data, MessageConstants.SearchSuccess);
             return result;
+        }
+
+        public ReturnMessage<BlogDTO> GetBlog(Guid id)
+        {
+            try
+            {
+                var entity = _blogRepository.Find(id);
+                return new ReturnMessage<BlogDTO>(false, _mapper.Map<Blog, BlogDTO>(entity), MessageConstants.DeleteSuccess);
+            }
+            catch (Exception ex)
+            {
+                return new ReturnMessage<BlogDTO>(true, null, ex.Message);
+            }
+            
         }
     }
 }

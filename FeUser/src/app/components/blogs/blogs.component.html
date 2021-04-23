@@ -12,8 +12,11 @@
           <div class="row blog-media">
             <div class="col-xl-6">
               <div class="blog-left">
-                <a
-                  ><img src="assets/images/blog/1.jpg" class="img-fluid" alt=""
+                <a [routerLink]="['/blog/', item.id]"
+                  ><img
+                    [src]="getImage(item.imageUrl)"
+                    class="img-fluid"
+                    alt=""
                 /></a>
               </div>
             </div>
@@ -52,7 +55,7 @@
                 <div class="media">
                   <img
                     class="img-fluid"
-                    src="assets/images/blog/1.jpg"
+                    [src]="getImage(item.imageUrl)"
                     alt="Generic placeholder image"
                   />
                   <div class="media-body align-self-center">

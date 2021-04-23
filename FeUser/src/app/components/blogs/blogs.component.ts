@@ -1,7 +1,11 @@
 import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { Observable } from "rxjs";
+import { switchMap } from "rxjs/operators";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { PageModel, ReturnMessage } from "src/app/lib/data/models/common";
+import { FileService } from "src/app/lib/data/services";
 import { BlogService } from "src/app/lib/data/services/blogs/blog.service";
 
 @Component({
@@ -13,8 +17,9 @@ export class BlogsComponent implements OnInit {
   public blogs: BlogModel[];
   public topBlogs: BlogModel[];
   public recentBlogs: BlogModel[];
+  public selectedId: string;
 
-  constructor(private blogService: BlogService) {
+  constructor(private blogService: BlogService, private route: ActivatedRoute) {
     this.getBlogs();
     this.getTopBlogs();
     this.getRecentBlogs();
@@ -65,5 +70,19 @@ export class BlogsComponent implements OnInit {
         }
       });
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.getRoute();
+  }
+
+  getRoute() {
+    this.route.queryParams.subscribe((params) => {
+      this.selectedId = params["id"];
+    });
+  }
+
+  getImage(image) {
+    return FileService.getLinkFile(image);
+  }
+
+  detail() {}
 }

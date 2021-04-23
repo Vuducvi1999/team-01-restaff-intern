@@ -90,5 +90,13 @@ namespace BE.Controllers
             var result = _blogService.RecentBlog(model);
             return CommonResponse(result);
         }
+
+        [Route(UrlConstants.GetBlog)]
+        [HttpGet]
+        public IActionResult GetBlog(Guid id)
+        {
+            var result = _blogService.GetBlog(id);
+            return CommonResponse(result);
+        }
     }
 }
