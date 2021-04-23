@@ -9,21 +9,21 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <div class="media">
-                            <a [routerLink]="['/shop/product/left/sidebar/', product.title.replace(' ', '-')]">
-                                <img class="img-fluid pro-img" [src]="product.images[0].src" [alt]="product.images[0].alt">
+                            <a [routerLink]="['/shop/product/left/sidebar/', product.name.replace(' ', '-')]">
+                                <img class="img-fluid pro-img" [src]="getImage(product.imageUrl)" [alt]="">
                             </a>
                             <div class="media-body align-self-center text-center">
-                                <a [routerLink]="['/shop/product/left/sidebar/', product.title.replace(' ', '-')]">
+                                <a [routerLink]="['/shop/product/left/sidebar/', product.name.replace(' ', '-')]">
                                     <h6>
                                         <i class="fa fa-check"></i>Item
-                                        <span>{{ product.title | titlecase }}</span>
+                                        <span>{{ product.name | titlecase }}</span>
                                         <span> successfully added to your Cart</span>
                                     </h6>
                                 </a>
                                 <div class="buttons">
-                                    <a [routerLink]="['/shop/cart']" class="view-cart btn btn-solid">Your cart</a>
-                                    <a [routerLink]="['/shop/checkout']" class="checkout btn btn-solid">Check out</a>
-                                    <a [routerLink]="['/shop/collection/left/sidebar']" class="continue btn btn-solid">Continue shopping</a>
+                                    <a [routerLink]="['../cart']" class="view-cart btn btn-solid">Your cart</a>
+                                    <a [routerLink]="['../checkout']" class="checkout btn btn-solid">Check out</a>
+                                    <a (click)="modal.dismiss('Cross click')" class="continue btn btn-solid">Continue shopping</a>
                                 </div>
 
                                 <div class="upsell_payment">
@@ -41,13 +41,13 @@
                                     <div class="product-box col-sm-3 col-6">
                                         <div class="img-wrapper">
                                             <div class="front">
-                                                <a [routerLink]="['/shop/product/left/sidebar/', product.title.replace(' ', '-')]">
-                                                    <img [src]="product.images[0].src" class="img-fluid mb-1" alt="">
+                                                <a [routerLink]="['/shop/product/left/sidebar/', product.name.replace(' ', '-')]">
+                                                    <img [src]="getImage(product.imageUrl)" class="img-fluid mb-1" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-detail">
                                                 <h6 class="mt-0">
-                                                    <a [routerLink]="['/shop/product/left/sidebar/', product.title.replace(' ', '-')]"><span>{{ product.title | titlecase }}</span></a>
+                                                    <a [routerLink]="['/shop/product/left/sidebar/', product.name.replace(' ', '-')]"><span>{{ product.name | titlecase }}</span></a>
                                                 </h6>
                                                 <h4><span>{{ product.price * currency?.price | discount:product | currency:currency?.currency:'symbol' }}</span></h4>
                                             </div>
