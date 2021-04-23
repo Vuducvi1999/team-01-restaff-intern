@@ -51,7 +51,9 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
   searchToggle(){
+
     this.search = !this.search;
   }
 

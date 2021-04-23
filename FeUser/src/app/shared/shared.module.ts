@@ -13,6 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HeaderOneComponent } from './header/header-one/header-one.component';
 import { FooterOneComponent } from './footer/footer-one/footer-one.component';
 
+
 // Components
 import { LeftMenuComponent } from './components/left-menu/left-menu.component';
 import { MenuComponent } from './components/menu/menu.component';
