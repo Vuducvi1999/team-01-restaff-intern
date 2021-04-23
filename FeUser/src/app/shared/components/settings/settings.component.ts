@@ -5,18 +5,20 @@ import { TranslateService } from '@ngx-translate/core';
 import { ProductService } from "../../services/product.service";
 import { FileService } from 'src/app/lib/data/services';
 import { ProductModel } from 'src/app/lib/data/models';
+import { CartService } from 'src/app/lib/data/services/cart/cart.service';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  styleUrls: ['./settings.component.scss'],
+  providers: [CartService]
 })
 export class SettingsComponent implements OnInit {
 
   public products: ProductModel[] = [];
   public search: boolean = false;
-  
-  public languages = [{ 
+
+  public languages = [{
     name: 'English',
     code: 'en'
   }, {
@@ -44,35 +46,31 @@ export class SettingsComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private translate: TranslateService,
-    public productService: ProductService) {
-    // this.productService.cartItems.subscribe(response => this.products = response);
+    public cartService: CartService) {
+    this.cartService.cartItems.subscribe(response => this.products = response);
   }
 
   ngOnInit(): void {
   }
 
 
-  searchToggle(){
+  searchToggle() {
 
     this.search = !this.search;
   }
 
-  changeLanguage(code){
+  changeLanguage(code) {
     if (isPlatformBrowser(this.platformId)) {
       this.translate.use(code)
     }
   }
 
   get getTotal(): Observable<number> {
-    return this.productService.cartTotalAmount();
+    return this.cartService.cartTotalAmount();
   }
 
   removeItem(product: any) {
-    this.productService.removeCartItem(product);
-  }
-
-  changeCurrency(currency: any) {
-    this.productService.Currency = currency
+      this.cartService.removeCartItem(product);
   }
 
   getImage(fileName: string) {

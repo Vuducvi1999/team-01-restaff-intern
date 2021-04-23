@@ -38,7 +38,8 @@ import { CheckoutComponent } from "./checkout/checkout.component";
     PriceComponent,
     GridComponent,
     CartComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    
   ],
   imports: [
     CommonModule,

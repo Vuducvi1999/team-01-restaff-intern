@@ -31,5 +31,16 @@ namespace BE.ControllersFeUser
             var result = _productService.SearchPagination(serachPagination);
             return CommonResponse(result);
         }
+
+        [HttpGet]
+        [Route("category")]
+        public IActionResult GetByCategory([FromQuery] Guid id)
+        {
+
+            var result = _productService.GetByCategory(id);
+            return CommonResponse(result);
+        }
+
+
     }
 }
