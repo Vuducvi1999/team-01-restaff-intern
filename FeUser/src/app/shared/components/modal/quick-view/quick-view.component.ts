@@ -13,7 +13,8 @@ import { HomeService } from 'src/app/lib/data/services/home/home.service';
 @Component({
   selector: 'app-quick-view',
   templateUrl: './quick-view.component.html',
-  styleUrls: ['./quick-view.component.scss']
+  styleUrls: ['./quick-view.component.scss'],
+  providers: [ProductService],
 })
 export class QuickViewComponent implements OnInit, OnDestroy {
 

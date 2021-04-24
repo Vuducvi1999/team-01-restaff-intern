@@ -33,12 +33,12 @@
           <ng-container *ngFor="let product of products | slice:0:16">
             <ng-template carouselSlide>
               <div class="product-box">
-                <app-product-box-one 
+                <app-product-box 
                   [product]="product" 
                   [currency]="homeService?.Currency"
                   [thumbnail]="true"
                   [cartModal]="true">
-                </app-product-box-one>
+                </app-product-box>
               </div>
             </ng-template>
           </ng-container>
@@ -85,12 +85,12 @@
               <div class="no-slider row">
                 <ng-container *ngFor="let product of products | slice:0:8">
                   <div class="product-box">
-                    <app-product-box-one 
+                    <app-product-box 
                       [product]="product" 
                       [currency]="homeService?.Currency"
                       [thumbnail]="true"
                       [cartModal]="true">
-                    </app-product-box-one>
+                    </app-product-box>
                   </div>
                 </ng-container>
               </div>

@@ -6,7 +6,8 @@ import { Product } from "../../../classes/product";
 @Component({
   selector: 'app-cart-variation',
   templateUrl: './cart-variation.component.html',
-  styleUrls: ['./cart-variation.component.scss']
+  styleUrls: ['./cart-variation.component.scss'],
+  providers: [ProductService],
 })
 export class CartVariationComponent implements OnInit, OnDestroy {
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
+import { FileService } from 'src/app/lib/data/services';
 
 import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
 
@@ -24,10 +25,10 @@ export class ListBannersComponent implements OnInit {
   public settings = {
 
     mode: 'external',
-    pager: {
-      display: true,
-      perPage: 10,
-    },
+    // pager: {
+    //   display: true,
+    //   perPage: 10,
+    // },
     actions: {
       position: 'right',
     },
@@ -42,7 +43,20 @@ export class ListBannersComponent implements OnInit {
         title: 'Link',
       },
       imageUrl: {
-        title: 'Image URL',
+        title: 'URL',
+        type: 'html',
+        valuePrepareFunction: (file) => {
+          var fileExt = file.split('.').pop();
+          if (
+            fileExt == 'png' ||
+            fileExt == 'jpg' ||
+            fileExt == 'jpeg' ||
+            fileExt == 'icon'
+          ) {
+            return `<a href="${FileService.getLinkFile(file)}"><img width="75px" height="75px" src="${FileService.getLinkFile(file)}"/></a>`;
+          }
+          return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
+        },
       },
       displayOrder: {
         title: 'Display Order',

@@ -13,7 +13,7 @@ import { ProductService } from 'src/app/lib/data/services/products/product.servi
   selector: 'app-cart-modal',
   templateUrl: './cart-modal.component.html',
   styleUrls: ['./cart-modal.component.scss'],
-  providers: [CartService]
+  providers: [CartService, ProductService]
 })
 export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
 

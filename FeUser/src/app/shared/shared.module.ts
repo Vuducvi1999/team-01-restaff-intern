@@ -44,6 +44,9 @@ import { TapToTopComponent } from './components/tap-to-top/tap-to-top.component'
 
 // Pipes
 import { DiscountPipe } from './pipes/discount.pipe';
+import { HomeComponent } from '../components/home/home.component';
+import { ProductBoxComponent } from './components/product/product-box/product-box.component';
+
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({

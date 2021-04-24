@@ -1,34 +1,71 @@
-import { Component, OnInit } from '@angular/core';
-import { CategoryModel, PageModel, ReturnMessage } from 'src/app/lib/data/models';
-import { CategoryService } from 'src/app/lib/data/services';
-import { Product } from '../../classes/product';
-import { ProductService } from '../../services/product.service';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from "@angular/core";
+import {
+  CategoryModel,
+  PageModel,
+  ReturnMessage,
+} from "src/app/lib/data/models";
+import { ProductListService } from "src/app/lib/data/services";
+import { Product } from "../../classes/product";
 
 @Component({
-  selector: 'app-categories',
-  templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss'],
-  providers: [CategoryService],
+  selector: "app-categories",
+  templateUrl: "./categories.component.html",
+  styleUrls: ["./categories.component.scss"],
+  providers: [ProductListService],
 })
 export class CategoriesComponent implements OnInit {
-
   public products: Product[] = [];
   public collapse: boolean = true;
   public categories: CategoryModel[] = [];
 
-  constructor(public productService: ProductService, public categoryService: CategoryService) { 
-    this.productService.getProducts.subscribe(product => this.products = product);
-    this.categoryService.get(null).then((res: ReturnMessage<PageModel<CategoryModel>>) => {
-      this.categories = res.data.results;
-    })
+  event: any = {};
+  @Input() categoryName: string = "ALL";
+  @Input() styleFont: string = "color: black; font-weight: bold";
+  styleFontNormal: string = "color: #77777777; font-weight: normal";
+  @Output() onChangeTypeCate = new EventEmitter();
+
+  constructor(
+    public productListService: ProductListService,
+    private elRef: ElementRef
+  ) {
+    this.productListService
+      .getCategory()
+      .then((res: ReturnMessage<CategoryModel[]>) => {
+        this.categories = res.data;
+      });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   get filterbyCategory() {
     const category = this.categories;
-    return category
+    return category;
   }
 
+  onSelect(event, typeCate: string) {
+    this.event = {};
+    this.onChangeTypeCate.emit(typeCate);
+  }
+
+  bigImg(event) {
+    this.event.color = event.color;
+    this.event["font-weight"] = event["font-weight"];
+
+    event.color = "black";
+    event["font-weight"] = "bold";
+  }
+
+  normalImg(event) {
+    if (this.event) {
+      event.color = this.event.color;
+      event["font-weight"] = this.event["font-weight"];
+    }
+  }
 }
