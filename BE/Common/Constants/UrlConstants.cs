@@ -47,7 +47,7 @@ namespace Common.Constants
         public const string BaseHeader = BaseApi + "/header";
         public const string BaseFooter = BaseApi + "/footer";
 
-
+        public const string BaseProductDetailsFeUser = BaseApi + "user/product-details";
 
 
         public const string BaseBlog = BaseApi + "/blog";
