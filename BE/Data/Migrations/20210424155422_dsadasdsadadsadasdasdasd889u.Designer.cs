@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
-    [Migration("20210424092131_dsadasdsadadsadasdasdasd889u")]
+    [Migration("20210424155422_dsadasdsadadsadasdasdasd889u")]
     partial class dsadasdsadadsadasdasdasd889u
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

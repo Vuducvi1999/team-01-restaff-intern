@@ -27,6 +27,7 @@ export class ProductService {
     return this.httpClient.deleteObservable(url).toPromise();
   }
   save(model: ProductModel) {
+    console.log(model)
     if (model.id) {
       return this.update(model);
     }

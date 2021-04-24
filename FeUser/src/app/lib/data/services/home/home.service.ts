@@ -58,6 +58,7 @@ export class HomeService {
     return this.httpClient.getObservable(url, request).toPromise();
   }
 
+
   // Add to Wishlist
   public addToWishlist(product): any {
     const wishlistItem = state.wishlist.find((item) => item.id === product.id);

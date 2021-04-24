@@ -16,6 +16,5 @@ namespace Domain.DTOs.BaseDTOs
         public DateTime CreateByDate { get; set; }
         public DateTime UpdateByDate { get; set; }
         public DateTime DeleteByDate { get; set; }
-
     }
 }

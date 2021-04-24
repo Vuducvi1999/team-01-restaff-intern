@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Domain.DTOs.Home
 {
-    public class HomeBlogDTO : BaseDTO
+    public class HomeBlogDTO: BaseDTO
     {
         public string Title { get; set; }
         public string ShortDes { get; set; }

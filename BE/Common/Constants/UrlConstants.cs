@@ -41,10 +41,11 @@ namespace Common.Constants
 
         public const string BaseBlog = BaseApi + "/blog";
         public const string BaseHome = BaseApi + "/home";
+
         public const string TopCollection = "top-collection";
         public const string NewProducts = "new-products";
-        public const string FeaturedProducts = "featured-products";
         public const string BestSeller = "best-seller";
+        public const string FeaturedProducts = "featured-products";
         public const string OnSale = "on-sale";
         public const string Blogs = "blogs";
 

@@ -48,7 +48,7 @@ export class ProductDetailsComponent implements OnInit {
     this.modalFile.multiBoolen = true;
     this.modalFile.enityType = EntityType.PRODUCT;
   }
-  ngOnChanges(changes: SimpleChanges): void {}
+  ngOnChanges(changes: SimpleChanges): void { }
 
   ngOnInit() {
     this.fetchCategory();
@@ -109,7 +109,7 @@ export class ProductDetailsComponent implements OnInit {
       isDeleted: this.item ? this.item.isDeleted : this.item,
       updatedBy: this.item ? this.item.updatedBy : this.item,
       updatedByName: this.item ? this.item.updatedByName : this.item,
-      files: this.modalFile.listFile,
+      files: this.modalFile.listFile
     };
     return this.productService
       .save(this.product)
@@ -169,8 +169,7 @@ export class ProductDetailsComponent implements OnInit {
       return;
     }
 
-    if(!this.fileURL)
-    {
+    if (!this.fileURL) {
       this.fileURL = [];
     }
 
@@ -178,8 +177,7 @@ export class ProductDetailsComponent implements OnInit {
       this.fileURL = [...this.fileURL, ...event.add];
     }
 
-    if(event.remove)
-    {
+    if (event.remove) {
       this.fileURL.forEach((e, i) => {
         if (e == event.remove) {
           this.fileURL.splice(i, 1);
@@ -187,8 +185,7 @@ export class ProductDetailsComponent implements OnInit {
       });
     }
 
-    if(event.removeAll)
-    {
+    if (event.removeAll) {
       this.fileURL = [];
     }
 
