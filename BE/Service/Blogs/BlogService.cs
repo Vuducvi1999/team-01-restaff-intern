@@ -9,6 +9,7 @@ using Infrastructure.Extensions;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Service.Blogs
@@ -114,6 +115,8 @@ namespace Service.Blogs
             return result;
         }
 
+
+
         private void TrimData(Blog blog)
         {
             blog.Title = blog.Title.Trim();
@@ -132,9 +135,9 @@ namespace Service.Blogs
             return result;
         }
 
-        public ReturnMessage<List<BlogDTO>> TopBlog(List<BlogDTO> model)
+        public ReturnMessage<List<BlogDTO>>TopBlog(List<BlogDTO> model)
         {
-            if (model == null)
+            if(model == null)
             {
                 return new ReturnMessage<List<BlogDTO>>(false, null, MessageConstants.DeleteSuccess);
             }
@@ -155,8 +158,7 @@ namespace Service.Blogs
             {
                 return new ReturnMessage<BlogDTO>(true, null, ex.Message);
             }
-
+            
         }
-
     }
 }

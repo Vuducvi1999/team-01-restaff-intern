@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace BE.Controllers
 {
-
+    
     [ApiController]
     public class BlogController : BaseController
     {
@@ -24,6 +24,7 @@ namespace BE.Controllers
         {
             _blogService = blogService;
         }
+
         [Route(UrlConstants.BaseBlog)]
         [HttpGet]
         public IActionResult Get([FromQuery] SerachPaginationDTO<BlogDTO> serachPagination)
@@ -31,6 +32,7 @@ namespace BE.Controllers
             var result = _blogService.SearchPagination(serachPagination);
             return CommonResponse(result);
         }
+
         [Route(UrlConstants.BaseBlog)]
         [HttpPost]
         public IActionResult Create([FromBody] CreateBlogDTO model)
@@ -47,6 +49,7 @@ namespace BE.Controllers
             }
             return CommonResponse(result);
         }
+
         [Route(UrlConstants.BaseBlog)]
         [HttpPut]
         public IActionResult Update([FromBody] UpdateBlogDTO model)
@@ -63,6 +66,7 @@ namespace BE.Controllers
             }
             return CommonResponse(result);
         }
+
         [Route(UrlConstants.BaseBlog)]
         [HttpDelete]
         public IActionResult Delete([FromQuery] DeleteBlogDTO model)
@@ -70,6 +74,7 @@ namespace BE.Controllers
             var result = _blogService.Delete(model);
             return CommonResponse(result);
         }
+
         [Route(UrlConstants.TopBlog)]
         [HttpGet]
         public IActionResult TopBlog([FromQuery] List<BlogDTO> model)

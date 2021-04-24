@@ -92,6 +92,7 @@ namespace Domain
             CreateMap<Blog, CreateBlogDTO>().ReverseMap();
             CreateMap<Blog, UpdateBlogDTO>().ReverseMap();
             CreateMap<Blog, DeleteBlogDTO>().ReverseMap();
+            
         }
     }
 }

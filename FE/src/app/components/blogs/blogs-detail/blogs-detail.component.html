@@ -65,15 +65,29 @@
               </div>
               <div class="form-group row">
                 <label for="" class="col-xl-3 col-md-4"
+                  ><span>*</span> Author</label
+                >
+                <input
+                  class="form-control col-xl-8 col-md-7"
+                  id=""
+                  type="text"
+                  formControlName="createdByName"
+                />
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    (blogFormControl.createdByName.touched || submitted) &&
+                    (blogFormControl.createdByName.errors?.required ||
+                      blogFormControl.createdByName.errors?.pattern)
+                  "
+                >
+                  Author is required or invalid
+                </span>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-xl-3 col-md-4"
                   ><span>*</span> Content Html</label
                 >
-                <!-- <input
-                  class="form-control col-xl-8 col-md-7"
-                  id="validationCustom1"
-                  type="text"
-                  required=""
-                  formControlName="contentHTML"
-                /> -->
                 <ckeditor
                   [editor]="editor"
                   class="col-xl-8 col-md-7 p-0"
@@ -94,7 +108,7 @@
               </div>
               <div class="form-group row">
                 <label for="validationCustom2" class="col-xl-3 col-md-4"
-                  ><span>*</span> Image Url</label
+                  >Image Url</label
                 >
                 <input
                   class="form-control col-xl-8 col-md-7"
@@ -104,16 +118,12 @@
                   formControlName="imageUrl"
                   hidden
                 />
-                <app-upload-file [data]="modalFile" [fileURL]="fileURL" styleFile="width: 200px; height: auto;" (onChange)="onChangeData($event)"></app-upload-file>
-                <span
-                  class="text-danger"
-                  *ngIf="
-                    (blogFormControl.imageUrl.touched || submitted) &&
-                    blogFormControl.imageUrl.errors?.required
-                  "
-                >
-                  ImageURL is required
-                </span>
+                <app-upload-file
+                  [data]="modalFile"
+                  [fileURL]="fileURL"
+                  styleFile="width: 200px; height: auto;"
+                  (onChange)="onChangeData($event)"
+                ></app-upload-file>
               </div>
             </form>
           </div>
