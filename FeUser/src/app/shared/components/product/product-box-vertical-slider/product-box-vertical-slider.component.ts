@@ -1,29 +1,55 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NewProductSlider } from '../../../data/slider';
-import { Product } from '../../../classes/product';
-import { ProductService } from '../../../services/product.service';
+import { Component, OnInit, Input } from "@angular/core";
+import { NewProductSlider } from "../../../data/slider";
+import {
+  PageModel,
+  ProductModel,
+  ReturnMessage,
+} from "src/app/lib/data/models";
+import { FileService, ProductListService } from "src/app/lib/data/services";
+import { ETypeSizeImage } from "src/app/shared/data";
 
 @Component({
-  selector: 'app-product-box-vertical-slider',
-  templateUrl: './product-box-vertical-slider.component.html',
-  styleUrls: ['./product-box-vertical-slider.component.scss']
+  selector: "app-product-box-vertical-slider",
+  templateUrl: "./product-box-vertical-slider.component.html",
+  styleUrls: ["./product-box-vertical-slider.component.scss"],
+  providers: [ProductListService],
 })
 export class ProductBoxVerticalSliderComponent implements OnInit {
+  @Input() title: string = "New Product"; // Default
+  @Input() type: string = "fashion"; // Default Fashion
+  @Input() size: number = 3;
+  @Input() typeSizeImage : string = ETypeSizeImage.SMALL;
 
-  @Input() title: string = 'New Product'; // Default
-  @Input() type: string = 'fashion'; // Default Fashion
+  result: ProductModel[][] = [];
 
-  public products : Product[] = [];
+  public products: ProductModel[] = [];
 
   public NewProductSliderConfig: any = NewProductSlider;
 
-  constructor(public productService: ProductService) { 
-    this.productService.getProducts.subscribe(response => 
-      this.products = response.filter(item => item.type == this.type)
-    );
+  constructor(public productListService: ProductListService) {
+    this.callData();
   }
 
   ngOnInit(): void {
+    // this.result = new Array(Math.ceil(this.products.length / this.size))
+    //   .fill()
+    //   .map((_) => this.products.splice(0, this.size));
   }
 
+  callData() {
+    this.productListService
+      .getPageProduct(null)
+      .then((res: ReturnMessage<PageModel<ProductModel>>) => {
+        this.products = res.data.results;
+        while(this.products.length != 0)
+        {
+          this.result.push(this.products.splice(0,this.size))
+        }
+      })
+      .catch((res) => console.error(res));
+  }
+
+  getImage(fileName: string) {
+    return FileService.getLinkFile(fileName);
+  }
 }
