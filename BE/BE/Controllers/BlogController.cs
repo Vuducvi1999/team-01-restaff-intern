@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace BE.Controllers
 {
-    [Route(UrlConstants.BaseBlog)]
+    
     [ApiController]
     public class BlogController : BaseController
     {
@@ -25,6 +25,7 @@ namespace BE.Controllers
             _blogService = blogService;
         }
 
+        [Route(UrlConstants.BaseBlog)]
         [HttpGet]
         public IActionResult Get([FromQuery] SerachPaginationDTO<BlogDTO> serachPagination)
         {
@@ -32,6 +33,7 @@ namespace BE.Controllers
             return CommonResponse(result);
         }
 
+        [Route(UrlConstants.BaseBlog)]
         [HttpPost]
         public IActionResult Create([FromBody] CreateBlogDTO model)
         {
@@ -48,6 +50,7 @@ namespace BE.Controllers
             return CommonResponse(result);
         }
 
+        [Route(UrlConstants.BaseBlog)]
         [HttpPut]
         public IActionResult Update([FromBody] UpdateBlogDTO model)
         {
@@ -64,10 +67,35 @@ namespace BE.Controllers
             return CommonResponse(result);
         }
 
+        [Route(UrlConstants.BaseBlog)]
         [HttpDelete]
         public IActionResult Delete([FromQuery] DeleteBlogDTO model)
         {
             var result = _blogService.Delete(model);
+            return CommonResponse(result);
+        }
+
+        [Route(UrlConstants.TopBlog)]
+        [HttpGet]
+        public IActionResult TopBlog([FromQuery] List<BlogDTO> model)
+        {
+            var result = _blogService.TopBlog(model);
+            return CommonResponse(result);
+        }
+
+        [Route(UrlConstants.RecentBlog)]
+        [HttpGet]
+        public IActionResult RecentBlog([FromQuery] List<BlogDTO> model)
+        {
+            var result = _blogService.RecentBlog(model);
+            return CommonResponse(result);
+        }
+
+        [Route(UrlConstants.GetBlog)]
+        [HttpGet]
+        public IActionResult GetBlog(Guid id)
+        {
+            var result = _blogService.GetBlog(id);
             return CommonResponse(result);
         }
     }

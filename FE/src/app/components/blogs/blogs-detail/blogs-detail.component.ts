@@ -28,7 +28,7 @@ export class BlogsDetailComponent implements OnInit {
 
   public modalFile: ModalFile;
   public fileURL: (string | ArrayBuffer)[];
-  
+
   constructor(
     private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
@@ -43,8 +43,7 @@ export class BlogsDetailComponent implements OnInit {
   ngOnInit() {
     this.loadFormItem();
     this.createModal();
-    if(this.item)
-    {
+    if (this.item) {
       this.fileURL = [];
       this.fileURL.push(this.item.imageUrl);
     }
@@ -55,21 +54,28 @@ export class BlogsDetailComponent implements OnInit {
         this.item ? this.item.title : '',
         [
           Validators.required,
-          Validators.pattern('^(?=.*[a-zA-Z0-9])([a-zA-Z0-9]+)$'),
+          Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`),
         ],
       ],
       shortDes: [
         this.item ? this.item.shortDes : '',
         [
           Validators.required,
-          Validators.pattern('^(?=.*[a-zA-Z0-9])([a-zA-Z0-9]+)$'),
+          Validators.pattern(`^[A-Za-z0-9]+[A-Za-z0-9 ]{0,}$`),
         ],
       ],
       contentHTML: [
         this.item ? this.item.contentHTML : '',
         Validators.required,
       ],
-      imageUrl: [this.item ? this.item.imageUrl : '', Validators.required],
+      imageUrl: [this.item ? this.item.imageUrl : ''],
+      createdByName: [
+        this.item ? this.item.createdByName : '',
+        [
+          Validators.required,
+          Validators.pattern(`^[A-Za-z0-9]+[A-Za-z0-9 ]{0,}$`),
+        ],
+      ],
     });
   }
 
@@ -87,6 +93,7 @@ export class BlogsDetailComponent implements OnInit {
       shortDes: this.blogForm.controls.shortDes.value,
       contentHTML: this.blogForm.controls.contentHTML.value,
       imageUrl: this.blogForm.controls.imageUrl.value,
+      createdByName: this.blogForm.controls.createdByName.value,
       id: this.item ? this.item.id : '',
     };
 
@@ -120,8 +127,7 @@ export class BlogsDetailComponent implements OnInit {
       return;
     }
 
-    if(!this.fileURL)
-    {
+    if (!this.fileURL) {
       this.fileURL = [];
     }
 
@@ -129,8 +135,7 @@ export class BlogsDetailComponent implements OnInit {
       this.fileURL = [...this.fileURL, ...event.add];
     }
 
-    if(event.remove)
-    {
+    if (event.remove) {
       this.fileURL.forEach((e, i) => {
         if (e == event.remove) {
           this.fileURL.splice(i, 1);
@@ -138,8 +143,7 @@ export class BlogsDetailComponent implements OnInit {
       });
     }
 
-    if(event.removeAll)
-    {
+    if (event.removeAll) {
       this.fileURL = [];
     }
 
