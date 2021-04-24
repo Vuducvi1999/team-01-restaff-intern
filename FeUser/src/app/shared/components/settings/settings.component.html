@@ -38,7 +38,7 @@
         <h6>currency</h6>
         <ul class="list-inline">
           <li *ngFor="let currency of currencies">
-            <a href="javascript:void(0)" (click)="changeCurrency(currency)">{{ currency.name }}</a>
+            <!-- <a href="javascript:void(0)" (click)="changeCurrency(currency)">{{ currency.name }}</a> -->
           </li>
         </ul>
       </div>
@@ -73,8 +73,9 @@
               </h4>
             </div>
           </div>
-          <div class="close-circle" (click)="removeItem(product)">
-            <a href="javascript:void(0)"><i class="fa fa-times" aria-hidden="true"></i></a>
+          <div class="close-circle" [swal]="{ title: 'Do you want to remove product', showCancelButton: true }"
+          (confirm)="removeItem(product)">
+            <a><i class="fa fa-times" aria-hidden="true"></i></a>
           </div>
         </li>
         <li>

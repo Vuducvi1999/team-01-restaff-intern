@@ -1,20 +1,25 @@
-import { Component, OnInit, OnDestroy, ViewChild, TemplateRef, Input, AfterViewInit,
-  Injectable, PLATFORM_ID, Inject } from '@angular/core';
+import {
+  Component, OnInit, OnDestroy, ViewChild, TemplateRef, Input, AfterViewInit,
+  Injectable, PLATFORM_ID, Inject
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProductService } from "../../../services/product.service";
-import { Product } from "../../../classes/product";
+import { ProductModel } from 'src/app/lib/data/models/products/product.model';
+import { CartService } from 'src/app/lib/data/services/cart/cart.service';
+import { FileService } from 'src/app/lib/data/services';
+import { ProductService } from 'src/app/lib/data/services/products/product.service';
 
 @Component({
   selector: 'app-cart-modal',
   templateUrl: './cart-modal.component.html',
-  styleUrls: ['./cart-modal.component.scss']
+  styleUrls: ['./cart-modal.component.scss'],
+  providers: [CartService]
 })
 export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Input() product: Product;
-  @Input() currency : any;
-  
+  @Input() product: ProductModel;
+  @Input() currency: any;
+
   @ViewChild("cartModal", { static: false }) CartModal: TemplateRef<any>;
 
   public closeResult: string;
@@ -23,7 +28,9 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private modalService: NgbModal,
-    private productService: ProductService) {
+    private productService: ProductService,
+    private cartService: CartService) {
+    { }
   }
 
   ngOnInit(): void {
@@ -33,13 +40,16 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async openModal(product) {
-    await this.productService.getProducts.subscribe(response => this.products = response);
-    this.products = await this.products.filter(items => items.category == product.category && items.id != product.id);
-    const status = await this.productService.addToCart(product);
-    if(status) {
+    const getData = await this.productService.getByCategory(product.categoryId,null);
+    this.products = getData.data;
+
+    // this.products = await this.products.filter(items => items.categoryName == product.categoryName && items.id != product.id);
+
+    const status = await this.cartService.addToCart(product);
+    if (status) {
       this.modalOpen = true;
       if (isPlatformBrowser(this.platformId)) { // For SSR 
-        this.modalService.open(this.CartModal, { 
+        this.modalService.open(this.CartModal, {
           size: 'lg',
           ariaLabelledBy: 'Cart-Modal',
           centered: true,
@@ -64,9 +74,12 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if(this.modalOpen){
+    if (this.modalOpen) {
       this.modalService.dismissAll();
     }
+  }
+  getImage(image) {
+    return FileService.getLinkFile(image)
   }
 
 }
