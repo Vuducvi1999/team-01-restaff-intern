@@ -9,6 +9,7 @@ import {
   SearchPaganationDTO,
 } from "src/app/lib/data/models";
 import { ProductListService } from "src/app/lib/data/services";
+import { ETypeGridLayout } from "src/app/shared/data";
 
 @Component({
   selector: "app-product-list",
@@ -17,7 +18,7 @@ import { ProductListService } from "src/app/lib/data/services";
   providers: [ProductListService],
 })
 export class ProductListComponent implements OnInit {
-  public grid: string = "col-xl-3 col-md-6";
+  public grid: string = ETypeGridLayout.NORMAL; //"col-xl-3 col-md-6";
   public layoutView: string = "grid-view";
   public products: ProductModel[];
   public pageModel: PageModel<ProductModel>;
@@ -28,8 +29,9 @@ export class ProductListComponent implements OnInit {
   // public size: any[] = [];
   public minPrice: number = 0;
   public maxPrice: number = 5000000;
+  public sizePrice: string;
   public tags: any[] = [];
-  // public category: string;
+  public category: string = 'ALL';
   // public pageNo: number = 1;
   public paginate: any = {}; // Pagination use only
   public sortBy: number = ETypeSort.NULL; // Sorting Order
@@ -122,8 +124,6 @@ export class ProductListComponent implements OnInit {
         this.params.pageSize = res.data.pageSize;
 
         this.products = [...this.products, ...res.data.results];
-
-        console.log(this.products);
       });
   }
 
@@ -140,7 +140,7 @@ export class ProductListComponent implements OnInit {
 
     this.params.minPrice = tags.minPrice;
     this.params.maxPrice = tags.maxPrice;
-
+    
     this.addItems();
     // tags.page = null; // Reset Pagination
     // this.router
@@ -182,43 +182,49 @@ export class ProductListComponent implements OnInit {
   }
 
   // // Remove Tag
-  // removeTag(tag) {
-  //   this.brands = this.brands.filter((val) => val !== tag);
-  //   this.colors = this.colors.filter((val) => val !== tag);
-  //   this.size = this.size.filter((val) => val !== tag);
+  removeTag(tag) {
+    this.tags = this.tags.filter((val) => val !== tag);
 
-  //   let params = {
-  //     brand: this.brands.length ? this.brands.join(",") : null,
-  //     color: this.colors.length ? this.colors.join(",") : null,
-  //     size: this.size.length ? this.size.join(",") : null,
-  //   };
-
-  //   this.router
-  //     .navigate([], {
-  //       relativeTo: this.route,
-  //       queryParams: params,
-  //       queryParamsHandling: "merge", // preserve the existing query params in the route
-  //       skipLocationChange: false, // do trigger navigation
-  //     })
-  //     .finally(() => {
-  //       this.viewScroller.setOffset([120, 120]);
-  //       this.viewScroller.scrollToAnchor("products"); // Anchore Link
-  //     });
-  // }
+    // this.brands = this.brands.filter((val) => val !== tag);
+    // this.colors = this.colors.filter((val) => val !== tag);
+    // this.size = this.size.filter((val) => val !== tag);
+    // let params = {
+    //   brand: this.brands.length ? this.brands.join(",") : null,
+    //   color: this.colors.length ? this.colors.join(",") : null,
+    //   size: this.size.length ? this.size.join(",") : null,
+    // };
+    // this.router
+    //   .navigate([], {
+    //     relativeTo: this.route,
+    //     queryParams: params,
+    //     queryParamsHandling: "merge", // preserve the existing query params in the route
+    //     skipLocationChange: false, // do trigger navigation
+    //   })
+    //   .finally(() => {
+    //     this.viewScroller.setOffset([120, 120]);
+    //     this.viewScroller.scrollToAnchor("products"); // Anchore Link
+    //   });
+  }
 
   // // Clear Tags
-  // removeAllTags() {
-  //   this.router
-  //     .navigate([], {
-  //       relativeTo: this.route,
-  //       queryParams: {},
-  //       skipLocationChange: false, // do trigger navigation
-  //     })
-  //     .finally(() => {
-  //       this.viewScroller.setOffset([120, 120]);
-  //       this.viewScroller.scrollToAnchor("products"); // Anchore Link
-  //     });
-  // }
+  removeAllTags() {
+    this.tags = [];
+    this.resetPage();
+    delete this.params["search.categoryName"];
+    this.category = 'ALL';
+
+    this.addItems();
+    // this.router
+    //   .navigate([], {
+    //     relativeTo: this.route,
+    //     queryParams: {},
+    //     skipLocationChange: false, // do trigger navigation
+    //   })
+    //   .finally(() => {
+    //     this.viewScroller.setOffset([120, 120]);
+    //     this.viewScroller.scrollToAnchor("products"); // Anchore Link
+    //   });
+  }
 
   // Change Grid Layout
   updateGridLayout(value: string) {
@@ -228,8 +234,13 @@ export class ProductListComponent implements OnInit {
   // Change Layout View
   updateLayoutView(value: string) {
     this.layoutView = value;
-    if (value == "list-view") this.grid = "col-lg-12";
-    else this.grid = "col-xl-3 col-md-6";
+    if (value == "list-view") {
+      this.grid = "col-lg-12";
+      return;
+    }
+
+    // this.grid = "col-xl-3 col-md-6";
+    this.grid = ETypeGridLayout.NORMAL;
   }
 
   // Mobile sidebar
@@ -239,8 +250,13 @@ export class ProductListComponent implements OnInit {
 
   onChangeTypeCate(event: string) {
     this.resetPage();
+    this.removeTag(this.category);
+    this.category = event;
 
-    this.params["search.categoryName"] = event;
+    if (event != "ALL") {
+      this.params["search.categoryName"] = event;
+      this.tags.push(event);
+    }
 
     if (event == "ALL") {
       delete this.params["search.categoryName"];
@@ -249,8 +265,7 @@ export class ProductListComponent implements OnInit {
     this.addItems();
   }
 
-  resetPage()
-  {
+  resetPage() {
     this.pageModel = null;
     this.products = [];
     this.finished = false;

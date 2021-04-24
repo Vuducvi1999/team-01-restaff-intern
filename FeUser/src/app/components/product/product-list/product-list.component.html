@@ -14,7 +14,7 @@
                                 </span>
                             </div>
                             <!-- Category filter start -->
-                            <app-categories (onChangeTypeCate)="onChangeTypeCate($event)"></app-categories>
+                            <app-categories (onChangeTypeCate)="onChangeTypeCate($event)" [categoryName]='category'></app-categories>
                         </div>
                         <!-- silde-bar colleps block end here -->
                         <!-- side-bar colleps block stat -->
@@ -74,7 +74,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <ul class="product-filter-tags">
+                                <ul class="product-filter-tags">
                                     <li class="mr-1" *ngFor="let tag of tags">
                                         <a href="javascript:void(0)" class="filter_tag">
                                             {{tag}} <i class="ti-close" (click)="removeTag(tag)"></i>
@@ -85,7 +85,7 @@
                                             Clear all
                                         </a>
                                     </li>
-                                </ul> -->
+                                </ul>
                                 <div class="collection-product-wrapper" id="products">
                                     <app-grid [products]="products" [paginate]="paginate" [layoutView]="layoutView" [sortBy]="sortBy" (setGrid)="updateGridLayout($event)" (setLayout)="updateLayoutView($event)" (sortedBy)="sortByFilter($event)">
                                     </app-grid>
@@ -93,11 +93,12 @@
                                         <div class="row">
                                             <div class="col-grid-box" [ngClass]="grid" *ngFor="let product of products" >
                                                 <div class="product-box" >
-                                                    <app-product-box-one style="width: 100%;"
+                                                    <app-product-box style="width: 100%;"
                                                         [product]="product"
                                                         [thumbnail]="false"
-                                                        [cartModal]="true">
-                                                    </app-product-box-one>
+                                                        [cartModal]="true"
+                                                        [typeGridLayout]="grid">
+                                                    </app-product-box>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 text-center section-b-space mt-5 no-found" *ngIf="!products.length">

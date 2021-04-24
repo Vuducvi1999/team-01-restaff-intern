@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, Input, EventEmitter, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Options } from 'ng5-slider';
+import { Subject } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-price',
@@ -39,5 +41,4 @@ export class PriceComponent implements OnInit {
     this.price = { minPrice: event.value, maxPrice: event.highValue };
     this.priceFilter.emit(this.price);
   }
-
 }

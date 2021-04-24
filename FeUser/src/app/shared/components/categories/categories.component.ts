@@ -1,4 +1,11 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from "@angular/core";
 import {
   CategoryModel,
   PageModel,
@@ -18,10 +25,16 @@ export class CategoriesComponent implements OnInit {
   public collapse: boolean = true;
   public categories: CategoryModel[] = [];
 
-  event: any;
+  event: any = {};
+  @Input() categoryName: string = "ALL";
+  @Input() styleFont: string = "color: black; font-weight: bold";
+  styleFontNormal: string = "color: #77777777; font-weight: normal";
   @Output() onChangeTypeCate = new EventEmitter();
 
-  constructor(public productListService: ProductListService, private elRef:ElementRef) {
+  constructor(
+    public productListService: ProductListService,
+    private elRef: ElementRef
+  ) {
     this.productListService
       .getCategory()
       .then((res: ReturnMessage<CategoryModel[]>) => {
@@ -29,10 +42,7 @@ export class CategoriesComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void {
-    this.elRef.nativeElement.getElementsByClassName('ALL')[0].style.color = "black";
-    this.elRef.nativeElement.getElementsByClassName('ALL')[0].style["font-weight"] = "bold";
-  }
+  ngOnInit(): void {}
 
   get filterbyCategory() {
     const category = this.categories;
@@ -40,30 +50,22 @@ export class CategoriesComponent implements OnInit {
   }
 
   onSelect(event, typeCate: string) {
-    if(!this.event)
-    {
-      this.elRef.nativeElement.getElementsByClassName('ALL')[0].style.color = "#777777";
-      this.elRef.nativeElement.getElementsByClassName('ALL')[0].style["font-weight"] = "normal";
-    }
-    if (this.event) {
-      this.event.target.style.color = "#777777";
-      this.event.target.style["font-weight"] = "normal";
-    }
-    this.event = event;
-    this.bigImg(this.event);
+    this.event = {};
     this.onChangeTypeCate.emit(typeCate);
   }
 
   bigImg(event) {
-    event.target.style.color = "black";
-    event.target.style["font-weight"] = "bold";
+    this.event.color = event.color;
+    this.event["font-weight"] = event["font-weight"];
+
+    event.color = "black";
+    event["font-weight"] = "bold";
   }
 
   normalImg(event) {
-    event.target.style.color = "#777777";
-    event.target.style["font-weight"] = "normal";
-    this.bigImg(this.event);
-    // event.style.height = "32px";
-    // event.style.width = "32px";
+    if (this.event) {
+      event.color = this.event.color;
+      event["font-weight"] = this.event["font-weight"];
+    }
   }
 }

@@ -15,7 +15,7 @@
           "
           class="img-fluid lazy-loading"
           alt="{{ product.categoryName }}"
-          style="height: 260px; width: 180px;"
+          [style]="typeSizeImage"
         />
       </a>
     </div>
@@ -43,7 +43,7 @@
         </a>
       </li>
     </ul>
-    <div class="cart-info cart-wrap" style="background-color: white">
+    <div [class]="typePositionCart" style="background-color: white">
       <a
         href="javascript:void(0)"
         title="Add to cart"
@@ -83,7 +83,7 @@
       </a>
     </div>
   </div>
-  <div class="product-detail">
+  <div [class]="typePositionInformation">
     <div>
       <!-- <bar-rating [rate]="5" [readOnly]="true"></bar-rating> -->
       <br/>
@@ -94,7 +94,7 @@
         {{ product?.description }}
       </p>
       <h4>
-        {{ product?.price | currency:'VND'}}
+        {{ product?.price | currency:currency}}
         <!-- <del *ngIf="product?.discount"><span class="money"> {{ product?.price * currency?.price | currency:currency?.currency:'symbol' }}</span></del> -->
       </h4>
       <!-- <ul class="color-variant" *ngIf="Color(product?.variants).length">
