@@ -50,7 +50,7 @@ import { ProductBoxComponent } from './components/product/product-box/product-bo
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
-  declarations: [
+  declarations: [ProductBoxComponent,
     HeaderOneComponent,
     FooterOneComponent,
     LeftMenuComponent,
@@ -89,7 +89,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     SweetAlert2Module.forRoot()
 
   ],
-  exports: [
+  exports: [ProductBoxComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

@@ -64,11 +64,4 @@ export class HomeComponent implements OnInit {
         console.log(e);
       });
   }
-
-  getBlogs() {
-    this.homeService.getBlogs().then((data: ReturnMessage<HomeBlogModel[]>) => {
-      this.blogs = data.data;
-      console.log(this.blogs);
-    }).catch(e => { console.log(e); });
-  }
 }

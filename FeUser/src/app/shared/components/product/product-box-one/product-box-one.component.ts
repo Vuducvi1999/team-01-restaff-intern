@@ -9,7 +9,6 @@ import { HomeService } from "src/app/lib/data/services/home/home.service";
 @Component({
   selector: "app-product-box-one",
   templateUrl: "./product-box-one.component.html",
-  styleUrls: ["./product-box-one.component.scss"],
   providers: [HomeService]
 })
 export class ProductBoxOneComponent implements OnInit {
