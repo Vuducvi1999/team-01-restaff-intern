@@ -90,7 +90,7 @@ export class ProductDetailsComponent implements OnInit {
   }
   save() {
     if (this.productsForm.invalid) {
-      // console.log('error');
+      window.alert("Invalid Form !");
       return;
     }
     this.product = {
@@ -132,32 +132,38 @@ export class ProductDetailsComponent implements OnInit {
 
   loadItem() {
     this.productsForm = this.formBuilder.group({
-      name: [this.item ? this.item.name : '', [Validators.required]],
+      name: [this.item ? this.item.name : '', 
+      [Validators.required,
+       Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
+    ],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required],
+        [Validators.required,
+         Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
       ],
       contentHTML: [
         this.item ? this.item.contentHTML : '',
-        [Validators.required],
+        [Validators.required, Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
       ],
       imageUrl: [this.item ? this.item.imageUrl : ''],
-      price: [this.item ? this.item.price : 0, [Validators.required]],
+      price: [this.item ? this.item.price : 0,
+         [Validators.required,
+          Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]],
       categoryName: [
         this.item ? this.item.categoryId : '',
-        [Validators.required],
+        [Validators.required,
+         Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
       ],
       displayOrder: [
         this.item ? this.item.displayOrder : 0,
-        [Validators.required],
+        [Validators.required,
+         Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
       ],
       hasDisplayHomePage: [
-        this.item ? this.item.hasDisplayHomePage : false,
-        [Validators.required],
+        this.item ? this.item.hasDisplayHomePage : false, 
       ],
       isImportant: [
         this.item ? this.item.isImportant : false,
-        [Validators.required],
       ],
     });
 
