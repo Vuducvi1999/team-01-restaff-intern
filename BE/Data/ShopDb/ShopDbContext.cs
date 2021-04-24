@@ -19,6 +19,10 @@ namespace Data
         DbSet<Product> Products { get; set; }
         DbSet<File> Files { get; set; }
         DbSet<Blog> Blogs { get; set; }
+        DbSet<Order> Order { get; set; }
+        DbSet<OrderDetail> OrderDetail { get; set; }
+
+
 
 
     }
