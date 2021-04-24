@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { Router } from "express";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { ReturnMessage } from "src/app/lib/data/models/common";
 import { FileService } from "src/app/lib/data/services";
