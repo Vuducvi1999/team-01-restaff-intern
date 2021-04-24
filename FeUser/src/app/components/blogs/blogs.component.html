@@ -30,7 +30,7 @@
                     </h4></a
                   >
                   <ul class="post-social">
-                    <li>Posted By : Admin Admin</li>
+                    <li>Posted By : {{ item.createdByName }}</li>
                     <li><i class="fa fa-heart"></i> 5 Hits</li>
                     <li><i class="fa fa-comments"></i> 10 Comment</li>
                   </ul>
@@ -53,11 +53,12 @@
             <ul class="recent-blog">
               <li *ngFor="let item of recentBlogs">
                 <div class="media">
-                  <img
-                    class="img-fluid"
-                    [src]="getImage(item.imageUrl)"
-                    alt="Generic placeholder image"
-                  />
+                  <a [routerLink]="['/blog/', item.id]">
+                    <img
+                      class="img-fluid"
+                      [src]="getImage(item.imageUrl)"
+                      alt="Generic placeholder image"
+                  /></a>
                   <div class="media-body align-self-center">
                     <h6>{{ item.createByDate | date: "mediumDate" }}</h6>
                     <p>0 hits</p>
@@ -76,12 +77,14 @@
                     <span>{{ item.createByDate | date: "MMM" }}</span>
                   </div>
                   <div class="media-body align-self-center">
-                    <h6>{{ item.title }}</h6>
+                    <a [routerLink]="['/blog/', item.id]"
+                      ><h6>{{ item.title }}</h6></a
+                    >
                     <p>0 hits</p>
                   </div>
                 </div>
                 <p>
-                  it look like readable English. Many desktop publishing text.
+                  {{ item.shortDes }}
                 </p>
               </li>
             </ul>

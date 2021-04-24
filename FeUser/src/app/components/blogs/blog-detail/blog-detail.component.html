@@ -7,17 +7,17 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12 blog-detail">
-        <img src="assets/images/about-main.jpg" class="img-fluid" alt="" />
+        <img [src]="getImage(data.imageUrl)" class="img-fluid" alt="" />
         <h3>
-          Also the leap into electronic typesetting, remaining essentially
-          unchanged.
+          {{ data.title }}
         </h3>
         <ul class="post-social">
-          <li>25 January 2018</li>
-          <li>Posted By : Admin Admin</li>
+          <li>{{ data.createByDate | date: "mediumDate" }}</li>
+          <li>Posted By : {{ data.createdByName }}</li>
           <!-- <li><i class="fa fa-heart"></i> 5 Hits</li>
           <li><i class="fa fa-comments"></i> 10 Comment</li> -->
         </ul>
+        <div [innerHTML]="data.contentHTML"></div>
       </div>
     </div>
     <div></div>

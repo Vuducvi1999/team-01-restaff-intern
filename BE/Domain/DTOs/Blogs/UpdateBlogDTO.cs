@@ -13,6 +13,7 @@ namespace Domain.DTOs.Blogs
         public string ContentHTML { get; set; }
         public string ImageUrl { get; set; }
         public DateTime UpdateByDate { get; set; }
+        public string CreatedByName { get; set; }
         public List<FileDTO> Files { get; set; }
     }
 }

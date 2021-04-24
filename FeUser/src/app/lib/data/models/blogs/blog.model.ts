@@ -6,4 +6,5 @@ export interface BlogModel extends BaseModel {
   contentHTML: string;
   imageUrl: string;
   createByDate: Date;
+  createdByName: string;
 }

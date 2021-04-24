@@ -1,6 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Router } from "express";
+import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
+import { ReturnMessage } from "src/app/lib/data/models/common";
+import { FileService } from "src/app/lib/data/services";
 import { BlogService } from "src/app/lib/data/services/blogs/blog.service";
 
 @Component({
@@ -10,15 +13,25 @@ import { BlogService } from "src/app/lib/data/services/blogs/blog.service";
 })
 export class BlogDetailComponent implements OnInit {
   id: string;
+  data: BlogModel;
   constructor(
     private blogService: BlogService,
-    private activedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.id = this.activedRoute.snapshot.paramMap.get("id");
-    this.blogService.getBlog(this.id).then((data) => console.log(data));
+    this.getBlog();
   }
 
-  getBlog() {}
+  getBlog() {
+    this.id = this.activatedRoute.snapshot.paramMap.get("id");
+    this.blogService.getBlog(this.id).then((res: ReturnMessage<BlogModel>) => {
+      this.data = res.data;
+      console.log(this.data);
+    });
+  }
+
+  getImage(image) {
+    return FileService.getLinkFile(image);
+  }
 }
