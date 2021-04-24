@@ -8,6 +8,7 @@ using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Service.Products
@@ -76,6 +77,22 @@ namespace Service.Products
             }
         }
 
+        public ReturnMessage<List<ProductDTO>> GetByCategory(Guid id)
+        {
+            try
+            {
+                var listDTO = _productRepository.Queryable().Where(product => product.CategoryId == id).ToList();
+                var list = _mapper.Map<List<ProductDTO>>(listDTO);
+                var result = new ReturnMessage<List<ProductDTO>>(false, list, MessageConstants.ListSuccess);
+                return result;
+            }
+
+            catch (Exception ex)
+            {
+                return new ReturnMessage<List<ProductDTO>>(true, null, ex.Message);
+            }
+        }
+
         public ReturnMessage<PaginatedList<ProductDTO>> SearchPagination(SerachPaginationDTO<ProductDTO> search)
         {
             if (search == null)
@@ -88,7 +105,7 @@ namespace Service.Products
                         (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
                         it.Name.Contains(search.Search.Name) ||
                         it.Description.Contains(search.Search.Description)
-                        
+
                     )
                 )
                 , search.PageSize

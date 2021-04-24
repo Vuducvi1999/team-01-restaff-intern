@@ -12,6 +12,7 @@ namespace Common.Constants
             {"product", "PRO" },
             {"socialmedia", "SOC" },
             {"user", "USER" },
+            { "blog", "BLOG" }
         };
 
         public enum ETypeFile
@@ -28,6 +29,7 @@ namespace Common.Constants
             { "PRO", ETypeFile.Image },
             { "SOC", ETypeFile.Image },
             { "USER", ETypeFile.Image },
+            { "BLOG", ETypeFile.Image },
         };
 
         public static Dictionary<ETypeFile, string> TypeAccept = new Dictionary<ETypeFile, string>()

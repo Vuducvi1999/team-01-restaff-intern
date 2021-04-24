@@ -38,14 +38,14 @@
         <h6>currency</h6>
         <ul class="list-inline">
           <li *ngFor="let currency of currencies">
-            <a href="javascript:void(0)" (click)="changeCurrency(currency)">{{ currency.name }}</a>
+            <!-- <a href="javascript:void(0)" (click)="changeCurrency(currency)">{{ currency.name }}</a> -->
           </li>
         </ul>
       </div>
     </li>
     <li class="onhover-div mobile-cart">
       <div>
-        <a [routerLink]="['/shop/cart']">
+        <a [routerLink]="['/cart']">
           <img src="assets/images/icon/cart.png" class="img-fluid" alt="">
           <i class="ti-shopping-cart"></i>
         </a>
@@ -73,8 +73,9 @@
               </h4>
             </div>
           </div>
-          <div class="close-circle" (click)="removeItem(product)">
-            <a href="javascript:void(0)"><i class="fa fa-times" aria-hidden="true"></i></a>
+          <div class="close-circle" [swal]="{ title: 'Do you want to remove product', showCancelButton: true }"
+          (confirm)="removeItem(product)">
+            <a><i class="fa fa-times" aria-hidden="true"></i></a>
           </div>
         </li>
         <li>
@@ -84,8 +85,8 @@
         </li>
         <li>
           <div class="buttons">
-            <a [routerLink]="['/shop/cart']" class="view-cart">view cart</a>
-            <a [routerLink]="['/shop/checkout']" class="checkout">checkout</a>
+            <a [routerLink]="['/cart']" class="view-cart">view cart</a>
+            <a [routerLink]="['/checkout']" class="checkout">checkout</a>
           </div>
         </li>
       </ul>

@@ -28,6 +28,15 @@ namespace BE.ControllersFeUser
             return CommonResponse(result);
         }
 
+        [HttpGet]
+        [Route("category")]
+        public IActionResult GetByCategory([FromQuery] Guid id)
+        {
+
+            var result = _productService.GetByCategory(id);
+            return CommonResponse(result);
+        }
+
 
     }
 }

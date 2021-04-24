@@ -107,14 +107,38 @@ export class SocialMediaDetailComponent implements OnInit {
     if(this.item)
     {
       this.fileURL = [];
-      this.fileURL.push(FileService.getLinkFile(this.item.iconUrl));
+      this.fileURL.push(this.item.iconUrl);
     }
   }
 
-  onChangeData(event: FileDtoModel[]) {
-    if (event || event.length > 0) {
-      this.fileURL = null;
-      this.socialMediaForm.controls.iconUrl.setValue(event[0].url);
+  onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {
+    if (event == null) {
+      return;
     }
+
+    if(!this.fileURL)
+    {
+      this.fileURL = [];
+    }
+
+    if (event.add) {
+      this.fileURL = [...this.fileURL, ...event.add];
+    }
+
+    if(event.remove)
+    {
+      this.fileURL.forEach((e, i) => {
+        if (e == event.remove) {
+          this.fileURL.splice(i, 1);
+        }
+      });
+    }
+
+    if(event.removeAll)
+    {
+      this.fileURL = [];
+    }
+
+    this.socialMediaForm.controls.imageUrl.setValue(this.fileURL.toString());
   }
 }

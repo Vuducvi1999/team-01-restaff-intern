@@ -35,8 +35,9 @@ namespace Service.Files
 
             try
             {
-                _unitOfWork.BeginTransaction();
                 var entities = _mapper.Map<List<CreateFileDTO>, List<Domain.Entities.File>>(model);
+                entities.ForEach(it => it.Insert());
+                _unitOfWork.BeginTransaction();
                 _fileRepository.InsertRange(entities);
                 _unitOfWork.Commit();
                 _unitOfWork.SaveChanges();
@@ -61,8 +62,13 @@ namespace Service.Files
             {
 
                 var entities = _fileRepository.Queryable().Where(it => model.IndexOf(_mapper.Map<Domain.Entities.File, DeleteFileDTO>(it)) > -1);
+                entities.ToList().ForEach(it =>
+                {
+                    it.Delete();
+                    it.IsDeleted = true;
+                });
                 _unitOfWork.BeginTransaction();
-                _fileRepository.DeleteRange(entities);
+                _fileRepository.UpdateRange(entities);
                 _unitOfWork.Commit();
                 _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<List<FileDTO>>(false, _mapper.Map<List<Domain.Entities.File>, List<FileDTO>>(entities.ToList()), MessageConstants.DeleteSuccess);
@@ -109,6 +115,7 @@ namespace Service.Files
             try
             {
                 var entities = _mapper.Map<List<UpdateFileDTO>, List<Domain.Entities.File>>(model);
+                entities.ForEach(it => it.Update());
                 _unitOfWork.BeginTransaction();
                 _fileRepository.UpdateRange(entities);
                 _unitOfWork.Commit();
@@ -122,7 +129,7 @@ namespace Service.Files
             }
         }
 
-        public ReturnMessage<List<FileDTO>> UpdateImageCategory(List<FileDTO> fileIds, Guid entityId)
+        public ReturnMessage<List<FileDTO>> UpdateIdFile(List<FileDTO> fileIds, Guid entityId)
         {
             if (fileIds.IsNullOrEmpty() || entityId.IsNullOrEmpty())
             {
@@ -140,6 +147,7 @@ namespace Service.Files
                         if (item.IsNotNullOrEmpty())
                         {
                             item.EntityId = entityId.ToString();
+                            item.Update();
                             files.Add(item);
                         }
                     }

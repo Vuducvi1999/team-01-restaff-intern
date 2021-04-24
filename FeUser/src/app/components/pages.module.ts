@@ -20,6 +20,8 @@ import { ColorsComponent } from "./product/widgets/colors/colors.component";
 import { Ng5SliderModule } from "ng5-slider";
 import { GridComponent } from "./product/widgets/grid/grid.component";
 import { ProductDetailsComponent } from "./product-details/product-details/product-details.component";
+import { CartComponent } from "./cart/cart.component";
+import { CheckoutComponent } from "./checkout/checkout.component";
 @NgModule({
   declarations: [
     HomeComponent,
@@ -37,6 +39,9 @@ import { ProductDetailsComponent } from "./product-details/product-details/produ
     SizeComponent,
     PriceComponent,
     GridComponent,
+    CartComponent,
+    CheckoutComponent,
+    
   ],
   imports: [
     CommonModule,

@@ -13,5 +13,8 @@ export class ProductService  {
       return this.httpClient.getObservable(this.url, request).toPromise();
     }
 
+    getByCategory(id:any,request: any) {
+      return this.httpClient.getObservable(this.url+"/category?id="+id, request).toPromise();
+    }
 
   }

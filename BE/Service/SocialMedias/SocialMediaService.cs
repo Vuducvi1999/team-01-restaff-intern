@@ -105,7 +105,7 @@ namespace Service.SocialMedias
                 , t => t.Title
             );
             var data = _mapper.Map<PaginatedList<SocialMedia>, PaginatedList<SocialMediaDTO>>(resultEntity);
-            var result = new ReturnMessage<PaginatedList<SocialMediaDTO>>(false, data, MessageConstants.DeleteSuccess);
+            var result = new ReturnMessage<PaginatedList<SocialMediaDTO>>(false, data, MessageConstants.GetPaginationSuccess);
 
             return result;
         }
