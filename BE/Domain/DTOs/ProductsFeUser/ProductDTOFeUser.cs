@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Domain.DTOs.ProductsFeUser
 {
-    public class ProductDTOFeUser
+    public class ProductDTOFeUser : BaseDTO
     {
-       public  Guid Id { get; set; }
         public string Name { get; set; }
 
         public string Description { get; set; }

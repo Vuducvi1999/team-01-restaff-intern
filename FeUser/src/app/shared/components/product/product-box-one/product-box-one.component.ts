@@ -5,6 +5,8 @@ import { ProductService } from "../../../services/product.service";
 import { ProductModel } from "src/app/lib/data/models";
 import { FileService } from "src/app/lib/data/services";
 
+import { ActivatedRoute, Router } from "@angular/router";
+
 @Component({
   selector: "app-product-box-one",
   templateUrl: "./product-box-one.component.html",
@@ -23,7 +25,9 @@ export class ProductBoxOneComponent implements OnInit {
 
   public ImageSrc: string;
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService,
+    private router: Router,
+    private route: ActivatedRoute,) {}
 
   ngOnInit(): void {
     if (this.loader) {
@@ -76,5 +80,11 @@ export class ProductBoxOneComponent implements OnInit {
 
   getImage(fileName: string) {
     return FileService.getLinkFile(fileName);
+  }
+
+  getItem(item: ProductModel){
+      const id= item ? item.id : null;
+      const url = `/product-details?id=${id}`;
+      this.router.navigateByUrl(url);
   }
 }

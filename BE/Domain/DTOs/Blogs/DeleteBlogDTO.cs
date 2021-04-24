@@ -7,5 +7,8 @@ namespace Domain.DTOs.Blogs
     public class DeleteBlogDTO
     {
         public Guid Id { get; set; }
+
+
+        public DateTime DeleteByDate { get; set; }
     }
 }
