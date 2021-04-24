@@ -1,8 +1,12 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { QuickViewComponent } from "../../modal/quick-view/quick-view.component";
 import { CartModalComponent } from "../../modal/cart-modal/cart-modal.component";
-import { Product } from "../../../classes/product";
-import { ProductService } from "../../../services/product.service";
+
+import { ProductDetailsModel } from 'src/app/lib/data/models/products/product-details.model';
+import { ProductService } from 'src/app/shared/services/product.service';
+import { FileService } from 'src/app/lib/data/services';
+import { Product } from 'src/app/shared/classes/product';
+
 
 @Component({
   selector: 'app-product-box-three',

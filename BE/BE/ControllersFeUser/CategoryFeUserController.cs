@@ -46,7 +46,7 @@ namespace BE.ControllersFeUser
         {
             //List<Category> categoryDTOs = new List<Category>();
             //List<Product> productDTOs = new List<Product>();
-            //List<String> urls = new List<string>() { "3526a574-6122-4852-a3af-02f3dfae59f6.jpg", "dfc39626-8113-43c4-ac73-24f09de84c18.jpg", "e03cef0f-c404-4fe9-8f41-8d0f54b62390.jpg" };
+            //List<String> urls = new List<string>() { "013245c3-9b09-454e-98cd-8d7ba8e90df1.jpeg", "04030102-efb1-4fe6-822a-29ddb0005fa3.jpg", "050b16ce-c52a-443b-a241-8865a93e04e3.jpg" };
 
             //for (int i = 0; i < 10; i++)
             //{

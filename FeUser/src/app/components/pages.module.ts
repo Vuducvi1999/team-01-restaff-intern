@@ -19,6 +19,7 @@ import { BrandsComponent } from "./product/widgets/brands/brands.component";
 import { ColorsComponent } from "./product/widgets/colors/colors.component";
 import { Ng5SliderModule } from "ng5-slider";
 import { GridComponent } from "./product/widgets/grid/grid.component";
+import { ProductDetailsComponent } from "./product-details/product-details/product-details.component";
 @NgModule({
   declarations: [
     HomeComponent,
@@ -30,6 +31,7 @@ import { GridComponent } from "./product/widgets/grid/grid.component";
     ServicesComponent,
     CollectionComponent,
     ProductListComponent,
+    ProductDetailsComponent,
     BrandsComponent,
     ColorsComponent,
     SizeComponent,

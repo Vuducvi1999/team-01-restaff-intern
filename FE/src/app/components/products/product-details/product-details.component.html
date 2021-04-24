@@ -9,7 +9,7 @@
       <div class="card tab2-card">
         <div class="card-body">
           <ngb-tabset class="tab-coupon">
-            <ngb-tab title="Categories">
+            <ngb-tab title="Products">
               <ng-template ngbTabContent>
                 <div
                   class="tab-pane fade active show"
@@ -22,7 +22,7 @@
                     class="needs-validation user-add"
                     novalidate=""
                   >
-                    <h4>Category Details</h4>
+                    <h4>Product Details</h4>
                     <div class="form-group row">
                       <label for="validationCustom0" class="col-xl-3 col-md-4"
                         ><span>*</span> Name</label
@@ -49,15 +49,24 @@
                     </div>
                     <div class="form-group row">
                       <label for="validationCustom0" class="col-xl-3 col-md-4"
-                        ><span>*</span> ContentHTML</label
+                        ><span>*</span> Content Html</label
                       >
-                      <input
+                      <!-- <input
                         class="form-control col-xl-8 col-md-7"
-                        id="validationCustom2"
+                        id="validationCustom1"
                         type="text"
                         required=""
                         formControlName="contentHTML"
-                      />
+                      /> -->
+                      <ckeditor
+                        [editor]="editor"
+                        class="col-xl-8 col-md-7 p-0"
+                        id="validationCustom3"
+                        type="text"
+                        required=""
+                        formControlName="contentHTML"
+                      ></ckeditor><span class="text-danger">Required</span>
+
                     </div>
                     <div class="form-group row">
                       <label for="validationCustom0" class="col-xl-3 col-md-4"
@@ -71,12 +80,13 @@
                         formControlName="imageUrl"
                         hidden
                       />
+                      <span class="text-danger">Required</span>
                       <app-upload-file
                         [data]="modalFile"
                         [fileURL]="fileURL"
-                        styleFile="width: 200px; height: auto;"
                         (onChange)="onChangeData($event)"
                       ></app-upload-file>
+                      
                     </div>
                     <div class="form-group row">
                       <label for="validationCustom0" class="col-xl-3 col-md-4"
@@ -89,6 +99,7 @@
                         required=""
                         formControlName="price"
                       />
+                      <span class="text-danger">Required</span>
                     </div>
                     <div class="form-group row">
                       <label for="validationCustom0" class="col-xl-3 col-md-4"
@@ -114,6 +125,7 @@
                         required=""
                         formControlName="displayOrder"
                       />
+                      <span class="text-danger">Required</span>
                     </div>
                     <div class="form-group row">
                       <label for="validationCustom0" class="col-xl-3 col-md-4"
@@ -123,9 +135,9 @@
                         class="form-control col-xl-8 col-md-7"
                         id="validationCustom7"
                         type="checkbox"
-                        required=""
                         formControlName="hasDisplayHomePage"
                       />
+                      <span class="text-danger">Required</span>
                     </div>
                     <div class="form-group row">
                       <label for="validationCustom0" class="col-xl-3 col-md-4"
@@ -135,9 +147,9 @@
                         class="form-control col-xl-8 col-md-7"
                         id="validationCustom8"
                         type="checkbox"
-                        required=""
                         formControlName="isImportant"
                       />
+                      <span class="text-danger">Required</span>
                     </div>
                   </form>
                 </div>

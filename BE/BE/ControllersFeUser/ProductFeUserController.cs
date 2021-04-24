@@ -2,15 +2,11 @@
 using Common.Constants;
 using Common.Pagination;
 using Domain.DTOs.Products;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Files;
 using Service.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace BE.ControllersFeUser
 {
@@ -31,5 +27,7 @@ namespace BE.ControllersFeUser
             var result = _productService.SearchPagination(serachPagination);
             return CommonResponse(result);
         }
+
+
     }
 }

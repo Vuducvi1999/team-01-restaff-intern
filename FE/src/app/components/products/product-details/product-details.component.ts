@@ -19,7 +19,7 @@ import {
   TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
 import { ListCategoriesComponent } from '../../categories/list-categories/list-categories.component';
-
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -37,6 +37,8 @@ export class ProductDetailsComponent implements OnInit {
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];
 
+
+  public editor = ClassicEditor;
   constructor(
     private formBuilder: FormBuilder,
     private productService: ProductService,
@@ -84,7 +86,8 @@ export class ProductDetailsComponent implements OnInit {
       });
   }
   save() {
-    if (this.productsForm.valid) {
+    if (this.productsForm.invalid) {
+      // console.log('error');
       return;
     }
     this.product = {
@@ -135,7 +138,7 @@ export class ProductDetailsComponent implements OnInit {
         [Validators.required],
       ],
       imageUrl: [this.item ? this.item.imageUrl : ''],
-      price: [this.item ? this.item.price : '', [Validators.required]],
+      price: [this.item ? this.item.price : 0, [Validators.required]],
       categoryName: [
         this.item ? this.item.categoryId : '',
         [Validators.required],

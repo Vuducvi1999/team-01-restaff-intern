@@ -15,7 +15,6 @@ namespace Common.Constants
 
         public const string BaseSocialMedia = BaseApi + "/social-media";
 
-
         public const string BaseAuth = BaseApi + "/auth";
 
         public const string BaseBanner = BaseApi + "/banner";
@@ -25,20 +24,25 @@ namespace Common.Constants
 
         public const string BaseProfile = BaseApi + "/profile";
 
-
         public const string BaseCategory = BaseApi + "/category";
+
         public const string BaseCategoryFeUser = BaseApi + "/user/category";
 
         public const string BaseFile = BaseApi + "/file";
+
         public const string BaseFileDownload = BaseFile + "/download";
+
         public const string BaseFileGetType = BaseFile + "/type";
 
         public const string BaseCoupon = BaseApi + "/coupon";
+
         public const string BaseUser= BaseApi + "/user";
 
         public const string BaseProduct = BaseApi + "/product";
+
         public const string BaseProductFeUser = BaseApi + "/user/product";
 
+        public const string BaseProductDetailsFeUser = BaseApi + "/user/productdetails";
 
         public const string BaseBlog = BaseApi + "/blog";
     }

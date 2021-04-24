@@ -13,7 +13,7 @@ import { ProductDetailsComponent } from '../product-details/product-details.comp
   providers: [ProductService]
 })
 export class ListProductsComponent implements OnInit {
-  public products = [];
+  public products: ProductModel[];
   closeResult = '';
 
   constructor(private modalService: NgbModal,private productService: ProductService)
@@ -25,11 +25,6 @@ export class ListProductsComponent implements OnInit {
   public settings = 
   {
      mode :'external',
-     pager:
-     {
-       display: true,
-       perPage: 9,
-     },
      actions: 
      {
        position: 'right'
@@ -45,7 +40,7 @@ export class ListProductsComponent implements OnInit {
        contentHTML: {
          title: 'Content HTML',
        },
-       imageURL: {
+       imageUrl: {
         title: 'ImageURL',
        },
        price: {
