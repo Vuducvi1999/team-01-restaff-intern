@@ -22,8 +22,6 @@ export class ProductBoxVerticalSliderComponent implements OnInit {
 
   result: ProductModel[][] = [];
 
-  public products: ProductModel[] = [];
-
   public NewProductSliderConfig: any = NewProductSlider;
 
   constructor(public productListService: ProductListService) {
@@ -40,10 +38,9 @@ export class ProductBoxVerticalSliderComponent implements OnInit {
     this.productListService
       .getPageProduct(null)
       .then((res: ReturnMessage<PageModel<ProductModel>>) => {
-        this.products = res.data.results;
-        while(this.products.length != 0)
+        while(res.data.results.length != 0)
         {
-          this.result.push(this.products.splice(0,this.size))
+          this.result.push(res.data.results.splice(0,this.size))
         }
       })
       .catch((res) => console.error(res));

@@ -1,8 +1,6 @@
 import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { Observable } from "rxjs";
-import { switchMap } from "rxjs/operators";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { PageModel, ReturnMessage } from "src/app/lib/data/models/common";
 import { FileService } from "src/app/lib/data/services";

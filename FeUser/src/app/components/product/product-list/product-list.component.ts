@@ -26,7 +26,7 @@ export class ProductListComponent implements OnInit {
   public maxPrice: number = 5000000;
   public sizePrice: string;
   public tags: any[] = [];
-  public category: string = 'ALL';
+  public category: string = "ALL";
   public paginate: any = {};
   public sortBy: number = ETypeSort.NULL;
   public mobileSidebar: boolean = false;
@@ -39,11 +39,11 @@ export class ProductListComponent implements OnInit {
     private viewScroller: ViewportScroller,
     public productListService: ProductListService
   ) {
-      this.products = [];
-      this.params = {};
-      this.finished = false;
-      console.log(JSON.stringify(this.params));
-      this.addItems();
+    this.products = [];
+    this.params = {};
+    this.finished = false;
+    console.log(JSON.stringify(this.params));
+    this.addItems();
   }
 
   ngOnInit(): void {}
@@ -63,7 +63,8 @@ export class ProductListComponent implements OnInit {
         this.params.pageSize = res.data.pageSize;
 
         this.products = [...this.products, ...res.data.results];
-      }).catch((res) => console.error(res));;
+      })
+      .catch((res) => console.error(res));
   }
 
   // Infinite scroll
@@ -79,7 +80,7 @@ export class ProductListComponent implements OnInit {
 
     this.params.minPrice = tags.minPrice;
     this.params.maxPrice = tags.maxPrice;
-    
+
     this.addItems();
   }
 
@@ -99,7 +100,14 @@ export class ProductListComponent implements OnInit {
 
   // // Remove Tag
   removeTag(tag) {
+    this.resetPage();
     this.tags = this.tags.filter((val) => val !== tag);
+    if (tag == this.category) {
+      delete this.params["search.categoryName"];
+      this.category = "ALL";
+    }
+
+    this.addItems();
   }
 
   // // Clear Tags
@@ -107,7 +115,7 @@ export class ProductListComponent implements OnInit {
     this.tags = [];
     this.resetPage();
     delete this.params["search.categoryName"];
-    this.category = 'ALL';
+    this.category = "ALL";
 
     this.addItems();
   }
@@ -136,7 +144,7 @@ export class ProductListComponent implements OnInit {
 
   onChangeTypeCate(event: string) {
     this.resetPage();
-    this.removeTag(this.category);
+    this.tags = this.tags.filter((x) => x != this.category);
     this.category = event;
 
     if (event != "ALL") {

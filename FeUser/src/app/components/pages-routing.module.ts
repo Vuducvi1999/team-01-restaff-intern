@@ -13,10 +13,6 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: "",
-    component: HomeComponent,
-  },
-  {
     path: "blog",
     component: BlogsComponent,
   },
@@ -41,6 +37,5 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [],
 })
 export class PagesRoutingModule {}
