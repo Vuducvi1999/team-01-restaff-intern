@@ -57,6 +57,12 @@ export class ListBlogsComponent implements OnInit {
       imageUrl: {
         title: 'Image URL',
       },
+      createByDate: {
+        title: 'Date Create',
+      },
+      createdByName: {
+        title: 'Author',
+      },
     },
   };
 
