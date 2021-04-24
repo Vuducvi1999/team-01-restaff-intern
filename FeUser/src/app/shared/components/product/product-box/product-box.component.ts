@@ -1,4 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { ProductModel } from 'src/app/lib/data/models';
 import { FileService } from 'src/app/lib/data/services';
 import { ETypeGridLayout, ETypePositionCart, ETypePositionInformation, ETypeSizeImage } from 'src/app/shared/data';
@@ -28,7 +30,8 @@ export class ProductBoxComponent implements OnInit, OnChanges {
 
   public ImageSrc: string;
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService,
+    private router: Router) {}
   ngOnChanges(changes: SimpleChanges): void {
     this.updateTypeGridLayout();
   }
@@ -112,5 +115,11 @@ export class ProductBoxComponent implements OnInit, OnChanges {
 
   getImage(fileName: string) {
     return FileService.getLinkFile(fileName);
+  }
+
+  getItem(item: ProductModel){
+    const id = item ? item.id : null;
+    const url = `/product-details?id=${id}`;
+    this.router.navigateByUrl(url);
   }
 }

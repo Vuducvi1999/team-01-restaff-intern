@@ -171,12 +171,35 @@ export class ProductDetailsComponent implements OnInit {
     this.ngbActiveModal.close();
   }
 
-  onChangeData(event: FileDtoModel[]) {
-    if (event || event.length > 0) {
-      this.fileURL = null;
-      this.productsForm.controls.imageUrl.setValue(
-        event.map((it) => it.url).toString()
-      );
+  onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {
+    if (event == null) {
+      return;
     }
+
+    if(!this.fileURL)
+    {
+      this.fileURL = [];
+    }
+
+    if (event.add) {
+      this.fileURL = [...this.fileURL, ...event.add];
+    }
+
+    if(event.remove)
+    {
+      this.fileURL.forEach((e, i) => {
+        if (e == event.remove) {
+          this.fileURL.splice(i, 1);
+        }
+      });
+    }
+
+    if(event.removeAll)
+    {
+      this.fileURL = [];
+    }
+
+    this.productsForm.controls.imageUrl.setValue(this.fileURL.toString());
   }
+
 }

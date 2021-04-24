@@ -8,7 +8,8 @@ import {
   ReturnMessage,
   SearchPaganationDTO,
 } from "src/app/lib/data/models";
-import { ProductListService } from "src/app/lib/data/services";
+import { ProductListService } from "src/app/lib/data/services/productlist/productlist.service";
+
 import { ETypeGridLayout } from "src/app/shared/data";
 
 @Component({
