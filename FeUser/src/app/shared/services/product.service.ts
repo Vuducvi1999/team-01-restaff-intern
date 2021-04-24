@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map, startWith, delay } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from '../classes/product';
+import { ProductModel } from 'src/app/lib/data/models';
 
 const state = {
   products: JSON.parse(localStorage['products'] || '[]'),

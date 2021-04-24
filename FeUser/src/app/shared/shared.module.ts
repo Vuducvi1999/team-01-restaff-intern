@@ -46,6 +46,8 @@ import { DiscountPipe } from './pipes/discount.pipe';
 import { HomeComponent } from '../components/home/home.component';
 import { ProductBoxComponent } from './components/product/product-box/product-box.component';
 
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
 @NgModule({
   declarations: [
     HeaderOneComponent,
@@ -87,12 +89,15 @@ import { ProductBoxComponent } from './components/product/product-box/product-bo
       // preset: scrollPreset // <-- tell LazyLoadImage that you want to use scrollPreset
     }),
     NgxSkeletonLoaderModule,
-    TranslateModule
+    TranslateModule,
+    SweetAlert2Module.forRoot()
+
   ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    SweetAlert2Module,
     NgbModule,
     CarouselModule,
     BarRatingModule,
