@@ -36,7 +36,7 @@ export class ProductDetailsComponent implements OnInit {
 
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];
-
+  submitted = false;
 
   public editor = ClassicEditor;
   constructor(
@@ -62,6 +62,9 @@ export class ProductDetailsComponent implements OnInit {
         this.fileURL.push(FileService.getLinkFile(it));
       });
     }
+  }
+  get productFormsControl() {
+    return this.productsForm.controls;
   }
 
   fetchCategory() {
@@ -114,6 +117,7 @@ export class ProductDetailsComponent implements OnInit {
       updatedByName: this.item ? this.item.updatedByName : this.item,
       files: this.modalFile.listFile,
     };
+    this.submitted = true;
     return this.productService
       .save(this.product)
       .then(() => {

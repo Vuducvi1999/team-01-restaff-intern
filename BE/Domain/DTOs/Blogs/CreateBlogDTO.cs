@@ -14,8 +14,5 @@ namespace Domain.DTOs.Blogs
         public DateTime CreateByDate { get; set; }
         public string CreatedByName { get; set; }
         public List<FileDTO> Files { get; set; }
-
-        public DateTime CreateByDate { get; set; }
-        public string CreatedByName { get; set; }
     }
 }

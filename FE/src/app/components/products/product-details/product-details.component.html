@@ -34,9 +34,10 @@
                         required=""
                         formControlName="name"
                       />
+                      <span class="text-danger" *ngIf="(productFormsControl.name.touched || submitted) && productFormsControl.name.errors?.required">Required</span>
                     </div>
                     <div class="form-group row">
-                      <label for="validationCustom0" class="col-xl-3 col-md-4"
+                      <label for="validationCustom1" class="col-xl-3 col-md-4"
                         ><span>*</span> Description</label
                       >
                       <input
@@ -46,9 +47,10 @@
                         required=""
                         formControlName="description"
                       />
+                      <span class="text-danger" *ngIf="(productFormsControl.description.touched || submitted) && productFormsControl.description.errors?.required">Required</span>
                     </div>
                     <div class="form-group row">
-                      <label for="validationCustom0" class="col-xl-3 col-md-4"
+                      <label for="validationCustom3" class="col-xl-3 col-md-4"
                         ><span>*</span> Content Html</label
                       >
                       <!-- <input
@@ -65,11 +67,12 @@
                         type="text"
                         required=""
                         formControlName="contentHTML"
-                      ></ckeditor><span class="text-danger">Required</span>
+                      ></ckeditor>
+                      <span class="text-danger" *ngIf="(productFormsControl.contentHTML.touched || submitted) && productFormsControl.contentHTML.errors?.required">Required</span>
 
                     </div>
                     <div class="form-group row">
-                      <label for="validationCustom0" class="col-xl-3 col-md-4"
+                      <label for="validationCustom4" class="col-xl-3 col-md-4"
                         ><span>*</span> ImageUrl</label
                       >
                       <input
@@ -80,7 +83,8 @@
                         formControlName="imageUrl"
                         hidden
                       />
-                      <span class="text-danger">Required</span>
+
+                      <span class="text-danger" *ngIf="(productFormsControl.imageUrl.touched || submitted) && productFormsControl.imageUrl.errors?.required">Required</span>
                       <app-upload-file
                         [data]="modalFile"
                         [fileURL]="fileURL"
@@ -89,7 +93,7 @@
                       
                     </div>
                     <div class="form-group row">
-                      <label for="validationCustom0" class="col-xl-3 col-md-4"
+                      <label for="validationCustom5" class="col-xl-3 col-md-4"
                         ><span>*</span> Price</label
                       >
                       <input
@@ -99,10 +103,11 @@
                         required=""
                         formControlName="price"
                       />
-                      <span class="text-danger">Required</span>
+                      
+                      <span class="text-danger" *ngIf="(productFormsControl.price.touched || submitted) && productFormsControl.price.errors?.required">Required</span>
                     </div>
                     <div class="form-group row">
-                      <label for="validationCustom0" class="col-xl-3 col-md-4"
+                      <label for="validationCustom6" class="col-xl-3 col-md-4"
                         ><span>*</span> Category Name</label
                       >
                       <select formControlName="categoryName">
@@ -113,43 +118,43 @@
                           {{ category.name }}
                         </option>
                       </select>
+                      <span class="text-danger" *ngIf="(productFormsControl.categoryName.touched || submitted) && productFormsControl.categoryName.errors?.required">Required</span>
                     </div>
                     <div class="form-group row">
-                      <label for="validationCustom0" class="col-xl-3 col-md-4"
+                      <label for="validationCustom7" class="col-xl-3 col-md-4"
                         ><span>*</span> Display Order</label
                       >
                       <input
                         class="form-control col-xl-8 col-md-7"
-                        id="validationCustom6"
+                        id="validationCustom7"
                         type="number"
                         required=""
                         formControlName="displayOrder"
                       />
-                      <span class="text-danger">Required</span>
+                      <span class="text-danger" *ngIf="(productFormsControl.displayOrder.touched || submitted) && productFormsControl.displayOrder.errors?.required">Required</span>
                     </div>
+
                     <div class="form-group row">
-                      <label for="validationCustom0" class="col-xl-3 col-md-4"
+                      <label for="validationCustom8" class="col-xl-3 col-md-4"
                         ><span>*</span> Display Home Page</label
-                      >
-                      <input
-                        class="form-control col-xl-8 col-md-7"
-                        id="validationCustom7"
-                        type="checkbox"
-                        formControlName="hasDisplayHomePage"
-                      />
-                      <span class="text-danger">Required</span>
-                    </div>
-                    <div class="form-group row">
-                      <label for="validationCustom0" class="col-xl-3 col-md-4"
-                        ><span>*</span> Is Important</label
                       >
                       <input
                         class="form-control col-xl-8 col-md-7"
                         id="validationCustom8"
                         type="checkbox"
+                        formControlName="hasDisplayHomePage"
+                      />
+                    </div>
+                    <div class="form-group row">
+                      <label for="validationCustom9" class="col-xl-3 col-md-4"
+                        ><span>*</span> Is Important</label
+                      >
+                      <input
+                        class="form-control col-xl-8 col-md-7"
+                        id="validationCustom9"
+                        type="checkbox"
                         formControlName="isImportant"
                       />
-                      <span class="text-danger">Required</span>
                     </div>
                   </form>
                 </div>

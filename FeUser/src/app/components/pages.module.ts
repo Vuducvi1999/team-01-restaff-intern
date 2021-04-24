@@ -24,6 +24,7 @@ import { BlogsComponent } from "./blogs/blogs.component";
 import { CartComponent } from "./cart/cart.component";
 import { CheckoutComponent } from "./checkout/checkout.component";
 import { BlogDetailComponent } from "./blogs/blog-detail/blog-detail.component";
+import { ProductDetailsComponent } from "./product/product-details/product-details.component";
 @NgModule({
   declarations: [
     HomeComponent,
