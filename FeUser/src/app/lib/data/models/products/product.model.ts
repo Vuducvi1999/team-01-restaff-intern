@@ -10,5 +10,13 @@ export interface ProductModel extends BaseModel{
     categoryName: string,
     price: number,
     isImportant: boolean,
-    quantity?:number
+    quantity?: number,
+}
+
+export enum ETypeSort {
+    NULL,
+    AZ,
+    ZA,
+    PRICELOW,
+    PRICEHIGH,
 }

@@ -76,6 +76,7 @@ namespace Service.Files
             }
             catch (Exception ex)
             {
+                _unitOfWork.Rollback();
                 return new ReturnMessage<List<FileDTO>>(true, null, ex.Message);
             }
         }
@@ -125,6 +126,7 @@ namespace Service.Files
             }
             catch (Exception ex)
             {
+                _unitOfWork.Rollback();
                 return new ReturnMessage<List<FileDTO>>(true, null, ex.Message);
             }
         }
@@ -162,6 +164,7 @@ namespace Service.Files
             }
             catch (Exception ex)
             {
+                _unitOfWork.Rollback();
                 return new ReturnMessage<List<FileDTO>>(true, null, ex.Message);
             }
         }

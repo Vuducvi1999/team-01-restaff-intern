@@ -5,7 +5,7 @@
           <h5>Category Details</h5>
       </div>
       <div class="card-body vendor-table">
-          <div id="batchDelete" class="custom-datatable vendor-list">
+          <div id="batchDelete" class="custom-datatable media-datatable">
               <div class="table-responsive ">
                       <ng2-smart-table  [settings]="settings" (edit)="openPopup($event)" (create)="openPopup(null)" (delete)="delete($event)" [(source)]="categories"></ng2-smart-table>
               </div>

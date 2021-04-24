@@ -6,7 +6,8 @@ import { ProductService } from 'src/app/shared/services/product.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  providers: [ProductService],
 })
 export class HomeComponent implements OnInit {
 

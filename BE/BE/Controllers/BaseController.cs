@@ -19,6 +19,7 @@ namespace BE.Controllers
             _userManager = userManager;
             _fileService = fileService;
         }
+
         public IActionResult CommonResponse<T>(ReturnMessage<T> data)
         {
             if (data.HasError)

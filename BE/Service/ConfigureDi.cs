@@ -17,6 +17,7 @@ using Service.ProductDetailsFeUser;
 using Service.ServiceFeUser;
 using Service.Header;
 using Service.Footer;
+using Service.UserProductList;
 
 namespace Service
 {
@@ -53,6 +54,11 @@ namespace Service
 
 
             services.AddScoped<IBlogService, BlogService>();
+
+
+            //FeUser
+
+            services.AddScoped<IUserProductListService, UserProductListService>();
 
             services.AddScoped<IProductDetailsFeService, ProductDetailsFeService>();
         }

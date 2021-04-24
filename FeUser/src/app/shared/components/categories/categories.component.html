@@ -4,9 +4,13 @@
     <div class="collection-collapse-block-content">
         <div class="collection-brand-filter">
             <ul class="category-list">
+                <li>
+                    <a class="ALL" (mouseenter)="bigImg($event.target.style)" (mouseleave)="normalImg($event.target.style)" (click)="onSelect($event.target.style,'ALL')" style="cursor: pointer;" [style]="categoryName=='ALL'?styleFont:styleFontNormal">
+                        ALL
+                    </a>
+                </li>
                 <li *ngFor="let category of filterbyCategory">
-                    <a [routerLink]="['/product']"
-                       [queryParams]="{ category: category.name}">
+                    <a (mouseenter)="bigImg($event.target.style)" (mouseleave)="normalImg($event.target.style)" (click)="onSelect($event.target.style,category.name)" style="cursor: pointer;" [style]="category.name==categoryName?styleFont:styleFontNormal">
                         {{ category.name }}
                     </a>
                 </li>
