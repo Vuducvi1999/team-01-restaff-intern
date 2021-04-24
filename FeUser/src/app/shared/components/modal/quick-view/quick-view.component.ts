@@ -10,7 +10,8 @@ import { ProductModel } from 'src/app/lib/data/models';
 @Component({
   selector: 'app-quick-view',
   templateUrl: './quick-view.component.html',
-  styleUrls: ['./quick-view.component.scss']
+  styleUrls: ['./quick-view.component.scss'],
+  providers: [ProductService],
 })
 export class QuickViewComponent implements OnInit, OnDestroy  {
 

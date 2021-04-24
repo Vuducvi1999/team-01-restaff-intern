@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ETypeLayoutView, ETypeGridLayout } from 'src/app/shared/data';
 import { Product } from '../../../../shared/classes/product';
 
 @Component({

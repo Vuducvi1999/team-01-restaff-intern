@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { UserModel } from 'src/app/lib/data/models/users/user.model';
+import { FileService } from 'src/app/lib/data/services';
 import { UserDetailComponent } from '../users-details/users-details.component';
 import { UserService } from './../../../lib/data/services/users/user.service';
 
@@ -42,7 +43,20 @@ export class ListUsersComponent {
         title: 'Last Name',
       },
       imageUrl: {
-        title: 'ImageURL',
+        title: 'URL',
+        type: 'html',
+        valuePrepareFunction: (file) => {
+          var fileExt = file.split('.').pop();
+          if (
+            fileExt == 'png' ||
+            fileExt == 'jpg' ||
+            fileExt == 'jpeg' ||
+            fileExt == 'icon'
+          ) {
+            return `<a href="${FileService.getLinkFile(file)}"><img width="75px" height="75px" src="${FileService.getLinkFile(file)}"/></a>`;
+          }
+          return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
+        },
       },
     },
   };

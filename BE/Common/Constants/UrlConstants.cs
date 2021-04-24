@@ -24,7 +24,6 @@ namespace Common.Constants
         public const string BaseProfile = BaseApi + "/profile";
 
         public const string BaseCategory = BaseApi + "/category";
-        public const string BaseCategoryFeUser = BaseApi + "/user/category";
 
         public const string BaseFile = BaseApi + "/file";
         public const string BaseFileDownload = BaseFile + "/download";
@@ -34,12 +33,16 @@ namespace Common.Constants
         public const string BaseUser= BaseApi + "/user";
 
         public const string BaseProduct = BaseApi + "/product";
-        public const string BaseProductFeUser = BaseApi + "/user/product";
 
         public const string BaseHeader = BaseApi + "/header";
         public const string BaseFooter = BaseApi + "/footer";
 
         public const string BaseBlog = BaseApi + "/blog";
+
+        public const string BaseProductList = BaseApi + "/user/productlist";
+
+        public const string Product = "product";
+        public const string Category = "category";
         public const string TopBlog = BaseBlog + "/topblog";
         public const string RecentBlog = BaseBlog + "/recentblog";
         public const string GetBlog = BaseBlog + "/{id}";
