@@ -1,8 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { PageModel, ProductModel, ReturnMessage } from "src/app/lib/data/models";
+import {
+  PageModel,
+  ProductModel,
+  ReturnMessage,
+} from "src/app/lib/data/models";
+import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { HomeService } from "src/app/lib/data/services/home/home.service";
 import { ProductService } from "src/app/lib/data/services/products/product.service";
-import { Product } from "src/app/shared/classes/product";
 import { ProductSlider } from "src/app/shared/data/slider";
 
 @Component({
@@ -13,9 +17,11 @@ import { ProductSlider } from "src/app/shared/data/slider";
 })
 export class HomeComponent implements OnInit {
   products: ProductModel[] = [];
+  blogs: BlogModel[]=[];
 
-  constructor(public homeService: HomeService, private productService: ProductService) {
-    this.getProducts()
+  constructor(public homeService: HomeService) {
+    this.getProducts();
+    this.getBlogs();
   }
 
   public ProductSliderConfig: any = ProductSlider;
@@ -33,42 +39,29 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  // Blog
-  public blog = [
-    {
-      image: "assets/images/blog/1.jpg",
-      date: "25 January 2018",
-      title: "Lorem ipsum dolor sit consectetur adipiscing elit,",
-      by: "John Dio",
-    },
-    {
-      image: "assets/images/blog/2.jpg",
-      date: "26 January 2018",
-      title: "Lorem ipsum dolor sit consectetur adipiscing elit,",
-      by: "John Dio",
-    },
-    {
-      image: "assets/images/blog/3.jpg",
-      date: "27 January 2018",
-      title: "Lorem ipsum dolor sit consectetur adipiscing elit,",
-      by: "John Dio",
-    },
-    {
-      image: "assets/images/blog/4.jpg",
-      date: "28 January 2018",
-      title: "Lorem ipsum dolor sit consectetur adipiscing elit,",
-      by: "John Dio",
-    },
-  ];
-
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   getProducts() {
-    this.productService
-      .get(null)
-      .then((data: ReturnMessage<PageModel<ProductModel>>) => {
-        this.products = data.data.results
-        console.log(this.products)
-      }).catch(e => { console.log(e); });
+    this.homeService
+      .getTopCollectionProducts()
+      .then((data: ReturnMessage<ProductModel[]>) => {
+        this.products = data.data;
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  getBlogs() {
+    this.homeService
+      .getBlogs()
+      .then((data: ReturnMessage<BlogModel[]>) => {
+        this.blogs = data.data;
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 }

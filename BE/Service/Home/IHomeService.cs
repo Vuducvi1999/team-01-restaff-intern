@@ -13,5 +13,6 @@ namespace Service.Home
         public ReturnMessage<List<HomeProductDTO>> GetBestSellerProducts();
         public ReturnMessage<List<HomeProductDTO>> GetFeaturedProducts();
         public ReturnMessage<List<HomeProductDTO>> GetOnSaleProducts();
+        public ReturnMessage<List<HomeBlogDTO>> GetBlogs();
     }
 }

@@ -14,44 +14,56 @@ namespace BE.FeUserControllers
     {
         private readonly IHomeService _homeService;
 
-        public HomeController(IHomeService productService, IAuthService authService, IUserManager userManager, IFileService fileService) : base(authService, userManager, fileService)
+        public HomeController(IHomeService homeService, IAuthService authService, IUserManager userManager, IFileService fileService) : base(authService, userManager, fileService)
         {
-            _homeService = productService;
+            _homeService = homeService;
         }
 
-        [HttpGet("top-collection")]
+        [HttpGet(UrlConstants.TopCollection)]
         public IActionResult GetTopCollectionProducts()
         {
 
             var result = _homeService.GetTopCollectionProducts();
             return CommonResponse(result);
         }
-        [HttpGet("new-products")]
+
+        [HttpGet(UrlConstants.NewProducts)]
         public IActionResult GetNewProducts()
         {
 
             var result = _homeService.GetNewProducts();
             return CommonResponse(result);
         }
-        [HttpGet("best-seller")]
+
+        [HttpGet(UrlConstants.BestSeller)]
         public IActionResult GetBestSellerProducts()
         {
 
             var result = _homeService.GetBestSellerProducts();
             return CommonResponse(result);
         }
-        [HttpGet("featured-products")]
+
+        [HttpGet(UrlConstants.FeaturedProducts)]
         public IActionResult GetFeaturedProducts()
         {
 
             var result = _homeService.GetFeaturedProducts();
             return CommonResponse(result);
         }
-        [HttpGet("on-sale")]
+
+        [HttpGet(UrlConstants.OnSale)]
         public IActionResult GetOnSaleProducts()
         {
 
             var result = _homeService.GetOnSaleProducts();
+            return CommonResponse(result);
+        }
+
+        [HttpGet(UrlConstants.Blogs)]
+        public IActionResult GetBlogs()
+        {
+
+            var result = _homeService.GetBlogs();
             return CommonResponse(result);
         }
     }

@@ -47,11 +47,11 @@ namespace Service.Categories
 
         public ReturnMessage<CategoryDTO> Create(CreateCategoryDTO model)
         {
-            var stringInput = StringExtension.CleanString(model);
-            if (!stringInput)
-            {
-                return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
-            }
+            //var stringInput = StringExtension.CleanString(model);
+            //if (!stringInput)
+            //{
+            //    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
+            //}
             try
             {
                 var entity = _mapper.Map<CreateCategoryDTO, Category>(model);
@@ -133,11 +133,11 @@ namespace Service.Categories
 
         public ReturnMessage<CategoryDTO> Update(UpdateCategoryDTO model)
         {
-            var stringInput = StringExtension.CleanString(model);
-            if (!stringInput)
-            {
-                return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
-            }
+            //var stringInput = StringExtension.CleanString(model);
+            //if (!stringInput)
+            //{
+            //    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
+            //}
             try
             {
                 var entity = _categoryRepository.Find(model.Id);

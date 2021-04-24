@@ -92,7 +92,9 @@ namespace Domain
             CreateMap<Blog, DeleteBlogDTO>().ReverseMap();
 
             //homePage FeUser
-            CreateMap<Product, HomeProductDTO>().ReverseMap();
+            CreateMap<Product, HomeProductDTO>()
+                 .ForMember(t => t.CategoryName, k => k.MapFrom(h => h.Category.Name)).ReverseMap();
+            CreateMap<Blog, HomeBlogDTO>().ReverseMap();
         }
     }
 }

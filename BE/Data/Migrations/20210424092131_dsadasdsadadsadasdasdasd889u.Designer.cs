@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
-    [Migration("20210423072142_AddDateTime")]
-    partial class AddDateTime
+    [Migration("20210424092131_dsadasdsadadsadasdasdasd889u")]
+    partial class dsadasdsadadsadasdasdasd889u
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

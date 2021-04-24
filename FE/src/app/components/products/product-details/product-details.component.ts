@@ -84,7 +84,7 @@ export class ProductDetailsComponent implements OnInit {
       });
   }
   save() {
-    if (this.productsForm.valid) {
+    if (this.productsForm.invalid) {
       return;
     }
     this.product = {
@@ -117,9 +117,9 @@ export class ProductDetailsComponent implements OnInit {
         this.ngbActiveModal.close();
       })
       .catch((er) => {
-        if (er.error.hasError) {
-          console.log(er.error.message);
-        }
+        
+          console.log(er);
+        
       });
   }
 
