@@ -45,6 +45,7 @@ export class CategoryDetailComponent implements OnInit {
 
     save(){
       if(this.categoriesForm.invalid){
+        window.alert("Invalid Form !");
         return;
       }
       this.category = {name: this.categoriesForm.value.name, 
@@ -75,12 +76,15 @@ export class CategoryDetailComponent implements OnInit {
 
   loadItem() {
     this.categoriesForm = this.formBuilder.group({
-      name: [this.item ? this.item.name : '', [Validators.required]],
+      name: [this.item ? this.item.name : '',
+       [Validators.required
+        , Validators.pattern(`^[A-Za-z0-9]+[A-Za-z0-9 ]{0,}$`)]],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required],
+        [Validators.required
+          , Validators.pattern(`^[A-Za-z0-9]+[A-Za-z0-9 ]{0,}$`)]
       ],
-      imageUrl: [this.item ? this.item.imageUrl : '', [Validators.required]],
+      imageUrl: [this.item ? this.item.imageUrl : '']
     });
 
     this.modalHeader = new ModalHeaderModel();
