@@ -52,8 +52,8 @@ namespace Service.Orders
                 var entity = _orderRepository.Find(model.Id);
                 if (entity.IsNotNullOrEmpty())
                 {
-                    entity.IsDeleted = true;
-                    _orderRepository.Update(entity);
+                    entity.Delete();
+                    _orderRepository.Delete(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<OrderDTO>(false, _mapper.Map<Order, OrderDTO>(entity), MessageConstants.DeleteSuccess);
                     return result;

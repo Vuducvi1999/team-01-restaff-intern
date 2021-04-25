@@ -166,6 +166,24 @@ export class NavService {
         },
       ],
     },
+    {
+      title: 'Orders',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/orders/list-orders',
+          title: 'Orders List',
+          type: 'link',
+        },
+        {
+          path: '/order-details/list-order-details',
+          title: 'Order Details List',
+          type: 'link',
+        },
+      ],
+    }
   ];
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 }

@@ -92,4 +92,12 @@ export const content: Routes = [
       breadcrumb: 'Blogs',
     },
   },
+  {
+    path: 'orders',
+    loadChildren: () =>
+      import('../../components/orders/orders.module').then((m) => m.OrdersModule),
+    data: {
+      breadcrumb: 'Orders',
+    },
+  }
 ];
