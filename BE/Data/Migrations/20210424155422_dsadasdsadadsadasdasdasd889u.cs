@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class init : Migration
+    public partial class dsadasdsadadsadasdasdasd889u : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,11 +24,40 @@ namespace Data.Migrations
                     UpdatedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DeletedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeleteByDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Banners", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Blogs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ShortDes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContentHTML = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UpdatedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DeletedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeleteByDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blogs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,7 +75,10 @@ namespace Data.Migrations
                     UpdatedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DeletedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeleteByDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -71,7 +103,10 @@ namespace Data.Migrations
                     UpdatedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DeletedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeleteByDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -95,7 +130,10 @@ namespace Data.Migrations
                     UpdatedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DeletedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeleteByDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -118,7 +156,10 @@ namespace Data.Migrations
                     UpdatedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DeletedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeleteByDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -139,7 +180,10 @@ namespace Data.Migrations
                     UpdatedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DeletedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeleteByDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -164,7 +208,10 @@ namespace Data.Migrations
                     UpdatedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DeletedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeleteByDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -192,7 +239,10 @@ namespace Data.Migrations
                     UpdatedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DeletedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeleteByDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -215,6 +265,9 @@ namespace Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Banners");
+
+            migrationBuilder.DropTable(
+                name: "Blogs");
 
             migrationBuilder.DropTable(
                 name: "Coupons");

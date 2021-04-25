@@ -13,6 +13,7 @@ using Service.Profiles;
 using Service.Users;
 using Service.Blogs;
 using Service.Products;
+using Service.Home;
 using Service.Header;
 using Service.Footer;
 using Service.UserProductList;
@@ -52,6 +53,8 @@ namespace Service
 
 
             services.AddScoped<IBlogService, BlogService>();
+
+            services.AddScoped<IHomeService, HomeService>();
 
 
             //FeUser

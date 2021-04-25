@@ -10,6 +10,7 @@ import {
   ModalHeaderModel,
   TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
+
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
