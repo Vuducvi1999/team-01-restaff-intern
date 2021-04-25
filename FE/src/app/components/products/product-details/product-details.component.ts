@@ -134,7 +134,7 @@ export class ProductDetailsComponent implements OnInit {
     this.productsForm = this.formBuilder.group({
       name: [this.item ? this.item.name : '', 
       [Validators.required,
-       Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
+      Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
     ],
       description: [
         this.item ? this.item.description : '',
