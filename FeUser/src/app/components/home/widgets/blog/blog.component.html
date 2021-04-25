@@ -2,19 +2,19 @@
   <ng-container *ngFor="let blog of blogs">
     <ng-template carouselSlide>
       <div class="col-md-12">
-        <a [routerLink]="'/pages/blog/details'">
+        <a [routerLink]="">
           <div class="classic-effect">
-            <img [src]="blog.image" class="img-fluid" alt="blog">
+            <img [src]="getImage(blog.imageUrl)" class="img-fluid" [alt]="blog.title">
             <span></span>
           </div>
         </a>
         <div class="blog-details">
-          <h4>{{blog.date}}</h4>
+          <h4>{{ getDate(blog.createByDate)}}</h4>
           <a [routerLink]="'/pages/blog/details'">
             <p>{{blog.title}}</p>
           </a>
           <hr class="style1">
-          <h6> {{ 'by:' +blog.by}} , {{ '2 Comment' }}</h6>
+          <h6 style="word-wrap: break-word;"> {{blog.shortDes}}</h6>
         </div>
       </div>
     </ng-template>

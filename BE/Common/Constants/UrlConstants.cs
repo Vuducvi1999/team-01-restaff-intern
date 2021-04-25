@@ -50,6 +50,15 @@ namespace Common.Constants
 
         public const string Product = "product";
         public const string Category = "category";
+        public const string BaseHome = BaseApi + "/home";
+
+        public const string TopCollection = "top-collection";
+        public const string NewProducts = "new-products";
+        public const string BestSeller = "best-seller";
+        public const string FeaturedProducts = "featured-products";
+        public const string OnSale = "on-sale";
+        public const string Blogs = "blogs";
+
         public const string TopBlog = BaseBlog + "/topblog";
         public const string RecentBlog = BaseBlog + "/recentblog";
         public const string GetBlog = BaseBlog + "/{id}";
