@@ -35,7 +35,7 @@ namespace Domain.Entities
         {
             base.Update();
             Username = model.Username;
-            Password = MD5Helper.ToMD5Hash(model.Password);
+            //Password = MD5Helper.ToMD5Hash(model.Password);
             Email = model.Email;
             FirstName = model.FirstName;
             LastName = model.LastName;

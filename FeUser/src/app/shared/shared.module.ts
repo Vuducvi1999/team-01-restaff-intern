@@ -20,6 +20,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { ProductBoxOneComponent } from './components/product/product-box-one/product-box-one.component';
 import { ProductBoxVerticalComponent } from './components/product/product-box-vertical/product-box-vertical.component';
 import { ProductBoxVerticalSliderComponent } from './components/product/product-box-vertical-slider/product-box-vertical-slider.component';
 
@@ -49,7 +50,7 @@ import { ProductBoxComponent } from './components/product/product-box/product-bo
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
-  declarations: [
+  declarations: [ProductBoxComponent,
     HeaderOneComponent,
     FooterOneComponent,
     LeftMenuComponent,
@@ -57,12 +58,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     SettingsComponent,
     BreadcrumbComponent,
     CategoriesComponent,
-    // ProductBoxOneComponent,
-    // ProductBoxTwoComponent,
-    // ProductBoxThreeComponent,
-    // ProductBoxFourComponent,
-    // ProductBoxFiveComponent,
-    ProductBoxComponent,
+    ProductBoxOneComponent,
     ProductBoxVerticalComponent,
     ProductBoxVerticalSliderComponent,
     NewsletterComponent,
@@ -93,7 +89,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     SweetAlert2Module.forRoot()
 
   ],
-  exports: [
+  exports: [ProductBoxComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -108,12 +104,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     FooterOneComponent,
     BreadcrumbComponent,
     CategoriesComponent,
-    // ProductBoxOneComponent,
-    // ProductBoxTwoComponent,
-    // ProductBoxThreeComponent,
-    // ProductBoxFourComponent,
-    // ProductBoxFiveComponent,
-    ProductBoxComponent,
+    ProductBoxOneComponent,
     ProductBoxVerticalComponent,
     ProductBoxVerticalSliderComponent,
     NewsletterComponent,

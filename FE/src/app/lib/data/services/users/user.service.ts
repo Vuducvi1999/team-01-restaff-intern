@@ -6,7 +6,7 @@ import { UserModel } from '../../models/users/user.model';
 export class UserService {
   private url = '/api/user';
 
-  constructor(private httpClient: HttpClientService) {}
+  constructor(private httpClient: HttpClientService) { }
 
   get(request: any) {
     return this.httpClient.getObservable(this.url, request).toPromise();
@@ -23,5 +23,12 @@ export class UserService {
   delete(model: UserModel) {
     const url = `${this.url}/?id=${model?.id}`;
     return this.httpClient.deleteObservable(url).toPromise();
+  }
+
+  save(model) {
+    if (model.id) {
+      return this.update(model);
+    }
+    return this.create(model);
   }
 }
