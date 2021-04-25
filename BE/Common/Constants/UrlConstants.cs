@@ -26,16 +26,23 @@ namespace Common.Constants
         public const string BaseCategory = BaseApi + "/category";
 
         public const string BaseFile = BaseApi + "/file";
+
         public const string BaseFileDownload = BaseFile + "/download";
+
         public const string BaseFileGetType = BaseFile + "/type";
 
         public const string BaseCoupon = BaseApi + "/coupon";
+
         public const string BaseUser= BaseApi + "/user";
 
         public const string BaseProduct = BaseApi + "/product";
 
         public const string BaseHeader = BaseApi + "/header";
         public const string BaseFooter = BaseApi + "/footer";
+
+        public const string BaseProductDetailsFeUser = BaseApi + "/user/product-details";
+
+
 
         public const string BaseBlog = BaseApi + "/blog";
 

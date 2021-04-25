@@ -13,7 +13,7 @@ import { ProductDetailsComponent } from '../product-details/product-details.comp
   providers: [ProductService],
 })
 export class ListProductsComponent implements OnInit {
-  public products = [];
+  public products: ProductModel[];
   closeResult = '';
 
   constructor(
