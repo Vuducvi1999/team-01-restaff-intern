@@ -15,6 +15,7 @@ using Service.Blogs;
 using Service.Products;
 using Service.Header;
 using Service.Footer;
+using Service.Orders;
 
 namespace Service
 {
@@ -51,6 +52,8 @@ namespace Service
 
 
             services.AddScoped<IBlogService, BlogService>();
+            services.AddScoped<IOrderService, OrderService>();
+
         }
     }
 }

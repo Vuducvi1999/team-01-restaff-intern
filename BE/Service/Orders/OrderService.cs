@@ -18,12 +18,11 @@ namespace Service.Orders
         private readonly IRepository<Order> _orderRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public OrderService(IRepository<Category> categoryRepository, IRepository<Order> orderRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public OrderService( IRepository<Order> orderRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _orderRepository = orderRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _categoryRepository = categoryRepository;
         }
 
         public ReturnMessage<OrderDTO> Create(CreateOrderDTO model)

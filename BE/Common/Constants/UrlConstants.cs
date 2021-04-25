@@ -50,6 +50,8 @@ namespace Common.Constants
 
         public const string BaseBlog = BaseApi + "/blog";
         public const string BaseOrder = BaseApi + "/order";
+        public const string BaseOrderDetail = BaseApi + "/order-detail";
+
 
     }
 }
