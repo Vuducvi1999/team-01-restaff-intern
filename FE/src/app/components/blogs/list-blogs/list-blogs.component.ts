@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BlogModel } from 'src/app/lib/data/models/blogs/blog.model';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models/common';
+import { FileService } from 'src/app/lib/data/services';
 import { BlogService } from 'src/app/lib/data/services/blogs/blog.service';
 import { BlogsDetailComponent } from '../blogs-detail/blogs-detail.component';
 
@@ -55,7 +56,26 @@ export class ListBlogsComponent implements OnInit {
         title: 'Content HTML',
       },
       imageUrl: {
-        title: 'Image URL',
+        title: 'URL',
+        type: 'html',
+        valuePrepareFunction: (file) => {
+          var fileExt = file.split('.').pop();
+          if (
+            fileExt == 'png' ||
+            fileExt == 'jpg' ||
+            fileExt == 'jpeg' ||
+            fileExt == 'icon'
+          ) {
+            return `<a href="${FileService.getLinkFile(file)}"><img width="75px" height="75px" src="${FileService.getLinkFile(file)}"/></a>`;
+          }
+          return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
+        },
+      },
+      createByDate: {
+        title: 'Date Create',
+      },
+      createdByName: {
+        title: 'Author',
       },
     },
   };

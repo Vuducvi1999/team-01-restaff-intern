@@ -4,11 +4,12 @@ import { CartModalComponent } from "../../modal/cart-modal/cart-modal.component"
 import { ProductService } from "../../../services/product.service";
 import { ProductModel } from "src/app/lib/data/models";
 import { FileService } from "src/app/lib/data/services";
+import { HomeService } from "src/app/lib/data/services/home/home.service";
 
 @Component({
   selector: "app-product-box-one",
   templateUrl: "./product-box-one.component.html",
-  styleUrls: ["./product-box-one.component.scss"],
+  providers: [HomeService]
 })
 export class ProductBoxOneComponent implements OnInit {
   @Input() product: ProductModel;
@@ -23,7 +24,7 @@ export class ProductBoxOneComponent implements OnInit {
 
   public ImageSrc: string;
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private homeService: HomeService) { }
 
   ngOnInit(): void {
     if (this.loader) {
@@ -57,21 +58,16 @@ export class ProductBoxOneComponent implements OnInit {
     });
   }
 
-  // Change Variants Image
-  ChangeVariantsImage(src) {
-    this.ImageSrc = src;
-  }
-
   addToCart(product: any) {
-    this.productService.addToCart(product);
+    this.homeService.addToCart(product);
   }
 
   addToWishlist(product: any) {
-    this.productService.addToWishlist(product);
+    this.homeService.addToWishlist(product);
   }
 
   addToCompare(product: any) {
-    this.productService.addToCompare(product);
+    this.homeService.addToCompare(product);
   }
 
   getImage(fileName: string) {

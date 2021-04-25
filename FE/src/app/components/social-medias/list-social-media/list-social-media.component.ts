@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { SocialMediaModel } from 'src/app/lib/data/models/social-medias/social-media.model';
+import { FileService } from 'src/app/lib/data/services';
 import { SocialMediaService } from 'src/app/lib/data/services/social-media/social-media.service';
 import { SocialMediaDetailComponent } from '../social-media-detail/social-media-detail.component';
 
@@ -53,7 +54,20 @@ export class ListSocialMediaComponent implements OnInit {
         title: 'Link',
       },
       iconUrl: {
-        title: 'Icon URL',
+        title: 'URL',
+        type: 'html',
+        valuePrepareFunction: (file) => {
+          var fileExt = file.split('.').pop();
+          if (
+            fileExt == 'png' ||
+            fileExt == 'jpg' ||
+            fileExt == 'jpeg' ||
+            fileExt == 'icon'
+          ) {
+            return `<a href="${FileService.getLinkFile(file)}"><img width="75px" height="75px" src="${FileService.getLinkFile(file)}"/></a>`;
+          }
+          return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
+        },
       },
       displayOrder: {
         title: 'Display Order',

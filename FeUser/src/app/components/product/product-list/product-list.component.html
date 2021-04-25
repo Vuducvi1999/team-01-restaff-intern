@@ -14,12 +14,12 @@
                                 </span>
                             </div>
                             <!-- Category filter start -->
-                            <app-categories></app-categories>
+                            <app-categories (onChangeTypeCate)="onChangeTypeCate($event)" [categoryName]='category'></app-categories>
                         </div>
                         <!-- silde-bar colleps block end here -->
                         <!-- side-bar colleps block stat -->
-                        <!-- <div class="collection-filter-block">
-                            brand filter start
+                        <div class="collection-filter-block">
+                            <!-- brand filter start
                             <app-brands [products]="products" [brands]="brands" (brandsFilter)="updateFilter($event)">
                             </app-brands>
                             color filter start here
@@ -28,21 +28,21 @@
                             size filter start here
                             <app-size [products]="products" [size]="size" (sizeFilter)="updateFilter($event)">
                             </app-size>
-                            price filter start here
+                            price filter start here -->
                             <app-price [min]="minPrice" [max]="maxPrice" (priceFilter)="updateFilter($event)">
                             </app-price>
-                        </div> -->
+                        </div>
                         <!-- silde-bar colleps block end here -->
                         <!-- side-bar single product slider start -->
                         <app-product-box-vertical-slider [title]="'New Products'">
                         </app-product-box-vertical-slider>
                         <!-- side-bar single product slider end -->
                         <!-- side-bar banner start here -->
-                        <div class="collection-sidebar-banner">
+                        <!-- <div class="collection-sidebar-banner">
                             <a [routerLink]="['/shop/collection/left/sidebar']">
                                 <img src="assets/images/collection-sidebar-banner.png" class="img-fluid" alt="banner">
                             </a>
-                        </div>
+                        </div> -->
                         <!-- side-bar banner end here -->
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                     <div class="page-main-content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <div class="top-banner-wrapper">
+                                <!-- <div class="top-banner-wrapper">
                                     <a [routerLink]="['/shop/collection/left/sidebar']">
                                         <img src="assets/images/collection-banner.jpg" class="img-fluid " alt="">
                                     </a>
@@ -64,7 +64,7 @@
                                             and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
                                         </p>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="filter-main-btn" (click)="toggleMobileSidebar()">
@@ -74,7 +74,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <ul class="product-filter-tags">
+                                <ul class="product-filter-tags">
                                     <li class="mr-1" *ngFor="let tag of tags">
                                         <a href="javascript:void(0)" class="filter_tag">
                                             {{tag}} <i class="ti-close" (click)="removeTag(tag)"></i>
@@ -85,19 +85,20 @@
                                             Clear all
                                         </a>
                                     </li>
-                                </ul> -->
+                                </ul>
                                 <div class="collection-product-wrapper" id="products">
                                     <app-grid [products]="products" [paginate]="paginate" [layoutView]="layoutView" [sortBy]="sortBy" (setGrid)="updateGridLayout($event)" (setLayout)="updateLayoutView($event)" (sortedBy)="sortByFilter($event)">
                                     </app-grid>
                                     <div class="product-wrapper-grid" [ngClass]="layoutView">
                                         <div class="row">
-                                            <div class="col-grid-box" [ngClass]="grid" *ngFor="let product of products">
-                                                <div class="product-box">
-                                                    <app-product-box-one 
+                                            <div class="col-grid-box" [ngClass]="grid" *ngFor="let product of products" >
+                                                <div class="product-box" >
+                                                    <app-product-box style="width: 100%;"
                                                         [product]="product"
                                                         [thumbnail]="false"
-                                                        [cartModal]="true">
-                                                    </app-product-box-one>
+                                                        [cartModal]="true"
+                                                        [typeGridLayout]="grid">
+                                                    </app-product-box>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 text-center section-b-space mt-5 no-found" *ngIf="!products.length">

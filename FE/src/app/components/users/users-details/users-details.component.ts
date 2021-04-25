@@ -34,7 +34,7 @@ export class UserDetailComponent implements OnInit {
   @Input() item;
 
   public modalFile: ModalFile;
-  public fileURL : (String | ArrayBuffer)[];
+  public fileURL: (String | ArrayBuffer)[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,8 +49,7 @@ export class UserDetailComponent implements OnInit {
 
   ngOnInit() {
     this.loadItem();
-    if(this.item)
-    {
+    if (this.item) {
       this.fileURL = [];
       this.fileURL.push(this.item.imageUrl);
     }
@@ -77,6 +76,7 @@ export class UserDetailComponent implements OnInit {
       console.log(this.usersForm);
       return;
     }
+
     this.user = {
       username: this.usersForm.value.username,
       password: this.usersForm.value.password,
@@ -84,36 +84,16 @@ export class UserDetailComponent implements OnInit {
       firstName: this.usersForm.value.firstName,
       lastName: this.usersForm.value.lastName,
       imageUrl: this.usersForm.value.imageUrl,
-      id: '',
+      id: this.item ? this.item.id : '',
       files: this.modalFile.listFile,
     };
-    if (!this.item?.id) {
-      this.user.id = '';
-      this.callServiceToCreate();
-    }
 
-    if (this.item?.id) {
-      this.user.id = this.item.id;
-      this.callServiceToUpdate();
-    }
+    this.callServiceToSave();
   }
 
-  callServiceToUpdate() {
+  callServiceToSave() {
     this.userService
-      .update(this.user)
-      .then(() => {
-        this.ngbActiveModal.close();
-      })
-      .catch((er) => {
-        if (er.error.hasError) {
-          console.log(er.error.message);
-        }
-      });
-  }
-
-  callServiceToCreate() {
-    this.userService
-      .create(this.user)
+      .save(this.user)
       .then(() => {
         this.ngbActiveModal.close();
       })

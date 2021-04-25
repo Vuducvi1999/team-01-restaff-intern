@@ -21,10 +21,6 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { CategoriesComponent } from './components/categories/categories.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { ProductBoxOneComponent } from './components/product/product-box-one/product-box-one.component';
-import { ProductBoxTwoComponent } from './components/product/product-box-two/product-box-two.component';
-import { ProductBoxThreeComponent } from './components/product/product-box-three/product-box-three.component';
-import { ProductBoxFourComponent } from './components/product/product-box-four/product-box-four.component';
-import { ProductBoxFiveComponent } from './components/product/product-box-five/product-box-five.component';
 import { ProductBoxVerticalComponent } from './components/product/product-box-vertical/product-box-vertical.component';
 import { ProductBoxVerticalSliderComponent } from './components/product/product-box-vertical-slider/product-box-vertical-slider.component';
 
@@ -48,10 +44,13 @@ import { TapToTopComponent } from './components/tap-to-top/tap-to-top.component'
 
 // Pipes
 import { DiscountPipe } from './pipes/discount.pipe';
+import { HomeComponent } from '../components/home/home.component';
+import { ProductBoxComponent } from './components/product/product-box/product-box.component';
+
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
-  declarations: [
+  declarations: [ProductBoxComponent,
     HeaderOneComponent,
     FooterOneComponent,
     LeftMenuComponent,
@@ -60,10 +59,6 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     BreadcrumbComponent,
     CategoriesComponent,
     ProductBoxOneComponent,
-    ProductBoxTwoComponent,
-    ProductBoxThreeComponent,
-    ProductBoxFourComponent,
-    ProductBoxFiveComponent,
     ProductBoxVerticalComponent,
     ProductBoxVerticalSliderComponent,
     NewsletterComponent,
@@ -94,7 +89,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     SweetAlert2Module.forRoot()
 
   ],
-  exports: [
+  exports: [ProductBoxComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -110,10 +105,6 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     BreadcrumbComponent,
     CategoriesComponent,
     ProductBoxOneComponent,
-    ProductBoxTwoComponent,
-    ProductBoxThreeComponent,
-    ProductBoxFourComponent,
-    ProductBoxFiveComponent,
     ProductBoxVerticalComponent,
     ProductBoxVerticalSliderComponent,
     NewsletterComponent,

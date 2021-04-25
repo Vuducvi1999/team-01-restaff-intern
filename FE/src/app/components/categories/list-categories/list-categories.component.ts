@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
+import { FileService } from 'src/app/lib/data/services';
 import { CategoryService } from 'src/app/lib/data/services/categories/category.service';
 import { CategoryDetailComponent } from '../categories-details/categories-details.component';
 
@@ -23,11 +24,6 @@ export class ListCategoriesComponent implements OnInit {
    public settings = 
    {
       mode :'external',
-      pager:
-      {
-        display: true,
-        perPage: 9,
-      },
       actions: 
       {
         position: 'right'
@@ -41,7 +37,20 @@ export class ListCategoriesComponent implements OnInit {
           title: 'Description'
         },
         imageUrl: {
-          title: 'Image URL',
+          title: 'URL',
+          type: 'html',
+          valuePrepareFunction: (file) => {
+            var fileExt = file.split('.').pop();
+            if (
+              fileExt == 'png' ||
+              fileExt == 'jpg' ||
+              fileExt == 'jpeg' ||
+              fileExt == 'icon'
+            ) {
+              return `<a href="${FileService.getLinkFile(file)}"><img width="75px" height="75px" src="${FileService.getLinkFile(file)}"/></a>`;
+            }
+            return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
+          },
         }
       },
     };

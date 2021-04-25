@@ -13,7 +13,7 @@ import { ProductService } from 'src/app/lib/data/services/products/product.servi
   selector: 'app-cart-modal',
   templateUrl: './cart-modal.component.html',
   styleUrls: ['./cart-modal.component.scss'],
-  providers: [CartService]
+  providers: [CartService, ProductService]
 })
 export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -24,7 +24,7 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public closeResult: string;
   public modalOpen: boolean = false;
-  public products: any[] = [];
+  public products: ProductModel[] = [];
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private modalService: NgbModal,
@@ -40,7 +40,7 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async openModal(product) {
-    const getData = await this.productService.getByCategory(product.categoryId,null);
+    const getData = await this.productService.getByCategory(product.categoryId, null);
     this.products = getData.data;
 
     // this.products = await this.products.filter(items => items.categoryName == product.categoryName && items.id != product.id);
@@ -81,5 +81,4 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
   getImage(image) {
     return FileService.getLinkFile(image)
   }
-
 }

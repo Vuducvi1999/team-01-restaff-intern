@@ -8,4 +8,10 @@ namespace Service.Common
         ReturnMessage<TRespone> Update(UpdateT model);
         ReturnMessage<TRespone> Delete(DeleteT model);
     }
+
+    public interface ICommonCRUDService<TRespone > where TRespone : class
+    {
+
+    }
+
 }

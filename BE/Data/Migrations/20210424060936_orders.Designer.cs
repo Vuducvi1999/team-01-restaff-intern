@@ -12,6 +12,7 @@ namespace Data.Migrations
     [DbContext(typeof(ShopDbContext))]
     [Migration("20210424060936_orders")]
     partial class orders
+
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

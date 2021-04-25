@@ -5,7 +5,7 @@ import { SharedModule } from "../shared/shared.module";
 import { PagesRoutingModule } from "./pages-routing.module";
 import { HomeComponent } from "./home/home.component";
 // Widgest Components
-import { SliderComponent } from "./home/widgets/slider/slider.component";
+
 import { BlogComponent } from "./home/widgets/blog/blog.component";
 import { LogoComponent } from "./home/widgets/logo/logo.component";
 import { InstagramComponent } from "./home/widgets/instagram/instagram.component";
@@ -19,8 +19,12 @@ import { BrandsComponent } from "./product/widgets/brands/brands.component";
 import { ColorsComponent } from "./product/widgets/colors/colors.component";
 import { Ng5SliderModule } from "ng5-slider";
 import { GridComponent } from "./product/widgets/grid/grid.component";
+import { SliderComponent } from "./home/slider/slider.component";
+import { BlogsComponent } from "./blogs/blogs.component";
 import { CartComponent } from "./cart/cart.component";
 import { CheckoutComponent } from "./checkout/checkout.component";
+import { BlogDetailComponent } from "./blogs/blog-detail/blog-detail.component";
+import { ProductDetailsComponent } from "./product/product-details/product-details.component";
 @NgModule({
   declarations: [
     HomeComponent,
@@ -32,14 +36,16 @@ import { CheckoutComponent } from "./checkout/checkout.component";
     ServicesComponent,
     CollectionComponent,
     ProductListComponent,
+    ProductDetailsComponent,
     BrandsComponent,
     ColorsComponent,
     SizeComponent,
     PriceComponent,
     GridComponent,
+    BlogsComponent,
     CartComponent,
     CheckoutComponent,
-    
+    BlogDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -50,6 +56,12 @@ import { CheckoutComponent } from "./checkout/checkout.component";
     Ng5SliderModule,
   ],
   providers: [],
-  exports: [BrandsComponent, ColorsComponent, SizeComponent, PriceComponent, GridComponent],
+  exports: [
+    BrandsComponent,
+    ColorsComponent,
+    SizeComponent,
+    PriceComponent,
+    GridComponent,
+  ],
 })
 export class PagesModule {}

@@ -48,5 +48,14 @@ namespace Common.Constants
             }
             return false;
         }
+
+        public enum ETypeSort
+        {
+            NULL,
+            AZ,
+            ZA,
+            PRICELOW,
+            PRICEHIGH
+        }
     }
 }

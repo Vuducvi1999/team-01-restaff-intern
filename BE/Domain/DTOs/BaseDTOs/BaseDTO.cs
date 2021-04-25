@@ -13,5 +13,8 @@ namespace Domain.DTOs.BaseDTOs
         public Guid UpdatedBy { get; set; }
         public string DeletedByName { get; set; }
         public Guid DeletedBy { get; set; }
+        public DateTime CreateByDate { get; set; }
+        public DateTime UpdateByDate { get; set; }
+        public DateTime DeleteByDate { get; set; }
     }
 }
