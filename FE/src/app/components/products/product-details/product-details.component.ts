@@ -117,7 +117,6 @@ export class ProductDetailsComponent implements OnInit {
       updatedByName: this.item ? this.item.updatedByName : this.item,
       files: this.modalFile.listFile
     };
-    this.submitted = true;
     return this.productService
       .save(this.product)
       .then(() => {
@@ -130,34 +129,30 @@ export class ProductDetailsComponent implements OnInit {
       });
   }
 
+  //Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)
   loadItem() {
     this.productsForm = this.formBuilder.group({
       name: [this.item ? this.item.name : '', 
-      [Validators.required,
-      Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
+      [Validators.required, Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
     ],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required,
-         Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
+        [Validators.required, Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
       ],
       contentHTML: [
         this.item ? this.item.contentHTML : '',
-        [Validators.required, Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
+        [Validators.required]
       ],
       imageUrl: [this.item ? this.item.imageUrl : ''],
       price: [this.item ? this.item.price : 0,
-         [Validators.required,
-          Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]],
+         [Validators.required]],
       categoryName: [
         this.item ? this.item.categoryId : '',
-        [Validators.required,
-         Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
+        [Validators.required]
       ],
       displayOrder: [
         this.item ? this.item.displayOrder : 0,
-        [Validators.required,
-         Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
+        [Validators.required]
       ],
       hasDisplayHomePage: [
         this.item ? this.item.hasDisplayHomePage : false, 
