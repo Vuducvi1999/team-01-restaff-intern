@@ -19,7 +19,6 @@ export class ProductDetailsComponent implements OnInit {
   public counter: number = 1;
   public activeSlide: any = 0;
   public ImageSrc: string;
-  public id: string;
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
 
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
@@ -28,7 +27,6 @@ export class ProductDetailsComponent implements OnInit {
   constructor(private productService: ProductDetailsService,
     private activedRoute:ActivatedRoute) 
     {
-      this.id = this.activedRoute.snapshot.queryParamMap.get('id');
       this.getProduct();
      }
 
@@ -36,20 +34,8 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   getProduct(){
-
-    this.productService.get(this.id).then((res : ReturnMessage<ProductDetailsModel>) => {
-      if(!res.hasError)
-      {
-        this.product = res.data;
-        console.log(this.product);
-      }
-    }).catch((er) => {
-      
-      if(er.error.hasError)
-      {
-        console.log(er.error.message)
-      }
-    });    
+    let data = JSON.parse(localStorage.getItem('item'));
+    this.product = data;
   }
 
   getImage(fileName: string) {

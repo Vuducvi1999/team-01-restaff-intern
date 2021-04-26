@@ -40,6 +40,8 @@ export class UploadFileComponent implements OnInit {
           }
         );
       });
+      
+      console.log(this.fileURL);
     }
   }
 
