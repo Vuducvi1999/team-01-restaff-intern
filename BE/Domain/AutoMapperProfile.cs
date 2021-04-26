@@ -15,6 +15,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using Domain.DTOs.Blogs;
+using Domain.DTOs.Customer;
 
 namespace Domain
 {
@@ -89,7 +90,14 @@ namespace Domain
             CreateMap<Blog, CreateBlogDTO>().ReverseMap();
             CreateMap<Blog, UpdateBlogDTO>().ReverseMap();
             CreateMap<Blog, DeleteBlogDTO>().ReverseMap();
-            
+
+            //Customer
+            CreateMap<PaginatedList<Customer>, PaginatedList<CustomerDTO>>().ReverseMap();
+            CreateMap<Customer, CustomerDTO>().ReverseMap();
+            CreateMap<Customer, CreateCustomerDTO>().ReverseMap();
+            CreateMap<Customer, UpdateCustomerDTO>().ReverseMap();
+            CreateMap<Customer, DeleteCustomerDTO>().ReverseMap();
+
         }
     }
 }

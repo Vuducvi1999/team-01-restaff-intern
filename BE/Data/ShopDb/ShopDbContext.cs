@@ -13,6 +13,7 @@ namespace Data
         DbSet<Supplier> Suppliers { get; set; }
         DbSet<SocialMedia> SocialMedias { get; set; }
         DbSet<User> Users { get; set; }
+        DbSet<Customer> Customers { get; set; }
         DbSet<Category> Categories { get; set; }
         DbSet<Coupon> Coupons { get; set; }
         DbSet<Banner> Banners { get; set; }
@@ -20,6 +21,20 @@ namespace Data
         DbSet<File> Files { get; set; }
         DbSet<Blog> Blogs { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<User>()
+               .HasOne(it => it.Customer)
+               .WithOne(it => it.User)
+               .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Customer>()
+                .HasOne(it => it.User)
+                .WithOne(it => it.Customer)
+                .OnDelete(DeleteBehavior.SetNull);
+
+        }
     }
 }
