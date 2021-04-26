@@ -1,6 +1,7 @@
 ﻿using Domain.DTOs.BaseDTOs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Domain.DTOs.Users
@@ -13,5 +14,10 @@ namespace Domain.DTOs.Users
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ImageUrl { get; set; }
+        [Required]
+        [StringLength(7, MinimumLength = 5)]
+        public string Type { get; set; }
+
+        public Guid? CumstomerId { get; set; }
     }
 }

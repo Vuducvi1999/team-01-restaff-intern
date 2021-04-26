@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { BlogModel } from 'src/app/lib/data/models/blogs/blog.model';
+import { FileService } from 'src/app/lib/data/services';
 import { BlogSlider } from 'src/app/shared/data/slider';
 
 @Component({
@@ -8,7 +10,7 @@ import { BlogSlider } from 'src/app/shared/data/slider';
 })
 export class BlogComponent implements OnInit {
   
-  @Input() blogs: any[] = [];
+  @Input() blogs: BlogModel[] = [];
 
   constructor() { }
 
@@ -17,4 +19,11 @@ export class BlogComponent implements OnInit {
 
   public BlogSliderConfig: any = BlogSlider;
 
+  getImage(image:string){
+    return FileService.getLinkFile(image);
+  }
+
+  getDate(date:string){
+    return new Date(date).toDateString();
+  }
 }

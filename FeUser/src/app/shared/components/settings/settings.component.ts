@@ -70,7 +70,7 @@ export class SettingsComponent implements OnInit {
   }
 
   removeItem(product: any) {
-      this.cartService.removeCartItem(product);
+    this.cartService.removeCartItem(product);
   }
 
   getImage(fileName: string) {

@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using Domain.DTOs.Blogs;
 using Domain.DTOs.Customer;
+using Domain.DTOs.ProductsFeUser;
+using Domain.DTOs.Home;
 
 namespace Domain
 {
@@ -76,6 +78,8 @@ namespace Domain
             CreateMap<CreateProductDTO, Product>().ReverseMap();
             CreateMap<UpdateProductDTO, Product>().ReverseMap();
             CreateMap<IQueryable<ProductDTO>, PaginatedList<Product>>().ReverseMap();
+            CreateMap<Product, ProductDTOFeUser>().ReverseMap();
+
 
             //Coupon
             CreateMap<PaginatedList<Coupon>, PaginatedList<CouponDTO>>().ReverseMap();
@@ -98,6 +102,12 @@ namespace Domain
             CreateMap<Customer, UpdateCustomerDTO>().ReverseMap();
             CreateMap<Customer, DeleteCustomerDTO>().ReverseMap();
 
+
+            //homePage FeUser
+            CreateMap<Product, HomeProductDTO>()
+                 .ForMember(t => t.CategoryName, k => k.MapFrom(h => h.Category.Name)).ReverseMap();
+            CreateMap<Blog, HomeBlogDTO>().ReverseMap();
+            
         }
     }
 }

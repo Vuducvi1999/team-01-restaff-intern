@@ -28,11 +28,13 @@ namespace Data
             modelBuilder.Entity<User>()
                .HasOne(it => it.Customer)
                .WithOne(it => it.User)
+               .HasForeignKey<Customer>(it => it.UserId)
                .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<Customer>()
                 .HasOne(it => it.User)
                 .WithOne(it => it.Customer)
+                .HasForeignKey<User>(it => it.CustomerId)
                 .OnDelete(DeleteBehavior.SetNull);
 
         }

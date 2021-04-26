@@ -318,10 +318,6 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique()
-                        .HasFilter("[UserId] IS NOT NULL");
-
                     b.ToTable("Customers");
                 });
 
@@ -578,7 +574,7 @@ namespace Data.Migrations
                     b.Property<string>("CreatedByName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("CumstomerId")
+                    b.Property<Guid?>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DeleteByDate")
@@ -612,10 +608,8 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(7)
-                        .HasColumnType("nvarchar(7)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdateByDate")
                         .HasColumnType("datetime2");
@@ -632,17 +626,11 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CustomerId")
+                        .IsUnique()
+                        .HasFilter("[CustomerId] IS NOT NULL");
+
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Customer", b =>
-                {
-                    b.HasOne("Domain.Entities.User", "User")
-                        .WithOne("Customer")
-                        .HasForeignKey("Domain.Entities.Customer", "UserId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.Product", b =>
@@ -656,14 +644,24 @@ namespace Data.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("Domain.Entities.User", b =>
+                {
+                    b.HasOne("Domain.Entities.Customer", "Customer")
+                        .WithOne("User")
+                        .HasForeignKey("Domain.Entities.User", "CustomerId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Customer");
+                });
+
             modelBuilder.Entity("Domain.Entities.Category", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Domain.Entities.User", b =>
+            modelBuilder.Entity("Domain.Entities.Customer", b =>
                 {
-                    b.Navigation("Customer");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

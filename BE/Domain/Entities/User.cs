@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Common.Enums;
 
 namespace Domain.Entities
 {
@@ -19,11 +20,9 @@ namespace Domain.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ImageUrl { get; set; }
-        [Required]
-        [StringLength(7, MinimumLength = 5)]
-        public string Type { get; set; }
+        public UserType Type { get; set; }
 
-        public Guid? CumstomerId { get; set; }
+        public Guid? CustomerId { get; set; }
         public virtual Customer Customer { get; set; }
 
 
@@ -41,7 +40,7 @@ namespace Domain.Entities
         {
             base.Update();
             Username = model.Username;
-            Password = MD5Helper.ToMD5Hash(model.Password);
+            //Password = MD5Helper.ToMD5Hash(model.Password);
             Email = model.Email;
             FirstName = model.FirstName;
             LastName = model.LastName;

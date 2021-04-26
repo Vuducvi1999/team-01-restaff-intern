@@ -25,6 +25,6 @@ namespace Domain.DTOs.Customer
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
 
-        public Guid? UserId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

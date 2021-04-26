@@ -36,7 +36,6 @@ namespace Domain.Entities
         }
         public virtual void Delete()
         {
-            IsDeleted = true;
             DeleteByDate = DateTime.Now;
             ObjectState = Infrastructure.EntityFramework.ObjectState.Deleted;
         }
