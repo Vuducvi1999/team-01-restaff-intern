@@ -93,6 +93,7 @@ export class ProductDetailsComponent implements OnInit {
       window.alert("Invalid Form !");
       return;
     }
+    this.submitted = true;
     this.product = {
       name: this.productsForm.value.name,
       description: this.productsForm.value.description,
@@ -117,6 +118,7 @@ export class ProductDetailsComponent implements OnInit {
       updatedByName: this.item ? this.item.updatedByName : this.item,
       files: this.modalFile.listFile
     };
+
     return this.productService
       .save(this.product)
       .then(() => {
