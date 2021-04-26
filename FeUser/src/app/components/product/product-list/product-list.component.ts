@@ -65,6 +65,8 @@ export class ProductListComponent implements OnInit {
         this.products = [...this.products, ...res.data.results];
       })
       .catch((res) => console.error(res));
+
+      this.addNavigate(this.params);
   }
 
   // Infinite scroll
@@ -166,5 +168,18 @@ export class ProductListComponent implements OnInit {
 
     delete this.params.pageIndex;
     delete this.params.pageSize;
+  }
+
+  addNavigate(params = {}) {
+    this.router
+      .navigate([], {
+        relativeTo: this.route,
+        queryParams: params,
+        skipLocationChange: false, // do trigger navigation
+      })
+      .finally(() => {
+        this.viewScroller.setOffset([120, 120]);
+        this.viewScroller.scrollToAnchor("products"); // Anchore Link
+      });
   }
 }
