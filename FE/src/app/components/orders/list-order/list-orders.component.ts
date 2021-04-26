@@ -24,7 +24,9 @@ export class ListOrdersComponent implements OnInit {
   public settings = {
 
     mode: 'external',
-    actions: false,
+    actions: {
+      position: 'right',
+    },
     columns: {
       fullName: {
         title: 'Full Name',

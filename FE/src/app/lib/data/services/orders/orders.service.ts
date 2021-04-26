@@ -17,18 +17,18 @@ export class OrdersService {
     return this.httpClient.getObservable(this.url+'-detail', request).toPromise();
   }
 
-//   create(model:OrderModel) {
-//     return this.httpClient.postObservable(this.url, model).toPromise();
-//   }
+  create(model:OrderModel) {
+    return this.httpClient.postObservable(this.url, model).toPromise();
+  }
 
-//   update(model: OrderModel) {
-//     return this.httpClient.putObservable(this.url, model).toPromise();
-//   }
+  update(model: OrderModel) {
+    return this.httpClient.putObservable(this.url, model).toPromise();
+  }
 
-//   delete(model: OrderModel) {
-//     const url = `${this.url}?id=${model?.id}`;
-//     return this.httpClient.deleteObservable(url).toPromise();
-//   }
+  delete(model: OrderModel) {
+    const url = `${this.url}?id=${model?.id}`;
+    return this.httpClient.deleteObservable(url).toPromise();
+  }
 //   save(model: OrderModel) {
 //     if (model.id) {
 //       return this.update(model);

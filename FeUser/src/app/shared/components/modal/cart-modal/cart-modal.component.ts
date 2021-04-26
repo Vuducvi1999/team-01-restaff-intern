@@ -27,7 +27,7 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private modalService: NgbModal,
-    private productService: ProductListService,
+    private productListService: ProductListService,
     private cartService: CartService) {
     { }
   }
@@ -39,11 +39,8 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async openModal(product) {
-    const getData = await this.productService.getByCategory(product.categoryId, null);
+    const getData = await this.productListService.getByCategory(product.categoryId, null);
     this.products = getData.data;
-
-    // this.products = await this.products.filter(items => items.categoryName == product.categoryName && items.id != product.id);
-
     const status = await this.cartService.addToCart(product);
     if (status) {
       this.modalOpen = true;
