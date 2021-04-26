@@ -59,7 +59,7 @@ export class ProductDetailsComponent implements OnInit {
       this.fileURL = [];
       console.log(this.item.imageUrl);
       this.item.imageUrl.split(',').forEach((it) => {
-        this.fileURL.push(FileService.getLinkFile(it));
+        this.fileURL.push(it);
       });
     }
   }
