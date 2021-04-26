@@ -30,17 +30,20 @@ namespace Service.Orders
 
             try
             {
-
                 var entity = _mapper.Map<CreateOrderDTO, Order>(model);
-
+                _unitOfWork.BeginTransaction();
                 entity.Insert();
                 _orderRepository.Insert(entity);
+
                 _unitOfWork.SaveChanges();
+                _unitOfWork.Commit();
+
                 var result = new ReturnMessage<OrderDTO>(false, _mapper.Map<Order, OrderDTO>(entity), MessageConstants.CreateSuccess);
                 return result;
             }
             catch (Exception ex)
             {
+                _unitOfWork.Rollback();
                 return new ReturnMessage<OrderDTO>(true, null, ex.Message);
             }
         }

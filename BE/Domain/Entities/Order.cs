@@ -1,4 +1,7 @@
-﻿using Domain.DTOs.Orders;
+﻿using Common.Constants;
+using Domain.DTOs.Orders;
+using System;
+using System.Collections.Generic;
 
 namespace Domain.Entities
 {
@@ -13,13 +16,19 @@ namespace Domain.Entities
         public string Status { get; set; }
         public int TotalAmount { get; set; }
         public int TotalItem { get; set; }
-
-
-
-
+        public Guid? CustomerId { get; set; }
+        public ICollection<OrderDetail> OrderDetails { get; set; }
+        
         public override void Insert()
         {
+
             base.Insert();
+            Code = CodeConstants.Code + DateTime.Now.ToString("ddMMyyyyHHmmssfff");
+            foreach(var item in OrderDetails)
+            {
+                item.OrderId = this.Id;
+                item.Insert();
+            }
         }
         public override void Delete()
         {
@@ -30,7 +39,6 @@ namespace Domain.Entities
         {
             base.Update();
             FullName = model.FullName;
-            Code = model.Code;
             Address = model.Address;
             Phone = model.Phone;
             Email = model.Email;

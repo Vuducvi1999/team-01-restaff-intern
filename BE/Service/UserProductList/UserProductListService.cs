@@ -17,20 +17,36 @@ namespace Service.UserProductList
 {
     public class UserProductListService : IUserProductListService
     {
-        private readonly IRepository<Category> _repositoryCategory;
-        private readonly IRepository<Product> _repositoryProduct;
+        private readonly IRepository<Category> _categoryRepository;
+        private readonly IRepository<Product> _productRepository;
         private readonly IMapper _mapper;
 
-        public UserProductListService(IRepository<Product> repositoryProduct, IRepository<Category> repositoryCategory, IMapper mapper)
+        public UserProductListService(IRepository<Product> productRepository, IRepository<Category> categoryRepository, IMapper mapper)
         {
-            _repositoryProduct = repositoryProduct;
-            _repositoryCategory = repositoryCategory;
+            _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
             _mapper = mapper;
+        }
+
+        public ReturnMessage<List<ProductDTO>> GetByCategory(Guid id)
+        {
+            try
+            {
+                var listDTO = _productRepository.Queryable().Where(product => product.CategoryId == id).ToList();
+                var list = _mapper.Map<List<ProductDTO>>(listDTO);
+                var result = new ReturnMessage<List<ProductDTO>>(false, list, MessageConstants.ListSuccess);
+                return result;
+            }
+
+            catch (Exception ex)
+            {
+                return new ReturnMessage<List<ProductDTO>>(true, null, ex.Message);
+            }
         }
 
         public ReturnMessage<IEnumerable<CategoryDTO>> GetCategory()
         {
-            var data = _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(_repositoryCategory.GetList());
+            var data = _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(_categoryRepository.GetList());
             var result = new ReturnMessage<IEnumerable<CategoryDTO>>(false, data, MessageConstants.ListSuccess);
             return result;
         }
@@ -47,7 +63,7 @@ namespace Service.UserProductList
                 return new ReturnMessage<PaginatedList<ProductDTO>>(false, null, MessageConstants.Error);
             }
 
-            var query = _repositoryProduct.DbSet.DynamicIncludeProperty(nameof(Category)).AsQueryable();
+            var query = _productRepository.DbSet.DynamicIncludeProperty(nameof(Category)).AsQueryable();
 
             query = query.Where(
                it =>

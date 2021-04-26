@@ -10,3 +10,12 @@ export interface OrderModel extends BaseModel {
   totalAmount:number;
   totalItem:number;
 }
+
+export interface OrderDetailModel extends BaseModel {
+  fullName:string;
+  orderId:string;
+  productId:string;
+  price:string;
+  quantity:string;
+  totalAmount:number;
+}

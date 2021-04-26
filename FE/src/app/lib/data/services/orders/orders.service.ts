@@ -13,24 +13,27 @@ export class OrdersService {
   get(request: any) {
     return this.httpClient.getObservable(this.url, request).toPromise();
   }
-
-  create(model:OrderModel) {
-    return this.httpClient.postObservable(this.url, model).toPromise();
+  getDetails(request: any) {
+    return this.httpClient.getObservable(this.url+'-detail', request).toPromise();
   }
 
-  update(model: OrderModel) {
-    return this.httpClient.putObservable(this.url, model).toPromise();
-  }
+//   create(model:OrderModel) {
+//     return this.httpClient.postObservable(this.url, model).toPromise();
+//   }
 
-  delete(model: OrderModel) {
-    const url = `${this.url}?id=${model?.id}`;
-    return this.httpClient.deleteObservable(url).toPromise();
-  }
-  save(model: OrderModel) {
-    if (model.id) {
-      return this.update(model);
-    }
-    return this.create(model);
-  }
+//   update(model: OrderModel) {
+//     return this.httpClient.putObservable(this.url, model).toPromise();
+//   }
+
+//   delete(model: OrderModel) {
+//     const url = `${this.url}?id=${model?.id}`;
+//     return this.httpClient.deleteObservable(url).toPromise();
+//   }
+//   save(model: OrderModel) {
+//     if (model.id) {
+//       return this.update(model);
+//     }
+//     return this.create(model);
+//   }
 }
 

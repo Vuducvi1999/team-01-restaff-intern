@@ -18,6 +18,7 @@ using Domain.DTOs.Blogs;
 using Domain.DTOs.Orders;
 using Domain.DTOs.ProductsFeUser;
 using Domain.DTOs.Home;
+using Domain.DTOs.OrderDetails;
 
 namespace Domain
 {
@@ -101,11 +102,20 @@ namespace Domain
             CreateMap<Order, CreateOrderDTO>().ReverseMap();
             CreateMap<Order, UpdateOrderDTO>().ReverseMap();
             CreateMap<Order, DeleteOrderDTO>().ReverseMap();
+
+            //OrderDetail
+            CreateMap<OrderDetail, OrderDetailDTO>().ReverseMap();
+            CreateMap<OrderDetail, CreateOrderDetailDTO>().ReverseMap();
+            CreateMap<OrderDetail, UpdateOrderDetailDTO>().ReverseMap();
+            CreateMap<OrderDetail, DeleteOrderDetailDTO>().ReverseMap();
+
             //homePage FeUser
             CreateMap<Product, HomeProductDTO>()
                  .ForMember(t => t.CategoryName, k => k.MapFrom(h => h.Category.Name)).ReverseMap();
             CreateMap<Blog, HomeBlogDTO>().ReverseMap();
             
+
+
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Service.OrderDetails
         private readonly IRepository<OrderDetail> _orderDetailRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public OrderDetailService( IRepository<OrderDetail> orderDetailRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public OrderDetailService(IRepository<OrderDetail> orderDetailRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _orderDetailRepository = orderDetailRepository;
             _unitOfWork = unitOfWork;
@@ -29,32 +29,32 @@ namespace Service.OrderDetails
         public ReturnMessage<OrderDetailDTO> Create(CreateOrderDetailDTO model)
         {
 
-            try
-            {
+            //    try
+            //    {
 
-                var entity = _mapper.Map<CreateOrderDetailDTO, OrderDetail>(model);
+            //        var entity = _mapper.Map<CreateOrderDetailDTO, OrderDetail>(model);
 
-                entity.Insert();
-                _orderDetailRepository.Insert(entity);
-                _unitOfWork.SaveChanges();
-                var result = new ReturnMessage<OrderDetailDTO>(false, _mapper.Map<OrderDetail, OrderDetailDTO>(entity), MessageConstants.CreateSuccess);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                return new ReturnMessage<OrderDetailDTO>(true, null, ex.Message);
-            }
+            //        entity.Insert();
+            //        _orderDetailRepository.Insert(entity);
+            //        _unitOfWork.SaveChanges();
+            //        var result = new ReturnMessage<OrderDetailDTO>(false, _mapper.Map<OrderDetail, OrderDetailDTO>(entity), MessageConstants.CreateSuccess);
+            //        return result;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            return new ReturnMessage<OrderDetailDTO>(true, null, null);
+            //    }
         }
 
         public ReturnMessage<OrderDetailDTO> Delete(DeleteOrderDetailDTO model)
-        {
+            {
             try
             {
                 var entity = _orderDetailRepository.Find(model.Id);
                 if (entity.IsNotNullOrEmpty())
                 {
-                    entity.IsDeleted = true;
-                    _orderDetailRepository.Update(entity);
+                    entity.Delete();
+                    _orderDetailRepository.Delete(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<OrderDetailDTO>(false, _mapper.Map<OrderDetail, OrderDetailDTO>(entity), MessageConstants.DeleteSuccess);
                     return result;
@@ -64,11 +64,11 @@ namespace Service.OrderDetails
             catch (Exception ex)
             {
                 return new ReturnMessage<OrderDetailDTO>(true, null, ex.Message);
-            }
         }
+    }
 
 
-        public ReturnMessage<PaginatedList<OrderDetailDTO>> SearchPagination(SerachPaginationDTO<OrderDetailDTO> search)
+    public ReturnMessage<PaginatedList<OrderDetailDTO>> SearchPagination(SerachPaginationDTO<OrderDetailDTO> search)
         {
             if (search == null)
             {
@@ -78,13 +78,12 @@ namespace Service.OrderDetails
             var resultEntity = _orderDetailRepository.GetPaginatedList(it => search.Search == null ||
                 (
                     (
-                        (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
-                        it.FullName.Contains(search.Search.FullName)
+                        (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) 
                     )
                 )
                 , search.PageSize
                 , search.PageIndex
-                , t => t.FullName
+                
             );
             var data = _mapper.Map<PaginatedList<OrderDetail>, PaginatedList<OrderDetailDTO>>(resultEntity);
             var result = new ReturnMessage<PaginatedList<OrderDetailDTO>>(false, data, MessageConstants.GetPaginationSuccess);

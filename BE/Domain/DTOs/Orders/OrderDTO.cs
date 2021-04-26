@@ -1,4 +1,5 @@
 ﻿using Domain.DTOs.BaseDTOs;
+using Domain.DTOs.OrderDetails;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,5 +16,6 @@ namespace Domain.DTOs.Orders
         public string Status { get; set; }
         public int TotalAmount { get; set; }
         public int TotalItem { get; set; }
+        public List<OrderDetailDTO> OrderDetails { get; set; }
     }
 }

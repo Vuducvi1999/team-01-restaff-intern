@@ -12,6 +12,7 @@ namespace Service.UserProductList
     public interface IUserProductListService
     {
         public ReturnMessage<IEnumerable<CategoryDTO>> GetCategory();
+        ReturnMessage<List<ProductDTO>> GetByCategory(Guid id);
         ReturnMessage<PaginatedList<ProductDTO>> SearchPagination(SearchPaginationUserFEDTO<ProductDTO> search);
     }
 }

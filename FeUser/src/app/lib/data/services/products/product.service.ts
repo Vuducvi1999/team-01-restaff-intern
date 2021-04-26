@@ -6,16 +6,14 @@ import { ProductModel } from "../../models/products/product.model";
 @Injectable()
 export class ProductService {
 
-    private url = '/api/user/product';
+    private url = '/api/user/productlist';
     constructor(private httpClient: HttpClientService) { }
 
   get(request: any) {
     return this.httpClient.getObservable(this.url, request).toPromise();
   }
 
-  getByCategory(id: any, request: any) {
-    return this.httpClient.getObservable(this.url + "/category?id=" + id, request).toPromise();
-  }
+
 
 
 

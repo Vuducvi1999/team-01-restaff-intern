@@ -6,14 +6,13 @@ import { isPlatformBrowser } from '@angular/common';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductModel } from 'src/app/lib/data/models/products/product.model';
 import { CartService } from 'src/app/lib/data/services/cart/cart.service';
-import { FileService } from 'src/app/lib/data/services';
-import { ProductService } from 'src/app/lib/data/services/products/product.service';
+import { FileService, ProductListService } from 'src/app/lib/data/services';
 
 @Component({
   selector: 'app-cart-modal',
   templateUrl: './cart-modal.component.html',
   styleUrls: ['./cart-modal.component.scss'],
-  providers: [CartService, ProductService]
+  providers: [CartService, ProductListService]
 })
 export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -28,7 +27,7 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private modalService: NgbModal,
-    private productService: ProductService,
+    private productService: ProductListService,
     private cartService: CartService) {
     { }
   }
