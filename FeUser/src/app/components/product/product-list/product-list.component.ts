@@ -8,6 +8,7 @@ import {
   ReturnMessage,
   SearchPaganationDTO,
 } from "src/app/lib/data/models";
+import { HomeService } from "src/app/lib/data/services/home/home.service";
 import { ProductListService } from "src/app/lib/data/services/productlist/productlist.service";
 
 import { ETypeGridLayout } from "src/app/shared/data";
@@ -16,7 +17,7 @@ import { ETypeGridLayout } from "src/app/shared/data";
   selector: "app-product-list",
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.scss"],
-  providers: [ProductListService],
+  providers: [HomeService, ProductListService],
 })
 export class ProductListComponent implements OnInit {
   public grid: string = ETypeGridLayout.NORMAL;
