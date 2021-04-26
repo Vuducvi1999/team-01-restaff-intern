@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BlogModel } from 'src/app/lib/data/models/blogs/blog.model';
@@ -16,7 +17,8 @@ export class ListBlogsComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private blogService: BlogService
+    private blogService: BlogService,
+    private datePipe: DatePipe
   ) {
     this.getBlogs();
   }
@@ -52,9 +54,6 @@ export class ListBlogsComponent implements OnInit {
       shortDes: {
         title: 'Short Description',
       },
-      contentHTML: {
-        title: 'Content HTML',
-      },
       imageUrl: {
         title: 'URL',
         type: 'html',
@@ -66,16 +65,22 @@ export class ListBlogsComponent implements OnInit {
             fileExt == 'jpeg' ||
             fileExt == 'icon'
           ) {
-            return `<a href="${FileService.getLinkFile(file)}"><img width="75px" height="75px" src="${FileService.getLinkFile(file)}"/></a>`;
+            return `<a href="${FileService.getLinkFile(
+              file
+            )}"><img width="75px" height="75px" src="${FileService.getLinkFile(
+              file
+            )}"/></a>`;
           }
-          return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
+          return `<a href="${FileService.getLinkFile(
+            file
+          )}">${FileService.getLinkFile(file)}</a>`;
         },
       },
       createByDate: {
         title: 'Date Create',
-      },
-      createdByName: {
-        title: 'Author',
+        valuePrepareFunction: (created) => {
+          return this.datePipe.transform(new Date(created), 'dd/MM/yyyy');
+        },
       },
     },
   };
