@@ -47,15 +47,10 @@ export class ListSocialMediaComponent implements OnInit {
       position: 'right',
     },
     columns: {
-      title: {
-        title: 'Title',
-      },
-      link: {
-        title: 'Link',
-      },
       iconUrl: {
-        title: 'URL',
+        title: 'ImageURL',
         type: 'html',
+        filter: false,
         valuePrepareFunction: (file) => {
           var fileExt = file.split('.').pop();
           if (
@@ -68,6 +63,12 @@ export class ListSocialMediaComponent implements OnInit {
           }
           return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
         },
+      },
+      title: {
+        title: 'Title',
+      },
+      link: {
+        title: 'Link',
       },
       displayOrder: {
         title: 'Display Order',

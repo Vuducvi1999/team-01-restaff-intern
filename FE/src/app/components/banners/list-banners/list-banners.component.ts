@@ -33,18 +33,10 @@ export class ListBannersComponent implements OnInit {
       position: 'right',
     },
     columns: {
-      title: {
-        title: 'Title',
-      },
-      description: {
-        title: 'Description',
-      },
-      link: {
-        title: 'Link',
-      },
       imageUrl: {
-        title: 'URL',
+        title: 'ImageURL',
         type: 'html',
+        filter: false,
         valuePrepareFunction: (file) => {
           var fileExt = file.split('.').pop();
           if (
@@ -57,6 +49,15 @@ export class ListBannersComponent implements OnInit {
           }
           return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
         },
+      },
+      title: {
+        title: 'Title',
+      },
+      description: {
+        title: 'Description',
+      },
+      link: {
+        title: 'Link',
       },
       displayOrder: {
         title: 'Display Order',

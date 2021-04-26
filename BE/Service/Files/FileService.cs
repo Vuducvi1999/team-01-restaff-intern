@@ -39,8 +39,9 @@ namespace Service.Files
                 entities.ForEach(it => it.Insert());
                 _unitOfWork.BeginTransaction();
                 _fileRepository.InsertRange(entities);
-                _unitOfWork.Commit();
+ 
                 _unitOfWork.SaveChanges();
+                _unitOfWork.Commit();
                 var result = new ReturnMessage<List<FileDTO>>(false, _mapper.Map<List<Domain.Entities.File>, List<FileDTO>>(entities), MessageConstants.CreateSuccess + " " + model.Count + " files");
                 return result;
             }
@@ -69,8 +70,9 @@ namespace Service.Files
                 });
                 _unitOfWork.BeginTransaction();
                 _fileRepository.UpdateRange(entities);
-                _unitOfWork.Commit();
                 _unitOfWork.SaveChanges();
+                _unitOfWork.Commit();
+
                 var result = new ReturnMessage<List<FileDTO>>(false, _mapper.Map<List<Domain.Entities.File>, List<FileDTO>>(entities.ToList()), MessageConstants.DeleteSuccess);
                 return result;
             }
@@ -119,8 +121,9 @@ namespace Service.Files
                 entities.ForEach(it => it.Update());
                 _unitOfWork.BeginTransaction();
                 _fileRepository.UpdateRange(entities);
-                _unitOfWork.Commit();
                 _unitOfWork.SaveChanges();
+                _unitOfWork.Commit();
+
                 var result = new ReturnMessage<List<FileDTO>>(false, _mapper.Map<List<Domain.Entities.File>, List<FileDTO>>(entities.ToList()), MessageConstants.UpdateSuccess);
                 return result;
             }
@@ -156,8 +159,9 @@ namespace Service.Files
                 }
                 _unitOfWork.BeginTransaction();
                 _fileRepository.UpdateRange(files);
-                _unitOfWork.Commit();
                 _unitOfWork.SaveChanges();
+                _unitOfWork.Commit();
+
                 var result = new ReturnMessage<List<FileDTO>>(false, _mapper.Map<List<Domain.Entities.File>, List<FileDTO>>(files), MessageConstants.UpdateSuccess);
                 return result;
 

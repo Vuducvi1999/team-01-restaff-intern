@@ -73,7 +73,21 @@ namespace Service.Customers
 
         public ReturnMessage<PaginatedList<CustomerDTO>> SearchPagination(SerachPaginationDTO<CustomerDTO> search)
         {
-            throw new NotImplementedException();
+            if (search == null)
+            {
+                return new ReturnMessage<PaginatedList<CustomerDTO>>(false, null, MessageConstants.Error);
+            }
+            var resultEntity = _customerRepository.GetPaginatedList(null
+                , search.PageSize
+                , search.PageIndex * search.PageSize
+                , t => t.UpdateByDate
+                , nameof(User)
+            );
+
+            var data = _mapper.Map<PaginatedList<Customer>, PaginatedList<CustomerDTO>>(resultEntity);
+            var result = new ReturnMessage<PaginatedList<CustomerDTO>>(false, data, MessageConstants.ListSuccess);
+
+            return result;
         }
 
         public ReturnMessage<CustomerDTO> Update(UpdateCustomerDTO model)

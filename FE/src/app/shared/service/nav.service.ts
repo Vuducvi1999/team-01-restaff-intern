@@ -36,24 +36,6 @@ export class NavService {
 
   MENUITEMS: Menu[] = [
     {
-      title: 'Suppliers',
-      icon: 'users',
-      type: 'sub',
-      active: false,
-      children: [
-        {
-          path: '/suppliers/list-suppliers',
-          title: 'Supplier List',
-          type: 'link',
-        },
-        {
-          path: '/suppliers/create-suppliers',
-          title: 'Create Supplier',
-          type: 'link',
-        },
-      ],
-    },
-    {
       title: 'Banners',
       icon: 'users',
       type: 'sub',
@@ -75,19 +57,6 @@ export class NavService {
         },
       ],
     },
-    // {
-    //   title: 'Files',
-    //   icon: 'camera',
-    //   type: 'sub',
-    //   active: false,
-    //   children: [
-    //     {
-    //       path: '/files/list-files',
-    //       title: 'File List',
-    //       type: 'link',
-    //     },
-    //   ],
-    // },
     {
       title: 'Coupon',
       icon: 'users',

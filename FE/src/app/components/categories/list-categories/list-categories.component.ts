@@ -30,15 +30,10 @@ export class ListCategoriesComponent implements OnInit {
       },
       columns: 
       {
-        name: {
-          title: 'Name'
-        },
-        description: {
-          title: 'Description'
-        },
         imageUrl: {
-          title: 'URL',
+          title: 'ImageURL',
           type: 'html',
+          filter: false,
           valuePrepareFunction: (file) => {
             var fileExt = file.split('.').pop();
             if (
@@ -51,7 +46,13 @@ export class ListCategoriesComponent implements OnInit {
             }
             return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
           },
-        }
+        },
+        name: {
+          title: 'Name'
+        },
+        description: {
+          title: 'Description'
+        },
       },
     };
 

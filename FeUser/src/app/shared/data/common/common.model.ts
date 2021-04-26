@@ -2,6 +2,7 @@ export class CommonShare {
     
 }
 
+
 export enum ETypePositionInformation
 {
     BOX_1_4 = 'product-detail', //left
