@@ -59,7 +59,7 @@ namespace Service.UserProductList
                 query = query.Where(it => it.Price > search.MinPrice);
             }
 
-            if(search.Search.IsNotNullOrEmpty() || search.Search.CategoryName.Length > 0)
+            if(search.Search.IsNotNullOrEmpty() && search.Search.CategoryName.IsNotNullOrEmpty())
             {
                 foreach(var i in search.Search.CategoryName.Split(','))
                 {
