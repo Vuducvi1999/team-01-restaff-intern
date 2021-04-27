@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { BlogDetailComponent } from './blogs/blog-detail/blog-detail.component';
-import { BlogsComponent } from './blogs/blogs.component';
-import { CartComponent } from './cart/cart.component';
-import { CheckoutComponent } from './checkout/checkout.component';
-import { HomeComponent } from './home/home.component';
-import { ProductDetailsComponent } from './product/product-details/product-details.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { BlogDetailComponent } from "./blogs/blog-detail/blog-detail.component";
+import { BlogMainComponent } from "./blogs/blog-main/blog-main.component";
+import { CartComponent } from "./cart/cart.component";
+import { CheckoutComponent } from "./checkout/checkout.component";
+import { HomeComponent } from "./home/home.component";
+import { ProductDetailsComponent } from "./product/product-details/product-details.component";
 
-import { ProductListComponent } from './product/product-list/product-list.component';
+import { ProductListComponent } from "./product/product-list/product-list.component";
 
 const routes: Routes = [
   {
@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: "blog",
-    component: BlogsComponent,
+    component: BlogMainComponent,
   },
   {
     path: "product",
@@ -35,13 +35,13 @@ const routes: Routes = [
     component: BlogDetailComponent,
   },
   {
-    path: 'product-details',
-    component: ProductDetailsComponent
+    path: "product-details",
+    component: ProductDetailsComponent,
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PagesRoutingModule { }
+export class PagesRoutingModule {}
