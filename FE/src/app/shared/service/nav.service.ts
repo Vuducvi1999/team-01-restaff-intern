@@ -174,7 +174,7 @@ export class NavService {
       children: [
         {
           path: '/information-website/list-information-website',
-          title: 'Information List',
+          title: 'Information',
           type: 'link',
         },
       ],

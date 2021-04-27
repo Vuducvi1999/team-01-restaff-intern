@@ -19,9 +19,7 @@ export class ListProductsComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private productService: ProductService
-  ) {
-    this.fetch();
-  }
+  ) {    this.fetch();}
 
   public settings = {
     mode: 'external',

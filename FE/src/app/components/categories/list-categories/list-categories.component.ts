@@ -18,6 +18,7 @@ export class ListCategoriesComponent implements OnInit {
   closeResult = '';
   constructor(private modalService: NgbModal,private categoryService:CategoryService) {
     this.fetch();
+    console.log("log constructor");
    }
 
 
@@ -71,6 +72,7 @@ export class ListCategoriesComponent implements OnInit {
       var modalRef =  this.modalService.open(CategoryDetailComponent, {size: 'lg'});
       modalRef.componentInstance.item = item.data;
       return modalRef.result.then(() => {
+              console.log("log here");
               this.fetch();
             }, (reason) => {
               this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -93,6 +95,7 @@ export class ListCategoriesComponent implements OnInit {
       if(!res.hasError)
       {
         this.categories = res.data.results.filter(r => r.isDeleted == false);
+        console.log("log fetch");
       }
     }).catch((er) => {
       

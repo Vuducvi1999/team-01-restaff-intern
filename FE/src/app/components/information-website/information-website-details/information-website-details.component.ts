@@ -17,7 +17,7 @@ export class InformationWebsiteDetailsComponent implements OnInit {
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   public infoWeb: InformationWebModel;
-  public item: any;
+  public item: InformationWebModel;
   submitted = false;
 
 
@@ -52,14 +52,14 @@ export class InformationWebsiteDetailsComponent implements OnInit {
       email: this.infoWebForm.value.email,
       fax: this.infoWebForm.value.fax,
       logo: this.infoWebForm.value.logo,
-      createdBy: this.item ? this.item.createdBy : this.item,
-      createdByName: this.item ? this.item.createdByName : this.item,
-      deletedBy: this.item ? this.item.deletedBy : this.item,
-      deletedByName: this.item ? this.item.deletedByName : this.item,
-      isActive: this.item ? this.item.isActive : this.item,
-      isDeleted: this.item ? this.item.isDeleted : this.item,
-      updatedBy: this.item ? this.item.updatedBy : this.item,
-      updatedByName: this.item ? this.item.updatedByName : this.item,
+      createdBy: this.item ? this.item.createdBy : '',
+      createdByName: this.item ? this.item.createdByName : '',
+      deletedBy: this.item ? this.item.deletedBy : '',
+      deletedByName: this.item ? this.item.deletedByName : '',
+      isActive: this.item ? this.item.isActive : false,
+      isDeleted: this.item ? this.item.isDeleted : false,
+      updatedBy: this.item ? this.item.updatedBy : '',
+      updatedByName: this.item ? this.item.updatedByName : '',
       id: this.item ? this.item.id : '',};
     return this.infoWebService.update(this.infoWeb)
                     .then(() => {
@@ -93,7 +93,7 @@ export class InformationWebsiteDetailsComponent implements OnInit {
     });
 
     this.modalHeader = new ModalHeaderModel();
-    this.modalHeader.title = this.item ? `[Update] ${this.item.name}` : `[Add]`;
+    this.modalHeader.title = this.item ? `[Update] ${this.item.address}` : `[Add]`;
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
   }

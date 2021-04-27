@@ -8,11 +8,12 @@ import { InformationWebsiteDetailsComponent } from '../information-website-detai
 @Component({
   selector: 'app-list-information-website',
   templateUrl: './list-information-website.component.html',
-  styleUrls: ['./list-information-website.component.scss']
+  styleUrls: ['./list-information-website.component.scss'],
+  providers: [InformationWebsiteService]
 })
 export class ListInformationWebsiteComponent implements OnInit {
 
-  public infoWeb: InformationWebModel[];
+  public infoWeb: InformationWebModel;
   closeResult = '';
   constructor(private modalService: NgbModal,private inforWebService:InformationWebsiteService) { }
 
@@ -58,10 +59,10 @@ export class ListInformationWebsiteComponent implements OnInit {
 
 
   fetch() {
-    this.inforWebService.get(null).then((res : ReturnMessage<PageModel<InformationWebModel>>) => {
+    this.inforWebService.get(null).then((res : ReturnMessage<InformationWebModel>) => {
       if(!res.hasError)
       {
-        this.infoWeb = res.data.results;
+        this.infoWeb = res.data;
       }
     }).catch((er) => {
       
@@ -81,6 +82,7 @@ export class ListInformationWebsiteComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.fetch();
   }
 
 }

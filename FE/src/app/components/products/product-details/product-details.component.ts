@@ -18,7 +18,6 @@ import {
   ModalHeaderModel,
   TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
-import { ListCategoriesComponent } from '../../categories/list-categories/list-categories.component';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
   selector: 'app-product-details',

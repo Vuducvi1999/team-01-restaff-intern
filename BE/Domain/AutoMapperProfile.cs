@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using Domain.DTOs.Blogs;
 using Domain.DTOs.ProductsFeUser;
 using Domain.DTOs.Home;
-using Domain.DTOs.DataSeed;
+using Domain.DTOs.InfomationWeb;
 
 namespace Domain
 {
@@ -101,8 +101,9 @@ namespace Domain
             CreateMap<Blog, HomeBlogDTO>().ReverseMap();
 
 
-            //Data Seed
-            CreateMap<DataSeedWebsite, DataSeedDTO>().ReverseMap();
+            //Information Web
+            CreateMap<InformationWebsite, InformationWebDTO>().ReverseMap();
+            CreateMap<InformationWebsite, UpdateInformationWebDTO>().ReverseMap();
         }
     }
 }

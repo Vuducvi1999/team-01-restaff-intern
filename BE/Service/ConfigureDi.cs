@@ -19,7 +19,7 @@ using Service.Home;
 using Service.Header;
 using Service.Footer;
 using Service.UserProductList;
-using Service.DataSeed;
+using Service.InformationWebsiteServices;
 
 namespace Service
 {
@@ -66,8 +66,9 @@ namespace Service
 
             services.AddScoped<IProductDetailsFeService, ProductDetailsFeService>();
 
-            //Data Seed
-            services.AddScoped<IDataSeedService, DataSeedService>();
+            //Information Website
+            services.AddScoped<IInfomationWebService, InformationWebService>();
+
         }
     }
 }

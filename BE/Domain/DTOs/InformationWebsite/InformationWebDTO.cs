@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Domain.DTOs.DataSeed
+namespace Domain.DTOs.InfomationWeb
 {
-    public class UpdateDataSeedDTO : BaseDTO
+    public class InformationWebDTO : BaseDTO
     {
         public string Address { get; set; }
         public string Phone { get; set; }
