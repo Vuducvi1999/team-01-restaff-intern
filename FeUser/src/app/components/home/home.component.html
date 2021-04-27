@@ -1,7 +1,7 @@
 <!-- Home slider start-->
 <section class="p-0">
   <app-slider
-    [sliders]="sliders"
+    [sliders]="banners"
     [textClass]="'text-center'"
     [category]="'fashion'"
     [buttonText]="'shop now'"
@@ -55,6 +55,27 @@
 </section>
 <!-- Product slider End -->
 
+<!-- Parallax banner start-->
+<section class="p-0">
+  <div
+    class="full-banner parallax-banner1 parallax text-center p-left"
+    [ngStyle]="{ 'background-image': 'url(assets/images/parallax/1.jpg)' }"
+  >
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="banner-contain">
+            <h2>2018</h2>
+            <h3>fashion trends</h3>
+            <h4>special offer</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Parallax banner End -->
+
 <!-- Tab product start-->
 <div class="title1 section-t-space">
   <h4>exclusive products</h4>
@@ -95,13 +116,13 @@
               <div class="no-slider row">
                 <ng-container *ngFor="let product of products | slice: 0:8">
                   <div class="product-box">
-                    <app-product-box
+                    <app-product-box-one
                       [product]="product"
                       [currency]="homeService?.Currency"
                       [thumbnail]="true"
                       [cartModal]="true"
                     >
-                    </app-product-box>
+                    </app-product-box-one>
                   </div>
                 </ng-container>
               </div>
@@ -114,13 +135,13 @@
               <div class="no-slider row">
                 <ng-container *ngFor="let product of products | slice: 0:8">
                   <div class="product-box">
-                    <app-product-box
+                    <app-product-box-one
                       [product]="product"
                       [currency]="homeService?.Currency"
                       [thumbnail]="true"
                       [cartModal]="true"
                     >
-                    </app-product-box>
+                    </app-product-box-one>
                   </div>
                 </ng-container>
               </div>
@@ -133,13 +154,13 @@
               <div class="no-slider row">
                 <ng-container *ngFor="let product of products | slice: 0:8">
                   <div class="product-box">
-                    <app-product-box
+                    <app-product-box-one
                       [product]="product"
                       [currency]="homeService?.Currency"
                       [thumbnail]="true"
                       [cartModal]="true"
                     >
-                    </app-product-box>
+                    </app-product-box-one>
                   </div>
                 </ng-container>
               </div>

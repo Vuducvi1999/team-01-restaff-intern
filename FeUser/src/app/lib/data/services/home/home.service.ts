@@ -14,7 +14,7 @@ const state = {
 @Injectable()
 export class HomeService {
   private url = "/api/home";
-  public Currency = { name: "Dollar", currency: "VND", price: 1 }; // Default Currency
+  public Currency = { name: "Dollar", currency: "USD", price: 1 }; // Default Currency
   public OpenCart: boolean = false;
 
   constructor(
@@ -55,6 +55,11 @@ export class HomeService {
   // Get blogs
   getBlogs(request: any = null) {
     const url = this.url + "/blogs";
+    return this.httpClient.getObservable(url, request).toPromise();
+  }
+
+  getBanners(request: any = null) {
+    const url = this.url + "/banners";
     return this.httpClient.getObservable(url, request).toPromise();
   }
 
