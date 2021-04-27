@@ -1,37 +1,51 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from "@angular/core";
+import { Router } from "@angular/router";
 
-import { ProductModel } from 'src/app/lib/data/models';
-import { FileService } from 'src/app/lib/data/services';
-import { ETypeGridLayout, ETypePositionCart, ETypePositionInformation, ETypeSizeImage } from 'src/app/shared/data';
-import { ProductService } from 'src/app/shared/services/product.service';
-import { CartModalComponent } from '../../modal/cart-modal/cart-modal.component';
-import { QuickViewComponent } from '../../modal/quick-view/quick-view.component';
+import { ProductModel } from "src/app/lib/data/models";
+import { ImageModel } from "src/app/lib/data/models/common/image.model";
+import { FileService } from "src/app/lib/data/services";
+import {
+  ETypeGridLayout,
+  ETypePositionCart,
+  ETypePositionInformation,
+  ETypeSizeImage,
+  TypeDisplayImage,
+} from "src/app/shared/data";
+import { ProductService } from "src/app/shared/services/product.service";
+import { CartModalComponent } from "../../modal/cart-modal/cart-modal.component";
+import { QuickViewComponent } from "../../modal/quick-view/quick-view.component";
 
 @Component({
-  selector: 'app-product-box',
-  templateUrl: './product-box.component.html',
-  styleUrls: ['./product-box.component.scss']
+  selector: "app-product-box",
+  templateUrl: "./product-box.component.html",
+  styleUrls: ["./product-box.component.scss"],
 })
 export class ProductBoxComponent implements OnInit, OnChanges {
   @Input() product: ProductModel;
-  @Input() currency: any = 'VND'; // Default Currency
+  @Input() currency: any = "VND"; // Default Currency
   @Input() thumbnail: boolean = false; // Default False
   @Input() onHowerChangeImage: boolean = false; // Default False
   @Input() cartModal: boolean = false; // Default False
   @Input() loader: boolean = false;
   @Input() typePositionInformation: string = ETypePositionInformation.BOX_3_5;
-  @Input() typePositionCart : string = ETypePositionCart.BOX_2;
-  @Input() typeSizeImage : string = ETypeSizeImage.NORMAL;
-  @Input() typeGridLayout : string = ETypeGridLayout.NORMAL;
+  @Input() typePositionCart: string = ETypePositionCart.BOX_2;
+  @Input() typeSizeImage: string = ETypeSizeImage.NORMAL;
+  @Input() typeGridLayout: string = ETypeGridLayout.NORMAL;
 
   @ViewChild("quickView") QuickView: QuickViewComponent;
   @ViewChild("cartModal") CartModal: CartModalComponent;
 
   public ImageSrc: string;
+  typeDisplayImage = TypeDisplayImage;
 
-  constructor(private productService: ProductService,
-    private router: Router) {}
+  constructor(private productService: ProductService, private router: Router) {}
   ngOnChanges(changes: SimpleChanges): void {
     this.updateTypeGridLayout();
   }
@@ -44,30 +58,25 @@ export class ProductBoxComponent implements OnInit, OnChanges {
     }
   }
 
-  updateTypeGridLayout()
-  {
-    if(this.typeGridLayout == ETypeGridLayout.VERYSMALL) //ListViewLayout
-    {
+  updateTypeGridLayout() {
+    if (this.typeGridLayout == ETypeGridLayout.VERYSMALL) {
+      //ListViewLayout
       this.typeSizeImage = ETypeSizeImage.NORMAL;
     }
 
-    if(this.typeGridLayout == ETypeGridLayout.SMALL)
-    {
+    if (this.typeGridLayout == ETypeGridLayout.SMALL) {
       this.typeSizeImage = ETypeSizeImage.SMALL;
     }
 
-    if(this.typeGridLayout == ETypeGridLayout.NORMAL)
-    {
+    if (this.typeGridLayout == ETypeGridLayout.NORMAL) {
       this.typeSizeImage = ETypeSizeImage.NORMAL;
     }
 
-    if(this.typeGridLayout == ETypeGridLayout.MEDIUM)
-    {
+    if (this.typeGridLayout == ETypeGridLayout.MEDIUM) {
       this.typeSizeImage = ETypeSizeImage.MEDIUM;
     }
 
-    if(this.typeGridLayout == ETypeGridLayout.LARGE)
-    {
+    if (this.typeGridLayout == ETypeGridLayout.LARGE) {
       this.typeSizeImage = ETypeSizeImage.LARGE;
     }
   }
@@ -117,10 +126,11 @@ export class ProductBoxComponent implements OnInit, OnChanges {
     return FileService.getLinkFile(fileName);
   }
 
-  getItem(item: ProductModel){
-    localStorage.setItem('item', JSON.stringify(item));
+  getItem(item: ProductModel) {
+    localStorage.setItem("item", JSON.stringify(item));
     const id = item ? item.id : null;
     const url = `/product-details?${item.name}`;
     this.router.navigateByUrl(url);
   }
+  
 }
