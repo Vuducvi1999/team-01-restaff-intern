@@ -19,6 +19,7 @@ using Service.Home;
 using Service.Header;
 using Service.Footer;
 using Service.UserProductList;
+using Service.Customers;
 
 namespace Service
 {
@@ -58,6 +59,7 @@ namespace Service
 
             services.AddScoped<IHomeService, HomeService>();
 
+            services.AddScoped<ICustomerService, CustomerService>();
 
             //FeUser
 

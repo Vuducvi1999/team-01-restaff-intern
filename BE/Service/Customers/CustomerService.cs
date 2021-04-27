@@ -29,7 +29,7 @@ namespace Service.Customers
         {
             try
             {
-                if(!StringExtension.CleanString(model))
+                if(StringExtension.CleanString(model))
                 {
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
                 }
