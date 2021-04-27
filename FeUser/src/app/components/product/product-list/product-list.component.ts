@@ -6,7 +6,6 @@ import {
   PageModel,
   ProductModel,
   ReturnMessage,
-  SearchPaganationDTO,
 } from "src/app/lib/data/models";
 import { HomeService } from "src/app/lib/data/services/home/home.service";
 import { ProductListService } from "src/app/lib/data/services/productlist/productlist.service";
@@ -34,6 +33,7 @@ export class ProductListComponent implements OnInit {
   public mobileSidebar: boolean = false;
   public finished: boolean = false;
   public params;
+  public searchName: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,6 +46,10 @@ export class ProductListComponent implements OnInit {
       console.log(params.search);
       this.products = [];
       this.params = {};
+      if (params.search != null) {
+        this.params.searchName = params.search;
+      }
+      console.log(this.params.searchName);
       this.tags = [];
       this.finished = false;
 
@@ -72,7 +76,6 @@ export class ProductListComponent implements OnInit {
       this.sortBy != ETypeSort.NULL
         ? (this.params.typeSort = this.sortBy)
         : delete this.params.typeSort;
-
       this.addItems();
     });
   }
@@ -88,9 +91,8 @@ export class ProductListComponent implements OnInit {
     this.productListService
       .getPageProduct({ params: this.params })
       .then((res: ReturnMessage<PageModel<ProductModel>>) => {
-        console.log(res.data);
         this.pageModel = res.data;
-
+        console.log(res.data);
         this.params.pageIndex = res.data.pageIndex;
         this.params.pageSize = res.data.pageSize;
 

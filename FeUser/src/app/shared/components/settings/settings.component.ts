@@ -23,6 +23,7 @@ export class SettingsComponent implements OnInit {
   public products: ProductModel[] = [];
   public search: boolean = false;
   public name: string;
+  public value: any;
 
   public languages = [
     {
@@ -107,22 +108,8 @@ export class SettingsComponent implements OnInit {
       this.router.navigate(["product"], {
         queryParams: { search: event.target?.value },
       });
+      console.log(event.target?.value);
       this.search = false;
     }
   }
-  // getProduct() {
-  //   this.productService
-  //     .findByName(this.name)
-  //     .then((res: ReturnMessage<ProductModel[]>) => {
-  //       if (!res.hasError) {
-  //         this.products = res.data;
-  //         console.log(res.data);
-  //       }
-  //     })
-  //     .catch((er) => {
-  //       if (er.error.hasError) {
-  //         console.log(er.error.message);
-  //       }
-  //     });
-  // }
 }

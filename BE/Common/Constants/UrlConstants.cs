@@ -49,7 +49,6 @@ namespace Common.Constants
         public const string BaseProductList = BaseApi + "/user/productlist";
 
         public const string Product = "product";
-        public const string GetProduct = BaseProduct + "/{name}";
         public const string Category = "category";
         public const string BaseHome = BaseApi + "/home";
 

@@ -67,12 +67,5 @@ namespace BE.Controllers
             var result = _productService.Delete(model);
             return CommonResponse(result);
         }
-
-        [HttpGet(UrlConstants.GetProduct)]
-        public IActionResult Search(string name)
-        {
-            var result = _productService.GetByName(name);
-            return CommonResponse(result);
-        }
     }
 }
