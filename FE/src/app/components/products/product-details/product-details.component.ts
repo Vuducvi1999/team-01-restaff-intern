@@ -32,7 +32,7 @@ export class ProductDetailsComponent implements OnInit {
   public modalFooter: ModalFooterModel;
   public product: ProductModel;
   public categories: CategoryModel[];
-  public item: any;
+  public item: ProductModel;
 
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];
@@ -57,9 +57,8 @@ export class ProductDetailsComponent implements OnInit {
     this.loadItem();
     if (this.item) {
       this.fileURL = [];
-      console.log(this.item.imageUrl);
       this.item.imageUrl.split(',').forEach((it) => {
-        this.fileURL.push(FileService.getLinkFile(it));
+        this.fileURL.push(it);
       });
     }
   }
@@ -75,11 +74,6 @@ export class ProductDetailsComponent implements OnInit {
           this.categories = res.data.results.filter(
             (r) => r.isDeleted == false
           );
-
-          // //default value category name equal the first element of array categories
-          // this.productsForm.controls.categoryName.setValue(this.categories[0], {
-          //   onlySelf: true,
-          // });
         }
       })
       .catch((er) => {
@@ -93,6 +87,7 @@ export class ProductDetailsComponent implements OnInit {
       window.alert('Invalid Form !');
       return;
     }
+    this.submitted = true;
     this.product = {
       name: this.productsForm.value.name,
       description: this.productsForm.value.description,
@@ -107,17 +102,17 @@ export class ProductDetailsComponent implements OnInit {
       hasDisplayHomePage: this.productsForm.value.hasDisplayHomePage,
       isImportant: this.productsForm.value.isImportant,
       id: this.item ? this.item.id : '',
-      createdBy: this.item ? this.item.createdBy : this.item,
-      createdByName: this.item ? this.item.createdByName : this.item,
-      deletedBy: this.item ? this.item.deletedBy : this.item,
-      deletedByName: this.item ? this.item.deletedByName : this.item,
-      isActive: this.item ? this.item.isActive : this.item,
-      isDeleted: this.item ? this.item.isDeleted : this.item,
-      updatedBy: this.item ? this.item.updatedBy : this.item,
-      updatedByName: this.item ? this.item.updatedByName : this.item,
-      files: this.modalFile.listFile,
+      createdBy: this.item ? this.item.createdBy :'',
+      createdByName: this.item ? this.item.createdByName : '',
+      deletedBy: this.item ? this.item.deletedBy : '',
+      deletedByName: this.item ? this.item.deletedByName : '',
+      isActive: this.item ? this.item.isActive : false,
+      isDeleted: this.item ? this.item.isDeleted : false,
+      updatedBy: this.item ? this.item.updatedBy : '',
+      updatedByName: this.item ? this.item.updatedByName : '',
+      files: this.modalFile.listFile
     };
-    this.submitted = true;
+
     return this.productService
       .save(this.product)
       .then(() => {
@@ -130,24 +125,33 @@ export class ProductDetailsComponent implements OnInit {
 
   loadItem() {
     this.productsForm = this.formBuilder.group({
-      name: [this.item ? this.item.name : '', [Validators.required]],
+      name: [this.item ? this.item.name : '', 
+      [Validators.required, Validators.pattern('[a-zA-Z0-9 ]*')]
+    ],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required],
+        [Validators.required, Validators.pattern('[a-zA-Z0-9 ]*')]
       ],
       contentHTML: [
         this.item ? this.item.contentHTML : '',
-        [Validators.required],
+        [Validators.required]
       ],
       imageUrl: [this.item ? this.item.imageUrl : ''],
-      price: [this.item ? this.item.price : 0, [Validators.required]],
+      price: [this.item ? this.item.price : 0,
+         [Validators.required]],
       categoryName: [
         this.item ? this.item.categoryId : '',
-        [Validators.required],
+        [Validators.required]
       ],
       displayOrder: [
         this.item ? this.item.displayOrder : 0,
-        [Validators.required],
+        [Validators.required]
+      ],
+      hasDisplayHomePage: [
+        this.item ? this.item.hasDisplayHomePage : false, 
+      ],
+      isImportant: [
+        this.item ? this.item.isImportant : false,
       ],
       hasDisplayHomePage: [this.item ? this.item.hasDisplayHomePage : false],
       isImportant: [this.item ? this.item.isImportant : false],

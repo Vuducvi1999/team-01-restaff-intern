@@ -9,7 +9,7 @@
           <ng2-smart-table
             [settings]="settings"
             [(source)]="blogs"
-            (create)="openDetails($event)"
+            (create)="openDetails(null)"
             (delete)="delete($event)"
             (edit)="openDetails($event)"
           >

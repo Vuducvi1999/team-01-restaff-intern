@@ -51,32 +51,13 @@ export class BlogsDetailComponent implements OnInit {
   }
   loadFormItem() {
     this.blogForm = this.formBuilder.group({
-      title: [
-        this.item ? this.item.title : '',
-        [
-          Validators.required,
-          Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`),
-        ],
-      ],
-      shortDes: [
-        this.item ? this.item.shortDes : '',
-        [
-          Validators.required,
-          Validators.pattern(`^[A-Za-z0-9]+[A-Za-z0-9 ]{0,}$`),
-        ],
-      ],
+      title: [this.item ? this.item.title : '', Validators.required],
+      shortDes: [this.item ? this.item.shortDes : '', Validators.required],
       contentHTML: [
         this.item ? this.item.contentHTML : '',
         Validators.required,
       ],
       imageUrl: [this.item ? this.item.imageUrl : ''],
-      createdByName: [
-        this.item ? this.item.createdByName : '',
-        [
-          Validators.required,
-          Validators.pattern(`^[A-Za-z0-9]+[A-Za-z0-9 ]{0,}$`),
-        ],
-      ],
     });
   }
 
@@ -90,12 +71,12 @@ export class BlogsDetailComponent implements OnInit {
 
   saveBlog(event: any) {
     this.blog = {
-      title: this.blogForm.controls.title.value,
-      shortDes: this.blogForm.controls.shortDes.value,
+      title: this.blogForm.controls.title.value.trim(),
+      shortDes: this.blogForm.controls.shortDes.value.trim(),
       contentHTML: this.blogForm.controls.contentHTML.value,
       imageUrl: this.blogForm.controls.imageUrl.value,
-      createdByName: this.blogForm.controls.createdByName.value,
       id: this.item ? this.item.id : '',
+      createdByName: this.item ? this.item.createdByName : '',
     };
 
     this.submitted = true;
@@ -114,6 +95,7 @@ export class BlogsDetailComponent implements OnInit {
           }
         });
     }
+    console.log(this.blog);
   }
 
   close(event: any) {
