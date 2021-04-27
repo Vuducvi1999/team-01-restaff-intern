@@ -10,6 +10,7 @@ namespace Service.PageContents
     public interface IPageContentService
     {
         public ReturnMessage<List<PageContentDTO>> GetList();
+        public ReturnMessage<PageContentDTO> GetById(Guid id);
         public ReturnMessage<PageContentDTO> Update(UpdatePageContentDTO dataUpdate);
     }
 }

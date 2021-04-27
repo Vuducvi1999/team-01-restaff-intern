@@ -6,6 +6,7 @@ using Service.Auth;
 using Service.Files;
 using Service.Home;
 using Service.PageContents;
+using System;
 
 namespace BE.ControllersFeUser
 {
@@ -24,6 +25,14 @@ namespace BE.ControllersFeUser
         public IActionResult Get()
         {
             var result = _pageContentService.GetList();
+            return CommonResponse(result);
+        }
+
+        [Route(UrlConstants.GetPageContent)]
+        [HttpGet]
+        public IActionResult GetById(Guid id)
+        {
+            var result = _pageContentService.GetById(id);
             return CommonResponse(result);
         }
 

@@ -9,7 +9,6 @@ import {
 import { Router } from "@angular/router";
 
 import { ProductModel } from "src/app/lib/data/models";
-import { ImageModel } from "src/app/lib/data/models/common/image.model";
 import { FileService } from "src/app/lib/data/services";
 import {
   ETypeGridLayout,
@@ -132,5 +131,4 @@ export class ProductBoxComponent implements OnInit, OnChanges {
     const url = `/product-details?${item.name}`;
     this.router.navigateByUrl(url);
   }
-  
 }

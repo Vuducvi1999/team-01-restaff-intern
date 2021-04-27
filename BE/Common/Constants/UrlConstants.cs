@@ -66,5 +66,6 @@ namespace Common.Constants
 
         // Page Content
         public const string BasePageContent= BaseApi + "/page-content";
+        public const string GetPageContent = BaseApi + "/page-content/{id}";
     }
 }

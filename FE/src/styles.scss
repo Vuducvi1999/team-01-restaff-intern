@@ -1,4 +1,9 @@
 .ck-editor__editable {
   min-height: 500px;
-  min-width: 1000px;
+}
+
+.ck-editor {
+  transition: 0.4s;
+}
+@keyframes ck-editor-change-size {
 }

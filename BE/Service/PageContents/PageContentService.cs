@@ -38,6 +38,22 @@ namespace Service.PageContents
             }
         }
 
+        public ReturnMessage<PageContentDTO> GetById(Guid id)
+
+        {
+            try
+            {
+                var resultEntity = _pageContentRepository.Find(id);
+                var data = _mapper.Map<PageContent, PageContentDTO>(resultEntity);
+                var result = new ReturnMessage<PageContentDTO>(false, data, MessageConstants.ListSuccess);
+                return result;
+            }
+            catch
+            {
+                return new ReturnMessage<PageContentDTO>(true, null, MessageConstants.Error);
+            }
+        }
+
         public ReturnMessage<PageContentDTO> Update(UpdatePageContentDTO model)
         {
             try

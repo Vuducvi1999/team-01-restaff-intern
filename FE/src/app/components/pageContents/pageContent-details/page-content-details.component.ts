@@ -19,14 +19,12 @@ import {
 })
 export class PageContentDetailComponent implements OnInit {
   public pageContentForm: FormGroup;
-  public permissionForm: FormGroup;
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   public pageContent: PageContentModel;
   @Input() item;
 
   public modalFile: ModalFile;
-  public fileURL: (String | ArrayBuffer)[];
   public editor = ClassicEditor;
 
   constructor(
@@ -42,10 +40,6 @@ export class PageContentDetailComponent implements OnInit {
 
   ngOnInit() {
     this.loadItem();
-    if (this.item) {
-      this.fileURL = [];
-      this.fileURL.push(this.item.imageUrl);
-    }
   }
 
   loadItem() {
@@ -93,4 +87,6 @@ export class PageContentDetailComponent implements OnInit {
   close(event: any) {
     this.ngbActiveModal.close();
   }
+
+  hideLabelDes = false;
 }

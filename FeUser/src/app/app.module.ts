@@ -22,10 +22,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PagesComponent,
-  ],
+  declarations: [AppComponent, PagesComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: "serverApp" }),
     BrowserAnimationsModule,
