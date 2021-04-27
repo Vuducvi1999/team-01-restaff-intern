@@ -19,6 +19,7 @@ using Service.Home;
 using Service.Header;
 using Service.Footer;
 using Service.UserProductList;
+using Service.PageContents;
 
 namespace Service
 {
@@ -64,6 +65,8 @@ namespace Service
             services.AddScoped<IUserProductListService, UserProductListService>();
 
             services.AddScoped<IProductDetailsFeService, ProductDetailsFeService>();
+            services.AddScoped<IPageContentService,PageContentService>();
+
         }
     }
 }

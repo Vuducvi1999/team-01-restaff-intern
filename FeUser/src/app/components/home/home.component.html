@@ -1,10 +1,11 @@
 <!-- Home slider start-->
 <section class="p-0">
-  <app-slider 
-    [sliders]="banners" 
+  <app-slider
+    [sliders]="banners"
     [textClass]="'text-center'"
     [category]="'fashion'"
-    [buttonText]="'shop now'"> 
+    [buttonText]="'shop now'"
+  >
   </app-slider>
 </section>
 <!-- Home slider End -->
@@ -18,8 +19,9 @@
     <div class="col-lg-6 offset-lg-3">
       <div class="product-para">
         <p class="text-center">
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry, 
-          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry, Lorem Ipsum has been the industry's standard dummy text ever
+          since the 1500s.
         </p>
       </div>
     </div>
@@ -29,15 +31,19 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <owl-carousel-o class="product-m no-arrow" [options]="ProductSliderConfig">
-          <ng-container *ngFor="let product of products | slice:0:16">
+        <owl-carousel-o
+          class="product-m no-arrow"
+          [options]="ProductSliderConfig"
+        >
+          <ng-container *ngFor="let product of products | slice: 0:16">
             <ng-template carouselSlide>
               <div class="product-box">
-                <app-product-box 
-                  [product]="product" 
+                <app-product-box
+                  [product]="product"
                   [currency]="homeService?.Currency"
                   [thumbnail]="true"
-                  [cartModal]="true">
+                  [cartModal]="true"
+                >
                 </app-product-box>
               </div>
             </ng-template>
@@ -51,8 +57,10 @@
 
 <!-- Parallax banner start-->
 <section class="p-0">
-  <div class="full-banner parallax-banner1 parallax text-center p-left"
-    [ngStyle]="{'background-image': 'url(assets/images/parallax/1.jpg)'}">
+  <div
+    class="full-banner parallax-banner1 parallax text-center p-left"
+    [ngStyle]="{ 'background-image': 'url(assets/images/parallax/1.jpg)' }"
+  >
     <div class="container">
       <div class="row">
         <div class="col">
@@ -77,19 +85,24 @@
   <div class="container">
     <div class="row">
       <div class="col theme-tab">
-        <ngb-tabset [justify]="'center'" [type]="'pills'" class="tabs tab-title">
+        <ngb-tabset
+          [justify]="'center'"
+          [type]="'pills'"
+          class="tabs tab-title"
+        >
           <!-- New Products -->
           <ngb-tab>
             <ng-template ngbTabTitle>New Products</ng-template>
             <ng-template ngbTabContent>
               <div class="no-slider row">
-                <ng-container *ngFor="let product of products | slice:0:8">
+                <ng-container *ngFor="let product of products | slice: 0:8">
                   <div class="product-box">
-                    <app-product-box 
-                      [product]="product" 
+                    <app-product-box
+                      [product]="product"
                       [currency]="homeService?.Currency"
                       [thumbnail]="true"
-                      [cartModal]="true">
+                      [cartModal]="true"
+                    >
                     </app-product-box>
                   </div>
                 </ng-container>
@@ -101,13 +114,14 @@
             <ng-template ngbTabTitle>Best Seller</ng-template>
             <ng-template ngbTabContent>
               <div class="no-slider row">
-                <ng-container *ngFor="let product of products | slice:0:8">
+                <ng-container *ngFor="let product of products | slice: 0:8">
                   <div class="product-box">
-                    <app-product-box-one 
-                      [product]="product" 
+                    <app-product-box-one
+                      [product]="product"
                       [currency]="homeService?.Currency"
                       [thumbnail]="true"
-                      [cartModal]="true">
+                      [cartModal]="true"
+                    >
                     </app-product-box-one>
                   </div>
                 </ng-container>
@@ -119,13 +133,14 @@
             <ng-template ngbTabTitle>Featured Products</ng-template>
             <ng-template ngbTabContent>
               <div class="no-slider row">
-                <ng-container *ngFor="let product of products | slice:0:8">
+                <ng-container *ngFor="let product of products | slice: 0:8">
                   <div class="product-box">
-                    <app-product-box-one 
-                      [product]="product" 
+                    <app-product-box-one
+                      [product]="product"
                       [currency]="homeService?.Currency"
                       [thumbnail]="true"
-                      [cartModal]="true">
+                      [cartModal]="true"
+                    >
                     </app-product-box-one>
                   </div>
                 </ng-container>
@@ -137,19 +152,20 @@
             <ng-template ngbTabTitle>On Sale</ng-template>
             <ng-template ngbTabContent>
               <div class="no-slider row">
-                <ng-container *ngFor="let product of products | slice:0:8">
+                <ng-container *ngFor="let product of products | slice: 0:8">
                   <div class="product-box">
-                    <app-product-box-one 
-                      [product]="product" 
+                    <app-product-box-one
+                      [product]="product"
                       [currency]="homeService?.Currency"
                       [thumbnail]="true"
-                      [cartModal]="true">
+                      [cartModal]="true"
+                    >
                     </app-product-box-one>
                   </div>
                 </ng-container>
               </div>
             </ng-template>
-          </ngb-tab>          
+          </ngb-tab>
         </ngb-tabset>
       </div>
     </div>
@@ -199,5 +215,3 @@
 <!-- Instagram section End -->
 
 <app-newsletter></app-newsletter>
-
-

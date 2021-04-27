@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using Domain.DTOs.Blogs;
 using Domain.DTOs.ProductsFeUser;
 using Domain.DTOs.Home;
+using Domain.DTOs.PageContent;
 
 namespace Domain
 {
@@ -99,6 +100,10 @@ namespace Domain
                  .ForMember(t => t.CategoryName, k => k.MapFrom(h => h.Category.Name)).ReverseMap();
             CreateMap<Blog, HomeBlogDTO>().ReverseMap();
             CreateMap<Banner, HomeBannerDTO>().ReverseMap();
+
+            // PageContent
+            CreateMap<PageContent, PageContentDTO>().ReverseMap();
+            CreateMap<PageContent, UpdatePageContentDTO>().ReverseMap();
 
         }
     }

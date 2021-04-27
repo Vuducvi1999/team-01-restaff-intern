@@ -63,5 +63,8 @@ namespace Common.Constants
         public const string TopBlog = BaseBlog + "/topblog";
         public const string RecentBlog = BaseBlog + "/recentblog";
         public const string GetBlog = BaseBlog + "/{id}";
+
+        // Page Content
+        public const string BasePageContent= BaseApi + "/page-content";
     }
 }

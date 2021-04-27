@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.Constants;
+using Domain.Entities;
+using Infrastructure.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -14,8 +17,15 @@ namespace Data
             {
                 if (ctx == null)
                     throw new ArgumentNullException(nameof(ctx));
-                if (!await ctx.Users.AnyAsync())
+                if (!await ctx.PageContents.AnyAsync())
                 {
+                    foreach (var item in PageContentConstants.ListPageContents)
+                    {
+                        item.Value.ObjectState = ObjectState.Added;
+                        item.Value.Id = item.Key;
+                        ctx.PageContents.Add(item.Value);
+                        ctx.SaveChanges();
+                    }
                 }
 
             }

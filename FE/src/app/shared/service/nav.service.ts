@@ -166,6 +166,19 @@ export class NavService {
         },
       ],
     },
+    {
+      title: 'Page Content',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/page-content/list-page-content',
+          title: 'Page Content List',
+          type: 'link',
+        },
+      ],
+    },
   ];
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 }

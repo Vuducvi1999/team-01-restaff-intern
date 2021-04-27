@@ -92,4 +92,14 @@ export const content: Routes = [
       breadcrumb: 'Blogs',
     },
   },
+  {
+    path: 'page-content',
+    loadChildren: () =>
+      import('../../components/pageContents/pageContent.module').then(
+        (m) => m.PageContentModule
+      ),
+    data: {
+      breadcrumb: 'page-content',
+    },
+  },
 ];
