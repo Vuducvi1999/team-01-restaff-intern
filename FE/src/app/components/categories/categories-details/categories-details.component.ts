@@ -24,12 +24,12 @@ export class CategoryDetailComponent implements OnInit {
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   public category: CategoryModel;
-
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];
-
   public item: any;
   submitted = false;
+
+  
   ngOnChanges(changes: SimpleChanges): void {}
 
   constructor(
@@ -42,6 +42,8 @@ export class CategoryDetailComponent implements OnInit {
     this.modalFile.multiBoolen = false;
     this.modalFile.enityType = EntityType.CATEGORY;
   }
+
+
   get categoryFormsControl() {
     return this.categoriesForm.controls;
   }
@@ -61,22 +63,18 @@ export class CategoryDetailComponent implements OnInit {
         isActive: this.item ? this.item.isActive : this.item,
         isDeleted: this.item ? this.item.isDeleted : this.item,
         updatedBy: this.item ? this.item.updatedBy : this.item,
-          updatedByName: this.item ? this.item.updatedByName : this.item,
-          files: this.modalFile.listFile,
+        updatedByName: this.item ? this.item.updatedByName : this.item,
+        files: this.modalFile.listFile,
         id: this.item ? this.item.id : '',};
-      return this.categoryService.save(this.category)
-                      .then(() => {
+      return this.categoryService
+                .save(this.category)              
+                .then(() => {
                           this.ngbActiveModal.close();
                       }).catch((er) => {
-                        if (er.error.hasError) {
-                          console.log(er.error.message)
-                        }
+                          console.log(er)
                       });
     }
-
-  // if (this.categoriesForm.invalid) {   return;
-  // }
-
+    
   loadItem() {
     this.categoriesForm = this.formBuilder.group({
       name: [this.item ? this.item.name : '',

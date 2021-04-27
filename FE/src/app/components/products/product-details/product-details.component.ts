@@ -38,6 +38,7 @@ export class ProductDetailsComponent implements OnInit {
   submitted = false;
 
   public editor = ClassicEditor;
+  ngOnChanges(changes: SimpleChanges): void { }
   constructor(
     private formBuilder: FormBuilder,
     private productService: ProductService,
@@ -49,18 +50,9 @@ export class ProductDetailsComponent implements OnInit {
     this.modalFile.multiBoolen = true;
     this.modalFile.enityType = EntityType.PRODUCT;
   }
-  ngOnChanges(changes: SimpleChanges): void { }
+  
 
-  ngOnInit() {
-    this.fetchCategory();
-    this.loadItem();
-    if (this.item) {
-      this.fileURL = [];
-      this.item.imageUrl.split(',').forEach((it) => {
-        this.fileURL.push(it);
-      });
-    }
-  }
+
   get productFormsControl() {
     return this.productsForm.controls;
   }
@@ -113,15 +105,13 @@ export class ProductDetailsComponent implements OnInit {
     };
 
     return this.productService
-      .save(this.product)
-      .then(() => {
-        this.ngbActiveModal.close();
-      })
-      .catch((er) => {
-        
-          console.log(er);
-        
-      });
+              .save(this.product)
+              .then(() => {
+                        this.ngbActiveModal.close();
+                      })
+                      .catch((er) => {               
+                          console.log(er);
+                      });
   }
 
   loadItem() {
@@ -166,6 +156,16 @@ export class ProductDetailsComponent implements OnInit {
     this.ngbActiveModal.close();
   }
 
+  ngOnInit() {
+    this.fetchCategory();
+    this.loadItem();
+    if (this.item) {
+      this.fileURL = [];
+      this.item.imageUrl.split(',').forEach((it) => {
+        this.fileURL.push(it);
+      });
+    }
+  }
   onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {
     if (event == null) {
       return;
