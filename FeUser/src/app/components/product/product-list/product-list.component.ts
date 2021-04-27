@@ -41,6 +41,7 @@ export class ProductListComponent implements OnInit {
   ) {
     // Get Query params..
     this.route.queryParams.subscribe((params) => {
+      
       this.products = [];
       this.params = {};
       this.tags = [];
@@ -216,7 +217,7 @@ export class ProductListComponent implements OnInit {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: params,
-      skipLocationChange: false, // do trigger navigation
+      skipLocationChange: false,
     });
     // .finally(() => {
     //   this.viewScroller.setOffset([120, 120]);
