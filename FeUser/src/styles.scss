@@ -1,1 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
+.productImage {
+  max-height: 300px;
+  max-width: fit-content;
+}
+
+.blogImage {
+  max-height: 300px;
+  max-width: fit-content;
+}
+
+.image-wrapper {
+  display: flex;
+  justify-content: center;
+}
