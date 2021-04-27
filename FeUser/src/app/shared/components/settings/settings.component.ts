@@ -1,67 +1,88 @@
-import { Component, OnInit, Injectable, PLATFORM_ID, Inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { Observable } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
-import { ProductService } from "../../services/product.service";
-import { FileService } from 'src/app/lib/data/services';
-import { ProductModel } from 'src/app/lib/data/models';
-import { CartService } from 'src/app/lib/data/services/cart/cart.service';
+import {
+  Component,
+  OnInit,
+  Injectable,
+  PLATFORM_ID,
+  Inject,
+} from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
+import { Observable } from "rxjs";
+import { TranslateService } from "@ngx-translate/core";
+import { FileService } from "src/app/lib/data/services";
+import { ProductModel, ReturnMessage } from "src/app/lib/data/models";
+import { CartService } from "src/app/lib/data/services/cart/cart.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ProductService } from "src/app/lib/data/services/products/product.service";
+import { ConsoleReporter } from "jasmine";
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss'],
-  providers: [CartService]
+  selector: "app-settings",
+  templateUrl: "./settings.component.html",
+  styleUrls: ["./settings.component.scss"],
+  providers: [CartService],
 })
 export class SettingsComponent implements OnInit {
-
   public products: ProductModel[] = [];
   public search: boolean = false;
+  public name: string;
 
-  public languages = [{
-    name: 'English',
-    code: 'en'
-  }, {
-    name: 'French',
-    code: 'fr'
-  }];
+  public languages = [
+    {
+      name: "English",
+      code: "en",
+    },
+    {
+      name: "French",
+      code: "fr",
+    },
+  ];
 
-  public currencies = [{
-    name: 'Euro',
-    currency: 'EUR',
-    price: 0.90 // price of euro
-  }, {
-    name: 'Rupees',
-    currency: 'INR',
-    price: 70.93 // price of inr
-  }, {
-    name: 'Pound',
-    currency: 'GBP',
-    price: 0.78 // price of euro
-  }, {
-    name: 'Dollar',
-    currency: 'USD',
-    price: 1 // price of usd
-  }]
+  public currencies = [
+    {
+      name: "Euro",
+      currency: "EUR",
+      price: 0.9, // price of euro
+    },
+    {
+      name: "Rupees",
+      currency: "INR",
+      price: 70.93, // price of inr
+    },
+    {
+      name: "Pound",
+      currency: "GBP",
+      price: 0.78, // price of euro
+    },
+    {
+      name: "Dollar",
+      currency: "USD",
+      price: 1, // price of usd
+    },
+  ];
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
     private translate: TranslateService,
-    public cartService: CartService) {
-    this.cartService.cartItems.subscribe(response => this.products = response);
+    public cartService: CartService,
+    public router: Router,
+    private activatedRoute: ActivatedRoute // private productService: ProductService
+  ) {
+    this.cartService.cartItems.subscribe(
+      (response) => (this.products = response)
+    );
   }
 
   ngOnInit(): void {
+    this.getRoute();
   }
 
-
   searchToggle() {
-
     this.search = !this.search;
   }
 
   changeLanguage(code) {
     if (isPlatformBrowser(this.platformId)) {
-      this.translate.use(code)
+      this.translate.use(code);
     }
   }
 
@@ -76,4 +97,34 @@ export class SettingsComponent implements OnInit {
   getImage(fileName: string) {
     return FileService.getLinkFile(fileName);
   }
+
+  getRoute() {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.name = params["name"];
+    });
+  }
+
+  onSearch(event: KeyboardEvent) {
+    if (event.code == "Enter") {
+      this.router.navigate(["product"], {
+        queryParams: { search: event.target?.value },
+      });
+      this.search = false;
+    }
+  }
+  // getProduct() {
+  //   this.productService
+  //     .findByName(this.name)
+  //     .then((res: ReturnMessage<ProductModel[]>) => {
+  //       if (!res.hasError) {
+  //         this.products = res.data;
+  //         console.log(res.data);
+  //       }
+  //     })
+  //     .catch((er) => {
+  //       if (er.error.hasError) {
+  //         console.log(er.error.message);
+  //       }
+  //     });
+  // }
 }

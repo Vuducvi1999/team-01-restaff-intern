@@ -17,7 +17,7 @@ import { ETypeGridLayout } from "src/app/shared/data";
   selector: "app-product-list",
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.scss"],
-  providers: [HomeService,ProductListService],
+  providers: [HomeService, ProductListService],
 })
 export class ProductListComponent implements OnInit {
   public grid: string = ETypeGridLayout.NORMAL;
@@ -43,7 +43,7 @@ export class ProductListComponent implements OnInit {
   ) {
     // Get Query params..
     this.route.queryParams.subscribe((params) => {
-      
+      console.log(params);
       this.products = [];
       this.params = {};
       this.tags = [];
@@ -77,8 +77,7 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   addItems() {
     if (this.pageModel?.totalItem == this.products.length) {

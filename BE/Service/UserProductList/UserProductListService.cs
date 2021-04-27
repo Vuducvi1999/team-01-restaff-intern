@@ -59,14 +59,6 @@ namespace Service.UserProductList
                 query = query.Where(it => it.Price > search.MinPrice);
             }
 
-            if(search.Search.IsNotNullOrEmpty() && search.Search.CategoryName.IsNotNullOrEmpty())
-            {
-                foreach(var i in search.Search.CategoryName.Split(','))
-                {
-                    query = query.Where(it => it.Category.Name.Contains(i));
-                }
-            }
-
             if (search.TypeSort.Equals((int)ETypeSort.AZ))
             {
                 query = query.OrderBy(t => t.Name.Length).ThenBy(t => t.Name);
@@ -82,6 +74,19 @@ namespace Service.UserProductList
             if (search.TypeSort.Equals((int)ETypeSort.PRICEHIGH))
             {
                 query = query.OrderByDescending(t => t.Price).ThenBy(t => t.Name.Length).ThenBy(t => t.Name);
+            }
+
+            if (search.Search.IsNotNullOrEmpty() && search.Search.CategoryName.IsNotNullOrEmpty())
+            {
+                foreach (var i in search.Search.CategoryName.Split(','))
+                {
+                    query = query.Where(it => it.Category.Name.Contains(i));
+                }
+            }
+
+            if (search.Search.IsNotNullOrEmpty())
+            {
+                query = query.Where(it => it.Name.Contains(search.Search.Name));
             }
 
             var entityPage = new PaginatedList<Product>(query, search.PageSize * search.PageIndex, search.PageSize);

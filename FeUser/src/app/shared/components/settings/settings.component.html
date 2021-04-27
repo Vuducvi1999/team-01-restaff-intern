@@ -9,7 +9,6 @@
         id="search-overlay"
         class="search-overlay"
         [ngStyle]="{ display: search ? 'block' : 'none' }"
-        name="name"
       >
         <div>
           <span class="closebtn" title="Close Overlay" (click)="searchToggle()"
@@ -26,6 +25,8 @@
                         class="form-control"
                         id="exampleInputPassword1"
                         placeholder="Search a Product"
+                        name="name"
+                        (keypress)="onSearch($event)"
                       />
                     </div>
                     <button type="submit" class="btn btn-primary">
