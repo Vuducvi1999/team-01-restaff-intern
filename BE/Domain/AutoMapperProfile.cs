@@ -98,7 +98,8 @@ namespace Domain
             CreateMap<Product, HomeProductDTO>()
                  .ForMember(t => t.CategoryName, k => k.MapFrom(h => h.Category.Name)).ReverseMap();
             CreateMap<Blog, HomeBlogDTO>().ReverseMap();
-            
+            CreateMap<Banner, HomeBannerDTO>().ReverseMap();
+
         }
     }
 }

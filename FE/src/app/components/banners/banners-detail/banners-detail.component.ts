@@ -44,8 +44,7 @@ export class BannersDetailComponent implements OnInit {
   ngOnInit() {
     this.loadFormItem();
     this.createModal();
-    if(this.item)
-    {
+    if (this.item) {
       this.fileURL = [];
       this.fileURL.push(this.item.imageUrl);
     }
@@ -55,7 +54,7 @@ export class BannersDetailComponent implements OnInit {
       title: [this.item ? this.item.title : '', Validators.required],
       description: [this.item ? this.item.description : ''],
       link: [this.item ? this.item.link : ''],
-      imageURL: [this.item ? this.item.imageUrl : '', Validators.required],
+      imageUrl: [this.item ? this.item.imageUrl : '', Validators.required],
       displayOrder: [
         this.item ? this.item.displayOrder : '',
         Validators.required,
@@ -80,7 +79,7 @@ export class BannersDetailComponent implements OnInit {
       title: this.bannersForm.controls.title.value,
       description: this.bannersForm.controls.description.value,
       link: this.bannersForm.controls.link.value,
-      imageURL: this.bannersForm.controls.imageURL.value,
+      imageUrl: this.bannersForm.controls.imageUrl.value,
       displayOrder: this.bannersForm.controls.displayOrder.value,
       id: this.item ? this.item.id : '',
       files: this.modalFile.listFile,
@@ -89,7 +88,8 @@ export class BannersDetailComponent implements OnInit {
     this.submitted = true;
 
     if (this.bannersForm.valid) {
-      this.bannersService.save(this.banner)
+      this.bannersService
+        .save(this.banner)
         .then((res) => {
           this.bannersForm.reset();
           this.submitted = false;
@@ -112,8 +112,7 @@ export class BannersDetailComponent implements OnInit {
       return;
     }
 
-    if(!this.fileURL)
-    {
+    if (!this.fileURL) {
       this.fileURL = [];
     }
 
@@ -121,8 +120,7 @@ export class BannersDetailComponent implements OnInit {
       this.fileURL = [...this.fileURL, ...event.add];
     }
 
-    if(event.remove)
-    {
+    if (event.remove) {
       this.fileURL.forEach((e, i) => {
         if (e == event.remove) {
           this.fileURL.splice(i, 1);
@@ -130,8 +128,7 @@ export class BannersDetailComponent implements OnInit {
       });
     }
 
-    if(event.removeAll)
-    {
+    if (event.removeAll) {
       this.fileURL = [];
     }
 

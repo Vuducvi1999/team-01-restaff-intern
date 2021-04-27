@@ -23,41 +23,45 @@ export class HomeService {
   ) {}
 
   // Top Collection
-  getTopCollectionProducts(request: any = null,) {
+  getTopCollectionProducts(request: any = null) {
     const url = this.url + "/top-collection";
     return this.httpClient.getObservable(url, request).toPromise();
   }
 
   // New Products
-  getNewProducts(request: any = null,) {
+  getNewProducts(request: any = null) {
     const url = this.url + "/new-products";
     return this.httpClient.getObservable(url, request).toPromise();
   }
 
   // Best Seller
-  getBestSellerProducts(request: any = null,) {
+  getBestSellerProducts(request: any = null) {
     const url = this.url + "/best-seller";
     return this.httpClient.getObservable(url, request).toPromise();
   }
 
   // Featured Products
-  getFeaturedProducts(request: any = null,) {
+  getFeaturedProducts(request: any = null) {
     const url = this.url + "/featured-products";
     return this.httpClient.getObservable(url, request).toPromise();
   }
 
   // On Sale
-  getOnSaleProducts(request: any = null,) {
+  getOnSaleProducts(request: any = null) {
     const url = this.url + "/on-sale";
     return this.httpClient.getObservable(url, request).toPromise();
   }
 
   // Get blogs
-  getBlogs(request: any = null){
+  getBlogs(request: any = null) {
     const url = this.url + "/blogs";
     return this.httpClient.getObservable(url, request).toPromise();
   }
 
+  getBanners(request: any = null) {
+    const url = this.url + "/banners";
+    return this.httpClient.getObservable(url, request).toPromise();
+  }
 
   // Add to Wishlist
   public addToWishlist(product): any {
