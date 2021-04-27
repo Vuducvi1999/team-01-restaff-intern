@@ -66,5 +66,13 @@ namespace BE.FeUserControllers
             var result = _homeService.GetBlogs();
             return CommonResponse(result);
         }
+
+        [HttpGet(UrlConstants.Banners)]
+        public IActionResult GetBanners()
+        {
+
+            var result = _homeService.GetBanners();
+            return CommonResponse(result);
+        }
     }
 }
