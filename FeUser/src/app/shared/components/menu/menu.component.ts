@@ -40,6 +40,7 @@ export class MenuComponent implements OnInit {
   async loadHeaderModel() {
    await this.headerService.getBlogs(null).then((res: any) => {
       this.headerModel.blogs = res.data;
+      console.log(res)
     })
    await this.headerService.getCategories(null).then((res: any) => {
       this.headerModel.categories = (res.data);
@@ -62,7 +63,7 @@ export class MenuComponent implements OnInit {
       this.blogsChildren.push(
         {
           title: item.title,
-          path: '/',
+          path: `/blog/${item.id}`,
           type: 'link'
         })
     });
@@ -71,7 +72,7 @@ export class MenuComponent implements OnInit {
       { title: 'home', type: 'link', path: '/home' },
       { title: 'categories', type: 'sub', active: false, children: this.categoriesChildren },
       { title: 'products', type: 'link', path: '/product' },
-      { title: 'blogs', type: 'sub', active: false, children: this.blogsChildren },
+      { title: 'blogs', type: 'link', path: '/blog', active: false, children: this.blogsChildren },
     );
   }
 
