@@ -24,6 +24,7 @@ namespace Service.Home
             _productRepository = productRepository;
             _bannerRepository = bannerRepository;
             _blogRepository = blogRepository;
+            _bannerRepository = bannerRepository;
             _mapper = mapper;
         }
 

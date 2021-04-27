@@ -116,9 +116,9 @@ export class BannersDetailComponent implements OnInit {
       this.fileURL = [];
     }
 
-    if (event.add) {
-      this.fileURL = [...this.fileURL, ...event.add];
-    }
+    // if (event.add) {
+    this.fileURL = [...this.fileURL, ...event.add];
+    // }
 
     if (event.remove) {
       this.fileURL.forEach((e, i) => {
