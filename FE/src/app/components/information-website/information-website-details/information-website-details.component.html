@@ -1,0 +1,99 @@
+<app-modal-header [data]="modalHeader" (onAction)="close($event)"></app-modal-header>
+<!-- Container-fluid starts-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card tab2-card">
+        <div class="card-body">
+          <ngb-tabset class="tab-coupon">
+            <ngb-tab title="Information Website">
+              <ng-template ngbTabContent>
+                <div
+                  class="tab-pane fade active show"
+                  id="account"
+                  role="tabpanel"
+                  aria-labelledby="account-tab"
+                >
+                  <form
+                    [formGroup]="infoWebForm"
+                    class="needs-validation user-add"
+                    novalidate=""
+                  >
+                    <h4>Information Website Details</h4>
+                    <div class="form-group row">
+                      <label for="validationCustom0" class="col-xl-3 col-md-4"
+                        ><span>*</span> Address</label
+                      >
+                      <input
+                        class="form-control col-xl-8 col-md-7"
+                        id="validationCustom0"
+                        type="text"
+                        required=""
+                        formControlName="address"
+                      />
+                      <span class="text-danger" *ngIf="(infoWebFormControl.address.touched || submitted) && infoWebFormControl.address.errors?.required">Required</span>
+                    </div>
+                    <div class="form-group row">
+                      <label for="validationCustom0" class="col-xl-3 col-md-4"
+                        ><span>*</span> Phone</label
+                      >
+                      <input
+                        class="form-control col-xl-8 col-md-7"
+                        id="validationCustom1"
+                        type="text"
+                        required=""
+                        formControlName="phone"
+                      />
+                      <span class="text-danger" *ngIf="(infoWebFormControl.phone.touched || submitted) && infoWebFormControl.phone.errors?.required">Required</span>
+                    </div>
+                    <div class="form-group row">
+                      <label for="validationCustom2" class="col-xl-3 col-md-4"
+                        ><span>*</span> Email</label
+                      >
+                      <input
+                        class="form-control col-xl-8 col-md-7"
+                        id="validationCustom2"
+                        type="text"
+                        required=""
+                        formControlName="email"
+                      />
+                      <span class="text-danger" *ngIf="(infoWebFormControl.email.touched || submitted) && infoWebFormControl.email.errors?.required">Required</span>
+                    </div>
+                    <div class="form-group row">
+                      <label for="validationCustom2" class="col-xl-3 col-md-4"
+                        ><span>*</span> Fax</label
+                      >
+                      <input
+                        class="form-control col-xl-8 col-md-7"
+                        id="validationCustom2"
+                        type="text"
+                        required=""
+                        formControlName="fax"
+                      />
+                      <span class="text-danger" *ngIf="(infoWebFormControl.fax.touched || submitted) && infoWebFormControl.fax.errors?.required">Required</span>
+                    </div>
+                    <div class="form-group row">
+                      <label for="validationCustom2" class="col-xl-3 col-md-4"
+                        ><span>*</span> Logo</label
+                      >
+                      <input
+                        class="form-control col-xl-8 col-md-7"
+                        id="validationCustom2"
+                        type="text"
+                        required=""
+                        formControlName="logo"
+                      />
+                      <span class="text-danger" *ngIf="(infoWebFormControl.logo.touched || submitted) && infoWebFormControl.logo.errors?.required">Required</span>
+                    </div>
+                  </form>
+                </div>
+              </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Container-fluid Ends-->
+<app-modal-footer [data]="modalFooter" (onAction)="save()"></app-modal-footer>

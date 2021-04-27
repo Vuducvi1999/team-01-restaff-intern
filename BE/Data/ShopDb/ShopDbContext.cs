@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Data.Extension;
+using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +20,12 @@ namespace Data
         DbSet<Product> Products { get; set; }
         DbSet<File> Files { get; set; }
         DbSet<Blog> Blogs { get; set; }
+        DbSet<DataSeedWebsite> DataSeedWebsites { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Seed();
+        }
 
     }
 }

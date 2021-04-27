@@ -6,3 +6,6 @@ export * from './social-media/social-media.service';
 export * from './auth/auth.service'
 export * from './files/file.service'
 export * from './profiles/profile.service'
+export * from './categories/category.service'
+export * from './products/product.service'
+export * from './information-website/infoWeb.service'
