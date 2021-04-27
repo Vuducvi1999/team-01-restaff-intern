@@ -54,7 +54,7 @@ export class BannersDetailComponent implements OnInit {
       title: [this.item ? this.item.title : '', Validators.required],
       description: [this.item ? this.item.description : ''],
       link: [this.item ? this.item.link : ''],
-      imageURL: [this.item ? this.item.imageUrl : '', Validators.required],
+      imageUrl: [this.item ? this.item.imageUrl : '', Validators.required],
       displayOrder: [
         this.item ? this.item.displayOrder : '',
         Validators.required,
@@ -79,7 +79,7 @@ export class BannersDetailComponent implements OnInit {
       title: this.bannersForm.controls.title.value,
       description: this.bannersForm.controls.description.value,
       link: this.bannersForm.controls.link.value,
-      imageURL: this.bannersForm.controls.imageURL.value,
+      imageUrl: this.bannersForm.controls.imageUrl.value,
       displayOrder: this.bannersForm.controls.displayOrder.value,
       id: this.item ? this.item.id : '',
       files: this.modalFile.listFile,
