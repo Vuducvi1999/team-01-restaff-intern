@@ -26,9 +26,10 @@ export class CategoriesComponent implements OnInit {
   public categories: CategoryModel[] = [];
 
   event: any = {};
-  @Input() categoryName: string = "ALL";
+  @Input() categoryName: string[] = [];
   @Input() styleFont: string = "color: black; font-weight: bold";
   styleFontNormal: string = "color: #77777777; font-weight: normal";
+  // [style]="category.name.indexOf(categoryName) > -1?styleFont:styleFontNormal"
   @Output() onChangeTypeCate = new EventEmitter();
 
   constructor(
@@ -50,7 +51,6 @@ export class CategoriesComponent implements OnInit {
   }
 
   onSelect(event, typeCate: string) {
-    this.event = {};
     this.onChangeTypeCate.emit(typeCate);
   }
 

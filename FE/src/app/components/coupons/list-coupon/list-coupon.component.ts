@@ -60,13 +60,13 @@ export class ListCouponComponent implements OnInit {
       startDate: {
         title: 'Start Date',
         valuePrepareFunction: (created) => {
-          return this.datePipe.transform(new Date(created), 'dd MM yyyy');
+          return this.datePipe.transform(new Date(created), 'dd/MM/yyyy');
         },
       },
       endDate: {
         title: 'End Date',
         valuePrepareFunction: (created) => {
-          return this.datePipe.transform(new Date(created), 'dd MM yyyy');
+          return this.datePipe.transform(new Date(created), 'dd/MM/yyyy');
         },
       },
     },

@@ -49,19 +49,23 @@ namespace Service.UserProductList
 
             var query = _repositoryProduct.DbSet.DynamicIncludeProperty(nameof(Category)).AsQueryable();
 
-            query = query.Where(
-               it =>
-                   (it.Price < search.MaxPrice || search.MaxPrice == 0) &&
-                   it.Price > search.MinPrice &&
-                   (search.Search.IsNullOrEmpty() ||
-                       (
-                            (search.Search.Id.IsNotNullOrGuidDefault() && it.Id == search.Search.Id) ||
-                            it.Name.Contains(search.Search.Name) ||
-                            it.Description.Contains(search.Search.Description) ||
-                            it.Category.Name.Contains(search.Search.CategoryName)
-                       )
-                   )
-               );
+            if(search.MaxPrice > 0)
+            {
+                query = query.Where(it => it.Price < search.MaxPrice);
+            }
+
+            if(search.MinPrice > 0)
+            {
+                query = query.Where(it => it.Price > search.MinPrice);
+            }
+
+            if(search.Search.IsNotNullOrEmpty() && search.Search.CategoryName.IsNotNullOrEmpty())
+            {
+                foreach(var i in search.Search.CategoryName.Split(','))
+                {
+                    query = query.Where(it => it.Category.Name.Contains(i));
+                }
+            }
 
             if (search.TypeSort.Equals((int)ETypeSort.AZ))
             {
