@@ -14,5 +14,6 @@ namespace Service.Home
         public ReturnMessage<List<HomeProductDTO>> GetFeaturedProducts();
         public ReturnMessage<List<HomeProductDTO>> GetOnSaleProducts();
         public ReturnMessage<List<HomeBlogDTO>> GetBlogs();
+        public ReturnMessage<List<HomeBannerDTO>> GetBanners();
     }
 }
