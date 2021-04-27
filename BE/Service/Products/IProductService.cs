@@ -12,6 +12,6 @@ namespace Service.Products
     {
         ReturnMessage<PaginatedList<ProductDTO>> SearchPagination(SerachPaginationDTO<ProductDTO> search);
         ReturnMessage<List<ProductDTO>> GetByCategory(Guid id);
-
+        ReturnMessage<List<ProductDTO>> GetByName(string name);
     }
 }

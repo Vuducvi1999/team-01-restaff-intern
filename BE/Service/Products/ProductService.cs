@@ -153,5 +153,17 @@ namespace Service.Products
                 return new ReturnMessage<ProductDTO>(true, null, ex.Message);
             }
         }
+
+        public ReturnMessage<List<ProductDTO>> GetByName(string name)
+        {
+            if (name.IsNullOrEmpty())
+            {
+                var model = _productRepository.Queryable().ToList();
+                return new ReturnMessage<List<ProductDTO>>(false, _mapper.Map<List<Product>, List<ProductDTO>>(model), MessageConstants.SearchSuccess);
+            }
+            var entity = _productRepository.Queryable().Where(s => s.Name.Contains(name)).ToList();
+            var result = new ReturnMessage<List<ProductDTO>>(false, _mapper.Map<List<Product>, List<ProductDTO>>(entity), MessageConstants.SearchSuccess);
+            return result;
+        }
     }
 }
