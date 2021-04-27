@@ -14,20 +14,25 @@ namespace Domain.Entities
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Status { get; set; }
-        public int TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public int TotalItem { get; set; }
         public Guid? CustomerId { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; }
-        
+
         public override void Insert()
         {
 
             base.Insert();
             Code = CodeConstants.Code + DateTime.Now.ToString("ddMMyyyyHHmmssfff");
-            foreach(var item in OrderDetails)
+            TotalItem = 0;
+            TotalAmount = 0;
+            Status = "New";
+            foreach (var item in OrderDetails)
             {
                 item.OrderId = this.Id;
                 item.Insert();
+                TotalItem += item.Quantity;
+                TotalAmount += item.TotalAmount;
             }
         }
         public override void Delete()

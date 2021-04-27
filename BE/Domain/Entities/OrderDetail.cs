@@ -9,7 +9,7 @@ namespace Domain.Entities
         public Guid ProductId { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }
-        public int TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }
 
@@ -17,6 +17,7 @@ namespace Domain.Entities
 
         public override void Insert()
         {
+            TotalAmount = Price * Quantity;
             base.Insert();
         }
         public override void Delete()

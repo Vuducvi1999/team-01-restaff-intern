@@ -4,7 +4,7 @@
   <div class="container padding-cls">
     <div class="checkout-page">
       <div class="checkout-form">
-        <form>
+        <form #checkoutForm="ngForm" (ngSubmit)="onSubmit()">
           <div class="row">
             <div class="col-lg-6 col-sm-12 col-xs-12">
               <div class="checkout-title">
@@ -12,24 +12,24 @@
               </div>
               <div class="row">
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
-                  <div class="field-label">First Name</div>
-                  <input type="text" name="field-name" value="" placeholder="">
+                  <div class="field-label" for="firstName">First Name</div>
+                  <input type="text" id="firstName" required  name="firstName" value="" placeholder="" [(ngModel)]="order.firstName">
                 </div>
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                   <div class="field-label">Last Name </div>
-                  <input type="text" name="field-name" value="" placeholder="">
+                  <input type="text" id="lastName" required  name="lastName" value="" placeholder="" [(ngModel)]="order.lastName">
                 </div>
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                   <div class="field-label">Phone</div>
-                  <input type="text" name="field-name" value="" placeholder="">
+                  <input type="text" id="phone" required  name="phone" value="" placeholder="" [(ngModel)]="order.phone">
                 </div>
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                   <div class="field-label">Email Address</div>
-                  <input type="text" name="field-name" value="" placeholder="">
+                  <input type="text" id="email" required email  name="email" value="" placeholder="" [(ngModel)]="order.email">
                 </div>
                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
                   <div class="field-label">Address</div>
-                  <input type="text" name="field-name" value="" placeholder="Street address">
+                  <input type="text" id="address" required  name="address" value="" placeholder="Street address" [(ngModel)]="order.address">
                 </div>
               </div>
            
@@ -44,8 +44,6 @@
                     <li>{{product.name}} x {{product.quantity}} <span>{{ product.quantity * product.price |
                         currency:'VND'}}
                       </span></li>
-                    <!-- <li>Pink Slim Shirt × 1 <span>$25.10</span></li>
-                      <li>SLim Fit Jeans × 1 <span>$555.00</span></li> -->
                   </ul>
                   <ul class="total">
                     <li>Total <span class="count">{{totalPrice | currency:'VND'}}</span></li>
@@ -54,7 +52,7 @@
 
                 <div class="payment-box">
                   <div class="text-right">
-                    <a [routerLink]="['shop/checkout']" class="btn-solid btn">Place Order</a>
+                    <button type="submit" class="btn-solid btn">Place Order</button>
                   </div>
                 </div>
               </div>

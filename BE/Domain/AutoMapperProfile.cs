@@ -104,7 +104,10 @@ namespace Domain
             CreateMap<Order, DeleteOrderDTO>().ReverseMap();
 
             //OrderDetail
-            CreateMap<OrderDetail, OrderDetailDTO>().ReverseMap();
+            CreateMap<OrderDetail, OrderDetailDTO>()
+                .ForMember(t=>t.ProductName, k=>k.MapFrom(h=>h.Product == null ? "" : h.Product.Name))
+                .ForMember(t => t.ProductImgUrl, k => k.MapFrom(h => h.Product == null ? "" : h.Product.ImageUrl))
+                 .ReverseMap();
             CreateMap<OrderDetail, CreateOrderDetailDTO>().ReverseMap();
             CreateMap<OrderDetail, UpdateOrderDetailDTO>().ReverseMap();
             CreateMap<OrderDetail, DeleteOrderDetailDTO>().ReverseMap();

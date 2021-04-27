@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Orders;
 using Service.Files;
+using System;
 
 namespace BE.Controllers
 {
@@ -29,6 +30,16 @@ namespace BE.Controllers
             var result = _orderService.SearchPagination(serachPagination);
             return CommonResponse(result);
         }
+
+
+        [HttpGet]
+        [Route("by-id")]
+        public IActionResult GetById([FromQuery] Guid id)
+        {
+            var result = _orderService.GetById(id);
+            return CommonResponse(result);
+        }
+
 
         [HttpPost]
         public IActionResult Create([FromBody] CreateOrderDTO model)

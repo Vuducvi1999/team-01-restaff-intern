@@ -7,6 +7,7 @@ using Domain.DTOs.Orders;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace Service.Orders
                 _unitOfWork.SaveChanges();
                 _unitOfWork.Commit();
 
-                var result = new ReturnMessage<OrderDTO>(false, _mapper.Map<Order, OrderDTO>(entity), MessageConstants.CreateSuccess);
+                var result = GetById(entity.Id);
                 return result;
             }
             catch (Exception ex)
@@ -48,6 +49,18 @@ namespace Service.Orders
             }
         }
 
+
+        public ReturnMessage<OrderDTO> GetById(Guid id)
+        {
+            var order = _orderRepository.Queryable()
+                .AsNoTracking()
+                .Include(t=>t.OrderDetails)
+                .ThenInclude(t=>t.Product)
+                .FirstOrDefault(t=>t.Id == id);
+            var result = new ReturnMessage<OrderDTO>(false, _mapper.Map<Order, OrderDTO>(order), MessageConstants.CreateSuccess);
+            return result;
+
+        }
         public ReturnMessage<OrderDTO> Delete(DeleteOrderDTO model)
         {
             try
