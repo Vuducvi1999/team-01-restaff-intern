@@ -102,7 +102,7 @@ export class ProductDetailsComponent implements OnInit {
       hasDisplayHomePage: this.productsForm.value.hasDisplayHomePage,
       isImportant: this.productsForm.value.isImportant,
       id: this.item ? this.item.id : '',
-      createdBy: this.item ? this.item.createdBy :'',
+      createdBy: this.item ? this.item.createdBy : '',
       createdByName: this.item ? this.item.createdByName : '',
       deletedBy: this.item ? this.item.deletedBy : '',
       deletedByName: this.item ? this.item.deletedByName : '',
@@ -110,7 +110,7 @@ export class ProductDetailsComponent implements OnInit {
       isDeleted: this.item ? this.item.isDeleted : false,
       updatedBy: this.item ? this.item.updatedBy : '',
       updatedByName: this.item ? this.item.updatedByName : '',
-      files: this.modalFile.listFile
+      files: this.modalFile.listFile,
     };
 
     return this.productService
@@ -125,33 +125,27 @@ export class ProductDetailsComponent implements OnInit {
 
   loadItem() {
     this.productsForm = this.formBuilder.group({
-      name: [this.item ? this.item.name : '', 
-      [Validators.required, Validators.pattern('[a-zA-Z0-9 ]*')]
-    ],
+      name: [
+        this.item ? this.item.name : '',
+        [Validators.required, Validators.pattern('[a-zA-Z0-9 ]*')],
+      ],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required, Validators.pattern('[a-zA-Z0-9 ]*')]
+        [Validators.required, Validators.pattern('[a-zA-Z0-9 ]*')],
       ],
       contentHTML: [
         this.item ? this.item.contentHTML : '',
-        [Validators.required]
+        [Validators.required],
       ],
       imageUrl: [this.item ? this.item.imageUrl : ''],
-      price: [this.item ? this.item.price : 0,
-         [Validators.required]],
+      price: [this.item ? this.item.price : 0, [Validators.required]],
       categoryName: [
         this.item ? this.item.categoryId : '',
-        [Validators.required]
+        [Validators.required],
       ],
       displayOrder: [
         this.item ? this.item.displayOrder : 0,
-        [Validators.required]
-      ],
-      hasDisplayHomePage: [
-        this.item ? this.item.hasDisplayHomePage : false, 
-      ],
-      isImportant: [
-        this.item ? this.item.isImportant : false,
+        [Validators.required],
       ],
       hasDisplayHomePage: [this.item ? this.item.hasDisplayHomePage : false],
       isImportant: [this.item ? this.item.isImportant : false],
