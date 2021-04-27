@@ -25,19 +25,9 @@ export class CheckoutComponent implements OnInit {
     this.calculateTotalPrice();
   }
 
-  loadFormItem() {
-    this.bannersForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      description: [''],
-      link: [''],
-      imageURL: ['', Validators.required],
-      displayOrder: [
-        '',
-        Validators.required,
-      ],
-    });
-  }
   calculateTotalPrice() {
     this.totalPrice = this.products.reduce((accumulator, product) => (accumulator + product.price * product.quantity), 0);
   }
+
+  
 }
