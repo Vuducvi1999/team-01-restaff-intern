@@ -25,11 +25,6 @@ export class ListProductsComponent implements OnInit {
 
   public settings = {
     mode: 'external',
-    //  pager:
-    //  {
-    //    display: true,
-    //    perPage: 9,
-    //  },
     actions: {
       position: 'right',
     },
@@ -40,11 +35,8 @@ export class ListProductsComponent implements OnInit {
       description: {
         title: 'Description',
       },
-      contentHTML: {
-        title: 'Content HTML',
-      },
       imageUrl: {
-        title: 'URL',
+        title: 'Image',
         type: 'html',
         valuePrepareFunction: (file: string) => {
           var arrayUrl = file.split(',');
@@ -93,7 +85,7 @@ export class ListProductsComponent implements OnInit {
   };
   delete(event: any) {
     let product = event.data as ProductModel;
-    if (window.confirm('Are u sure?')) {
+    if (window.confirm('Are you sure to delete this item?')) {
       this.productService.delete(product).then(() => {
         this.fetch();
       });
@@ -105,7 +97,7 @@ export class ListProductsComponent implements OnInit {
       var modalRef = this.modalService.open(ProductDetailsComponent, {
         size: 'lg',
       });
-      modalRef.componentInstance.item = item.data;
+      modalRef.componentInstance.item = item.data as ProductModel;
       return modalRef.result.then(
         () => {
           this.fetch();
@@ -118,7 +110,7 @@ export class ListProductsComponent implements OnInit {
     var modalRef = this.modalService.open(ProductDetailsComponent, {
       size: 'lg',
     });
-    modalRef.componentInstance.item = item as ProductModel;
+    modalRef.componentInstance.item = item.data as ProductModel;
     return modalRef.result.then(
       () => {
         this.fetch();

@@ -18,7 +18,7 @@ export class ProductBoxVerticalSliderComponent implements OnInit {
   @Input() title: string = "New Product"; // Default
   @Input() type: string = "fashion"; // Default Fashion
   @Input() size: number = 3;
-  @Input() typeSizeImage : string = ETypeSizeImage.SMALL;
+  @Input() typeSizeImage: string = ETypeSizeImage.SMALL;
 
   result: ProductModel[][] = [];
 
@@ -36,11 +36,10 @@ export class ProductBoxVerticalSliderComponent implements OnInit {
 
   callData() {
     this.productListService
-      .getPageProduct(null)
+      .getPageProduct({ params: { pageSize: 12 } })
       .then((res: ReturnMessage<PageModel<ProductModel>>) => {
-        while(res.data.results.length != 0)
-        {
-          this.result.push(res.data.results.splice(0,this.size))
+        while (res.data.results.length != 0) {
+          this.result.push(res.data.results.splice(0, this.size));
         }
       })
       .catch((res) => console.error(res));

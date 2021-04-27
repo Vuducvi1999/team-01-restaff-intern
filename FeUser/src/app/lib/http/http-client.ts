@@ -271,7 +271,7 @@ export class HttpClientService {
   }
 
   private getFullUrl(url: string) {
-    console.log(AppConfig.settings.API_URL);
+    // console.log(AppConfig.settings.API_URL);
     return `${AppConfig.settings.API_URL}${url}`;
   }
 

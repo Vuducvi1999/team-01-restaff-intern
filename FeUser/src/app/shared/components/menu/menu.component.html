@@ -51,7 +51,8 @@
               <span class="sub-arrow" *ngIf="childrenItem.children"></span>
             </a>
             <!-- Link -->
-            <a [routerLink]="childrenItem.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" 
+            <!-- <a [routerLink]="childrenItem.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"  -->
+            <a (click)="loadUrlNavaigate(childrenItem.path)" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="cursor: pointer;" 
               *ngIf="childrenItem.type === 'link' ">
               {{ childrenItem.title | translate }}
               <span class="new-tag" *ngIf="childrenItem.badge">{{ childrenItem.badgeText | translate }}</span>

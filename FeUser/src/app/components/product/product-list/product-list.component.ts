@@ -17,7 +17,7 @@ import { ETypeGridLayout } from "src/app/shared/data";
   selector: "app-product-list",
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.scss"],
-  providers: [HomeService, ProductListService],
+  providers: [HomeService,ProductListService],
 })
 export class ProductListComponent implements OnInit {
   public grid: string = ETypeGridLayout.NORMAL;
@@ -28,7 +28,7 @@ export class ProductListComponent implements OnInit {
   public maxPrice: number = 5000000;
   public sizePrice: string;
   public tags: any[] = [];
-  public category: string = "ALL";
+  public category: string[] = [];
   public paginate: any = {};
   public sortBy: number = ETypeSort.NULL;
   public mobileSidebar: boolean = false;
@@ -41,14 +41,44 @@ export class ProductListComponent implements OnInit {
     private viewScroller: ViewportScroller,
     public productListService: ProductListService
   ) {
-    this.products = [];
-    this.params = {};
-    this.finished = false;
-    console.log(JSON.stringify(this.params));
-    this.addItems();
+    // Get Query params..
+    this.route.queryParams.subscribe((params) => {
+      
+      this.products = [];
+      this.params = {};
+      this.tags = [];
+      this.finished = false;
+
+      this.minPrice = params.minPrice ? params.minPrice : this.minPrice;
+      this.maxPrice = params.maxPrice ? params.maxPrice : this.maxPrice;
+
+      this.category = params["search.categoryName"]
+        ? params["search.categoryName"].split(",")
+        : [];
+      this.sortBy = params.typeSort ? params.typeSort : ETypeSort.NULL;
+
+      if (this.category.length > 0) {
+        this.category.forEach((x) => this.tags.push(x));
+        this.params["search.categoryName"] = this.category.join(",");
+      }
+
+      this.minPrice > 0
+        ? (this.params.minPrice = this.minPrice)
+        : delete this.params.minPrice;
+      this.maxPrice < 5000000
+        ? (this.params.maxPrice = this.maxPrice)
+        : delete this.params.maxPrice;
+
+      this.sortBy != ETypeSort.NULL
+        ? (this.params.typeSort = this.sortBy)
+        : delete this.params.typeSort;
+
+      this.addItems();
+    });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   addItems() {
     if (this.pageModel?.totalItem == this.products.length) {
@@ -83,7 +113,7 @@ export class ProductListComponent implements OnInit {
     this.params.minPrice = tags.minPrice;
     this.params.maxPrice = tags.maxPrice;
 
-    this.addItems();
+    this.addNavigate(this.params);
   }
 
   // SortBy Filter
@@ -97,19 +127,21 @@ export class ProductListComponent implements OnInit {
       delete this.params.typeSort;
     }
 
-    this.addItems();
+    this.addNavigate(this.params);
   }
 
   // // Remove Tag
   removeTag(tag) {
     this.resetPage();
     this.tags = this.tags.filter((val) => val !== tag);
-    if (tag == this.category) {
-      delete this.params["search.categoryName"];
-      this.category = "ALL";
+    if (this.category.indexOf(tag) > -1) {
+      this.category = this.category.filter((val) => val !== tag);
+      this.category.length > 0
+        ? (this.params["search.categoryName"] = this.category.join(","))
+        : delete this.params["search.categoryName"];
     }
 
-    this.addItems();
+    this.addNavigate(this.params);
   }
 
   // // Clear Tags
@@ -117,9 +149,9 @@ export class ProductListComponent implements OnInit {
     this.tags = [];
     this.resetPage();
     delete this.params["search.categoryName"];
-    this.category = "ALL";
+    this.category = [];
 
-    this.addItems();
+    this.addNavigate(this.params);
   }
 
   // Change Grid Layout
@@ -145,20 +177,34 @@ export class ProductListComponent implements OnInit {
   }
 
   onChangeTypeCate(event: string) {
-    this.resetPage();
-    this.tags = this.tags.filter((x) => x != this.category);
-    this.category = event;
+    // this.tags = this.tags.filter((x) => x != this.category);
+
+    if (this.category == null || this.category.length <= 0) {
+      this.category = [];
+    }
+
+    if (this.category.indexOf(event) > -1) {
+      return;
+    }
+
+    if (this.category.length == 0 && event == "ALL") {
+      return;
+    }
+
+    this.category.push(event);
 
     if (event != "ALL") {
-      this.params["search.categoryName"] = event;
-      this.tags.push(event);
+      this.params["search.categoryName"] = this.category.join(",");
+      this.tags.indexOf(event) > -1 ? null : this.tags.push(event);
     }
 
     if (event == "ALL") {
       delete this.params["search.categoryName"];
+      this.tags = this.tags.filter((x) => this.category.indexOf(x) < 0);
     }
 
-    this.addItems();
+    this.resetPage();
+    this.addNavigate(this.params);
   }
 
   resetPage() {
@@ -168,5 +214,17 @@ export class ProductListComponent implements OnInit {
 
     delete this.params.pageIndex;
     delete this.params.pageSize;
+  }
+
+  addNavigate(params = {}) {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: params,
+      skipLocationChange: false,
+    });
+    // .finally(() => {
+    //   this.viewScroller.setOffset([120, 120]);
+    //   this.viewScroller.scrollToAnchor("products"); // Anchore Link
+    // });
   }
 }

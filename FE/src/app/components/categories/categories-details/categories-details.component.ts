@@ -29,7 +29,7 @@ export class CategoryDetailComponent implements OnInit {
   public fileURL: (String | ArrayBuffer)[];
 
   public item: any;
-
+  submitted = false;
   ngOnChanges(changes: SimpleChanges): void {}
 
   constructor(
@@ -42,12 +42,15 @@ export class CategoryDetailComponent implements OnInit {
     this.modalFile.multiBoolen = false;
     this.modalFile.enityType = EntityType.CATEGORY;
   }
-
+  get categoryFormsControl() {
+    return this.categoriesForm.controls;
+  }
     save(){
       if(this.categoriesForm.invalid){
         window.alert("Invalid Form !");
         return;
       }
+      this.submitted = true;
       this.category = {name: this.categoriesForm.value.name, 
         description: this.categoriesForm.value.description,
         imageUrl: this.categoriesForm.value.imageUrl,
