@@ -5,12 +5,12 @@
         <div class="collection-brand-filter">
             <ul class="category-list">
                 <li>
-                    <a class="ALL" (mouseenter)="bigImg($event.target.style)" (mouseleave)="normalImg($event.target.style)" (click)="onSelect($event.target.style,'ALL')" style="cursor: pointer;" [style]="categoryName=='ALL'?styleFont:styleFontNormal">
+                    <a class="ALL" (mouseenter)="bigImg($event.target.style)" (mouseleave)="normalImg($event.target.style)" (click)="onSelect($event.target.style,'ALL')" style="cursor: pointer;" >
                         ALL
                     </a>
                 </li>
                 <li *ngFor="let category of filterbyCategory">
-                    <a (mouseenter)="bigImg($event.target.style)" (mouseleave)="normalImg($event.target.style)" (click)="onSelect($event.target.style,category.name)" style="cursor: pointer;" [style]="category.name==categoryName?styleFont:styleFontNormal">
+                    <a (mouseenter)="bigImg($event.target.style)" (mouseleave)="normalImg($event.target.style)" (click)="onSelect($event.target.style,category.name)" style="cursor: pointer;" >
                         {{ category.name }}
                     </a>
                 </li>
