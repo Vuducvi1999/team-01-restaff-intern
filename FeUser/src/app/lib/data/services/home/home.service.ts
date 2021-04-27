@@ -14,7 +14,7 @@ const state = {
 @Injectable()
 export class HomeService {
   private url = "/api/home";
-  public Currency = { name: "Dollar", currency: "USD", price: 1 }; // Default Currency
+  public Currency = { name: "Dollar", currency: "VND", price: 1 }; // Default Currency
   public OpenCart: boolean = false;
 
   constructor(
@@ -23,41 +23,40 @@ export class HomeService {
   ) {}
 
   // Top Collection
-  getTopCollectionProducts(request: any = null,) {
+  getTopCollectionProducts(request: any = null) {
     const url = this.url + "/top-collection";
     return this.httpClient.getObservable(url, request).toPromise();
   }
 
   // New Products
-  getNewProducts(request: any = null,) {
+  getNewProducts(request: any = null) {
     const url = this.url + "/new-products";
     return this.httpClient.getObservable(url, request).toPromise();
   }
 
   // Best Seller
-  getBestSellerProducts(request: any = null,) {
+  getBestSellerProducts(request: any = null) {
     const url = this.url + "/best-seller";
     return this.httpClient.getObservable(url, request).toPromise();
   }
 
   // Featured Products
-  getFeaturedProducts(request: any = null,) {
+  getFeaturedProducts(request: any = null) {
     const url = this.url + "/featured-products";
     return this.httpClient.getObservable(url, request).toPromise();
   }
 
   // On Sale
-  getOnSaleProducts(request: any = null,) {
+  getOnSaleProducts(request: any = null) {
     const url = this.url + "/on-sale";
     return this.httpClient.getObservable(url, request).toPromise();
   }
 
   // Get blogs
-  getBlogs(request: any = null){
+  getBlogs(request: any = null) {
     const url = this.url + "/blogs";
     return this.httpClient.getObservable(url, request).toPromise();
   }
-
 
   // Add to Wishlist
   public addToWishlist(product): any {

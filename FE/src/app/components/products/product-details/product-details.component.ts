@@ -50,7 +50,7 @@ export class ProductDetailsComponent implements OnInit {
     this.modalFile.multiBoolen = true;
     this.modalFile.enityType = EntityType.PRODUCT;
   }
-  ngOnChanges(changes: SimpleChanges): void { }
+  ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit() {
     this.fetchCategory();
@@ -90,7 +90,7 @@ export class ProductDetailsComponent implements OnInit {
   }
   save() {
     if (this.productsForm.invalid) {
-      window.alert("Invalid Form !");
+      window.alert('Invalid Form !');
       return;
     }
     this.product = {
@@ -115,7 +115,7 @@ export class ProductDetailsComponent implements OnInit {
       isDeleted: this.item ? this.item.isDeleted : this.item,
       updatedBy: this.item ? this.item.updatedBy : this.item,
       updatedByName: this.item ? this.item.updatedByName : this.item,
-      files: this.modalFile.listFile
+      files: this.modalFile.listFile,
     };
     this.submitted = true;
     return this.productService
@@ -124,47 +124,33 @@ export class ProductDetailsComponent implements OnInit {
         this.ngbActiveModal.close();
       })
       .catch((er) => {
-        
-          console.log(er);
-        
+        console.log(er);
       });
   }
 
   loadItem() {
     this.productsForm = this.formBuilder.group({
-      name: [this.item ? this.item.name : '', 
-      [Validators.required,
-      Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
-    ],
+      name: [this.item ? this.item.name : '', [Validators.required]],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required,
-         Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
+        [Validators.required],
       ],
       contentHTML: [
         this.item ? this.item.contentHTML : '',
-        [Validators.required, Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
+        [Validators.required],
       ],
       imageUrl: [this.item ? this.item.imageUrl : ''],
-      price: [this.item ? this.item.price : 0,
-         [Validators.required,
-          Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]],
+      price: [this.item ? this.item.price : 0, [Validators.required]],
       categoryName: [
         this.item ? this.item.categoryId : '',
-        [Validators.required,
-         Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
+        [Validators.required],
       ],
       displayOrder: [
         this.item ? this.item.displayOrder : 0,
-        [Validators.required,
-         Validators.pattern(`^([A-Za-z0-9])+([A-Za-z0-9 ]{0,})$`)]
+        [Validators.required],
       ],
-      hasDisplayHomePage: [
-        this.item ? this.item.hasDisplayHomePage : false, 
-      ],
-      isImportant: [
-        this.item ? this.item.isImportant : false,
-      ],
+      hasDisplayHomePage: [this.item ? this.item.hasDisplayHomePage : false],
+      isImportant: [this.item ? this.item.isImportant : false],
     });
 
     this.modalHeader = new ModalHeaderModel();
@@ -204,5 +190,4 @@ export class ProductDetailsComponent implements OnInit {
 
     this.productsForm.controls.imageUrl.setValue(this.fileURL.toString());
   }
-
 }

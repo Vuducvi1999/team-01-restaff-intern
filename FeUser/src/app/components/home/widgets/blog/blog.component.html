@@ -4,17 +4,17 @@
       <div class="col-md-12">
         <a [routerLink]="">
           <div class="classic-effect">
-            <img [src]="getImage(blog.imageUrl)" class="img-fluid" [alt]="blog.title">
+            <app-image-wapper [data]="getDataImage(blog)"></app-image-wapper>
             <span></span>
           </div>
         </a>
         <div class="blog-details">
-          <h4>{{ getDate(blog.createByDate)}}</h4>
+          <h4>{{ getDate(blog.createByDate) }}</h4>
           <a [routerLink]="'/pages/blog/details'">
-            <p>{{blog.title}}</p>
+            <p>{{ blog.title }}</p>
           </a>
-          <hr class="style1">
-          <h6 style="word-wrap: break-word;"> {{blog.shortDes}}</h6>
+          <hr class="style1" />
+          <h6 style="word-wrap: break-word">{{ blog.shortDes }}</h6>
         </div>
       </div>
     </ng-template>
