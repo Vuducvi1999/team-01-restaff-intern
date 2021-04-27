@@ -5,13 +5,12 @@ import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
 import { NgbModalModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { SharedModule } from "src/app/shared/shared.module";
-import { InformationWebsiteDetailsComponent } from "./information-website-details/information-website-details.component";
 import { InformationWebsiteRoutingModule } from "./information-website-routing.module";
 import { ListInformationWebsiteComponent } from "./list-information-website/list-information-website.component";
 
 
 @NgModule({
-    declarations: [ListInformationWebsiteComponent, InformationWebsiteDetailsComponent],
+    declarations: [ListInformationWebsiteComponent],
     imports: [
       CommonModule,
       InformationWebsiteRoutingModule,

@@ -1,3 +1,4 @@
+import { FileDtoModel } from "..";
 import { baseDTO } from "../categories/baseDTO.model";
 import { BaseModel } from "../common";
 
@@ -8,4 +9,5 @@ export interface InformationWebModel extends BaseModel, baseDTO{
     email: string;
     fax: string;
     logo: string;
+    files: FileDtoModel[];
 }
