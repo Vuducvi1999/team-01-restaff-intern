@@ -12,8 +12,6 @@ import { FileService } from "src/app/lib/data/services";
 import { ProductModel, ReturnMessage } from "src/app/lib/data/models";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ProductService } from "src/app/lib/data/services/products/product.service";
-import { ConsoleReporter } from "jasmine";
 
 @Component({
   selector: "app-settings",
@@ -105,7 +103,7 @@ export class SettingsComponent implements OnInit {
   }
 
   onSearch(event: KeyboardEvent) {
-    if (event.code == "Enter") {
+    if (event.code == "Enter" || event.code == "NumpadEnter") {
       this.router.navigate(["product"], {
         queryParams: { search: event.target?.value },
       });

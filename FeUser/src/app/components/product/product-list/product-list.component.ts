@@ -43,7 +43,7 @@ export class ProductListComponent implements OnInit {
   ) {
     // Get Query params..
     this.route.queryParams.subscribe((params) => {
-      console.log(params);
+      console.log(params.search);
       this.products = [];
       this.params = {};
       this.tags = [];
@@ -88,6 +88,7 @@ export class ProductListComponent implements OnInit {
     this.productListService
       .getPageProduct({ params: this.params })
       .then((res: ReturnMessage<PageModel<ProductModel>>) => {
+        console.log(res.data);
         this.pageModel = res.data;
 
         this.params.pageIndex = res.data.pageIndex;
