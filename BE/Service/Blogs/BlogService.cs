@@ -7,6 +7,7 @@ using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,13 +19,12 @@ namespace Service.Blogs
         private readonly IRepository<Blog> _blogRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
         public BlogService(IRepository<Blog> blogRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _blogRepository = blogRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-        }
+         }
 
         public ReturnMessage<BlogDTO> Create(CreateBlogDTO model)
         {
@@ -32,6 +32,7 @@ namespace Service.Blogs
             {
                 var entity = _mapper.Map<CreateBlogDTO, Blog>(model);
                 TrimData(entity);
+                entity.CreatedByName = "admin";
                 entity.Insert();
                 _blogRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
@@ -107,7 +108,7 @@ namespace Service.Blogs
                 )
                 , search.PageSize
                 , search.PageIndex
-                , t => t.Title
+                , t => t.CreateByDate
             );
             var data = _mapper.Map<PaginatedList<Blog>, PaginatedList<BlogDTO>>(resultEntity);
             var result = new ReturnMessage<PaginatedList<BlogDTO>>(false, data, MessageConstants.DeleteSuccess);

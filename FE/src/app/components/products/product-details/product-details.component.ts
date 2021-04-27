@@ -19,7 +19,7 @@ import {
   TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
 import { ListCategoriesComponent } from '../../categories/list-categories/list-categories.component';
-
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -32,11 +32,13 @@ export class ProductDetailsComponent implements OnInit {
   public modalFooter: ModalFooterModel;
   public product: ProductModel;
   public categories: CategoryModel[];
-  public item: any;
+  public item: ProductModel;
 
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];
+  submitted = false;
 
+  public editor = ClassicEditor;
   constructor(
     private formBuilder: FormBuilder,
     private productService: ProductService,
@@ -48,18 +50,20 @@ export class ProductDetailsComponent implements OnInit {
     this.modalFile.multiBoolen = true;
     this.modalFile.enityType = EntityType.PRODUCT;
   }
-  ngOnChanges(changes: SimpleChanges): void {}
+  ngOnChanges(changes: SimpleChanges): void { }
 
   ngOnInit() {
     this.fetchCategory();
     this.loadItem();
     if (this.item) {
       this.fileURL = [];
-      console.log(this.item.imageUrl);
       this.item.imageUrl.split(',').forEach((it) => {
         this.fileURL.push(it);
       });
     }
+  }
+  get productFormsControl() {
+    return this.productsForm.controls;
   }
 
   fetchCategory() {
@@ -70,11 +74,6 @@ export class ProductDetailsComponent implements OnInit {
           this.categories = res.data.results.filter(
             (r) => r.isDeleted == false
           );
-
-          // //default value category name equal the first element of array categories
-          // this.productsForm.controls.categoryName.setValue(this.categories[0], {
-          //   onlySelf: true,
-          // });
         }
       })
       .catch((er) => {
@@ -84,9 +83,11 @@ export class ProductDetailsComponent implements OnInit {
       });
   }
   save() {
-    if (this.productsForm.valid) {
+    if (this.productsForm.invalid) {
+      window.alert("Invalid Form !");
       return;
     }
+    this.submitted = true;
     this.product = {
       name: this.productsForm.value.name,
       description: this.productsForm.value.description,
@@ -101,56 +102,58 @@ export class ProductDetailsComponent implements OnInit {
       hasDisplayHomePage: this.productsForm.value.hasDisplayHomePage,
       isImportant: this.productsForm.value.isImportant,
       id: this.item ? this.item.id : '',
-      createdBy: this.item ? this.item.createdBy : this.item,
-      createdByName: this.item ? this.item.createdByName : this.item,
-      deletedBy: this.item ? this.item.deletedBy : this.item,
-      deletedByName: this.item ? this.item.deletedByName : this.item,
-      isActive: this.item ? this.item.isActive : this.item,
-      isDeleted: this.item ? this.item.isDeleted : this.item,
-      updatedBy: this.item ? this.item.updatedBy : this.item,
-      updatedByName: this.item ? this.item.updatedByName : this.item,
-      files: this.modalFile.listFile,
+      createdBy: this.item ? this.item.createdBy :'',
+      createdByName: this.item ? this.item.createdByName : '',
+      deletedBy: this.item ? this.item.deletedBy : '',
+      deletedByName: this.item ? this.item.deletedByName : '',
+      isActive: this.item ? this.item.isActive : false,
+      isDeleted: this.item ? this.item.isDeleted : false,
+      updatedBy: this.item ? this.item.updatedBy : '',
+      updatedByName: this.item ? this.item.updatedByName : '',
+      files: this.modalFile.listFile
     };
+
     return this.productService
       .save(this.product)
       .then(() => {
         this.ngbActiveModal.close();
       })
       .catch((er) => {
-        if (er.error.hasError) {
-          console.log(er.error.message);
-        }
+        
+          console.log(er);
+        
       });
   }
 
   loadItem() {
     this.productsForm = this.formBuilder.group({
-      name: [this.item ? this.item.name : '', [Validators.required]],
+      name: [this.item ? this.item.name : '', 
+      [Validators.required, Validators.pattern('[a-zA-Z0-9 ]*')]
+    ],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required],
+        [Validators.required, Validators.pattern('[a-zA-Z0-9 ]*')]
       ],
       contentHTML: [
         this.item ? this.item.contentHTML : '',
-        [Validators.required],
+        [Validators.required]
       ],
       imageUrl: [this.item ? this.item.imageUrl : ''],
-      price: [this.item ? this.item.price : '', [Validators.required]],
+      price: [this.item ? this.item.price : 0,
+         [Validators.required]],
       categoryName: [
         this.item ? this.item.categoryId : '',
-        [Validators.required],
+        [Validators.required]
       ],
       displayOrder: [
         this.item ? this.item.displayOrder : 0,
-        [Validators.required],
+        [Validators.required]
       ],
       hasDisplayHomePage: [
-        this.item ? this.item.hasDisplayHomePage : false,
-        [Validators.required],
+        this.item ? this.item.hasDisplayHomePage : false, 
       ],
       isImportant: [
         this.item ? this.item.isImportant : false,
-        [Validators.required],
       ],
     });
 
@@ -169,8 +172,7 @@ export class ProductDetailsComponent implements OnInit {
       return;
     }
 
-    if(!this.fileURL)
-    {
+    if (!this.fileURL) {
       this.fileURL = [];
     }
 
@@ -178,8 +180,7 @@ export class ProductDetailsComponent implements OnInit {
       this.fileURL = [...this.fileURL, ...event.add];
     }
 
-    if(event.remove)
-    {
+    if (event.remove) {
       this.fileURL.forEach((e, i) => {
         if (e == event.remove) {
           this.fileURL.splice(i, 1);
@@ -187,11 +188,11 @@ export class ProductDetailsComponent implements OnInit {
       });
     }
 
-    if(event.removeAll)
-    {
+    if (event.removeAll) {
       this.fileURL = [];
     }
 
     this.productsForm.controls.imageUrl.setValue(this.fileURL.toString());
   }
+
 }

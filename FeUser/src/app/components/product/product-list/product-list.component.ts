@@ -8,14 +8,16 @@ import {
   ReturnMessage,
   SearchPaganationDTO,
 } from "src/app/lib/data/models";
-import { ProductListService } from "src/app/lib/data/services";
+import { HomeService } from "src/app/lib/data/services/home/home.service";
+import { ProductListService } from "src/app/lib/data/services/productlist/productlist.service";
+
 import { ETypeGridLayout } from "src/app/shared/data";
 
 @Component({
   selector: "app-product-list",
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.scss"],
-  providers: [ProductListService],
+  providers: [HomeService,ProductListService],
 })
 export class ProductListComponent implements OnInit {
   public grid: string = ETypeGridLayout.NORMAL;
@@ -75,7 +77,8 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   addItems() {
     if (this.pageModel?.totalItem == this.products.length) {

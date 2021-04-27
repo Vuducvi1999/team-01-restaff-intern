@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -21,6 +21,6 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     SharedModule,
     CKEditorModule,
   ],
-  providers: [BlogService],
+  providers: [BlogService, DatePipe],
 })
 export class BlogsModule {}

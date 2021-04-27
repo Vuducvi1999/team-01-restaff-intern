@@ -29,7 +29,7 @@ export class CategoryDetailComponent implements OnInit {
   public fileURL: (String | ArrayBuffer)[];
 
   public item: any;
-
+  submitted = false;
   ngOnChanges(changes: SimpleChanges): void {}
 
   constructor(
@@ -42,11 +42,15 @@ export class CategoryDetailComponent implements OnInit {
     this.modalFile.multiBoolen = false;
     this.modalFile.enityType = EntityType.CATEGORY;
   }
-
+  get categoryFormsControl() {
+    return this.categoriesForm.controls;
+  }
     save(){
       if(this.categoriesForm.invalid){
+        window.alert("Invalid Form !");
         return;
       }
+      this.submitted = true;
       this.category = {name: this.categoriesForm.value.name, 
         description: this.categoriesForm.value.description,
         imageUrl: this.categoriesForm.value.imageUrl,
@@ -75,12 +79,15 @@ export class CategoryDetailComponent implements OnInit {
 
   loadItem() {
     this.categoriesForm = this.formBuilder.group({
-      name: [this.item ? this.item.name : '', [Validators.required]],
+      name: [this.item ? this.item.name : '',
+       [Validators.required
+        , Validators.pattern(`^[A-Za-z0-9]+[A-Za-z0-9 ]{0,}$`)]],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required],
+        [Validators.required
+          , Validators.pattern(`^[A-Za-z0-9]+[A-Za-z0-9 ]{0,}$`)]
       ],
-      imageUrl: [this.item ? this.item.imageUrl : '', [Validators.required]],
+      imageUrl: [this.item ? this.item.imageUrl : '']
     });
 
     this.modalHeader = new ModalHeaderModel();

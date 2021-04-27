@@ -37,7 +37,7 @@ export class ListCategoriesComponent implements OnInit {
           title: 'Description'
         },
         imageUrl: {
-          title: 'URL',
+          title: 'Image',
           type: 'html',
           valuePrepareFunction: (file) => {
             var fileExt = file.split('.').pop();
