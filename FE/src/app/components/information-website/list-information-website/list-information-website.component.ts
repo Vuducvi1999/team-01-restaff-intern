@@ -13,9 +13,12 @@ import { InformationWebsiteDetailsComponent } from '../information-website-detai
 })
 export class ListInformationWebsiteComponent implements OnInit {
 
-  public infoWeb: InformationWebModel;
+  public infoWeb: InformationWebModel[];
   closeResult = '';
-  constructor(private modalService: NgbModal,private inforWebService:InformationWebsiteService) { }
+  constructor(private modalService: NgbModal,private inforWebService:InformationWebsiteService)
+  {
+    this.fetch();
+  }
 
     //Address , Phone, Email, Fax, Logo
   public settings = 
@@ -59,10 +62,12 @@ export class ListInformationWebsiteComponent implements OnInit {
 
 
   fetch() {
-    this.inforWebService.get(null).then((res : ReturnMessage<InformationWebModel>) => {
+    this.inforWebService
+      .get(null)
+      .then((res : ReturnMessage<InformationWebModel>) => {
       if(!res.hasError)
       {
-        this.infoWeb = res.data;
+        this.infoWeb = [res.data];
       }
     }).catch((er) => {
       
@@ -82,7 +87,7 @@ export class ListInformationWebsiteComponent implements OnInit {
     }
   }
   ngOnInit() {
-    this.fetch();
+    
   }
 
 }

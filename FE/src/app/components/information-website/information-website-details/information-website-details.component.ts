@@ -80,7 +80,7 @@ export class InformationWebsiteDetailsComponent implements OnInit {
         [Validators.required, Validators.pattern('[0-9]*')]
       ],
       email: [this.item ? this.item.email : '',
-      [Validators.required, Validators.pattern('[a-zA-Z0-9 ]*')]
+      [Validators.required, Validators.email]
       ],
       fax: [this.item ? this.item.fax : '',
       [Validators.required, Validators.pattern('[0-9]*')]
