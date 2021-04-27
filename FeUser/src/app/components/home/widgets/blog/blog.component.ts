@@ -12,6 +12,7 @@ import { BlogSlider } from "src/app/shared/data/slider";
 })
 export class BlogComponent implements OnInit {
   @Input() blogs: BlogModel[] = [];
+  typeDisplayImage = TypeDisplayImage;
 
   constructor() {}
 
@@ -25,14 +26,5 @@ export class BlogComponent implements OnInit {
 
   getDate(date: string) {
     return new Date(date).toDateString();
-  }
-
-  getDataImage(blog: BlogModel) {
-    const result: ImageModel = {
-      title: blog.title,
-      url: this.getImage(blog.imageUrl),
-      type: TypeDisplayImage.BLOG_IMAGE,
-    };
-    return result;
   }
 }

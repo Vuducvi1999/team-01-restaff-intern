@@ -43,6 +43,7 @@ export class ProductBoxComponent implements OnInit, OnChanges {
   @ViewChild("cartModal") CartModal: CartModalComponent;
 
   public ImageSrc: string;
+  typeDisplayImage = TypeDisplayImage;
 
   constructor(private productService: ProductService, private router: Router) {}
   ngOnChanges(changes: SimpleChanges): void {
@@ -125,19 +126,11 @@ export class ProductBoxComponent implements OnInit, OnChanges {
     return FileService.getLinkFile(fileName);
   }
 
-  getItem(item: ProductModel){
-    localStorage.setItem('item', JSON.stringify(item));
+  getItem(item: ProductModel) {
+    localStorage.setItem("item", JSON.stringify(item));
     const id = item ? item.id : null;
     const url = `/product-details?${item.name}`;
     this.router.navigateByUrl(url);
   }
-
-  getDataImage(product: ProductModel) {
-    const result: ImageModel = {
-      title: product.name,
-      url: this.getImage(product.imageUrl),
-      type: TypeDisplayImage.PRODUCT_IMAGE,
-    };
-    return result;
-  }
+  
 }

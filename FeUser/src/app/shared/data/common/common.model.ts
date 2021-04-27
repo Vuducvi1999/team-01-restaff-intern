@@ -42,7 +42,7 @@ export enum TypeDisplayImage {
 
 export const TemplateType = {
   Display: {
-    [TypeDisplayImage.BLOG_IMAGE]: "blogImage",
+    [TypeDisplayImage.BLOG_IMAGE]: "blogImage classic-effect",
     [TypeDisplayImage.PRODUCT_IMAGE]: "productImage",
   },
 };

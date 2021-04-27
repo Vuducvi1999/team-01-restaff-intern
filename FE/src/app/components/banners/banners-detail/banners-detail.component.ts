@@ -44,8 +44,7 @@ export class BannersDetailComponent implements OnInit {
   ngOnInit() {
     this.loadFormItem();
     this.createModal();
-    if(this.item)
-    {
+    if (this.item) {
       this.fileURL = [];
       this.fileURL.push(this.item.imageUrl);
     }
@@ -89,7 +88,8 @@ export class BannersDetailComponent implements OnInit {
     this.submitted = true;
 
     if (this.bannersForm.valid) {
-      this.bannersService.save(this.banner)
+      this.bannersService
+        .save(this.banner)
         .then((res) => {
           this.bannersForm.reset();
           this.submitted = false;
@@ -112,17 +112,15 @@ export class BannersDetailComponent implements OnInit {
       return;
     }
 
-    if(!this.fileURL)
-    {
+    if (!this.fileURL) {
       this.fileURL = [];
     }
 
-    if (event.add) {
-      this.fileURL = [...this.fileURL, ...event.add];
-    }
+    // if (event.add) {
+    this.fileURL = [...this.fileURL, ...event.add];
+    // }
 
-    if(event.remove)
-    {
+    if (event.remove) {
       this.fileURL.forEach((e, i) => {
         if (e == event.remove) {
           this.fileURL.splice(i, 1);
@@ -130,8 +128,7 @@ export class BannersDetailComponent implements OnInit {
       });
     }
 
-    if(event.removeAll)
-    {
+    if (event.removeAll) {
       this.fileURL = [];
     }
 

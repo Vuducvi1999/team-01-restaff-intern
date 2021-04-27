@@ -3,8 +3,14 @@
     <ng-template carouselSlide>
       <div class="col-md-12">
         <a [routerLink]="">
-          <div class="classic-effect">
-            <app-image-wapper [data]="getDataImage(blog)"></app-image-wapper>
+          <div class="">
+            <app-image-wapper
+              [data]="{
+                title: blog.title,
+                url: getImage(blog.imageUrl),
+                type: typeDisplayImage.BLOG_IMAGE
+              }"
+            ></app-image-wapper>
             <span></span>
           </div>
         </a>

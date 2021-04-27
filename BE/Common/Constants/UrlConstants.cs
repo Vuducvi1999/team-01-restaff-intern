@@ -58,6 +58,7 @@ namespace Common.Constants
         public const string FeaturedProducts = "featured-products";
         public const string OnSale = "on-sale";
         public const string Blogs = "blogs";
+        public const string Banners = "banners";
 
         public const string TopBlog = BaseBlog + "/topblog";
         public const string RecentBlog = BaseBlog + "/recentblog";

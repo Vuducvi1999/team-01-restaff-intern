@@ -6,7 +6,13 @@
     </div> -->
     <div class="front">
       <a [routerLink]="" (click)="getItem(product)">
-        <app-image-wapper [data]="{}"></app-image-wapper>
+        <app-image-wapper
+          [data]="{
+            title: product.name,
+            url: this.getImage(product.imageUrl),
+            type: typeDisplayImage.PRODUCT_IMAGE
+          }"
+        ></app-image-wapper>
       </a>
     </div>
     <div class="back" *ngIf="onHowerChangeImage">

@@ -14,5 +14,4 @@ import {
 export class ImageWrapperComponent {
   @Input() data: ImageModel;
   templateType = TemplateType.Display;
-  typeSizeImage: string = ETypeSizeImage.NORMAL;
 }
