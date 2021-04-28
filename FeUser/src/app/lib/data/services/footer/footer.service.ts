@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class FooterService {
   private url = '/api/footer';
+  private urlInfo = '/api/info-website';
   constructor(private httpClient: HttpClientService) {
   }
 
@@ -17,4 +18,7 @@ export class FooterService {
     return  this.httpClient.getObservable(this.url + "/social-medias", request).toPromise();
   }
 
+  getInformationWeb(request: any){
+    return  this.httpClient.getObservable(this.urlInfo, request).toPromise();
+  }
 }

@@ -1,6 +1,7 @@
 <div class="image-wrapper">
   <img
-    [src]="data?.url ? data?.url:'assets/images/product/placeholder.jpg'"
+    [defaultImage]="'assets/images/product/placeholder.jpg'"
+    [lazyLoad]="data.url"
     class="img-fluid lazy-loading"
     [alt]="data.title"
     [ngClass]="templateType[data.type]"

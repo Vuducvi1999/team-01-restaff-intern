@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿
+using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,9 +22,7 @@ namespace Data
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderDetail> OrderDetail { get; set; }
-
-
-
+        public DbSet<InformationWebsite> InformationWebsites { get; set; }
 
     }
 }

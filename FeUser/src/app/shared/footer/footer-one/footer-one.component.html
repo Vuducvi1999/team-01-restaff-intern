@@ -35,11 +35,10 @@
 						<h4>about</h4>
 					</div>
 					<div class="footer-contant">
-						<div class="footer-logo">
-							<img [src]="themeLogo" alt="logo">
+						<div class="footer-logo" *ngIf="footerModel.informationWeb">
+							<img src={{getIcon(footerModel.informationWeb.logo)}} alt="logo">
 						</div>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-							labore et dolore magna aliqua. Ut enim ad minim veniam, </p>
+						<p>This is a page for fashion</p>
 						<div class="footer-social">
 							<ul>
 								<li *ngFor="let item of socialMediasIcons">
@@ -84,13 +83,20 @@
 						<div class="footer-title">
 							<h4>store information</h4>
 						</div>
-						<div class="footer-contant">
+						<div class="footer-contant" *ngIf="footerModel.informationWeb">
 							<ul class="contact-list">
-								<li><i class="fa fa-map-marker"></i>Multikart Demo Store, Demo store
-									India 345-659</li>
-								<li><i class="fa fa-phone"></i>Call Us: 123-456-7898</li>
-								<li><i class="fa fa-envelope-o"></i>Email Us: <a>Support@Fiot.com</a></li>
-								<li><i class="fa fa-fax"></i>Fax: 123456</li>
+								<li >
+									<i class="fa fa-map-marker"></i>{{footerModel.informationWeb.address}}
+								</li>
+								<li>
+									<i class="fa fa-phone"></i>{{footerModel.informationWeb.phone}}
+								</li>
+								<li>
+									<i class="fa fa-envelope-o"></i>Email Us: <a> {{footerModel.informationWeb.email}}</a>
+								</li>
+								<li>
+									<i class="fa fa-fax"></i>Fax: {{footerModel.informationWeb.fax}}
+								</li>
 							</ul>
 						</div>
 					</div>
