@@ -25,6 +25,7 @@ import { CartComponent } from "./cart/cart.component";
 import { CheckoutComponent } from "./checkout/checkout.component";
 import { BlogDetailComponent } from "./blogs/blog-detail/blog-detail.component";
 import { ProductDetailsComponent } from "./product/product-details/product-details.component";
+import { PageContentComponent } from "./page-content/page-content.component";
 @NgModule({
   declarations: [
     HomeComponent,
@@ -46,6 +47,7 @@ import { ProductDetailsComponent } from "./product/product-details/product-detai
     CartComponent,
     CheckoutComponent,
     BlogDetailComponent,
+    PageContentComponent
   ],
   imports: [
     CommonModule,

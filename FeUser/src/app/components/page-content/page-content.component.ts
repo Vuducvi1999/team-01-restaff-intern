@@ -10,10 +10,16 @@ import { PageContentService } from "src/app/lib/data/services/pageContent/pageCo
   providers: [PageContentService],
 })
 export class PageContentComponent implements OnInit {
+  public pageContent: PageContentModel;
+
   constructor(
     public pageContentService: PageContentService,
     private activeRoute: ActivatedRoute
-  ) {}
+  ) {
+    this.activeRoute.params.subscribe(() => {
+      this.getCurrentPageContent();
+    });
+  }
 
   ngOnInit() {
     this.getCurrentPageContent();
@@ -24,7 +30,8 @@ export class PageContentComponent implements OnInit {
     this.pageContentService
       .getById(null, id)
       .then((data: ReturnMessage<PageContentModel>) => {
-        const element = document.getElementById("place-to-convert");
+        this.pageContent = data.data;
+        const element = document.getElementById("convert-to-html");
         element.innerHTML = data.data.description;
       });
   }
