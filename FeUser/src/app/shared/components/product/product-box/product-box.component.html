@@ -18,7 +18,9 @@
     <div class="back" *ngIf="onHowerChangeImage">
       <a [routerLink]="" (click)="getItem(product)">
         <img
-          [src]="ImageSrc ? ImageSrc : getImage(product.imageUrl.split(',')[0])"
+          [src]="
+            ImageSrc ? ImageSrc : getImage(product?.imageUrl.split(',')[0])
+          "
           class="img-fluid lazy-loading"
           alt="{{ product.categoryName }}"
         />

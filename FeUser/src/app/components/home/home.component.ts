@@ -29,26 +29,13 @@ export class HomeComponent implements OnInit {
 
   public ProductSliderConfig: any = ProductSlider;
 
-  public sliders = [
-    {
-      title: "welcome to fashion",
-      subTitle: "Men fashion",
-      image: "assets/images/slider/1.jpg",
-    },
-    {
-      title: "welcome to fashion",
-      subTitle: "Women fashion",
-      image: "assets/images/slider/2.jpg",
-    },
-  ];
-
   ngOnInit(): void {}
 
   getProducts() {
     this.homeService
       .getTopCollectionProducts()
       .then((data: ReturnMessage<ProductModel[]>) => {
-        this.products = data.data;
+        this.products = data.data.filter((i) => i.isDeleted === false);
         console.log(data);
       })
       .catch((e) => {
