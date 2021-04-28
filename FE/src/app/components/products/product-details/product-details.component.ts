@@ -125,13 +125,10 @@ export class ProductDetailsComponent implements OnInit {
 
   loadItem() {
     this.productsForm = this.formBuilder.group({
-      name: [
-        this.item ? this.item.name : '',
-        [Validators.required, Validators.pattern('[a-zA-Z0-9 ]*')],
-      ],
+      name: [this.item ? this.item.name : '', [Validators.required]],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required, Validators.pattern('[a-zA-Z0-9 ]*')],
+        [Validators.required],
       ],
       contentHTML: [
         this.item ? this.item.contentHTML : '',

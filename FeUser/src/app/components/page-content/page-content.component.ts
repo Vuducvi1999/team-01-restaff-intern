@@ -15,14 +15,13 @@ export class PageContentComponent implements OnInit {
   constructor(
     public pageContentService: PageContentService,
     private activeRoute: ActivatedRoute
-  ) {
-    this.activeRoute.params.subscribe(() => {
-      this.getCurrentPageContent();
-    });
-  }
+  ) {}
 
   ngOnInit() {
     this.getCurrentPageContent();
+    this.activeRoute.params.subscribe(() => {
+      this.getCurrentPageContent();
+    });
   }
 
   getCurrentPageContent() {
