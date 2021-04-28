@@ -85,6 +85,12 @@ export class CartService {
     return true
   }
 
+  public removeAll(): any {
+    state.cart.splice(0);
+    localStorage.setItem("cartItems", JSON.stringify(state.cart));
+    return true
+  }
+
   // Total amount 
   public cartTotalAmount(): Observable<number> {
     return this.cartItems.pipe(map((product: ProductModel[]) => {

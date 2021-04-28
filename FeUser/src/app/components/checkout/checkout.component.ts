@@ -44,7 +44,7 @@ export class CheckoutComponent implements OnInit {
     this.loadModel();
     this.orderService.create(this.order).then(
       (resp) => {
-        localStorage.removeItem('cartItems');
+        this.cartService.removeAll();
         this.routerService.navigate(["checkout/success"],{state: resp})
       }
     ).catch((er) => console.log(er));
