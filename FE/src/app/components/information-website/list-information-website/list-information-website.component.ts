@@ -71,6 +71,11 @@ export class ListInformationWebsiteComponent implements OnInit {
 
   //Address , Phone, Email, Fax, Logo
   loadForminfoWeb() {
+    if(this.infoWeb)
+    {
+      this.fileURL = [];
+      this.fileURL.push(this.infoWeb.logo);
+    }
     this.inforWebForm = this.formBuilder.group({
       address: [
         this.infoWeb ? this.infoWeb.address : '',
