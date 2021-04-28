@@ -127,7 +127,6 @@ export class SettingsComponent implements OnInit {
   getItem() {
     this.searchService.get(null).then((res: any) => {
       this.data = res.data.results;
-      console.log(res.data.results);
     });
   }
 }

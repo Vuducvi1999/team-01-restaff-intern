@@ -1,6 +1,7 @@
 import { ViewportScroller } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { timingSafeEqual } from "crypto";
 import {
   ETypeSort,
   PageModel,
@@ -49,7 +50,10 @@ export class ProductListComponent implements OnInit {
 
       this.search = params.search ? params.search : this.search;
       this.params["search.Name"] = this.search;
-      console.log(this.search);
+      if (this.params["search.Name"] == null) {
+        delete this.params["search.Name"];
+      }
+
       this.tags = [];
       this.finished = false;
 
@@ -93,6 +97,7 @@ export class ProductListComponent implements OnInit {
       .getPageProduct({ params: this.params })
       .then((res: ReturnMessage<PageModel<ProductModel>>) => {
         this.pageModel = res.data;
+        console.log(res.data);
         this.params.pageIndex = res.data.pageIndex;
         this.params.pageSize = res.data.pageSize;
 
