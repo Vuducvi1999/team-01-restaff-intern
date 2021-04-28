@@ -162,6 +162,7 @@ export class ProfileSettingsComponent implements OnInit {
   }
 
   get getImage() {
+    console.log("get image");
     return FileService.getLinkFile(this.userInfo.imageUrl);
   }
 }

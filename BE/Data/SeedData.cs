@@ -1,6 +1,8 @@
 ﻿using Domain.Constants;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
+using Common.Constants;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,6 +28,22 @@ namespace Data
                         ctx.PageContents.Add(item.Value);
                         ctx.SaveChanges();
                     }
+                }
+                if (!await ctx.InformationWebsites.AnyAsync())
+                {
+         
+                    ctx.InformationWebsites.Add(new InformationWebsite() {
+                        Id = CommonConstants.WebSiteInformationId,
+                        Address = "123 Hai Ba Trung",
+                        Email = "email@gmail.com",
+                        Fax = "656565655656",
+                        Logo = "logo1",
+                        Phone = "776767776767",
+                        CreateByDate = DateTime.Now,
+                        IsActive = true,
+                        ObjectState = Infrastructure.EntityFramework.ObjectState.Added
+                    });
+                    ctx.SaveChanges();
                 }
 
             }

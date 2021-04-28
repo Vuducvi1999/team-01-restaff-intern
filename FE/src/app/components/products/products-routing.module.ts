@@ -14,14 +14,6 @@ const routes: Routes = [
             title: "Product List",
             breadcrumb: "Product List"
           }
-        },
-        {
-          path: 'create-products',
-          component: ProductDetailsComponent,
-          data: {
-            title: "Create Product",
-            breadcrumb: "Create Product"
-          }
         }
       ]
     }

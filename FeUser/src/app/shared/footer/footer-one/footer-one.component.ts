@@ -21,7 +21,8 @@ export class FooterOneComponent implements OnInit {
   public footerModel: FooterModel = {
     socialMedias: [],
     categories: [],
-  };
+    informationWeb: {address: '', phone: '', email: '', fax: '', logo: ''}  
+  }
   public socialMediasIcons: any[] = [];
   pageContents: PageContentModel[] = [];
 
@@ -40,8 +41,12 @@ export class FooterOneComponent implements OnInit {
       this.footerModel.socialMedias = res.data;
     });
     await this.footerService.getCategories(null).then((res: any) => {
-      this.footerModel.categories = res.data;
-    });
+      this.footerModel.categories = (res.data);
+    })
+    await this.footerService.getInformationWeb(null).then((res: any) => {
+      this.footerModel.informationWeb = res.data;
+    })
+
   }
 
   async sortIcons() {

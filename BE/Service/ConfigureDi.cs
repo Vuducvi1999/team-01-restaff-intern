@@ -20,6 +20,7 @@ using Service.Header;
 using Service.Footer;
 using Service.UserProductList;
 using Service.PageContents;
+using Service.InformationWebsiteServices;
 
 namespace Service
 {
@@ -66,6 +67,10 @@ namespace Service
 
             services.AddScoped<IProductDetailsFeService, ProductDetailsFeService>();
             services.AddScoped<IPageContentService,PageContentService>();
+
+
+            //Information Website
+            services.AddScoped<IInfomationWebService, InformationWebService>();
 
         }
     }

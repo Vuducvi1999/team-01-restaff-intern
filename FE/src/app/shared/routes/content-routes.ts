@@ -102,4 +102,12 @@ export const content: Routes = [
       breadcrumb: 'page-content',
     },
   },
+  {
+    path: 'information-website',
+    loadChildren: () =>
+      import('../../components/information-website/information.module').then((m) => m.InformationWebsiteModule),
+    data: {
+      breadcrumb: 'Information Website',
+    },
+  },
 ];

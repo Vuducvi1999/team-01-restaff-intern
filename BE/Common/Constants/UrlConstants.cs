@@ -64,6 +64,8 @@ namespace Common.Constants
         public const string RecentBlog = BaseBlog + "/recentblog";
         public const string GetBlog = BaseBlog + "/{id}";
 
+        public const string BaseInformationWebsite = BaseApi + "/info-website";
+
         // Page Content
         public const string BasePageContent= BaseApi + "/page-content";
         public const string GetPageContent = BaseApi + "/page-content/{id}";

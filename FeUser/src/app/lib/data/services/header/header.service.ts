@@ -8,6 +8,7 @@ import { HeaderModel, Menu } from 'src/app/lib/data/models/header/header.model';
 })
 export class HeaderService {
   private url = '/api/header';
+  private urlInfo = '/api/info-website';
   public screenWidth: any;
   public leftMenuToggle: boolean = false;
   public mainMenuToggle: boolean = false;
@@ -24,5 +25,8 @@ export class HeaderService {
   }
    getBlogs(request: any) {
     return  this.httpClient.getObservable(this.url + "/blogs", request).toPromise();
+  }
+  getInformationWeb(request: any){
+    return  this.httpClient.getObservable(this.urlInfo, request).toPromise();
   }
 }

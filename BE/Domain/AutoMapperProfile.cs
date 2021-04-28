@@ -18,6 +18,7 @@ using Domain.DTOs.Blogs;
 using Domain.DTOs.ProductsFeUser;
 using Domain.DTOs.Home;
 using Domain.DTOs.PageContent;
+using Domain.DTOs.InfomationWeb;
 
 namespace Domain
 {
@@ -105,6 +106,11 @@ namespace Domain
             CreateMap<PageContent, PageContentDTO>().ReverseMap();
             CreateMap<PageContent, UpdatePageContentDTO>().ReverseMap();
 
+
+
+            //Information Web
+            CreateMap<InformationWebsite, InformationWebDTO>().ReverseMap();
+            CreateMap<InformationWebsite, UpdateInformationWebDTO>().ReverseMap();
         }
     }
 }
