@@ -29,7 +29,6 @@ export class ListInformationWebsiteComponent implements OnInit {
     this.modalFile.typeFile = TypeFile.IMAGE;
     this.modalFile.multiBoolen = false;
     this.modalFile.enityType = EntityType.USER;
-    this.loadForminfoWeb();
   }
   ngOnInit() {
     this.fetch();
@@ -65,6 +64,9 @@ export class ListInformationWebsiteComponent implements OnInit {
    updateSwitch() {
     this.modalFile.listFile = [];
     this.update = this.update == true ? false : true;
+    if(this.update){
+      this.loadForminfoWeb();
+    }
   }
 
   //Address , Phone, Email, Fax, Logo

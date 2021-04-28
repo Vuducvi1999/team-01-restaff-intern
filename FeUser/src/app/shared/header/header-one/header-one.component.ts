@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { HeaderModel, InfoHeaderModel } from 'src/app/lib/data/models';
+import { FileService, HeaderService } from 'src/app/lib/data/services';
 
 @Component({
   selector: 'app-header-one',
@@ -12,11 +14,15 @@ export class HeaderOneComponent implements OnInit {
   @Input() topbar: boolean = true; // Default True
   @Input() sticky: boolean = false; // Default false
   
+  public headerModel: InfoHeaderModel = {
+    informationWeb: {address: '', phone: '', email: '', fax: '', logo: ''}
+  }
   public stick: boolean = false;
 
-  constructor() { }
+  constructor(public headerService: HeaderService) { }
 
   ngOnInit(): void {
+    this.loadHeaderModel();
   }
 
   // @HostListener Decorator
@@ -29,5 +35,14 @@ export class HeaderOneComponent implements OnInit {
   	  this.stick = false;
   	}
   }
+  async loadHeaderModel() {
+    await this.headerService.getInformationWeb(null).then((res: any) => {
+      this.headerModel.informationWeb = res.data;
+      console.log(this.headerModel.informationWeb);
+    })
+  }
 
+  getIcon(model: any) {
+    return FileService.getLinkFile(model);
+  }
 }

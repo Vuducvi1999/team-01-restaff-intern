@@ -9,7 +9,7 @@
         <app-image-wapper
           [data]="{
             title: product.name,
-            url: this.getImage(product.imageUrl),
+            url: getImage(product.imageUrl.split(',')[0]),
             type: typeDisplayImage.PRODUCT_IMAGE
           }"
         ></app-image-wapper>
