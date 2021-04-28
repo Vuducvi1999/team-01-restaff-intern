@@ -5,11 +5,8 @@ import { PageContentModel } from 'src/app/lib/data/models/pageContent/pageConten
 import { PageContentService } from 'src/app/lib/data/services/pageContents/pageContent.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {
-  EntityType,
-  ModalFile,
   ModalFooterModel,
   ModalHeaderModel,
-  TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
 @Component({
   selector: 'app-page-content-details',
@@ -24,19 +21,13 @@ export class PageContentDetailComponent implements OnInit {
   public pageContent: PageContentModel;
   @Input() item;
 
-  public modalFile: ModalFile;
   public editor = ClassicEditor;
 
   constructor(
     private formBuilder: FormBuilder,
     private pageContentService: PageContentService,
     private ngbActiveModal: NgbActiveModal
-  ) {
-    this.modalFile = new ModalFile();
-    this.modalFile.typeFile = TypeFile.IMAGE;
-    this.modalFile.multiBoolen = false;
-    this.modalFile.enityType = EntityType.USER;
-  }
+  ) {}
 
   ngOnInit() {
     this.loadItem();
