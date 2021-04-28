@@ -30,8 +30,6 @@ export class PageContentComponent implements OnInit {
       .getById(null, id)
       .then((data: ReturnMessage<PageContentModel>) => {
         this.pageContent = data.data;
-        const element = document.getElementById("convert-to-html");
-        element.innerHTML = data.data.description;
       });
   }
 }
