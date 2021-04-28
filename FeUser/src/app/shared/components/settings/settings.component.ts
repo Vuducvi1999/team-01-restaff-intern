@@ -8,10 +8,16 @@ import {
 import { isPlatformBrowser } from "@angular/common";
 import { Observable } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
-import { FileService } from "src/app/lib/data/services";
-import { ProductModel, ReturnMessage } from "src/app/lib/data/models";
+import { FileService, ProductListService } from "src/app/lib/data/services";
+import {
+  PageModel,
+  ProductModel,
+  ReturnMessage,
+} from "src/app/lib/data/models";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { FilterPipeModule } from "ngx-filter-pipe";
+import { SearchService } from "src/app/lib/data/services/search/search.service";
 
 @Component({
   selector: "app-settings",
@@ -24,6 +30,8 @@ export class SettingsComponent implements OnInit {
   public search: boolean = false;
   public name: string;
   public value: any;
+  public data: ProductModel[] = [];
+  public userFilter: any = { name: "" };
 
   public languages = [
     {
@@ -64,7 +72,8 @@ export class SettingsComponent implements OnInit {
     private translate: TranslateService,
     public cartService: CartService,
     public router: Router,
-    private activatedRoute: ActivatedRoute // private productService: ProductService
+    private activatedRoute: ActivatedRoute,
+    private searchService: SearchService // private productListService: ProductListService
   ) {
     this.cartService.cartItems.subscribe(
       (response) => (this.products = response)
@@ -73,6 +82,7 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRoute();
+    this.getItem();
   }
 
   searchToggle() {
@@ -104,12 +114,20 @@ export class SettingsComponent implements OnInit {
   }
 
   onSearch(event: KeyboardEvent) {
+    const target = event.target as HTMLInputElement;
     if (event.code == "Enter" || event.code == "NumpadEnter") {
       this.router.navigate(["product"], {
-        queryParams: { search: event.target?.value },
+        queryParams: { search: target?.value },
+        relativeTo: this.activatedRoute,
       });
-      console.log(event.target?.value);
+      console.log(target?.value);
       this.search = false;
     }
+  }
+  getItem() {
+    this.searchService.get(null).then((res: any) => {
+      this.data = res.data.results;
+      console.log(res.data.results);
+    });
   }
 }

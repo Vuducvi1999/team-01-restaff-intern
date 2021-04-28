@@ -21,6 +21,7 @@
                   <form>
                     <div class="form-group">
                       <input
+                        [(ngModel)]="userFilter.name"
                         type="text"
                         class="form-control"
                         id="exampleInputPassword1"
@@ -28,6 +29,11 @@
                         name="name"
                         (keypress)="onSearch($event)"
                       />
+                      <ul>
+                        <li *ngFor="let item of data | filterBy: userFilter">
+                          {{ item.name }}
+                        </li>
+                      </ul>
                     </div>
                     <button type="submit" class="btn btn-primary">
                       <i class="fa fa-search"></i>

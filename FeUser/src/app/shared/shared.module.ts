@@ -49,6 +49,9 @@ import { ProductBoxComponent } from "./components/product/product-box/product-bo
 import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
 import { ImageWrapperComponent } from "./components/imageWrapper/imageWapper.component";
 
+import { FilterPipeModule } from "ngx-filter-pipe";
+import { SearchService } from "../lib/data/services/search/search.service";
+
 @NgModule({
   declarations: [
     ProductBoxComponent,
@@ -89,7 +92,9 @@ import { ImageWrapperComponent } from "./components/imageWrapper/imageWapper.com
     NgxSkeletonLoaderModule,
     TranslateModule,
     SweetAlert2Module.forRoot(),
+    FilterPipeModule,
   ],
+  providers: [SearchService],
   exports: [
     ProductBoxComponent,
     CommonModule,

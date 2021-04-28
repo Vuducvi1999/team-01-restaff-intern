@@ -33,7 +33,7 @@ export class ProductListComponent implements OnInit {
   public mobileSidebar: boolean = false;
   public finished: boolean = false;
   public params;
-  public searchName: string;
+  public search: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,10 +46,10 @@ export class ProductListComponent implements OnInit {
       console.log(params.search);
       this.products = [];
       this.params = {};
-      if (params.search != null) {
-        this.params.searchName = params.search;
-      }
-      console.log(this.params.searchName);
+
+      this.search = params.search ? params.search : this.search;
+      this.params["search.Name"] = this.search;
+      console.log(this.search);
       this.tags = [];
       this.finished = false;
 
@@ -88,11 +88,11 @@ export class ProductListComponent implements OnInit {
       return;
     }
 
+    console.log(this.params);
     this.productListService
       .getPageProduct({ params: this.params })
       .then((res: ReturnMessage<PageModel<ProductModel>>) => {
         this.pageModel = res.data;
-        console.log(res.data);
         this.params.pageIndex = res.data.pageIndex;
         this.params.pageSize = res.data.pageSize;
 
