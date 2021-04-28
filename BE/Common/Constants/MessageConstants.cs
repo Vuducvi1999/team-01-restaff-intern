@@ -11,6 +11,8 @@
         public const string ListSuccess = "List successfully";
         public const string Error = "Save fail";
 
+        public const string CommonError = "Error !";
+
         public const string InvalidAuthInfoMsg = "Invalid email or password";
         public const string LoginSuccess = "Login successfully";
 

@@ -14,4 +14,9 @@ namespace Service.Common
 
     }
 
+    public interface ICommonCRUDService<TRespone, UpdateT> where TRespone : class
+    {
+        ReturnMessage<TRespone> Update(UpdateT model);
+    }
+
 }

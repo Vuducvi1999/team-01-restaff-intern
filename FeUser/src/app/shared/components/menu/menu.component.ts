@@ -14,7 +14,7 @@ export class MenuComponent implements OnInit {
 
   public headerModel: HeaderModel = {
     categories: [],
-    blogs: [],
+    blogs: []
   };
   public categoriesChildren: Menu[] = [];
   public blogsChildren: Menu[] = [];

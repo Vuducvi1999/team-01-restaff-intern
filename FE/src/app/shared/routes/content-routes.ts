@@ -92,4 +92,12 @@ export const content: Routes = [
       breadcrumb: 'Blogs',
     },
   },
+  {
+    path: 'information-website',
+    loadChildren: () =>
+      import('../../components/information-website/information.module').then((m) => m.InformationWebsiteModule),
+    data: {
+      breadcrumb: 'Information Website',
+    },
+  },
 ];

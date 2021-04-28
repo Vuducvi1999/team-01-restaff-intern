@@ -24,4 +24,9 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extension\" />
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

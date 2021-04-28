@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿
+using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +20,7 @@ namespace Data
         public DbSet<Product> Products { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<Blog> Blogs { get; set; }
-
+        public DbSet<InformationWebsite> InformationWebsites { get; set; }
 
     }
 }
