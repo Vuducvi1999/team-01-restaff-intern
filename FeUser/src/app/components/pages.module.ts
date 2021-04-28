@@ -20,11 +20,11 @@ import { ColorsComponent } from "./product/widgets/colors/colors.component";
 import { Ng5SliderModule } from "ng5-slider";
 import { GridComponent } from "./product/widgets/grid/grid.component";
 import { SliderComponent } from "./home/slider/slider.component";
-import { BlogsComponent } from "./blogs/blogs.component";
 import { CartComponent } from "./cart/cart.component";
 import { CheckoutComponent } from "./checkout/checkout.component";
 import { BlogDetailComponent } from "./blogs/blog-detail/blog-detail.component";
 import { ProductDetailsComponent } from "./product/product-details/product-details.component";
+import { BlogMainComponent } from "./blogs/blog-main/blog-main.component";
 import { PageContentComponent } from "./page-content/page-content.component";
 @NgModule({
   declarations: [
@@ -43,10 +43,10 @@ import { PageContentComponent } from "./page-content/page-content.component";
     SizeComponent,
     PriceComponent,
     GridComponent,
-    BlogsComponent,
+    BlogDetailComponent,
     CartComponent,
     CheckoutComponent,
-    BlogDetailComponent,
+    BlogMainComponent,
     PageContentComponent
   ],
   imports: [

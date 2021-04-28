@@ -17,7 +17,7 @@ const routes: Routes = [
   },
   {
     path: "blog",
-    component: BlogsComponent,
+    component: BlogMainComponent,
   },
   {
     path: "product",

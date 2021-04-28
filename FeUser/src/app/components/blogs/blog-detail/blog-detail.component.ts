@@ -22,10 +22,13 @@ export class BlogDetailComponent implements OnInit {
   }
 
   getBlog() {
-    this.id = this.activatedRoute.snapshot.paramMap.get("id");
-    this.blogService.getBlog(this.id).then((res: ReturnMessage<BlogModel>) => {
-      this.data = res.data;
-      console.log(this.data);
+    this.activatedRoute.paramMap.subscribe((params) => {
+      this.id = params.get("id");
+      this.blogService
+        .getBlog(this.id)
+        .then((res: ReturnMessage<BlogModel>) => {
+          this.data = res.data;
+        });
     });
   }
 

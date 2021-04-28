@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
     this.homeService
       .getTopCollectionProducts()
       .then((data: ReturnMessage<ProductModel[]>) => {
-        this.products = data.data;
+        this.products = data.data.filter((i) => i.isDeleted === false);
         console.log(data);
       })
       .catch((e) => {
