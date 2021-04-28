@@ -128,8 +128,8 @@ export class ProductBoxComponent implements OnInit, OnChanges {
 
   getItem(item: ProductModel) {
     localStorage.setItem("item", JSON.stringify(item));
-    const id = item ? item.id : null;
-    const url = `/product-details?${item.name}`;
+    const name = item ? item.name : null;
+    const url = `/product-details?name=${name}`;
     this.router.navigateByUrl(url);
   }
   

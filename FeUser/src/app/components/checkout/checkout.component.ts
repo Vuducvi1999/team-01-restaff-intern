@@ -55,6 +55,7 @@ export class CheckoutComponent implements OnInit {
     this.order.fullName = `${this.order.firstName} ${this.order.lastName}`;
     this.order.totalAmount = this.totalPrice;
     this.order.totalItem = this.totalItem;
+
     this.products.forEach(product => {
       var orderDetail = new OrderDetailModel();
       orderDetail.productId = product.id;

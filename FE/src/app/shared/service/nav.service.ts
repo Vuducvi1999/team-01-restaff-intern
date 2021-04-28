@@ -75,19 +75,6 @@ export class NavService {
         },
       ],
     },
-    // {
-    //   title: 'Files',
-    //   icon: 'camera',
-    //   type: 'sub',
-    //   active: false,
-    //   children: [
-    //     {
-    //       path: '/files/list-files',
-    //       title: 'File List',
-    //       type: 'link',
-    //     },
-    //   ],
-    // },
     {
       title: 'Coupon',
       icon: 'users',
@@ -176,12 +163,7 @@ export class NavService {
           path: '/orders/list-orders',
           title: 'Orders List',
           type: 'link',
-        },
-        {
-          path: '/order-details/list-order-details',
-          title: 'Order Details List',
-          type: 'link',
-        },
+        }
       ],
     }
   ];

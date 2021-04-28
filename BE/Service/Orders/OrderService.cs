@@ -99,7 +99,7 @@ namespace Service.Orders
                     )
                 )
                 , search.PageSize
-                , search.PageIndex
+                , search.PageIndex* search.PageSize
                 , t => t.FullName
             );
             var data = _mapper.Map<PaginatedList<Order>, PaginatedList<OrderDTO>>(resultEntity);

@@ -37,7 +37,7 @@
                             <tbody>
                                 <tr *ngFor="let orderDetail of checkOutOrderDetails">
                                     <td>
-                                        <img [src]="getImage(orderDetail.imageUrl)" alt="" class="img-fluid">
+                                        <img [src]="getImage(orderDetail.productImgUrl)" alt="" class="img-fluid">
                                     </td>
                                     <td>
                                         <h5>{{ orderDetail.productName }}</h5>
@@ -73,11 +73,6 @@
                         <div class="order-detail">
                            {{checkOutOrders.address}}
                         </div>
-                    </div>
-
-                    <div class="col-sm-12 payment-mode">
-                        <h4>payment method</h4>
-                        <p>Pay on Delivery (Cash/Card). Cash on delivery (COD) available. </p>
                     </div>
                     <div class="col-md-12">
                         <div class="delivery-sec">

@@ -6,6 +6,7 @@ import { ProductService } from "../../services/product.service";
 import { FileService } from 'src/app/lib/data/services';
 import { ProductModel } from 'src/app/lib/data/models';
 import { CartService } from 'src/app/lib/data/services/cart/cart.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
@@ -46,7 +47,8 @@ export class SettingsComponent implements OnInit {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private translate: TranslateService,
-    public cartService: CartService) {
+    public cartService: CartService,
+    public route:Router) {
     this.cartService.cartItems.subscribe(response => this.products = response);
   }
 
@@ -75,5 +77,10 @@ export class SettingsComponent implements OnInit {
 
   getImage(fileName: string) {
     return FileService.getLinkFile(fileName);
+  }
+
+  getLink(name:any){
+    const url = `/product-details?name=${name}`;
+    this.route.navigateByUrl(url);
   }
 }

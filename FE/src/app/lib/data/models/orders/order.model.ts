@@ -1,21 +1,22 @@
-import { BaseModel } from "../common";
-// import { FileDtoModel } from "../files/file.model";
-export interface OrderModel extends BaseModel {
-  fullName:string;
-  code:string;
-  address:string;
-  phone:string;
-  email:string;
-  status:string;
-  totalAmount:number;
-  totalItem:number;
+export class OrderModel {
+  id?: string;
+  fullName?: string;
+  firstName? = '';
+  lastName? = '';
+  address = '';
+  phone = '';
+  email = '';
+  status: 'New';
+  totalAmount = 0;
+  totalItem = 0;
+  orderDetails?: OrderDetailModel[] = [];
 }
 
-export interface OrderDetailModel extends BaseModel {
-  fullName:string;
-  orderId:string;
-  productId:string;
-  price:string;
-  quantity:string;
-  totalAmount:number;
+export class OrderDetailModel {
+  // orderId:string;
+  productName = '';
+  productId = '';
+  price = 0;
+  quantity = 0;
+  totalAmount = 0;
 }
