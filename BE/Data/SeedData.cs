@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Common.Constants;
+using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -14,8 +16,21 @@ namespace Data
             {
                 if (ctx == null)
                     throw new ArgumentNullException(nameof(ctx));
-                if (!await ctx.Users.AnyAsync())
+                if (!await ctx.InformationWebsites.AnyAsync())
                 {
+         
+                    ctx.InformationWebsites.Add(new InformationWebsite() {
+                        Id = CommonConstants.WebSiteInformationId,
+                        Address = "123 Hai Ba Trung",
+                        Email = "email@gmail.com",
+                        Fax = "656565655656",
+                        Logo = "logo1",
+                        Phone = "776767776767",
+                        CreateByDate = DateTime.Now,
+                        IsActive = true,
+                        ObjectState = Infrastructure.EntityFramework.ObjectState.Added
+                    });
+                    ctx.SaveChanges();
                 }
 
             }
