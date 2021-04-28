@@ -135,6 +135,19 @@ export class NavService {
         },
       ],
     },
+    {
+      title: 'Customer',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/customers/list-customers',
+          title: 'Customer List',
+          type: 'link',
+        },
+      ],
+    },
   ];
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 }

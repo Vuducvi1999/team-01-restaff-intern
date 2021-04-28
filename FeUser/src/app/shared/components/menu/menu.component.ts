@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HeaderModel, Menu } from 'src/app/lib/data/models/header/header.model';
 import { HeaderService } from 'src/app/lib/data/services';
 
@@ -20,7 +21,7 @@ export class MenuComponent implements OnInit {
   public blogsChildren: Menu[] = [];
 
 
-  constructor(public headerService: HeaderService) {
+  constructor(public headerService: HeaderService, private router: Router) {
   }
 
   ngOnInit() {
@@ -52,7 +53,7 @@ export class MenuComponent implements OnInit {
       this.categoriesChildren.push(
         {
           title: item.name,
-          path: '/',
+          path: `/product?search.categoryName=${item.name}`,
           type: 'link'
         })
     });
@@ -74,4 +75,8 @@ export class MenuComponent implements OnInit {
     );
   }
 
+  loadUrlNavaigate(url: string)
+  {
+    this.router.navigateByUrl(url);
+  }
 }

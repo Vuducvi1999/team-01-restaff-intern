@@ -15,6 +15,8 @@ import { AppComponent } from "./app.component";
 import { PagesComponent } from "./components/pages.component";
 import { environment } from "./lib/environments/environment";
 import { AppConfig } from "./lib/environments/config/appConfig";
+import { LoginComponent } from "./components/auth/login/login.component";
+import { RegisterComponent } from "./components/auth/register/register.component";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -25,6 +27,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     PagesComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "serverApp" }),

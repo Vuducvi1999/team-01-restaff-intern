@@ -10,16 +10,16 @@ namespace Data
         {
         }
 
-        DbSet<Supplier> Suppliers { get; set; }
-        DbSet<SocialMedia> SocialMedias { get; set; }
-        DbSet<User> Users { get; set; }
-        DbSet<Customer> Customers { get; set; }
-        DbSet<Category> Categories { get; set; }
-        DbSet<Coupon> Coupons { get; set; }
-        DbSet<Banner> Banners { get; set; }
-        DbSet<Product> Products { get; set; }
-        DbSet<File> Files { get; set; }
-        DbSet<Blog> Blogs { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<SocialMedia> SocialMedias { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Coupon> Coupons { get; set; }
+        public DbSet<Banner> Banners { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<File> Files { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

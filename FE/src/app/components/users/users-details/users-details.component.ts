@@ -31,7 +31,7 @@ export class UserDetailComponent implements OnInit {
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   public user: UserModel;
-  @Input() item;
+  @Input() item: UserModel;
 
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];
@@ -86,6 +86,7 @@ export class UserDetailComponent implements OnInit {
       imageUrl: this.usersForm.value.imageUrl,
       id: this.item ? this.item.id : '',
       files: this.modalFile.listFile,
+      customerId: this.item? this.item.customerId : null
     };
 
     this.callServiceToSave();

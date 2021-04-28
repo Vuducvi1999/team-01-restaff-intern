@@ -20,6 +20,7 @@ using Service.Header;
 using Service.Footer;
 using Service.UserProductList;
 using Service.Customers;
+using Service.AuthCustomer;
 
 namespace Service
 {
@@ -59,13 +60,20 @@ namespace Service
 
             services.AddScoped<IHomeService, HomeService>();
 
+            //Customer
+            services.AddScoped<ICustomerInfoService, CustomerInfoService>();
             services.AddScoped<ICustomerService, CustomerService>();
+
+            ////AuthCustomer
+            services.AddScoped<IAuthCustomerManager, AuthCustomerManager>();
+            services.AddScoped<IAuthCustomerService, AuthCustomerService>();
 
             //FeUser
 
             services.AddScoped<IUserProductListService, UserProductListService>();
 
             services.AddScoped<IProductDetailsFeService, ProductDetailsFeService>();
+
         }
     }
 }

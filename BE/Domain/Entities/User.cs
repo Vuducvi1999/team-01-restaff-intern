@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Common.Enums;
+using Domain.DTOs.Customer;
 
 namespace Domain.Entities
 {
@@ -37,6 +38,18 @@ namespace Domain.Entities
         }
 
         public void Update(UpdateUserDTO model)
+        {
+            base.Update();
+            Username = model.Username;
+            //Password = MD5Helper.ToMD5Hash(model.Password);
+            Email = model.Email;
+            FirstName = model.FirstName;
+            LastName = model.LastName;
+            ImageUrl = model.ImageUrl;
+            ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
+        }
+
+        public void Update(UpdateCustomerDTO model)
         {
             base.Update();
             Username = model.Username;

@@ -3,6 +3,8 @@ export * from './banners/banners.service';
 export * from './auth/auth.service';
 export * from './coupons/coupon.service';
 export * from './social-media/social-media.service';
-export * from './auth/auth.service'
-export * from './files/file.service'
-export * from './profiles/profile.service'
+export * from './auth/auth.service';
+export * from './files/file.service';
+export * from './profiles/profile.service';
+export * from './customers/customer.service';
+export * from './customers/customer-info.service';

@@ -14,7 +14,7 @@ import {
   ModalFooterModel,
   ModalHeaderModel,
 } from 'src/app/shared/components/modals/models/modal.model';
-
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-coupon-detail',
   templateUrl: './coupon-detail.component.html',
@@ -35,28 +35,21 @@ export class CouponDetailComponent implements OnInit {
   ) {}
   loadItemForm() {
     this.couponForm = this.formBuilder.group({
-      code: [
-        this.item ? this.item.code : '',
-        [
-          Validators.required,
-          Validators.pattern('^(?=.*[a-zA-Z0-9])([a-zA-Z0-9]+)$'),
-        ],
-      ],
-      name: [
-        this.item ? this.item.name : '',
-        [
-          Validators.required,
-          Validators.pattern('^(?=.*[a-zA-Z0-9])([a-zA-Z0-9]+)$'),
-        ],
-      ],
+      code: [this.item ? this.item.code : '', [Validators.required]],
+      name: [this.item ? this.item.name : '', [Validators.required]],
       hasPercent: [this.item?.hasPercent ? true : false],
       value: [this.item ? this.item.value : '', Validators.required],
-      startDate: [this.item ? this.item.startDate : '', Validators.required],
+      startDate: [
+        this.item ? formatDate(this.item.startDate, 'yyyy-MM-dd', 'en') : '',
+        Validators.required,
+      ],
       endDate: [
-        this.item ? this.item.endDate : '',
+        this.item ? formatDate(this.item.endDate, 'yyyy-MM-dd', 'en') : '',
         [Validators.required, this.compareDate('startDate')],
       ],
     });
+    //this.item.startDate.getTime()
+    console.log(this.couponForm);
   }
 
   compareDate(matchTo: string): ValidatorFn {
@@ -78,8 +71,8 @@ export class CouponDetailComponent implements OnInit {
 
   saveCoupon(event: any) {
     this.coupon = {
-      code: this.couponForm.controls.code?.value,
-      name: this.couponForm.controls.name?.value,
+      code: this.couponForm.controls.code?.value.trim(),
+      name: this.couponForm.controls.name?.value.trim(),
       hasPercent: this.couponForm.controls.hasPercent?.value,
       value: this.couponForm.controls.value?.value,
       startDate: this.couponForm.controls.startDate?.value,

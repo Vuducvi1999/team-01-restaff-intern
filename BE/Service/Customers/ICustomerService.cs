@@ -1,6 +1,7 @@
 ﻿using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Customer;
+using Domain.DTOs.Users;
 using Infrastructure.EntityFramework;
 using Service.Common;
 using System;

@@ -44,6 +44,8 @@ namespace BE
 
             //Auth
             JwtAuthConfig.Setup(services, Configuration);
+            ////AuthCustomer
+            //JwtAuthCustomerConfig.Setup(services, Configuration);
 
             //services.AddDirectoryBrowser();
             //Swagger

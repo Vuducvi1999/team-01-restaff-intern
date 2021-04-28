@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using Common.Constants;
+using Common.Enums;
 using Common.Http;
+using Common.MD5;
 using Common.Pagination;
-using Common.StringEx;
 using Domain.DTOs.Customer;
+using Domain.DTOs.Users;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
+using Infrastructure.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,13 +17,13 @@ namespace Service.Customers
 {
     public class CustomerService : ICustomerService
     {
-        private readonly IRepository<Customer> _customerRepository;
+        private readonly IRepository<User> _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CustomerService(IRepository<Customer> customerRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public CustomerService(IRepository<User> userRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _customerRepository = customerRepository;
+            _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -29,17 +32,16 @@ namespace Service.Customers
         {
             try
             {
-                if(StringExtension.CleanString(model))
-                {
-                    return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
-                }
+                if (model.Username.Trim() == "" || model.Password.Trim() == "")
+                    return new ReturnMessage<CustomerDTO>(false, null, MessageConstants.CreateSuccess);
 
-                var entity = _mapper.Map<CreateCustomerDTO, Customer>(model);
+                var entity = _mapper.Map<CreateCustomerDTO, User>(model);
+                entity.Password = MD5Helper.ToMD5Hash(model.Password);
                 entity.Insert();
-                _customerRepository.Insert(entity);
+                entity.Type = UserType.Customer;
+                _userRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
-
-                var result = new ReturnMessage<CustomerDTO>(false, _mapper.Map<Customer, CustomerDTO>(entity), MessageConstants.CreateSuccess);
+                var result = new ReturnMessage<CustomerDTO>(false, _mapper.Map<User, CustomerDTO>(entity), MessageConstants.CreateSuccess);
                 return result;
             }
             catch (Exception ex)
@@ -52,18 +54,39 @@ namespace Service.Customers
         {
             try
             {
-                if (!StringExtension.CleanString(model))
+                var entity = _userRepository.Find(model.Id);
+                if (entity.IsNotNullOrEmpty())
                 {
-                    return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
+                    entity.Delete();
+                    _userRepository.Delete(entity);
+                    _unitOfWork.SaveChanges();
+                    var result = new ReturnMessage<CustomerDTO>(false, _mapper.Map<User, CustomerDTO>(entity), MessageConstants.DeleteSuccess);
+                    return result;
                 }
+                return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
+            }
+            catch (Exception ex)
+            {
+                return new ReturnMessage<CustomerDTO>(true, null, ex.Message);
+            }
+        }
 
-                var entity = _customerRepository.Find(model.Id);
-                entity.Delete();
-                _customerRepository.Update(entity);
-                _unitOfWork.SaveChanges();
-
-                var result = new ReturnMessage<CustomerDTO>(false, _mapper.Map<Customer, CustomerDTO>(entity), MessageConstants.CreateSuccess);
-                return result;
+        public ReturnMessage<CustomerDTO> Update(UpdateCustomerDTO model)
+        {
+            try
+            {
+                if (model.Username.Trim() == "")
+                    return new ReturnMessage<CustomerDTO>(false, null, MessageConstants.CreateSuccess);
+                var entity = _userRepository.Find(model.Id);
+                if (entity.IsNotNullOrEmpty())
+                {
+                    entity.Update(model);
+                    _userRepository.Update(entity);
+                    _unitOfWork.SaveChanges();
+                    var result = new ReturnMessage<CustomerDTO>(false, _mapper.Map<User, CustomerDTO>(entity), MessageConstants.UpdateSuccess);
+                    return result;
+                }
+                return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
             }
             catch (Exception ex)
             {
@@ -75,42 +98,30 @@ namespace Service.Customers
         {
             if (search == null)
             {
-                return new ReturnMessage<PaginatedList<CustomerDTO>>(false, null, MessageConstants.Error);
+                return new ReturnMessage<PaginatedList<CustomerDTO>>(false, null, MessageConstants.GetPaginationFail);
             }
-            var resultEntity = _customerRepository.GetPaginatedList(null
-                , search.PageSize
-                , search.PageIndex * search.PageSize
-                , t => t.UpdateByDate
-                , nameof(User)
-            );
 
-            var data = _mapper.Map<PaginatedList<Customer>, PaginatedList<CustomerDTO>>(resultEntity);
-            var result = new ReturnMessage<PaginatedList<CustomerDTO>>(false, data, MessageConstants.ListSuccess);
+            var resultEntity = _userRepository.GetPaginatedList(it => it.Type == UserType.Customer &&
+                (search.Search == null ||
+                    (
+                        (
+                            (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
+                            it.Username.Contains(search.Search.Username) ||
+                            it.Email.Contains(search.Search.Email) ||
+                            it.FirstName.Contains(search.Search.FirstName) ||
+                            it.LastName.Contains(search.Search.LastName) ||
+                            it.ImageUrl.Contains(search.Search.ImageUrl)
+                        )
+                    )
+                )
+                , search.PageSize
+                , search.PageIndex
+                , t => t.Username
+            );
+            var data = _mapper.Map<PaginatedList<User>, PaginatedList<CustomerDTO>>(resultEntity);
+            var result = new ReturnMessage<PaginatedList<CustomerDTO>>(false, data, MessageConstants.GetPaginationSuccess);
 
             return result;
-        }
-
-        public ReturnMessage<CustomerDTO> Update(UpdateCustomerDTO model)
-        {
-            try
-            {
-                if (!StringExtension.CleanString(model))
-                {
-                    return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
-                }
-
-                var entity = _mapper.Map<UpdateCustomerDTO, Customer>(model);
-                entity.Update();
-                _customerRepository.Update(entity);
-                _unitOfWork.SaveChanges();
-
-                var result = new ReturnMessage<CustomerDTO>(false, _mapper.Map<Customer, CustomerDTO>(entity), MessageConstants.CreateSuccess);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                return new ReturnMessage<CustomerDTO>(true, null, ex.Message);
-            }
         }
     }
 }

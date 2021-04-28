@@ -18,6 +18,7 @@ using Domain.DTOs.Blogs;
 using Domain.DTOs.Customer;
 using Domain.DTOs.ProductsFeUser;
 using Domain.DTOs.Home;
+using Domain.DTOs.CustomerInfo;
 
 namespace Domain
 {
@@ -55,7 +56,8 @@ namespace Domain
             CreateMap<PaginatedList<User>, PaginatedList<UserDTO>>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<User, UpdateProfileDTO>().ReverseMap();
-            CreateMap<User, CreateUserDTO>().ReverseMap(); CreateMap<User, UserLoginDTO>().ReverseMap();
+            CreateMap<User, CreateUserDTO>().ReverseMap();
+            CreateMap<User, UserLoginDTO>().ReverseMap();
             CreateMap<User, ChangePassworProfileDTO>().ReverseMap();
             CreateMap<User, UserDataReturnDTO>().ReverseMap();
 
@@ -96,12 +98,20 @@ namespace Domain
             CreateMap<Blog, DeleteBlogDTO>().ReverseMap();
 
             //Customer
-            CreateMap<PaginatedList<Customer>, PaginatedList<CustomerDTO>>().ReverseMap();
-            CreateMap<Customer, CustomerDTO>().ReverseMap();
-            CreateMap<Customer, CreateCustomerDTO>().ReverseMap();
-            CreateMap<Customer, UpdateCustomerDTO>().ReverseMap();
-            CreateMap<Customer, DeleteCustomerDTO>().ReverseMap();
+            CreateMap<PaginatedList<User>, PaginatedList<CustomerDTO>>().ReverseMap();
+            CreateMap<User, CustomerDTO>().ReverseMap();
+            CreateMap<User, CreateCustomerDTO>().ReverseMap();
+            CreateMap<User, UpdateCustomerDTO>().ReverseMap();
+            CreateMap<User, DeleteCustomerDTO>().ReverseMap();
+            CreateMap<User, CustomerLoginDTO>().ReverseMap();
+            CreateMap<User, CustomerDataReturnDTO>().ReverseMap();
 
+            //CustomerInfo
+            CreateMap<PaginatedList<Customer>, PaginatedList<CustomerInfoDTO>>().ReverseMap();
+            CreateMap<Customer, CustomerInfoDTO>().ReverseMap();
+            CreateMap<Customer, CreateCustomerInfoDTO>().ReverseMap();
+            CreateMap<Customer, UpdateCustomerInfoDTO>().ReverseMap();
+            CreateMap<Customer, DeleteCustomerInfoDTO>().ReverseMap();
 
             //homePage FeUser
             CreateMap<Product, HomeProductDTO>()

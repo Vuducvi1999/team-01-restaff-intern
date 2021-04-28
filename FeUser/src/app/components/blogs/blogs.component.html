@@ -1,12 +1,7 @@
-<app-breadcrumb
-  [title]="'Blog Left Sidebar'"
-  [breadcrumb]="'Blog Left Sidebar'"
-></app-breadcrumb>
-<!-- section start -->
+<app-breadcrumb [title]="'Blog'" [breadcrumb]="'Blog'"></app-breadcrumb>
 <section class="section-b-space blog-page">
   <div class="container">
     <div class="row">
-      <!--Blog List start-->
       <div class="col-xl-9 col-lg-8 col-md-7">
         <div *ngFor="let item of blogs">
           <div class="row blog-media">
@@ -24,15 +19,15 @@
               <div class="blog-right">
                 <div>
                   <h6>{{ item.createByDate | date: "mediumDate" }}</h6>
-                  <a
+                  <a [routerLink]="['/blog/', item.id]"
                     ><h4>
                       {{ item.title }}
                     </h4></a
                   >
                   <ul class="post-social">
                     <li>Posted By : {{ item.createdByName }}</li>
-                    <li><i class="fa fa-heart"></i> 5 Hits</li>
-                    <li><i class="fa fa-comments"></i> 10 Comment</li>
+                    <!-- <li><i class="fa fa-heart"></i> 5 Hits</li>
+                    <li><i class="fa fa-comments"></i> 10 Comment</li> -->
                   </ul>
                   <p>
                     {{ item.shortDes }}
@@ -44,8 +39,6 @@
           <br />
         </div>
       </div>
-      <!--Blog List start-->
-      <!--Blog sidebar start-->
       <div class="col-xl-3 col-lg-4 col-md-5">
         <div class="blog-sidebar">
           <div class="theme-card">
@@ -60,8 +53,11 @@
                       alt="Generic placeholder image"
                   /></a>
                   <div class="media-body align-self-center">
-                    <h6>{{ item.createByDate | date: "mediumDate" }}</h6>
-                    <p>0 hits</p>
+                    <a [routerLink]="['/blog/', item.id]">
+                      <h6>{{ item.title }}</h6>
+                    </a>
+                    <!-- <p>0 hits</p> -->
+                    <p>{{ item.createByDate | date: "mediumDate" }}</p>
                   </div>
                 </div>
               </li>
@@ -80,18 +76,17 @@
                     <a [routerLink]="['/blog/', item.id]"
                       ><h6>{{ item.title }}</h6></a
                     >
-                    <p>0 hits</p>
+                    <p>
+                      {{ item.shortDes }}
+                    </p>
+                    <!-- <p>0 hits</p> -->
                   </div>
                 </div>
-                <p>
-                  {{ item.shortDes }}
-                </p>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      <!--Blog sidebar start-->
     </div>
   </div>
 </section>
