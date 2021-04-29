@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ReturnMessage, PageModel } from 'src/app/lib/data/models';
-import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
-import { UserModel } from 'src/app/lib/data/models/users/user.model';
+import {
+  ReturnMessage,
+  PageModel,
+  CustomerModel,
+} from 'src/app/lib/data/models';
 import { CustomerService, FileService } from 'src/app/lib/data/services';
 import { CustomerDetailsComponent } from '../customer-details/customer-details.component';
 
@@ -10,12 +12,15 @@ import { CustomerDetailsComponent } from '../customer-details/customer-details.c
   selector: 'app-list-customers',
   templateUrl: './list-customers.component.html',
   styleUrls: ['./list-customers.component.scss'],
-  providers: [CustomerService]
+  providers: [CustomerService],
 })
 export class ListCustomersComponent implements OnInit {
-public users: UserModel[];
+  public customers: CustomerModel[];
   closeResult = '';
-  constructor(private modalService: NgbModal, private customerService: CustomerService) {
+  constructor(
+    private modalService: NgbModal,
+    private customerService: CustomerService
+  ) {
     this.getList();
   }
   ngOnInit(): void {}
@@ -31,8 +36,7 @@ public users: UserModel[];
         type: 'html',
         filter: false,
         valuePrepareFunction: (file) => {
-          if(file == null)
-          {
+          if (file == null) {
             return;
           }
           var fileExt = file.split('.').pop();
@@ -42,9 +46,15 @@ public users: UserModel[];
             fileExt == 'jpeg' ||
             fileExt == 'icon'
           ) {
-            return `<a href="${FileService.getLinkFile(file)}"><img width="75px" height="75px" src="${FileService.getLinkFile(file)}"/></a>`;
+            return `<a href="${FileService.getLinkFile(
+              file
+            )}"><img width="75px" height="75px" src="${FileService.getLinkFile(
+              file
+            )}"/></a>`;
           }
-          return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
+          return `<a href="${FileService.getLinkFile(
+            file
+          )}">${FileService.getLinkFile(file)}</a>`;
         },
       },
       username: {
@@ -52,6 +62,12 @@ public users: UserModel[];
       },
       email: {
         title: 'Email',
+      },
+      phone: {
+        title: 'Phone',
+      },
+      address: {
+        title: 'Address',
       },
       firstName: {
         title: 'First Name',
@@ -63,7 +79,7 @@ public users: UserModel[];
   };
 
   delete(event: any) {
-    let category = event.data as UserModel;
+    let category = event.data as CustomerModel;
     if (window.confirm('Are u sure?')) {
       this.customerService.delete(category).then(() => {
         this.getList();
@@ -88,9 +104,9 @@ public users: UserModel[];
   getList() {
     this.customerService
       .get(null)
-      .then((res: ReturnMessage<PageModel<UserModel>>) => {
+      .then((res: ReturnMessage<PageModel<CustomerModel>>) => {
         if (!res.hasError) {
-          this.users = res.data.results;
+          this.customers = res.data.results;
         }
       })
       .catch((er) => {

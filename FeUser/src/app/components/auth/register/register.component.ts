@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import {
   AuthRegistModel,
   ReturnMessage,
-  UserDataReturnDTOModel,
 } from "src/app/lib/data/models";
+import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
 import { AuthService } from "src/app/lib/data/services";
 
 @Component({

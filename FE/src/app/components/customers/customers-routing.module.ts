@@ -1,8 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { CustomerDetailsComponent } from "./customer-details/customer-details.component";
-import { CustomerInfoDetailsComponent } from "./customer-info-details/customer-info-details.component";
-import { ListCustomerInfoComponent } from "./list-customer-info/list-customer-info.component";
 import { ListCustomersComponent } from "./list-customers/list-customers.component";
 
 const routes: Routes = [
@@ -25,22 +23,6 @@ const routes: Routes = [
             breadcrumb: "Create Customer"
           }
         },
-        {
-            path: 'list-customers-info',
-            component: ListCustomerInfoComponent,
-            data: {
-              title: "Customer Information List",
-              breadcrumb: "Customer Information List"
-            }
-          },
-          {
-            path: 'create-customers-info',
-            component: CustomerInfoDetailsComponent,
-            data: {
-              title: "Create Customer Information",
-              breadcrumb: "Create Customer Information"
-            }
-          }
       ]
     }
 ];

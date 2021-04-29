@@ -1,9 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { UserModel } from 'src/app/lib/data/models/users/user.model';
+import { CustomerModel } from 'src/app/lib/data/models';
 import { CustomerService } from 'src/app/lib/data/services';
-import { ModalHeaderModel, ModalFooterModel, ModalFile, TypeFile, EntityType } from 'src/app/shared/components/modals/models/modal.model';
+import {
+  ModalHeaderModel,
+  ModalFooterModel,
+  ModalFile,
+  TypeFile,
+  EntityType,
+} from 'src/app/shared/components/modals/models/modal.model';
 
 @Component({
   selector: 'app-customer-details',
@@ -16,8 +22,8 @@ export class CustomerDetailsComponent implements OnInit {
   public permissionForm: FormGroup;
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
-  public user: UserModel;
-  @Input() item: UserModel;
+  public user: CustomerModel;
+  @Input() item: CustomerModel;
 
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];
@@ -49,6 +55,8 @@ export class CustomerDetailsComponent implements OnInit {
       firstName: [this.item ? this.item.firstName : ''],
       lastName: [this.item ? this.item.lastName : ''],
       imageUrl: [this.item ? this.item.imageUrl : ''],
+      address: [this.item ? this.item.address : ''],
+      phone: [this.item ? this.item.phone : ''],
     });
 
     this.modalHeader = new ModalHeaderModel();
@@ -72,7 +80,8 @@ export class CustomerDetailsComponent implements OnInit {
       imageUrl: this.usersForm.value.imageUrl,
       id: this.item ? this.item.id : '',
       files: this.modalFile.listFile,
-      customerId: this.item? this.item.customerId : null
+      address: this.usersForm.value.address,
+      phone: this.usersForm.value.phone,
     };
 
     this.callServiceToSave();
@@ -100,8 +109,7 @@ export class CustomerDetailsComponent implements OnInit {
       return;
     }
 
-    if(!this.fileURL)
-    {
+    if (!this.fileURL) {
       this.fileURL = [];
     }
 
@@ -109,8 +117,7 @@ export class CustomerDetailsComponent implements OnInit {
       this.fileURL = [...this.fileURL, ...event.add];
     }
 
-    if(event.remove)
-    {
+    if (event.remove) {
       this.fileURL.forEach((e, i) => {
         if (e == event.remove) {
           this.fileURL.splice(i, 1);
@@ -118,8 +125,7 @@ export class CustomerDetailsComponent implements OnInit {
       });
     }
 
-    if(event.removeAll)
-    {
+    if (event.removeAll) {
       this.fileURL = [];
     }
 

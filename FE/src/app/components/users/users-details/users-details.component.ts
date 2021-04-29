@@ -86,7 +86,6 @@ export class UserDetailComponent implements OnInit {
       imageUrl: this.usersForm.value.imageUrl,
       id: this.item ? this.item.id : '',
       files: this.modalFile.listFile,
-      customerId: this.item? this.item.customerId : null
     };
 
     this.callServiceToSave();

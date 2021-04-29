@@ -146,11 +146,6 @@ export class NavService {
           title: 'Customer List',
           type: 'link',
         },
-        {
-          path: '/customers/list-customers-info',
-          title: 'Customer Information List',
-          type: 'link',
-        },
       ],
     },
   ];

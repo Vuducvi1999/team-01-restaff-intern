@@ -31,7 +31,7 @@
                         class="form-control col-xl-8 col-md-7"
                         type="text"
                         formControlName="username"
-                        autocomplete="new-password"
+                        autocomplete="username"
                       />
                     </div>
                     <div class="form-group row" *ngIf="!item">
@@ -53,6 +53,26 @@
                         class="form-control col-xl-8 col-md-7"
                         type="text"
                         formControlName="email"
+                      />
+                    </div>
+                    <div class="form-group row">
+                      <label for="validationCustom2" class="col-xl-3 col-md-4">
+                        Address</label
+                      >
+                      <input
+                        class="form-control col-xl-8 col-md-7"
+                        type="text"
+                        formControlName="address"
+                      />
+                    </div>
+                    <div class="form-group row">
+                      <label for="validationCustom2" class="col-xl-3 col-md-4">
+                        Phone</label
+                      >
+                      <input
+                        class="form-control col-xl-8 col-md-7"
+                        type="text"
+                        formControlName="phone"
                       />
                     </div>
                     <div class="form-group row">
@@ -82,7 +102,7 @@
                       <input
                         class="form-control col-xl-8 col-md-7"
                         type="text"
-                        formControlName="email"
+                        formControlName="imageUrl"
                         hidden
                       />
                       <app-upload-file

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserDataReturnDTOModel } from 'src/app/lib/data/models';
+import { UserDataReturnDTOModel } from 'src/app/lib/data/models/users/user.model';
 
 @Component({
   selector: 'app-header-one',

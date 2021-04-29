@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClientService } from 'src/app/lib/http/http-client';
-import { CustomerInfoModel, CustomerModel } from '../../models';
-import { UserModel } from '../../models/users/user.model';
+import { CustomerModel } from '../../models';
 
 @Injectable()
 export class CustomerService {

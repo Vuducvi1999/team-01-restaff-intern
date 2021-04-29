@@ -8,5 +8,4 @@ export interface UserModel extends BaseModel {
   lastName: string;
   imageUrl: string;
   files: FileDtoModel[];
-  customerId: string; 
 }

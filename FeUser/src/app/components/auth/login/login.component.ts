@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AuthLoginModel, ReturnMessage, UserDataReturnDTOModel } from "src/app/lib/data/models";
+import { AuthLoginModel, ReturnMessage } from "src/app/lib/data/models";
+import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
 import { AuthService } from "src/app/lib/data/services";
 
 @Component({
