@@ -1,7 +1,6 @@
 import { ViewportScroller } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { timingSafeEqual } from "crypto";
 import {
   ETypeSort,
   PageModel,
@@ -34,25 +33,18 @@ export class ProductListComponent implements OnInit {
   public mobileSidebar: boolean = false;
   public finished: boolean = false;
   public params;
-  public search: string;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private viewScroller: ViewportScroller,
     public productListService: ProductListService
-  ) {
-    // Get Query params..
+  ) {}
+
+  load() {
     this.route.queryParams.subscribe((params) => {
-      console.log(params.search);
       this.products = [];
       this.params = {};
-
-      this.search = params.search ? params.search : this.search;
-      this.params["search.Name"] = this.search;
-      if (this.params["search.Name"] == null) {
-        delete this.params["search.Name"];
-      }
 
       this.tags = [];
       this.finished = false;
@@ -69,6 +61,14 @@ export class ProductListComponent implements OnInit {
         this.category.forEach((x) => this.tags.push(x));
         this.params["search.categoryName"] = this.category.join(",");
       }
+      //fix backend
+
+      this.params["search.Name"] = params.search
+        ? params.search
+        : this.params["search.Name"];
+      if (this.params["search.Name"] == null) {
+        delete this.params["search.Name"];
+      }
 
       this.minPrice > 0
         ? (this.params.minPrice = this.minPrice)
@@ -83,21 +83,19 @@ export class ProductListComponent implements OnInit {
       this.addItems();
     });
   }
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.load();
+  }
 
   addItems() {
     if (this.pageModel?.totalItem == this.products.length) {
       this.finished = true;
       return;
     }
-
-    console.log(this.params);
     this.productListService
       .getPageProduct({ params: this.params })
       .then((res: ReturnMessage<PageModel<ProductModel>>) => {
         this.pageModel = res.data;
-        console.log(res.data);
         this.params.pageIndex = res.data.pageIndex;
         this.params.pageSize = res.data.pageSize;
 

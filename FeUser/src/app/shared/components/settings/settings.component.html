@@ -29,8 +29,8 @@
                         name="name"
                         (keypress)="onSearch($event)"
                       />
-                      <ul>
-                        <li *ngFor="let item of data | filterBy: userFilter">
+                      <ul *ngFor="let item of data | filterBy: userFilter">
+                        <li>
                           {{ item.name }}
                         </li>
                       </ul>

@@ -75,6 +75,20 @@ namespace Service.UserProductList
             {
                 query = query.OrderByDescending(t => t.Price).ThenBy(t => t.Name.Length).ThenBy(t => t.Name);
             }
+            if (search.Search.IsNotNullOrEmpty())
+            {
+                query = query.Where(it => it.Name.Contains(search.Search.Name));
+            }
+
+
+            //backend fail with category full
+            if (search.Search.IsNotNullOrEmpty() && search.Search.CategoryName.IsNotNullOrEmpty() && search.Search.Name.IsNotNullOrEmpty())
+            {
+                foreach (var i in search.Search.CategoryName.Split(','))
+                {
+                    query = query.Where(it => it.Category.Name.Contains(i) && it.Name.Contains(search.Search.Name));
+                }
+            }
 
             if (search.Search.IsNotNullOrEmpty() && search.Search.CategoryName.IsNotNullOrEmpty())
             {
@@ -84,10 +98,7 @@ namespace Service.UserProductList
                 }
             }
 
-            if (search.Search.IsNotNullOrEmpty())
-            {
-                query = query.Where(it => it.Name.Contains(search.Search.Name));
-            }
+            
 
             var entityPage = new PaginatedList<Product>(query, search.PageSize * search.PageIndex, search.PageSize);
             var data = _mapper.Map<PaginatedList<Product>, PaginatedList<ProductDTO>>(entityPage);

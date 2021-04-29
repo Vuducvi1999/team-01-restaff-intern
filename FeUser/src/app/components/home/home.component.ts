@@ -36,7 +36,6 @@ export class HomeComponent implements OnInit {
       .getTopCollectionProducts()
       .then((data: ReturnMessage<ProductModel[]>) => {
         this.products = data.data.filter((i) => i.isDeleted === false);
-        console.log(data);
       })
       .catch((e) => {
         console.log(e);
@@ -48,7 +47,6 @@ export class HomeComponent implements OnInit {
       .getBlogs()
       .then((data: ReturnMessage<BlogModel[]>) => {
         this.blogs = data.data;
-        console.log(data);
       })
       .catch((e) => {
         console.log(e);
@@ -60,7 +58,6 @@ export class HomeComponent implements OnInit {
       .getBanners()
       .then((data: ReturnMessage<BannerModel[]>) => {
         this.banners = data.data;
-        console.log(data);
       })
       .catch((e) => {
         console.log(e);

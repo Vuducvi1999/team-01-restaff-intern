@@ -120,7 +120,6 @@ export class SettingsComponent implements OnInit {
         queryParams: { search: target?.value },
         relativeTo: this.activatedRoute,
       });
-      console.log(target?.value);
       this.search = false;
     }
   }
