@@ -19,10 +19,10 @@ namespace Domain.Entities
         public string Address { get; set; }
         [Required]
         [StringLength(90)]
-        [DataType(DataType.EmailAddress)]
+        [RegularExpression(@"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z")]
         public string Email { get; set;}
         [StringLength(11)]
-        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$")]
         public string Phone { get; set; }
 
         public Guid? UserId { get; set; }
