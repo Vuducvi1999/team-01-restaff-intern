@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+.ck-editor__editable {
+  min-height: 500px;
+}
+
+.ck-editor {
+  transition: 0.4s;
+}
+@keyframes ck-editor-change-size {
+}

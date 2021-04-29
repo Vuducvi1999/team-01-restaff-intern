@@ -19,9 +19,10 @@ namespace Service.Home
         private readonly IRepository<Banner> _bannerRepository;
         private readonly IMapper _mapper;
 
-        public HomeService(IRepository<Product> productRepository, IRepository<Blog> blogRepository, IRepository<Banner> bannerRepository,IMapper mapper)
+        public HomeService(IRepository<Product> productRepository, IRepository<Blog> blogRepository,IRepository<Banner> bannerRepository,IMapper mapper)
         {
             _productRepository = productRepository;
+            _bannerRepository = bannerRepository;
             _blogRepository = blogRepository;
             _bannerRepository = bannerRepository;
             _mapper = mapper;
@@ -118,8 +119,7 @@ namespace Service.Home
             }
         }
 
-        public ReturnMessage<List<HomeBannerDTO>> GetBanners()
-        {
+        public ReturnMessage<List<HomeBannerDTO>> GetBanners() {
             try
             {
                 var resultEntity = _bannerRepository.Queryable().Take(12).ToList();
