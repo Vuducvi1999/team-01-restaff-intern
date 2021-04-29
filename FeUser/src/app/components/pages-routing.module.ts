@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuardsAdminService } from '../lib/guards/auth.guard';
 import { BlogDetailComponent } from './blogs/blog-detail/blog-detail.component';
 import { BlogsComponent } from './blogs/blogs.component';
 import { CartComponent } from './cart/cart.component';
@@ -42,6 +43,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuardsAdminService],
 })
 export class PagesRoutingModule { }
