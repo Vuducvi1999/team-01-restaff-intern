@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Domain.DTOs.Customer;
+using Infrastructure.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -13,14 +15,12 @@ namespace Domain.Entities
         [Required]
         [StringLength(35)]
         public string LastName { get; set; }
-        [Required]
         [StringLength(90)]
         public string Address { get; set; }
         [Required]
         [StringLength(90)]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set;}
-        [Required]
         [StringLength(11)]
         [DataType(DataType.PhoneNumber)]
         public string Phone { get; set; }
@@ -31,6 +31,8 @@ namespace Domain.Entities
         public override void Insert()
         {
             base.Insert();
+            Phone = Phone.IsNullOrEmpty() ? "" : Phone;
+            Address = Address.IsNullOrEmpty() ? "" : Address;
         }
 
         public override void Delete()
@@ -41,6 +43,16 @@ namespace Domain.Entities
         public override void Update()
         {
             base.Update();
+        }
+
+        public void Update(UpdateCustomerDTO dto)
+        {
+            base.Update();
+            FirstName = dto.FirstName;
+            LastName = dto.LastName;
+            Email = dto.Email;
+            Phone = dto.Phone;
+            Address = dto.Address;
         }
     }
 }

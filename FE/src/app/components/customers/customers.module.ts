@@ -8,13 +8,14 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
 import { CustomerInfoDetailsComponent } from './customer-info-details/customer-info-details.component';
 import { CustomerRoutingModule } from './customers-routing.module';
+import { ListCustomerInfoComponent } from './list-customer-info/list-customer-info.component';
 import { ListCustomersComponent } from './list-customers/list-customers.component';
 
 @NgModule({
   declarations: [
     ListCustomersComponent,
     CustomerDetailsComponent,
-    ListCustomersComponent,
+    ListCustomerInfoComponent,
     CustomerInfoDetailsComponent,
   ],
   imports: [

@@ -5,7 +5,7 @@ import { UserModel } from '../../models/users/user.model';
 
 @Injectable()
 export class CustomerInfoService {
-  private url = '/api/customer';
+  private url = '/api/customer/info';
 
   constructor(private httpClient: HttpClientService) { }
 

@@ -61,12 +61,11 @@ namespace Service
             services.AddScoped<IHomeService, HomeService>();
 
             //Customer
-            services.AddScoped<ICustomerInfoService, CustomerInfoService>();
             services.AddScoped<ICustomerService, CustomerService>();
 
             ////AuthCustomer
-            services.AddScoped<IAuthCustomerManager, AuthCustomerManager>();
-            services.AddScoped<IAuthCustomerService, AuthCustomerService>();
+            services.AddScoped<IAuthCustomerUserManager, AuthCustomerUserManager>();
+            services.AddScoped<IAuthCustomerUserService, AuthCustomerUserService>();
 
             //FeUser
 

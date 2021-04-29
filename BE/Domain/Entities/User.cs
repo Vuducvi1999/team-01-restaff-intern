@@ -60,6 +60,7 @@ namespace Domain.Entities
             ImageUrl = model.ImageUrl;
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
+
         public void UpdateProfile(UpdateProfileDTO model)
         {
             base.Update();

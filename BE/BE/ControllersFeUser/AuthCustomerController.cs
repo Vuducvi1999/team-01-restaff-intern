@@ -1,6 +1,7 @@
 ﻿using BE.Controllers;
 using Common.Constants;
 using Domain.DTOs.Customer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
@@ -17,8 +18,8 @@ namespace BE.ControllersFeUser
     [ApiController]
     public class AuthCustomerController : BaseController
     {
-        private readonly IAuthCustomerService _authCustomerService;
-        public AuthCustomerController(IAuthService authService, IUserManager userManager, IFileService fileService, IAuthCustomerService authCustomerService) : base(authService, userManager, fileService)
+        private readonly IAuthCustomerUserService _authCustomerService;
+        public AuthCustomerController(IAuthService authService, IUserManager userManager, IFileService fileService, IAuthCustomerUserService authCustomerService) : base(authService, userManager, fileService)
         {
             _authCustomerService = authCustomerService;
         }
@@ -31,7 +32,19 @@ namespace BE.ControllersFeUser
             return CommonResponse(result);
         }
 
-        public string token { get; set; }
-        public CustomerDataReturnDTO userDataReturnDTO { get; set; }
+        [HttpPost(UrlConstants.BaseRegistCustomer)]
+        public IActionResult Register([FromBody] CustomerRegisterDTO data)
+        {
+            var result = _authCustomerService.CheckRegister(data);
+            return CommonResponse(result);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult GetInfo()
+        {
+            var result = _authCustomerService.GetInfomationDTO(HttpContext.User.Claims);
+            return CommonResponse(result);
+        }
     }
 }

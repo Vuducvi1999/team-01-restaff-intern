@@ -16,12 +16,14 @@ namespace Common.Constants
         public const string BaseSocialMedia = BaseApi + "/social-media";
 
         public const string BaseAuth = BaseApi + "/auth";
-        public const string BaseAuthCustomer = BaseApi + "user/auth";
+        public const string BaseAuthCustomer = BaseApi + "/user/auth";
 
         public const string BaseBanner = BaseApi + "/banner";
 
         public const string BaseLogin = BaseAuth + "/login";
         public const string BaseLoginCustomer = BaseAuthCustomer + "/login";
+
+        public const string BaseRegistCustomer = BaseAuthCustomer + "/regist";
 
         public const string BaseProfile = BaseApi + "/profile";
 
@@ -38,8 +40,6 @@ namespace Common.Constants
         public const string BaseUser= BaseApi + "/user";
 
         public const string BaseCustomer = BaseApi + "/customer";
-
-        public const string BaseCustomerInfo = BaseCustomer + "/info";
 
         public const string BaseProduct = BaseApi + "/product";
 

@@ -77,8 +77,6 @@ export class ListUsersComponent {
     });
     if (item) modalRef.componentInstance.item = item.data;
 
-    if (!item) modalRef.componentInstance.item = item as CategoryModel;
-
     modalRef.result.then(
       (close) => {
         this.getList();

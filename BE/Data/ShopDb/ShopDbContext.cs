@@ -23,7 +23,7 @@ namespace Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            
 
             modelBuilder.Entity<User>()
                .HasOne(it => it.Customer)
@@ -37,6 +37,7 @@ namespace Data
                 .HasForeignKey<User>(it => it.CustomerId)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

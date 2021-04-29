@@ -256,7 +256,6 @@ namespace Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(90)
                         .HasColumnType("nvarchar(90)");
 
@@ -300,7 +299,6 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(35)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 

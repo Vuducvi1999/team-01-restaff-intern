@@ -25,10 +25,6 @@ export class ListBannersComponent implements OnInit {
   public settings = {
 
     mode: 'external',
-    // pager: {
-    //   display: true,
-    //   perPage: 10,
-    // },
     actions: {
       position: 'right',
     },

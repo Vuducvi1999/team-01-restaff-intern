@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class addcustomeranduser_databasedeletetableuserandupdate : Migration
+    public partial class addcustomer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,9 +14,9 @@ namespace Data.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(90)", maxLength: 90, nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -35,6 +35,7 @@ namespace Data.Migrations
                     table.PrimaryKey("PK_Customers", x => x.Id);
                 });
 
+            
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -71,6 +72,7 @@ namespace Data.Migrations
                         onDelete: ReferentialAction.SetNull);
                 });
 
+          
             migrationBuilder.CreateIndex(
                 name: "IX_Users_CustomerId",
                 table: "Users",

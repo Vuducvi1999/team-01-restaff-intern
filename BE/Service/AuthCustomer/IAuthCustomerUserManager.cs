@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Service.AuthCustomer
 {
-    public interface IAuthCustomerManager
+    public interface IAuthCustomerUserManager
     {
         string GenerateToken(IEnumerable<Claim> claims, DateTime now);
         public CustomerDataReturnDTO GetInformationAuth(Guid id);

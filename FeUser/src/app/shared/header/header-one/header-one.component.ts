@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserDataReturnDTOModel } from 'src/app/lib/data/models';
 
 @Component({
   selector: 'app-header-one',
@@ -13,10 +15,19 @@ export class HeaderOneComponent implements OnInit {
   @Input() sticky: boolean = false; // Default false
   
   public stick: boolean = false;
+  public user: UserDataReturnDTOModel;
+  loadUrlNavaigate(url: string)
+  {
+    this.router.navigateByUrl(url);
+  }
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+    if(localStorage.getItem('user'))
+    {
+      this.user = JSON.parse(localStorage.getItem('user'));
+    }
   }
 
   // @HostListener Decorator
@@ -28,6 +39,13 @@ export class HeaderOneComponent implements OnInit {
   	} else {
   	  this.stick = false;
   	}
+  }
+
+  onLogout()
+  {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    this.loadUrlNavaigate('/auth/login');
   }
 
 }

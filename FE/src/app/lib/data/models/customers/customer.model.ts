@@ -11,4 +11,7 @@ export interface CustomerInfoModel extends BaseModel
     email: string,
     phone: string,
     userId: string,
+    username: string,
+    hasInfo: boolean,
+    type: number,
 }

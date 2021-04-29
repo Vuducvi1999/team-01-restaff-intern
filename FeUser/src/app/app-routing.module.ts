@@ -12,16 +12,14 @@ const routes: Routes = [
   {
     path: "",
     component: PagesComponent,
-    loadChildren: () => import("./components/pages.module").then((m) => m.PagesModule),
+    loadChildren: () =>
+      import("./components/pages.module").then((m) => m.PagesModule),
   },
   {
-    path: "login",
+    path: "auth",
     component: PagesComponent,
-    loadChildren: () => LoginComponent,
-  },
-  {
-    path: "register",
-    component: RegisterComponent,
+    loadChildren: () =>
+      import("./components/auth/auth.module").then((m) => m.AuthModule),
   },
   {
     path: "**", // Navigate to Home Page if not found any page

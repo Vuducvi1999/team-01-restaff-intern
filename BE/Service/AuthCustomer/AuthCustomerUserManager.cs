@@ -11,14 +11,14 @@ using System.Text;
 
 namespace Service.AuthCustomer
 {
-    public class AuthCustomerManager : IAuthCustomerManager
+    public class AuthCustomerUserManager : IAuthCustomerUserManager
     {
         private IRepository<Domain.Entities.User> _repository;
         private IMapper _mapper;
         private readonly JwtTokenConfig _jwtTokenConfig;
         private readonly byte[] _secret;
 
-        public AuthCustomerManager(JwtTokenConfig jwtTokenConfig, IMapper mapper, IRepository<Domain.Entities.User> repository)
+        public AuthCustomerUserManager(JwtTokenConfig jwtTokenConfig, IMapper mapper, IRepository<Domain.Entities.User> repository)
         {
             _jwtTokenConfig = jwtTokenConfig;
             _secret = Encoding.ASCII.GetBytes(jwtTokenConfig.Secret); // Secret key

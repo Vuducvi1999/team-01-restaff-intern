@@ -9,13 +9,26 @@ namespace Domain.DTOs.Customer
 {
     public class CreateCustomerDTO
     {
+        [Required]
+        [StringLength(35)]
+        public string FirstName { get; set; }
+        [Required]
+        [StringLength(35)]
+        public string LastName { get; set; }
+        [StringLength(90)]
+        public string Address { get; set; }
+        [Required]
+        [StringLength(90)]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+        [StringLength(11)]
+        [DataType(DataType.PhoneNumber)]
+        public string Phone { get; set; }
+
         public string Username { get; set; }
         public string Password { get; set; }
-        public string Email { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+
         public string ImageUrl { get; set; }
-        public Guid? CumstomerId { get; set; }
         public List<FileDTO> Files { get; set; }
     }
 }
