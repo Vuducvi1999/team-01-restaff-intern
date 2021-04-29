@@ -34,7 +34,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     ModalFooterComponent,
     UploadFileComponent,
   ],
-  imports: [CommonModule, RouterModule, NgbModalModule, NgxDropzoneModule ],
+  imports: [CommonModule, RouterModule, NgbModalModule, NgxDropzoneModule],
   providers: [NavService, WINDOW_PROVIDERS, FileService],
   exports: [
     FeatherIconsComponent,

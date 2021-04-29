@@ -1,5 +1,4 @@
-﻿
-using Domain.Entities;
+﻿using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,7 +10,6 @@ namespace Data
         {
         }
 
-        public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<SocialMedia> SocialMedias { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -20,6 +18,7 @@ namespace Data
         public DbSet<Product> Products { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<Blog> Blogs { get; set; }
+        public DbSet<PageContent> PageContents { get; set; }
         public DbSet<InformationWebsite> InformationWebsites { get; set; }
 
     }

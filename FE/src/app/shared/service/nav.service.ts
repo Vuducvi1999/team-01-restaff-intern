@@ -167,6 +167,19 @@ export class NavService {
       ],
     },
     {
+      title: 'Page Content',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/page-content/list-page-content',
+          title: 'Page Content List',
+          type: 'link',
+        },
+      ],
+    },
+    {
       title: 'Information Website',
       icon: 'info',
       type: 'sub',
