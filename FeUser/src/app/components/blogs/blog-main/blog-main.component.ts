@@ -1,27 +1,25 @@
-import { DatePipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { PageModel, ReturnMessage } from "src/app/lib/data/models";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
-import { PageModel, ReturnMessage } from "src/app/lib/data/models/common";
 import { FileService } from "src/app/lib/data/services";
 import { BlogService } from "src/app/lib/data/services/blogs/blog.service";
 
 @Component({
-  selector: "app-blogs",
-  templateUrl: "./blogs.component.html",
-  styleUrls: ["./blogs.component.scss"],
+  selector: "app-blog-main",
+  templateUrl: "./blog-main.component.html",
+  styleUrls: ["./blog-main.component.scss"],
 })
-export class BlogsComponent implements OnInit {
+export class BlogMainComponent implements OnInit {
   public blogs: BlogModel[];
   public topBlogs: BlogModel[];
   public recentBlogs: BlogModel[];
   public selectedId: string;
 
-  constructor(private blogService: BlogService, private route: ActivatedRoute) {
-    this.getBlogs();
-    this.getTopBlogs();
-    this.getRecentBlogs();
-  }
+  constructor(
+    private blogService: BlogService,
+    private route: ActivatedRoute
+  ) {}
 
   getBlogs() {
     this.blogService
@@ -70,6 +68,9 @@ export class BlogsComponent implements OnInit {
   }
   ngOnInit() {
     this.getRoute();
+    this.getBlogs();
+    this.getTopBlogs();
+    this.getRecentBlogs();
   }
 
   getRoute() {

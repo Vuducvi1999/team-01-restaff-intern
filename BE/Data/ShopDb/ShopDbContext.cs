@@ -10,7 +10,6 @@ namespace Data
         {
         }
 
-        public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<SocialMedia> SocialMedias { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Customer> Customers { get; set; }
@@ -20,11 +19,11 @@ namespace Data
         public DbSet<Product> Products { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<Blog> Blogs { get; set; }
+        public DbSet<PageContent> PageContents { get; set; }
+        public DbSet<InformationWebsite> InformationWebsites { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
-
             modelBuilder.Entity<User>()
                .HasOne(it => it.Customer)
                .WithOne(it => it.User)

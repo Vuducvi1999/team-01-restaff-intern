@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserDataReturnDTOModel } from 'src/app/lib/data/models/users/user.model';
+import { HeaderModel, InfoHeaderModel } from 'src/app/lib/data/models';
+import { FileService, HeaderService } from 'src/app/lib/data/services';
 
 @Component({
   selector: 'app-header-one',
@@ -14,6 +16,9 @@ export class HeaderOneComponent implements OnInit {
   @Input() topbar: boolean = true; // Default True
   @Input() sticky: boolean = false; // Default false
   
+  public headerModel: InfoHeaderModel = {
+    informationWeb: {address: '', phone: '', email: '', fax: '', logo: ''}
+  }
   public stick: boolean = false;
   public user: UserDataReturnDTOModel;
   loadUrlNavaigate(url: string)
@@ -21,13 +26,14 @@ export class HeaderOneComponent implements OnInit {
     this.router.navigateByUrl(url);
   }
 
-  constructor(private router: Router) { }
+    constructor(private router: Router, public headerService: HeaderService) { }
 
   ngOnInit(): void {
     if(localStorage.getItem('user'))
     {
       this.user = JSON.parse(localStorage.getItem('user'));
     }
+    this.loadHeaderModel();
   }
 
   // @HostListener Decorator
@@ -47,5 +53,14 @@ export class HeaderOneComponent implements OnInit {
     localStorage.removeItem('token');
     this.loadUrlNavaigate('/auth/login');
   }
+  async loadHeaderModel() {
+    await this.headerService.getInformationWeb(null).then((res: any) => {
+      this.headerModel.informationWeb = res.data;
+      console.log(this.headerModel.informationWeb);
+    })
+  }
 
+  getIcon(model: any) {
+    return FileService.getLinkFile(model);
+  }
 }

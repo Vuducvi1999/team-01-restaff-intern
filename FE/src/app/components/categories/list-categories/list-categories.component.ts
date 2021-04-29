@@ -16,9 +16,14 @@ export class ListCategoriesComponent implements OnInit {
 
   public categories: CategoryModel[];
   closeResult = '';
-  constructor(private modalService: NgbModal,private categoryService:CategoryService) {
+  constructor
+  (
+    private modalService: NgbModal,
+    private categoryService:CategoryService
+  )
+  {
     this.fetch();
-   }
+  }
 
 
    public settings = 
@@ -70,12 +75,13 @@ export class ListCategoriesComponent implements OnInit {
   openPopup(item:any){
     if(item){
       var modalRef =  this.modalService.open(CategoryDetailComponent, {size: 'lg'});
-      modalRef.componentInstance.item = item.data;
+      modalRef.componentInstance.item = item.data as CategoryModel;
       return modalRef.result.then(() => {
               this.fetch();
             }, (reason) => {
               this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-            });
+            }
+        );
     }
     var modalRef =  this.modalService.open(CategoryDetailComponent, {size: 'lg'});
     modalRef.componentInstance.item = item as CategoryModel;
@@ -83,14 +89,18 @@ export class ListCategoriesComponent implements OnInit {
                 this.fetch();
               }, (reason) => {
                 this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-              });
-  }
+              }
+        );
+    }
 
 
 
 
-  fetch() {
-    this.categoryService.get(null).then((res : ReturnMessage<PageModel<CategoryModel>>) => {
+  fetch()
+  {
+    this.categoryService
+      .get(null)
+      .then((res : ReturnMessage<PageModel<CategoryModel>>) => {
       if(!res.hasError)
       {
         this.categories = res.data.results.filter(r => r.isDeleted == false);

@@ -64,9 +64,16 @@ namespace Common.Constants
         public const string FeaturedProducts = "featured-products";
         public const string OnSale = "on-sale";
         public const string Blogs = "blogs";
+        public const string Banners = "banners";
 
         public const string TopBlog = BaseBlog + "/topblog";
         public const string RecentBlog = BaseBlog + "/recentblog";
         public const string GetBlog = BaseBlog + "/{id}";
+
+        public const string BaseInformationWebsite = BaseApi + "/info-website";
+
+        // Page Content
+        public const string BasePageContent= BaseApi + "/page-content";
+        public const string GetPageContent = BaseApi + "/page-content/{id}";
     }
 }

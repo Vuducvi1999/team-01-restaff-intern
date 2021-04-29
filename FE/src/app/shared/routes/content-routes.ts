@@ -93,6 +93,24 @@ export const content: Routes = [
     },
   },
   {
+    path: 'page-content',
+    loadChildren: () =>
+      import('../../components/pageContents/pageContent.module').then(
+        (m) => m.PageContentModule
+      ),
+    data: {
+      breadcrumb: 'page-content',
+    },
+  },
+  {
+    path: 'information-website',
+    loadChildren: () =>
+      import('../../components/information-website/information.module').then((m) => m.InformationWebsiteModule),
+    data: {
+      breadcrumb: 'Information Website',
+    },
+  },
+  {
     path: 'customers',
     loadChildren: () =>
       import('../../components/customers/customers.module').then((m) => m.CustomerModule),

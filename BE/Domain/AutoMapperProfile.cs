@@ -19,6 +19,8 @@ using Domain.DTOs.Customer;
 using Domain.DTOs.ProductsFeUser;
 using Domain.DTOs.Home;
 using Infrastructure.Extensions;
+using Domain.DTOs.PageContent;
+using Domain.DTOs.InfomationWeb;
 
 namespace Domain
 {
@@ -130,6 +132,17 @@ namespace Domain
                  .ForMember(t => t.CategoryName, k => k.MapFrom(h => h.Category.Name)).ReverseMap();
             CreateMap<Blog, HomeBlogDTO>().ReverseMap();
 
+            CreateMap<Banner, HomeBannerDTO>().ReverseMap();
+
+            // PageContent
+            CreateMap<PageContent, PageContentDTO>().ReverseMap();
+            CreateMap<PageContent, UpdatePageContentDTO>().ReverseMap();
+
+
+
+            //Information Web
+            CreateMap<InformationWebsite, InformationWebDTO>().ReverseMap();
+            CreateMap<InformationWebsite, UpdateInformationWebDTO>().ReverseMap();
         }
     }
 }

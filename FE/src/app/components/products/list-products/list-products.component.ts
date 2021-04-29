@@ -16,10 +16,12 @@ export class ListProductsComponent implements OnInit {
   public products: ProductModel[];
   closeResult = '';
 
-  constructor(
+  constructor
+  (
     private modalService: NgbModal,
     private productService: ProductService
-  ) {
+  ) 
+  { 
     this.fetch();
   }
 
@@ -83,43 +85,38 @@ export class ListProductsComponent implements OnInit {
 
   openPopup(item: any) {
     if (item) {
-      var modalRef = this.modalService.open(ProductDetailsComponent, {
-        size: 'lg',
-      });
+      var modalRef = this.modalService.open(ProductDetailsComponent, {size: 'lg'});
       modalRef.componentInstance.item = item.data as ProductModel;
-      return modalRef.result.then(
-        () => {
+      return modalRef.result.then(() => {
           this.fetch();
-        },
-        (reason) => {
+        }, (reason) => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
       );
     }
-    var modalRef = this.modalService.open(ProductDetailsComponent, {
-      size: 'lg',
-    });
-    modalRef.componentInstance.item = item.data as ProductModel;
-    return modalRef.result.then(
-      () => {
+    var modalRef = this.modalService.open(ProductDetailsComponent, {size: 'lg'});
+    modalRef.componentInstance.item = item as ProductModel;
+    return modalRef.result.then(() => {
         this.fetch();
-      },
-      (reason) => {
+      }, (reason) => {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       }
     );
   }
 
-  fetch() {
+  fetch()
+  {
     this.productService
       .get(null)
       .then((res: ReturnMessage<PageModel<ProductModel>>) => {
-        if (!res.hasError) {
+        if (!res.hasError) 
+        {
           this.products = res.data.results.filter((r) => r.isDeleted == false);
         }
       })
       .catch((er) => {
-        if (er.error.hasError) {
+        if (er.error.hasError)
+        {
           console.log(er.error.message);
         }
       });

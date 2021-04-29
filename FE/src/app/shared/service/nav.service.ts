@@ -58,6 +58,19 @@ export class NavService {
       ],
     },
     {
+      title: 'Files',
+      icon: 'camera',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/files/list-files',
+          title: 'File List',
+          type: 'link',
+        },
+      ],
+    },
+    {
       title: 'Coupon',
       icon: 'users',
       type: 'sub',
@@ -111,7 +124,7 @@ export class NavService {
     },
     {
       title: 'Category',
-      icon: 'users',
+      icon: 'grid',
       type: 'sub',
       active: false,
       children: [
@@ -124,7 +137,7 @@ export class NavService {
     },
     {
       title: 'Product',
-      icon: 'users',
+      icon: 'package',
       type: 'sub',
       active: false,
       children: [
@@ -144,6 +157,32 @@ export class NavService {
         {
           path: '/customers/list-customers',
           title: 'Customer List',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      title: 'Page Content',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/page-content/list-page-content',
+          title: 'Page Content List',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      title: 'Information Website',
+      icon: 'info',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/information-website/list-information-website',
+          title: 'Information',
           type: 'link',
         },
       ],

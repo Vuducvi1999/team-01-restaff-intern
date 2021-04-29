@@ -1,0 +1,14 @@
+<app-breadcrumb
+  [title]="pageContent?.title"
+  [breadcrumb]="pageContent?.title"
+></app-breadcrumb>
+
+<section class="about-page section-b-space">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <span id="convert-to-html" [innerHTML]="pageContent.description"></span>
+      </div>
+    </div>
+  </div>
+</section>

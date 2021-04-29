@@ -11,6 +11,8 @@
         public const string ListSuccess = "List successfully";
         public const string Error = "Error server";
 
+        public const string CommonError = "Error !";
+
         public const string InvalidAuthInfoMsg = "Invalid email or password";
         public const string ExistUsername = "Username has exist";
         public const string ExistEmail = "Email has exist";

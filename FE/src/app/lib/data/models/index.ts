@@ -8,3 +8,6 @@ export * from './profile/profile.model';
 export * from './auth/auth.informationreturndto.model';
 export * from './files/file.model';
 export * from './customers/customer.model';
+export * from './information-website/info-web.model'
+export * from './products/product.model'
+export * from './categories/category.model'

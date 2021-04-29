@@ -21,6 +21,8 @@ using Service.Footer;
 using Service.UserProductList;
 using Service.Customers;
 using Service.AuthCustomer;
+using Service.PageContents;
+using Service.InformationWebsiteServices;
 
 namespace Service
 {
@@ -72,6 +74,11 @@ namespace Service
             services.AddScoped<IUserProductListService, UserProductListService>();
 
             services.AddScoped<IProductDetailsFeService, ProductDetailsFeService>();
+            services.AddScoped<IPageContentService,PageContentService>();
+
+
+            //Information Website
+            services.AddScoped<IInfomationWebService, InformationWebService>();
 
         }
     }
