@@ -12,3 +12,10 @@ export interface UpdatePageContentModel {
   shortDes: string;
   description: string;
 }
+export interface PageContentInfoModel extends BaseModel {
+  address: string;
+  phone: string;
+  email: string;
+  fax: string;
+  logo: string;
+}

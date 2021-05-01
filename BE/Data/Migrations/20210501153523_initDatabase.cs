@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class InitDatabase : Migration
+    public partial class initDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -168,6 +168,32 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PageContents",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ShortDes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UpdatedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DeletedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DeleteByDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PageContents", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SocialMedias",
                 columns: table => new
                 {
@@ -191,30 +217,6 @@ namespace Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SocialMedias", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Suppliers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UpdatedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DeletedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DeletedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdateByDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeleteByDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Suppliers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -306,13 +308,13 @@ namespace Data.Migrations
                 name: "InformationWebsites");
 
             migrationBuilder.DropTable(
+                name: "PageContents");
+
+            migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
                 name: "SocialMedias");
-
-            migrationBuilder.DropTable(
-                name: "Suppliers");
 
             migrationBuilder.DropTable(
                 name: "Users");
