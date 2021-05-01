@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { OrderModel } from 'src/app/lib/data/models/orders/order.model';
-import { FileService } from 'src/app/lib/data/services';
 import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
+import { ListOrderDetailsComponent } from '../list-order-details/list-order-details.component';
 import { UpdateOrderComponent } from '../update-order/update-order.component';
 
 
@@ -27,8 +27,8 @@ export class ListOrdersComponent implements OnInit {
     mode: 'external',
     actions: {
       position: 'right',
-      add:false,
-      delete:false,
+      add: false,
+      delete: false,
     },
     columns: {
       fullName: {
@@ -54,7 +54,8 @@ export class ListOrdersComponent implements OnInit {
       },
       totalItem: {
         title: 'Total Item',
-      },
+      }
+
     },
   };
 
@@ -74,8 +75,16 @@ export class ListOrdersComponent implements OnInit {
 
   }
 
-  openDetails(event: any) {
+  openUpdate(event: any) {
     var modalRef = this.modalService.open(UpdateOrderComponent, {
+      size: 'lg'
+    });
+    modalRef.componentInstance.item = event?.data;
+    modalRef.result.then(() => this.getOrders());
+  }
+  
+  openDetails(event: any) {
+    var modalRef = this.modalService.open(ListOrderDetailsComponent, {
       size: 'lg'
     });
     modalRef.componentInstance.item = event?.data;

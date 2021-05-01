@@ -1,8 +1,13 @@
+<app-modal-header
+  [data]="modalHeader"
+  (onAction)="close($event)"
+></app-modal-header>
+<!-- Container-fluid starts-->
 <!-- Container-fluid starts-->
 <div class="container-fluid">
   <div class="card">
     <div class="card-header">
-      <h5>Order Details</h5>
+      <h5>Order Details List</h5>
     </div>
     <div class="card-body vendor-table">
       <div id="batchDelete" class="custom-datatable media-datatable">
@@ -10,8 +15,6 @@
           <ng2-smart-table
             [settings]="settings"
             [(source)]="orders"
-            (edit)="openUpdate($event)"
-            (userRowSelect)="openDetails($event)"
           >
           </ng2-smart-table>
         </div>
@@ -21,3 +24,9 @@
 </div>
 
 <!-- Container-fluid Ends-->
+
+<!-- Container-fluid Ends-->
+<app-modal-footer
+  [data]="modalFooter"
+  (onAction)="close($event)"
+></app-modal-footer>
