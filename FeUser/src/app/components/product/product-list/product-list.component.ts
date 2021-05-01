@@ -61,7 +61,6 @@ export class ProductListComponent implements OnInit {
         this.category.forEach((x) => this.tags.push(x));
         this.params["search.categoryName"] = this.category.join(",");
       }
-      //fix backend
 
       this.params["search.Name"] = params.search
         ? params.search

@@ -32,6 +32,7 @@ export class SettingsComponent implements OnInit {
   public value: any;
   public data: ProductModel[] = [];
   public userFilter: any = { name: "" };
+  public path: any;
 
   public languages = [
     {
@@ -127,5 +128,11 @@ export class SettingsComponent implements OnInit {
     this.searchService.get(null).then((res: any) => {
       this.data = res.data.results;
     });
+    this.path = "product-details?id={item.id}`";
+  }
+
+  clickRouter(id: String) {
+    const url = `/product-details?id=${id}`;
+    this.router.navigateByUrl(url);
   }
 }

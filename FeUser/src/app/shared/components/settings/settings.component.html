@@ -29,9 +29,13 @@
                         name="name"
                         (keypress)="onSearch($event)"
                       />
+
                       <ul *ngFor="let item of data | filterBy: userFilter">
                         <li>
-                          {{ item.name }}
+                          <!-- routerfail -->
+                          <a [routerLink]="['/product-details?id=', item.id]"
+                            >{{ item.name }}
+                          </a>
                         </li>
                       </ul>
                     </div>

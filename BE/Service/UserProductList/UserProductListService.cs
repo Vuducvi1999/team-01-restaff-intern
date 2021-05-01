@@ -80,8 +80,6 @@ namespace Service.UserProductList
                 query = query.Where(it => it.Name.Contains(search.Search.Name));
             }
 
-
-            //backend fail with category full
             if (search.Search.IsNotNullOrEmpty() && search.Search.CategoryName.IsNotNullOrEmpty() && search.Search.Name.IsNotNullOrEmpty())
             {
                 foreach (var i in search.Search.CategoryName.Split(','))
@@ -90,7 +88,9 @@ namespace Service.UserProductList
                 }
             }
 
-            if (search.Search.IsNotNullOrEmpty() && search.Search.CategoryName.IsNotNullOrEmpty())
+            //fail with category
+
+            if (search.Search.IsNotNullOrEmpty() && search.Search.Name.IsNullOrEmpty() && search.Search.CategoryName.IsNotNullOrEmpty())
             {
                 foreach (var i in search.Search.CategoryName.Split(','))
                 {
@@ -98,7 +98,11 @@ namespace Service.UserProductList
                 }
             }
 
-            
+            if (search.Search.IsNotNullOrEmpty() && search.Search.CategoryName.IsNullOrEmpty() && search.Search.Name.IsNotNullOrEmpty())
+            {
+                query = query.Where(it => it.Name.Contains(search.Search.Name));
+            }
+
 
             var entityPage = new PaginatedList<Product>(query, search.PageSize * search.PageIndex, search.PageSize);
             var data = _mapper.Map<PaginatedList<Product>, PaginatedList<ProductDTO>>(entityPage);
