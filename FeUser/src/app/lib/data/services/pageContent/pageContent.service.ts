@@ -20,4 +20,9 @@ export class PageContentService {
     const url = "/api/info-website";
     return this.httpClient.getObservable(url, request).toPromise();
   }
+
+  postContact(request: any = null) {
+    const url = this.url + "/contact";
+    return this.httpClient.postObservable(url, request).toPromise();
+  }
 }

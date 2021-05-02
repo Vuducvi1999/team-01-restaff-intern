@@ -192,6 +192,19 @@ export class NavService {
         },
       ],
     },
+    {
+      title: 'Contact',
+      icon: 'info',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/contact/list-contact',
+          title: 'Contact',
+          type: 'link',
+        },
+      ],
+    },
   ];
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 }

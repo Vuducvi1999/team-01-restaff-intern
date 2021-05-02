@@ -6,12 +6,7 @@ export interface PageContentModel extends BaseModel {
   shortDes: string;
   description: string;
 }
-export interface UpdatePageContentModel {
-  id: string;
-  title: string;
-  shortDes: string;
-  description: string;
-}
+
 export interface PageContentInfoModel extends BaseModel {
   address: string;
   phone: string;

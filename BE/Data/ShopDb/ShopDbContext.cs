@@ -19,6 +19,7 @@ namespace Data
         public DbSet<File> Files { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<PageContent> PageContents { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
         public DbSet<InformationWebsite> InformationWebsites { get; set; }
 
     }
