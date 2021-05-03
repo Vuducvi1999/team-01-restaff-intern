@@ -10,6 +10,7 @@ import { PageContentComponent } from './page-content/page-content.component';
 import { ProductDetailsComponent } from './product/product-details/product-details.component';
 
 import { ProductListComponent } from "./product/product-list/product-list.component";
+import { ProfileComponent } from './profile/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,11 @@ const routes: Routes = [
     path: "why-we-choose/:id",
     component: PageContentComponent,
   },
+  {
+    path: "profile",
+    component: ProfileComponent,
+    canActivate: [AuthGuardsAdminService],
+  }
 ];
 
 @NgModule({

@@ -1,6 +1,7 @@
 ﻿using BE.Controllers;
 using Common.Constants;
 using Domain.DTOs.CustomerProfileFeUser;
+using Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,9 +27,18 @@ namespace BE.ControllersFeUser
 
         [Authorize]
         [HttpPut]
-        public IActionResult UpdateProfile([FromBody] UpdateCustomerProfileFeUserDTO dto)
+        public IActionResult UpdateProfile([FromBody] UpdateCustomerProfileFeUserDTO model)
         {
-            var result = _customerProfileFeUserService.Update(HttpContext.User.Claims, dto);
+            var result = _customerProfileFeUserService.Update(HttpContext.User.Claims, model);
+            if (model.Files.IsNullOrEmpty() || result.HasError)
+            {
+                return CommonResponse(result);
+            }
+            var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
+            if (uploadImage.HasError)
+            {
+                return CommonResponse(uploadImage);
+            }
             return CommonResponse(result);
         }
 

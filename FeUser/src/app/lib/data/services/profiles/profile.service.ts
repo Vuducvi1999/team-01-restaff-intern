@@ -6,7 +6,8 @@ import { ChangePasswordProfileModel, ProfileModel } from "../../models";
 @Injectable()
 export class ProfileService {
 
-  private url = '/api/profile';
+  private url = '/api/user/profile';
+  private urlChangePassword = this.url + '/password';
 
   constructor(private httpClient: HttpClientService) { }
 
@@ -14,7 +15,7 @@ export class ProfileService {
     return this.httpClient.putObservable(this.url, model).toPromise();
   }
   changePassword(model: ChangePasswordProfileModel) {
-    return this.httpClient.putObservable(this.url + "/password", model).toPromise();
+    return this.httpClient.putObservable(this.urlChangePassword, model).toPromise();
   }
 
 }

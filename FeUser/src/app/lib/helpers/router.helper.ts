@@ -47,12 +47,12 @@ export class RouterHelperService {
     }
 
     if (returnUrl) {
-      this.router.navigate([`/login`], {
+      this.router.navigate([`/auth/login`], {
         queryParams: { returnUrl },
         queryParamsHandling: "merge",
       });
     } else {
-      this.router.navigate([`/login`]);
+      this.router.navigate([`/auth/login`]);
     }
   }
 }

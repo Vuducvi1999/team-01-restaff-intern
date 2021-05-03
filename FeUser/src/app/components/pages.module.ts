@@ -26,6 +26,7 @@ import { BlogDetailComponent } from "./blogs/blog-detail/blog-detail.component";
 import { ProductDetailsComponent } from "./product/product-details/product-details.component";
 import { BlogMainComponent } from "./blogs/blog-main/blog-main.component";
 import { PageContentComponent } from "./page-content/page-content.component";
+import { ProfileComponent } from "./profile/profile/profile.component";
 @NgModule({
   declarations: [
     HomeComponent,
@@ -47,7 +48,8 @@ import { PageContentComponent } from "./page-content/page-content.component";
     CartComponent,
     CheckoutComponent,
     BlogMainComponent,
-    PageContentComponent
+    PageContentComponent,
+    ProfileComponent,
   ],
   imports: [
     CommonModule,
