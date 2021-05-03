@@ -29,15 +29,17 @@
                         name="name"
                         (keypress)="onSearch($event)"
                       />
-
-                      <ul *ngFor="let item of data | filterBy: userFilter">
-                        <li>
-                          <!-- routerfail -->
-                          <a [routerLink]="['/product-details?id=', item.id]"
-                            >{{ item.name }}
-                          </a>
-                        </li>
-                      </ul>
+                      <div *ngIf="userFilter.name">
+                        <ul *ngFor="let item of data | filterBy: userFilter">
+                          <li class="title">
+                            <a
+                              [routerLink]="['/product-details']"
+                              [queryParams]="{ id: item.id }"
+                              >{{ item.name }}
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                     <button type="submit" class="btn btn-primary">
                       <i class="fa fa-search"></i>

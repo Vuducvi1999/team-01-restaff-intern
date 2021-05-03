@@ -18,6 +18,7 @@ import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FilterPipeModule } from "ngx-filter-pipe";
 import { SearchService } from "src/app/lib/data/services/search/search.service";
+import { query } from "express";
 
 @Component({
   selector: "app-settings",
@@ -131,8 +132,9 @@ export class SettingsComponent implements OnInit {
     this.path = "product-details?id={item.id}`";
   }
 
-  clickRouter(id: String) {
-    const url = `/product-details?id=${id}`;
-    this.router.navigateByUrl(url);
+  clickRouter(product: String) {
+    this.router.navigate(["product-details"], {
+      queryParams: { id: product },
+    });
   }
 }
