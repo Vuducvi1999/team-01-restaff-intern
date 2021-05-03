@@ -23,6 +23,7 @@ using Service.Customers;
 using Service.AuthCustomer;
 using Service.PageContents;
 using Service.InformationWebsiteServices;
+using Service.CustomerProfileFeUser;
 
 namespace Service
 {
@@ -68,6 +69,9 @@ namespace Service
             ////AuthCustomer
             services.AddScoped<IAuthCustomerUserManager, AuthCustomerUserManager>();
             services.AddScoped<IAuthCustomerUserService, AuthCustomerUserService>();
+
+            //ProfileCustomer
+            services.AddScoped<ICustomerProfileFeUserService, CustomerProfileFeUserService>();
 
             //FeUser
 

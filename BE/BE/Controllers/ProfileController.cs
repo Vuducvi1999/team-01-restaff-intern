@@ -39,7 +39,7 @@ namespace BE.Controllers
         }
 
         [HttpPut]
-        [Route("password")]
+        [Route(UrlConstants.Password)]
         public IActionResult ChangePassword([FromBody] ChangePassworProfileDTO model)
         {
             var result = _profileService.ChangePassword(model);

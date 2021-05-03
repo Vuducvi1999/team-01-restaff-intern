@@ -1,4 +1,5 @@
 ﻿using Domain.DTOs.Customer;
+using Domain.DTOs.CustomerProfileFeUser;
 using Infrastructure.Extensions;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,16 @@ namespace Domain.Entities
         }
 
         public void Update(UpdateCustomerDTO dto)
+        {
+            base.Update();
+            FirstName = dto.FirstName;
+            LastName = dto.LastName;
+            Email = dto.Email;
+            Phone = dto.Phone;
+            Address = dto.Address;
+        }
+
+        public void UpdateProfile(UpdateCustomerProfileFeUserDTO dto)
         {
             base.Update();
             FirstName = dto.FirstName;

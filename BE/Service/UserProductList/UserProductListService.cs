@@ -18,20 +18,20 @@ namespace Service.UserProductList
 {
     public class UserProductListService : IUserProductListService
     {
-        private readonly IRepository<Category> _repositoryCategory;
-        private readonly IRepository<Product> _repositoryProduct;
+        private readonly IRepository<Category> _categoryRepository;
+        private readonly IRepository<Product> _productRepository;
         private readonly IMapper _mapper;
 
-        public UserProductListService(IRepository<Product> repositoryProduct, IRepository<Category> repositoryCategory, IMapper mapper)
+        public UserProductListService(IRepository<Category> categoryRepository, IRepository<Product> productRepository, IMapper mapper)
         {
-            _repositoryProduct = repositoryProduct;
-            _repositoryCategory = repositoryCategory;
+            _categoryRepository = categoryRepository;
+            _productRepository = productRepository;
             _mapper = mapper;
         }
 
         public ReturnMessage<IEnumerable<CategoryDTO>> GetCategory()
         {
-            var data = _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(_repositoryCategory.GetList());
+            var data = _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(_categoryRepository.GetList());
             var result = new ReturnMessage<IEnumerable<CategoryDTO>>(false, data, MessageConstants.ListSuccess);
             return result;
         }
@@ -48,7 +48,7 @@ namespace Service.UserProductList
                 return new ReturnMessage<PaginatedList<ProductDTO>>(false, null, MessageConstants.Error);
             }
 
-            var query = _repositoryProduct.Queryable();
+            var query = _productRepository.Queryable();
 
             if(search.MaxPrice > 0)
             {
