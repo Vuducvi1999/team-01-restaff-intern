@@ -12,7 +12,7 @@ namespace Domain.Constants
         public static Guid AboutUs = new Guid("00000000-0000-0000-0000-000000000003");
 
         public static readonly Dictionary<Guid, PageContent> ListPageContents = new Dictionary<Guid, PageContent>() {
-            { Shipping, new PageContent(){ Order = 1} },
+            { Shipping, new PageContent(){ Order = 1, Title = "Contact"} },
             { ContractUs, new PageContent(){ Order = 2} },
             { AboutUs, new PageContent() { Order = 3 } }
         };

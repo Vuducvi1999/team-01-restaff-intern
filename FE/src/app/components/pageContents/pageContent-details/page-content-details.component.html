@@ -8,7 +8,7 @@
     <div class="col-sm-12">
       <div class="card tab2-card">
         <div class="card-body">
-          <ngb-tabset class="tab-coupon">
+          <ngb-tabset>
             <ngb-tab title="Page Content">
               <ng-template ngbTabContent>
                 <div
@@ -26,7 +26,7 @@
                     <div class="form-group row">
                       <label class="col-xl-3 col-md-4"> Title</label>
                       <input
-                        class="form-control col-xl-8 col-md-7"
+                        class="form-control col-xl-9 col-md-8"
                         type="text"
                         formControlName="title"
                       />
@@ -36,7 +36,7 @@
                         Short Description</label
                       >
                       <textarea
-                        class="form-control col-xl-8 col-md-7"
+                        class="form-control col-xl-9 col-md-8"
                         rows="4"
                         formControlName="shortDes"
                       ></textarea>
@@ -45,7 +45,7 @@
                       <label class="col-11 pb-2"> Description</label>
                       <ckeditor
                         [editor]="editor"
-                        class="col-11 p-0"
+                        class="col-12 p-0"
                         type="text"
                         formControlName="description"
                       ></ckeditor>

@@ -1,7 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { ReturnMessage } from "src/app/lib/data/models";
-import { PageContentModel } from "src/app/lib/data/models/pageContent/pageContent.model";
+import {
+  PageContentInfoModel,
+  PageContentModel,
+} from "src/app/lib/data/models/pageContent/pageContent.model";
 import { PageContentService } from "src/app/lib/data/services/pageContent/pageContent.service";
 
 @Component({
@@ -10,7 +13,7 @@ import { PageContentService } from "src/app/lib/data/services/pageContent/pageCo
   providers: [PageContentService],
 })
 export class PageContentComponent implements OnInit {
-  public pageContent: PageContentModel;
+  pageContent: PageContentModel;
 
   constructor(
     public pageContentService: PageContentService,
@@ -18,10 +21,10 @@ export class PageContentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getCurrentPageContent();
     this.activeRoute.params.subscribe(() => {
       this.getCurrentPageContent();
     });
+    this.getCurrentPageContent();
   }
 
   getCurrentPageContent() {

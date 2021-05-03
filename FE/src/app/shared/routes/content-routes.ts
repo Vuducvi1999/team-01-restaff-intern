@@ -105,7 +105,9 @@ export const content: Routes = [
   {
     path: 'information-website',
     loadChildren: () =>
-      import('../../components/information-website/information.module').then((m) => m.InformationWebsiteModule),
+      import('../../components/information-website/information.module').then(
+        (m) => m.InformationWebsiteModule
+      ),
     data: {
       breadcrumb: 'Information Website',
     },
@@ -116,6 +118,16 @@ export const content: Routes = [
       import('../../components/customers/customers.module').then((m) => m.CustomerModule),
     data: {
       breadcrumb: 'Customers',
+    },
+  },
+  {
+    path: 'contact',
+    loadChildren: () =>
+      import('../../components/contacts/contact.module').then(
+        (m) => m.ContactModule
+      ),
+    data: {
+      breadcrumb: 'Contact',
     },
   },
 ];

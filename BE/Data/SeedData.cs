@@ -2,7 +2,6 @@
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Common.Constants;
-using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
