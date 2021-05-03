@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserDataReturnDTOModel } from 'src/app/lib/data/models/users/user.model';
 import { HeaderModel, InfoHeaderModel } from 'src/app/lib/data/models';
 import { FileService, HeaderService } from 'src/app/lib/data/services';
 
@@ -18,10 +20,19 @@ export class HeaderOneComponent implements OnInit {
     informationWeb: {address: '', phone: '', email: '', fax: '', logo: ''}
   }
   public stick: boolean = false;
+  public user: UserDataReturnDTOModel;
+  loadUrlNavaigate(url: string)
+  {
+    this.router.navigateByUrl(url);
+  }
 
-  constructor(public headerService: HeaderService) { }
+    constructor(private router: Router, public headerService: HeaderService) { }
 
   ngOnInit(): void {
+    if(localStorage.getItem('user'))
+    {
+      this.user = JSON.parse(localStorage.getItem('user'));
+    }
     this.loadHeaderModel();
   }
 
@@ -34,6 +45,13 @@ export class HeaderOneComponent implements OnInit {
   	} else {
   	  this.stick = false;
   	}
+  }
+
+  onLogout()
+  {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    this.loadUrlNavaigate('/auth/login');
   }
   async loadHeaderModel() {
     await this.headerService.getInformationWeb(null).then((res: any) => {

@@ -32,8 +32,5 @@ namespace BE.Controllers
             //var result = MD5Helper.ToMD5Hash(data.Password);
             return CommonResponse(result);
         }
-
-        public string token { get; set; }
-        public UserDataReturnDTO userDataReturnDTO { get; set; }
     }
 }

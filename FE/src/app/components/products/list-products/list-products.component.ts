@@ -31,42 +31,31 @@ export class ListProductsComponent implements OnInit {
       position: 'right',
     },
     columns: {
+      imageUrl: {
+        title: 'ImageURL',
+        type: 'html',
+        filter: false,
+        valuePrepareFunction: (file) => {
+          var fileExt = file.split(',')[0].split('.').pop();
+          if (
+            fileExt == 'png' ||
+            fileExt == 'jpg' ||
+            fileExt == 'jpeg' ||
+            fileExt == 'icon'
+          ) {
+            return `<a href="${FileService.getLinkFile(file.split(',')[0])}"><img width="75px" height="75px" src="${FileService.getLinkFile(file.split(',')[0])}"/></a>`;
+          }
+          return `<a href="${FileService.getLinkFile(file.split(',')[0])}">${FileService.getLinkFile(file.split(',')[0])}</a>`;
+        },
+      },
       name: {
         title: 'Name',
       },
       description: {
         title: 'Description',
       },
-      imageUrl: {
-        title: 'Image',
-        type: 'html',
-        valuePrepareFunction: (file: string) => {
-          var arrayUrl = file.split(',');
-          if (arrayUrl.length >= 1) {
-            var result = '';
-            arrayUrl.forEach((i) => {
-              var fileExt = file.split(',')[0].split('.').pop();
-              if (
-                fileExt != 'png' &&
-                fileExt != 'jpg' &&
-                fileExt != 'jpeg' &&
-                fileExt != 'icon'
-              ) {
-                result += `<a href="${FileService.getLinkFile(
-                  i
-                )}">${FileService.getLinkFile(i)}</a>`;
-              }
-
-              result += `<a href="${FileService.getLinkFile(
-                i
-              )}"><img width="75px" height="75px" src="${FileService.getLinkFile(
-                i
-              )}"/></a>`;
-            });
-            return result;
-          }
-          return file;
-        },
+      contentHTML: {
+        title: 'Content HTML',
       },
       price: {
         title: 'Price',

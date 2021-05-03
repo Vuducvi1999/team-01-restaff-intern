@@ -5,7 +5,7 @@
     <ng-container *ngFor="let products of result">
       <ng-template carouselSlide>
         <div>
-          <div class="media" *ngFor="let product of products">
+          <div  class="media" *ngFor="let product of products">
             <a
               [routerLink]="['/shop/product/left/sidebar/', product?.name]"
             >

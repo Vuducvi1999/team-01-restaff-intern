@@ -12,6 +12,7 @@ namespace Data
 
         public DbSet<SocialMedia> SocialMedias { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<Banner> Banners { get; set; }
@@ -21,5 +22,21 @@ namespace Data
         public DbSet<PageContent> PageContents { get; set; }
         public DbSet<InformationWebsite> InformationWebsites { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+               .HasOne(it => it.Customer)
+               .WithOne(it => it.User)
+               .HasForeignKey<Customer>(it => it.UserId)
+               .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Customer>()
+                .HasOne(it => it.User)
+                .WithOne(it => it.Customer)
+                .HasForeignKey<User>(it => it.CustomerId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

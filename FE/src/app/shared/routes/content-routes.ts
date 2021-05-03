@@ -110,4 +110,12 @@ export const content: Routes = [
       breadcrumb: 'Information Website',
     },
   },
+  {
+    path: 'customers',
+    loadChildren: () =>
+      import('../../components/customers/customers.module').then((m) => m.CustomerModule),
+    data: {
+      breadcrumb: 'Customers',
+    },
+  },
 ];

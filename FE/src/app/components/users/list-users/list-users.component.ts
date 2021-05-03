@@ -30,21 +30,10 @@ export class ListUsersComponent {
       position: 'right',
     },
     columns: {
-      username: {
-        title: 'Username',
-      },
-      email: {
-        title: 'Email',
-      },
-      firstName: {
-        title: 'First Name',
-      },
-      lastName: {
-        title: 'Last Name',
-      },
       imageUrl: {
-        title: 'URL',
+        title: 'ImageURL',
         type: 'html',
+        filter: false,
         valuePrepareFunction: (file) => {
           var fileExt = file.split('.').pop();
           if (
@@ -57,6 +46,18 @@ export class ListUsersComponent {
           }
           return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
         },
+      },
+      username: {
+        title: 'Username',
+      },
+      email: {
+        title: 'Email',
+      },
+      firstName: {
+        title: 'First Name',
+      },
+      lastName: {
+        title: 'Last Name',
       },
     },
   };
@@ -75,8 +76,6 @@ export class ListUsersComponent {
       size: 'lg',
     });
     if (item) modalRef.componentInstance.item = item.data;
-
-    if (!item) modalRef.componentInstance.item = item as CategoryModel;
 
     modalRef.result.then(
       (close) => {
