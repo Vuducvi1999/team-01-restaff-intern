@@ -14,18 +14,27 @@
         <div class="col-lg-6 text-right">
           <ul class="header-dropdown">
             <li class="onhover-dropdown mobile-account">
-              <i class="fa fa-user" aria-hidden="true"></i> My Account
+              <i class="fa fa-user" aria-hidden="true"></i> {{user?'Hello ' + user.firstName + ' ' + user.lastName:'My Account'}}
               <ul class="onhover-show-div">
+                <ng-container *ngIf="!user">
                 <li>
-                  <a data-lng="en">
+                  <a (click)="loadUrlNavaigate('/auth/login')" data-lng="en">
                     Login
                   </a>
                 </li>
                 <li>
-                  <a data-lng="es">
+                  <a (click)="loadUrlNavaigate('/auth/regist')" data-lng="es">
+                    Regist
+                  </a>
+                </li>
+              </ng-container>
+              <ng-container *ngIf="user">
+                <li>
+                  <a (click)="onLogout()" data-lng="en">
                     Logout
                   </a>
                 </li>
+              </ng-container>
               </ul>
             </li>
           </ul>

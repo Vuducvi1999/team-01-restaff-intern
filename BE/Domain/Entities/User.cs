@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Common.Enums;
+using Domain.DTOs.Customer;
 
 namespace Domain.Entities
 {
@@ -19,6 +21,10 @@ namespace Domain.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ImageUrl { get; set; }
+        public UserType Type { get; set; }
+
+        public Guid? CustomerId { get; set; }
+        public virtual Customer Customer { get; set; }
 
 
         public override void Insert()
@@ -42,6 +48,19 @@ namespace Domain.Entities
             ImageUrl = model.ImageUrl;
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
+
+        public void Update(UpdateCustomerDTO model)
+        {
+            base.Update();
+            Username = model.Username;
+            //Password = MD5Helper.ToMD5Hash(model.Password);
+            Email = model.Email;
+            FirstName = model.FirstName;
+            LastName = model.LastName;
+            ImageUrl = model.ImageUrl;
+            ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
+        }
+
         public void UpdateProfile(UpdateProfileDTO model)
         {
             base.Update();

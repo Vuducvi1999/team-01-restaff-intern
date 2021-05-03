@@ -26,6 +26,7 @@ import { BlogDetailComponent } from "./blogs/blog-detail/blog-detail.component";
 import { ProductDetailsComponent } from "./product/product-details/product-details.component";
 import { OrderSuccessComponent } from "./order-success/order-success.component";
 import { BlogMainComponent } from "./blogs/blog-main/blog-main.component";
+import { PageContentComponent } from "./page-content/page-content.component";
 @NgModule({
   declarations: [
     HomeComponent,
@@ -49,6 +50,7 @@ import { BlogMainComponent } from "./blogs/blog-main/blog-main.component";
     BlogDetailComponent,
     OrderSuccessComponent,
     BlogMainComponent,
+    PageContentComponent
   ],
   imports: [
     CommonModule,

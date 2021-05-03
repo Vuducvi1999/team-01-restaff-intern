@@ -1,4 +1,7 @@
-﻿using Common.Constants;
+﻿using Domain.Constants;
+using Domain.Entities;
+using Infrastructure.EntityFramework;
+using Common.Constants;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,10 +19,27 @@ namespace Data
             {
                 if (ctx == null)
                     throw new ArgumentNullException(nameof(ctx));
+                if (!await ctx.Users.AnyAsync())
+                {
+                    ctx.Users.Add(new Domain.Entities.User()
+                    {
+                        Username = "admin",
+                        Password = "E10ADC3949BA59ABBE56E057F20F883E",
+                    });
+                }
+                if (!await ctx.PageContents.AnyAsync())
+                {
+                    foreach (var item in PageContentConstants.ListPageContents)
+                    {
+                        item.Value.ObjectState = ObjectState.Added;
+                        item.Value.Id = item.Key;
+                        ctx.PageContents.Add(item.Value);
+                        ctx.SaveChanges();
+                    }
+                }
                 if (!await ctx.InformationWebsites.AnyAsync())
                 {
-         
-                    ctx.InformationWebsites.Add(new InformationWebsite() {
+                        ctx.InformationWebsites.Add(new InformationWebsite() {
                         Id = CommonConstants.WebSiteInformationId,
                         Address = "123 Hai Ba Trung",
                         Email = "email@gmail.com",

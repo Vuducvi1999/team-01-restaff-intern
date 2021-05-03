@@ -1,4 +1,5 @@
 import { BaseModel } from '../common';
+import { FileDtoModel } from '../files/file.model';
 export interface UserModel extends BaseModel {
   username: string;
   password: string;
@@ -6,4 +7,20 @@ export interface UserModel extends BaseModel {
   firstName: string;
   lastName: string;
   imageUrl: number;
+  phone: string;
+  address: string;
+  files: FileDtoModel[];
 }
+
+export interface UserDataReturnDTOModel {
+  id: string;
+  username: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  imageUrl: string;
+  address: string;
+  phone: string;
+  token: string;
+}
+
