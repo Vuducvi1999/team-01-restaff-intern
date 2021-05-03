@@ -27,6 +27,9 @@ export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
   user: UserDataReturnDTOModel;
 
+  submittedProfile = false;
+  submittedPassword = false;
+
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];
 
@@ -34,37 +37,68 @@ export class ProfileComponent implements OnInit {
     private formBuilder: FormBuilder,
     private profileService: ProfileService
   ) {
+    this.user = JSON.parse(localStorage.getItem("user"));
+    if (this.user) {
+      this.fileURL = [];
+      this.fileURL.push(this.user.imageUrl);
+    }
     this.createChangePasswordForm();
+    this.createProfileForm();
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
     this.modalFile.multiBoolen = false;
     this.modalFile.enityType = EntityType.CUSTOMER;
   }
 
-  ngOnInit(): void {
-    this.user = JSON.parse(localStorage.getItem("user"));
-    this.createProfileForm();
-    if (this.user) {
-      this.fileURL = [];
-      this.fileURL.push(this.user.imageUrl);
-    }
-  }
+  ngOnInit(): void {}
 
   profileSwith() {
     this.updateProfile = !this.updateProfile;
+    this.submittedProfile = false;
+    this.createProfileForm();
   }
 
   passwordSwith() {
     this.updatePassword = !this.updatePassword;
+    this.submittedPassword = false;
+    this.createChangePasswordForm();
+  }
+
+  get fProfile() {
+    return this.profileForm.controls;
+  }
+
+  get fPassword() {
+    return this.changePasswordForm.controls;
   }
 
   createProfileForm() {
     this.profileForm = this.formBuilder.group({
-      firstName: [this.user ? this.user.firstName : "", [Validators.required]],
-      lastName: [this.user ? this.user.lastName : "", [Validators.required]],
-      phone: [this.user ? this.user.phone : "", [Validators.required]],
-      address: [this.user ? this.user.address : "", [Validators.required]],
-      email: [this.user ? this.user.email : "", [Validators.required]],
+      firstName: [
+        this.user ? this.user.firstName : "",
+        [Validators.required, Validators.maxLength(35)],
+      ],
+      lastName: [
+        this.user ? this.user.lastName : "",
+        [Validators.required, Validators.maxLength(35)],
+      ],
+      phone: [
+        this.user ? this.user.phone : "",
+        [Validators.required, Validators.pattern("[0-9]{10}"),
+        Validators.maxLength(11),]
+      ],
+      address: [
+        this.user ? this.user.address : "",
+        [Validators.required, Validators.maxLength(90)],
+      ],
+      email: [
+        this.user ? this.user.email : "",
+        [
+          Validators.required,
+          Validators.pattern("[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}"),
+          Validators.maxLength(90),
+        ],
+      ],
       imageUrl: [this.user ? this.user.imageUrl : "", [Validators.required]],
     });
   }
@@ -76,39 +110,39 @@ export class ProfileComponent implements OnInit {
         newPassword: [null, [Validators.required]],
         confirmPassword: [null, [Validators.required]],
       },
-      this.checkValidatorsPassword
+      { validators: this.checkValidatorsPassword }
     );
   }
 
   checkValidatorsPassword(group: FormGroup) {
-    const pass = group.get("password");
+    const pass = group.get("newPassword");
     const confirmpass = group.get("confirmPassword");
     if (pass.value !== confirmpass.value) {
       confirmpass.setErrors({ mustMatch: true });
     }
   }
 
-  onChangePassword() {
+  async onChangePassword() {
+    this.submittedPassword = true;
+
     if (this.changePasswordForm.invalid) {
       return;
     }
     var data: ChangePasswordProfileModel = this.changePasswordForm.value;
-    this.profileService
+    await this.profileService
       .changePassword(data)
       .then((res: ReturnMessage<null>) => {
-        if (!res.hasError) {
-          alert("Change Password Success");
-        }
-        if (res.hasError) {
-          alert(res.message);
-        }
+        alert("Change Password Success");
+        this.passwordSwith();
       })
       .catch((er) => {
         alert(er.error ? er.error.message : "Server Disconnected");
       });
   }
 
-  onUpdateProfile() {
+  async onUpdateProfile() {
+    this.submittedProfile = true;
+
     if (this.profileForm.invalid && this.user?.id) {
       return;
     }
@@ -125,12 +159,13 @@ export class ProfileComponent implements OnInit {
       phone: dataProfileForm.phone,
     };
 
-    this.profileService
+    await this.profileService
       .update(data)
       .then((res: ReturnMessage<UserDataReturnDTOModel>) => {
         this.user = res.data;
-        localStorage.setItem('user',JSON.stringify(this.user));
+        localStorage.setItem("user", JSON.stringify(this.user));
         alert("Update Profile Success");
+        this.profileSwith();
       })
       .catch((er) => {
         alert(er.error ? er.error.message : "Server is disconnected");
