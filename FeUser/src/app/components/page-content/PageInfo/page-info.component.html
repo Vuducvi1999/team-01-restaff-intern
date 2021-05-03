@@ -1,0 +1,92 @@
+<div class="row section-b-space">
+  <div class="col-lg-7">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.235105403194!2d106.67593531474907!3d10.79329699231007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529ccfb535167%3A0x1258c8b49869aa7c!2sRestaff-%20House%20of%20Norway!5e0!3m2!1svi!2s!4v1619885298875!5m2!1svi!2s"
+      width="600"
+      height="450"
+      style="border: 0"
+      allowfullscreen
+      loading="lazy"
+    ></iframe>
+  </div>
+  <div class="col-lg-5">
+    <div class="contact-right">
+      <ul>
+        <li>
+          <div class="contact-icon">
+            <img
+              src="../assets/images/icon/phone.png"
+              alt="Generic placeholder image"
+            />
+            <h6>Contact Us</h6>
+          </div>
+          <div class="media-body">
+            <p>{{ pageContentInfo?.phone }}</p>
+          </div>
+        </li>
+        <li>
+          <div class="contact-icon">
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
+            <h6>Address</h6>
+          </div>
+          <div class="media-body">
+            <p>{{ pageContentInfo?.address }}</p>
+          </div>
+        </li>
+        <li>
+          <div class="contact-icon">
+            <img
+              src="../assets/images/icon/email.png"
+              alt="Generic placeholder image"
+            />
+            <h6>Address</h6>
+          </div>
+          <div class="media-body">
+            <p>{{ pageContentInfo?.email }}</p>
+          </div>
+        </li>
+        <li>
+          <div class="contact-icon">
+            <i class="fa fa-fax" aria-hidden="true"></i>
+            <h6>Fax</h6>
+          </div>
+          <div class="media-body">
+            <p>{{ pageContentInfo?.fax }}</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<form [formGroup]="contactForm" (ngSubmit)="Submit()" class="theme-form">
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label> First Name</label>
+      <input class="form-control" type="text" formControlName="firstName" />
+    </div>
+    <div class="form-group col-md-6">
+      <label> Last Name</label>
+      <input class="form-control" type="text" formControlName="lastName" />
+    </div>
+    <div class="form-group col-md-6">
+      <label> Phone Number</label>
+      <input class="form-control" type="text" formControlName="phoneNumber" />
+    </div>
+    <div class="form-group col-md-6">
+      <label> Email</label>
+      <input class="form-control" type="text" formControlName="email" />
+    </div>
+    <div class="form-group col-md-12">
+      <label> Write Your Message</label>
+      <textarea
+        class="form-control"
+        rows="4"
+        formControlName="message"
+      ></textarea>
+    </div>
+    <div class="col-md-12">
+      <button class="btn btn-solid" type="submit">Send Your Message</button>
+    </div>
+  </div>
+</form>

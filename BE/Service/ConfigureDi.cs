@@ -25,6 +25,7 @@ using Service.AuthCustomer;
 using Service.PageContents;
 using Service.InformationWebsiteServices;
 using Service.OrderDetails;
+using Service.Contacts;
 
 namespace Service
 {
@@ -88,6 +89,8 @@ namespace Service
             services.AddScoped<IOrderDetailService, OrderDetailService>();
 
 
+            // Contact
+            services.AddScoped<IContactService, ContactService>();
         }
     }
 }
