@@ -58,19 +58,6 @@ export class NavService {
       ],
     },
     {
-      title: 'Files',
-      icon: 'camera',
-      type: 'sub',
-      active: false,
-      children: [
-        {
-          path: '/files/list-files',
-          title: 'File List',
-          type: 'link',
-        },
-      ],
-    },
-    {
       title: 'Coupon',
       icon: 'users',
       type: 'sub',

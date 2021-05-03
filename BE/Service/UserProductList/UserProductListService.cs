@@ -68,6 +68,11 @@ namespace Service.UserProductList
                 }
             }
 
+            if(search.Search.IsNotNullOrEmpty() && search.Search.Name.IsNotNullOrEmpty())
+            {
+                query = query.Where(it => it.Name.Contains(search.Search.Name));
+            }
+
             if (search.TypeSort.Equals((int)ETypeSort.AZ))
             {
                 query = query.OrderBy(t => t.Name.Length).ThenBy(t => t.Name);

@@ -7,9 +7,6 @@ export class ProductService {
   private url = "/api/user/productlist";
   constructor(private httpClient: HttpClientService) {}
 
-    private url = '/api/user/productList';
-    constructor(private httpClient: HttpClientService) { }
-
   get(request: any) {
     return this.httpClient.getObservable(this.url, request).toPromise();
   }
