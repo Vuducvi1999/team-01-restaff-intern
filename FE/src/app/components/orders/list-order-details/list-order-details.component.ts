@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
-import { OrderModel } from 'src/app/lib/data/models/orders/order.model';
+import { OrderDetailModel, OrderModel } from 'src/app/lib/data/models/orders/order.model';
 import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
+import { OrderDetailsService } from 'src/app/lib/data/services/orders/order-details.service';
 import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
 import {
   ModalFooterModel,
@@ -15,72 +16,53 @@ import {
   selector: 'app-list-order-details',
   templateUrl: './list-order-details.component.html',
   styleUrls: ['./list-order-details.component.scss'],
-  providers: [OrdersService],
+  providers: [OrderDetailsService],
 })
 export class ListOrderDetailsComponent implements OnInit {
   public orderForm: FormGroup;
   public item: any;
-  public order = new OrderModel();
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
-  public orders: OrderModel[];
+  public orderDetails: OrderDetailModel[];
+
 
   constructor(
-    private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
-    private ordersService: OrdersService
+    private orderDetailsService: OrderDetailsService
   ) {
-
   }
-
   public settings = {
-
     mode: 'external',
-    actions: {
-      position: 'right',
-      add: false,
-      delete: false,
-    },
+    actions: false,
     columns: {
-      fullName: {
-        title: 'Full Name',
+      productName: {
+        title: 'Product Name',
       },
-      code: {
-        title: 'Code',
+      productId: {
+        title: 'Product Id',
       },
-      address: {
-        title: 'Address',
+      price: {
+        title: 'Price',
       },
-      phone: {
-        title: 'Phone',
-      },
-      email: {
-        title: 'Email',
-      },
-      status: {
-        title: 'Status',
-      },
+      quantity: {
+        title: 'Quantity',
+      }
+      ,
       totalAmount: {
         title: 'Total Amount',
-      },
-      totalItem: {
-        title: 'Total Item',
       }
-
     },
   };
 
   ngOnInit() {
-    this.getOrders();
+    this.getOrderDetails();
     this.createModal();
   }
 
-  getOrders() {
-    this.ordersService.get(null).then((res: ReturnMessage<PageModel<OrderModel>>) => {
+  getOrderDetails() {
+    this.orderDetailsService.getByOrder(this.item.id, null).then((res: ReturnMessage<OrderDetailModel[]>) => {
       if (!res.hasError) {
-        this.orders = res.data.results;
-        console.log("order", this.orders);
-
+        this.orderDetails = res.data;
       }
     }).catch((er) => {
 

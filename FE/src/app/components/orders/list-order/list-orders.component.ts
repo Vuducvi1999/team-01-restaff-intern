@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
-import { OrderModel } from 'src/app/lib/data/models/orders/order.model';
+import { OrderDetailModel, OrderModel } from 'src/app/lib/data/models/orders/order.model';
 import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
 import { ListOrderDetailsComponent } from '../list-order-details/list-order-details.component';
 import { UpdateOrderComponent } from '../update-order/update-order.component';
@@ -16,6 +16,7 @@ import { UpdateOrderComponent } from '../update-order/update-order.component';
 })
 export class ListOrdersComponent implements OnInit {
   public orders: OrderModel[];
+
 
   constructor(private modalService: NgbModal, private ordersService: OrdersService) {
     this.getOrders();

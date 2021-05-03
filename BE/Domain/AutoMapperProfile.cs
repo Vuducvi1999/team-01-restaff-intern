@@ -75,7 +75,7 @@ namespace Domain
             //product
             CreateMap<PaginatedList<Product>, PaginatedList<ProductDTO>>().ReverseMap();
             CreateMap<Product, ProductDTO>()
-                 .ForMember(t => t.CategoryName, k=>k.MapFrom(h=>h.Category.Name)).ReverseMap();
+                 .ForMember(t => t.CategoryName, k => k.MapFrom(h => h.Category.Name)).ReverseMap();
 
             CreateMap<CreateProductDTO, Product>().ReverseMap();
             CreateMap<UpdateProductDTO, Product>().ReverseMap();
@@ -105,8 +105,9 @@ namespace Domain
             CreateMap<Order, DeleteOrderDTO>().ReverseMap();
 
             //OrderDetail
+            CreateMap<PaginatedList<OrderDetail>, PaginatedList<OrderDetailDTO>>().ReverseMap();
             CreateMap<OrderDetail, OrderDetailDTO>()
-                .ForMember(t=>t.ProductName, k=>k.MapFrom(h=>h.Product == null ? "" : h.Product.Name))
+                .ForMember(t => t.ProductName, k => k.MapFrom(h => h.Product == null ? "" : h.Product.Name))
                 .ForMember(t => t.ProductImgUrl, k => k.MapFrom(h => h.Product == null ? "" : h.Product.ImageUrl))
                  .ReverseMap();
             CreateMap<OrderDetail, CreateOrderDetailDTO>().ReverseMap();

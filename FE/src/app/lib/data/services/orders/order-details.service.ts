@@ -22,15 +22,13 @@ export class OrderDetailsService {
     return this.httpClient.putObservable(this.url, model).toPromise();
   }
 
-  delete(model: OrderDetailModel) {
-    const url = `${this.url}?id=${model?.id}`;
+  delete(id:string) {
+    const url = `${this.url}?id=${id}`;
     return this.httpClient.deleteObservable(url).toPromise();
   }
-  save(model: OrderDetailModel) {
-    if (model.id) {
-      return this.update(model);
-    }
-    return this.create(model);
+  getByOrder(id: any,request: any) {
+    const url = `${this.url}/order?id=${id}`
+    return this.httpClient.getObservable(url, request).toPromise();
   }
 }
 

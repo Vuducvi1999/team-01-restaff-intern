@@ -8,6 +8,7 @@ using Domain.DTOs.Orders;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,21 +30,20 @@ namespace Service.OrderDetails
         public ReturnMessage<OrderDetailDTO> Create(CreateOrderDetailDTO model)
         {
 
-            //    try
-            //    {
+            //try
+            //{
+            //    var entity = _mapper.Map<CreateOrderDetailDTO, OrderDetail>(model);
 
-            //        var entity = _mapper.Map<CreateOrderDetailDTO, OrderDetail>(model);
-
-            //        entity.Insert();
-            //        _orderDetailRepository.Insert(entity);
-            //        _unitOfWork.SaveChanges();
-            //        var result = new ReturnMessage<OrderDetailDTO>(false, _mapper.Map<OrderDetail, OrderDetailDTO>(entity), MessageConstants.CreateSuccess);
-            //        return result;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            return new ReturnMessage<OrderDetailDTO>(true, null, null);
-            //    }
+            //    entity.Insert();
+            //    _orderDetailRepository.Insert(entity);
+            //    _unitOfWork.SaveChanges();
+            //    var result = new ReturnMessage<OrderDetailDTO>(false, _mapper.Map<OrderDetail, OrderDetailDTO>(entity), MessageConstants.CreateSuccess);
+            //    return result;
+            //}
+            //catch (Exception ex)
+            //{
+                return new ReturnMessage<OrderDetailDTO>(false, null, null);
+            //}
         }
 
         public ReturnMessage<OrderDetailDTO> Delete(DeleteOrderDetailDTO model)
@@ -83,6 +83,9 @@ namespace Service.OrderDetails
                 )
                 , search.PageSize
                 , search.PageIndex
+                ,t=>t.Product
+                ,nameof(Product)
+                //??????????? how to get product name in paging?
                 
             );
             var data = _mapper.Map<PaginatedList<OrderDetail>, PaginatedList<OrderDetailDTO>>(resultEntity);
@@ -111,5 +114,15 @@ namespace Service.OrderDetails
                 return new ReturnMessage<OrderDetailDTO>(true, null, ex.Message);
             }
         }
+
+        public ReturnMessage<List<OrderDetailDTO>> GetByOrder(Guid Id)
+        {
+            var entity = _orderDetailRepository.Queryable().AsNoTracking().Include(t=>t.Product).Where(t => t.OrderId == Id).ToList();
+            var result = new ReturnMessage<List<OrderDetailDTO>>(false, _mapper.Map<List<OrderDetail>, List<OrderDetailDTO>>(entity), MessageConstants.ListSuccess);
+            return result;
+
+        }
+
+
     }
 }

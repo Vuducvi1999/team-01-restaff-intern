@@ -21,6 +21,7 @@ using Service.Footer;
 using Service.Orders;
 using Service.UserProductList;
 using Service.InformationWebsiteServices;
+using Service.OrderDetails;
 
 namespace Service
 {
@@ -71,6 +72,10 @@ namespace Service
 
             //Information Website
             services.AddScoped<IInfomationWebService, InformationWebService>();
+
+            //Order Details
+            services.AddScoped<IOrderDetailService, OrderDetailService>();
+
 
         }
     }
