@@ -21,6 +21,8 @@ using Domain.DTOs.Home;
 using Infrastructure.Extensions;
 using Domain.DTOs.PageContent;
 using Domain.DTOs.InfomationWeb;
+using Domain.DTOs.PageContentContact;
+using Domain.DTOs.Contact;
 
 namespace Domain
 {
@@ -138,7 +140,9 @@ namespace Domain
             CreateMap<PageContent, PageContentDTO>().ReverseMap();
             CreateMap<PageContent, UpdatePageContentDTO>().ReverseMap();
 
-
+            // Page Content Contact
+            CreateMap<Contact, ContactDTO>().ReverseMap();
+            CreateMap<Contact, CreateContactDTO>().ReverseMap();
 
             //Information Web
             CreateMap<InformationWebsite, InformationWebDTO>().ReverseMap();

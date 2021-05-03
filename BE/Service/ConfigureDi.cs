@@ -23,6 +23,7 @@ using Service.Customers;
 using Service.AuthCustomer;
 using Service.PageContents;
 using Service.InformationWebsiteServices;
+using Service.Contacts;
 
 namespace Service
 {
@@ -80,6 +81,8 @@ namespace Service
             //Information Website
             services.AddScoped<IInfomationWebService, InformationWebService>();
 
+            // Contact
+            services.AddScoped<IContactService, ContactService>();
         }
     }
 }

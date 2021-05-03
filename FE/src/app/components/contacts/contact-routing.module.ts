@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListPageContentComponent } from './list-pageContent/list-page-content.component';
+import { ListContactComponent } from './list-contact/list-contact.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'list-page-content',
-        component: ListPageContentComponent,
+        path: 'list-contact',
+        component: ListContactComponent,
         data: {
-          title: 'Page Content List',
-          breadcrumb: 'PageContent List',
+          title: 'Coupon List',
+          breadcrumb: 'CouponList',
         },
       },
     ],
@@ -21,4 +21,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PageContentRouting {}
+export class ContactRouting {}
