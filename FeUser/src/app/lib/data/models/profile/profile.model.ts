@@ -1,6 +1,6 @@
-import { BaseModel } from "../common";
 import { FileDtoModel } from "../files/file.model";
-export interface ProfileModel extends BaseModel {
+export interface ProfileModel {
+    id: string;
     firstName: string;
     lastName: string;
     address: string;

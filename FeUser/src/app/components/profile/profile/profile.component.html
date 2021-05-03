@@ -12,7 +12,7 @@
           </div>
         </div>
 
-        <form class="theme-form">
+        <form class="theme-form" [formGroup]="profileForm">
           <div class="form-row">
             <div class="col-md-12 form-group">
               <label for="name">Avatar</label>
@@ -20,6 +20,7 @@
               <input
                 type="text"
                 class="form-control"
+                formControlName="imageUrl"
                 id="address-two"
                 placeholder="Avatar"
                 required=""
@@ -27,13 +28,25 @@
               />
               <img
                 *ngIf="updateProfile"
-                src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+                [src]="
+                  user
+                    ? getImage(user.imageUrl)
+                    : 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png'
+                "
                 style="height: 250px; width: 250px"
               />
+              <app-upload-file
+                *ngIf="!updateProfile"
+                [data]="modalFile"
+                [fileURL]="fileURL"
+                styleFile="width: 250px; height: 250px;"
+                (onChange)="onChangeData($event)"
+              ></app-upload-file>
             </div>
             <div class="col-md-6 form-group">
               <label for="name">First Name</label>
               <input
+                formControlName="firstName"
                 type="text"
                 class="form-control"
                 id="name"
@@ -45,6 +58,7 @@
             <div class="col-md-6 form-group">
               <label for="email">Last Name</label>
               <input
+                formControlName="lastName"
                 type="text"
                 class="form-control"
                 id="last-name"
@@ -56,6 +70,7 @@
             <div class="col-md-6 form-group">
               <label for="review">Phone number</label>
               <input
+                formControlName="phone"
                 type="text"
                 class="form-control"
                 id="review"
@@ -67,6 +82,7 @@
             <div class="col-md-6 form-group">
               <label for="email">Email</label>
               <input
+                formControlName="email"
                 type="text"
                 class="form-control"
                 id="email"
@@ -78,6 +94,7 @@
             <div class="col-md-6 form-group">
               <label for="name">Address</label>
               <input
+                formControlName="address"
                 type="text"
                 class="form-control"
                 id="address-two"
@@ -88,16 +105,18 @@
             </div>
             <div class="col-md-12" [hidden]="updateProfile">
               <div class="pull-left" style="margin-right: 5px">
-                <button
-                  class="btn btn-sm btn-solid"
-                  (click)="profileSwith()"
-                >
+                <button class="btn btn-sm btn-solid" (click)="profileSwith()">
                   Cancel
                 </button>
               </div>
 
               <div class="pull-left">
-                <button class="btn btn-sm btn-solid">Save</button>
+                <button
+                  class="btn btn-sm btn-solid"
+                  (click)="onUpdateProfile()"
+                >
+                  Save
+                </button>
               </div>
             </div>
           </div>
@@ -120,7 +139,11 @@
             </button>
           </div>
         </div>
-        <form class="theme-form" [hidden]="updatePassword">
+        <form
+          class="theme-form"
+          [hidden]="updatePassword"
+          [formGroup]="changePasswordForm"
+        >
           <div class="form-group">
             <div class="col-md-6">
               <label for="name">Current Password</label>
@@ -160,16 +183,18 @@
 
             <div class="col-md-12" [hidden]="updatePassword">
               <div class="pull-left" style="margin-right: 5px">
-                <button
-                  class="btn btn-sm btn-solid"
-                  (click)="passwordSwith()"
-                >
+                <button class="btn btn-sm btn-solid" (click)="passwordSwith()">
                   Cancel
                 </button>
               </div>
 
               <div class="pull-left">
-                <button class="btn btn-sm btn-solid" (click)="onChangePassword()">Save</button>
+                <button
+                  class="btn btn-sm btn-solid"
+                  (click)="onChangePassword()"
+                >
+                  Save
+                </button>
               </div>
             </div>
           </div>

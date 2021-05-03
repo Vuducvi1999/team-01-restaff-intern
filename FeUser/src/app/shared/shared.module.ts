@@ -9,6 +9,9 @@ import { LazyLoadImageModule, scrollPreset } from "ng-lazyload-image";
 import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import { TranslateModule } from "@ngx-translate/core";
 
+//UploadFile
+import { NgxDropzoneModule } from 'ngx-dropzone';
+
 // Header and Footer Components
 import { HeaderOneComponent } from "./header/header-one/header-one.component";
 import { FooterOneComponent } from "./footer/footer-one/footer-one.component";
@@ -48,6 +51,7 @@ import { ProductBoxComponent } from "./components/product/product-box/product-bo
 
 import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
 import { ImageWrapperComponent } from "./components/imageWrapper/imageWapper.component";
+import { UploadFileComponent } from "./components/upload-file/upload-file.component";
 
 @NgModule({
   declarations: [
@@ -74,6 +78,7 @@ import { ImageWrapperComponent } from "./components/imageWrapper/imageWapper.com
     TapToTopComponent,
     DiscountPipe,
     ImageWrapperComponent,
+    UploadFileComponent,
   ],
   imports: [
     CommonModule,
@@ -83,6 +88,7 @@ import { ImageWrapperComponent } from "./components/imageWrapper/imageWapper.com
     NgbModule,
     CarouselModule,
     BarRatingModule,
+    NgxDropzoneModule,
     LazyLoadImageModule.forRoot({
       // preset: scrollPreset // <-- tell LazyLoadImage that you want to use scrollPreset
     }),
@@ -121,6 +127,7 @@ import { ImageWrapperComponent } from "./components/imageWrapper/imageWapper.com
     TapToTopComponent,
     DiscountPipe,
     ImageWrapperComponent,
+    UploadFileComponent,
   ],
 })
 export class SharedModule {}
