@@ -15,8 +15,10 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using Domain.DTOs.Blogs;
+using Domain.DTOs.Customer;
 using Domain.DTOs.ProductsFeUser;
 using Domain.DTOs.Home;
+using Infrastructure.Extensions;
 using Domain.DTOs.PageContent;
 using Domain.DTOs.InfomationWeb;
 using Domain.DTOs.PageContentContact;
@@ -58,7 +60,8 @@ namespace Domain
             CreateMap<PaginatedList<User>, PaginatedList<UserDTO>>().ReverseMap();
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<User, UpdateProfileDTO>().ReverseMap();
-            CreateMap<User, CreateUserDTO>().ReverseMap(); CreateMap<User, UserLoginDTO>().ReverseMap();
+            CreateMap<User, CreateUserDTO>().ReverseMap();
+            CreateMap<User, UserLoginDTO>().ReverseMap();
             CreateMap<User, ChangePassworProfileDTO>().ReverseMap();
             CreateMap<User, UserDataReturnDTO>().ReverseMap();
 
@@ -76,7 +79,7 @@ namespace Domain
             //product
             CreateMap<PaginatedList<Product>, PaginatedList<ProductDTO>>().ReverseMap();
             CreateMap<Product, ProductDTO>()
-                 .ForMember(t => t.CategoryName, k=>k.MapFrom(h=>h.Category.Name)).ReverseMap();
+                 .ForMember(t => t.CategoryName, k => k.MapFrom(h => h.Category.Name)).ReverseMap();
 
             CreateMap<CreateProductDTO, Product>().ReverseMap();
             CreateMap<UpdateProductDTO, Product>().ReverseMap();
@@ -98,10 +101,39 @@ namespace Domain
             CreateMap<Blog, UpdateBlogDTO>().ReverseMap();
             CreateMap<Blog, DeleteBlogDTO>().ReverseMap();
 
+            //Customer
+            CreateMap<PaginatedList<User>, PaginatedList<CustomerDTO>>().ReverseMap();
+            CreateMap<User, CustomerDTO>()
+                .ForMember(a => a.FirstName, b => b.MapFrom(c => c.Customer.IsNullOrEmpty() ? c.FirstName : c.Customer.FirstName))
+                .ForMember(a => a.LastName, b => b.MapFrom(c => c.Customer.IsNullOrEmpty() ? c.LastName : c.Customer.LastName))
+                .ForMember(a => a.Address, b => b.MapFrom(c => c.Customer.Address))
+                .ForMember(a => a.Email, b => b.MapFrom(c => c.Customer.IsNullOrEmpty() ? c.Email : c.Customer.Email))
+                .ForMember(a => a.Phone, b => b.MapFrom(c => c.Customer.Phone))
+                .ReverseMap();
+            CreateMap<User, CreateCustomerDTO>().ReverseMap();
+            CreateMap<User, UpdateCustomerDTO>().ReverseMap();
+            CreateMap<User, DeleteCustomerDTO>().ReverseMap();
+
+            CreateMap<Customer, CustomerDTO>().ReverseMap();
+            CreateMap<Customer, CreateCustomerDTO>().ReverseMap();
+            CreateMap<Customer, UpdateCustomerDTO>().ReverseMap();
+            CreateMap<Customer, DeleteCustomerDTO>().ReverseMap();
+
+            CreateMap<User, CustomerDataReturnDTO>()
+               .ForMember(a => a.FirstName, b => b.MapFrom(c => c.Customer.IsNullOrEmpty() ? c.FirstName : c.Customer.FirstName))
+               .ForMember(a => a.LastName, b => b.MapFrom(c => c.Customer.IsNullOrEmpty() ? c.LastName : c.Customer.LastName))
+               .ForMember(a => a.Address, b => b.MapFrom(c => c.Customer.Address))
+               .ForMember(a => a.Email, b => b.MapFrom(c => c.Customer.IsNullOrEmpty() ? c.Email : c.Customer.Email))
+               .ForMember(a => a.Phone, b => b.MapFrom(c => c.Customer.Phone))
+               .ReverseMap();
+            CreateMap<CustomerRegisterDTO, CreateCustomerDTO>().ReverseMap();
+            CreateMap<CustomerDTO, CustomerDataReturnDTO>().ReverseMap();
+
             //homePage FeUser
             CreateMap<Product, HomeProductDTO>()
                  .ForMember(t => t.CategoryName, k => k.MapFrom(h => h.Category.Name)).ReverseMap();
             CreateMap<Blog, HomeBlogDTO>().ReverseMap();
+
             CreateMap<Banner, HomeBannerDTO>().ReverseMap();
 
             // PageContent

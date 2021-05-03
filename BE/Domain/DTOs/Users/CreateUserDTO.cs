@@ -1,6 +1,8 @@
-﻿using Domain.DTOs.Files;
+﻿using Common.Enums;
+using Domain.DTOs.Files;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Domain.DTOs.Users
@@ -13,6 +15,7 @@ namespace Domain.DTOs.Users
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ImageUrl { get; set; }
+        public Guid? CumstomerId { get; set; }
         public List<FileDTO> Files { get; set; }
     }
 }

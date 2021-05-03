@@ -31,7 +31,7 @@ export class UserDetailComponent implements OnInit {
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   public user: UserModel;
-  @Input() item;
+  @Input() item: UserModel;
 
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];

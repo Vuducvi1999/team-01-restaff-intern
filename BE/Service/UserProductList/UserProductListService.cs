@@ -7,6 +7,7 @@ using Domain.DTOs.Products;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +48,7 @@ namespace Service.UserProductList
                 return new ReturnMessage<PaginatedList<ProductDTO>>(false, null, MessageConstants.Error);
             }
 
-            var query = _repositoryProduct.DbSet.DynamicIncludeProperty(nameof(Category)).AsQueryable();
+            var query = _repositoryProduct.Queryable();
 
             if(search.MaxPrice > 0)
             {
@@ -65,6 +66,11 @@ namespace Service.UserProductList
                 {
                     query = query.Where(it => it.Category.Name.Contains(i));
                 }
+            }
+
+            if(search.Search.IsNotNullOrEmpty() && search.Search.Name.IsNotNullOrEmpty())
+            {
+                query = query.Where(it => it.Name.Contains(search.Search.Name));
             }
 
             if (search.TypeSort.Equals((int)ETypeSort.AZ))

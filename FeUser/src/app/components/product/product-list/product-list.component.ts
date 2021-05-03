@@ -1,6 +1,7 @@
 import { ViewportScroller } from "@angular/common";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Subscription } from "rxjs";
 import {
   ETypeSort,
   PageModel,
@@ -17,9 +18,9 @@ import { ETypeGridLayout } from "src/app/shared/data";
   selector: "app-product-list",
   templateUrl: "./product-list.component.html",
   styleUrls: ["./product-list.component.scss"],
-  providers: [HomeService,ProductListService],
+  providers: [HomeService, ProductListService],
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
   public grid: string = ETypeGridLayout.NORMAL;
   public layoutView: string = "grid-view";
   public products: ProductModel[];
@@ -34,15 +35,22 @@ export class ProductListComponent implements OnInit {
   public mobileSidebar: boolean = false;
   public finished: boolean = false;
   public params;
+  public subscribe: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private viewScroller: ViewportScroller,
     public productListService: ProductListService
   ) {
-    // Get Query params..
-    this.route.queryParams.subscribe((params) => {
+   
+  }
+  ngOnDestroy(): void {
+    this.subscribe.unsubscribe();
+  }
+
+  ngOnInit(): void {
+     // Get Query params..
+     this.subscribe = this.route.queryParams.subscribe((params) => {
       
       this.products = [];
       this.params = {};
@@ -75,9 +83,6 @@ export class ProductListComponent implements OnInit {
 
       this.addItems();
     });
-  }
-
-  ngOnInit(): void {
   }
 
   addItems() {

@@ -7,6 +7,6 @@ export interface UserModel extends BaseModel {
   email: string;
   firstName: string;
   lastName: string;
-  imageUrl: number;
+  imageUrl: string;
   files: FileDtoModel[];
 }
