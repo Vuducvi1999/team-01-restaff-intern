@@ -64,7 +64,7 @@ namespace Service.UserProductList
                 return new ReturnMessage<PaginatedList<ProductDTO>>(false, null, MessageConstants.Error);
             }
 
-            var query = _repositoryProduct.Queryable();
+            var query = _productRepository.Queryable();
 
             if(search.MaxPrice > 0)
             {
