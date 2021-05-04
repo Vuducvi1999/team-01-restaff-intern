@@ -27,8 +27,6 @@ using Service.InformationWebsiteServices;
 using Service.CustomerProfileFeUser;
 using Service.OrderDetails;
 using Service.Contacts;
-using Service.Promotions;
-using Service.PromotionDetails;
 
 namespace Service
 {
@@ -97,12 +95,6 @@ namespace Service
 
             // Contact
             services.AddScoped<IContactService, ContactService>();
-
-            //Promotion
-            services.AddScoped<IPromotionService, PromotionService>();
-
-            //Promotion Details
-            services.AddScoped<IPromotionDetailsService, PromotionDetailsService>();
         }
     }
 }

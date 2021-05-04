@@ -27,8 +27,6 @@ using Domain.DTOs.PageContent;
 using Domain.DTOs.InfomationWeb;
 using Domain.DTOs.PageContentContact;
 using Domain.DTOs.Contact;
-using Domain.DTOs.Promotions;
-using Domain.DTOs.PromotionDetails;
 
 namespace Domain
 {
@@ -169,18 +167,6 @@ namespace Domain
             //Information Web
             CreateMap<InformationWebsite, InformationWebDTO>().ReverseMap();
             CreateMap<InformationWebsite, UpdateInformationWebDTO>().ReverseMap();
-
-            //Promotion
-            CreateMap<Promotion, PromotionDTO>().ReverseMap();
-            CreateMap<Promotion, CreatePromotionDTO>().ReverseMap();
-            CreateMap<Promotion, UpdatePromotionDTO>().ReverseMap();
-            CreateMap<PaginatedList<Promotion>, PaginatedList<PromotionDTO>>().ReverseMap();
-
-            //Promotion Detail
-            CreateMap<PromotionDetail, PromotionDetailDTO>().ReverseMap();
-            CreateMap<PromotionDetail, CreatePromotionDetailDTO>().ReverseMap();
-            CreateMap<PromotionDetail, UpdatePromotionDetailDTO>().ReverseMap();
-            CreateMap<PaginatedList<PromotionDetail>, PaginatedList<PromotionDetailDTO>>().ReverseMap();
         }
     }
 }

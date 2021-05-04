@@ -12,9 +12,9 @@ namespace Domain.Entities
         public string Description { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndtDate { get; set; }
-        public decimal Value { get; set; } //10 , 200,000
+        public decimal Value { get; set; }
         public string ImageUrl { get; set; }
-        public bool HasPercent { get; set; } //true if has percent or false if not
+        public bool HasPercent { get; set; }
         public override void Insert()
         {
             base.Insert();
@@ -31,10 +31,12 @@ namespace Domain.Entities
             Description = model.Description;
             StartDate = model.StartDate;
             EndtDate = model.EndtDate;
-            Value = model.Value;
             ImageUrl = model.ImageUrl;
             HasPercent = model.HasPercent;
+            Value = model.Value;
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
+
     }
+
 }

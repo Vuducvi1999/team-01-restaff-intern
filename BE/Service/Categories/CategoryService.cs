@@ -107,7 +107,7 @@ namespace Service.Categories
         {
             if (search == null)
             {
-                return new ReturnMessage<PaginatedList<CategoryDTO>>(true, null, MessageConstants.CommonError);
+                return new ReturnMessage<PaginatedList<CategoryDTO>>(false, null, MessageConstants.DeleteSuccess);
             }
 
             var resultEntity = _categoryRepository.GetPaginatedList(it => search.Search == null ||
@@ -125,7 +125,7 @@ namespace Service.Categories
             resultEntity.Results.Where(r => r.ObjectState == ObjectState.Added);
             var data = _mapper.Map<PaginatedList<Category>, PaginatedList<CategoryDTO>>(resultEntity);
             
-            var result = new ReturnMessage<PaginatedList<CategoryDTO>>(false, data, MessageConstants.ListSuccess);
+            var result = new ReturnMessage<PaginatedList<CategoryDTO>>(false, data, MessageConstants.UpdateSuccess);
 
             return result;
         }
@@ -150,7 +150,7 @@ namespace Service.Categories
                     entity.Update(model);
                     _categoryRepository.Update(entity);
                     _unitOfWork.SaveChanges();
-                    var result = new ReturnMessage<CategoryDTO>(false, _mapper.Map<Category, CategoryDTO>(entity), MessageConstants.UpdateSuccess);
+                    var result = new ReturnMessage<CategoryDTO>(false, _mapper.Map<Category, CategoryDTO>(entity), MessageConstants.DeleteSuccess);
                     return result;
                 }
                 return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
