@@ -3,20 +3,31 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Data.Migrations
 {
-    public partial class infowebsite : Migration
+    public partial class addtypeupdatefile : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            //migrationBuilder.DropTable(
+            //    name: "Suppliers");
+
+            migrationBuilder.AddColumn<int>(
+                name: "TypeUpload",
+                table: "Files",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
             migrationBuilder.CreateTable(
-                name: "InformationWebsites",
+                name: "Contacts",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Fax = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     CreatedByName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -31,14 +42,19 @@ namespace Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InformationWebsites", x => x.Id);
+                    table.PrimaryKey("PK_Contacts", x => x.Id);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "InformationWebsites");
+                name: "Contacts");
+
+            migrationBuilder.DropColumn(
+                name: "TypeUpload",
+                table: "Files");
+
         }
     }
 }

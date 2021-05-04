@@ -27,7 +27,7 @@ export class SocialMediaDetailComponent implements OnInit {
   submitted = false;
 
   public modalFile: ModalFile;
-  public fileURL : (String | ArrayBuffer)[];
+  public fileURL: (String | ArrayBuffer)[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -103,9 +103,8 @@ export class SocialMediaDetailComponent implements OnInit {
   ngOnInit(): void {
     this.loadItemForm();
     this.createModal();
-    
-    if(this.item)
-    {
+
+    if (this.item) {
       this.fileURL = [];
       this.fileURL.push(this.item.iconUrl);
     }
@@ -116,8 +115,7 @@ export class SocialMediaDetailComponent implements OnInit {
       return;
     }
 
-    if(!this.fileURL)
-    {
+    if (!this.fileURL) {
       this.fileURL = [];
     }
 
@@ -125,20 +123,18 @@ export class SocialMediaDetailComponent implements OnInit {
       this.fileURL = [...this.fileURL, ...event.add];
     }
 
-    if(event.remove)
-    {
-      this.fileURL.forEach((e, i) => {
-        if (e == event.remove) {
+    if (event.remove) {
+      this.fileURL.forEach((e: string, i) => {
+        if (e.includes(event.remove)) {
           this.fileURL.splice(i, 1);
         }
       });
     }
 
-    if(event.removeAll)
-    {
+    if (event.removeAll) {
       this.fileURL = [];
     }
 
-    this.socialMediaForm.controls.imageUrl.setValue(this.fileURL.toString());
+    this.socialMediaForm.controls.imageUrl.setValue(this.fileURL.join(','));
   }
 }

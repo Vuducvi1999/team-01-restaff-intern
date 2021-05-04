@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Common.Constants;
+using Common.Http;
 using Domain.DTOs.Files;
 using Infrastructure.Extensions;
+using Infrastructure.Files;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using System;
@@ -15,14 +19,26 @@ namespace Service.Files
     public class FileManager : IFileManager
     {
         private readonly IMapper _mapper;
+        private readonly FileConfig _fileConfig;
+        private readonly Cloudinary _cloudinary;
 
-        public FileManager(IMapper mapper)
+        public FileManager(IMapper mapper, FileConfig fileConfig)
         {
             _mapper = mapper;
+            _fileConfig = fileConfig;
+            var account = new Account(_fileConfig.CloudName, _fileConfig.ApiKey, _fileConfig.ApiSecret);
+            _cloudinary = new Cloudinary(account);
         }
 
-        public async Task<FileStreamResult> DownloadFile(string url)
+        public async Task<IActionResult> DownloadFile(string url)
         {
+            var ext = Path.GetExtension(url);
+            if (DataType.TypeAccept[DataType.ETypeFile.Image].Contains(ext))
+            {
+                var urlReturn = "https://localhost:44309/files/" + url;
+                return new OkObjectResult(urlReturn);
+            }
+
             var memory = new MemoryStream();
             if (url.IsNullOrEmpty())
             {
@@ -58,6 +74,12 @@ namespace Service.Files
 
         public async Task<List<CreateFileDTO>> SaveFile(SaveFileDTO saveFile)
         {
+            if (!DataType.TypeName.ContainsKey(saveFile.EntityType))
+            {
+                return new List<CreateFileDTO>();
+            }
+            saveFile.EntityType = DataType.TypeName[saveFile.EntityType];
+            
             var filePaths = UrlConstants.BaseLocalUrlFile;
             //var urlPath = UrlConstants.BaseCloudUrlFile;
             List<CreateFileDTO> createFileDTOs = new List<CreateFileDTO>();
@@ -71,7 +93,7 @@ namespace Service.Files
                 foreach (var formFile in saveFile.Files)
                 {
                     var ext = Path.GetExtension(formFile.FileName);
-                    if(!DataType.CheckTypeAccept(saveFile.EntityType, ext))
+                    if (!DataType.CheckTypeAccept(saveFile.EntityType, ext))
                     {
                         continue;
                     }
@@ -79,17 +101,44 @@ namespace Service.Files
                     var filePath = Path.Combine(filePaths, fileName);
 
                     var item = _mapper.Map<SaveFileDTO, CreateFileDTO>(saveFile);
-                    if (formFile.Length > 0)
+                    if (formFile.Length <= 0)
+                    {
+                        continue;
+                    }
+
+                    if(DataType.TypeAccept[DataType.ETypeFile.Image].Contains(ext) && saveFile.TypeUpload == 1)
+                    {
+                        var uploadParams = new ImageUploadParams();
+
+                        using (var memory = new MemoryStream())
+                        {
+                            using var fileStream = formFile.OpenReadStream();
+                            byte[] bytes = new byte[formFile.Length];
+                            fileStream.Read(bytes, 0, (int)formFile.Length);
+                            fileStream.Position = 0;
+                            uploadParams.File = new FileDescription(fileName, fileStream);
+                            var result = _cloudinary.Upload(uploadParams);
+
+                            item.Url = result.SecureUrl.ToString();
+                            item.Name = formFile.FileName;
+                            item.FileExt = ext;
+                            item.TypeUpload = 1;
+                        }
+                        createFileDTOs.Add(item);
+                    }
+
+                    if (!DataType.TypeAccept[DataType.ETypeFile.Image].Contains(ext) || saveFile.TypeUpload == 0)
                     {
                         using (var stream = System.IO.File.Create(filePath))
                         {
                             //stream.Write();
-                            await formFile.CopyToAsync(stream);
+                            formFile.CopyTo(stream);
 
                             //item.Url = Path.Combine(urlPath, fileName);
                             item.Url = fileName;
                             item.Name = formFile.FileName;
                             item.FileExt = ext;
+                            item.TypeUpload = 0;
                         }
                         createFileDTOs.Add(item);
                     }

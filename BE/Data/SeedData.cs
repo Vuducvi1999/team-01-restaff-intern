@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Data
 {
@@ -25,6 +26,25 @@ namespace Data
                         Username = "admin",
                         Password = "E10ADC3949BA59ABBE56E057F20F883E",
                     });
+                }
+                if(!await ctx.Categories.AnyAsync() && !await ctx.Products.AnyAsync())
+                {
+                    var categories = new List<Category>();
+                    for(int i = 0; i < 10; i++)
+                    {
+                        categories.Add(new Category()
+                        {
+                            Name = "Category" + i,
+                            Description = "Hello kitty..."
+                        });
+                    }
+                    ctx.Categories.AddRange(categories);
+
+                    for(int i = 0; i < 100; i++)
+                    {
+
+                    }
+
                 }
                 if (!await ctx.PageContents.AnyAsync())
                 {

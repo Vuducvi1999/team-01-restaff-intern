@@ -115,8 +115,8 @@ export class UpdateOrderComponent implements OnInit {
     // }
 
     if (event.remove) {
-      this.fileURL.forEach((e, i) => {
-        if (e == event.remove) {
+      this.fileURL.forEach((e : string, i) => {
+        if (e.includes(event.remove)) {
           this.fileURL.splice(i, 1);
         }
       });
@@ -126,6 +126,6 @@ export class UpdateOrderComponent implements OnInit {
       this.fileURL = [];
     }
 
-    this.orderForm.controls.imageUrl.setValue(this.fileURL.toString());
+    this.orderForm.controls.imageUrl.setValue(this.fileURL.join(','));
   }
 }

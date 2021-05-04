@@ -10,7 +10,7 @@ import { CategoryDetailComponent } from '../categories-details/categories-detail
   selector: 'app-list-categories',
   templateUrl: './list-categories.component.html',
   styleUrls: ['./list-categories.component.scss'],
-  providers: [CategoryService]
+  providers: [CategoryService, FileService]
 })
 export class ListCategoriesComponent implements OnInit {
 
@@ -19,7 +19,7 @@ export class ListCategoriesComponent implements OnInit {
   constructor
   (
     private modalService: NgbModal,
-    private categoryService:CategoryService
+    private categoryService:CategoryService,
   )
   {
     this.fetch();
