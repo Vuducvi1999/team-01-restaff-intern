@@ -41,5 +41,14 @@ namespace BE.ControllersFeUser
             var result = _userProductListService.SearchPagination(dto);
             return CommonResponse(result);
         }
+        [HttpGet]
+        [Route(UrlConstants.ByCategory)]
+        public IActionResult GetByCategory([FromQuery] Guid id)
+        {
+
+            var result = _userProductListService.GetByCategory(id);
+            return CommonResponse(result);
+        }
+
     }
 }

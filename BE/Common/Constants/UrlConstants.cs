@@ -51,11 +51,17 @@ namespace Common.Constants
 
 
         public const string BaseBlog = BaseApi + "/blog";
+        public const string BaseOrder = BaseApi + "/order";
+        public const string BaseOrderDetail = BaseApi + "/order-detail";
+
+
 
         public const string BaseProductList = BaseApi + "/user/productlist";
 
         public const string Product = "product";
         public const string Category = "category";
+        public const string ByCategory = "by-category";
+
         public const string BaseHome = BaseApi + "/home";
 
         public const string TopCollection = "top-collection";

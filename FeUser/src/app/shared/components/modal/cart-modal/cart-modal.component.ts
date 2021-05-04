@@ -6,14 +6,13 @@ import { isPlatformBrowser } from '@angular/common';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductModel } from 'src/app/lib/data/models/products/product.model';
 import { CartService } from 'src/app/lib/data/services/cart/cart.service';
-import { FileService } from 'src/app/lib/data/services';
-import { ProductService } from 'src/app/lib/data/services/products/product.service';
+import { FileService, ProductListService } from 'src/app/lib/data/services';
 
 @Component({
   selector: 'app-cart-modal',
   templateUrl: './cart-modal.component.html',
   styleUrls: ['./cart-modal.component.scss'],
-  providers: [CartService, ProductService]
+  providers: [CartService, ProductListService]
 })
 export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -28,7 +27,7 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object,
     private modalService: NgbModal,
-    private productService: ProductService,
+    private productListService: ProductListService,
     private cartService: CartService) {
     { }
   }
@@ -40,11 +39,8 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async openModal(product) {
-    const getData = await this.productService.getByCategory(product.categoryId, null);
+    const getData = await this.productListService.getByCategory(product.categoryId, null);
     this.products = getData.data;
-
-    // this.products = await this.products.filter(items => items.categoryName == product.categoryName && items.id != product.id);
-
     const status = await this.cartService.addToCart(product);
     if (status) {
       this.modalOpen = true;

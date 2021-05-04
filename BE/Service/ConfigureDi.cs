@@ -18,11 +18,13 @@ using Service.ServiceFeUser;
 using Service.Home;
 using Service.Header;
 using Service.Footer;
+using Service.Orders;
 using Service.UserProductList;
 using Service.Customers;
 using Service.AuthCustomer;
 using Service.PageContents;
 using Service.InformationWebsiteServices;
+using Service.OrderDetails;
 using Service.Contacts;
 
 namespace Service
@@ -60,6 +62,8 @@ namespace Service
 
 
             services.AddScoped<IBlogService, BlogService>();
+            services.AddScoped<IOrderService, OrderService>();
+
 
             services.AddScoped<IHomeService, HomeService>();
 
@@ -80,6 +84,10 @@ namespace Service
 
             //Information Website
             services.AddScoped<IInfomationWebService, InformationWebService>();
+
+            //Order Details
+            services.AddScoped<IOrderDetailService, OrderDetailService>();
+
 
             // Contact
             services.AddScoped<IContactService, ContactService>();

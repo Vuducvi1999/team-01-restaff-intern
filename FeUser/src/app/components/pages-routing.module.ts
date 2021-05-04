@@ -33,6 +33,10 @@ const routes: Routes = [
     component: CheckoutComponent,
   },
   {
+    path: "checkout/success",
+    component: OrderSuccessComponent,
+  },
+  {
     path: "blog/:id",
     component: BlogDetailComponent,
   },
