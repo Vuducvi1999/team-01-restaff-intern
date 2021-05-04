@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using Common.Enums;
 using Domain.DTOs.Customer;
+using Domain.DTOs.CustomerProfileFeUser;
 
 namespace Domain.Entities
 {
@@ -71,6 +72,15 @@ namespace Domain.Entities
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
 
+        public void UpdateProfile(UpdateCustomerProfileFeUserDTO model)
+        {
+            base.Update();
+            Email = model.Email;
+            FirstName = model.FirstName;
+            LastName = model.LastName;
+            ImageUrl = model.ImageUrl;
+        }
+
         public void ChangePassword(ChangePassworProfileDTO model)
         {
             base.Update();
@@ -79,6 +89,12 @@ namespace Domain.Entities
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
 
+        public void ChangePassword(ChangePasswordCustomerProfileFeUserDTO model)
+        {
+            base.Update();
+            model.NewPassword = MD5Helper.ToMD5Hash(model.NewPassword);
+            Password = model.NewPassword;
+        }
     }
 
 }

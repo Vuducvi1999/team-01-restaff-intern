@@ -22,10 +22,10 @@ namespace Service.UserProductList
         private readonly IRepository<Product> _productRepository;
         private readonly IMapper _mapper;
 
-        public UserProductListService(IRepository<Product> productRepository, IRepository<Category> categoryRepository, IMapper mapper)
+        public UserProductListService(IRepository<Category> categoryRepository, IRepository<Product> productRepository, IMapper mapper)
         {
-            _productRepository = productRepository;
             _categoryRepository = categoryRepository;
+            _productRepository = productRepository;
             _mapper = mapper;
         }
 
