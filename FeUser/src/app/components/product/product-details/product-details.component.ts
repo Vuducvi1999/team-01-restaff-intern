@@ -19,23 +19,29 @@ export class ProductDetailsComponent implements OnInit {
   public counter: number = 1;
   public activeSlide: any = 0;
   public ImageSrc: string;
+  public id : string;
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
 
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
   public ProductDetailsThumbConfig: any = ProductDetailsThumbSlider;
 
   constructor(private productService: ProductDetailsService,
-    private activedRoute:ActivatedRoute) 
+    private activatedRoute:ActivatedRoute) 
     {
       this.getProduct();
-     }
+    }
 
   ngOnInit(): void  {
   }
 
   getProduct(){
-    let data = JSON.parse(localStorage.getItem('item'));
-    this.product = data;
+        this.activatedRoute.queryParams.subscribe( param =>{
+        this.productService
+          .get(param.id)
+          .then((res: ReturnMessage<ProductDetailsModel>) => {
+              this.product = res.data;
+        }) 
+      });
   }
 
   getImage(fileName: string) {
