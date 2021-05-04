@@ -7,6 +7,7 @@ export class ProductListService {
   private url = "/api/user/productlist";
   private baseProduct = this.url + "/product";
   private baseCategory = this.url + "/category";
+  private byCategory = this.url + "/by-category?id=";
 
   constructor(private httpClient: HttpClientService) {}
 
@@ -17,4 +18,10 @@ export class ProductListService {
   getCategory() {
     return this.httpClient.getObservable(this.baseCategory, null).toPromise();
   }
+  
+  getByCategory(id: any, request: any) {
+    return this.httpClient.getObservable(this.byCategory + id, request).toPromise();
+  }
+
+
 }

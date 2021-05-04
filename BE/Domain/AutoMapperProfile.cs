@@ -15,6 +15,10 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using Domain.DTOs.Blogs;
+using Domain.DTOs.Orders;
+using Domain.DTOs.ProductsFeUser;
+using Domain.DTOs.Home;
+using Domain.DTOs.OrderDetails;
 using Domain.DTOs.Customer;
 using Domain.DTOs.ProductsFeUser;
 using Domain.DTOs.Home;
@@ -101,6 +105,22 @@ namespace Domain
             CreateMap<Blog, UpdateBlogDTO>().ReverseMap();
             CreateMap<Blog, DeleteBlogDTO>().ReverseMap();
 
+            //Order
+            CreateMap<PaginatedList<Order>, PaginatedList<OrderDTO>>().ReverseMap();
+            CreateMap<Order, OrderDTO>().ReverseMap();
+            CreateMap<Order, CreateOrderDTO>().ReverseMap();
+            CreateMap<Order, UpdateOrderDTO>().ReverseMap();
+            CreateMap<Order, DeleteOrderDTO>().ReverseMap();
+
+            //OrderDetail
+            CreateMap<PaginatedList<OrderDetail>, PaginatedList<OrderDetailDTO>>().ReverseMap();
+            CreateMap<OrderDetail, OrderDetailDTO>()
+                .ForMember(t => t.ProductName, k => k.MapFrom(h => h.Product == null ? "" : h.Product.Name))
+                .ForMember(t => t.ProductImgUrl, k => k.MapFrom(h => h.Product == null ? "" : h.Product.ImageUrl))
+                 .ReverseMap();
+            CreateMap<OrderDetail, CreateOrderDetailDTO>().ReverseMap();
+            CreateMap<OrderDetail, UpdateOrderDetailDTO>().ReverseMap();
+            CreateMap<OrderDetail, DeleteOrderDetailDTO>().ReverseMap();
             //Customer
             CreateMap<PaginatedList<User>, PaginatedList<CustomerDTO>>().ReverseMap();
             CreateMap<User, CustomerDTO>()

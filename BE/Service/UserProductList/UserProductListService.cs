@@ -29,6 +29,22 @@ namespace Service.UserProductList
             _mapper = mapper;
         }
 
+        public ReturnMessage<List<ProductDTO>> GetByCategory(Guid id)
+        {
+            try
+            {
+                var listDTO = _productRepository.Queryable().Where(product => product.CategoryId == id).ToList();
+                var list = _mapper.Map<List<ProductDTO>>(listDTO);
+                var result = new ReturnMessage<List<ProductDTO>>(false, list, MessageConstants.ListSuccess);
+                return result;
+            }
+
+            catch (Exception ex)
+            {
+                return new ReturnMessage<List<ProductDTO>>(true, null, ex.Message);
+            }
+        }
+
         public ReturnMessage<IEnumerable<CategoryDTO>> GetCategory()
         {
             var data = _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(_categoryRepository.GetList());

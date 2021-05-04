@@ -6,6 +6,7 @@ import { BlogMainComponent } from './blogs/blog-main/blog-main.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { HomeComponent } from './home/home.component';
+import { OrderSuccessComponent } from './order-success/order-success.component';
 import { PageContentComponent } from './page-content/page-content.component';
 import { ProductDetailsComponent } from './product/product-details/product-details.component';
 
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: "checkout",
     component: CheckoutComponent,
+  },
+  {
+    path: "checkout/success",
+    component: OrderSuccessComponent,
   },
   {
     path: "blog/:id",

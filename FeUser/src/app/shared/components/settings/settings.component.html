@@ -93,7 +93,7 @@
               </a>
               <h4>
                 <span>
-                  {{ product?.price }}
+                  {{product?.quantity}} x {{ product?.price | currency:'VND'}}
                   <!-- {{ product?.quantity }} x 
                   {{ product?.price * productService?.Currency.price | discount:product | currency:productService?.Currency.currency:'symbol' }} -->
                 </span>

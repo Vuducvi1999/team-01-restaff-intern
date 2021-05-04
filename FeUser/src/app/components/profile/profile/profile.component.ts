@@ -136,7 +136,7 @@ export class ProfileComponent implements OnInit {
         this.passwordSwith();
       })
       .catch((er) => {
-        alert(er.error ? er.error.message : "Server Disconnected");
+        alert(er.error.message ? er.error.message : "Server is disconnected");
       });
   }
 
@@ -168,7 +168,7 @@ export class ProfileComponent implements OnInit {
         this.profileSwith();
       })
       .catch((er) => {
-        alert(er.error ? er.error.message : "Server is disconnected");
+        alert(er.error.message ? er.error.message : "Server is disconnected");
       });
   }
 

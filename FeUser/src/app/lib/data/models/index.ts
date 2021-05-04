@@ -5,3 +5,4 @@ export * from "./products/product.model";
 export * from "./common";
 export * from "./auth/auth.model";
 export * from "./profile/profile.model";
+export * from './orders/order.model';
