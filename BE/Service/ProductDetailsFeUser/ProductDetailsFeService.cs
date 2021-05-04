@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Common.Constants;
 using Common.Http;
+using Domain.DTOs.ProductRating;
 using Domain.DTOs.Products;
 using Domain.DTOs.ProductsFeUser;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
+using Service.AuthCustomer;
 using Service.ProductDetailsFeUser;
 using System;
 using System.Collections.Generic;
@@ -18,11 +20,15 @@ namespace Service.ServiceFeUser
 
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Category> _categoryRepository;
+        private readonly IRepository<Customer> _customerRepository;
+        private readonly IAuthCustomerUserService _authCustomerUserService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ProductDetailsFeService(IRepository<Category> categoryRepository, IRepository<Product> productRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public ProductDetailsFeService(IRepository<Category> categoryRepository, IRepository<Product> productRepository, IUnitOfWork unitOfWork, IMapper mapper, IRepository<Customer> customerRepository, IAuthCustomerUserService authCustomerUserService)
         {
+            _customerRepository = customerRepository;
+            _authCustomerUserService = authCustomerUserService;
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -46,6 +52,23 @@ namespace Service.ServiceFeUser
 
             return result;
         }
+        public ReturnMessage<ProductRatingDTO> CreateRating(CreateProductRatingDTO model)
+        {
+            try
+            {
+                var entity = _mapper.Map<CreateProductRatingDTO, ProductRating>(model);
+                
+            }
+            catch(Exception ex)
+            {
+                return new ReturnMessage<ProductRatingDTO>(true, null, ex.Message);
+            }
+        }
+        public ReturnMessage<ProductRatingDTO> UpdateRating(UpdateProductRatingDTO model)
+        {
+
+        }
+
 
     }
 }

@@ -24,7 +24,7 @@ namespace Data
         public DbSet<PageContent> PageContents { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<InformationWebsite> InformationWebsites { get; set; }
-
+        public DbSet<ProductRating> ProductRatings { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()

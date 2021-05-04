@@ -27,6 +27,7 @@ using Domain.DTOs.PageContent;
 using Domain.DTOs.InfomationWeb;
 using Domain.DTOs.PageContentContact;
 using Domain.DTOs.Contact;
+using Domain.DTOs.ProductRating;
 
 namespace Domain
 {
@@ -167,6 +168,14 @@ namespace Domain
             //Information Web
             CreateMap<InformationWebsite, InformationWebDTO>().ReverseMap();
             CreateMap<InformationWebsite, UpdateInformationWebDTO>().ReverseMap();
+
+            //RatingProduct
+            CreateMap<ProductRating, ProductRatingDTO>()
+                .ForMember(t => t.ProductName, k => k.MapFrom(h => h.Product.Name))
+                .ForMember(t => t.CustomerName, k => k.MapFrom(h => h.Customer.FirstName + " " + h.Customer.LastName))
+                .ReverseMap();
+            CreateMap<ProductRating, UpdateProductRatingDTO>().ReverseMap();
+
         }
     }
 }
