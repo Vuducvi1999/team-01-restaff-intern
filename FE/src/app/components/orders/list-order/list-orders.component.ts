@@ -3,7 +3,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { OrderDetailModel, OrderModel } from 'src/app/lib/data/models/orders/order.model';
 import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
-import { ListOrderDetailsComponent } from '../list-order-details/list-order-details.component';
 import { UpdateOrderComponent } from '../update-order/update-order.component';
 
 
@@ -50,22 +49,27 @@ export class ListOrdersComponent implements OnInit {
       status: {
         title: 'Status',
       },
-      totalAmount: {
-        title: 'Total Amount',
-      },
       totalItem: {
         title: 'Total Item',
-      }
-
-    },
+      },
+      totalAmount: {
+        title: 'Total Amount',
+        type: 'text',
+        valuePrepareFunction: (row) => {
+          var price = (row).toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'VND',
+          });
+          return `${price}`;
+        }
+      },
+    }
   };
 
   getOrders() {
     this.ordersService.get(null).then((res: ReturnMessage<PageModel<OrderModel>>) => {
       if (!res.hasError) {
         this.orders = res.data.results;
-        console.log("order", this.orders);
-
       }
     }).catch((er) => {
 
@@ -83,13 +87,6 @@ export class ListOrdersComponent implements OnInit {
     modalRef.componentInstance.item = event?.data;
     modalRef.result.then(() => this.getOrders());
   }
-  
-  openDetails(event: any) {
-    var modalRef = this.modalService.open(ListOrderDetailsComponent, {
-      size: 'lg'
-    });
-    modalRef.componentInstance.item = event?.data;
-    modalRef.result.then(() => this.getOrders());
-  }
+
 
 }
