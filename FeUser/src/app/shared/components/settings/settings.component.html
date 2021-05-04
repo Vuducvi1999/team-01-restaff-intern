@@ -30,11 +30,15 @@
                         (keypress)="onSearch($event)"
                       />
                       <div *ngIf="userFilter.name">
-                        <ul *ngFor="let item of data | filterBy: userFilter">
-                          <li class="title">
+                        <ul
+                          class="nav"
+                          *ngFor="let item of data | filterBy: userFilter"
+                        >
+                          <li class="nav-item">
                             <a
-                              [routerLink]="['/product-details']"
-                              [queryParams]="{ id: item.id }"
+                              class="nav-link"
+                              href="javascript:void(0)"
+                              (click)="clickRouter(item.id)"
                               >{{ item.name }}
                             </a>
                           </li>
@@ -107,7 +111,8 @@
               </a>
               <h4>
                 <span>
-                  {{product?.quantity}} x {{ product?.price | currency:'VND'}}
+                  {{ product?.quantity }} x
+                  {{ product?.price | currency: "VND" }}
                   <!-- {{ product?.quantity }} x 
                   {{ product?.price * productService?.Currency.price | discount:product | currency:productService?.Currency.currency:'symbol' }} -->
                 </span>

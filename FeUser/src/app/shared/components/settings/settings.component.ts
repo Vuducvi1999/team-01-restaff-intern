@@ -1,12 +1,19 @@
-import { Component, OnInit, Injectable, PLATFORM_ID, Inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { Observable } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
+import {
+  Component,
+  OnInit,
+  Injectable,
+  PLATFORM_ID,
+  Inject,
+} from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
+import { Observable } from "rxjs";
+import { TranslateService } from "@ngx-translate/core";
 import { ProductService } from "../../services/product.service";
-import { FileService } from 'src/app/lib/data/services';
-import { ProductModel } from 'src/app/lib/data/models';
-import { CartService } from 'src/app/lib/data/services/cart/cart.service';
-import { Router } from '@angular/router';
+import { FileService } from "src/app/lib/data/services";
+import { ProductModel } from "src/app/lib/data/models";
+import { CartService } from "src/app/lib/data/services/cart/cart.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { SearchService } from "src/app/lib/data/services/search/search.service";
 
 @Component({
   selector: "app-settings",
@@ -22,6 +29,7 @@ export class SettingsComponent implements OnInit {
   public data: ProductModel[] = [];
   public userFilter: any = { name: "" };
   public path: any;
+  public id: string;
 
   public languages = [
     {
@@ -101,6 +109,10 @@ export class SettingsComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params) => {
       this.name = params["name"];
     });
+
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.id = params["id"];
+    });
   }
 
   onSearch(event: KeyboardEvent) {
@@ -120,14 +132,9 @@ export class SettingsComponent implements OnInit {
     this.path = "product-details?id={item.id}`";
   }
 
-  clickRouter(product: String) {
-    this.router.navigate(["product-details"], {
-      queryParams: { id: product },
-    });
-  }
-
-  getLink(name:any){
-    const url = `/product-details?name=${name}`;
-    this.route.navigateByUrl(url);
+  clickRouter(id: String) {
+    const url = `/product-details?id=${id}`;
+    this.router.navigateByUrl(url);
+    this.searchToggle();
   }
 }

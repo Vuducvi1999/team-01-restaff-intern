@@ -57,6 +57,7 @@
     "ng5-slider": "^1.2.4",
     "ngx-bar-rating": "^2.0.0",
     "ngx-dropzone": "^3.0.0",
+    "ngx-filter-pipe": "^2.1.2",
     "ngx-infinite-scroll": "^10.0.0",
     "ngx-isotope": "^0.1.7",
     "ngx-masonry": "^1.1.4",
