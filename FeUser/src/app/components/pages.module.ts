@@ -24,8 +24,11 @@ import { CartComponent } from "./cart/cart.component";
 import { CheckoutComponent } from "./checkout/checkout.component";
 import { BlogDetailComponent } from "./blogs/blog-detail/blog-detail.component";
 import { ProductDetailsComponent } from "./product/product-details/product-details.component";
+import { OrderSuccessComponent } from "./order-success/order-success.component";
 import { BlogMainComponent } from "./blogs/blog-main/blog-main.component";
 import { PageContentComponent } from "./page-content/page-content.component";
+import { ProfileComponent } from "./profile/profile/profile.component";
+import { PageContentInfoComponent } from "./page-content/PageInfo/page-info.component";
 @NgModule({
   declarations: [
     HomeComponent,
@@ -46,8 +49,12 @@ import { PageContentComponent } from "./page-content/page-content.component";
     BlogDetailComponent,
     CartComponent,
     CheckoutComponent,
+    BlogDetailComponent,
+    OrderSuccessComponent,
     BlogMainComponent,
-    PageContentComponent
+    PageContentComponent,
+    ProfileComponent,
+    PageContentInfoComponent
   ],
   imports: [
     CommonModule,

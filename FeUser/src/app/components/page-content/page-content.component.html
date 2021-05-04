@@ -5,9 +5,15 @@
 
 <section class="about-page section-b-space">
   <div class="container">
-    <div class="row">
+    <ng-container *ngIf="pageContent?.title === 'Contact'"
+      ><app-page-info></app-page-info
+    ></ng-container>
+    <div class="row" *ngIf="pageContent?.title !== 'Contact'">
       <div class="col-sm-12">
-        <span id="convert-to-html" [innerHTML]="pageContent.description"></span>
+        <span
+          id="convert-to-html"
+          [innerHTML]="pageContent?.description"
+        ></span>
       </div>
     </div>
   </div>

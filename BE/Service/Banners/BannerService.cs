@@ -102,7 +102,7 @@ namespace Service.Banners
                 , t => t.Title
             );
             var data = _mapper.Map<PaginatedList<Banner>, PaginatedList<BannerDTO>>(resultEntity);
-            var result = new ReturnMessage<PaginatedList<BannerDTO>>(false, data, MessageConstants.DeleteSuccess);
+            var result = new ReturnMessage<PaginatedList<BannerDTO>>(false, data, MessageConstants.GetPaginationSuccess);
 
             return result;
         }

@@ -36,24 +36,6 @@ export class NavService {
 
   MENUITEMS: Menu[] = [
     {
-      title: 'Suppliers',
-      icon: 'users',
-      type: 'sub',
-      active: false,
-      children: [
-        {
-          path: '/suppliers/list-suppliers',
-          title: 'Supplier List',
-          type: 'link',
-        },
-        {
-          path: '/suppliers/create-suppliers',
-          title: 'Create Supplier',
-          type: 'link',
-        },
-      ],
-    },
-    {
       title: 'Banners',
       icon: 'users',
       type: 'sub',
@@ -71,19 +53,6 @@ export class NavService {
         {
           path: '/social-medias/list-social-medias',
           title: 'Social Media List',
-          type: 'link',
-        },
-      ],
-    },
-    {
-      title: 'Files',
-      icon: 'camera',
-      type: 'sub',
-      active: false,
-      children: [
-        {
-          path: '/files/list-files',
-          title: 'File List',
           type: 'link',
         },
       ],
@@ -167,6 +136,19 @@ export class NavService {
       ],
     },
     {
+      title: 'Customer',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/customers/list-customers',
+          title: 'Customer List',
+          type: 'link',
+        },
+      ],
+    },
+    {
       title: 'Page Content',
       icon: 'users',
       type: 'sub',
@@ -192,6 +174,35 @@ export class NavService {
         },
       ],
     },
+    {
+      title: 'Contact',
+      icon: 'info',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/contact/list-contact',
+          title: 'Contact',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      title: 'Orders',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/orders/list-orders',
+          title: 'Orders List',
+          type: 'link',
+        }
+      ]
+    },
   ];
+
+
+
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 }

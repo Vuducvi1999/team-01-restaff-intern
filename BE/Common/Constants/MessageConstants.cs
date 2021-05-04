@@ -9,12 +9,16 @@
 
 
         public const string ListSuccess = "List successfully";
-        public const string Error = "Save fail";
+        public const string Error = "Error server";
 
         public const string CommonError = "Error !";
 
         public const string InvalidAuthInfoMsg = "Invalid email or password";
+        public const string ExistUsername = "Username has exist";
+        public const string ExistEmail = "Email has exist";
         public const string LoginSuccess = "Login successfully";
+        public const string RegisterSuccess = "Register successfully";
+        public const string RegisterFail = "Register fail";
 
         public const string EnityTypeError = "Don't find EnityType";
 

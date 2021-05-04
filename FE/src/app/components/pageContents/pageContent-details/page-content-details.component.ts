@@ -78,6 +78,4 @@ export class PageContentDetailComponent implements OnInit {
   close(event: any) {
     this.ngbActiveModal.close();
   }
-
-  hideLabelDes = false;
 }

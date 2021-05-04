@@ -93,6 +93,14 @@ export const content: Routes = [
     },
   },
   {
+    path: 'orders',
+    loadChildren: () =>
+      import('../../components/orders/orders.module').then((m) => m.OrdersModule),
+    data: {
+      breadcrumb: 'Orders',
+    }
+  },
+  {
     path: 'page-content',
     loadChildren: () =>
       import('../../components/pageContents/pageContent.module').then(
@@ -105,9 +113,29 @@ export const content: Routes = [
   {
     path: 'information-website',
     loadChildren: () =>
-      import('../../components/information-website/information.module').then((m) => m.InformationWebsiteModule),
+      import('../../components/information-website/information.module').then(
+        (m) => m.InformationWebsiteModule
+      ),
     data: {
       breadcrumb: 'Information Website',
+    },
+  },
+  {
+    path: 'customers',
+    loadChildren: () =>
+      import('../../components/customers/customers.module').then((m) => m.CustomerModule),
+    data: {
+      breadcrumb: 'Customers',
+    },
+  },
+  {
+    path: 'contact',
+    loadChildren: () =>
+      import('../../components/contacts/contact.module').then(
+        (m) => m.ContactModule
+      ),
+    data: {
+      breadcrumb: 'Contact',
     },
   },
 ];

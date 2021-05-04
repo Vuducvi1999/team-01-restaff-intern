@@ -34,14 +34,13 @@ export class UploadFileComponent implements OnInit {
     if (this.fileURL) {
       this.files = [];
       this.fileURL.forEach((res) => {
+        if(res == null) return;
         this.converUrltoFile(FileService.getLinkFile(res.toString())).then(
           (res) => {
             this.files.push(res);
           }
         );
       });
-      
-      console.log(this.fileURL);
     }
   }
 

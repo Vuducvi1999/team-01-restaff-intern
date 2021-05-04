@@ -12,6 +12,7 @@ namespace Common.Constants
             {"product", "PRO" },
             {"socialmedia", "SOC" },
             {"user", "USER" },
+            {"customer", "CUSTOMER"},
             { "blog", "BLOG" }
         };
 
@@ -29,6 +30,7 @@ namespace Common.Constants
             { "PRO", ETypeFile.Image },
             { "SOC", ETypeFile.Image },
             { "USER", ETypeFile.Image },
+            { "CUSTOMER", ETypeFile.Image},
             { "BLOG", ETypeFile.Image },
         };
 

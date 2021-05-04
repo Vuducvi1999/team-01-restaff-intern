@@ -17,7 +17,6 @@ namespace Domain.Entities
             Title = model.Title;
             ShortDes = model.ShortDes;
             Description = model.Description;
-            ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
     }
 }

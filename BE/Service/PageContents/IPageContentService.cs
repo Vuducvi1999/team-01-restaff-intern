@@ -1,5 +1,6 @@
 ﻿using Common.Http;
 using Domain.DTOs.PageContent;
+using Domain.DTOs.PageContentContact;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;

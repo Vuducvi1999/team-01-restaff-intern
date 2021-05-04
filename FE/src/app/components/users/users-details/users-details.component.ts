@@ -31,7 +31,7 @@ export class UserDetailComponent implements OnInit {
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   public user: UserModel;
-  @Input() item;
+  @Input() item: UserModel;
 
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];
@@ -113,8 +113,7 @@ export class UserDetailComponent implements OnInit {
       return;
     }
 
-    if(!this.fileURL)
-    {
+    if (!this.fileURL) {
       this.fileURL = [];
     }
 
@@ -122,8 +121,7 @@ export class UserDetailComponent implements OnInit {
       this.fileURL = [...this.fileURL, ...event.add];
     }
 
-    if(event.remove)
-    {
+    if (event.remove) {
       this.fileURL.forEach((e, i) => {
         if (e == event.remove) {
           this.fileURL.splice(i, 1);
@@ -131,8 +129,7 @@ export class UserDetailComponent implements OnInit {
       });
     }
 
-    if(event.removeAll)
-    {
+    if (event.removeAll) {
       this.fileURL = [];
     }
 

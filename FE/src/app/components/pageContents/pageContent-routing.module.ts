@@ -10,8 +10,8 @@ const routes: Routes = [
         path: 'list-page-content',
         component: ListPageContentComponent,
         data: {
-          title: 'Coupon List',
-          breadcrumb: 'CouponList',
+          title: 'Page Content List',
+          breadcrumb: 'PageContent List',
         },
       },
     ],

@@ -1,7 +1,6 @@
 import { HttpClientService } from 'src/app/lib/http/http-client';
 import { Injectable, HostListener } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { HeaderModel, Menu } from 'src/app/lib/data/models/header/header.model';
 
 @Injectable({
   providedIn: 'root'
