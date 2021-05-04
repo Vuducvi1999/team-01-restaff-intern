@@ -35,10 +35,7 @@
                           *ngFor="let item of data | filterBy: userFilter"
                         >
                           <li class="nav-item">
-                            <a
-                              class="nav-link"
-                              href="javascript:void(0)"
-                              (click)="clickRouter(item.id)"
+                            <a class="nav-link" (click)="clickRouter(item.id)"
                               >{{ item.name }}
                             </a>
                           </li>

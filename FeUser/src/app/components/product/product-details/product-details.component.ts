@@ -5,6 +5,7 @@ import {
   ProductModel,
   ReturnMessage,
 } from "src/app/lib/data/models";
+import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { ProductDetailsModel } from "src/app/lib/data/models/products/product-details.model";
 import { FileService } from "src/app/lib/data/services";
 import { ProductDetailsService } from "src/app/lib/data/services/products/product-details.service";
@@ -26,6 +27,8 @@ export class ProductDetailsComponent implements OnInit {
   public counter: number = 1;
   public activeSlide: any = 0;
   public ImageSrc: string;
+  public id: string;
+
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
 
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
@@ -33,7 +36,7 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(
     private productService: ProductDetailsService,
-    private activedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute
   ) {
     this.getProduct();
   }
@@ -41,8 +44,13 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit(): void {}
 
   getProduct() {
-    let data = JSON.parse(localStorage.getItem("item"));
-    this.product = data;
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.productService
+        .get(params.id)
+        .then((res: ReturnMessage<ProductDetailsModel>) => {
+          this.product = res.data;
+        });
+    });
   }
 
   getImage(fileName: string) {
