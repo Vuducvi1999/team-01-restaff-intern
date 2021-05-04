@@ -14,5 +14,6 @@ namespace Service.Files
     {
         ReturnMessage<PaginatedList<FileDTO>> SearchPagination(SerachPaginationDTO<FileDTO> search);
         ReturnMessage<List<FileDTO>> UpdateIdFile(List<FileDTO> files, Guid entityId);
+        object UpdateIdFile(object files, Guid id);
     }
 }

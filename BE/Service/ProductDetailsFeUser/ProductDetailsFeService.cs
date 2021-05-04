@@ -32,7 +32,7 @@ namespace Service.ServiceFeUser
         {
             if (search == null)
             {
-                return new ReturnMessage<ProductDTOFeUser>(false, null, MessageConstants.Error);
+                return new ReturnMessage<ProductDTOFeUser>(true, null, MessageConstants.Error);
             }
             
             var resultEntity = _productRepository.Find(search.Id);

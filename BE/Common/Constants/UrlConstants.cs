@@ -85,5 +85,9 @@ namespace Common.Constants
         public const string GetPageContent = BaseApi + "/page-content/{id}";
         // Contact
         public const string BaseContact = BaseApi + "/contact";
+
+        public const string BasePromotion = BaseApi + "/promotion";
+
+        public const string BasePromotionDetails = BaseApi + "/promotion-details";
     }
 }
