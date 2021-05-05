@@ -125,9 +125,4 @@ export class ProductBoxComponent implements OnInit, OnChanges {
     return FileService.getLinkFile(fileName);
   }
 
-  getItem(item: ProductModel) {
-    const id = item ? item.id : null;
-    const url = `/product-details?id=${item.id}`;
-    this.router.navigateByUrl(url);
-  }
 }

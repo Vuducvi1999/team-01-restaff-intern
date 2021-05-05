@@ -27,7 +27,6 @@ namespace BE.ControllersFeUser
         [HttpGet]
         public IActionResult Get([FromQuery] ProductDTOFeUser search)
         {
-
             var result = _productDetailsFeService.GetDetails(search);
             return CommonResponse(result);
         }

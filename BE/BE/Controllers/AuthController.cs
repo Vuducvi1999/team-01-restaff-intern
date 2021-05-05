@@ -24,7 +24,7 @@ namespace BE.Controllers
             _authService = authService;
             _authManager = authManager;
         }
-
+        
         [HttpPost(UrlConstants.BaseLogin)]
         public IActionResult Login([FromBody] UserLoginDTO data)
         {

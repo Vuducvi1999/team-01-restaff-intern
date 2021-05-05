@@ -16,6 +16,8 @@ namespace Domain.DTOs.Orders
         public string Status { get; set; }
         public int TotalAmount { get; set; }
         public int TotalItem { get; set; }
+        public string Note { get; set; }
+
         public List<OrderDetailDTO> OrderDetails { get; set; }
     }
 }

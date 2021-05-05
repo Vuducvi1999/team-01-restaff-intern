@@ -66,19 +66,19 @@ namespace Service.UserProductList
 
             var query = _productRepository.Queryable();
 
-            if(search.MaxPrice > 0)
+            if (search.MaxPrice > 0)
             {
                 query = query.Where(it => it.Price < search.MaxPrice);
             }
 
-            if(search.MinPrice > 0)
+            if (search.MinPrice > 0)
             {
                 query = query.Where(it => it.Price > search.MinPrice);
             }
 
-            if(search.Search.IsNotNullOrEmpty() && search.Search.CategoryName.IsNotNullOrEmpty())
+            if (search.Search.IsNotNullOrEmpty() && search.Search.CategoryName.IsNotNullOrEmpty())
             {
-                foreach(var i in search.Search.CategoryName.Split(','))
+                foreach (var i in search.Search.CategoryName.Split(','))
                 {
                     query = query.Where(it => it.Category.Name.Contains(i));
                 }

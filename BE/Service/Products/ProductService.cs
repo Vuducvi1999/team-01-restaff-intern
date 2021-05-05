@@ -122,25 +122,17 @@ namespace Service.Products
 
         public ReturnMessage<ProductDTO> Update(UpdateProductDTO model)
         {
-            //var stringInput = StringExtension.CleanString(model);
-            //if (!stringInput)
-            //{
-            //    return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
-            //}
             try
             {
                 var entity = _mapper.Map<UpdateProductDTO, Product>(model);
-                //entity = _productRepository.Find(model.Id);
                 var category = _categoryRepository.Queryable().Where(it => it.Name == model.CategoryName).FirstOrDefault();
                 if (category == null)
                 {
                     return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
                 }
-                //model.CategoryId = category.Id;
                 entity.CategoryId = category.Id;
                 if (entity.IsNotNullOrEmpty())
                 {
-                    //entity.Update(model);
                     _productRepository.Update(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<ProductDTO>(false, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.UpdateSuccess);
@@ -153,5 +145,7 @@ namespace Service.Products
                 return new ReturnMessage<ProductDTO>(true, null, ex.Message);
             }
         }
+
+       
     }
 }

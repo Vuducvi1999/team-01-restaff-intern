@@ -14,7 +14,7 @@ export class MenuComponent implements OnInit {
 
   public headerModel: HeaderModel = {
     categories: [],
-    blogs: []
+    blogs: [],
   };
   public categoriesChildren: Menu[] = [];
   public blogsChildren: Menu[] = [];
@@ -37,10 +37,10 @@ export class MenuComponent implements OnInit {
   async loadHeaderModel() {
     await this.headerService.getBlogs(null).then((res: any) => {
       this.headerModel.blogs = res.data;
-    })
-   await this.headerService.getCategories(null).then((res: any) => {
-      this.headerModel.categories = (res.data);
-    })
+    });
+    await this.headerService.getCategories(null).then((res: any) => {
+      this.headerModel.categories = res.data;
+    });
   }
 
   async loadMenu() {
@@ -54,20 +54,29 @@ export class MenuComponent implements OnInit {
       });
     });
 
-    this.headerModel.blogs.forEach(item => {
-      this.blogsChildren.push(
-        {
-          title: item.title,
-          path: '/',
-          type: 'link'
-        })
+    this.headerModel.blogs.forEach((item) => {
+      this.blogsChildren.push({
+        title: item.title,
+        path: `/blog/${item.id}`,
+        type: "link",
+      });
     });
 
     this.menuItems.push(
-      { title: 'home', type: 'link', path: '/home' },
-      { title: 'categories', type: 'sub', active: false, children: this.categoriesChildren },
-      { title: 'products', type: 'link', path: '/product' },
-      { title: 'blogs', type: 'sub', active: false, children: this.blogsChildren },
+      { title: "home", type: "link", path: "/home" },
+      {
+        title: "categories",
+        type: "sub",
+        active: false,
+        children: this.categoriesChildren,
+      },
+      { title: "products", type: "link", path: "/product" },
+      {
+        title: "blogs",
+        type: "sub",
+        path: "/blog",
+        children: this.blogsChildren,
+      }
     );
   }
 

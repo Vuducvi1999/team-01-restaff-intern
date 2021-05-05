@@ -29,4 +29,9 @@ export class ProductService {
     const url = `${this.url}/?Id=${model?.id}`;
     return this.httpClient.deleteObservable(url).toPromise();
   }
+
+  findByName(name: string) {
+    const urlSearch = `${this.url}/?name=${name}`;
+    return this.httpClient.getObservable(urlSearch).toPromise();
+  }
 }
