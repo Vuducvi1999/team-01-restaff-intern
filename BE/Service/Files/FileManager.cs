@@ -127,7 +127,7 @@ namespace Service.Files
                         createFileDTOs.Add(item);
                     }
 
-                    if (!DataType.TypeAccept[DataType.ETypeFile.Image].Contains(ext) || saveFile.TypeUpload == 0)
+                    if (!DataType.TypeAccept[DataType.ETypeFile.Image].Contains(ext))
                     {
                         using (var stream = System.IO.File.Create(filePath))
                         {
