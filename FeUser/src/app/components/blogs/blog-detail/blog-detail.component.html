@@ -7,7 +7,14 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12 blog-detail">
-        <img [src]="getImage(data?.imageUrl)" class="img-fluid" alt="" />
+        <!-- <img [src]="getImage(data.imageUrl)" class="img-fluid" alt="" /> -->
+        <app-image-wapper
+          [data]="{
+            title: data.title,
+            url: getImage(data.imageUrl),
+            type: typeDisplayImage.BLOG_DETAIL
+          }"
+        ></app-image-wapper>
         <h3>
           {{ data?.title }}
         </h3>
@@ -18,6 +25,10 @@
           <li><i class="fa fa-comments"></i> 10 Comment</li> -->
         </ul>
         <div [innerHTML]="data?.contentHTML"></div>
+      </div>
+      <div class="col-sm-12 mt-5">
+        <h2>Leave Your Message</h2>
+        <app-comment [dataComment]="dataComment"></app-comment>
       </div>
     </div>
     <div></div>

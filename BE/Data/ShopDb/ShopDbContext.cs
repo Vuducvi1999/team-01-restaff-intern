@@ -23,6 +23,7 @@ namespace Data
         public DbSet<OrderDetail> OrderDetail { get; set; }
         public DbSet<PageContent> PageContents { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Comment> Comments { get; set; }
         public DbSet<InformationWebsite> InformationWebsites { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

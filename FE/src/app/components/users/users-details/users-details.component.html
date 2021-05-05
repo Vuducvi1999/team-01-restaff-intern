@@ -23,6 +23,9 @@
                     novalidate=""
                   >
                     <h4>User Details</h4>
+                    <p class="text-danger" *ngIf="messageFail">
+                      {{ messageFail }}
+                    </p>
                     <div class="form-group row">
                       <label for="validationCustom0" class="col-xl-3 col-md-4"
                         ><span>*</span> Username</label

@@ -7,7 +7,8 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FileDtoModel } from 'src/app/lib/data/models';
+import { VirtualTimeScheduler } from 'rxjs';
+import { FileDtoModel, ReturnMessage } from 'src/app/lib/data/models';
 import { UserModel } from 'src/app/lib/data/models/users/user.model';
 import { FileService } from 'src/app/lib/data/services';
 import { UserService } from 'src/app/lib/data/services/users/user.service';
@@ -31,6 +32,7 @@ export class UserDetailComponent implements OnInit {
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   public user: UserModel;
+  messageFail: string;
   @Input() item: UserModel;
 
   public modalFile: ModalFile;
@@ -72,6 +74,8 @@ export class UserDetailComponent implements OnInit {
   }
 
   save() {
+    this.messageFail = '';
+
     if (this.usersForm.invalid) {
       console.log(this.usersForm);
       return;
@@ -94,13 +98,12 @@ export class UserDetailComponent implements OnInit {
   callServiceToSave() {
     this.userService
       .save(this.user)
-      .then(() => {
+      .then((data: ReturnMessage<UserModel>) => {
         this.ngbActiveModal.close();
       })
-      .catch((er) => {
-        if (er.error.hasError) {
-          console.log(er.error.message);
-        }
+      .catch((e) => {
+        if (e.error.message) this.messageFail = e.error.message;
+        console.log(e);
       });
   }
 
