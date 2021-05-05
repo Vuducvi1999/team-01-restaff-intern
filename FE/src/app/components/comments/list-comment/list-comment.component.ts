@@ -25,7 +25,7 @@ export class ListCommentComponent {
     mode: 'external',
     pager: {
       display: true,
-      perPage: 5,
+      perPage: 10,
     },
     actions: {
       position: 'right',
@@ -65,16 +65,10 @@ export class ListCommentComponent {
 
   getList() {
     this.service
-      .getPagination(null)
-      .then((res: ReturnMessage<PageModel<CommentModel>>) => {
-        if (!res.hasError) {
-          this.comments = res.data.results;
-          this.settings = {
-            ...this.settings,
-            pager: { ...this.settings.pager, perPage: res.data.pageSize },
-          };
-          console.log('comment', res.data);
-        }
+      .getAll(null)
+      .then((res: ReturnMessage<CommentModel[]>) => {
+        this.comments = res.data;
+        console.log('comment', res.data);
       })
       .catch((er) => {
         if (er) {

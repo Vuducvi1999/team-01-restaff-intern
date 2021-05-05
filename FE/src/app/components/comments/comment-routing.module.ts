@@ -10,8 +10,8 @@ const routes: Routes = [
         path: 'list-comment',
         component: ListCommentComponent,
         data: {
-          title: 'Coupon List',
-          breadcrumb: 'CouponList',
+          title: 'Comment List',
+          breadcrumb: 'CommentList',
         },
       },
     ],

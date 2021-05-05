@@ -8,7 +8,7 @@ export class CommentService {
 
   constructor(private httpClient: HttpClientService) {}
 
-  getPagination(request: any) {
+  getAll(request: any) {
     return this.httpClient.getObservable(this.url, request).toPromise();
   }
 

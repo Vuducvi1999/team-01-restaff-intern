@@ -12,6 +12,7 @@ namespace Service.Comments
     public interface ICommentService
     {
         public ReturnMessage<PaginatedList<CommentDTO>> SearchPagination(SerachPaginationDTO<CommentDTO> search);
+        public ReturnMessage<List<CommentDTO>> GetAll();
         public ReturnMessage<CommentDTO> Create(CreateCommentDTO model);
         public ReturnMessage<CommentDTO> Delete(DeleteCommentDTO model);
     }

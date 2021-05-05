@@ -7,6 +7,7 @@ using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Service.Comments
@@ -82,12 +83,27 @@ namespace Service.Comments
                 )
                 , search.PageSize
                 , search.PageIndex
-                , t => t.FullName
+                , t => t.CreateByDate
             );
             var data = _mapper.Map<PaginatedList<Comment>, PaginatedList<CommentDTO>>(resultEntity);
             var result = new ReturnMessage<PaginatedList<CommentDTO>>(false, data, MessageConstants.GetPaginationSuccess);
 
             return result;
+        }
+
+        public ReturnMessage<List<CommentDTO>> GetAll()
+        {
+            try
+            {
+                var entity = _repository.Queryable().OrderByDescending(t => t.CreateByDate).ToList();
+                var data = _mapper.Map<List<Comment>, List<CommentDTO>>(entity);
+                var result = new ReturnMessage<List<CommentDTO>>(false, data, MessageConstants.DeleteSuccess);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new ReturnMessage<List<CommentDTO>>(true, null, ex.Message);
+            }
         }
     }
 }

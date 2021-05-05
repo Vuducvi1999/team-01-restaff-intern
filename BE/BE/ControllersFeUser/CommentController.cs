@@ -26,9 +26,9 @@ namespace BE.ControllersFeUser
         }
 
         [HttpGet]
-        public IActionResult Get([FromQuery] SerachPaginationDTO<CommentDTO> serachPagination)
+        public IActionResult Get()
         {
-            var result = _commentService.SearchPagination(serachPagination);
+            var result = _commentService.GetAll();
             return CommonResponse(result);
         }
 
