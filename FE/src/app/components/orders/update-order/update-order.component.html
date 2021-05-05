@@ -9,9 +9,8 @@
             <form [formGroup]="orderForm" class="needs-validation user-add" novalidate="">
               <h4>Order</h4>
               <div class="form-group row">
-                <label  class="col-xl-3 col-md-4"><span>*</span> Full Name</label>
-                <input class="form-control col-xl-8 col-md-7"  type="text" required
-                  formControlName="fullName" />
+                <label class="col-xl-3 col-md-4"><span>*</span> Full Name</label>
+                <input class="form-control col-xl-8 col-md-7" type="text" required formControlName="fullName" />
                 <span class="text-danger" *ngIf="
                     (orderFormControl.fullName.touched || submitted) &&
                     orderFormControl.fullName.errors?.required
@@ -20,9 +19,8 @@
                 </span>
               </div>
               <div class="form-group row">
-                <label  class="col-xl-3 col-md-4"><span>*</span> Address</label>
-                <input class="form-control col-xl-8 col-md-7"  type="text" required
-                  formControlName="address" />
+                <label class="col-xl-3 col-md-4"><span>*</span> Address</label>
+                <input class="form-control col-xl-8 col-md-7" type="text" required formControlName="address" />
                 <span class="text-danger" *ngIf="
                     (orderFormControl.address.touched || submitted) &&
                     orderFormControl.address.errors?.required
@@ -32,9 +30,8 @@
               </div>
 
               <div class="form-group row">
-                <label  class="col-xl-3 col-md-4"><span>*</span> Email</label>
-                <input class="form-control col-xl-8 col-md-7"  type="text" required
-                  formControlName="email" />
+                <label class="col-xl-3 col-md-4"><span>*</span> Email</label>
+                <input class="form-control col-xl-8 col-md-7" type="text" required formControlName="email" />
                 <span class="text-danger" *ngIf="
                     (orderFormControl.email.touched || submitted) &&
                     orderFormControl.email.errors?.required
@@ -45,8 +42,7 @@
 
               <div class="form-group row">
                 <label class="col-xl-3 col-md-4"><span>*</span> Phone</label>
-                <input class="form-control col-xl-8 col-md-7"  type="text" required
-                  formControlName="phone" />
+                <input class="form-control col-xl-8 col-md-7" type="text" required formControlName="phone" />
                 <span class="text-danger" *ngIf="
                     (orderFormControl.phone.touched || submitted) &&
                     orderFormControl.phone.errors?.required
@@ -54,88 +50,6 @@
                   Phone is required
                 </span>
               </div>
-
-              <!-- <div class="form-group row">
-                <label for="validationCustom0" class="col-xl-3 col-md-4"
-                  ><span>*</span> Status</label
-                >
-                <select formControlName="status">
-                  <option>
-                    New
-                  </option>
-                  <option>
-                    Approved
-                  </option>
-                </select>
-             
-              </div> -->
-
-              <!-- <div class="form-group row">
-                <label for="" class="col-xl-3 col-md-4"
-                  ><span>&nbsp;</span> Description</label
-                >
-                <input
-                  class="form-control col-xl-8 col-md-7"
-                  id=""
-                  type="text"
-                  formControlName="description"
-                />
-              </div> -->
-              <!-- <div class="form-group row">
-                <label for="" class="col-xl-3 col-md-4"
-                  ><span>&nbsp;</span> Link</label
-                >
-                <input
-                  class="form-control col-xl-8 col-md-7"
-                  id="validationCustom1"
-                  type="text"
-                  required=""
-                  formControlName="link"
-                />
-              </div>
-              <div class="form-group row">
-                <label for="validationCustom2" class="col-xl-3 col-md-4"
-                  ><span>*</span> ImageUrl</label
-                >
-                <input
-                  class="form-control col-xl-8 col-md-7"
-                  id="validationCustom2"
-                  type="text"
-                  required=""
-                  formControlName="imageURL"
-                  hidden
-                />
-                <span
-                  class="text-danger"
-                  *ngIf="
-                    (orderFormControl.imageURL.touched || submitted) &&
-                    orderFormControl.imageURL.errors?.required
-                  "
-                >
-                  ImageURL is required
-                </span>
-              </div>
-              <div class="form-group row">
-                <label for="validationCustom3" class="col-xl-3 col-md-4"
-                  ><span>*</span> Display Order</label
-                >
-                <input
-                  class="form-control col-xl-8 col-md-7"
-                  id="validationCustom3"
-                  type="number"
-                  required=""
-                  formControlName="displayOrder"
-                />
-                <span
-                  class="text-danger"
-                  *ngIf="
-                    (orderFormControl.displayOrder.touched || submitted) &&
-                    orderFormControl.displayOrder.errors?.required
-                  "
-                >
-                  Display Order is required
-                </span>
-              </div> -->
             </form>
           </div>
           <div class="container-fluid">

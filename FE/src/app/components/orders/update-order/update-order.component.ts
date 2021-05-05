@@ -89,11 +89,12 @@ export class UpdateOrderComponent implements OnInit {
   };
 
   loadFormItem() {
+    var check = this.item.status != "New"
     this.orderForm = this.formBuilder.group({
-      fullName: [this.item.fullName, Validators.required],
-      address: [this.item.address, Validators.required],
-      email: [this.item.email, Validators.required],
-      phone: [this.item.phone, Validators.required],
+      fullName: [{ value: this.item.fullName, disabled: check }, Validators.required],
+      address: [{ value: this.item.address, disabled: check }, Validators.required],
+      email: [{ value: this.item.email, disabled: check }, Validators.required],
+      phone: [{ value: this.item.phone, disabled: check }, Validators.required],
     });
   }
 
