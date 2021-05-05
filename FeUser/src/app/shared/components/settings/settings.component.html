@@ -21,11 +21,26 @@
                   <form>
                     <div class="form-group">
                       <input
+                        [(ngModel)]="userFilter.name"
                         type="text"
                         class="form-control"
                         id="exampleInputPassword1"
                         placeholder="Search a Product"
+                        name="name"
+                        (keypress)="onSearch($event)"
                       />
+                      <div *ngIf="userFilter.name">
+                        <ul
+                          class="nav"
+                          *ngFor="let item of data | filterBy: userFilter"
+                        >
+                          <li class="nav-item">
+                            <a class="nav-link" (click)="clickRouter(item.id)"
+                              >{{ item.name }}
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                     <button type="submit" class="btn btn-primary">
                       <i class="fa fa-search"></i>
@@ -93,7 +108,8 @@
               </a>
               <h4>
                 <span>
-                  {{product?.quantity}} x {{ product?.price | currency:'VND'}}
+                  {{ product?.quantity }} x
+                  {{ product?.price | currency: "VND" }}
                   <!-- {{ product?.quantity }} x 
                   {{ product?.price * productService?.Currency.price | discount:product | currency:productService?.Currency.currency:'symbol' }} -->
                 </span>

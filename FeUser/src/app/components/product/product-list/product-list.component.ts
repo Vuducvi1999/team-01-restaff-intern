@@ -7,7 +7,6 @@ import {
   PageModel,
   ProductModel,
   ReturnMessage,
-  SearchPaganationDTO,
 } from "src/app/lib/data/models";
 import { HomeService } from "src/app/lib/data/services/home/home.service";
 import { ProductListService } from "src/app/lib/data/services/productlist/productlist.service";
@@ -54,6 +53,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       
       this.products = [];
       this.params = {};
+
       this.tags = [];
       this.finished = false;
 
@@ -70,6 +70,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.params["search.categoryName"] = this.category.join(",");
       }
 
+      this.params["search.Name"] = params.search
+        ? params.search
+        : this.params["search.Name"];
+      if (this.params["search.Name"] == null) {
+        delete this.params["search.Name"];
+      }
+
       this.minPrice > 0
         ? (this.params.minPrice = this.minPrice)
         : delete this.params.minPrice;
@@ -80,7 +87,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
       this.sortBy != ETypeSort.NULL
         ? (this.params.typeSort = this.sortBy)
         : delete this.params.typeSort;
-
       this.addItems();
     });
   }
@@ -90,12 +96,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
       this.finished = true;
       return;
     }
-
     this.productListService
       .getPageProduct({ params: this.params })
       .then((res: ReturnMessage<PageModel<ProductModel>>) => {
         this.pageModel = res.data;
-
         this.params.pageIndex = res.data.pageIndex;
         this.params.pageSize = res.data.pageSize;
 
