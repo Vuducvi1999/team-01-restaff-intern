@@ -5,7 +5,10 @@
       <span class="lable4" *ngIf="product.sale">on sale</span>
     </div> -->
     <div class="front">
-      <a [routerLink]="['/product-details']"  [queryParams]="{ id: product?.id }">
+      <a
+        [routerLink]="['/product-details']"
+        [queryParams]="{ id: product?.id }"
+      >
         <app-image-wapper
           [data]="{
             title: product.name,
@@ -16,7 +19,10 @@
       </a>
     </div>
     <div class="back" *ngIf="onHowerChangeImage">
-      <a [routerLink]="['/product-details']"  [queryParams]="{ id: product?.id }">
+      <a
+        [routerLink]="['/product-details']"
+        [queryParams]="{ id: product?.id }"
+      >
         <img
           [src]="
             ImageSrc ? ImageSrc : getImage(product?.imageUrl.split(',')[0])
@@ -84,7 +90,10 @@
     <div>
       <!-- <bar-rating [rate]="5" [readOnly]="true"></bar-rating> -->
       <br />
-      <a [routerLink]="['/product-details']"  [queryParams]="{ id: product?.id }">
+      <a
+        [routerLink]="['/product-details']"
+        [queryParams]="{ id: product?.id }"
+      >
         <h6>{{ product?.name | titlecase }}</h6>
       </a>
       <p>

@@ -3,23 +3,22 @@ import { FileDtoModel } from 'src/app/lib/data/models';
 export class ModalHeaderModel {
   public title = '';
   public color = '';
-  constructor() { }
+  constructor() {}
 }
 
 export class ModalFooterModel {
   public title = '';
   public color = '';
-  public buttons : ModalButtonModel[] = [];
-  constructor() { }
+  public buttons: ModalButtonModel[];
+  constructor() {}
 }
 
 export class ModalButtonModel {
   public title = '';
   public color = '';
   public onAction: any;
-  constructor() { }
+  constructor() {}
 }
-
 
 export class ModalFile {
   public listFile: FileDtoModel[];
@@ -27,7 +26,7 @@ export class ModalFile {
   public enityId = '';
   public typeFile: TypeFile;
   public multiBoolen: boolean;
-  constructor() { }
+  constructor() {}
 }
 
 export enum TypeFile {

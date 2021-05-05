@@ -1,12 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 .productImage {
-  max-height: 300px;
-  max-width: fit-content;
+  height: 300px;
+  width: 340px;
 }
 
-.blogImage {
-  max-height: 300px;
-  max-width: fit-content;
+div.image-wrapper .blogImage {
+  height: 300px;
+  width: 340px;
+}
+
+.logo-image {
+  height: 50px;
+  margin-top: -25px;
+  margin-bottom: -25px;
 }
 
 .image-wrapper {

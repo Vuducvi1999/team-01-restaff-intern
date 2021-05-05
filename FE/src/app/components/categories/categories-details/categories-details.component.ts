@@ -29,7 +29,6 @@ export class CategoryDetailComponent implements OnInit {
   public item: any;
   submitted = false;
 
-  
   ngOnChanges(changes: SimpleChanges): void {}
 
   constructor(
@@ -43,50 +42,48 @@ export class CategoryDetailComponent implements OnInit {
     this.modalFile.enityType = EntityType.CATEGORY;
   }
 
-
   get categoryFormsControl() {
     return this.categoriesForm.controls;
   }
-    save(){
-      if(this.categoriesForm.invalid){
-        window.alert("Invalid Form !");
-        return;
-      }
-      this.submitted = true;
-      this.category = {name: this.categoriesForm.value.name, 
-        description: this.categoriesForm.value.description,
-        imageUrl: this.categoriesForm.value.imageUrl,
-        createdBy: this.item ? this.item.createdBy : this.item,
-        createdByName: this.item ? this.item.createdByName : this.item,
-        deletedBy: this.item ? this.item.deletedBy : this.item,
-        deletedByName: this.item ? this.item.deletedByName : this.item,
-        isActive: this.item ? this.item.isActive : this.item,
-        isDeleted: this.item ? this.item.isDeleted : this.item,
-        updatedBy: this.item ? this.item.updatedBy : this.item,
-        updatedByName: this.item ? this.item.updatedByName : this.item,
-        files: this.modalFile.listFile,
-        id: this.item ? this.item.id : '',};
-      return this.categoryService
-                .save(this.category)              
-                .then(() => {
-                          this.ngbActiveModal.close();
-                      }).catch((er) => {
-                          console.log(er)
-                      });
+  save() {
+    if (this.categoriesForm.invalid) {
+      window.alert('Invalid Form !');
+      return;
     }
-    
+    this.submitted = true;
+    this.category = {
+      name: this.categoriesForm.value.name,
+      description: this.categoriesForm.value.description,
+      imageUrl: this.categoriesForm.value.imageUrl,
+      createdBy: this.item ? this.item.createdBy : this.item,
+      createdByName: this.item ? this.item.createdByName : this.item,
+      deletedBy: this.item ? this.item.deletedBy : this.item,
+      deletedByName: this.item ? this.item.deletedByName : this.item,
+      isActive: this.item ? this.item.isActive : this.item,
+      isDeleted: this.item ? this.item.isDeleted : this.item,
+      updatedBy: this.item ? this.item.updatedBy : this.item,
+      updatedByName: this.item ? this.item.updatedByName : this.item,
+      files: this.modalFile.listFile,
+      id: this.item ? this.item.id : '',
+    };
+    return this.categoryService
+      .save(this.category)
+      .then(() => {
+        this.ngbActiveModal.close();
+      })
+      .catch((er) => {
+        console.log(er);
+      });
+  }
+
   loadItem() {
     this.categoriesForm = this.formBuilder.group({
-      name: [this.item ? this.item.name : '',
-       [Validators.required
-        , Validators.pattern('[a-zA-Z0-9 ]*')]
-      ],
+      name: [this.item ? this.item.name : '', [Validators.required]],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required
-          , Validators.pattern('[a-zA-Z0-9 ]*')]
+        [Validators.required],
       ],
-      imageUrl: [this.item ? this.item.imageUrl : '']
+      imageUrl: [this.item ? this.item.imageUrl : ''],
     });
 
     this.modalHeader = new ModalHeaderModel();
@@ -112,8 +109,7 @@ export class CategoryDetailComponent implements OnInit {
       return;
     }
 
-    if(!this.fileURL)
-    {
+    if (!this.fileURL) {
       this.fileURL = [];
     }
 
@@ -121,8 +117,7 @@ export class CategoryDetailComponent implements OnInit {
       this.fileURL = [...this.fileURL, ...event.add];
     }
 
-    if(event.remove)
-    {
+    if (event.remove) {
       this.fileURL.forEach((e, i) => {
         if (e == event.remove) {
           this.fileURL.splice(i, 1);
@@ -130,8 +125,7 @@ export class CategoryDetailComponent implements OnInit {
       });
     }
 
-    if(event.removeAll)
-    {
+    if (event.removeAll) {
       this.fileURL = [];
     }
 

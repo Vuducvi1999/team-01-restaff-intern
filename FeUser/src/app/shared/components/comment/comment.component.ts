@@ -1,10 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import {
-  CommentModel,
-  CommentPassingModel,
-} from "src/app/lib/data/models/comments/comment.model";
-import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
+import { CommentPassingModel } from "src/app/lib/data/models/comments/comment.model";
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
 
 @Component({
