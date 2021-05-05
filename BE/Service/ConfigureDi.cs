@@ -27,6 +27,7 @@ using Service.InformationWebsiteServices;
 using Service.CustomerProfileFeUser;
 using Service.OrderDetails;
 using Service.Contacts;
+using Service.Comments;
 
 namespace Service
 {
@@ -92,9 +93,11 @@ namespace Service
             //Order Details
             services.AddScoped<IOrderDetailService, OrderDetailService>();
 
-
             // Contact
             services.AddScoped<IContactService, ContactService>();
+
+            // Comment 
+            services.AddScoped<ICommentService, CommentService>();
         }
     }
 }

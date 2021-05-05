@@ -197,12 +197,23 @@ export class NavService {
           path: '/orders/list-orders',
           title: 'Orders List',
           type: 'link',
-        }
-      ]
+        },
+      ],
+    },
+    {
+      title: 'Comment',
+      icon: 'info',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/comment/list-comment',
+          title: 'Comment List',
+          type: 'link',
+        },
+      ],
     },
   ];
-
-
 
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
 }

@@ -10,7 +10,7 @@ import { NgxSkeletonLoaderModule } from "ngx-skeleton-loader";
 import { TranslateModule } from "@ngx-translate/core";
 
 //UploadFile
-import { NgxDropzoneModule } from 'ngx-dropzone';
+import { NgxDropzoneModule } from "ngx-dropzone";
 
 // Header and Footer Components
 import { HeaderOneComponent } from "./header/header-one/header-one.component";
@@ -52,6 +52,7 @@ import { ProductBoxComponent } from "./components/product/product-box/product-bo
 import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
 import { ImageWrapperComponent } from "./components/imageWrapper/imageWapper.component";
 import { UploadFileComponent } from "./components/upload-file/upload-file.component";
+import { CommentComponent } from "./components/comment/comment.component";
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { UploadFileComponent } from "./components/upload-file/upload-file.compon
     DiscountPipe,
     ImageWrapperComponent,
     UploadFileComponent,
+    CommentComponent,
   ],
   imports: [
     CommonModule,
@@ -128,6 +130,7 @@ import { UploadFileComponent } from "./components/upload-file/upload-file.compon
     DiscountPipe,
     ImageWrapperComponent,
     UploadFileComponent,
+    CommentComponent,
   ],
 })
 export class SharedModule {}
