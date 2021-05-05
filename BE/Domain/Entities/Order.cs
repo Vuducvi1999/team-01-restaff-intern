@@ -51,6 +51,8 @@ namespace Domain.Entities
             Status = model.Status;
             TotalAmount = model.TotalAmount;
             TotalItem = model.TotalItem;
+            Note = model.Note;
+
 
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }

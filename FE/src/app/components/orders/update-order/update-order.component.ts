@@ -10,6 +10,7 @@ import {
   ModalFooterModel,
   ModalHeaderModel,
 } from 'src/app/shared/components/modals/models/modal.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-update-order',
@@ -145,31 +146,78 @@ export class UpdateOrderComponent implements OnInit {
       id: this.item.id,
       totalAmount: (this.item.totalAmount),
       totalItem: this.item.totalItem
-      
+
     };
   }
   save(event: any) {
     this.loadOrderModel();
+
     if (event == "approve") {
       this.order.status = 'Approved';
     }
     if (event == "reject") {
       this.order.status = 'Rejected';
     }
-    this.submitted = true;
-    if (this.orderForm.valid) {
-      this.ordersService
-        .update(this.order)
-        .then((res) => {
-          this.ngbActiveModal.close();
-        })
-        .catch((er) => {
-          if (er.error.hasError) {
-            console.log(er.error.message);
+
+    Swal.fire({
+      title: `Do you want to ${event} the order?`,
+      showCancelButton: true,
+      confirmButtonText: `Yes`,
+      icon: 'question'
+    })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          this.submitted = true;
+          if (this.orderForm.valid) {
+
+            if (event == "reject") {
+              await Swal.fire({
+                title: 'Submit your Github username',
+                input: 'text',
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+              }).then((res) => {
+                if (res.isConfirmed) {
+                  this.order.note = res.value;
+                  console.log(this.order.note);
+                }
+              })
+            }
+
+            this.ordersService
+              .update(this.order)
+              .then((res) => {
+
+                if (event == "approve") {
+                  Swal.fire({
+                    icon: 'success',
+                    title: `Order has been approved`,
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+                }
+
+                if (event == "reject") {
+                  Swal.fire({
+                    icon: 'success',
+                    title: `Order has been rejected`,
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+                }
+                this.ngbActiveModal.close();
+              })
+              .catch((er) => {
+                if (er.error.hasError) {
+                  console.log(er.error.message);
+                }
+              });
           }
-        });
-    }
+        }
+      })
   }
+
+
 
   getOrderDetails() {
     this.orderDetailsService.getByOrder(this.item.id, null).then((res: ReturnMessage<OrderDetailModel[]>) => {

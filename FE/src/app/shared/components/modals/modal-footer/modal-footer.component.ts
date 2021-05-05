@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ModalFooterModel } from '../models/modal.model';
 
 @Component({
@@ -7,7 +7,6 @@ import { ModalFooterModel } from '../models/modal.model';
   styleUrls: ['./modal-footer.component.scss']
 })
 export class ModalFooterComponent implements OnInit {
-
   @Input() data = new ModalFooterModel();
   @Output() onAction = new EventEmitter();
 
