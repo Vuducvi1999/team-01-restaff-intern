@@ -1,11 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import {
-  PageModel,
-  ProductModel,
-  ReturnMessage,
-} from "src/app/lib/data/models";
-import {
   CommentModel,
   CommentPassingModel,
 } from "src/app/lib/data/models/comments/comment.model";
@@ -18,23 +13,13 @@ import {
   ProductDetailsMainSlider,
   ProductDetailsThumbSlider,
 } from "src/app/shared/data/slider";
-import { Component, OnInit, Input, ViewChild } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+
 import {
   PageModel,
   ProductModel,
   ReturnMessage,
 } from "src/app/lib/data/models";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
-import { ProductDetailsModel } from "src/app/lib/data/models/products/product-details.model";
-import { FileService } from "src/app/lib/data/services";
-import { ProductDetailsService } from "src/app/lib/data/services/products/product-details.service";
-import { SizeModalComponent } from "src/app/shared/components/modal/size-modal/size-modal.component";
-import { SettingsComponent } from "src/app/shared/components/settings/settings.component";
-import {
-  ProductDetailsMainSlider,
-  ProductDetailsThumbSlider,
-} from "src/app/shared/data/slider";
 
 @Component({
   selector: "app-product-details",
