@@ -113,7 +113,7 @@ namespace Service.Orders
             try
             {
                 var entity = _orderRepository.Find(model.Id);
-                if (entity.Status == "New")
+                if (entity.Status != "New")
                 {
                     return new ReturnMessage<OrderDTO>(true, null,MessageConstants.UpdateFail);
                 }
