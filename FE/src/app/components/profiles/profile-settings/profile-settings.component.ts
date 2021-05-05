@@ -144,10 +144,9 @@ export class ProfileSettingsComponent implements OnInit {
       this.fileURL = [...this.fileURL, ...event.add];
     }
 
-    if(event.remove)
-    {
-      this.fileURL.forEach((e, i) => {
-        if (e == event.remove) {
+    if (event.remove) {
+      this.fileURL.forEach((e : string, i) => {
+        if (e.includes(event.remove)) {
           this.fileURL.splice(i, 1);
         }
       });
@@ -158,7 +157,7 @@ export class ProfileSettingsComponent implements OnInit {
       this.fileURL = [];
     }
 
-    this.profileForm.controls.imageUrl.setValue(this.fileURL.toString());
+    this.profileForm.controls.imageUrl.setValue(this.fileURL.join(','));
   }
 
   get getImage() {

@@ -30,15 +30,7 @@ namespace BE.ControllersFeUser
         public IActionResult UpdateProfile([FromBody] UpdateCustomerProfileFeUserDTO model)
         {
             var result = _customerProfileFeUserService.Update(HttpContext.User.Claims, model);
-            if (model.Files.IsNullOrEmpty() || result.HasError)
-            {
-                return CommonResponse(result);
-            }
             var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
-            if (uploadImage.HasError)
-            {
-                return CommonResponse(uploadImage);
-            }
             return CommonResponse(result);
         }
 

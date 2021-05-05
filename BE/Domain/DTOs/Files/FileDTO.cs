@@ -10,5 +10,6 @@ namespace Domain.DTOs.Files
         public String FileExt { get; set; }
         public String EntityType { get; set; }
         public String EntityId { get; set; }
+        public int TypeUpload { get; set; }
     }
 }
