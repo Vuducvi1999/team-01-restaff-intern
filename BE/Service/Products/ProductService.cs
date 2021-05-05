@@ -29,11 +29,6 @@ namespace Service.Products
 
         public ReturnMessage<ProductDTO> Create(CreateProductDTO model)
         {
-            //var stringInput = StringExtension.CleanString(model);
-            //if (!stringInput)
-            //{
-            //    return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
-            //}
             try
             {
                 var entity = _mapper.Map<CreateProductDTO, Product>(model);
@@ -42,8 +37,6 @@ namespace Service.Products
                 {
                     return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
                 }
-                //entity.CategoryId = category.Id;
-                //entity.Insert();
                 _productRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<ProductDTO>(false, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.CreateSuccess);
@@ -62,7 +55,7 @@ namespace Service.Products
                 var entity = _productRepository.Find(model.Id);
                 if (entity.IsNotNullOrEmpty())
                 {
-                    //entity.Delete();
+                    entity.Delete();
                     entity.IsDeleted = true;
                     _productRepository.Update(entity);
                     _unitOfWork.SaveChanges();

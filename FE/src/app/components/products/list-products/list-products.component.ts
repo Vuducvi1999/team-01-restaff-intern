@@ -36,7 +36,6 @@ export class ListProductsComponent implements OnInit {
         type: 'html',
         filter: false,
         valuePrepareFunction: (file) => {
-          console.log(file);
           var fileExt = file.split(',')[0].split('.').pop();
           if (
             fileExt == 'png' ||
@@ -85,24 +84,14 @@ export class ListProductsComponent implements OnInit {
   }
 
   openPopup(item: any) {
-    if (item) {
-      var modalRef = this.modalService.open(ProductDetailsComponent, {size: 'lg'});
-      modalRef.componentInstance.item = item.data as ProductModel;
+      var modalRef = this.modalService.open(ProductDetailsComponent, {size: 'xl'});
+      modalRef.componentInstance.item = item?.data;
       return modalRef.result.then(() => {
           this.fetch();
         }, (reason) => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
       );
-    }
-    var modalRef = this.modalService.open(ProductDetailsComponent, {size: 'lg'});
-    modalRef.componentInstance.item = item as ProductModel;
-    return modalRef.result.then(() => {
-        this.fetch();
-      }, (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      }
-    );
   }
 
   fetch()

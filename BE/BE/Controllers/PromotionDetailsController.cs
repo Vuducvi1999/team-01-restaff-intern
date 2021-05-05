@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace BE.Controllers
 {
-    [Route(UrlConstants.BasePromotionDetails)]
+    [Route(UrlConstants.BasePromotionDetail)]
     [ApiController]
     public class PromotionDetailsController : BaseController
     {
