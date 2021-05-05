@@ -19,7 +19,7 @@ namespace Service.Orders
         private readonly IRepository<Order> _orderRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public OrderService( IRepository<Order> orderRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public OrderService(IRepository<Order> orderRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _orderRepository = orderRepository;
             _unitOfWork = unitOfWork;
@@ -54,9 +54,9 @@ namespace Service.Orders
         {
             var order = _orderRepository.Queryable()
                 .AsNoTracking()
-                .Include(t=>t.OrderDetails)
-                .ThenInclude(t=>t.Product)
-                .FirstOrDefault(t=>t.Id == id);
+                .Include(t => t.OrderDetails)
+                .ThenInclude(t => t.Product)
+                .FirstOrDefault(t => t.Id == id);
             var result = new ReturnMessage<OrderDTO>(false, _mapper.Map<Order, OrderDTO>(order), MessageConstants.CreateSuccess);
             return result;
 
@@ -99,7 +99,7 @@ namespace Service.Orders
                     )
                 )
                 , search.PageSize
-                , search.PageIndex* search.PageSize
+                , search.PageIndex * search.PageSize
                 , t => t.FullName
             );
             var data = _mapper.Map<PaginatedList<Order>, PaginatedList<OrderDTO>>(resultEntity);
@@ -113,6 +113,10 @@ namespace Service.Orders
             try
             {
                 var entity = _orderRepository.Find(model.Id);
+                if (entity.Status == "New")
+                {
+                    return new ReturnMessage<OrderDTO>(true, null,MessageConstants.UpdateFail);
+                }
                 if (entity.IsNotNullOrEmpty())
                 {
                     entity.Update(model);
