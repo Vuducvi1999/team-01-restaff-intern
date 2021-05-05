@@ -1,11 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import {
-  PageModel,
-  ProductModel,
-  ReturnMessage,
-} from "src/app/lib/data/models";
-import {
   CommentModel,
   CommentPassingModel,
 } from "src/app/lib/data/models/comments/comment.model";
@@ -18,6 +13,13 @@ import {
   ProductDetailsMainSlider,
   ProductDetailsThumbSlider,
 } from "src/app/shared/data/slider";
+
+import {
+  PageModel,
+  ProductModel,
+  ReturnMessage,
+} from "src/app/lib/data/models";
+import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 
 @Component({
   selector: "app-product-details",
