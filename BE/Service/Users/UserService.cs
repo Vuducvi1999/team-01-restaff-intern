@@ -30,15 +30,16 @@ namespace Service.Users
         public ReturnMessage<UserDTO> Create(CreateUserDTO model)
         {
             if (model.Username.Trim() == "" || model.Password.Trim() == "")
-                return new ReturnMessage<UserDTO>(false, null, MessageConstants.CreateSuccess);
+                return new ReturnMessage<UserDTO>(true, null, MessageConstants.Error);
+
             if (_userRepository.Queryable().Any(it => it.Username == model.Username && it.Type == UserType.Admin))
             {
-                return new ReturnMessage<UserDTO>(false, null, "0", MessageConstants.ExistUsername);
+                return new ReturnMessage<UserDTO>(true, null, "0", MessageConstants.ExistUsername);
             }
 
             if (_userRepository.Queryable().Any(it => it.Email == model.Email && it.Type == UserType.Admin))
             {
-                return new ReturnMessage<UserDTO>(false, null, "1", MessageConstants.ExistEmail);
+                return new ReturnMessage<UserDTO>(true, null, "1", MessageConstants.ExistEmail);
             }
             try
             {

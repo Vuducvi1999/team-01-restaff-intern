@@ -38,11 +38,13 @@ export enum ETypeLayoutView {
 export enum TypeDisplayImage {
   BLOG_IMAGE = 1,
   PRODUCT_IMAGE = 2,
+  BLOG_DETAIL = 3,
 }
 
 export const TemplateType = {
   Display: {
     [TypeDisplayImage.BLOG_IMAGE]: "blogImage classic-effect",
     [TypeDisplayImage.PRODUCT_IMAGE]: "productImage",
+    [TypeDisplayImage.BLOG_DETAIL]: "blog-detail",
   },
 };

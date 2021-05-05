@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
       .getBlogs()
       .then((data: ReturnMessage<BlogModel[]>) => {
         this.blogs = data.data;
-        console.log(data);
+        console.log("Blog Data", data);
       })
       .catch((e) => {
         console.log(e);
