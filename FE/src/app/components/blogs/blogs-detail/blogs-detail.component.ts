@@ -119,8 +119,8 @@ export class BlogsDetailComponent implements OnInit {
     }
 
     if (event.remove) {
-      this.fileURL.forEach((e, i) => {
-        if (e == event.remove) {
+      this.fileURL.forEach((e : string, i) => {
+        if (e.includes(event.remove)) {
           this.fileURL.splice(i, 1);
         }
       });
@@ -130,6 +130,6 @@ export class BlogsDetailComponent implements OnInit {
       this.fileURL = [];
     }
 
-    this.blogForm.controls.imageUrl.setValue(this.fileURL.toString());
+    this.blogForm.controls.imageUrl.setValue(this.fileURL.join(','));
   }
 }

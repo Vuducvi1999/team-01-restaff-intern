@@ -39,15 +39,7 @@ namespace BE.Controllers
         public IActionResult Create([FromBody] CreateSocialMediaDTO model)
         {
             var result = _socialMediaService.Create(model);
-            if (model.Files.IsNullOrEmpty() || result.HasError)
-            {
-                return CommonResponse(result);
-            }
             var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
-            if (uploadImage.HasError)
-            {
-                return CommonResponse(uploadImage);
-            }
             return CommonResponse(result);
         }
 
@@ -55,15 +47,7 @@ namespace BE.Controllers
         public IActionResult Update([FromBody] UpdateSocialMediaDTO model)
         {
             var result = _socialMediaService.Update(model);
-            if (model.Files.IsNullOrEmpty() || result.HasError)
-            {
-                return CommonResponse(result);
-            }
             var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
-            if (uploadImage.HasError)
-            {
-                return CommonResponse(uploadImage);
-            }
             return CommonResponse(result);
         }
 

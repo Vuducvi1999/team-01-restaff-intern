@@ -11,6 +11,6 @@ namespace Service.Files
     public interface IFileManager
     {
         Task<List<CreateFileDTO>> SaveFile(SaveFileDTO saveFile);
-        Task<FileStreamResult> DownloadFile(String url);
+        Task<IActionResult> DownloadFile(String url);
     }
 }
