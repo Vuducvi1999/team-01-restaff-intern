@@ -1,12 +1,13 @@
 export class OrderModel {
   id?: string;
   fullName?: string;
-  firstName? = '';
-  lastName? = '';
+  firstName?= '';
+  lastName?= '';
   address = '';
   phone = '';
   email = '';
-  status: 'New';
+  note? = '';
+  status: string = 'New';
   totalAmount = 0;
   totalItem = 0;
   orderDetails?: OrderDetailModel[] = [];
@@ -19,4 +20,5 @@ export class OrderDetailModel {
   price = 0;
   quantity = 0;
   totalAmount = 0;
+  productImgUrl = ''
 }

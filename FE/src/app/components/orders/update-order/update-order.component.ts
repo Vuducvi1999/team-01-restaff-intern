@@ -1,23 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
-import { OrderModel } from 'src/app/lib/data/models/orders/order.model';
-import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
+import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
+import { OrderDetailModel, OrderModel } from 'src/app/lib/data/models/orders/order.model';
+import { FileService } from 'src/app/lib/data/services';
+import { OrderDetailsService } from 'src/app/lib/data/services/orders/order-details.service';
 import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
 import {
-  EntityType,
-  ModalFile,
   ModalFooterModel,
   ModalHeaderModel,
-  TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-update-order',
   templateUrl: './update-order.component.html',
   styleUrls: ['./update-order.component.scss'],
-  providers: [OrdersService],
+  providers: [OrdersService, OrderDetailsService],
 })
 export class UpdateOrderComponent implements OnInit {
   public orderForm: FormGroup;
@@ -26,31 +25,76 @@ export class UpdateOrderComponent implements OnInit {
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   submitted = false;
-  public fileURL: (string | ArrayBuffer)[];
+  public orderDetails: OrderDetailModel[];
+
 
   constructor(
     private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
-    private ordersService: OrdersService
-  ) {
+    private ordersService: OrdersService,
+    private orderDetailsService: OrderDetailsService
 
-  }
+  ) { }
+
 
   ngOnInit() {
     this.loadFormItem();
     this.createModal();
-    if (this.item) {
-      this.fileURL = [];
-      this.fileURL.push(this.item.imageUrl);
-    }
+    this.getOrderDetails();
   }
+
+  public settings = {
+    mode: 'external',
+    actions: false,
+    columns: {
+      productImgUrl: {
+        title: 'Image',
+        type: 'html',
+        filter: false,
+        valuePrepareFunction: (file) => {
+          var fileExt = file.split(',')[0].split('.').pop();
+          if (
+            fileExt == 'png' ||
+            fileExt == 'jpg' ||
+            fileExt == 'jpeg' ||
+            fileExt == 'icon'
+          ) {
+            return `<a href="${FileService.getLinkFile(file.split(',')[0])}"><img width="75px" height="75px" src="${FileService.getLinkFile(file.split(',')[0])}"/></a>`;
+          }
+          return `<a href="${FileService.getLinkFile(file.split(',')[0])}">${FileService.getLinkFile(file.split(',')[0])}</a>`;
+        },
+      },
+      productName: {
+        title: 'Product Name',
+      },
+      price: {
+        title: 'Price',
+      },
+      quantity: {
+        title: 'Quantity',
+      }
+      ,
+      totalAmount: {
+        title: 'Total Amount',
+        type: 'text',
+        valuePrepareFunction: (row) => {
+          var price = (row).toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'VND',
+          });
+          return `${price}`;
+        }
+      }
+    },
+  };
+
   loadFormItem() {
+    var check = this.item.status != "New"
     this.orderForm = this.formBuilder.group({
-      fullName: [this.item.fullName, Validators.required],
-      address: [this.item.address,Validators.required],
-      email: [this.item.email,Validators.required],
-      phone: [this.item.phone, Validators.required],
-      status:[this.item.status,Validators.required]
+      fullName: [{ value: this.item.fullName, disabled: check }, Validators.required],
+      address: [{ value: this.item.address, disabled: check }, Validators.required],
+      email: [{ value: this.item.email, disabled: check }, Validators.required],
+      phone: [{ value: this.item.phone, disabled: check }, Validators.required],
     });
   }
 
@@ -59,73 +103,143 @@ export class UpdateOrderComponent implements OnInit {
     this.modalHeader.title =
       `Update Order`;
     this.modalFooter = new ModalFooterModel();
-    this.modalFooter.title = 'Save';
+    this.modalFooter.buttons = [
+      {
+        color: 'btn btn-primary',
+        title: 'back',
+        onAction: (event: any) => {
+          this.ngbActiveModal.close();
+        }
+      }
+    ]
+    if (this.item.status == "New") {
+      this.modalFooter.buttons = [
+        {
+          color: 'btn btn-primary',
+          title: 'save',
+          onAction: (event: any) => {
+            this.save("save");
+          }
+        },
+        {
+          color: 'btn btn-success',
+          title: 'approve',
+          onAction: (event: any) => {
+            this.save("approve");
+          }
+        },
+        {
+          color: 'btn btn-danger',
+          title: 'reject',
+          onAction: (event: any) => {
+            this.save("reject")
+          }
+        }
+      ]
+    }
   }
 
   get orderFormControl() {
     return this.orderForm.controls;
   }
 
-  save(event: any) {
+  loadOrderModel() {
     this.order = {
       fullName: this.orderForm.controls.fullName.value,
       address: this.orderForm.controls.address.value,
       email: this.orderForm.controls.email.value,
       phone: this.orderForm.controls.phone.value,
-      status: this.orderForm.controls.status.value,
+      status: this.item.status,
       id: this.item.id,
-      totalAmount: this.item.totalAmount,
-      totalItem:this.item.totalItem
+      totalAmount: (this.item.totalAmount),
+      totalItem: this.item.totalItem
 
     };
+  }
+  save(event: any) {
+    this.loadOrderModel();
 
-    this.submitted = true;
-
-    if (this.orderForm.valid) {
-      this.ordersService
-        .update(this.order)
-        .then((res) => {
-          this.orderForm.reset();
-          this.submitted = false;
-          this.ngbActiveModal.close();
-        })
-        .catch((er) => {
-          if (er.error.hasError) {
-            console.log(er.error.message);
-          }
-        });
+    if (event == "approve") {
+      this.order.status = 'Approved';
     }
+    if (event == "reject") {
+      this.order.status = 'Rejected';
+    }
+
+    Swal.fire({
+      title: `Do you want to ${event} the order?`,
+      showCancelButton: true,
+      confirmButtonText: `Yes`,
+      icon: 'question'
+    })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          this.submitted = true;
+          if (this.orderForm.valid) {
+
+            if (event == "reject") {
+              await Swal.fire({
+                title: 'Submit your Github username',
+                input: 'text',
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+              }).then((res) => {
+                if (res.isConfirmed) {
+                  this.order.note = res.value;
+                  console.log(this.order.note);
+                }
+              })
+            }
+
+            this.ordersService
+              .update(this.order)
+              .then((res) => {
+
+                if (event == "approve") {
+                  Swal.fire({
+                    icon: 'success',
+                    title: `Order has been approved`,
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+                }
+
+                if (event == "reject") {
+                  Swal.fire({
+                    icon: 'success',
+                    title: `Order has been rejected`,
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
+                }
+                this.ngbActiveModal.close();
+              })
+              .catch((er) => {
+                if (er.error.hasError) {
+                  console.log(er.error.message);
+                }
+              });
+          }
+        }
+      })
   }
 
+
+
+  getOrderDetails() {
+    this.orderDetailsService.getByOrder(this.item.id, null).then((res: ReturnMessage<OrderDetailModel[]>) => {
+      if (!res.hasError) {
+        this.orderDetails = res.data;
+      }
+    }).catch((er) => {
+
+      if (er.error.hasError) {
+        console.log(er.error.message)
+      }
+    });
+  }
   close(event: any) {
     this.ngbActiveModal.close();
   }
 
-  onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {
-    if (event == null) {
-      return;
-    }
-
-    if (!this.fileURL) {
-      this.fileURL = [];
-    }
-
-    // if (event.add) {
-    this.fileURL = [...this.fileURL, ...event.add];
-    // }
-
-    if (event.remove) {
-      this.fileURL.forEach((e : string, i) => {
-        if (e.includes(event.remove)) {
-          this.fileURL.splice(i, 1);
-        }
-      });
-    }
-
-    if (event.removeAll) {
-      this.fileURL = [];
-    }
-
-    this.orderForm.controls.imageUrl.setValue(this.fileURL.join(','));
-  }
 }

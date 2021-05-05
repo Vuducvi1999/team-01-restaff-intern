@@ -95,10 +95,12 @@ export const content: Routes = [
   {
     path: 'orders',
     loadChildren: () =>
-      import('../../components/orders/orders.module').then((m) => m.OrdersModule),
+      import('../../components/orders/orders.module').then(
+        (m) => m.OrdersModule
+      ),
     data: {
       breadcrumb: 'Orders',
-    }
+    },
   },
   {
     path: 'page-content',
@@ -123,7 +125,9 @@ export const content: Routes = [
   {
     path: 'customers',
     loadChildren: () =>
-      import('../../components/customers/customers.module').then((m) => m.CustomerModule),
+      import('../../components/customers/customers.module').then(
+        (m) => m.CustomerModule
+      ),
     data: {
       breadcrumb: 'Customers',
     },
@@ -136,6 +140,16 @@ export const content: Routes = [
       ),
     data: {
       breadcrumb: 'Contact',
+    },
+  },
+  {
+    path: 'comment',
+    loadChildren: () =>
+      import('../../components/comments/comment.module').then(
+        (m) => m.CommentModule
+      ),
+    data: {
+      breadcrumb: 'Comment',
     },
   },
 ];

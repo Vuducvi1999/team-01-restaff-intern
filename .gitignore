@@ -1,2 +1,6 @@
-BE/BE/wwwroot/Files
-BE/BE/appsetting.json
+/BE/BE/wwwroot/Files
+/BE/BE/appsetting.json
+/BE/Data/Migrations/20210504040321_InitialDB1.Designer.cs
+/BE/Data/Migrations/20210504040321_InitialDB1.cs
+/BE/Data/Migrations/20210504041853_InitialDB2.cs
+/BE/Data/Migrations/20210504041853_InitialDB2.Designer.cs

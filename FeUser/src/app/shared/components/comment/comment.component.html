@@ -1,0 +1,16 @@
+<form [formGroup]="commentForm" (ngSubmit)="Submit()">
+  <div class="row pt-3">
+    <div class="form-group col-md-12">
+      <label> Write Your Review</label>
+      <textarea
+        class="form-control"
+        rows="4"
+        formControlName="content"
+        placeholder="Leave your review"
+      ></textarea>
+    </div>
+    <div class="col-md-12">
+      <button class="btn btn-solid" type="submit">Send</button>
+    </div>
+  </div>
+</form>

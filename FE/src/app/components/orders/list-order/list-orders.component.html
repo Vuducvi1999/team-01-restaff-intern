@@ -7,12 +7,7 @@
     <div class="card-body vendor-table">
       <div id="batchDelete" class="custom-datatable media-datatable">
         <div class="table-responsive">
-          <ng2-smart-table
-            [settings]="settings"
-            [(source)]="orders"
-            (edit)="openUpdate($event)"
-            (userRowSelect)="openDetails($event)"
-          >
+          <ng2-smart-table [settings]="settings" [(source)]="orders" (edit)="openUpdate($event)" >
           </ng2-smart-table>
         </div>
       </div>

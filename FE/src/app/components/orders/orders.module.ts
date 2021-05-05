@@ -9,7 +9,6 @@ import { BannersService } from 'src/app/lib/data/services';
 import { ListOrdersComponent } from './list-order/list-orders.component';
 import { OrdersRoutingModule } from './orders-routing.module';
 import { UpdateOrderComponent } from './update-order/update-order.component';
-import { ListOrderDetailsComponent } from './list-order-details/list-order-details.component';
 
 @NgModule({
   imports: [
@@ -20,7 +19,7 @@ import { ListOrderDetailsComponent } from './list-order-details/list-order-detai
     OrdersRoutingModule,
     SharedModule,
   ],
-  declarations: [ListOrdersComponent, UpdateOrderComponent,ListOrderDetailsComponent ],
+  declarations: [ListOrdersComponent, UpdateOrderComponent],
   providers: [BannersService],
 })
 export class OrdersModule {}
