@@ -6,7 +6,6 @@ import { FeatherIconsComponent } from './components/feather-icons/feather-icons.
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-
 import { ToggleFullscreenDirective } from './directives/fullscreen.directive';
 import { ContentLayoutComponent } from './layout/content-layout/content-layout.component';
 import { NavService } from './service/nav.service';
@@ -19,7 +18,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { FileService } from '../lib/data/services';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 @NgModule({
   declarations: [
     ToggleFullscreenDirective,
@@ -34,7 +33,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     ModalFooterComponent,
     UploadFileComponent,
   ],
-  imports: [CommonModule, RouterModule, NgbModalModule, NgxDropzoneModule],
+  imports: [CommonModule, RouterModule, NgbModalModule, NgxDropzoneModule,SweetAlert2Module.forRoot()],
   providers: [NavService, WINDOW_PROVIDERS, FileService],
   exports: [
     FeatherIconsComponent,
@@ -42,6 +41,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     ModalFooterComponent,
     ModalHeaderComponent,
     UploadFileComponent,
+    SweetAlert2Module,
   ],
 })
 export class SharedModule {}

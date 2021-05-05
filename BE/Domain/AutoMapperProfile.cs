@@ -28,6 +28,7 @@ using Domain.DTOs.InfomationWeb;
 using Domain.DTOs.PageContentContact;
 using Domain.DTOs.Contact;
 using Domain.DTOs.ProductRating;
+using Domain.DTOs.Comments;
 
 namespace Domain
 {
@@ -168,6 +169,11 @@ namespace Domain
             //Information Web
             CreateMap<InformationWebsite, InformationWebDTO>().ReverseMap();
             CreateMap<InformationWebsite, UpdateInformationWebDTO>().ReverseMap();
+
+            // Comment
+            CreateMap<Comment, CreateCommentDTO>().ReverseMap();
+            CreateMap<Comment, CommentDTO>().ReverseMap();
+            CreateMap<PaginatedList<Comment>, PaginatedList<CommentDTO>>().ReverseMap();
 
             //RatingProduct
             CreateMap<ProductRating, ProductRatingDTO>()
