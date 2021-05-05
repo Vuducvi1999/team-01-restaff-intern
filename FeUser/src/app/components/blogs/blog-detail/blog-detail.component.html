@@ -16,15 +16,15 @@
           }"
         ></app-image-wapper>
         <h3>
-          {{ data.title }}
+          {{ data?.title }}
         </h3>
         <ul class="post-social">
-          <li>{{ data.createByDate | date: "mediumDate" }}</li>
-          <li>Posted By : {{ data.createdByName }}</li>
+          <li>{{ data?.createByDate | date: "mediumDate" }}</li>
+          <li>Posted By : {{ data?.createdByName }}</li>
           <!-- <li><i class="fa fa-heart"></i> 5 Hits</li>
           <li><i class="fa fa-comments"></i> 10 Comment</li> -->
         </ul>
-        <div [innerHTML]="data.contentHTML"></div>
+        <div [innerHTML]="data?.contentHTML"></div>
       </div>
       <div class="col-sm-12 mt-5">
         <h2>Leave Your Message</h2>
