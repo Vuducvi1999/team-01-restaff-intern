@@ -6,6 +6,7 @@ using Domain.DTOs.Products;
 using Domain.DTOs.ProductsFeUser;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
+using Infrastructure.Extensions;
 using Service.AuthCustomer;
 using Service.ProductDetailsFeUser;
 using System;
@@ -21,11 +22,12 @@ namespace Service.ServiceFeUser
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Category> _categoryRepository;
         private readonly IRepository<Customer> _customerRepository;
+        private readonly IRepository<ProductRating> _productRatingRepository;
         private readonly IAuthCustomerUserService _authCustomerUserService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ProductDetailsFeService(IRepository<Category> categoryRepository, IRepository<Product> productRepository, IUnitOfWork unitOfWork, IMapper mapper, IRepository<Customer> customerRepository, IAuthCustomerUserService authCustomerUserService)
+        public ProductDetailsFeService(IRepository<Category> categoryRepository, IRepository<Product> productRepository, IUnitOfWork unitOfWork, IMapper mapper, IRepository<Customer> customerRepository, IAuthCustomerUserService authCustomerUserService, IRepository<ProductRating> productRatingRepository)
         {
             _customerRepository = customerRepository;
             _authCustomerUserService = authCustomerUserService;
@@ -57,16 +59,37 @@ namespace Service.ServiceFeUser
             try
             {
                 var entity = _mapper.Map<CreateProductRatingDTO, ProductRating>(model);
+                entity.Insert();
+                _productRatingRepository.Insert(entity);
+                _unitOfWork.SaveChanges();
+                var result = new ReturnMessage<ProductRatingDTO>(false, _mapper.Map<ProductRating, ProductRatingDTO>(entity), MessageConstants.CreateSuccess);
+                return result;
                 
             }
-            catch(Exception ex)
+            
+            catch (Exception ex)
             {
                 return new ReturnMessage<ProductRatingDTO>(true, null, ex.Message);
             }
         }
         public ReturnMessage<ProductRatingDTO> UpdateRating(UpdateProductRatingDTO model)
         {
-
+            try
+            {
+                var entity = _productRatingRepository.Find(model.Id);
+                if (entity.IsNotNullOrEmpty())
+                {
+                    entity.Update(model);
+                    _productRatingRepository.Update(entity);
+                    _unitOfWork.SaveChanges();
+                    var result = new ReturnMessage<ProductRatingDTO>(false, _mapper.Map<ProductRating, ProductRatingDTO>(entity), MessageConstants.DeleteSuccess);
+                }
+                return new ReturnMessage<ProductRatingDTO>(true, null, MessageConstants.Error);
+            }
+            catch (Exception ex)
+            {
+                return new ReturnMessage<ProductRatingDTO>(true, null, ex.Message);
+            }
         }
 
 

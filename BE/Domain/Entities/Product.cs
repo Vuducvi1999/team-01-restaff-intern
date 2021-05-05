@@ -24,7 +24,7 @@ namespace Domain.Entities
         public Guid CategoryId { get; set; }
         public virtual Category Category { get; set; }
 
-        public ICollection<RatingProduct> RatingProducts { get; set; }
+        public ICollection<ProductRating> RatingProducts { get; set; }
         public override void Insert()
         {
             base.Insert();
