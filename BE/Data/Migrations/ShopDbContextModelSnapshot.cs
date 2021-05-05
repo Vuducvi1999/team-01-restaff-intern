@@ -633,7 +633,7 @@ namespace Data.Migrations
                     b.ToTable("OrderDetail");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Product", b =>
+            modelBuilder.Entity("Domain.Entities.PageContent", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -935,6 +935,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Domain.Entities.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Customer", b =>
+                {
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.Order", b =>
