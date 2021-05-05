@@ -33,8 +33,6 @@ export class ListCommentComponent {
     },
     columns: {
       fullName: { title: 'Full Name' },
-      customerId: { title: 'Customer Id' },
-      entityId: { title: 'Entity Id' },
       entityType: { title: 'Entity Type' },
       content: { title: 'Content' },
     },

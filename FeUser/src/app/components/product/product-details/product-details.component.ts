@@ -30,7 +30,7 @@ export class ProductDetailsComponent implements OnInit {
   public counter: number = 1;
   public activeSlide: any = 0;
   public ImageSrc: string;
-  public id : string;
+  public id: string;
   public dataComment: CommentPassingModel;
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
 
@@ -39,7 +39,7 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(
     private productService: ProductDetailsService,
-    private activedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute
   ) {
     this.getProduct();
     this.initDataComment();
@@ -47,14 +47,14 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  getProduct(){
-        this.activatedRoute.queryParams.subscribe( param =>{
-        this.productService
-          .get(param.id)
-          .then((res: ReturnMessage<ProductDetailsModel>) => {
-              this.product = res.data;
-        }) 
-      });
+  getProduct() {
+    this.activatedRoute.queryParams.subscribe((param) => {
+      this.productService
+        .get(param.id)
+        .then((res: ReturnMessage<ProductDetailsModel>) => {
+          this.product = res.data;
+        });
+    });
   }
 
   getImage(fileName: string) {
@@ -69,7 +69,7 @@ export class ProductDetailsComponent implements OnInit {
     this.dataComment = {
       fullName: user ? user.firstName + " " + user.lastName : "",
       customerId: user ? user.id : "",
-      entityId: this.activedRoute.snapshot.queryParamMap.get("id"),
+      entityId: this.activatedRoute.snapshot.queryParamMap.get("id"),
       entityType: "Product",
     };
   }

@@ -43,7 +43,9 @@ export class CommentComponent implements OnInit {
 
     this.commentService
       .create(this.commentForm.value)
-      .then((data) => alert("Submited"))
+      .then((data) => {
+        this.initForm();
+      })
       .catch((e) => {
         console.log(e);
         alert("Submit fail");
