@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrderDetailModel, OrderModel, ProductModel } from 'src/app/lib/data/models';
 import { CartService } from 'src/app/lib/data/services/cart/cart.service';
+import { CouponService } from 'src/app/lib/data/services/coupons/coupon.service';
 import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss'],
-  providers: [CartService, OrdersService]
+  providers: [CartService, OrdersService, CouponService]
 
 })
 export class CheckoutComponent implements OnInit {
@@ -20,8 +21,10 @@ export class CheckoutComponent implements OnInit {
   constructor(
     public cartService: CartService,
     public orderService: OrdersService,
+    public couponService: CouponService,
     public routerService: Router) {
   }
+
 
   ngOnInit(): void {
     this.loadCartItems();
@@ -30,10 +33,16 @@ export class CheckoutComponent implements OnInit {
   }
 
   loadCartItems() {
-    this.cartService.cartItems.subscribe(response => this.products = response);
+    this.cartService.cartItems.subscribe(response => {
+      this.products = response;
+
+    });
   }
   calculateTotalPrice() {
-    this.totalPrice = this.products.reduce((accumulator, product) => (accumulator + product.price * product.quantity), 0);
+    this.cartService.cartTotalAmount().subscribe(resp => {
+      console.log(resp)
+      this.totalPrice = resp
+    });
   }
 
   calculateTotalItem() {
@@ -45,7 +54,7 @@ export class CheckoutComponent implements OnInit {
     this.orderService.create(this.order).then(
       (resp) => {
         this.cartService.removeAll();
-        this.routerService.navigate(["checkout/success"],{state: resp})
+        this.routerService.navigate(["checkout/success"], { state: resp })
       }
     ).catch((er) => console.log(er));
 
@@ -65,5 +74,16 @@ export class CheckoutComponent implements OnInit {
       orderDetail.totalAmount = orderDetail.price * orderDetail.quantity;
       this.order.orderDetails.push(orderDetail);
     });
+  }
+
+  applyCoupon() {
+    this.couponService.getByCode(null, this.order.couponCode)
+      .then((resp) => {
+        this.order.couponId = resp.data.id;
+        this.order.couponName = resp.data.name;
+        console.log(this.order.couponId);
+      })
+      .catch((er) => console.log(er));
+
   }
 }

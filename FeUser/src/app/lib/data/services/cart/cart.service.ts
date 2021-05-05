@@ -95,12 +95,11 @@ export class CartService {
   public cartTotalAmount(): Observable<number> {
     return this.cartItems.pipe(map((product: ProductModel[]) => {
       return product.reduce((prev, curr: ProductModel) => {
-        let price = curr.price;
         // if (curr.discount) {
         //   price = curr.price - (curr.price * curr.discount / 100)
         // }
         // return (prev + price * curr.quantity) * this.Currency.price;
-        return 0;
+        return prev + curr.price * curr.quantity;
       }, 0);
     }));
   }

@@ -12,6 +12,11 @@ export class OrderModel {
   totalAmount = 0;
   totalItem = 0;
   orderDetails?: OrderDetailModel[] = [];
+  couponId?: string;
+  couponName: string;
+  couponCode: string;
+  couponPercent: number;
+  couponValue: number;
 }
 
 export class OrderDetailModel {

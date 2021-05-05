@@ -57,7 +57,7 @@ namespace Service.Orders
                 .Include(t => t.OrderDetails)
                 .ThenInclude(t => t.Product)
                 .FirstOrDefault(t => t.Id == id);
-            var result = new ReturnMessage<OrderDTO>(false, _mapper.Map<Order, OrderDTO>(order), MessageConstants.CreateSuccess);
+            var result = new ReturnMessage<OrderDTO>(false, _mapper.Map<Order, OrderDTO>(order), MessageConstants.GetPaginationSuccess);
             return result;
 
         }

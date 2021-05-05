@@ -17,6 +17,14 @@ namespace Domain.Entities
         public decimal TotalAmount { get; set; }
         public int TotalItem { get; set; }
         public string Note { get; set; }
+        public Guid CouponId { get; set; }
+
+        public string CouponName { get; set; }
+        public string CouponCode { get; set; }
+        public decimal CouponPercent { get; set; }
+        public decimal CouponValue { get; set; }
+
+
         public Guid? CustomerId { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; }
 
