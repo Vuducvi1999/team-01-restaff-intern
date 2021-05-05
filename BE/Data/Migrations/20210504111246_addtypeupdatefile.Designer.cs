@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
-    [Migration("20210504022950_InitDbAfterMerge")]
-    partial class InitDbAfterMerge
+    [Migration("20210504111246_addtypeupdatefile")]
+    partial class addtypeupdatefile
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -424,6 +424,9 @@ namespace Data.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TypeUpload")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdateByDate")
                         .HasColumnType("datetime2");

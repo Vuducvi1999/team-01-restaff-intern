@@ -11,6 +11,7 @@ namespace Domain.DTOs.Files
         [Required]
         public String EntityType { get; set; }
         public String EntityId { get; set; }
+        public int TypeUpload { get; set; } = 1;
         [Required]
         public List<IFormFile> Files { get; set; }
     }

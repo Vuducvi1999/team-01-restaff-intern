@@ -44,6 +44,9 @@ namespace BE
 
             //Auth
             JwtAuthConfig.Setup(services, Configuration);
+
+            //CloudFile
+            FileCloudConfig.Setup(services, Configuration);
             ////AuthCustomer
             //JwtAuthCustomerConfig.Setup(services, Configuration);
 

@@ -131,6 +131,8 @@ namespace Domain
                 .ForMember(a => a.Address, b => b.MapFrom(c => c.Customer.Address))
                 .ForMember(a => a.Email, b => b.MapFrom(c => c.Customer.IsNullOrEmpty() ? c.Email : c.Customer.Email))
                 .ForMember(a => a.Phone, b => b.MapFrom(c => c.Customer.Phone))
+                .ForMember(a => a.Id, b => b.MapFrom(c => c.Customer.Id))
+
                 .ReverseMap();
             CreateMap<User, CreateCustomerDTO>().ReverseMap();
             CreateMap<User, UpdateCustomerDTO>().ReverseMap();
@@ -147,6 +149,7 @@ namespace Domain
                .ForMember(a => a.Address, b => b.MapFrom(c => c.Customer.Address))
                .ForMember(a => a.Email, b => b.MapFrom(c => c.Customer.IsNullOrEmpty() ? c.Email : c.Customer.Email))
                .ForMember(a => a.Phone, b => b.MapFrom(c => c.Customer.Phone))
+               .ForMember(a => a.CustomerId, b => b.MapFrom(c => c.Customer.Id))
                .ReverseMap();
             CreateMap<CustomerRegisterDTO, CreateCustomerDTO>().ReverseMap();
             CreateMap<CustomerDTO, CustomerDataReturnDTO>().ReverseMap();

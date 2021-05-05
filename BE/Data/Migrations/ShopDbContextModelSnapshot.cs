@@ -482,6 +482,9 @@ namespace Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TypeUpload")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdateByDate")
                         .HasColumnType("datetime2");
 
