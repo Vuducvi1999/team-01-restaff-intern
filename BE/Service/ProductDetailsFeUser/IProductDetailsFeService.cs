@@ -4,6 +4,8 @@ using Domain.DTOs.Products;
 using Domain.DTOs.ProductsFeUser;
 using Service.Common;
 using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace Service.ProductDetailsFeUser
 {
@@ -11,7 +13,7 @@ namespace Service.ProductDetailsFeUser
     {
         ReturnMessage<ProductDTOFeUser> GetDetails(ProductDTOFeUser search);
 
-        ReturnMessage<ProductRatingDTO> CreateRating(CreateProductRatingDTO model);
+        ReturnMessage<ProductRatingDTO> CreateRating(IEnumerable<Claim> claims, CreateProductRatingDTO model);
 
         ReturnMessage<ProductRatingDTO> UpdateRating(UpdateProductRatingDTO model);
     }

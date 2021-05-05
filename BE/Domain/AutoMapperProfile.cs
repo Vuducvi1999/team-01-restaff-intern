@@ -177,11 +177,9 @@ namespace Domain
 
             //RatingProduct
             CreateMap<ProductRating, ProductRatingDTO>()
-                .ForMember(t => t.ProductName, k => k.MapFrom(h => h.Product.Name))
-                .ForMember(t => t.CustomerName, k => k.MapFrom(h => h.Customer.FirstName + " " + h.Customer.LastName))
                 .ReverseMap();
             CreateMap<ProductRating, UpdateProductRatingDTO>().ReverseMap();
-
+            CreateMap<ProductRating, CreateProductRatingDTO>().ReverseMap();
         }
     }
 }

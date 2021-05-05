@@ -12,13 +12,14 @@ using Service.ProductDetailsFeUser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 
 namespace Service.ServiceFeUser
 {
     public class ProductDetailsFeService : IProductDetailsFeService
     {
-
+        private readonly IRepository<User> _userRepository;
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Category> _categoryRepository;
         private readonly IRepository<Customer> _customerRepository;
@@ -27,7 +28,7 @@ namespace Service.ServiceFeUser
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ProductDetailsFeService(IRepository<Category> categoryRepository, IRepository<Product> productRepository, IUnitOfWork unitOfWork, IMapper mapper, IRepository<Customer> customerRepository, IAuthCustomerUserService authCustomerUserService, IRepository<ProductRating> productRatingRepository)
+        public ProductDetailsFeService(IRepository<Category> categoryRepository, IRepository<Product> productRepository, IUnitOfWork unitOfWork, IMapper mapper, IRepository<Customer> customerRepository, IAuthCustomerUserService authCustomerUserService, IRepository<ProductRating> productRatingRepository, IRepository<User> userRepository)
         {
             _customerRepository = customerRepository;
             _authCustomerUserService = authCustomerUserService;
@@ -35,6 +36,8 @@ namespace Service.ServiceFeUser
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _categoryRepository = categoryRepository;
+            _productRatingRepository = productRatingRepository;
+            _userRepository = userRepository;
         }
         public ReturnMessage<ProductDTOFeUser> GetDetails(ProductDTOFeUser search)
         {
@@ -54,17 +57,19 @@ namespace Service.ServiceFeUser
 
             return result;
         }
-        public ReturnMessage<ProductRatingDTO> CreateRating(CreateProductRatingDTO model)
+        public ReturnMessage<ProductRatingDTO> CreateRating(IEnumerable<Claim> claims, CreateProductRatingDTO model)
         {
             try
             {
+                var userDecompile = _authCustomerUserService.GetInformationToken(claims);
+                var user = _userRepository.Find(userDecompile.Id);
                 var entity = _mapper.Map<CreateProductRatingDTO, ProductRating>(model);
-                entity.Insert();
+                var product = _productRepository.Find(model.ProductId);
+                entity.Insert(user);
                 _productRatingRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<ProductRatingDTO>(false, _mapper.Map<ProductRating, ProductRatingDTO>(entity), MessageConstants.CreateSuccess);
                 return result;
-                
             }
             
             catch (Exception ex)
