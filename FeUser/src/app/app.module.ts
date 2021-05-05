@@ -17,6 +17,8 @@ import { environment } from "./lib/environments/environment";
 import { AppConfig } from "./lib/environments/config/appConfig";
 import { AuthModule } from "./components/auth/auth.module";
 
+import { NgHttpLoaderModule } from 'ng-http-loader';
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
@@ -46,6 +48,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SharedModule,
     AuthModule,
     AppRoutingModule,
+    NgHttpLoaderModule.forRoot(),
   ],
   providers: [
     { provide: "BASE_URL", useValue: environment.host },
