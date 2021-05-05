@@ -9,7 +9,13 @@ import {
 import { Router } from "@angular/router";
 
 import { ProductModel } from "src/app/lib/data/models";
+import {
+  CreateCustomerWishListModel,
+  CustomerWishListModel,
+} from "src/app/lib/data/models/customerWishList/customerWishList.model";
+import { UserModel } from "src/app/lib/data/models/users/user.model";
 import { FileService } from "src/app/lib/data/services";
+import { CustomerWishListService } from "src/app/lib/data/services/customerWishLists/customerWishList.service";
 import {
   ETypeGridLayout,
   ETypePositionCart,
@@ -25,6 +31,7 @@ import { QuickViewComponent } from "../../modal/quick-view/quick-view.component"
   selector: "app-product-box",
   templateUrl: "./product-box.component.html",
   styleUrls: ["./product-box.component.scss"],
+  providers: [CustomerWishListService],
 })
 export class ProductBoxComponent implements OnInit, OnChanges {
   @Input() product: ProductModel;
@@ -44,7 +51,11 @@ export class ProductBoxComponent implements OnInit, OnChanges {
   public ImageSrc: string;
   typeDisplayImage = TypeDisplayImage;
 
-  constructor(private productService: ProductService, private router: Router) {}
+  constructor(
+    private productService: ProductService,
+    private wishListService: CustomerWishListService,
+    private router: Router
+  ) {}
   ngOnChanges(changes: SimpleChanges): void {
     this.updateTypeGridLayout();
   }
@@ -115,6 +126,13 @@ export class ProductBoxComponent implements OnInit, OnChanges {
 
   addToWishlist(product: any) {
     this.productService.addToWishlist(product);
+
+    const user: UserModel = JSON.parse(localStorage.getItem("user"));
+    const model: CreateCustomerWishListModel = {
+      customerId: user.id,
+      productId: product.id,
+    };
+    this.wishListService.create(model);
   }
 
   addToCompare(product: any) {
@@ -124,5 +142,4 @@ export class ProductBoxComponent implements OnInit, OnChanges {
   getImage(fileName: string) {
     return FileService.getLinkFile(fileName);
   }
-
 }

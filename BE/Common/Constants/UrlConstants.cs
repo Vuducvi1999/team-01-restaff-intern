@@ -87,5 +87,8 @@ namespace Common.Constants
         public const string BaseContact = BaseApi + "/contact";
         // Comment
         public const string BaseComment = BaseApi + "/comment";
+        // CustomerWishList
+        public const string BaseCustomerWishList = BaseApi + "/customer-wish-list";
+        public const string GetCustomerWishList = BaseApi + "/customer-wish-list/{customerId}";
     }
 }
