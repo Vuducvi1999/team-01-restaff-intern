@@ -23,7 +23,7 @@ export class ProductService {
   }
 
   delete(model: ProductModel) {
-    const url = `${this.url}/?Id=${model?.id}`;
+    const url = `${this.url}?Id=${model?.id}`;
     return this.httpClient.deleteObservable(url).toPromise();
   }
   save(model: ProductModel) {

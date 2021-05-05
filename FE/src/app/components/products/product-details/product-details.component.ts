@@ -75,7 +75,7 @@ export class ProductDetailsComponent implements OnInit {
   }
   save() {
     if (this.productsForm.invalid) {
-      window.alert('Invalid Form !');
+      window.alert("Invalid Form make sure you fill valid value !");
       return;
     }
     this.submitted = true;
@@ -86,9 +86,9 @@ export class ProductDetailsComponent implements OnInit {
       imageUrl: this.productsForm.value.imageUrl,
       price: this.productsForm.value.price,
       categoryName: this.categories.filter(
-        (it) => it.id == this.productsForm.value.categoryName
+        (it) => it.id == this.productsForm.value.category
       )[0].name,
-      categoryId: this.productsForm.value.categoryName,
+      categoryId: this.productsForm.value.category,
       displayOrder: this.productsForm.value.displayOrder,
       hasDisplayHomePage: this.productsForm.value.hasDisplayHomePage,
       isImportant: this.productsForm.value.isImportant,
@@ -116,24 +116,28 @@ export class ProductDetailsComponent implements OnInit {
 
   loadItem() {
     this.productsForm = this.formBuilder.group({
-      name: [this.item ? this.item.name : '', [Validators.required]],
+      name: [this.item ? this.item.name : '', 
+      [Validators.required, Validators.maxLength(50), Validators.pattern('[a-zA-Z0-9 -]*')]
+    ],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required],
+        [Validators.required, Validators.maxLength(100), Validators.pattern('[a-zA-Z0-9 -]*')],
       ],
       contentHTML: [
         this.item ? this.item.contentHTML : '',
-        [Validators.required],
+        [Validators.required, Validators.maxLength(1000)],
       ],
       imageUrl: [this.item ? this.item.imageUrl : ''],
-      price: [this.item ? this.item.price : 0, [Validators.required]],
-      categoryName: [
+      price: [this.item ? this.item.price : this.item,
+         [Validators.required, Validators.min(1), Validators.max(9999999999)]
+      ],
+      category: [
         this.item ? this.item.categoryId : '',
-        [Validators.required],
+        [Validators.required, Validators.maxLength(100), Validators.pattern('[a-zA-Z0-9 -]*')],
       ],
       displayOrder: [
-        this.item ? this.item.displayOrder : 0,
-        [Validators.required],
+        this.item ? this.item.displayOrder : 1,
+        [Validators.required, Validators.min(1), Validators.max(10)],
       ],
       hasDisplayHomePage: [this.item ? this.item.hasDisplayHomePage : false],
       isImportant: [this.item ? this.item.isImportant : false],

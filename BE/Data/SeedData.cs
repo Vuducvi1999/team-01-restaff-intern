@@ -58,7 +58,8 @@ namespace Data
                 }
                 if (!await ctx.InformationWebsites.AnyAsync())
                 {
-                        ctx.InformationWebsites.Add(new InformationWebsite() {
+                    ctx.InformationWebsites.Add(new InformationWebsite()
+                    {
                         Id = CommonConstants.WebSiteInformationId,
                         Address = "123 Hai Ba Trung",
                         Email = "email@gmail.com",
@@ -71,6 +72,36 @@ namespace Data
                     });
                     ctx.SaveChanges();
                 }
+                //if (!await ctx.Categories.AnyAsync())
+                //{
+                //    for(int i = 0; i <= 10; i++)
+                //    {
+                //        ctx.Categories.Add(new Category()
+                //        {
+                //            Name = "Category " + i,
+                //            Description = "Description for Category " + i,
+                //            ImageUrl = ,
+                //            CreateByDate = DateTime.Now,
+                //            IsActive = true,
+                //            ObjectState = Infrastructure.EntityFramework.ObjectState.Added
+                //        });
+                //    }
+
+                //    ctx.SaveChanges();
+                //}
+                //if (!await ctx.Products.AnyAsync())
+                //{
+                //    for(int i = 0; i <= 50; i++)
+                //    {
+                //        ctx.Products.Add(new Product()
+                //        {
+
+                //            ObjectState = Infrastructure.EntityFramework.ObjectState.Added
+                //        });
+                //    }
+
+                //    ctx.SaveChanges();
+                //}
 
             }
             catch (Exception ex)

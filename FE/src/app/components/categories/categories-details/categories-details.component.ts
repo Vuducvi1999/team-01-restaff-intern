@@ -80,11 +80,11 @@ export class CategoryDetailComponent implements OnInit {
     this.categoriesForm = this.formBuilder.group({
       name: [
         this.item ? this.item.name : '',
-        [Validators.required, Validators.pattern('[a-zA-Z0-9 ]*')],
+        [Validators.required, Validators.pattern('[a-zA-Z0-9 -]*'), Validators.maxLength(100)]
       ],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required, Validators.pattern('[a-zA-Z0-9 ]*')],
+        [Validators.required, Validators.pattern('[a-zA-Z0-9 -]*'), Validators.maxLength(100)],
       ],
       imageUrl: [this.item ? this.item.imageUrl : ''],
     });

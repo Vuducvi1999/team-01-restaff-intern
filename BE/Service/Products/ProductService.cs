@@ -108,6 +108,7 @@ namespace Service.Products
             );
 
             var data = _mapper.Map<PaginatedList<Product>, PaginatedList<ProductDTO>>(resultEntity);
+            data.Results.Where(r => r.IsDeleted == false);
             var result = new ReturnMessage<PaginatedList<ProductDTO>>(false, data, MessageConstants.ListSuccess);
 
             return result;
@@ -118,7 +119,7 @@ namespace Service.Products
             try
             {
                 var entity = _mapper.Map<UpdateProductDTO, Product>(model);
-                var category = _categoryRepository.Queryable().Where(it => it.Name == model.CategoryName).FirstOrDefault();
+                var category = _categoryRepository.Find(model.CategoryId);
                 if (category == null)
                 {
                     return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);

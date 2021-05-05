@@ -6,6 +6,9 @@ namespace Common.Constants
 {
     public struct CommonConstants
     {
-        public static Guid WebSiteInformationId = Guid.Parse("00000000-0000-0000-0000-000000000001");            
+        public static Guid WebSiteInformationId = Guid.Parse("00000000-0000-0000-0000-000000000001");
+
+        public static Guid ProductId = Guid.NewGuid();
+
     }
 }
