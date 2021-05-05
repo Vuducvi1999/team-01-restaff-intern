@@ -16,6 +16,7 @@ namespace Domain.Entities
         public string Status { get; set; }
         public decimal TotalAmount { get; set; }
         public int TotalItem { get; set; }
+        public string Note { get; set; }
         public Guid? CustomerId { get; set; }
         public ICollection<OrderDetail> OrderDetails { get; set; }
 
@@ -50,6 +51,8 @@ namespace Domain.Entities
             Status = model.Status;
             TotalAmount = model.TotalAmount;
             TotalItem = model.TotalItem;
+            Note = model.Note;
+
 
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
