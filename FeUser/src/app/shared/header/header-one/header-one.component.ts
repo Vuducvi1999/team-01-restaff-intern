@@ -56,7 +56,6 @@ export class HeaderOneComponent implements OnInit {
   async loadHeaderModel() {
     await this.headerService.getInformationWeb(null).then((res: any) => {
       this.headerModel.informationWeb = res.data;
-      console.log(this.headerModel.informationWeb);
     })
   }
 

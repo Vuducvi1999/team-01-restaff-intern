@@ -9,8 +9,8 @@ export class ProductDetailsService  {
 
     private url = '/api/user/product-details';
 
-    get(model: string) {
-        const url = `${this.url}?id=${model}`;
+    get(id: string) {
+        const url = `${this.url}?id=${id}`;
       return this.httpClient.getObservable(url).toPromise();
     }
   }
