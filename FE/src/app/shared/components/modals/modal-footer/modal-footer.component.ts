@@ -9,12 +9,9 @@ import { ModalFooterModel } from '../models/modal.model';
 export class ModalFooterComponent implements OnInit {
   @Input() data = new ModalFooterModel();
   @Output() onAction = new EventEmitter();
-
   constructor() { }
-
   ngOnInit() {
   }
-
   action() {
     this.onAction.emit("ok");
   }

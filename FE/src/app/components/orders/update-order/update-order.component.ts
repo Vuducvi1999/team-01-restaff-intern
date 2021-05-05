@@ -25,7 +25,6 @@ export class UpdateOrderComponent implements OnInit {
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   submitted = false;
-  public fileURL: (string | ArrayBuffer)[];
   public orderDetails: OrderDetailModel[];
 
 
@@ -41,10 +40,6 @@ export class UpdateOrderComponent implements OnInit {
   ngOnInit() {
     this.loadFormItem();
     this.createModal();
-    if (this.item) {
-      this.fileURL = [];
-      this.fileURL.push(this.item.imageUrl);
-    }
     this.getOrderDetails();
   }
 
@@ -109,27 +104,38 @@ export class UpdateOrderComponent implements OnInit {
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.buttons = [
       {
-        color: 'btn btn-success',
-        title: 'approve',
-        onAction: (event: any) => {
-          this.save("approve");
-        }
-      },
-      {
-        color: 'btn btn-danger',
-        title: 'reject',
-        onAction: (event: any) => {
-          this.save("reject")
-        }
-      },
-      {
         color: 'btn btn-primary',
-        title: 'save',
+        title: 'back',
         onAction: (event: any) => {
-          this.save("save");
+          this.ngbActiveModal.close();
         }
       }
     ]
+    if (this.item.status == "New") {
+      this.modalFooter.buttons = [
+        {
+          color: 'btn btn-primary',
+          title: 'save',
+          onAction: (event: any) => {
+            this.save("save");
+          }
+        },
+        {
+          color: 'btn btn-success',
+          title: 'approve',
+          onAction: (event: any) => {
+            this.save("approve");
+          }
+        },
+        {
+          color: 'btn btn-danger',
+          title: 'reject',
+          onAction: (event: any) => {
+            this.save("reject")
+          }
+        }
+      ]
+    }
   }
 
   get orderFormControl() {
