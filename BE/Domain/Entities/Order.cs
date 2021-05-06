@@ -43,6 +43,8 @@ namespace Domain.Entities
                 TotalItem += item.Quantity;
                 TotalAmount += item.TotalAmount;
             }
+            TotalAmount -= CouponValue;
+
         }
         public override void Delete()
         {

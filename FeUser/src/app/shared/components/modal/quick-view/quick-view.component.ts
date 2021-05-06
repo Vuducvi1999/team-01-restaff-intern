@@ -5,7 +5,6 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
-import { ProductService } from '../../../../shared/services/product.service';
 import { FileService } from 'src/app/lib/data/services';
 import { ProductModel } from 'src/app/lib/data/models';
 import { HomeService } from 'src/app/lib/data/services/home/home.service';
@@ -14,7 +13,7 @@ import { HomeService } from 'src/app/lib/data/services/home/home.service';
   selector: 'app-quick-view',
   templateUrl: './quick-view.component.html',
   styleUrls: ['./quick-view.component.scss'],
-  providers: [ProductService],
+  providers: [],
 })
 export class QuickViewComponent implements OnInit, OnDestroy {
 

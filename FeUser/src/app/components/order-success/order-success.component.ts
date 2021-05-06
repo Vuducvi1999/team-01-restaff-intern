@@ -20,6 +20,7 @@ export class OrderSuccessComponent implements OnInit {
 
     this.checkOutOrders = this.route.getCurrentNavigation().extras?.state.data;
     this.checkOutOrderDetails = this.checkOutOrders.orderDetails;
+
   }
 
 

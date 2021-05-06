@@ -10,6 +10,7 @@ import { Router } from "@angular/router";
 
 import { ProductModel } from "src/app/lib/data/models";
 import { FileService } from "src/app/lib/data/services";
+import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import {
   ETypeGridLayout,
   ETypePositionCart,
@@ -17,7 +18,6 @@ import {
   ETypeSizeImage,
   TypeDisplayImage,
 } from "src/app/shared/data";
-import { ProductService } from "src/app/shared/services/product.service";
 import { CartModalComponent } from "../../modal/cart-modal/cart-modal.component";
 import { QuickViewComponent } from "../../modal/quick-view/quick-view.component";
 
@@ -25,6 +25,7 @@ import { QuickViewComponent } from "../../modal/quick-view/quick-view.component"
   selector: "app-product-box",
   templateUrl: "./product-box.component.html",
   styleUrls: ["./product-box.component.scss"],
+  providers:[CartService]
 })
 export class ProductBoxComponent implements OnInit, OnChanges {
   @Input() product: ProductModel;
@@ -44,7 +45,7 @@ export class ProductBoxComponent implements OnInit, OnChanges {
   public ImageSrc: string;
   typeDisplayImage = TypeDisplayImage;
 
-  constructor(private productService: ProductService, private router: Router) {}
+  constructor(private cartService: CartService, private router: Router) { }
   ngOnChanges(changes: SimpleChanges): void {
     this.updateTypeGridLayout();
   }
@@ -110,15 +111,15 @@ export class ProductBoxComponent implements OnInit, OnChanges {
   }
 
   addToCart(product: any) {
-    this.productService.addToCart(product);
+    this.cartService.addToCart(product);
   }
 
   addToWishlist(product: any) {
-    this.productService.addToWishlist(product);
+    this.cartService.addToWishlist(product);
   }
 
   addToCompare(product: any) {
-    this.productService.addToCompare(product);
+    this.cartService.addToCompare(product);
   }
 
   getImage(fileName: string) {

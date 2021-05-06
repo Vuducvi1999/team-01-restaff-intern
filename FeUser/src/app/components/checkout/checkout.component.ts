@@ -14,9 +14,10 @@ import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
 })
 export class CheckoutComponent implements OnInit {
   public products: ProductModel[] = [];
-  public totalPrice: any;
+  public subTotal: any;
+  public totalAmount: any;
   public totalItem: any;
-
+  public couponValue: any;
   public order: OrderModel = new OrderModel();
   constructor(
     public cartService: CartService,
@@ -39,7 +40,7 @@ export class CheckoutComponent implements OnInit {
   }
   calculateTotalPrice() {
     this.cartService.totalAmount.subscribe(response => {
-      this.totalPrice = response;
+      this.subTotal = response;
     });
   }
 
@@ -49,6 +50,7 @@ export class CheckoutComponent implements OnInit {
 
   onSubmit() {
     this.loadModel();
+    console.log(this.order)
     this.orderService.create(this.order).then(
       (resp) => {
         this.cartService.removeAll();
@@ -60,7 +62,7 @@ export class CheckoutComponent implements OnInit {
 
   loadModel() {
     this.order.fullName = `${this.order.firstName} ${this.order.lastName}`;
-    this.order.totalAmount = this.totalPrice;
+    this.order.totalAmount = this.totalAmount;
     this.order.totalItem = this.totalItem;
 
     this.products.forEach(product => {
@@ -79,7 +81,22 @@ export class CheckoutComponent implements OnInit {
       .then((resp) => {
         this.order.couponId = resp.data.id;
         this.order.couponName = resp.data.name;
-        console.log(this.order.couponId);
+        if (resp.data.hasPercent) {
+          this.order.couponPercent = resp.data.value;
+
+          this.order.couponValue = this.subTotal * resp.data.value / 100;
+          this.couponValue = this.order.couponValue;
+          this.totalAmount = this.subTotal - this.couponValue;
+          this.order.totalAmount = this.totalAmount;
+        }
+        if (!resp.data.hasPercent) {
+          this.order.couponValue = resp.data.value;
+
+          this.order.couponPercent = (this.subTotal / resp.data.value) * 100;
+          this.couponValue = this.order.couponValue;
+          this.totalAmount = this.subTotal - this.couponValue;
+          this.order.totalAmount = this.totalAmount;
+        }
       })
       .catch((er) => console.log(er));
 

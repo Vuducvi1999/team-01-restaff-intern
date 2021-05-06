@@ -1,14 +1,11 @@
 import {
   Component,
   OnInit,
-  Injectable,
   PLATFORM_ID,
   Inject,
 } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
-import { Observable } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
-import { ProductService } from "../../services/product.service";
 import { FileService } from "src/app/lib/data/services";
 import { ProductModel } from "src/app/lib/data/models";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
@@ -30,40 +27,41 @@ export class SettingsComponent implements OnInit {
   public userFilter: any = { name: "" };
   public path: any;
   public id: string;
+  public totalAmount: number;
 
-  public languages = [
-    {
-      name: "English",
-      code: "en",
-    },
-    {
-      name: "French",
-      code: "fr",
-    },
-  ];
+  // public languages = [
+  //   {
+  //     name: "English",
+  //     code: "en",
+  //   },
+  //   {
+  //     name: "French",
+  //     code: "fr",
+  //   },
+  // ];
 
-  public currencies = [
-    {
-      name: "Euro",
-      currency: "EUR",
-      price: 0.9, // price of euro
-    },
-    {
-      name: "Rupees",
-      currency: "INR",
-      price: 70.93, // price of inr
-    },
-    {
-      name: "Pound",
-      currency: "GBP",
-      price: 0.78, // price of euro
-    },
-    {
-      name: "Dollar",
-      currency: "USD",
-      price: 1, // price of usd
-    },
-  ];
+  // public currencies = [
+  //   {
+  //     name: "Euro",
+  //     currency: "EUR",
+  //     price: 0.9, // price of euro
+  //   },
+  //   {
+  //     name: "Rupees",
+  //     currency: "INR",
+  //     price: 70.93, // price of inr
+  //   },
+  //   {
+  //     name: "Pound",
+  //     currency: "GBP",
+  //     price: 0.78, // price of euro
+  //   },
+  //   {
+  //     name: "Dollar",
+  //     currency: "USD",
+  //     price: 1, // price of usd
+  //   },
+  // ];
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -71,12 +69,12 @@ export class SettingsComponent implements OnInit {
     public cartService: CartService,
     public router: Router,
     private activatedRoute: ActivatedRoute,
-    private searchService: SearchService // private productListService: ProductListService
+    private searchService: SearchService 
   ) {
     this.cartService.cartItems.subscribe(
       (response) => (this.products = response)
     );
-    
+    this.cartService.totalAmount.subscribe((response) => (this.totalAmount = response))
   }
 
   ngOnInit(): void {

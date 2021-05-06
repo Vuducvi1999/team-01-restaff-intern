@@ -84,12 +84,12 @@
                       </span></li>
                   </ul>
                   <ul class="sub-total">
-                    <li>Subtotal <span class="count">{{totalPrice | currency:'VND'}}</span></li>
-                    <li>Coupon <span class="count">-{{totalPrice | currency:'VND'}}</span></li>
+                    <li>Subtotal <span class="count">{{subTotal | currency:'VND'}}</span></li>
+                    <li>Coupon <span class="count">-{{couponValue | currency:'VND'}}</span></li>
 
                   </ul>
                   <ul class="total">
-                    <li>Total <span class="count">{{totalPrice | currency:'VND'}}</span></li>
+                    <li>Total <span class="count">{{totalAmount | currency:'VND'}}</span></li>
                   </ul>
                 </div>
                 <div class="payment-box">

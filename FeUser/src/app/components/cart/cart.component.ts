@@ -24,7 +24,9 @@ export class CartComponent implements OnInit, OnChanges {
   }
 
   calculateTotalPrice() {
-    this.totalPrice = this.products.reduce((accumulator, product) => (accumulator + product.price * product.quantity), 0);
+    // this.totalPrice = this.products.reduce((accumulator, product) => (accumulator + product.price * product.quantity), 0);
+    this.cartService.totalAmount.subscribe(response => this.totalPrice = response);
+
   }
   removeItem(product: any) {
     this.cartService.removeCartItem(product);
@@ -36,7 +38,7 @@ export class CartComponent implements OnInit, OnChanges {
     if (product.quantity < 0) {
       product.quantity = 0;
     }
-    localStorage.setItem('cartItems',JSON.stringify(this.products))
+    localStorage.setItem('cartItems', JSON.stringify(this.products))
     this.calculateTotalPrice();
   }
 

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { ProductModel } from '../../models';
 
 
@@ -22,6 +21,7 @@ export class CartService {
   constructor(private toastrService: ToastrService) { }
 
   public get cartItems(): Observable<ProductModel[]> {
+    console.log("getCArt")
     const itemsStream = new Observable(observer => {
       observer.next(state.cart);
       observer.complete();
@@ -49,9 +49,7 @@ export class CartService {
 
     this.OpenCart = true; // If we use cart variation modal
     localStorage.setItem("cartItems", JSON.stringify(state.cart));
-    this.cartTotalAmount().subscribe();
-
-
+    this.cartTotalAmount();
     return true;
   }
 
@@ -65,8 +63,6 @@ export class CartService {
           state.cart[index].quantity = qty
         }
         localStorage.setItem("cartItems", JSON.stringify(state.cart));
-        this.cartTotalAmount().subscribe();
-
         return true
       }
     })
@@ -88,39 +84,57 @@ export class CartService {
     const index = state.cart.indexOf(product);
     state.cart.splice(index, 1);
     localStorage.setItem("cartItems", JSON.stringify(state.cart));
-    this.cartTotalAmount().subscribe();
-    
-
+    this.cartTotalAmount();
     return true
   }
 
   public removeAll(): any {
     state.cart.splice(0);
     localStorage.setItem("cartItems", JSON.stringify(state.cart));
-    this.cartTotalAmount().subscribe();
-
+    this.cartTotalAmount();
     return true
   }
 
   // Total amount 
-  public cartTotalAmount(): Observable<number> {
-    return this.cartItems.pipe(map((product: ProductModel[]) => {
-      return product.reduce((prev, curr: ProductModel) => {
+  public cartTotalAmount() {
+    // return this.cartItems.pipe(map((product: ProductModel[]) => {
+    //   return product.reduce((prev, curr: ProductModel) => {
+    //     if (curr) {
+    //       // if (curr.discount) {
+    //       //   price = curr.price - (curr.price * curr.discount / 100)
+    //       // }
+    //       // return (prev + price * curr.quantity) * this.Currency.price;
+    //       state.totalAmount = prev + curr.price * curr.quantity;
+    //       localStorage.setItem("totalAmount", String(state.totalAmount));
+    //       return prev + curr.price * curr.quantity;
+    //     }
+    //     return 0;
+    //   }, 0);
+    // }));
+    this.cartItems.subscribe((response: ProductModel[]) => {
+      if (response.length == 0) {
+        return localStorage.setItem("totalAmount", String(0));
+      }
+      response.reduce((prev, curr: ProductModel) => {
         if (curr) {
           // if (curr.discount) {
           //   price = curr.price - (curr.price * curr.discount / 100)
           // }
           // return (prev + price * curr.quantity) * this.Currency.price;
-          state.totalAmount=prev + curr.price * curr.quantity;
-          localStorage.setItem("totalAmount",state.totalAmount);
+          state.totalAmount = prev + curr.price * curr.quantity;
+          localStorage.setItem("totalAmount", String(state.totalAmount));
           return prev + curr.price * curr.quantity;
         }
+
         return 0;
       }, 0);
-    }));
+    }
+    )
+
   }
 
   public get totalAmount(): Observable<number> {
+    console.log("totalCartMaount")
     this.cartTotalAmount();
     const itemsStream = new Observable(observer => {
       observer.next(state.totalAmount);
@@ -128,5 +142,80 @@ export class CartService {
     });
     return <Observable<number>>itemsStream;
   }
+
+  /*
+     ---------------------------------------------
+     ---------------  Wish List  -----------------
+     ---------------------------------------------
+   */
+
+  // Get Wishlist Items
+  public get wishlistItems(): Observable<ProductModel[]> {
+    const itemsStream = new Observable(observer => {
+      observer.next(state.wishlist);
+      observer.complete();
+    });
+    return <Observable<ProductModel[]>>itemsStream;
+  }
+
+  // Add to Wishlist
+  public addToWishlist(product): any {
+    const wishlistItem = state.wishlist.find(item => item.id === product.id)
+    if (!wishlistItem) {
+      state.wishlist.push({
+        ...product
+      })
+    }
+    this.toastrService.success('Product has been added in wishlist.');
+    localStorage.setItem("wishlistItems", JSON.stringify(state.wishlist));
+    return true
+  }
+
+  // Remove Wishlist items
+  public removeWishlistItem(product: ProductModel): any {
+    const index = state.wishlist.indexOf(product);
+    state.wishlist.splice(index, 1);
+    localStorage.setItem("wishlistItems", JSON.stringify(state.wishlist));
+    return true
+  }
+
+  /*
+    ---------------------------------------------
+    -------------  Compare Product  -------------
+    ---------------------------------------------
+  */
+
+  // Get Compare Items
+  public get compareItems(): Observable<ProductModel[]> {
+    const itemsStream = new Observable(observer => {
+      observer.next(state.compare);
+      observer.complete();
+    });
+    return <Observable<ProductModel[]>>itemsStream;
+  }
+
+  // Add to Compare
+  public addToCompare(product): any {
+    const compareItem = state.compare.find(item => item.id === product.id)
+    if (!compareItem) {
+      state.compare.push({
+        ...product
+      })
+    }
+    this.toastrService.success('Product has been added in compare.');
+    localStorage.setItem("compareItems", JSON.stringify(state.compare));
+    return true
+  }
+
+  // Remove Compare items
+  public removeCompareItem(product: ProductModel): any {
+    const index = state.compare.indexOf(product);
+    state.compare.splice(index, 1);
+    localStorage.setItem("compareItems", JSON.stringify(state.compare));
+    return true
+  }
+
+
+
 
 }
