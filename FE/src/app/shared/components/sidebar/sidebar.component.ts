@@ -8,7 +8,8 @@ import { NavService, Menu } from '../../service/nav.service';
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: []
 })
 export class SidebarComponent implements OnInit {
 

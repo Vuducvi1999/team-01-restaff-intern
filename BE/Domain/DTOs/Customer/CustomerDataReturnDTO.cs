@@ -8,6 +8,7 @@ namespace Domain.DTOs.Customer
     public class CustomerDataReturnDTO
     {
         public Guid Id { get; set; }
+        public Guid CustomerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Address { get; set; }

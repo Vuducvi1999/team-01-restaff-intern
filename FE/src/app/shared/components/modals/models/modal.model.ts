@@ -9,8 +9,8 @@ export class ModalHeaderModel {
 export class ModalFooterModel {
   public title = '';
   public color = '';
-  public buttons: ModalButtonModel[];
-  constructor() {}
+  public buttons : ModalButtonModel[];
+  constructor() { }
 }
 
 export class ModalButtonModel {

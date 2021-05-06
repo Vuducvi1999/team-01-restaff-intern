@@ -136,7 +136,7 @@ namespace Service.Files
 
         public ReturnMessage<List<FileDTO>> UpdateIdFile(List<FileDTO> fileIds, Guid entityId)
         {
-            if (fileIds.IsNullOrEmpty() || entityId.IsNullOrEmpty())
+            if (fileIds.IsNullOrEmpty() || entityId.IsNullOrEmpty() || entityId == Guid.Empty)
             {
                 return new ReturnMessage<List<FileDTO>>(true, null, MessageConstants.Error);
             }
