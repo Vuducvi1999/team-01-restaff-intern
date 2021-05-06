@@ -132,7 +132,7 @@ export class ProductBoxComponent implements OnInit, OnChanges {
       customerId: user.id,
       productId: product.id,
     };
-    this.wishListService.create(model);
+    this.wishListService.create(model).catch((e) => console.log(e));
   }
 
   addToCompare(product: any) {

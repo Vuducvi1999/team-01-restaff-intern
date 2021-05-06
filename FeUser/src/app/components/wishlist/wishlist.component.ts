@@ -14,33 +14,32 @@ import {
   CustomerWishListModel,
   DeleteCustomerWishListModel,
 } from "src/app/lib/data/models/customerWishList/customerWishList.model";
+import { CartService } from "src/app/lib/data/services/cart/cart.service";
 
 @Component({
   selector: "app-wishlist",
   templateUrl: "./wishlist.component.html",
   styleUrls: ["./wishlist.component.scss"],
-  providers: [CustomerWishListService],
+  providers: [CustomerWishListService, CartService],
 })
 export class WishlistComponent implements OnInit {
   products: ProductModel[] = [];
   typeDisplayImage = TypeDisplayImage;
 
   constructor(
-    private router: Router,
     private wishListService: CustomerWishListService,
+    public cartService: CartService,
     public productService: ProductService
-  ) {}
+  ) {
+    this.cartService.cartItems.subscribe();
+  }
 
   ngOnInit(): void {
     this.getList();
   }
 
-  async addToCart(product: any) {
-    const status = await this.productService.addToCart(product);
-    if (status) {
-      this.router.navigate(["/shop/cart"]);
-      this.removeItem(product);
-    }
+  addToCart(product: any) {
+    this.cartService.addToCart(product);
   }
 
   getList() {
@@ -54,7 +53,7 @@ export class WishlistComponent implements OnInit {
   }
 
   removeItem(product: any) {
-    this.productService.removeWishlistItem(product);
+    // this.cartService.removeWishlistItem(product);
 
     const user: UserModel = JSON.parse(localStorage.getItem("user"));
     const model: DeleteCustomerWishListModel = {
@@ -69,9 +68,8 @@ export class WishlistComponent implements OnInit {
   }
 
   checkStock(product: ProductModel) {
-    const cartItems: ProductModel[] = JSON.parse(
-      localStorage.getItem("cartItems")
-    );
+    const cartItems: ProductModel[] =
+      JSON.parse(localStorage.getItem("cartItems")) ?? [];
 
     return cartItems.some((i) => product.id == i.id);
   }

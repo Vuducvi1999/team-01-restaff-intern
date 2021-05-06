@@ -47,7 +47,7 @@
                 <div class="mobile-cart-content row">
                   <div class="col-xs-3">
                     <p>
-                      {{ checkStock(product) ? "in stock" : "out of stock" }}
+                      {{ checkStock(product) ? "in cart" : "out cart" }}
                     </p>
                   </div>
                   <div class="col-xs-3">
@@ -60,12 +60,12 @@
                       <a
                         href="javascript:void(0)"
                         (click)="removeItem(product)"
-                        class="icon mr-1"
+                        class="icon mb-2"
                       >
                         <i class="ti-close"></i>
                       </a>
                       <a
-                        [routerLink]="['/shop/cart']"
+                        href="javascript:void(0)"
                         (click)="addToCart(product)"
                         class="cart"
                       >
@@ -77,13 +77,11 @@
               </td>
               <td>
                 <h2>
-                  {{
-                    product?.price | currency: productService?.Currency:"symbol"
-                  }}
+                  {{ product?.price | currency: "VND":"symbol" }}
                 </h2>
               </td>
               <td>
-                {{ checkStock(product) ? "in stock" : "out of stock" }}
+                {{ checkStock(product) ? "in cart" : "out cart" }}
               </td>
               <td>
                 <a
@@ -108,12 +106,10 @@
     </div>
     <div class="row wishlist-buttons" *ngIf="products.length">
       <div class="col-12">
-        <a
-          [routerLink]="['/shop/collection/left/sidebar']"
-          class="btn btn-solid"
+        <a [routerLink]="['/product']" class="btn btn-solid"
           >continue shopping</a
         >
-        <a [routerLink]="['/shop/checkout']" class="btn btn-solid">check out</a>
+        <a [routerLink]="['/cart']" class="btn btn-solid">view cart</a>
       </div>
     </div>
   </div>
