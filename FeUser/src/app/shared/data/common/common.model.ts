@@ -41,14 +41,16 @@ export enum TypeDisplayImage {
   BLOG_DETAIL,
   LOGO_IMAGE,
   WISHLIST_IMAGE,
+  SETTING_IMAGE,
 }
 
 export const TemplateType = {
   Display: {
-    [TypeDisplayImage.BLOG_IMAGE]: "blogImage classic-effect",
+    [TypeDisplayImage.BLOG_IMAGE]: "blogImage",
     [TypeDisplayImage.PRODUCT_IMAGE]: "productImage",
     [TypeDisplayImage.BLOG_DETAIL]: "blog-detail",
     [TypeDisplayImage.LOGO_IMAGE]: "logo-image",
     [TypeDisplayImage.WISHLIST_IMAGE]: "wish-list-image",
+    [TypeDisplayImage.SETTING_IMAGE]: "setting-image",
   },
 };

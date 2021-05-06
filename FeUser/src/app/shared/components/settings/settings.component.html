@@ -96,11 +96,13 @@
         <li *ngFor="let product of products">
           <div class="media">
             <a [routerLink]="['/shop/product/left/sidebar/', product.name]">
-              <img
-                class="mr-3"
-                [src]="getImage(product?.imageUrl.split(',')[0])"
-                [alt]="product?.categoryName"
-              />
+              <app-image-wapper
+                [data]="{
+                  url: getImage(product?.imageUrl.split(',')[0]),
+                  typeClass: typeDisPlayImage.SETTING_IMAGE,
+                  class: 'mr-3'
+                }"
+              ></app-image-wapper>
             </a>
             <div class="media-body">
               <a [routerLink]="['/shop/product/left/sidebar/', product.name]">

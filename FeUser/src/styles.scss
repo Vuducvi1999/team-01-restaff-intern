@@ -4,9 +4,9 @@
   width: 340px;
 }
 
-div.image-wrapper .blogImage {
-  height: 300px;
-  width: 340px;
+.blogImage {
+  height: 300px !important;
+  width: 340px !important;
 }
 
 .logo-image {
@@ -22,6 +22,11 @@ div.image-wrapper .blogImage {
 
 .blog-detail {
   width: 50%;
+}
+
+.setting-image {
+  width: 50px !important;
+  height: 50px !important;
 }
 
 .wish-list-image {

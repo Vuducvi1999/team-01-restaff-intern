@@ -14,6 +14,7 @@ import { ProductModel } from "src/app/lib/data/models";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SearchService } from "src/app/lib/data/services/search/search.service";
+import { TypeDisplayImage } from "../../data";
 
 @Component({
   selector: "app-settings",
@@ -30,6 +31,7 @@ export class SettingsComponent implements OnInit {
   public userFilter: any = { name: "" };
   public path: any;
   public id: string;
+  public typeDisPlayImage = TypeDisplayImage;
 
   public languages = [
     {
