@@ -9,7 +9,8 @@ const state = {
   products: JSON.parse(localStorage['products'] || '[]'),
   wishlist: JSON.parse(localStorage['wishlistItems'] || '[]'),
   compare: JSON.parse(localStorage['compareItems'] || '[]'),
-  cart: JSON.parse(localStorage['cartItems'] || '[]')
+  cart: JSON.parse(localStorage['cartItems'] || '[]'),
+  totalAmount: JSON.parse(localStorage['totalAmount'] || '0'),
 }
 
 
@@ -48,6 +49,9 @@ export class CartService {
 
     this.OpenCart = true; // If we use cart variation modal
     localStorage.setItem("cartItems", JSON.stringify(state.cart));
+    this.cartTotalAmount().subscribe();
+
+
     return true;
   }
 
@@ -61,6 +65,8 @@ export class CartService {
           state.cart[index].quantity = qty
         }
         localStorage.setItem("cartItems", JSON.stringify(state.cart));
+        this.cartTotalAmount().subscribe();
+
         return true
       }
     })
@@ -82,12 +88,17 @@ export class CartService {
     const index = state.cart.indexOf(product);
     state.cart.splice(index, 1);
     localStorage.setItem("cartItems", JSON.stringify(state.cart));
+    this.cartTotalAmount().subscribe();
+    
+
     return true
   }
 
   public removeAll(): any {
     state.cart.splice(0);
     localStorage.setItem("cartItems", JSON.stringify(state.cart));
+    this.cartTotalAmount().subscribe();
+
     return true
   }
 
@@ -95,13 +106,27 @@ export class CartService {
   public cartTotalAmount(): Observable<number> {
     return this.cartItems.pipe(map((product: ProductModel[]) => {
       return product.reduce((prev, curr: ProductModel) => {
-        // if (curr.discount) {
-        //   price = curr.price - (curr.price * curr.discount / 100)
-        // }
-        // return (prev + price * curr.quantity) * this.Currency.price;
-        return prev + curr.price * curr.quantity;
+        if (curr) {
+          // if (curr.discount) {
+          //   price = curr.price - (curr.price * curr.discount / 100)
+          // }
+          // return (prev + price * curr.quantity) * this.Currency.price;
+          state.totalAmount=prev + curr.price * curr.quantity;
+          localStorage.setItem("totalAmount",state.totalAmount);
+          return prev + curr.price * curr.quantity;
+        }
+        return 0;
       }, 0);
     }));
+  }
+
+  public get totalAmount(): Observable<number> {
+    this.cartTotalAmount();
+    const itemsStream = new Observable(observer => {
+      observer.next(state.totalAmount);
+      observer.complete();
+    });
+    return <Observable<number>>itemsStream;
   }
 
 }

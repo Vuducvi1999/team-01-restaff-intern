@@ -35,13 +35,11 @@ export class CheckoutComponent implements OnInit {
   loadCartItems() {
     this.cartService.cartItems.subscribe(response => {
       this.products = response;
-
     });
   }
   calculateTotalPrice() {
-    this.cartService.cartTotalAmount().subscribe(resp => {
-      console.log(resp)
-      this.totalPrice = resp
+    this.cartService.totalAmount.subscribe(response => {
+      this.totalPrice = response;
     });
   }
 

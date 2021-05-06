@@ -76,6 +76,7 @@ export class SettingsComponent implements OnInit {
     this.cartService.cartItems.subscribe(
       (response) => (this.products = response)
     );
+    
   }
 
   ngOnInit(): void {
@@ -92,11 +93,6 @@ export class SettingsComponent implements OnInit {
       this.translate.use(code);
     }
   }
-
-  get getTotal(): Observable<number> {
-    return this.cartService.cartTotalAmount();
-  }
-
   removeItem(product: any) {
     this.cartService.removeCartItem(product);
   }
