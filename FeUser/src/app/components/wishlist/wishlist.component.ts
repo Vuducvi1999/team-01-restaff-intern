@@ -28,8 +28,7 @@ export class WishlistComponent implements OnInit {
 
   constructor(
     private wishListService: CustomerWishListService,
-    public cartService: CartService,
-    public productService: ProductService
+    public cartService: CartService
   ) {
     this.cartService.cartItems.subscribe();
   }
@@ -48,7 +47,6 @@ export class WishlistComponent implements OnInit {
       .getByCustomer(user.id)
       .then((data: ReturnMessage<ProductModel[]>) => {
         this.products = data.data;
-        console.log("wishlist:", data.data);
       });
   }
 
