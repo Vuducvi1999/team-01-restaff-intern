@@ -129,7 +129,7 @@ export class ProductDetailsComponent implements OnInit {
       ],
       imageUrl: [this.item ? this.item.imageUrl : ''],
       price: [this.item ? this.item.price : this.item,
-         [Validators.required, Validators.min(1), Validators.max(9999999999)]
+         [Validators.required, Validators.min(1), Validators.max(9999999999), Validators.pattern('[0-9]*')]
       ],
       category: [
         this.item ? this.item.categoryId : '',
@@ -137,7 +137,7 @@ export class ProductDetailsComponent implements OnInit {
       ],
       displayOrder: [
         this.item ? this.item.displayOrder : 1,
-        [Validators.required, Validators.min(1), Validators.max(10)],
+        [Validators.required, Validators.min(1), Validators.max(10), Validators.pattern('[0-9]*')],
       ],
       hasDisplayHomePage: [this.item ? this.item.hasDisplayHomePage : false],
       isImportant: [this.item ? this.item.isImportant : false],
