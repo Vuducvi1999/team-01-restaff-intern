@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Data
 {
@@ -26,25 +27,7 @@ namespace Data
                         Username = "admin",
                         Password = "E10ADC3949BA59ABBE56E057F20F883E",
                     });
-                }
-                if(!await ctx.Categories.AnyAsync() && !await ctx.Products.AnyAsync())
-                {
-                    var categories = new List<Category>();
-                    for(int i = 0; i < 10; i++)
-                    {
-                        categories.Add(new Category()
-                        {
-                            Name = "Category" + i,
-                            Description = "Hello kitty..."
-                        });
-                    }
-                    ctx.Categories.AddRange(categories);
-
-                    for(int i = 0; i < 100; i++)
-                    {
-
-                    }
-
+                    ctx.SaveChanges();
                 }
                 if (!await ctx.PageContents.AnyAsync())
                 {
@@ -61,7 +44,7 @@ namespace Data
                     ctx.InformationWebsites.Add(new InformationWebsite()
                     {
                         Id = CommonConstants.WebSiteInformationId,
-                        Address = "123 Hai Ba Trung",
+                        Address = "67 Tran Huy Lieu",
                         Email = "email@gmail.com",
                         Fax = "656565655656",
                         Logo = "logo1",
@@ -72,36 +55,47 @@ namespace Data
                     });
                     ctx.SaveChanges();
                 }
-                //if (!await ctx.Categories.AnyAsync())
-                //{
-                //    for(int i = 0; i <= 10; i++)
-                //    {
-                //        ctx.Categories.Add(new Category()
-                //        {
-                //            Name = "Category " + i,
-                //            Description = "Description for Category " + i,
-                //            ImageUrl = ,
-                //            CreateByDate = DateTime.Now,
-                //            IsActive = true,
-                //            ObjectState = Infrastructure.EntityFramework.ObjectState.Added
-                //        });
-                //    }
+                if (!await ctx.Categories.AnyAsync())
+                {
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        ctx.Categories.Add(new Category()
+                        {
+                            Name = "Category " + i,
+                            Description = "Description for Category " + i,
+                            ImageUrl = "https://res.cloudinary.com/tungimage/image/upload/v1620233950/pyv3241siykegow7phjf.jpg",
+                            CreateByDate = DateTime.Now,
+                            IsActive = true,
+                            ObjectState = Infrastructure.EntityFramework.ObjectState.Added
+                        });
+                        ctx.SaveChanges();
+                    }
 
-                //    ctx.SaveChanges();
-                //}
-                //if (!await ctx.Products.AnyAsync())
-                //{
-                //    for(int i = 0; i <= 50; i++)
-                //    {
-                //        ctx.Products.Add(new Product()
-                //        {
-
-                //            ObjectState = Infrastructure.EntityFramework.ObjectState.Added
-                //        });
-                //    }
-
-                //    ctx.SaveChanges();
-                //}
+                    
+                }
+                if (!await ctx.Products.AnyAsync())
+                {
+                    for (int i = 1; i <= 50; i++)
+                    {
+                        ctx.Products.Add(new Product()
+                        {
+                            Name = "Product " + i,
+                            Description = "Description for Product " + i,
+                            ContentHTML = "Content for Product " + i,
+                            CategoryId = ctx.Categories.Select(r => r.Id).First(),
+                            Price = 1000000,
+                            DisplayOrder = 1,
+                            IsImportant = false,
+                            IsDeleted = false,
+                            CreateByDate = DateTime.Now,
+                            IsActive = true,
+                            HasDisplayHomePage = false,
+                            ImageUrl = "https://res.cloudinary.com/tungimage/image/upload/v1620230565/x1kv8vatwdtebbjnzkdv.jpg,https://res.cloudinary.com/tungimage/image/upload/v1620233950/pyv3241siykegow7phjf.jpg",
+                            ObjectState = Infrastructure.EntityFramework.ObjectState.Added
+                        });
+                        ctx.SaveChanges();
+                    }
+                }
 
             }
             catch (Exception ex)

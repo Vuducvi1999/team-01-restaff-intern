@@ -36,7 +36,7 @@ export class ListCategoriesComponent implements OnInit {
       columns: 
       {
         imageUrl: {
-          title: 'ImageURL',
+          title: 'Image',
           type: 'html',
           filter: false,
           valuePrepareFunction: (file) => {

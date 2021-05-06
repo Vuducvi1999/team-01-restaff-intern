@@ -120,7 +120,6 @@ export class ProfileSettingsComponent implements OnInit {
         .then((resp) => {
           this.passwordForm.reset();
           window.alert(resp.message);
-          console.log(resp);
         })
         .catch((er) => {
           if (er.error.hasError) {
@@ -161,7 +160,6 @@ export class ProfileSettingsComponent implements OnInit {
   }
 
   get getImage() {
-    console.log("get image");
     return FileService.getLinkFile(this.userInfo.imageUrl);
   }
 }
