@@ -8,13 +8,13 @@
     <div class="row">
       <div class="col-sm-12 blog-detail">
         <!-- <img [src]="getImage(data.imageUrl)" class="img-fluid" alt="" /> -->
-        <app-image-wapper
+        <app-image-wrapper
           [data]="{
             title: data.title,
             url: getImage(data.imageUrl),
             typeClass: typeDisplayImage.BLOG_DETAIL
           }"
-        ></app-image-wapper>
+        ></app-image-wrapper>
         <h3>
           {{ data?.title }}
         </h3>

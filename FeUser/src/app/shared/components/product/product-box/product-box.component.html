@@ -9,13 +9,13 @@
         [routerLink]="['/product-details']"
         [queryParams]="{ id: product?.id }"
       >
-        <app-image-wapper
+        <app-image-wrapper
           [data]="{
             title: product.name,
             url: getImage(product.imageUrl.split(',')[0]),
             typeClass: typeDisplayImage.HOME_PRODUCT_IMAGE
           }"
-        ></app-image-wapper>
+        ></app-image-wrapper>
       </a>
     </div>
     <div class="back" *ngIf="onHowerChangeImage">

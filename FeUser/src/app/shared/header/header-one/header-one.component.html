@@ -62,13 +62,13 @@
             <app-left-menu></app-left-menu>
             <div class="brand-logo">
               <a routerLink="/home" id="headerlogo">
-                <app-image-wapper
+                <app-image-wrapper
                   *ngIf="headerModel.informationWeb.logo"
                   [data]="{
                     url: getIcon(headerModel.informationWeb.logo),
                     typeClass: typeDisplayImage.LOGO_IMAGE
                   }"
-                ></app-image-wapper>
+                ></app-image-wrapper>
               </a>
             </div>
           </div>

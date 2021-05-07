@@ -4,13 +4,13 @@
       <div class="">
         <a [routerLink]="['/blog/', blog.id]">
           <div class="classic-effect">
-            <app-image-wapper
+            <app-image-wrapper
               [data]="{
                 title: blog.title,
                 url: getImage(blog.imageUrl),
                 typeClass: typeDisplayImage.BLOG_IMAGE
               }"
-            ></app-image-wapper>
+            ></app-image-wrapper>
             <span></span>
           </div>
         </a>

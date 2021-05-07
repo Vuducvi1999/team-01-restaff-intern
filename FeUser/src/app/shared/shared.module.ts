@@ -50,7 +50,7 @@ import { HomeComponent } from "../components/home/home.component";
 import { ProductBoxComponent } from "./components/product/product-box/product-box.component";
 
 import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
-import { ImageWrapperComponent } from "./components/imageWrapper/imageWapper.component";
+import { ImageWrapperComponent } from "./components/imageWrapper/imageWrapper.component";
 import { UploadFileComponent } from "./components/upload-file/upload-file.component";
 import { FilterPipeModule } from "ngx-filter-pipe";
 import { SearchService } from "../lib/data/services/search/search.service";

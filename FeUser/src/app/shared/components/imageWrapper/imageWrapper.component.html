@@ -4,6 +4,6 @@
     [lazyLoad]="data.url"
     class="img-fluid lazy-loading"
     [alt]="data.title"
-    [ngClass]="[templateType[data.typeClass], data.class]"
+    [ngClass]="[templateType[data.typeClass], data?.class ? data.class : '']"
   />
 </div>

@@ -30,12 +30,12 @@
                   [routerLink]="['/product-details']"
                   [queryParams]="{ id: product?.id }"
                 >
-                  <app-image-wapper
+                  <app-image-wrapper
                     [data]="{
-                      url: getImage(product?.imageUrl),
+                      url: getImage(product?.imageUrl.split(',')[0]),
                       typeClass: typeDisplayImage.WISHLIST_IMAGE
                     }"
-                  ></app-image-wapper>
+                  ></app-image-wrapper>
                 </a>
               </td>
               <td>
