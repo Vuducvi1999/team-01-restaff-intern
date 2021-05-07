@@ -10,7 +10,7 @@ namespace Common.Constants
         public static string Address = "67 Tran Huy Lieu";
         public static string Email = "email@gmail.com";
         public static string Fax = "656565655656";
-        public static string Logo = "logo1";
+        public static string Logo = "https://res.cloudinary.com/tungimage/image/upload/v1620372703/ridn0zmlny900h2sjlmh.png";
         public static string Phone = "776767776767";
 
     }
