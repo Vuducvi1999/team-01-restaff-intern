@@ -44,11 +44,11 @@ namespace Data
                     ctx.InformationWebsites.Add(new InformationWebsite()
                     {
                         Id = CommonConstants.WebSiteInformationId,
-                        Address = "67 Tran Huy Lieu",
-                        Email = "email@gmail.com",
-                        Fax = "656565655656",
-                        Logo = "logo1",
-                        Phone = "776767776767",
+                        Address = CommonConstants.Address,
+                        Email = CommonConstants.Email,
+                        Fax = CommonConstants.Fax,
+                        Logo = CommonConstants.Logo,
+                        Phone = CommonConstants.Phone,
                         CreateByDate = DateTime.Now,
                         IsActive = true,
                         ObjectState = Infrastructure.EntityFramework.ObjectState.Added
@@ -61,9 +61,9 @@ namespace Data
                     {
                         ctx.Categories.Add(new Category()
                         {
-                            Name = "Category " + i,
-                            Description = "Description for Category " + i,
-                            ImageUrl = "https://res.cloudinary.com/tungimage/image/upload/v1620233950/pyv3241siykegow7phjf.jpg",
+                            Name = CommonConstantsCategory.Name + i,
+                            Description = CommonConstantsCategory.Description + i,
+                            ImageUrl = CommonConstantsCategory.ImageUrl,
                             CreateByDate = DateTime.Now,
                             IsActive = true,
                             ObjectState = Infrastructure.EntityFramework.ObjectState.Added
@@ -79,18 +79,18 @@ namespace Data
                     {
                         ctx.Products.Add(new Product()
                         {
-                            Name = "Product " + i,
-                            Description = "Description for Product " + i,
-                            ContentHTML = "Content for Product " + i,
+                            Name = CommonConstantsUser.Name + i,
+                            Description = CommonConstantsUser.Description + i,
+                            ContentHTML = CommonConstantsUser.ContentHTML + i,
                             CategoryId = ctx.Categories.Select(r => r.Id).First(),
-                            Price = 1000000,
-                            DisplayOrder = 1,
+                            Price = CommonConstantsUser.Price,
+                            DisplayOrder = CommonConstantsUser.DisplayOrder,
                             IsImportant = false,
                             IsDeleted = false,
                             CreateByDate = DateTime.Now,
                             IsActive = true,
                             HasDisplayHomePage = false,
-                            ImageUrl = "https://res.cloudinary.com/tungimage/image/upload/v1620230565/x1kv8vatwdtebbjnzkdv.jpg,https://res.cloudinary.com/tungimage/image/upload/v1620233950/pyv3241siykegow7phjf.jpg",
+                            ImageUrl = CommonConstantsUser.ImageUrl,
                             ObjectState = Infrastructure.EntityFramework.ObjectState.Added
                         });
                         ctx.SaveChanges();
