@@ -19,7 +19,9 @@ import {
   ProductModel,
   ReturnMessage,
 } from "src/app/lib/data/models";
-import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr, 'fr');
 
 @Component({
   selector: "app-product-details",
