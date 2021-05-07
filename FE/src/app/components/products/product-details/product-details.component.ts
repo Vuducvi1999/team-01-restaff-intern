@@ -32,7 +32,7 @@ export class ProductDetailsComponent implements OnInit {
   public product: ProductModel;
   public categories: CategoryModel[];
   public item: ProductModel;
-
+  public regex: string = "^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ]*$";
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];
   submitted = false;
@@ -118,15 +118,13 @@ export class ProductDetailsComponent implements OnInit {
     this.productsForm = this.formBuilder.group({
       name: [this.item ? this.item.name : '', 
       [Validators.required, Validators.minLength(3), Validators.maxLength(50),
-       Validators.pattern(
-         '^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ]*$')
+       Validators.pattern(this.regex)
       ]
     ],
       description: [
         this.item ? this.item.description : '',
         [Validators.required, Validators.maxLength(100),
-         Validators.pattern(
-           '^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ]*$')
+         Validators.pattern(this.regex)
         ]
       ],
       contentHTML: [
