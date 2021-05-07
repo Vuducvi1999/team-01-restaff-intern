@@ -21,6 +21,7 @@ import {
 } from "src/app/lib/data/models";
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { TypeDisplayImage } from "src/app/shared/data";
 registerLocaleData(localeFr, 'fr');
 
 @Component({
@@ -36,6 +37,7 @@ export class ProductDetailsComponent implements OnInit {
   public ImageSrc: string;
   public id: string;
   public dataComment: CommentPassingModel;
+  public typeDisplayImage = TypeDisplayImage;
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
 
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
