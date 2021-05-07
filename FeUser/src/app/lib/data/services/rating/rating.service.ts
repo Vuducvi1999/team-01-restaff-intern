@@ -14,4 +14,15 @@ export class RatingService {
   update(request: any) {
     return this.httpClient.putObservable(this.url, request).toPromise();
   }
+
+  save(model: any) {
+    if (model.id) {
+      return this.update(model);
+    }
+    return this.create(model);
+  }
+
+  get(id: any) {
+    return this.httpClient.getObservable(this.url, id).toPromise();
+  }
 }

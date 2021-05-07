@@ -1,6 +1,5 @@
-import { BaseModel } from "../common";
-
-export interface RatingModel extends BaseModel {
+export interface RatingModel {
+  id: string;
   rating: number;
   customerId: string;
   productId: string;

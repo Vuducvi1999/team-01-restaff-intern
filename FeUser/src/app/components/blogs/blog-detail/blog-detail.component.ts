@@ -36,7 +36,6 @@ export class BlogDetailComponent implements OnInit {
         .getBlog(this.id)
         .then((res: ReturnMessage<BlogModel>) => {
           this.data = res.data;
-          console.log(this.data);
         });
     });
   }

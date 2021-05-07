@@ -47,8 +47,15 @@ namespace BE.ControllersFeUser
             var result = _productDetailsFeService.UpdateRating(model);
             return CommonResponse(result);
         }
+        [Authorize]
+        [HttpGet(UrlConstants.BaseRating)]
+        public IActionResult GetRating([FromQuery]Guid id)
+        {
+            var claims = HttpContext.User.Claims;
+            var result = _productDetailsFeService.GetRating(claims, id);
+            return CommonResponse(result);
+        }
 
-        
     }
 
 }

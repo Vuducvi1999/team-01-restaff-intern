@@ -20,13 +20,15 @@ import {
   ReturnMessage,
 } from "src/app/lib/data/models";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { RatingService } from "src/app/lib/data/services/rating/rating.service";
+import { RatingModel } from "src/app/lib/data/models/rating/rating.model";
 
 @Component({
   selector: "app-product-details",
   templateUrl: "./product-details.component.html",
   styleUrls: ["./product-details.component.scss"],
-  providers: [ProductDetailsService],
+  providers: [ProductDetailsService, RatingService],
   styles: [
     `
       .star {
@@ -57,19 +59,25 @@ export class ProductDetailsComponent implements OnInit {
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
   public ProductDetailsThumbConfig: any = ProductDetailsThumbSlider;
 
-  public currentRate = 1;
+  public currentRate: number;
   public token: string;
+  public ratingForm: FormGroup;
+  public item: any;
+  public ratingModel: RatingModel;
+
   constructor(
     private productService: ProductDetailsService,
     private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder
-  ) {
+    private formBuilder: FormBuilder,
+    private ratingService: RatingService
+  ) {}
+
+  ngOnInit(): void {
     this.token = localStorage.getItem("token");
     this.getProduct();
     this.initDataComment();
+    this.loadFormItem();
   }
-
-  ngOnInit(): void {}
 
   getProduct() {
     this.activatedRoute.queryParams.subscribe((param) => {
@@ -77,6 +85,17 @@ export class ProductDetailsComponent implements OnInit {
         .get(param.id)
         .then((res: ReturnMessage<ProductDetailsModel>) => {
           this.product = res.data;
+        });
+    });
+  }
+
+  getRating() {
+    this.activatedRoute.queryParams.subscribe((param) => {
+      const data = { id: param.id };
+      this.ratingService
+        .get({ params: data })
+        .then((it: ReturnMessage<RatingModel>) => {
+          this.item = it.data;
         });
     });
   }
@@ -96,5 +115,34 @@ export class ProductDetailsComponent implements OnInit {
       entityId: this.activatedRoute.snapshot.queryParamMap.get("id"),
       entityType: "Product",
     };
+  }
+
+  loadFormItem() {
+    this.getRating();
+    console.log(this.item);
+    this.ratingForm = this.formBuilder.group({
+      rating: [this.item ? this.item.rating : 1],
+    });
+    console.log(this.ratingForm.controls.rating.value);
+  }
+
+  saveRating(event: any) {
+    this.ratingModel = {
+      rating: this.ratingForm.controls.rating.value,
+      productId: this.product.id,
+      customerId: localStorage.getItem("user.customerId"),
+      id: this.id ? this.item.id : "",
+    };
+
+    this.ratingService
+      .save(this.ratingModel)
+      .then(() => {
+        this.ratingForm.reset();
+      })
+      .catch((er) => {
+        if (er.console.error) {
+          console.log(er.error.message);
+        }
+      });
   }
 }

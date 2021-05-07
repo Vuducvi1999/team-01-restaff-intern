@@ -97,6 +97,23 @@ namespace Service.ServiceFeUser
             }
         }
 
-
+        public ReturnMessage<ProductRatingDTO> GetRating(IEnumerable<Claim> claims, Guid id)
+        {
+            if (id.IsNullOrEmpty() && id == Guid.Empty)
+            {
+                return new ReturnMessage<ProductRatingDTO>(true, null, MessageConstants.Error);
+            }
+            try 
+            {
+                var userDecompile = _authCustomerUserService.GetInformationToken(claims);
+                var customer = _userRepository.Find(userDecompile.Id);
+                var entity = _productRatingRepository.Queryable().FirstOrDefault(p => p.ProductId == id && p.CustomerId == /*new Guid("c2392707-652e-41e3-80c7-ff85961139aa")*/customer.CustomerId);
+                return new ReturnMessage<ProductRatingDTO>(false, _mapper.Map<ProductRating, ProductRatingDTO>(entity), MessageConstants.DeleteSuccess);
+            }
+            catch(Exception ex)
+            {
+                return new ReturnMessage<ProductRatingDTO>(true, null, ex.Message);
+            }
+        }
     }
 }
