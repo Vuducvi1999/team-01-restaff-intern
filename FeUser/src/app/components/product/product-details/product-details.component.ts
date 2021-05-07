@@ -5,7 +5,10 @@ import {
   CommentPassingModel,
 } from "src/app/lib/data/models/comments/comment.model";
 import { ProductDetailsModel } from "src/app/lib/data/models/products/product-details.model";
-import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
+import {
+  UserDataReturnDTOModel,
+  UserModel,
+} from "src/app/lib/data/models/users/user.model";
 import { FileService } from "src/app/lib/data/services";
 import { ProductDetailsService } from "src/app/lib/data/services/products/product-details.service";
 import { SizeModalComponent } from "src/app/shared/components/modal/size-modal/size-modal.component";
@@ -34,6 +37,8 @@ export class ProductDetailsComponent implements OnInit {
   public ImageSrc: string;
   public id: string;
   public dataComment: CommentPassingModel;
+  public user: UserDataReturnDTOModel;
+
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
 
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
@@ -64,13 +69,11 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   initDataComment() {
-    const user: UserDataReturnDTOModel = JSON.parse(
-      localStorage.getItem("user")
-    );
+    this.user = JSON.parse(localStorage.getItem("user"));
 
     this.dataComment = {
-      fullName: user ? user.firstName + " " + user.lastName : "",
-      customerId: user ? user.id : "",
+      fullName: this.user ? this.user.firstName + " " + this.user.lastName : "",
+      customerId: this.user ? this.user.id : "",
       entityId: this.activatedRoute.snapshot.queryParamMap.get("id"),
       entityType: "Product",
     };

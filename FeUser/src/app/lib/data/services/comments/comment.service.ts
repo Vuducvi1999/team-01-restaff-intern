@@ -8,6 +8,10 @@ export class CommentService {
 
   constructor(private httpClient: HttpClientService) {}
 
+  getAll() {
+    return this.httpClient.getObservable(this.url).toPromise();
+  }
+
   create(model: CommentModel) {
     return this.httpClient.postObservable(this.url, model).toPromise();
   }

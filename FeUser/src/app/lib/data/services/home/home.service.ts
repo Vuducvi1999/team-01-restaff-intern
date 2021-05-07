@@ -14,7 +14,7 @@ const state = {
 @Injectable()
 export class HomeService {
   private url = "/api/home";
-  public Currency = { name: "Dollar", currency: "VND", price: 1 }; // Default Currency
+  public Currency = { name: "Viet Nam dong", currency: "VND", price: 1 }; // Default Currency
   public OpenCart: boolean = false;
 
   constructor(

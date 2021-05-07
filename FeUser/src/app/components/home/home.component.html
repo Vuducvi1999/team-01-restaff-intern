@@ -65,16 +65,19 @@
     <div class="row">
       <div class="col theme-tab">
         <ngb-tabset
+          *ngIf="products.length !== 0"
           [justify]="'center'"
           [type]="'pills'"
           class="tabs tab-title"
         >
           <!-- New Products -->
-          <ngb-tab *ngIf="products.length !== 0">
+          <ngb-tab>
             <ng-template ngbTabTitle>New Products</ng-template>
             <ng-template ngbTabContent>
               <div class="no-slider row">
-                <ng-container *ngFor="let product of products | slice: 0:8">
+                <ng-container
+                  *ngFor="let product of getNewProducts() | slice: 0:8"
+                >
                   <div class="product-box">
                     <app-product-box
                       [product]="product"

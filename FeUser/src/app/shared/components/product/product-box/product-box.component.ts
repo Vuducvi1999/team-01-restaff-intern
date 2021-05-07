@@ -27,6 +27,10 @@ import { ProductService } from "src/app/shared/services/product.service";
 import { CartModalComponent } from "../../modal/cart-modal/cart-modal.component";
 import { QuickViewComponent } from "../../modal/quick-view/quick-view.component";
 
+import { registerLocaleData } from "@angular/common";
+import localeFr from "@angular/common/locales/fr";
+registerLocaleData(localeFr, "fr");
+
 @Component({
   selector: "app-product-box",
   templateUrl: "./product-box.component.html",
