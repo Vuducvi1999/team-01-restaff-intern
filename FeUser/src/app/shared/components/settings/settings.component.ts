@@ -11,6 +11,7 @@ import { ProductModel } from "src/app/lib/data/models";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SearchService } from "src/app/lib/data/services/search/search.service";
+import { CartModel } from "src/app/lib/data/models/cart/cart.model";
 
 @Component({
   selector: "app-settings",
@@ -27,41 +28,7 @@ export class SettingsComponent implements OnInit {
   public userFilter: any = { name: "" };
   public path: any;
   public id: string;
-  public totalAmount: number;
-
-  // public languages = [
-  //   {
-  //     name: "English",
-  //     code: "en",
-  //   },
-  //   {
-  //     name: "French",
-  //     code: "fr",
-  //   },
-  // ];
-
-  // public currencies = [
-  //   {
-  //     name: "Euro",
-  //     currency: "EUR",
-  //     price: 0.9, // price of euro
-  //   },
-  //   {
-  //     name: "Rupees",
-  //     currency: "INR",
-  //     price: 70.93, // price of inr
-  //   },
-  //   {
-  //     name: "Pound",
-  //     currency: "GBP",
-  //     price: 0.78, // price of euro
-  //   },
-  //   {
-  //     name: "Dollar",
-  //     currency: "USD",
-  //     price: 1, // price of usd
-  //   },
-  // ];
+  public cart: CartModel;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -69,12 +36,12 @@ export class SettingsComponent implements OnInit {
     public cartService: CartService,
     public router: Router,
     private activatedRoute: ActivatedRoute,
-    private searchService: SearchService 
+    private searchService: SearchService
   ) {
-    this.cartService.cartItems.subscribe(
-      (response) => (this.products = response)
-    );
-    this.cartService.totalAmount.subscribe((response) => (this.totalAmount = response))
+    this.cartService.cartData.subscribe(
+      (response: CartModel) => {
+        (this.products = response.cartDetails)
+      });
   }
 
   ngOnInit(): void {

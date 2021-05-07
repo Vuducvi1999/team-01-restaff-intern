@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { OrderDetailModel, OrderModel, ProductModel } from 'src/app/lib/data/models';
+import { CartModel } from 'src/app/lib/data/models/cart/cart.model';
 import { CartService } from 'src/app/lib/data/services/cart/cart.service';
 import { CouponService } from 'src/app/lib/data/services/coupons/coupon.service';
 import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
@@ -13,6 +14,7 @@ import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
 
 })
 export class CheckoutComponent implements OnInit {
+  public cart: CartModel;
   public products: ProductModel[] = [];
   public subTotal: any;
   public totalAmount: any;
@@ -29,24 +31,17 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCartItems();
-    this.calculateTotalPrice();
-    this.calculateTotalItem();
   }
 
   loadCartItems() {
-    this.cartService.cartItems.subscribe(response => {
-      this.products = response;
-    });
-  }
-  calculateTotalPrice() {
-    this.cartService.totalAmount.subscribe(response => {
-      this.subTotal = response;
+    this.cartService.cartData.subscribe((cart: CartModel) => {
+      this.products = cart.cartDetails;
+      this.cart = cart;
+      this.subTotal = cart.totalAmount;
     });
   }
 
-  calculateTotalItem() {
-    this.totalItem = this.products.reduce((accumulator, product) => (accumulator + product.quantity), 0);
-  }
+
 
   onSubmit() {
     this.loadModel();
@@ -87,16 +82,14 @@ export class CheckoutComponent implements OnInit {
           this.order.couponValue = this.subTotal * resp.data.value / 100;
           this.couponValue = this.order.couponValue;
           this.totalAmount = this.subTotal - this.couponValue;
-          this.order.totalAmount = this.totalAmount;
+          return this.order.totalAmount = this.totalAmount;
         }
-        if (!resp.data.hasPercent) {
-          this.order.couponValue = resp.data.value;
 
-          this.order.couponPercent = (this.subTotal / resp.data.value) * 100;
+          this.order.couponValue = resp.data.value;
+          this.order.couponPercent = (resp.data.value/this.subTotal ) * 100;
           this.couponValue = this.order.couponValue;
-          this.totalAmount = this.subTotal - this.couponValue;
+          this.totalAmount = (this.cart.totalAmount - this.couponValue)<0? 0:(this.cart.totalAmount - this.couponValue) ;
           this.order.totalAmount = this.totalAmount;
-        }
       })
       .catch((er) => console.log(er));
 
