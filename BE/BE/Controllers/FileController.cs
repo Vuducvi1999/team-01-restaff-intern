@@ -42,18 +42,7 @@ namespace BE.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveFile([FromForm] SaveFileDTO dto)
         {
-
-            if (!DataType.TypeName.ContainsKey(dto.EntityType))
-            {
-                return CommonResponse(new ReturnMessage<List<FileDTO>>(true, null, MessageConstants.EnityTypeError));
-            }
-            dto.EntityType = DataType.TypeName[dto.EntityType];
-
             var saveFiles = await _fileManager.SaveFile(dto);
-            if (saveFiles.Count <= 0)
-            {
-                return CommonResponse(new ReturnMessage<List<FileDTO>>(true, null, MessageConstants.Error));
-            }
             var result = _fileService.Create(saveFiles);
             return CommonResponse(result);
         }
@@ -66,7 +55,7 @@ namespace BE.Controllers
         }
 
         [HttpGet(UrlConstants.BaseFileDownload)]
-        public async Task<FileStreamResult> DownloadFile([FromQuery] string url)
+        public async Task<IActionResult> DownloadFile([FromQuery] string url)
         {
             var fileDownload = await _fileManager.DownloadFile(url);
             return fileDownload;

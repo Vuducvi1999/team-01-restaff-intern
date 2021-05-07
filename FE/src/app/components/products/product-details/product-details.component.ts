@@ -173,8 +173,8 @@ export class ProductDetailsComponent implements OnInit {
     }
 
     if (event.remove) {
-      this.fileURL.forEach((e, i) => {
-        if (e == event.remove) {
+      this.fileURL.forEach((e : string, i) => {
+        if (e.includes(event.remove)) {
           this.fileURL.splice(i, 1);
         }
       });
@@ -184,6 +184,6 @@ export class ProductDetailsComponent implements OnInit {
       this.fileURL = [];
     }
 
-    this.productsForm.controls.imageUrl.setValue(this.fileURL.toString());
+    this.productsForm.controls.imageUrl.setValue(this.fileURL.join(','));
   }
 }

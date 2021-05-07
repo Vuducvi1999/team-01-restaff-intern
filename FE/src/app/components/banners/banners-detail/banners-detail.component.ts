@@ -121,8 +121,8 @@ export class BannersDetailComponent implements OnInit {
     // }
 
     if (event.remove) {
-      this.fileURL.forEach((e, i) => {
-        if (e == event.remove) {
+      this.fileURL.forEach((e : string, i) => {
+        if (e.includes(event.remove)) {
           this.fileURL.splice(i, 1);
         }
       });
@@ -132,6 +132,6 @@ export class BannersDetailComponent implements OnInit {
       this.fileURL = [];
     }
 
-    this.bannersForm.controls.imageUrl.setValue(this.fileURL.toString());
+    this.bannersForm.controls.imageUrl.setValue(this.fileURL.join(','));
   }
 }

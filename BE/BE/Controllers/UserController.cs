@@ -31,15 +31,7 @@ namespace BE.Controllers
         public IActionResult Create([FromBody] CreateUserDTO model)
         {
             var result = _userService.Create(model);
-            if (model.Files.IsNullOrEmpty() || result.HasError)
-            {
-                return CommonResponse(result);
-            }
             var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
-            if (uploadImage.HasError)
-            {
-                return CommonResponse(uploadImage);
-            }
             return CommonResponse(result);
         }
 
@@ -47,15 +39,7 @@ namespace BE.Controllers
         public IActionResult Update([FromBody] UpdateUserDTO model)
         {
             var result = _userService.Update(model);
-            if (model.Files.IsNullOrEmpty() || result.HasError)
-            {
-                return CommonResponse(result);
-            }
             var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
-            if (uploadImage.HasError)
-            {
-                return CommonResponse(uploadImage);
-            }
             return CommonResponse(result);
         }
 

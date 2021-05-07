@@ -125,8 +125,8 @@ export class UserDetailComponent implements OnInit {
     }
 
     if (event.remove) {
-      this.fileURL.forEach((e, i) => {
-        if (e == event.remove) {
+      this.fileURL.forEach((e : string, i) => {
+        if (e.includes(event.remove)) {
           this.fileURL.splice(i, 1);
         }
       });
@@ -136,6 +136,6 @@ export class UserDetailComponent implements OnInit {
       this.fileURL = [];
     }
 
-    this.usersForm.controls.imageUrl.setValue(this.fileURL.toString());
+    this.usersForm.controls.imageUrl.setValue(this.fileURL.join(','));
   }
 }
