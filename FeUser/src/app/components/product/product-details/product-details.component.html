@@ -25,8 +25,12 @@
                     ">
                     <ng-template carouselSlide [id]="i">
                       <div class="owl-thumb" [class.active]="i == activeSlide">
-                        <img [defaultImage]="getImage(image)" [lazyLoad]="getImage(image)" [alt]="getImage(image)"
-                          class="img-fluid" (click)="owlCar.to((activeSlide = i.toString()))" />
+                        <img 
+                        [defaultImage]="getImage(image)" 
+                        [lazyLoad]="getImage(image)" 
+                        [alt]="getImage(image)"
+                        class="img-fluid" 
+                        (click)="owlCar.to((activeSlide = i.toString()))" />
                       </div>
                     </ng-template>
                   </ng-container>
