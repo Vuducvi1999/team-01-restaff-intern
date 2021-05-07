@@ -18,7 +18,12 @@
   width: 50%;
 }
 .product-details{
-  height: 100px;
-  width: 100px;
+  height: 200px;
+  width: 150px;
+  display: inline-block;
+}
+.product-details-main{
+  max-height: 400px;
+  max-width: 400px;
   display: inline-block;
 }

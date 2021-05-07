@@ -9,8 +9,14 @@
             <ng-container *ngFor="let image of product?.imageUrl.split(','); index as i">
               <ng-template carouselSlide [id]="i">
                 <div>
-                  <img [defaultImage]="getImage(image)" [lazyLoad]="getImage(image)" [alt]="getImage(image)"
-                    class="img-fluid" />
+                    <app-image-wapper 
+                    [data]='{url: getImage(image),
+                    type:typeDisplayImage.PRODUCT_DETAIL_MAIN_IMAGE}'
+                    [lazyLoad]="getImage(image)" 
+                    [defaultImage]="getImage(image)" 
+                    (click)="owlCar.to((activeSlide = i.toString()))" 
+                    class="img-fluid"
+                  ></app-image-wapper>
                 </div>
               </ng-template>
             </ng-container>
@@ -53,7 +59,8 @@
             </div>
             <div class="addeffect-section product-description border-product">
               <h3 style="color: orangered;">Description</h3>
-              <p>{{ product?.contentHTML}}</p>
+              <div [innerHTML]= "product?.contentHTML">
+              </div>
             </div>
           </div>
         </div>

@@ -39,7 +39,8 @@ export enum TypeDisplayImage {
   BLOG_IMAGE,
   PRODUCT_IMAGE,
   BLOG_DETAIL,
-  PRODUCT_DETAIL_IMAGE
+  PRODUCT_DETAIL_IMAGE,
+  PRODUCT_DETAIL_MAIN_IMAGE
 }
 
 export const TemplateType = {
@@ -48,5 +49,6 @@ export const TemplateType = {
     [TypeDisplayImage.PRODUCT_IMAGE]: "productImage",
     [TypeDisplayImage.BLOG_DETAIL]: "blog-detail",
     [TypeDisplayImage.PRODUCT_DETAIL_IMAGE]: "product-details",
+    [TypeDisplayImage.PRODUCT_DETAIL_MAIN_IMAGE]: "product-details-main"
   },
 };

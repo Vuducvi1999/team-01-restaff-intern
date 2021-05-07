@@ -107,7 +107,7 @@ export class ListProductsComponent implements OnInit {
       .catch((er) => {
         if (er.error.hasError)
         {
-          console.log(er.error.message);
+          window.alert("Can not connect to Server !");
         }
       });
   }

@@ -2,13 +2,11 @@ import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {
-  FileDtoModel,
   PageModel,
-  ReturnMessage,
+  ReturnMessage
 } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { ProductModel } from 'src/app/lib/data/models/products/product.model';
-import { FileService } from 'src/app/lib/data/services';
 import { CategoryService } from 'src/app/lib/data/services/categories/category.service';
 import { ProductService } from 'src/app/lib/data/services/products/product.service';
 import {
@@ -69,7 +67,7 @@ export class ProductDetailsComponent implements OnInit {
       })
       .catch((er) => {
         if (er.error.hasError) {
-          console.log(er.error.message);
+          window.alert("Can not get Category !");
         }
       });
   }
