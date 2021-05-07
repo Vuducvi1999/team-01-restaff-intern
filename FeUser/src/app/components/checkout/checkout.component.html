@@ -89,7 +89,7 @@
 
                   </ul>
                   <ul class="total">
-                    <li>Total <span class="count">{{totalAmount | currency:'VND'}}</span></li>
+                    <li>Total <span class="count">{{cart.totalAmount - couponValue | currency:'VND'}}</span></li>
                   </ul>
                 </div>
                 <div class="payment-box">
@@ -99,11 +99,15 @@
                         <div class="col-lg-8 col-sm-12 col-xs-12">
                           <input placeholder="Coupon Code" type="text" id="couponCode" name="couponCode"
                             #couponCode="ngModel" [(ngModel)]="order.couponCode">
+                          <div *ngIf="couponInvalid">
+                            <span>APPLY COUPON FAILED</span>
+                          </div>
                         </div>
                         <div class="col-lg-4 col-sm-12 col-xs-12">
                           <div class="text-left">
                             <button type="button" (click)="applyCoupon()" class="btn-solid btn">Apply</button>
                           </div>
+
                         </div>
                       </div>
                     </div>

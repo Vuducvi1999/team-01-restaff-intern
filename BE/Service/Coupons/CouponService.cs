@@ -129,6 +129,11 @@ namespace Service.Coupons
             var entity = _couponRepository.Queryable().FirstOrDefault(t => t.Code == code);
             if (entity.IsNotNullOrEmpty())
             {
+                if(entity.EndDate < DateTime.Now)
+                {
+                    return new ReturnMessage<CouponDTO>(true, null, MessageConstants.Error);
+
+                }
                 var result = _mapper.Map<CouponDTO>(entity);
                 return new ReturnMessage<CouponDTO>(false, result, MessageConstants.GetPaginationSuccess);
             }
