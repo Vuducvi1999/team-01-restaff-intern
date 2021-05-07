@@ -22,27 +22,16 @@ namespace Service.Auth
     public class AuthService : IAuthService
     {
         private IRepository<User> _userRepository;
-        private IUserManager _jwtManager;
+        private IUserManager _userManager;
         private IMapper _mapper;
-        private IHttpContextAccessor _httpContextAccessor;
 
         public AuthService(
-            IUserManager jwtManager, IRepository<User> repository, IMapper mapper,
+            IUserManager userManager, IRepository<User> repository, IMapper mapper,
             IHttpContextAccessor httpContextAccessor)
         {
-            _jwtManager = jwtManager;
+            _userManager = userManager;
             _userRepository = repository;
             _mapper = mapper;
-            _httpContextAccessor = httpContextAccessor;
-        }
-
-        public Guid AuthorizedUserId
-        {
-            get
-            {
-                var claims = _httpContextAccessor.HttpContext.User.Claims;
-                return Guid.Parse(claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
-            }
         }
 
         public ReturnMessage<UserDataReturnDTO> CheckLogin(UserLoginDTO data)
@@ -67,7 +56,7 @@ namespace Service.Auth
                 };
 
                 // Generate JWT token
-                var token = _jwtManager.GenerateToken(claims, DateTime.UtcNow);
+                var token = _userManager.GenerateToken(claims, DateTime.UtcNow);
                 var result = _mapper.Map<User, UserDataReturnDTO>(account);
                 result.Token = token;
                 return new ReturnMessage<UserDataReturnDTO>(false, result, MessageConstants.LoginSuccess);
@@ -78,22 +67,11 @@ namespace Service.Auth
             }
         }
 
-        public UserDecompileDTO GetInformationToken()
-        {
-            var claims = _httpContextAccessor.HttpContext.User.Claims;
-            var data = new UserDecompileDTO()
-            {
-                Id = Guid.Parse(claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value),
-                Username = claims.First(claim => claim.Type == ClaimTypes.UserData).Value,
-            };
-            return data;
-        }
-
         public ReturnMessage<UserDataReturnDTO> GetInformationUser()
         {
             try
             {
-                var data = _userRepository.Find(AuthorizedUserId);
+                var data = _userRepository.Find(_userManager.AuthorizedUserId);
                 if (data.IsNullOrEmpty())
                 {
                     return new ReturnMessage<UserDataReturnDTO>(true, null, MessageConstants.Error);

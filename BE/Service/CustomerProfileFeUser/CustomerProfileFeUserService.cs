@@ -24,18 +24,18 @@ namespace Service.CustomerProfileFeUser
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<Customer> _customerRepository;
         private readonly IAuthCustomerUserService _authCustomerUserService;
-        private readonly IAuthService _authService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUserManager _userManager;
 
-        public CustomerProfileFeUserService(IRepository<User> userRepository, IRepository<Customer> customerRepository, IAuthCustomerUserService authCustomerUserService, IUnitOfWork unitOfWork, IMapper mapper, IAuthService authService)
+        public CustomerProfileFeUserService(IRepository<User> userRepository, IRepository<Customer> customerRepository, IAuthCustomerUserService authCustomerUserService, IUnitOfWork unitOfWork, IMapper mapper, IAuthService authService, IUserManager userManager)
         {
             _userRepository = userRepository;
             _customerRepository = customerRepository;
             _authCustomerUserService = authCustomerUserService;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _authService = authService;
+            _userManager = userManager;
         }
 
         public ReturnMessage<CustomerDataReturnDTO> ChangePassword(IEnumerable<Claim> claims, ChangePasswordCustomerProfileFeUserDTO model)
@@ -48,7 +48,7 @@ namespace Service.CustomerProfileFeUser
                 }
 
                 var user = _userRepository.Queryable().FirstOrDefault(it => it.Type == UserType.Customer
-                                                                            && it.Id == _authService.AuthorizedUserId
+                                                                            && it.Id == _userManager.AuthorizedUserId
                                                                             && it.Password == MD5Helper.ToMD5Hash(model.Password));
 
                 if (user.IsNullOrEmpty())
@@ -78,7 +78,7 @@ namespace Service.CustomerProfileFeUser
                 }
 
                 var user = _userRepository.Queryable()
-                    .FirstOrDefault(it => it.Type == UserType.Customer && it.Id == _authService.AuthorizedUserId);
+                    .FirstOrDefault(it => it.Type == UserType.Customer && it.Id == _userManager.AuthorizedUserId);
                 if (user.IsNullOrEmpty())
                 {
                     return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);

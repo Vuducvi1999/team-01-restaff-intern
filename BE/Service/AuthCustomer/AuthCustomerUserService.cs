@@ -27,7 +27,6 @@ namespace Service.AuthCustomer
         private readonly IUserManager _userManager;
         private readonly IMapper _mapper;
         private readonly ICustomerService _customerService;
-        private readonly IAuthService _authService;
 
         public AuthCustomerUserService(
             IRepository<User> repository,
@@ -40,7 +39,6 @@ namespace Service.AuthCustomer
             _mapper = mapper;
             _customerService = customerService;
             _customerRepository = customerRepository;
-            _authService = authService;
             _userManager = userManager;
         }
 
@@ -101,7 +99,7 @@ namespace Service.AuthCustomer
 
         public ReturnMessage<CustomerDataReturnDTO> GetCustomerDataReturnDTO()
         {
-            var entity = _userRepository.Queryable().Include(it => it.Customer).Where(it => it.Id == _authService.AuthorizedUserId).FirstOrDefault();
+            var entity = _userRepository.Queryable().Include(it => it.Customer).Where(it => it.Id == _userManager.AuthorizedUserId).FirstOrDefault();
             if (entity.IsNullOrEmpty())
             {
                 return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);

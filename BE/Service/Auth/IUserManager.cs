@@ -10,6 +10,7 @@ namespace Service.Auth
     public interface IUserManager
     {
         string GenerateToken(IEnumerable<Claim> claims, DateTime now);
-        public UserInformationDTO GetInformationUser(Guid id);
+        public UserInformationDTO GetInformationUser();
+        Guid AuthorizedUserId { get; }
     }
 }

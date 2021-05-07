@@ -9,8 +9,6 @@ namespace Service.Auth
     public interface IAuthService
     {
         ReturnMessage<UserDataReturnDTO> CheckLogin(UserLoginDTO data);
-        UserDecompileDTO GetInformationToken();
         ReturnMessage<UserDataReturnDTO> GetInformationUser();
-        Guid AuthorizedUserId { get; }
     }
 }
