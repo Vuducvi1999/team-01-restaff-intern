@@ -49,10 +49,10 @@ namespace BE.ControllersFeUser
         }
         [Authorize]
         [HttpGet(UrlConstants.BaseRating)]
-        public IActionResult GetRating([FromQuery]Guid id)
+        public IActionResult GetRating([FromQuery]Guid productId)
         {
             var claims = HttpContext.User.Claims;
-            var result = _productDetailsFeService.GetRating(claims, id);
+            var result = _productDetailsFeService.GetRating(claims, productId);
             return CommonResponse(result);
         }
 

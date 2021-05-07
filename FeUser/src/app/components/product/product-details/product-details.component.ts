@@ -62,8 +62,8 @@ export class ProductDetailsComponent implements OnInit {
   public currentRate: number;
   public token: string;
   public ratingForm: FormGroup;
-  public item: any;
   public ratingModel: RatingModel;
+  public item: any;
 
   constructor(
     private productService: ProductDetailsService,
@@ -76,7 +76,10 @@ export class ProductDetailsComponent implements OnInit {
     this.token = localStorage.getItem("token");
     this.getProduct();
     this.initDataComment();
-    this.loadFormItem();
+    if (this.token != null) {
+      this.loadFormItem();
+      this.getRating();
+    }
   }
 
   getProduct() {
@@ -91,8 +94,8 @@ export class ProductDetailsComponent implements OnInit {
 
   getRating() {
     this.activatedRoute.queryParams.subscribe((param) => {
-      const data = { id: param.id };
-      this.ratingService
+      const data = { productId: param.id };
+      return this.ratingService
         .get({ params: data })
         .then((it: ReturnMessage<RatingModel>) => {
           this.item = it.data;
@@ -118,31 +121,25 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   loadFormItem() {
-    this.getRating();
-    console.log(this.item);
     this.ratingForm = this.formBuilder.group({
       rating: [this.item ? this.item.rating : 1],
     });
-    console.log(this.ratingForm.controls.rating.value);
   }
 
   saveRating(event: any) {
     this.ratingModel = {
-      rating: this.ratingForm.controls.rating.value,
+      rating: this.ratingForm.controls?.rating.value,
       productId: this.product.id,
-      customerId: localStorage.getItem("user.customerId"),
-      id: this.id ? this.item.id : "",
+      customerId: JSON.parse(localStorage.getItem("user")).customerId,
+      id: this.item ? this.item?.id : "",
     };
-
     this.ratingService
       .save(this.ratingModel)
       .then(() => {
-        this.ratingForm.reset();
+        this.getRating();
       })
       .catch((er) => {
-        if (er.console.error) {
-          console.log(er.error.message);
-        }
+        console.log(er);
       });
   }
 }

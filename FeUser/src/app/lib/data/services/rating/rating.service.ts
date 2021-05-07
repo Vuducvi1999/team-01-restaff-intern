@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClientService } from "src/app/lib/http/http-client";
+import { RatingModel } from "../../models/rating/rating.model";
 
 @Injectable()
 export class RatingService {
@@ -7,22 +8,22 @@ export class RatingService {
 
   constructor(private httpClient: HttpClientService) {}
 
-  create(request: any) {
+  create(request: RatingModel) {
     return this.httpClient.postObservable(this.url, request).toPromise();
   }
 
-  update(request: any) {
+  update(request: RatingModel) {
     return this.httpClient.putObservable(this.url, request).toPromise();
   }
 
-  save(model: any) {
+  save(model: RatingModel) {
     if (model.id) {
       return this.update(model);
     }
     return this.create(model);
   }
 
-  get(id: any) {
-    return this.httpClient.getObservable(this.url, id).toPromise();
+  get(productId: any) {
+    return this.httpClient.getObservable(this.url, productId).toPromise();
   }
 }

@@ -7,6 +7,7 @@ using Domain.DTOs.ProductsFeUser;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
+using Service.Auth;
 using Service.AuthCustomer;
 using Service.ProductDetailsFeUser;
 using System;
@@ -22,19 +23,19 @@ namespace Service.ServiceFeUser
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Category> _categoryRepository;
-        private readonly IRepository<Customer> _customerRepository;
         private readonly IRepository<ProductRating> _productRatingRepository;
         private readonly IAuthCustomerUserService _authCustomerUserService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUserManager _userManager;
 
-        public ProductDetailsFeService(IRepository<Category> categoryRepository, IRepository<Product> productRepository, IUnitOfWork unitOfWork, IMapper mapper, IRepository<Customer> customerRepository, IAuthCustomerUserService authCustomerUserService, IRepository<ProductRating> productRatingRepository, IRepository<User> userRepository)
+        public ProductDetailsFeService(IRepository<Category> categoryRepository, IRepository<Product> productRepository, IUnitOfWork unitOfWork, IUserManager userManager, IMapper mapper,  IAuthCustomerUserService authCustomerUserService, IRepository<ProductRating> productRatingRepository, IRepository<User> userRepository)
         {
-            _customerRepository = customerRepository;
             _authCustomerUserService = authCustomerUserService;
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userManager = userManager;
             _categoryRepository = categoryRepository;
             _productRatingRepository = productRatingRepository;
             _userRepository = userRepository;
@@ -62,10 +63,10 @@ namespace Service.ServiceFeUser
             try
             {
                 var userDecompile = _authCustomerUserService.GetInformationToken(claims);
-                var user = _userRepository.Find(userDecompile.Id);
+                var customer = _userRepository.Find(userDecompile.Id);
                 var entity = _mapper.Map<CreateProductRatingDTO, ProductRating>(model);
                 var product = _productRepository.Find(model.ProductId);
-                entity.Insert(user);
+                entity.Insert(customer);
                 _productRatingRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<ProductRatingDTO>(false, _mapper.Map<ProductRating, ProductRatingDTO>(entity), MessageConstants.CreateSuccess);
@@ -88,6 +89,7 @@ namespace Service.ServiceFeUser
                     _productRatingRepository.Update(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<ProductRatingDTO>(false, _mapper.Map<ProductRating, ProductRatingDTO>(entity), MessageConstants.DeleteSuccess);
+                    return result;
                 }
                 return new ReturnMessage<ProductRatingDTO>(true, null, MessageConstants.Error);
             }
@@ -97,9 +99,10 @@ namespace Service.ServiceFeUser
             }
         }
 
-        public ReturnMessage<ProductRatingDTO> GetRating(IEnumerable<Claim> claims, Guid id)
+        public ReturnMessage<ProductRatingDTO> GetRating(IEnumerable<Claim> claims, Guid productId)
         {
-            if (id.IsNullOrEmpty() && id == Guid.Empty)
+            //var user = _userManager.GetInformationAuth();
+            if (productId.IsNullOrEmpty() && productId == Guid.Empty)
             {
                 return new ReturnMessage<ProductRatingDTO>(true, null, MessageConstants.Error);
             }
@@ -107,7 +110,7 @@ namespace Service.ServiceFeUser
             {
                 var userDecompile = _authCustomerUserService.GetInformationToken(claims);
                 var customer = _userRepository.Find(userDecompile.Id);
-                var entity = _productRatingRepository.Queryable().FirstOrDefault(p => p.ProductId == id && p.CustomerId == /*new Guid("c2392707-652e-41e3-80c7-ff85961139aa")*/customer.CustomerId);
+                var entity = _productRatingRepository.Queryable().FirstOrDefault(p => p.ProductId == productId && p.CustomerId == customer.CustomerId);
                 return new ReturnMessage<ProductRatingDTO>(false, _mapper.Map<ProductRating, ProductRatingDTO>(entity), MessageConstants.DeleteSuccess);
             }
             catch(Exception ex)

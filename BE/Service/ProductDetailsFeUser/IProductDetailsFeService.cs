@@ -17,6 +17,6 @@ namespace Service.ProductDetailsFeUser
 
         ReturnMessage<ProductRatingDTO> UpdateRating(UpdateProductRatingDTO model);
 
-        ReturnMessage<ProductRatingDTO> GetRating(IEnumerable<Claim> claims, Guid id);
+        ReturnMessage<ProductRatingDTO> GetRating(IEnumerable<Claim> claims, Guid productId);
     }
 }
