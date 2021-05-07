@@ -135,6 +135,6 @@ export class SocialMediaDetailComponent implements OnInit {
       this.fileURL = [];
     }
 
-    this.socialMediaForm.controls.imageUrl.setValue(this.fileURL.join(','));
+    this.socialMediaForm.controls.iconUrl.setValue(this.fileURL.join(','));
   }
 }
