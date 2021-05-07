@@ -12,6 +12,7 @@ import { environment } from './lib/environments/environment';
 import { AppConfig } from './lib/environments/config/appConfig';
 import { FilesModule } from './components/files/files.module';
 import { ActivatedRouteSnapshot } from '@angular/router';
+import { NgHttpLoaderModule } from 'ng-http-loader';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -22,7 +23,8 @@ import { ActivatedRouteSnapshot } from '@angular/router';
     AuthModule,
     SharedModule,
     HttpClientModule,
-    FilesModule
+    FilesModule,
+    NgHttpLoaderModule.forRoot(),
   ],
   providers: [
     { provide: 'BASE_URL', useValue: environment.host },
