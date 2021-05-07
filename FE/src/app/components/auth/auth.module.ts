@@ -22,6 +22,6 @@ import { HttpClientService } from 'src/app/lib/http/http-client';
     CarouselModule,
     SharedModule,
   ],
-  providers: [AuthService, HttpClientService]
+  providers: [HttpClientService]
 })
 export class AuthModule { }

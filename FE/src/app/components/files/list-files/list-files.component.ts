@@ -59,9 +59,15 @@ export class ListFilesComponent implements OnInit {
             fileExt == 'jpeg' ||
             fileExt == 'icon'
           ) {
-            return `<a href="${FileService.getLinkFile(file)}"><img width="75px" height="75px" src="${FileService.getLinkFile(file)}"/></a>`;
+            return `<a href="${FileService.getLinkFile(
+              file
+            )}"><img width="75px" height="75px" src="${FileService.getLinkFile(
+              file
+            )}"/></a>`;
           }
-          return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
+          return `<a href="${FileService.getLinkFile(
+            file
+          )}">${FileService.getLinkFile(file)}</a>`;
         },
       },
       fileExt: {
@@ -84,13 +90,15 @@ export class ListFilesComponent implements OnInit {
       .then(
         (res: ReturnMessage<PageModel<FileDtoModel>>) =>
           (this.media = res.data.results)
-      )
-      .catch((er) => console.log(er.error));
+      );
+    // .catch((er) =>
+    // console.log(er.error)
+    // );
   }
 
   async getType() {
     await this.fileService.getType().then((res: ReturnMessage<any>) => {
-      console.log(res.data);
+      // console.log(res.data);
       this.type = res.data;
     });
   }

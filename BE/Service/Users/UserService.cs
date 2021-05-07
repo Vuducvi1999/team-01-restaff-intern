@@ -131,5 +131,11 @@ namespace Service.Users
 
             return result;
         }
+
+        public UserDTO GetById(Guid userId)
+        {
+            var user = _userRepository.Find(userId);
+            return _mapper.Map<User, UserDTO>(user);
+        }
     }
 }

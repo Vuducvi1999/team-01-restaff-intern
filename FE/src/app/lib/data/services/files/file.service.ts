@@ -31,6 +31,10 @@ export class FileService {
   }
 
   public static getLinkFile(fileName: String) {
+    if(fileName.length <= 0)
+    {
+      return "";
+    }
     var result = fileName.includes('http')
       ? fileName
       : `${AppConfig.settings.API_URL}/Files/${fileName}`;

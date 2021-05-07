@@ -28,6 +28,8 @@ using Service.CustomerProfileFeUser;
 using Service.OrderDetails;
 using Service.Contacts;
 using Service.Comments;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Service
 {
@@ -35,6 +37,8 @@ namespace Service
     {
         public static void Setup(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+            //services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddScoped<RepositoryFactories>();
             services.AddScoped<IRepositoryProvider, RepositoryProvider>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -73,7 +77,6 @@ namespace Service
             services.AddScoped<ICustomerService, CustomerService>();
 
             ////AuthCustomer
-            services.AddScoped<IAuthCustomerUserManager, AuthCustomerUserManager>();
             services.AddScoped<IAuthCustomerUserService, AuthCustomerUserService>();
 
             //ProfileCustomer

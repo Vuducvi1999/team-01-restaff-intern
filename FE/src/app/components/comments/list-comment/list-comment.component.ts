@@ -66,11 +66,11 @@ export class ListCommentComponent {
       .getAll(null)
       .then((res: ReturnMessage<CommentModel[]>) => {
         this.comments = res.data;
-        console.log('comment', res.data);
+        // console.log('comment', res.data);
       })
       .catch((er) => {
         if (er) {
-          console.log(er);
+          // console.log(er);
         }
       });
   }

@@ -9,7 +9,7 @@ import { RouterHelperService } from './lib/helpers';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard/default',
+    redirectTo: 'profiles/profile-settings',
     pathMatch: 'full',
   },
   {

@@ -71,12 +71,12 @@ export class ListPageContentComponent {
       .then((res: ReturnMessage<PageContentModel[]>) => {
         if (!res.hasError) {
           this.pageContents = res.data;
-          console.log('page content', res.data);
+          // console.log('page content', res.data);
         }
       })
       .catch((er) => {
         if (er.error.hasError) {
-          console.log(er.error.message);
+          // console.log(er.error.message);
         }
       });
   }

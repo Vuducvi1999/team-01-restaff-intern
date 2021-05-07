@@ -77,7 +77,7 @@ export class UserDetailComponent implements OnInit {
     this.messageFail = '';
 
     if (this.usersForm.invalid) {
-      console.log(this.usersForm);
+      // console.log(this.usersForm);
       return;
     }
 
@@ -103,7 +103,7 @@ export class UserDetailComponent implements OnInit {
       })
       .catch((e) => {
         if (e.error.message) this.messageFail = e.error.message;
-        console.log(e);
+        // console.log(e);
       });
   }
 

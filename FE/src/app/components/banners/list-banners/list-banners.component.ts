@@ -65,13 +65,13 @@ export class ListBannersComponent implements OnInit {
     this.bannersService.get(null).then((res: ReturnMessage<PageModel<BannerModel>>) => {
       if (!res.hasError) {
         this.banners = res.data.results;
-        console.log("banner", this.banners);
+        // console.log("banner", this.banners);
 
       }
     }).catch((er) => {
 
       if (er.error.hasError) {
-        console.log(er.error.message)
+        // console.log(er.error.message)
       }
     });
 
@@ -86,7 +86,7 @@ export class ListBannersComponent implements OnInit {
   }
 
   delete(event: any) {
-    console.log(event);
+    // console.log(event);
     let banner = event.data as BannerModel;
     if (window.confirm("Do you want to permanently delete this item?")) {
       this.bannersService.delete(banner).then(res => {

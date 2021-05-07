@@ -28,15 +28,5 @@ namespace BE.Controllers
             }
             return Ok(data);
         }
-
-        public ReturnMessage<UserDataReturnDTO> InformationUser
-        {
-            get
-            {
-                var userId = _authService.GetInformationToken(this.User.Claims).Id;
-                return new ReturnMessage<UserDataReturnDTO>(true, _userManager.GetInformationAuth(userId), MessageConstants.DeleteSuccess);
-            }
-        }
-
     }
 }

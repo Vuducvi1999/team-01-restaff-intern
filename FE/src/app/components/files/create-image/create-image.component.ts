@@ -88,12 +88,12 @@ export class CreateImageComponent implements OnInit {
   }
 
   close(event: any) {
-    console.log(event);
+    // console.log(event);
     this.ngbActiveModal.close();
   }
 
   save(event: any) {
-    console.log(event);
+    // console.log(event);
     this.ngbActiveModal.close();
   }
 }

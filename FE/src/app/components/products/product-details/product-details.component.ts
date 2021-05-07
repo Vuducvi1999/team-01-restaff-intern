@@ -38,7 +38,7 @@ export class ProductDetailsComponent implements OnInit {
   submitted = false;
 
   public editor = ClassicEditor;
-  ngOnChanges(changes: SimpleChanges): void { }
+  ngOnChanges(changes: SimpleChanges): void {}
   constructor(
     private formBuilder: FormBuilder,
     private productService: ProductService,
@@ -50,8 +50,6 @@ export class ProductDetailsComponent implements OnInit {
     this.modalFile.multiBoolen = true;
     this.modalFile.enityType = EntityType.PRODUCT;
   }
-  
-
 
   get productFormsControl() {
     return this.productsForm.controls;
@@ -69,7 +67,7 @@ export class ProductDetailsComponent implements OnInit {
       })
       .catch((er) => {
         if (er.error.hasError) {
-          console.log(er.error.message);
+          // console.log(er.error.message);
         }
       });
   }
@@ -105,13 +103,13 @@ export class ProductDetailsComponent implements OnInit {
     };
 
     return this.productService
-              .save(this.product)
-              .then(() => {
-                        this.ngbActiveModal.close();
-                      })
-                      .catch((er) => {               
-                          console.log(er);
-                      });
+      .save(this.product)
+      .then(() => {
+        this.ngbActiveModal.close();
+      })
+      .catch((er) => {
+        // console.log(er);
+      });
   }
 
   loadItem() {
@@ -173,7 +171,7 @@ export class ProductDetailsComponent implements OnInit {
     }
 
     if (event.remove) {
-      this.fileURL.forEach((e : string, i) => {
+      this.fileURL.forEach((e: string, i) => {
         if (e.includes(event.remove)) {
           this.fileURL.splice(i, 1);
         }

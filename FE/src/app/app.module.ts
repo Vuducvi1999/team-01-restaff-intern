@@ -13,6 +13,7 @@ import { AppConfig } from './lib/environments/config/appConfig';
 import { FilesModule } from './components/files/files.module';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { NgHttpLoaderModule } from 'ng-http-loader';
+import { AuthService } from './lib/data/services';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -36,6 +37,7 @@ import { NgHttpLoaderModule } from 'ng-http-loader';
       useFactory: (appConfigService: AppConfig) => () =>
         appConfigService.load(),
     },
+    AuthService,
   ],
   bootstrap: [AppComponent],
 })

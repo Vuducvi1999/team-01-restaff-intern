@@ -72,7 +72,7 @@ export class CategoryDetailComponent implements OnInit {
         this.ngbActiveModal.close();
       })
       .catch((er) => {
-        console.log(er);
+        // console.log(er);
       });
   }
 

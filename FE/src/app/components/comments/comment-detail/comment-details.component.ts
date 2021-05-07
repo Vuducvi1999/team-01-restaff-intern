@@ -47,7 +47,7 @@ export class CommentDetailComponent implements OnInit {
 
   save() {
     if (this.commentForm.invalid) {
-      console.log(this.commentForm);
+      // console.log(this.commentForm);
       return;
     }
 
@@ -71,7 +71,7 @@ export class CommentDetailComponent implements OnInit {
       })
       .catch((er) => {
         if (er) {
-          console.log(er);
+          // console.log(er);
         }
       });
   }

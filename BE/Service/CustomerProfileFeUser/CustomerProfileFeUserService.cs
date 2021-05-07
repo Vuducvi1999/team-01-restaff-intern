@@ -8,6 +8,7 @@ using Domain.DTOs.CustomerProfileFeUser;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
+using Service.Auth;
 using Service.AuthCustomer;
 using Service.Customers;
 using System;
@@ -23,16 +24,18 @@ namespace Service.CustomerProfileFeUser
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<Customer> _customerRepository;
         private readonly IAuthCustomerUserService _authCustomerUserService;
+        private readonly IAuthService _authService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public CustomerProfileFeUserService(IRepository<User> userRepository, IRepository<Customer> customerRepository, IAuthCustomerUserService authCustomerUserService, IUnitOfWork unitOfWork, IMapper mapper)
+        public CustomerProfileFeUserService(IRepository<User> userRepository, IRepository<Customer> customerRepository, IAuthCustomerUserService authCustomerUserService, IUnitOfWork unitOfWork, IMapper mapper, IAuthService authService)
         {
             _userRepository = userRepository;
             _customerRepository = customerRepository;
             _authCustomerUserService = authCustomerUserService;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _authService = authService;
         }
 
         public ReturnMessage<CustomerDataReturnDTO> ChangePassword(IEnumerable<Claim> claims, ChangePasswordCustomerProfileFeUserDTO model)
@@ -44,8 +47,9 @@ namespace Service.CustomerProfileFeUser
                     return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);
                 }
 
-                var userDecompile = _authCustomerUserService.GetInformationToken(claims);
-                var user = _userRepository.Queryable().FirstOrDefault(it => it.Type == UserType.Customer && it.Id == userDecompile.Id && it.Password == MD5Helper.ToMD5Hash(model.Password));
+                var user = _userRepository.Queryable().FirstOrDefault(it => it.Type == UserType.Customer
+                                                                            && it.Id == _authService.AuthorizedUserId
+                                                                            && it.Password == MD5Helper.ToMD5Hash(model.Password));
 
                 if (user.IsNullOrEmpty())
                 {
@@ -73,9 +77,8 @@ namespace Service.CustomerProfileFeUser
                     return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);
                 }
 
-                var userDecompile = _authCustomerUserService.GetInformationToken(claims);
-
-                var user = _userRepository.Queryable().FirstOrDefault(it => it.Type == UserType.Customer && it.Id == userDecompile.Id);
+                var user = _userRepository.Queryable()
+                    .FirstOrDefault(it => it.Type == UserType.Customer && it.Id == _authService.AuthorizedUserId);
                 if (user.IsNullOrEmpty())
                 {
                     return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);

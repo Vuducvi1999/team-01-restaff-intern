@@ -28,7 +28,6 @@ namespace BE.ControllersFeUser
         public IActionResult Login([FromBody] CustomerLoginDTO data)
         {
             var result = _authCustomerService.CheckLogin(data);
-            //var result = MD5Helper.ToMD5Hash(data.Password);
             return CommonResponse(result);
         }
 
@@ -43,7 +42,7 @@ namespace BE.ControllersFeUser
         [HttpGet]
         public IActionResult GetInfo()
         {
-            var result = _authCustomerService.GetInfomationDTO(HttpContext.User.Claims);
+            var result = _authCustomerService.GetCustomerDataReturnDTO();
             return CommonResponse(result);
         }
     }

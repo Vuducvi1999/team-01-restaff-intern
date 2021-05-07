@@ -15,7 +15,7 @@
             <div class="people-list friend-list">
                 <ul class="list">
                     <li class="clearfix" *ngFor="let user of users">
-                        <img class="rounded-circle user-image blur-up lazyloaded" [src]="user.img" alt="">
+                        <img appUiImageLoader class="rounded-circle user-image blur-up lazyloaded" [src]="user.img" alt="">
                         <div class="status-circle online"></div>
                         <div class="about">
                             <div class="name">{{user.name}}</div>

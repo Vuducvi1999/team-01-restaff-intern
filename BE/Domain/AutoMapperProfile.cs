@@ -20,8 +20,6 @@ using Domain.DTOs.ProductsFeUser;
 using Domain.DTOs.Home;
 using Domain.DTOs.OrderDetails;
 using Domain.DTOs.Customer;
-using Domain.DTOs.ProductsFeUser;
-using Domain.DTOs.Home;
 using Infrastructure.Extensions;
 using Domain.DTOs.PageContent;
 using Domain.DTOs.InfomationWeb;
@@ -69,6 +67,17 @@ namespace Domain
             CreateMap<User, UserLoginDTO>().ReverseMap();
             CreateMap<User, ChangePassworProfileDTO>().ReverseMap();
             CreateMap<User, UserDataReturnDTO>().ReverseMap();
+            CreateMap<User, UserInformationDTO>()
+                .ForMember(a => a.UserId, b => b.MapFrom(c => c.Id))
+                .ForMember(a => a.CumstomerId, b => b.MapFrom(c => c.CustomerId))
+                .ForMember(a => a.Username, b => b.MapFrom(c => c.Username))
+                .ForMember(a => a.Password, b => b.MapFrom(c => c.Password))
+                .ForMember(a => a.FirstName, b => b.MapFrom(c => c.FirstName))
+                .ForMember(a => a.LastName, b => b.MapFrom(c => c.LastName))
+                .ForMember(a => a.Phone, b => b.MapFrom(c => c.Customer.IsNullOrEmpty() ? null : c.Customer.Phone))
+                .ForMember(a => a.Address, b => b.MapFrom(c => c.Customer.IsNullOrEmpty() ? null : c.Customer.Address))
+                .ForMember(a => a.Email, b => b.MapFrom(c => c.Customer.Email))
+                .ReverseMap();
 
             // Files
             CreateMap<PaginatedList<File>, PaginatedList<FileDTO>>().ReverseMap();
@@ -130,7 +139,7 @@ namespace Domain
                 .ForMember(a => a.Address, b => b.MapFrom(c => c.Customer.Address))
                 .ForMember(a => a.Email, b => b.MapFrom(c => c.Customer.IsNullOrEmpty() ? c.Email : c.Customer.Email))
                 .ForMember(a => a.Phone, b => b.MapFrom(c => c.Customer.Phone))
-                .ForMember(a => a.Id, b => b.MapFrom(c => c.Customer.Id))
+                .ForMember(a => a.Id, b => b.MapFrom(c => c.Customer.UserId))
 
                 .ReverseMap();
             CreateMap<User, CreateCustomerDTO>().ReverseMap();

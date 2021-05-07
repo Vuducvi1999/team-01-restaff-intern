@@ -36,7 +36,7 @@ export class ListProductsComponent implements OnInit {
         type: 'html',
         filter: false,
         valuePrepareFunction: (file) => {
-          console.log(file);
+          // console.log(file);
           var fileExt = file.split(',')[0].split('.').pop();
           if (
             fileExt == 'png' ||
@@ -118,7 +118,7 @@ export class ListProductsComponent implements OnInit {
       .catch((er) => {
         if (er.error.hasError)
         {
-          console.log(er.error.message);
+          // console.log(er.error.message);
         }
       });
   }

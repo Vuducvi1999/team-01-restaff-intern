@@ -7,6 +7,7 @@ using Domain.DTOs.Customer;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Service.Auth;
 using Service.Customers;
@@ -23,17 +24,24 @@ namespace Service.AuthCustomer
         private readonly IRepository<Domain.Entities.User> _userRepository;
         private readonly IRepository<Customer> _customerRepository;
 
-        private readonly IAuthCustomerUserManager _authCustomerManager;
+        private readonly IUserManager _userManager;
         private readonly IMapper _mapper;
         private readonly ICustomerService _customerService;
+        private readonly IAuthService _authService;
 
-        public AuthCustomerUserService(IRepository<User> repository, IMapper mapper, IAuthCustomerUserManager authCustomerManager, ICustomerService customerService, IRepository<Customer> customerRepository)
+        public AuthCustomerUserService(
+            IRepository<User> repository,
+            IMapper mapper,
+            ICustomerService customerService,
+            IRepository<Customer> customerRepository,
+            IAuthService authService, IUserManager userManager)
         {
             _userRepository = repository;
             _mapper = mapper;
-            _authCustomerManager = authCustomerManager;
             _customerService = customerService;
             _customerRepository = customerRepository;
+            _authService = authService;
+            _userManager = userManager;
         }
 
         public ReturnMessage<CustomerDataReturnDTO> CheckLogin(CustomerLoginDTO data)
@@ -58,8 +66,8 @@ namespace Service.AuthCustomer
                 };
 
                 // Generate JWT token
-                var token = _authCustomerManager.GenerateToken(claims, DateTime.UtcNow);
-                var result = _mapper.Map<Domain.Entities.User, CustomerDataReturnDTO>(account);
+                var token = _userManager.GenerateToken(claims, DateTime.UtcNow);
+                var result = _mapper.Map<User, CustomerDataReturnDTO>(account);
                 result.Token = token;
                 return new ReturnMessage<CustomerDataReturnDTO>(false, result, MessageConstants.LoginSuccess);
             }
@@ -73,7 +81,7 @@ namespace Service.AuthCustomer
         {
             var entity = _mapper.Map<CustomerRegisterDTO, CreateCustomerDTO>(data);
             var dto = _customerService.Create(entity);
-            if(dto.HasError)
+            if (dto.HasError)
             {
                 return new ReturnMessage<CustomerDataReturnDTO>(true, null, dto.Message);
             }
@@ -85,39 +93,22 @@ namespace Service.AuthCustomer
                 };
 
             // Generate JWT token
-            var token = _authCustomerManager.GenerateToken(claims, DateTime.UtcNow);
+            var token = _userManager.GenerateToken(claims, DateTime.UtcNow);
             var result = _mapper.Map<CustomerDTO, CustomerDataReturnDTO>(dto.Data);
             result.Token = token;
             return new ReturnMessage<CustomerDataReturnDTO>(false, result, MessageConstants.RegisterSuccess);
         }
 
-        public ReturnMessage<CustomerDataReturnDTO> GetInfomationDTO(IEnumerable<Claim> claims)
+        public ReturnMessage<CustomerDataReturnDTO> GetCustomerDataReturnDTO()
         {
-            if(claims.IsNullOrEmpty())
-            {
-                return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);
-            }
-
-            var data = GetInformationToken(claims);
-            var entity = _userRepository.Queryable().Include(it => it.Customer).Where(it => it.Id == data.Id).FirstOrDefault();
-            if(entity.IsNullOrEmpty())
+            var entity = _userRepository.Queryable().Include(it => it.Customer).Where(it => it.Id == _authService.AuthorizedUserId).FirstOrDefault();
+            if (entity.IsNullOrEmpty())
             {
                 return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);
             }
 
             var result = _mapper.Map<User, CustomerDataReturnDTO>(entity);
-            result.Token = _authCustomerManager.GenerateToken(claims, DateTime.UtcNow);
             return new ReturnMessage<CustomerDataReturnDTO>(false, result, MessageConstants.LoginSuccess);
-        }
-
-        public CustomerDecompileDTO GetInformationToken(IEnumerable<Claim> claims)
-        {
-            var data = new CustomerDecompileDTO()
-            {
-                Id = Guid.Parse(claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value),
-                Username = claims.First(claim => claim.Type == ClaimTypes.UserData).Value,
-            };
-            return data;
         }
     }
 }
