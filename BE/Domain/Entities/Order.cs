@@ -44,6 +44,7 @@ namespace Domain.Entities
                 TotalAmount += item.TotalAmount;
             }
             TotalAmount -= CouponValue;
+            TotalAmount = TotalAmount > 0 ? TotalAmount : 0;
 
         }
         public override void Delete()

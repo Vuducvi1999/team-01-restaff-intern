@@ -45,6 +45,6 @@ export class HeaderComponent implements OnInit {
   }
 
   get getImage() {
-    return FileService.getLinkFile(this.userInfo.imageUrl);
+    return FileService.getLinkFile(this.userInfo?.imageUrl);
   }
 }
