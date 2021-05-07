@@ -75,7 +75,7 @@ export class ProductDetailsComponent implements OnInit {
   }
   save() {
     if (this.productsForm.invalid) {
-      window.alert("Invalid Form make sure you fill valid value !");
+      window.alert("Invalid Form make sure you input valid value !");
       return;
     }
     this.submitted = true;
@@ -97,7 +97,7 @@ export class ProductDetailsComponent implements OnInit {
       createdByName: this.item ? this.item.createdByName : '',
       deletedBy: this.item ? this.item.deletedBy : '',
       deletedByName: this.item ? this.item.deletedByName : '',
-      isActive: this.item ? this.item.isActive : false,
+      isActive: this.item ? this.item.isActive : true,
       isDeleted: this.item ? this.item.isDeleted : false,
       updatedBy: this.item ? this.item.updatedBy : '',
       updatedByName: this.item ? this.item.updatedByName : '',
@@ -109,19 +109,25 @@ export class ProductDetailsComponent implements OnInit {
               .then(() => {
                         this.ngbActiveModal.close();
                       })
-                      .catch((er) => {               
-                          console.log(er);
+                      .catch((er) => { 
+                          window.alert("Invalid Value Input");
                       });
   }
 
   loadItem() {
     this.productsForm = this.formBuilder.group({
       name: [this.item ? this.item.name : '', 
-      [Validators.required, Validators.maxLength(50), Validators.pattern('[a-zA-Z0-9 -]*')]
+      [Validators.required, Validators.minLength(3), Validators.maxLength(50),
+       Validators.pattern(
+         '^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ]*$')
+      ]
     ],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required, Validators.maxLength(100), Validators.pattern('[a-zA-Z0-9 -]*')],
+        [Validators.required, Validators.maxLength(100),
+         Validators.pattern(
+           '^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ]*$')
+        ]
       ],
       contentHTML: [
         this.item ? this.item.contentHTML : '',
@@ -133,11 +139,11 @@ export class ProductDetailsComponent implements OnInit {
       ],
       category: [
         this.item ? this.item.categoryId : '',
-        [Validators.required, Validators.maxLength(100), Validators.pattern('[a-zA-Z0-9 -]*')],
+        [Validators.required],
       ],
       displayOrder: [
         this.item ? this.item.displayOrder : 1,
-        [Validators.required, Validators.min(1), Validators.max(10), Validators.pattern('[0-9]*')],
+        [Validators.required, Validators.min(1), Validators.max(10), Validators.pattern('[0-9]+')],
       ],
       hasDisplayHomePage: [this.item ? this.item.hasDisplayHomePage : false],
       isImportant: [this.item ? this.item.isImportant : false],

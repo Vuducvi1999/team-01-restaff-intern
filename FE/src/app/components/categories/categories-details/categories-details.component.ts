@@ -47,7 +47,7 @@ export class CategoryDetailComponent implements OnInit {
   }
   save() {
     if (this.categoriesForm.invalid) {
-      window.alert('Invalid Form !');
+      window.alert("Invalid Form make sure you input valid value !");
       return;
     }
     this.submitted = true;
@@ -72,7 +72,7 @@ export class CategoryDetailComponent implements OnInit {
         this.ngbActiveModal.close();
       })
       .catch((er) => {
-        console.log(er);
+        window.alert("Invalid Form make sure you input valid value !");
       });
   }
 
@@ -80,11 +80,17 @@ export class CategoryDetailComponent implements OnInit {
     this.categoriesForm = this.formBuilder.group({
       name: [
         this.item ? this.item.name : '',
-        [Validators.required, Validators.pattern('[a-zA-Z0-9 -]*'), Validators.maxLength(100)]
+        [Validators.required, Validators.minLength(3), Validators.maxLength(50),
+          Validators.pattern(
+            '^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ]*$')
+         ]
       ],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required, Validators.pattern('[a-zA-Z0-9 -]*'), Validators.maxLength(100)],
+        [Validators.required, Validators.minLength(3), Validators.maxLength(100),
+          Validators.pattern(
+            '^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ]*$')
+         ]
       ],
       imageUrl: [this.item ? this.item.imageUrl : ''],
     });

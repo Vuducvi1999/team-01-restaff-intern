@@ -29,6 +29,17 @@ namespace Service.Products
 
         public ReturnMessage<ProductDTO> Create(CreateProductDTO model)
         {
+            model.Name = StringExtension.CleanString(model.Name);
+            model.Description = StringExtension.CleanString(model.Description);
+            model.ContentHTML = StringExtension.CleanString(model.ContentHTML);
+            if (model.Name == "null" ||
+               model.Description == "null" ||
+               model.ContentHTML == "null")
+            {
+                var entity = _mapper.Map<CreateProductDTO, Product>(model);
+                return new ReturnMessage<ProductDTO>(true, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.Error);
+            }
+
             try
             {
                 var entity = _mapper.Map<CreateProductDTO, Product>(model);
@@ -116,6 +127,17 @@ namespace Service.Products
 
         public ReturnMessage<ProductDTO> Update(UpdateProductDTO model)
         {
+
+            model.Name = StringExtension.CleanString(model.Name);
+            model.Description = StringExtension.CleanString(model.Description);
+            model.ContentHTML= StringExtension.CleanString(model.ContentHTML);
+            if(model.Name == "null" ||
+               model.Description == "null" ||
+               model.ContentHTML  == "null")
+            {
+                var entity = _mapper.Map<UpdateProductDTO, Product>(model);
+                return new ReturnMessage<ProductDTO>(true, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.Error);
+            }
             try
             {
                 var entity = _mapper.Map<UpdateProductDTO, Product>(model);
