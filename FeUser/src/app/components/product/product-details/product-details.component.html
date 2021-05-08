@@ -95,7 +95,10 @@
               <ngb-tab *ngIf="user">
                 <ng-template ngbTabTitle>Write Review</ng-template>
                 <ng-template ngbTabContent>
-                  <app-comment [dataComment]="dataComment"></app-comment>
+                  <app-comment
+                    [dataComment]="dataComment"
+                    (action)="getComments()"
+                  ></app-comment>
                 </ng-template>
               </ngb-tab>
             </ngb-tabset>

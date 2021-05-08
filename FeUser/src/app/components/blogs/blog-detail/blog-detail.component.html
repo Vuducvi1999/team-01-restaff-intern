@@ -40,7 +40,6 @@
       <div class="col-sm-12 mt-5" *ngIf="user">
         <h2>Leave Your Message</h2>
         <app-comment
-          *ngIf="dataComment"
           [dataComment]="dataComment"
           (action)="getComments()"
         ></app-comment>
