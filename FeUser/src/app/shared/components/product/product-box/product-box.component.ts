@@ -6,9 +6,9 @@ import {
   SimpleChanges,
   ViewChild,
 } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
-import { ProductModel } from "src/app/lib/data/models";
+import { ProductModel, ReturnMessage } from "src/app/lib/data/models";
 import {
   CreateCustomerWishListModel,
   CustomerWishListModel,
@@ -48,7 +48,7 @@ export class ProductBoxComponent implements OnInit, OnChanges {
   @Input() typePositionCart: string = ETypePositionCart.BOX_2;
   @Input() typeSizeImage: string = ETypeSizeImage.NORMAL;
   @Input() typeGridLayout: string = ETypeGridLayout.NORMAL;
-
+  testData: ProductModel[];
   @ViewChild("quickView") QuickView: QuickViewComponent;
   @ViewChild("cartModal") CartModal: CartModalComponent;
 
@@ -57,8 +57,7 @@ export class ProductBoxComponent implements OnInit, OnChanges {
 
   constructor(
     private productService: ProductService,
-    private wishListService: CustomerWishListService,
-    private router: Router
+    private wishListService: CustomerWishListService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     this.updateTypeGridLayout();
@@ -70,6 +69,20 @@ export class ProductBoxComponent implements OnInit, OnChanges {
         this.loader = false;
       }, 2000); // Skeleton Loader
     }
+
+    this.getWishlist();
+  }
+
+  getWishlist() {
+    const customerId = JSON.parse(localStorage.getItem("user")).id ?? "";
+    console.log(customerId);
+    this.wishListService.getByCustomer(customerId).then((data) => {
+      this.testData = data.data;
+    });
+  }
+
+  compareProductWishList() {
+    return this.testData.some((i) => i.id === this.product.id);
   }
 
   updateTypeGridLayout() {

@@ -68,7 +68,13 @@
         title="Add to Wishlist"
         (click)="addToWishlist(product)"
       >
-        <i class="ti-heart" aria-hidden="true"></i>
+        <i
+          *ngIf="testData"
+          [ngClass]="[
+            compareProductWishList() ? 'fa fa-heart color-red' : 'ti-heart'
+          ]"
+          aria-hidden="true"
+        ></i>
       </a>
       <a
         href="javascript:void(0)"
