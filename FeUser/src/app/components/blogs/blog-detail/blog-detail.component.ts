@@ -1,12 +1,16 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { CommonConnectionOptions } from "node:tls";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import {
   CommentModel,
   CommentPassingModel,
+  SearchCommentModel,
 } from "src/app/lib/data/models/comments/comment.model";
-import { ReturnMessage } from "src/app/lib/data/models/common";
+import {
+  PageModel,
+  ReturnMessage,
+  SearchPaganationDTO,
+} from "src/app/lib/data/models/common";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
 import { FileService } from "src/app/lib/data/services";
 import { BlogService } from "src/app/lib/data/services/blogs/blog.service";
@@ -24,7 +28,8 @@ export class BlogDetailComponent implements OnInit {
   dataComment: CommentPassingModel;
   typeDisplayImage = TypeDisplayImage;
   user: UserDataReturnDTOModel;
-  comments: CommentModel[] = [];
+  comments: PageModel<CommentModel>;
+  searchModel: SearchPaganationDTO<SearchCommentModel>;
 
   constructor(
     private blogService: BlogService,
@@ -34,6 +39,7 @@ export class BlogDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getBlog();
+    this.createSearchModel();
     this.initDataComment();
     this.getComments();
   }
@@ -49,16 +55,29 @@ export class BlogDetailComponent implements OnInit {
     });
   }
 
-  async getComments() {
-    try {
-      const data: ReturnMessage<
-        CommentModel[]
-      > = await this.commentService.getAll();
-      this.comments = data.data;
-      console.log(data);
-    } catch (e) {
-      console.log(e);
-    }
+  createSearchModel() {
+    this.searchModel = {
+      search: { entityId: this.id },
+      pageIndex: 0,
+      pageSize: 10,
+    };
+  }
+
+  changePageIndex(pageIndex: number) {
+    this.searchModel = { ...this.searchModel, pageIndex: pageIndex - 1 };
+
+    this.getComments();
+  }
+
+  getComments() {
+    this.commentService
+      .getBlogComments(this.searchModel)
+      .then((data: ReturnMessage<PageModel<CommentModel>>) => {
+        this.comments = data.data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   getImage(image) {

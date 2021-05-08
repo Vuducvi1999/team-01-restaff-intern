@@ -22,32 +22,25 @@
           <li>{{ data?.createByDate | date: "mediumDate" }}</li>
           <li>Posted By : {{ data?.createdByName }}</li>
           <li>
-            <i class="fa fa-comments"></i> {{ comments?.length + " Comment" }}
+            <i class="fa fa-comments"></i>
+            {{ comments?.results.length + " Comment" }}
           </li>
         </ul>
         <div [innerHTML]="data?.contentHTML"></div>
-        <div class="row mt-5">
-          <div class="col-12">
-            <ul class="comment-section">
-              <li *ngFor="let comment of comments">
-                <div class="media">
-                  <app-image-wrapper [data]="{}"></app-image-wrapper>
-                  <div class="media-body">
-                    <h6>
-                      {{ comment.fullName }}
-                      <span>( {{ comment.createByDate }} )</span>
-                    </h6>
-                    <p>{{ comment.content }}</p>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
+
+        <app-comment-detail
+          *ngIf="comments"
+          (action)="changePageIndex($event)"
+          [comments]="comments"
+        ></app-comment-detail>
       </div>
       <div class="col-sm-12 mt-5" *ngIf="user">
         <h2>Leave Your Message</h2>
-        <app-comment [dataComment]="dataComment"></app-comment>
+        <app-comment
+          *ngIf="dataComment"
+          [dataComment]="dataComment"
+          (action)="getComments()"
+        ></app-comment>
       </div>
     </div>
     <div></div>

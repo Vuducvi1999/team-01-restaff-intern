@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Files;
 using Service.Users;
+using System;
 
 namespace BE.Controllers
 {
@@ -27,11 +28,18 @@ namespace BE.Controllers
             return CommonResponse(result);
         }
 
+        [Route(UrlConstants.GetUser)]
+        [HttpGet]
+        public IActionResult GetDetailUser(Guid id)
+        {
+            var result = _userService.GetDetailUser(id);
+            return CommonResponse(result);
+        }
+
         [HttpPost]
         public IActionResult Create([FromBody] CreateUserDTO model)
         {
             var result = _userService.Create(model);
-            var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
             return CommonResponse(result);
         }
 

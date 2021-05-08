@@ -1,6 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClientService } from "src/app/lib/http/http-client";
-import { CommentModel } from "../../models/comments/comment.model";
+import { SearchPaganationDTO } from "../../models";
+import {
+  CommentModel,
+  SearchCommentModel,
+} from "../../models/comments/comment.model";
 
 @Injectable()
 export class CommentService {
@@ -8,8 +12,31 @@ export class CommentService {
 
   constructor(private httpClient: HttpClientService) {}
 
-  getAll() {
-    return this.httpClient.getObservable(this.url).toPromise();
+  getBlogComments(search: SearchPaganationDTO<SearchCommentModel> = null) {
+    const qs = Object.keys(search.search)
+      .map(
+        (key) =>
+          `search.${encodeURIComponent(key)}=${encodeURIComponent(
+            search.search[key]
+          )}`
+      )
+      .join("&");
+    const qs2 = Object.keys({
+      pageIndex: search.pageIndex,
+      pageSize: search.pageSize,
+    })
+      .map(
+        (key) => `${encodeURIComponent(key)}=${encodeURIComponent(search[key])}`
+      )
+      .join("&");
+
+    const url = this.url + `/blog?${qs}&${qs2}`;
+    return this.httpClient.getObservable(url).toPromise();
+  }
+
+  getProductComments(search: SearchPaganationDTO<SearchCommentModel> = null) {
+    const url = this.url + `/product`;
+    return this.httpClient.getObservable(url).toPromise();
   }
 
   create(model: CommentModel) {

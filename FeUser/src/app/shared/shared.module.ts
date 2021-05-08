@@ -55,6 +55,7 @@ import { UploadFileComponent } from "./components/upload-file/upload-file.compon
 import { FilterPipeModule } from "ngx-filter-pipe";
 import { SearchService } from "../lib/data/services/search/search.service";
 import { CommentComponent } from "./components/comment/comment.component";
+import { CommentDetailComponent } from "./components/comment/comment-detail/comment-detail.component";
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { CommentComponent } from "./components/comment/comment.component";
     ImageWrapperComponent,
     UploadFileComponent,
     CommentComponent,
+    CommentDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -135,6 +137,7 @@ import { CommentComponent } from "./components/comment/comment.component";
     ImageWrapperComponent,
     UploadFileComponent,
     CommentComponent,
+    CommentDetailComponent,
   ],
 })
 export class SharedModule {}
