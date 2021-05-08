@@ -29,6 +29,7 @@ import { QuickViewComponent } from "../../modal/quick-view/quick-view.component"
 
 import { registerLocaleData } from "@angular/common";
 import localeFr from "@angular/common/locales/fr";
+import { ThrowStmt } from "@angular/compiler";
 registerLocaleData(localeFr, "fr");
 
 @Component({
@@ -149,7 +150,10 @@ export class ProductBoxComponent implements OnInit, OnChanges {
       customerId: user.id,
       productId: product.id,
     };
-    this.wishListService.create(model).catch((e) => console.log(e));
+    this.wishListService
+      .create(model)
+      .then(() => this.getWishlist())
+      .catch((e) => console.log(e));
   }
 
   addToCompare(product: any) {
