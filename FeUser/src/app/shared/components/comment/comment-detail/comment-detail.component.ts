@@ -24,6 +24,7 @@ export class CommentDetailComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   async ngOnInit() {
+    console.log(this.comments);
     this.page = this.comments.pageIndex + 1;
     this.getAllUser();
   }

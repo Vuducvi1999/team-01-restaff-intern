@@ -35,7 +35,24 @@ export class CommentService {
   }
 
   getProductComments(search: SearchPaganationDTO<SearchCommentModel> = null) {
-    const url = this.url + `/product`;
+    const qs = Object.keys(search.search)
+      .map(
+        (key) =>
+          `search.${encodeURIComponent(key)}=${encodeURIComponent(
+            search.search[key]
+          )}`
+      )
+      .join("&");
+    const qs2 = Object.keys({
+      pageIndex: search.pageIndex,
+      pageSize: search.pageSize,
+    })
+      .map(
+        (key) => `${encodeURIComponent(key)}=${encodeURIComponent(search[key])}`
+      )
+      .join("&");
+
+    const url = this.url + `/product?${qs}&${qs2}`;
     return this.httpClient.getObservable(url).toPromise();
   }
 

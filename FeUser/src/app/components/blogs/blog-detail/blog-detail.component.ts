@@ -40,9 +40,6 @@ export class BlogDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getBlog();
-    this.createSearchModel();
-    this.initDataComment();
-    this.getComments();
   }
 
   getBlog() {
@@ -53,6 +50,10 @@ export class BlogDetailComponent implements OnInit {
         .then((res: ReturnMessage<BlogModel>) => {
           this.data = res.data;
         });
+
+      this.createSearchModel();
+      this.initDataComment();
+      this.getComments();
     });
   }
 

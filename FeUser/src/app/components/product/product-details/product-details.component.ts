@@ -53,9 +53,6 @@ export class ProductDetailsComponent implements OnInit {
     private commentService: CommentService
   ) {
     this.getProduct();
-    this.initDataComment();
-    this.createSearchModel();
-    this.getComments();
   }
 
   ngOnInit(): void {}
@@ -67,6 +64,9 @@ export class ProductDetailsComponent implements OnInit {
         .then((res: ReturnMessage<ProductDetailsModel>) => {
           this.product = res.data;
         });
+      this.initDataComment();
+      this.createSearchModel();
+      this.getComments();
     });
   }
 
