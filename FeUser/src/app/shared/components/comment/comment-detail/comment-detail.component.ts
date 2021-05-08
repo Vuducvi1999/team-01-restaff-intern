@@ -15,6 +15,7 @@ import { TypeDisplayImage } from "src/app/shared/data";
 })
 export class CommentDetailComponent implements OnInit {
   @Input() comments: PageModel<CommentModel>;
+  @Input() class: string;
   @Output() action = new EventEmitter();
   allUser: ReturnMessage<UserModel>[] = [];
   page = 0;

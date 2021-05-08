@@ -28,11 +28,14 @@
         </ul>
         <div [innerHTML]="data?.contentHTML"></div>
 
-        <app-comment-detail
-          *ngIf="comments"
-          (action)="changePageIndex($event)"
-          [comments]="comments"
-        ></app-comment-detail>
+        <div class="mt-5">
+          <p class="comment-label">Comments</p>
+          <app-comment-detail
+            *ngIf="comments"
+            (action)="changePageIndex($event)"
+            [comments]="comments"
+          ></app-comment-detail>
+        </div>
       </div>
       <div class="col-sm-12 mt-5" *ngIf="user">
         <h2>Leave Your Message</h2>

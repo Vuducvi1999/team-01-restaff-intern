@@ -82,6 +82,16 @@
                   <p>{{ product?.description }}</p>
                 </ng-template>
               </ngb-tab>
+              <ngb-tab>
+                <ng-template ngbTabTitle>Comments</ng-template>
+                <ng-template ngbTabContent>
+                  <app-comment-detail
+                    *ngIf="comments"
+                    (action)="changePageIndex($event)"
+                    [comments]="comments"
+                  ></app-comment-detail>
+                </ng-template>
+              </ngb-tab>
               <ngb-tab *ngIf="user">
                 <ng-template ngbTabTitle>Write Review</ng-template>
                 <ng-template ngbTabContent>

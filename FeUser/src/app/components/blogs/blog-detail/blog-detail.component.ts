@@ -19,6 +19,7 @@ import { TypeDisplayImage } from "src/app/shared/data";
 
 @Component({
   selector: "app-blog-detail",
+  styleUrls: ["./blog-detail.component.scss"],
   templateUrl: "./blog-detail.component.html",
   providers: [CommentService],
 })

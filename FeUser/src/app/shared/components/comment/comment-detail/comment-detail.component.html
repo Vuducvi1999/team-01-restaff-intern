@@ -1,9 +1,10 @@
-<div class="row mt-5" *ngIf="allUser.length > 0">
+<div [ngClass]="['row', class ? class : '']" *ngIf="allUser.length > 0">
   <div class="col-12">
     <ul class="comments">
       <li *ngFor="let comment of comments.results">
         <div class="media">
           <app-image-wrapper
+            class="flex-shrink-0"
             [data]="{
               url: getCustomerImage(comment.customerId),
               typeClass: typeDisplayImage.COMMENT_IMAGE_CUSTOMER
@@ -20,7 +21,7 @@
       </li>
     </ul>
     <ngb-pagination
-      class="d-flex justify-content-end"
+      class="d-flex justify-content-end mt-3"
       [collectionSize]="comments.totalItem"
       [(page)]="page"
       (pageChange)="pageChange($event)"

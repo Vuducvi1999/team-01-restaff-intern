@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import {
   CommentModel,
   CommentPassingModel,
+  SearchCommentModel,
 } from "src/app/lib/data/models/comments/comment.model";
 import { ProductDetailsModel } from "src/app/lib/data/models/products/product-details.model";
 import {
@@ -21,23 +22,25 @@ import {
   PageModel,
   ProductModel,
   ReturnMessage,
+  SearchPaganationDTO,
 } from "src/app/lib/data/models";
-import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
+import { CommentService } from "src/app/lib/data/services/comments/comment.service";
 
 @Component({
   selector: "app-product-details",
   templateUrl: "./product-details.component.html",
   styleUrls: ["./product-details.component.scss"],
-  providers: [ProductDetailsService],
+  providers: [ProductDetailsService, CommentService],
 })
 export class ProductDetailsComponent implements OnInit {
   public product: ProductDetailsModel;
   public counter: number = 1;
   public activeSlide: any = 0;
   public ImageSrc: string;
-  public id: string;
   public dataComment: CommentPassingModel;
   public user: UserDataReturnDTOModel;
+  public comments: PageModel<CommentModel>;
+  public searchModel: SearchPaganationDTO<SearchCommentModel>;
 
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
 
@@ -46,10 +49,13 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(
     private productService: ProductDetailsService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private commentService: CommentService
   ) {
     this.getProduct();
     this.initDataComment();
+    this.createSearchModel();
+    this.getComments();
   }
 
   ngOnInit(): void {}
@@ -77,5 +83,31 @@ export class ProductDetailsComponent implements OnInit {
       entityId: this.activatedRoute.snapshot.queryParamMap.get("id"),
       entityType: "Product",
     };
+  }
+
+  createSearchModel() {
+    const id = this.activatedRoute.snapshot.queryParamMap.get("id");
+    this.searchModel = {
+      search: { entityId: id },
+      pageIndex: 0,
+      pageSize: 10,
+    };
+  }
+
+  changePageIndex(pageIndex: number) {
+    this.searchModel = { ...this.searchModel, pageIndex: pageIndex - 1 };
+
+    this.getComments();
+  }
+
+  getComments() {
+    this.commentService
+      .getProductComments(this.searchModel)
+      .then((data: ReturnMessage<PageModel<CommentModel>>) => {
+        this.comments = data.data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 }
