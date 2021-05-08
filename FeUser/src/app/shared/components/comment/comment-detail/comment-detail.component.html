@@ -1,5 +1,9 @@
-<div [ngClass]="['row', class ? class : '']" *ngIf="allUser.length > 0">
+<div [ngClass]="['row', class ? class : '']">
   <div class="col-12">
+    <p *ngIf="comments.results.length === 0">Not Found Comments</p>
+  </div>
+
+  <div class="col-12" *ngIf="allUser.length > 0 && comments.results.length > 0">
     <ul class="comments">
       <li *ngFor="let comment of comments.results">
         <div class="media">
