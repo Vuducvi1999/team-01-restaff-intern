@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from "@angular/core";
 import { ReturnMessage } from "src/app/lib/data/models";
 import { CommentModel } from "src/app/lib/data/models/comments/comment.model";
 import { PageModel } from "src/app/lib/data/models/common/page.model";
@@ -20,6 +28,7 @@ export class CommentDetailComponent implements OnInit {
   allUser: ReturnMessage<UserModel>[] = [];
   page = 0;
   public typeDisplayImage = TypeDisplayImage;
+  @ViewChild("refComment") refComment!: ElementRef;
 
   constructor(private userService: UserService) {}
 
@@ -51,5 +60,12 @@ export class CommentDetailComponent implements OnInit {
 
   pageChange(event) {
     this.action.emit(event);
+    console.log([this.refComment.nativeElement.getBoundingClientRect()]);
+    console.log(window);
+    window.scrollTo(
+      this.refComment.nativeElement.getBoundingClientRect().left +
+        window.scrollX,
+      this.refComment.nativeElement.getBoundingClientRect().top + window.scrollY
+    );
   }
 }

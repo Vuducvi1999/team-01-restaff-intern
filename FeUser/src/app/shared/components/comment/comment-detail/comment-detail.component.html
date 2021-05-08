@@ -1,4 +1,4 @@
-<div [ngClass]="['row', class ? class : '']">
+<div [ngClass]="['row', class ? class : '']" #refComment>
   <div class="col-12">
     <p *ngIf="comments.results.length === 0">Not Found Comments</p>
   </div>

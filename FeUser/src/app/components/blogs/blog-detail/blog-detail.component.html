@@ -29,7 +29,7 @@
         <div [innerHTML]="data?.contentHTML"></div>
 
         <div class="mt-5">
-          <p class="comment-label">Comments</p>
+          <p class="comment-label" #refComment>Comments</p>
           <app-comment-detail
             *ngIf="comments"
             (action)="changePageIndex($event)"
