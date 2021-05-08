@@ -53,7 +53,8 @@
         </div>
       </div>
     </li>
-    <li class="onhover-div mobile-setting">
+    <!-- Xóa language vì không sử dụng -->
+    <!-- <li class="onhover-div mobile-setting">
       <div>
         <img
           src="assets/images/icon/setting.png"
@@ -75,12 +76,10 @@
         </ul>
         <h6>currency</h6>
         <ul class="list-inline">
-          <li *ngFor="let currency of currencies">
-            <!-- <a href="javascript:void(0)" (click)="changeCurrency(currency)">{{ currency.name }}</a> -->
-          </li>
+          <li *ngFor="let currency of currencies"></li>
         </ul>
       </div>
-    </li>
+    </li> -->
     <li class="onhover-div mobile-cart">
       <div>
         <a [routerLink]="['/cart']">
