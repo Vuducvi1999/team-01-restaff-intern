@@ -68,29 +68,35 @@
                         First name</label>
                       <input class="form-control col-xl-8 col-md-7" id="validationCustom0" type="text" required
                         formControlName="firstName">
-                      <span class="text-danger"
-                        *ngIf="(profileFormControl.firstName.touched || submitted) && profileFormControl.firstName.errors?.required">
-                        This field is required
-                      </span>
+                      <div class="col-md-3 offset-md-3">
+                        <span class="text-danger"
+                          *ngIf="(profileFormControl.firstName.touched || submitted) && profileFormControl.firstName.errors?.required">
+                          This field is required
+                        </span>
+                      </div>
                     </div>
                     <div class="form-group row">
                       <label for="" class="col-xl-3 col-md-4"><span>*</span>
                         Last name</label>
                       <input class="form-control col-xl-8 col-md-7" id="" type="text" formControlName="lastName">
+                      <div class="col-md-3 offset-md-3">
+                        <span class="text-danger"
+                          *ngIf="(profileFormControl.lastName.touched || submitted) && profileFormControl.lastName.errors?.required">
+                          Last name is required
+                        </span>
+                      </div>
                     </div>
-                    <span class="text-danger"
-                      *ngIf="(profileFormControl.lastName.touched || submitted) && profileFormControl.lastName.errors?.required">
-                      Last name is required
-                    </span>
                     <div class="form-group row">
                       <label for="validationCustom1" class="col-xl-3 col-md-4"><span>*</span>
                         Email</label>
                       <input class="form-control col-xl-8 col-md-7" id="validationCustom1" type="text" required=""
                         formControlName="email">
-                      <span class="text-danger"
-                        *ngIf="(profileFormControl.email.touched || submitted) && profileFormControl.email.errors?.required">
-                        This field is required
-                      </span>
+                      <div class="col-md-3 offset-md-3">
+                        <span class="text-danger"
+                          *ngIf="(profileFormControl.email.touched || submitted) && profileFormControl.email.errors?.required">
+                          This field is required
+                        </span>
+                      </div>
                     </div>
                     <div class="form-group row">
                       <label for="validationCustom2" class="col-xl-3 col-md-4"><span>*</span>
@@ -99,10 +105,12 @@
                         formControlName="imageUrl" hidden>
                       <app-upload-file [data]="modalFile" [fileURL]="fileURL" styleFile="width: 200px; height: auto;"
                         (onChange)="onChangeData($event)"></app-upload-file>
-                      <span class="text-danger"
-                        *ngIf="(profileFormControl.imageUrl.touched || submitted) && profileFormControl.imageUrl.errors?.required">
-                        This field is required
-                      </span>
+                      <div class="col-md-3 offset-md-3">
+                        <span class="text-danger"
+                          *ngIf="(profileFormControl.imageUrl.touched || submitted) && profileFormControl.imageUrl.errors?.required">
+                          This field is required
+                        </span>
+                      </div>
                     </div>
                     <div class="pull-right">
                       <div class="form-group">
@@ -128,36 +136,43 @@
                   <div class="form-group row">
                     <label for="" class="col-xl-3 col-md-4"><span>*</span>
                       Password</label>
-                    <input class="form-control col-xl-3 col-md-7" id="" type="password" formControlName="password">
+                    <input class="form-control col-xl-5 col-md-7" id="" type="password" formControlName="password">
+                    <div class="col-md-3 offset-md-3">
+                      <span class="text-danger"
+                        *ngIf="(passwordFormControl.password.touched || submitted) && passwordFormControl.password.errors?.required">
+                        This field is required
+                      </span>
+                    </div>
                   </div>
-                  <span class="text-danger"
-                    *ngIf="(passwordFormControl.password.touched || submitted) && passwordFormControl.password.errors?.required">
-                    This field is required
-                  </span>
                   <div class="form-group row">
                     <label for="validationCustom1" class="col-xl-3 col-md-4"><span>*</span>
                       New Password</label>
-                    <input class="form-control col-xl-3 col-md-7" id="validationCustom1" type="password" required=""
+                    <input class="form-control col-xl-5 col-md-7" id="validationCustom1" type="password" required=""
                       formControlName="newPassword">
+                    <div class="col-md-3 offset-md-3"> <span class="text-danger"
+                        *ngIf="(passwordFormControl.newPassword.touched || submitted) && passwordFormControl.newPassword.errors?.required">
+                        This field is required
+                      </span></div>
                   </div>
-                  <span class="text-danger"
-                    *ngIf="(passwordFormControl.newPassword.touched || submitted) && passwordFormControl.newPassword.errors?.required">
-                    This field is required
-                  </span>
+
+
+
                   <div class="form-group row">
                     <label for="validationCustom2" class="col-xl-3 col-md-4"><span>*</span>
                       Confirm New Password</label>
-                    <input class="form-control col-xl-3 col-md-7" id="validationCustom2" type="password" required=""
+                    <input class="form-control col-xl-5 col-md-7" id="validationCustom2" type="password" required=""
                       formControlName="confirmNewPassword">
+                    <div class="col-md-3 offset-md-3">
+                      <span class="text-danger"
+                        *ngIf="(passwordFormControl.confirmNewPassword.touched || submitted) && passwordFormControl.confirmNewPassword.errors?.required">
+                        This field is required
+                      </span>
+                      <span class="text-danger"
+                        *ngIf="passwordFormControl.confirmNewPassword.value !== passwordFormControl.newPassword.value && passwordFormControl.confirmNewPassword.value">
+                        New password and Confirm new password are not the same
+                      </span>
+                    </div>
                   </div>
-                  <span class="text-danger"
-                    *ngIf="(passwordFormControl.confirmNewPassword.touched || submitted) && passwordFormControl.confirmNewPassword.errors?.required">
-                    This field is required
-                  </span>
-                  <span class="text-danger"
-                    *ngIf="passwordFormControl.confirmNewPassword.value !== passwordFormControl.newPassword.value && passwordFormControl.confirmNewPassword.value">
-                    New password and Confirm new password are not the same
-                  </span>
                   <div class="pull-right">
                     <div class="form-group">
                       <button type="button" class="btn btn-primary" (click)="changePassword()">CHANGE PASSWORD</button>

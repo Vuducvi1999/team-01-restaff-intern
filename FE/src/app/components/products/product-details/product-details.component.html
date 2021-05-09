@@ -71,13 +71,15 @@
                                 *ngIf="(productFormsControl.category.touched || submitted) && productFormsControl.category.errors?.required">Required</span>
                             </div>
                             <div class="form-group row">
-                              <label for="validationCustom8" class="col-xl-3 col-md-4"><span>*</span> Display Home
+                              <label for="validationCustom8" class="col-xl-7 col-md-4"><span>*</span> Display Home
                                 Page</label>
-                              <input class="form-control col-xl-1 col-md-6" id="validationCustom8" type="checkbox"
+                              <input class="form-check-input col-xl-10 col-md-6" id="validationCustom8" type="checkbox"
                                 formControlName="hasDisplayHomePage" />
-                              <label for="validationCustom9" class="col-xl-3 col-md-4"><span>*</span> Is
+                            </div>
+                            <div class="form-group row">
+                              <label for="validationCustom9" class="col-xl-7 col-md-4"><span>*</span> Is
                                 Important</label>
-                              <input class="form-control col-xl-1 col-md-6" id="validationCustom9" type="checkbox"
+                              <input class="form-check-input col-xl-10 col-md-6" id="validationCustom9" type="checkbox"
                                 formControlName="isImportant" />
                             </div>
                           </div>
