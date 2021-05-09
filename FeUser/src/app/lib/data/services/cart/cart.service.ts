@@ -3,7 +3,6 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { ProductModel } from '../../models';
 
-
 const state = {
   products: JSON.parse(localStorage['products'] || '[]'),
   wishlist: JSON.parse(localStorage['wishlistItems'] || '[]'),
@@ -12,10 +11,9 @@ const state = {
 }
 @Injectable()
 export class CartService {
-
   public OpenCart: boolean = false;
 
-  constructor(private toastrService: ToastrService) { }
+  constructor(private toastrService: ToastrService) {}
 
   public get cartData(): Observable<any> {
     const itemsStream = new Observable(observer => {
@@ -43,15 +41,15 @@ export class CartService {
     const items = cartItem ? cartItem : product;
     const stock = this.calculateStockCounts(items, qty);
 
-    if (!stock) return false
+    if (!stock) return false;
 
     if (cartItem) {
-      cartItem.quantity += qty
+      cartItem.quantity += qty;
     } else {
       state.cart.cartDetails.push({
         ...product,
-        quantity: qty
-      })
+        quantity: qty,
+      });
     }
     state.cart = this.processCart(state.cart);
     localStorage.setItem("cartItems", JSON.stringify(state.cart));
@@ -69,20 +67,24 @@ export class CartService {
         }
         state.cart = this.processCart(state.cart);
         localStorage.setItem("cartItems", JSON.stringify(state.cart));
-        return true
+        return true;
       }
-    })
+    });
   }
 
   // Calculate Stock Counts
   public calculateStockCounts(product, quantity) {
-    const qty = product.quantity + quantity
-    const stock = product.stock
+    const qty = product.quantity + quantity;
+    const stock = product.stock;
     if (stock < qty || stock == 0) {
-      this.toastrService.error('You can not add more items than available. In stock ' + stock + ' items.');
-      return false
+      this.toastrService.error(
+        "You can not add more items than available. In stock " +
+          stock +
+          " items."
+      );
+      return false;
     }
-    return true
+    return true;
   }
 
   // Remove Cart items
@@ -91,14 +93,14 @@ export class CartService {
     state.cart.cartDetails.splice(index, 1);
     state.cart = this.processCart(state.cart);
     localStorage.setItem("cartItems", JSON.stringify(state.cart));
-    return true
+    return true;
   }
 
   public removeAll(): any {
     state.cart.cartDetails.splice(0);
     state.cart = this.processCart(state.cart);
     localStorage.setItem("cartItems", JSON.stringify(state.cart));
-    return true
+    return true;
   }
 
   // Total amount 

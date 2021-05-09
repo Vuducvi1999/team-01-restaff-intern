@@ -33,7 +33,10 @@ namespace Service.Home
         {
             try
             {
-                var resultEntity = _productRepository.DbSet.DynamicIncludeProperty(nameof(Category)).AsQueryable().Take(12).ToList();
+                var resultEntity = _productRepository.DbSet.DynamicIncludeProperty(nameof(Category))
+                                    .AsQueryable()
+                                    .Take(12)
+                                    .ToList();
                 var data = _mapper.Map<List<Product>, List<HomeProductDTO>>(resultEntity);
                 var result = new ReturnMessage<List<HomeProductDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;
@@ -48,7 +51,10 @@ namespace Service.Home
         {
             try
             {
-                var resultEntity = _productRepository.DbSet.DynamicIncludeProperty(nameof(Category)).AsQueryable().Take(12).ToList();
+                var resultEntity = _productRepository.DbSet.DynamicIncludeProperty(nameof(Category))
+                                    .AsQueryable()
+                                    .Take(12)
+                                    .ToList();
                 var data = _mapper.Map<List<Product>, List<HomeProductDTO>>(resultEntity);
                 var result = new ReturnMessage<List<HomeProductDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;
@@ -63,7 +69,10 @@ namespace Service.Home
         {
             try
             {
-                var resultEntity = _productRepository.DbSet.DynamicIncludeProperty(nameof(Category)).AsQueryable().Take(12).ToList();
+                var resultEntity = _productRepository.DbSet.DynamicIncludeProperty(nameof(Category))
+                                    .AsQueryable()
+                                    .Take(12)
+                                    .ToList();
                 var data = _mapper.Map<List<Product>, List<HomeProductDTO>>(resultEntity);
                 var result = new ReturnMessage<List<HomeProductDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;
@@ -78,7 +87,10 @@ namespace Service.Home
         {
             try
             {
-                var resultEntity = _productRepository.DbSet.DynamicIncludeProperty(nameof(Category)).AsQueryable().Take(12).ToList();
+                var resultEntity = _productRepository.DbSet.DynamicIncludeProperty(nameof(Category))
+                                    .AsQueryable()
+                                    .Take(12)
+                                    .ToList();
                 var data = _mapper.Map<List<Product>, List<HomeProductDTO>>(resultEntity);
                 var result = new ReturnMessage<List<HomeProductDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;
@@ -93,8 +105,12 @@ namespace Service.Home
         {
             try
             {
-                var resultEntity = _productRepository.DbSet.DynamicIncludeProperty(nameof(Category)).AsQueryable().Take(12).ToList();
+                var resultEntity = _productRepository.DbSet.DynamicIncludeProperty(nameof(Category))
+                                    .AsQueryable()
+                                    .Take(12)
+                                    .ToList();
                 var data = _mapper.Map<List<Product>, List<HomeProductDTO>>(resultEntity);
+
                 var result = new ReturnMessage<List<HomeProductDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;
             }

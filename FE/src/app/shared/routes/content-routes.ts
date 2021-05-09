@@ -152,4 +152,14 @@ export const content: Routes = [
       breadcrumb: 'Comment',
     },
   },
+  {
+    path: 'customer-wish-list',
+    loadChildren: () =>
+      import(
+        '../../components/customer-wish-list/customer-wish-list.module'
+      ).then((m) => m.CustomerWishListModule),
+    data: {
+      breadcrumb: 'CustomerWishList',
+    },
+  },
 ];

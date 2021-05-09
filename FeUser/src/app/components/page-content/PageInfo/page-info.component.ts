@@ -52,14 +52,10 @@ export class PageContentInfoComponent implements OnInit {
     this.contactService
       .create(this.contactForm.value)
       .then(() => {
-        console.log(this.contactForm.value);
-        alert("Submited");
         this.initForm();
       })
       .catch((e) => {
-        console.log(this.contactForm.value);
-        alert("Submit Fail");
-        this.initForm();
+        alert(e.error.message);
       });
   }
 }

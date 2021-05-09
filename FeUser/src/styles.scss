@@ -1,12 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
-.productImage {
-  max-height: 300px;
-  max-width: fit-content;
+.home-product-image {
+  height: 350px;
+  width: 340px;
 }
 
 .blogImage {
-  max-height: 300px;
-  max-width: fit-content;
+  height: 300px !important;
+  width: 340px !important;
+}
+
+.logo-image {
+  height: 50px;
+  margin-top: -25px;
+  margin-bottom: -25px;
 }
 
 .image-wrapper {
@@ -16,6 +22,24 @@
 
 .blog-detail {
   width: 50%;
+}
+
+.setting-image {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.wish-list-image {
+  height: 90px;
+}
+
+img.customer-comment-image {
+  height: 65px;
+  width: 65px;
+  padding: 0 !important ;
+  margin: 0 !important;
+  margin-right: 20px !important;
+  border-radius: 100%;
 }
 .product-details{
   height: 200px;

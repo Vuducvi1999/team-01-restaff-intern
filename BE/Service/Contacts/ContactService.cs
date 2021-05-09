@@ -64,6 +64,16 @@ namespace Service.Contacts
         {
             try
             {
+                foreach (var item in model.GetType().GetProperties())
+                {
+                    var key = item.Name;
+                    var value = item.GetValue(model, null);
+                    if (value.ToString().Trim() == "")
+                    {
+                        return new ReturnMessage<ContactDTO>(true, null, MessageConstants.Error);
+                    }
+                }
+
                 var entity = _mapper.Map<CreateContactDTO, Contact>(model);
                 entity.Insert();
                 _repository.Insert(entity);
