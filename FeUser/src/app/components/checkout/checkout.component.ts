@@ -19,7 +19,7 @@ export class CheckoutComponent implements OnInit {
   public subTotal: any;
   public totalAmount: any;
   public totalItem: any;
-  public couponValue: any;
+  public couponValue=0;
   public couponInvalid: boolean;
 
   public order: OrderModel = new OrderModel();

@@ -100,7 +100,7 @@
                           <input placeholder="Coupon Code" type="text" id="couponCode" name="couponCode"
                             #couponCode="ngModel" [(ngModel)]="order.couponCode">
                           <div *ngIf="couponInvalid">
-                            <span>APPLY COUPON FAILED</span>
+                            <span class="text-danger">APPLY COUPON FAILED</span>
                           </div>
                         </div>
                         <div class="col-lg-4 col-sm-12 col-xs-12">

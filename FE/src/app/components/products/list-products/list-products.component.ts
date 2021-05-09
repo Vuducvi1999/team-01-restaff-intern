@@ -36,7 +36,6 @@ export class ListProductsComponent implements OnInit {
         type: 'html',
         filter: false,
         valuePrepareFunction: (file) => {
-          console.log(file);
           var fileExt = file.split(',')[0].split('.').pop();
           if (
             fileExt == 'png' ||
