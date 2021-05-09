@@ -18,7 +18,7 @@
             >
               <ng-template carouselSlide [id]="i">
                 <div>
-                  <app-image-wapper
+                  <!-- <app-image-wapper
                     [data]="{
                       url: getImage(image),
                       type: typeDisplayImage.PRODUCT_DETAIL_MAIN_IMAGE
@@ -27,7 +27,13 @@
                     [defaultImage]="getImage(image)"
                     (click)="owlCar.to((activeSlide = i.toString()))"
                     class="img-fluid"
-                  ></app-image-wapper>
+                  ></app-image-wapper> -->
+                  <img
+                    [defaultImage]="getImage(image)"
+                    [lazyLoad]="getImage(image)"
+                    [alt]="getImage(image)"
+                    class="img-fluid"
+                  />
                 </div>
               </ng-template>
             </ng-container>
@@ -48,7 +54,7 @@
                   >
                     <ng-template carouselSlide [id]="i">
                       <div class="owl-thumb" [class.active]="i == activeSlide">
-                        <app-image-wapper
+                        <!-- <app-image-wapper
                           [data]="{
                             url: getImage(image),
                             type: typeDisplayImage.PRODUCT_DETAIL_IMAGE
@@ -56,7 +62,14 @@
                           [lazyLoad]="getImage(image)"
                           [defaultImage]="getImage(image)"
                           (click)="owlCar.to((activeSlide = i.toString()))"
-                        ></app-image-wapper>
+                        ></app-image-wapper> -->
+                        <img
+                          [defaultImage]="getImage(image)"
+                          [lazyLoad]="getImage(image)"
+                          [alt]="getImage(image)"
+                          class="img-fluid"
+                          (click)="owlCar.to((activeSlide = i.toString()))"
+                        />
                       </div>
                     </ng-template>
                   </ng-container>
