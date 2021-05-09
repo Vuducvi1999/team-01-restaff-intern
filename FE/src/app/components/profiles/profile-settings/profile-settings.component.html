@@ -5,8 +5,8 @@
       <div class="card">
         <div class="card-body">
           <div class="profile-details text-center">
-            <img src="{{getImage}}"  alt=""
-              class="img-fluid img-90 rounded-circle blur-up lazyloaded" width="90px" height="90px">
+            <img src="{{getImage}}" alt="" class="img-fluid img-90 rounded-circle blur-up lazyloaded" width="90px"
+              height="90px">
             <h5 class="f-w-600 mb-0">{{userInfo.firstName}} {{userInfo.lastName}}</h5>
             <span>{{userInfo.email}}</span>
             <div class="social">
@@ -55,7 +55,7 @@
                         <tr>
                           <td>Avatar:</td>
                           <!-- <td>{{userInfo.imageUrl}}</td> -->
-                          <img [src]="getImage" style="width: 200px; height: auto;"/>
+                          <img [src]="getImage" style="width: 200px; height: auto;" />
                         </tr>
                       </tbody>
                     </table>
@@ -97,7 +97,8 @@
                         Avatar</label>
                       <input class="form-control col-xl-8 col-md-7" id="validationCustom2" type="text" required=""
                         formControlName="imageUrl" hidden>
-                      <app-upload-file [data]="modalFile" [fileURL]="fileURL" styleFile="width: 200px; height: auto;" (onChange)="onChangeData($event)"></app-upload-file>
+                      <app-upload-file [data]="modalFile" [fileURL]="fileURL" styleFile="width: 200px; height: auto;"
+                        (onChange)="onChangeData($event)"></app-upload-file>
                       <span class="text-danger"
                         *ngIf="(profileFormControl.imageUrl.touched || submitted) && profileFormControl.imageUrl.errors?.required">
                         This field is required
@@ -127,7 +128,7 @@
                   <div class="form-group row">
                     <label for="" class="col-xl-3 col-md-4"><span>*</span>
                       Password</label>
-                    <input class="form-control col-xl-8 col-md-7" id="" type="password" formControlName="password">
+                    <input class="form-control col-xl-3 col-md-7" id="" type="password" formControlName="password">
                   </div>
                   <span class="text-danger"
                     *ngIf="(passwordFormControl.password.touched || submitted) && passwordFormControl.password.errors?.required">
@@ -136,27 +137,27 @@
                   <div class="form-group row">
                     <label for="validationCustom1" class="col-xl-3 col-md-4"><span>*</span>
                       New Password</label>
-                    <input class="form-control col-xl-8 col-md-7" id="validationCustom1" type="password" required=""
+                    <input class="form-control col-xl-3 col-md-7" id="validationCustom1" type="password" required=""
                       formControlName="newPassword">
-                    <span class="text-danger"
-                      *ngIf="(passwordFormControl.newPassword.touched || submitted) && passwordFormControl.newPassword.errors?.required">
-                      This field is required
-                    </span>
                   </div>
+                  <span class="text-danger"
+                    *ngIf="(passwordFormControl.newPassword.touched || submitted) && passwordFormControl.newPassword.errors?.required">
+                    This field is required
+                  </span>
                   <div class="form-group row">
                     <label for="validationCustom2" class="col-xl-3 col-md-4"><span>*</span>
                       Confirm New Password</label>
-                    <input class="form-control col-xl-8 col-md-7" id="validationCustom2" type="password" required=""
+                    <input class="form-control col-xl-3 col-md-7" id="validationCustom2" type="password" required=""
                       formControlName="confirmNewPassword">
-                    <span class="text-danger"
-                      *ngIf="(passwordFormControl.confirmNewPassword.touched || submitted) && passwordFormControl.confirmNewPassword.errors?.required">
-                      This field is required
-                    </span>
-                    <span class="text-danger"
-                      *ngIf="passwordFormControl.confirmNewPassword.value !== passwordFormControl.newPassword.value && passwordFormControl.confirmNewPassword.value">
-                      New password and Confirm new password are not the same
-                    </span>
                   </div>
+                  <span class="text-danger"
+                    *ngIf="(passwordFormControl.confirmNewPassword.touched || submitted) && passwordFormControl.confirmNewPassword.errors?.required">
+                    This field is required
+                  </span>
+                  <span class="text-danger"
+                    *ngIf="passwordFormControl.confirmNewPassword.value !== passwordFormControl.newPassword.value && passwordFormControl.confirmNewPassword.value">
+                    New password and Confirm new password are not the same
+                  </span>
                   <div class="pull-right">
                     <div class="form-group">
                       <button type="button" class="btn btn-primary" (click)="changePassword()">CHANGE PASSWORD</button>

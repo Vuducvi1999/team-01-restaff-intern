@@ -573,6 +573,21 @@ namespace Data.Migrations
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CouponCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CouponId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CouponName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("CouponPercent")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("CouponValue")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime>("CreateByDate")
                         .HasColumnType("datetime2");
 
@@ -605,6 +620,9 @@ namespace Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");

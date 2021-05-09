@@ -65,8 +65,6 @@ export class ListBannersComponent implements OnInit {
     this.bannersService.get(null).then((res: ReturnMessage<PageModel<BannerModel>>) => {
       if (!res.hasError) {
         this.banners = res.data.results;
-        console.log("banner", this.banners);
-
       }
     }).catch((er) => {
 

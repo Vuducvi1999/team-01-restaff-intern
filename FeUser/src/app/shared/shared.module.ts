@@ -22,7 +22,6 @@ import { MenuComponent } from "./components/menu/menu.component";
 import { SettingsComponent } from "./components/settings/settings.component";
 import { CategoriesComponent } from "./components/categories/categories.component";
 import { BreadcrumbComponent } from "./components/breadcrumb/breadcrumb.component";
-import { ProductBoxOneComponent } from "./components/product/product-box-one/product-box-one.component";
 import { ProductBoxVerticalComponent } from "./components/product/product-box-vertical/product-box-vertical.component";
 import { ProductBoxVerticalSliderComponent } from "./components/product/product-box-vertical-slider/product-box-vertical-slider.component";
 
@@ -30,7 +29,6 @@ import { ProductBoxVerticalSliderComponent } from "./components/product/product-
 import { NewsletterComponent } from "./components/modal/newsletter/newsletter.component";
 import { QuickViewComponent } from "./components/modal/quick-view/quick-view.component";
 import { CartModalComponent } from "./components/modal/cart-modal/cart-modal.component";
-import { CartVariationComponent } from "./components/modal/cart-variation/cart-variation.component";
 import { VideoModalComponent } from "./components/modal/video-modal/video-modal.component";
 import { SizeModalComponent } from "./components/modal/size-modal/size-modal.component";
 import { AgeVerificationComponent } from "./components/modal/age-verification/age-verification.component";
@@ -46,7 +44,6 @@ import { TapToTopComponent } from "./components/tap-to-top/tap-to-top.component"
 
 // Pipes
 import { DiscountPipe } from "./pipes/discount.pipe";
-import { HomeComponent } from "../components/home/home.component";
 import { ProductBoxComponent } from "./components/product/product-box/product-box.component";
 
 import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
@@ -66,13 +63,11 @@ import { CommentComponent } from "./components/comment/comment.component";
     SettingsComponent,
     BreadcrumbComponent,
     CategoriesComponent,
-    ProductBoxOneComponent,
     ProductBoxVerticalComponent,
     ProductBoxVerticalSliderComponent,
     NewsletterComponent,
     QuickViewComponent,
     CartModalComponent,
-    CartVariationComponent,
     VideoModalComponent,
     SizeModalComponent,
     AgeVerificationComponent,
@@ -94,7 +89,6 @@ import { CommentComponent } from "./components/comment/comment.component";
     BarRatingModule,
     NgxDropzoneModule,
     LazyLoadImageModule.forRoot({
-      // preset: scrollPreset // <-- tell LazyLoadImage that you want to use scrollPreset
     }),
     NgxSkeletonLoaderModule,
     TranslateModule,
@@ -118,13 +112,11 @@ import { CommentComponent } from "./components/comment/comment.component";
     FooterOneComponent,
     BreadcrumbComponent,
     CategoriesComponent,
-    ProductBoxOneComponent,
     ProductBoxVerticalComponent,
     ProductBoxVerticalSliderComponent,
     NewsletterComponent,
     QuickViewComponent,
     CartModalComponent,
-    CartVariationComponent,
     VideoModalComponent,
     SizeModalComponent,
     AgeVerificationComponent,

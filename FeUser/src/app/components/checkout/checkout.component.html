@@ -60,10 +60,10 @@
 
                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
                   <div class="field-label">Address</div>
-                  <input type="text" id="address" required name="address" #address="ngModel" placeholder="Street address"
-                    [(ngModel)]="order.address">
+                  <input type="text" id="address" required name="address" #address="ngModel"
+                    placeholder="Street address" [(ngModel)]="order.address">
 
-                  <div *ngIf="!address?.valid && (address?.dirty || address?.touched)"  class="error">
+                  <div *ngIf="!address?.valid && (address?.dirty || address?.touched)" class="error">
                     <div *ngIf="address.errors.required">
                       Adress is required
                     </div>
@@ -83,14 +83,39 @@
                         currency:'VND'}}
                       </span></li>
                   </ul>
+                  <ul class="sub-total">
+                    <li>Subtotal <span class="count">{{cart.totalAmount | currency:'VND'}}</span></li>
+                    <li>Coupon <span class="count">-{{couponValue | currency:'VND'}}</span></li>
+
+                  </ul>
                   <ul class="total">
-                    <li>Total <span class="count">{{totalPrice | currency:'VND'}}</span></li>
+                    <li>Total <span class="count">{{cart.totalAmount - couponValue | currency:'VND'}}</span></li>
                   </ul>
                 </div>
-
                 <div class="payment-box">
+                  <div class="row">
+                    <div class="col-lg-12 col-sm-6 col-xs-12">
+                      <div class="row">
+                        <div class="col-lg-8 col-sm-12 col-xs-12">
+                          <input placeholder="Coupon Code" type="text" id="couponCode" name="couponCode"
+                            #couponCode="ngModel" [(ngModel)]="order.couponCode">
+                          <div *ngIf="couponInvalid">
+                            <span class="text-danger">APPLY COUPON FAILED</span>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-12 col-xs-12">
+                          <div class="text-left">
+                            <button type="button" (click)="applyCoupon()" class="btn-solid btn">Apply</button>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
                   <div class="text-right">
-                    <button [disabled]="!checkoutForm.valid" type="submit" class="btn-solid btn">Place Order</button>
+                    <button [disabled]="!checkoutForm.valid" type="submit" class="btn-solid btn">Place
+                      Order</button>
                   </div>
                 </div>
               </div>

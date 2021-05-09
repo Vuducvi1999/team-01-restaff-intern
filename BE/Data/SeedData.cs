@@ -24,8 +24,13 @@ namespace Data
                 {
                     ctx.Users.Add(new Domain.Entities.User()
                     {
+                        Id = Guid.NewGuid(),
                         Username = "admin",
                         Password = "E10ADC3949BA59ABBE56E057F20F883E",
+                        Type = Common.Enums.UserType.Admin,
+                        CreateByDate = DateTime.Now,
+                        IsActive = true,
+                        ObjectState = Infrastructure.EntityFramework.ObjectState.Added
                     });
                     ctx.SaveChanges();
                 }
