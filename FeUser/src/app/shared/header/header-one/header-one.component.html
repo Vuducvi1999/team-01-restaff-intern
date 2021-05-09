@@ -7,39 +7,46 @@
           <div class="header-contact" *ngIf="headerModel.informationWeb">
             <ul>
               <li>Welcome to Our Fashion store</li>
-              <li><i class="fa fa-phone" aria-hidden="true"></i>Call Us: {{headerModel.informationWeb.phone}}</li>
+              <li>
+                <i class="fa fa-phone" aria-hidden="true"></i>Call Us:
+                {{ headerModel.informationWeb.phone }}
+              </li>
             </ul>
           </div>
         </div>
         <div class="col-lg-6 text-right">
           <ul class="header-dropdown">
+            <li class="mobile-wishlist mr-3">
+              <a [routerLink]="['/wishlist']"
+                ><i class="fa fa-heart" aria-hidden="true"></i>Wishlist</a
+              >
+            </li>
             <li class="onhover-dropdown mobile-account">
-              <i class="fa fa-user" aria-hidden="true"></i> {{user?'Hello ' + user.firstName + ' ' + user.lastName:'Hello Guest'}}
+              <i class="fa fa-user" aria-hidden="true"></i>
+              {{
+                user
+                  ? "Hello " + user.firstName + " " + user.lastName
+                  : "Hello Guest"
+              }}
               <ul class="onhover-show-div">
                 <ng-container *ngIf="!user">
-                <li>
-                  <a (click)="loadUrlNavaigate('/auth/login')">
-                    Login
-                  </a>
-                </li>
-                <li>
-                  <a (click)="loadUrlNavaigate('/auth/register')">
-                    Register
-                  </a>
-                </li>
-              </ng-container>
-              <ng-container *ngIf="user">
-                <li>
-                  <a (click)="loadUrlNavaigate('/profile')">
-                    Profile
-                  </a>
-                </li>
-                <li>
-                  <a (click)="onLogout()">
-                    Logout
-                  </a>
-                </li>
-              </ng-container>
+                  <li>
+                    <a (click)="loadUrlNavaigate('/auth/login')"> Login </a>
+                  </li>
+                  <li>
+                    <a (click)="loadUrlNavaigate('/auth/register')">
+                      Register
+                    </a>
+                  </li>
+                </ng-container>
+                <ng-container *ngIf="user">
+                  <li>
+                    <a (click)="loadUrlNavaigate('/profile')"> Profile </a>
+                  </li>
+                  <li>
+                    <a (click)="onLogout()"> Logout </a>
+                  </li>
+                </ng-container>
               </ul>
             </li>
           </ul>
@@ -55,7 +62,13 @@
             <app-left-menu></app-left-menu>
             <div class="brand-logo">
               <a routerLink="/home" id="headerlogo">
-                <img src={{getIcon(headerModel.informationWeb.logo)}} class="img-logo" alt="logo">
+                <app-image-wrapper
+                  *ngIf="headerModel.informationWeb.logo"
+                  [data]="{
+                    url: getIcon(headerModel.informationWeb.logo),
+                    typeClass: typeDisplayImage.LOGO_IMAGE
+                  }"
+                ></app-image-wrapper>
               </a>
             </div>
           </div>

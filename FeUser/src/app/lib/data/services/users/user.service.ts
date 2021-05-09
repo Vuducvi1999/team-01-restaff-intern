@@ -1,15 +1,20 @@
-import { Injectable } from '@angular/core';
-import { HttpClientService } from 'src/app/lib/http/http-client';
-import { UserModel } from '../../models/users/user.model';
+import { Injectable } from "@angular/core";
+import { HttpClientService } from "src/app/lib/http/http-client";
+import { UserModel } from "../../models/users/user.model";
 
 @Injectable()
 export class UserService {
-  private url = '/api/user';
+  private url = "/api/user";
 
   constructor(private httpClient: HttpClientService) {}
 
   get(request: any) {
     return this.httpClient.getObservable(this.url, request).toPromise();
+  }
+
+  getUserById(id: string) {
+    const url = `${this.url}/${id}`;
+    return this.httpClient.getObservable(url).toPromise();
   }
 
   create(model: UserModel) {

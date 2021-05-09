@@ -7,9 +7,9 @@ import {
 } from "../../data/common/common.model";
 
 @Component({
-  selector: "app-image-wapper",
-  templateUrl: "./imageWapper.component.html",
-  styleUrls: ["./imageWapper.component.scss"],
+  selector: "app-image-wrapper",
+  templateUrl: "./imageWrapper.component.html",
+  styleUrls: ["./imageWrapper.component.scss"],
 })
 export class ImageWrapperComponent {
   @Input() data: ImageModel;

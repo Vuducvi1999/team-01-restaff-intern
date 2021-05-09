@@ -1,10 +1,6 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import {
-  CommentModel,
-  CommentPassingModel,
-} from "src/app/lib/data/models/comments/comment.model";
-import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
+import { CommentPassingModel } from "src/app/lib/data/models/comments/comment.model";
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
 
 @Component({
@@ -15,6 +11,7 @@ import { CommentService } from "src/app/lib/data/services/comments/comment.servi
 export class CommentComponent implements OnInit {
   commentForm: FormGroup;
   @Input() dataComment: CommentPassingModel;
+  @Output() action = new EventEmitter();
 
   constructor(
     private commentService: CommentService,
@@ -45,6 +42,7 @@ export class CommentComponent implements OnInit {
       .create(this.commentForm.value)
       .then((data) => {
         this.initForm();
+        this.action.emit();
       })
       .catch((e) => {
         console.log(e);

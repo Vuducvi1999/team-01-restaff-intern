@@ -30,6 +30,7 @@ import { PageContentComponent } from "./page-content/page-content.component";
 import { ProfileComponent } from "./profile/profile/profile.component";
 import { PageContentInfoComponent } from "./page-content/PageInfo/page-info.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { WishlistComponent } from "./wishlist/wishlist.component";
 @NgModule({
   declarations: [
     HomeComponent,
@@ -56,6 +57,7 @@ import { ReactiveFormsModule } from "@angular/forms";
     PageContentComponent,
     ProfileComponent,
     PageContentInfoComponent,
+    WishlistComponent,
   ],
   imports: [
     CommonModule,

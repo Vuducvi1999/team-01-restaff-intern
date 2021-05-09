@@ -37,18 +37,26 @@ export enum ETypeLayoutView {
 
 export enum TypeDisplayImage {
   BLOG_IMAGE,
-  PRODUCT_IMAGE,
+  HOME_PRODUCT_IMAGE,
   BLOG_DETAIL,
+  LOGO_IMAGE,
+  WISHLIST_IMAGE,
+  SETTING_IMAGE,
+  COMMENT_IMAGE_CUSTOMER,
   PRODUCT_DETAIL_IMAGE,
-  PRODUCT_DETAIL_MAIN_IMAGE
+  PRODUCT_DETAIL_MAIN_IMAGE,
 }
 
 export const TemplateType = {
   Display: {
-    [TypeDisplayImage.BLOG_IMAGE]: "blogImage classic-effect",
-    [TypeDisplayImage.PRODUCT_IMAGE]: "productImage",
+    [TypeDisplayImage.BLOG_IMAGE]: "blogImage",
+    [TypeDisplayImage.HOME_PRODUCT_IMAGE]: "home-product-image",
     [TypeDisplayImage.BLOG_DETAIL]: "blog-detail",
+    [TypeDisplayImage.LOGO_IMAGE]: "logo-image",
+    [TypeDisplayImage.WISHLIST_IMAGE]: "wish-list-image",
+    [TypeDisplayImage.SETTING_IMAGE]: "setting-image",
+    [TypeDisplayImage.COMMENT_IMAGE_CUSTOMER]: "customer-comment-image",
     [TypeDisplayImage.PRODUCT_DETAIL_IMAGE]: "product-details",
-    [TypeDisplayImage.PRODUCT_DETAIL_MAIN_IMAGE]: "product-details-main"
+    [TypeDisplayImage.PRODUCT_DETAIL_MAIN_IMAGE]: "product-details-main",
   },
 };

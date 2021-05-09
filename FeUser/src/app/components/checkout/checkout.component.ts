@@ -19,7 +19,7 @@ export class CheckoutComponent implements OnInit {
   public subTotal: any;
   public totalAmount: any;
   public totalItem: any;
-  public couponValue=0;
+  public couponValue = 0;
   public couponInvalid: boolean;
 
   public order: OrderModel = new OrderModel();
@@ -29,6 +29,7 @@ export class CheckoutComponent implements OnInit {
     public couponService: CouponService,
     public routerService: Router) {
   }
+  public couponPercent: string;
 
 
   ngOnInit(): void {
@@ -76,28 +77,33 @@ export class CheckoutComponent implements OnInit {
   applyCoupon() {
     this.couponService.getByCode(null, this.order.couponCode)
       .then((resp) => {
-        this.couponInvalid=false;
+        this.couponInvalid = false;
 
         this.order.couponId = resp.data.id;
         this.order.couponName = resp.data.name;
+
         if (resp.data.hasPercent) {
           this.order.couponPercent = resp.data.value;
-
+          this.couponPercent = `-${this.order.couponPercent}%`;
           this.order.couponValue = this.subTotal * resp.data.value / 100;
           this.couponValue = this.order.couponValue;
           this.totalAmount = this.subTotal - this.couponValue;
           return this.order.totalAmount = this.totalAmount;
         }
 
+
+        if (resp.data.value > this.subTotal) {
+          this.couponValue = this.subTotal;
+        }
         this.order.couponValue = resp.data.value;
-        this.order.couponPercent = (resp.data.value / this.subTotal) * 100;
-        this.couponValue = this.order.couponValue;
+        this.order.couponPercent = (this.couponValue / this.subTotal) * 100;
+        this.couponPercent = `-${this.order.couponPercent}%`;
         this.totalAmount = (this.cart.totalAmount - this.couponValue) < 0 ? 0 : (this.cart.totalAmount - this.couponValue);
         this.order.totalAmount = this.totalAmount;
       })
       .catch((er) => {
         console.log(er);
-        this.couponInvalid=true;
+        this.couponInvalid = true;
 
       });
 
