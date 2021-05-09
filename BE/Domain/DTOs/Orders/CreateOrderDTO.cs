@@ -15,6 +15,12 @@ namespace Domain.DTOs.Orders
         public string Status { get; set; }
         public decimal TotalAmount { get; set; }
         public int TotalItem { get; set; }
+        public Guid CouponId { get; set; }
+        public string CouponName { get; set; }
+        public string CouponCode { get; set; }
+        public decimal CouponPercent { get; set; }
+        public decimal CouponValue { get; set; }
+
         public List<CreateOrderDetailDTO> OrderDetails{ get; set; }
     }
 }

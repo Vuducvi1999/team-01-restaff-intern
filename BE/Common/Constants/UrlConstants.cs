@@ -88,6 +88,11 @@ namespace Common.Constants
         // Comment
         public const string BaseComment = BaseApi + "/comment";
 
+        public const string BasePromotion = BaseApi + "/promotion";
+
+        public const string BasePromotionDetail = BaseApi + "/promotion-detail";
+
+
 
         //Rating
         public const string BaseRating = BaseApi + "/rating";

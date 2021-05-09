@@ -36,7 +36,7 @@ export class ListCategoriesComponent implements OnInit {
       columns: 
       {
         imageUrl: {
-          title: 'ImageURL',
+          title: 'Image',
           type: 'html',
           filter: false,
           valuePrepareFunction: (file) => {
@@ -73,24 +73,14 @@ export class ListCategoriesComponent implements OnInit {
   }
 
   openPopup(item:any){
-    if(item){
-      var modalRef =  this.modalService.open(CategoryDetailComponent, {size: 'lg'});
-      modalRef.componentInstance.item = item.data as CategoryModel;
-      return modalRef.result.then(() => {
-              this.fetch();
-            }, (reason) => {
-              this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-            }
-        );
-    }
-    var modalRef =  this.modalService.open(CategoryDetailComponent, {size: 'lg'});
-    modalRef.componentInstance.item = item as CategoryModel;
+    var modalRef = this.modalService.open(CategoryDetailComponent, {size: 'xl'});
+    modalRef.componentInstance.item = item?.data;
     return modalRef.result.then(() => {
-                this.fetch();
-              }, (reason) => {
-                this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-              }
-        );
+        this.fetch();
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    );
     }
 
 
@@ -109,7 +99,7 @@ export class ListCategoriesComponent implements OnInit {
       
       if(er.error.hasError)
       {
-        console.log(er.error.message)
+        window.alert("Can not connect to Server !");
       }
     });
   }

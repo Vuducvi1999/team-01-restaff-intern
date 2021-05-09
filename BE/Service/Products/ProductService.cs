@@ -29,11 +29,17 @@ namespace Service.Products
 
         public ReturnMessage<ProductDTO> Create(CreateProductDTO model)
         {
-            //var stringInput = StringExtension.CleanString(model);
-            //if (!stringInput)
-            //{
-            //    return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
-            //}
+            model.Name = StringExtension.CleanString(model.Name);
+            model.Description = StringExtension.CleanString(model.Description);
+            model.ContentHTML = StringExtension.CleanString(model.ContentHTML);
+            if (model.Name == "null" ||
+               model.Description == "null" ||
+               model.ContentHTML == "null")
+            {
+                var entity = _mapper.Map<CreateProductDTO, Product>(model);
+                return new ReturnMessage<ProductDTO>(true, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.Error);
+            }
+
             try
             {
                 var entity = _mapper.Map<CreateProductDTO, Product>(model);
@@ -42,8 +48,6 @@ namespace Service.Products
                 {
                     return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
                 }
-                //entity.CategoryId = category.Id;
-                //entity.Insert();
                 _productRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<ProductDTO>(false, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.CreateSuccess);
@@ -62,7 +66,7 @@ namespace Service.Products
                 var entity = _productRepository.Find(model.Id);
                 if (entity.IsNotNullOrEmpty())
                 {
-                    //entity.Delete();
+                    entity.Delete();
                     entity.IsDeleted = true;
                     _productRepository.Update(entity);
                     _unitOfWork.SaveChanges();
@@ -115,6 +119,7 @@ namespace Service.Products
             );
 
             var data = _mapper.Map<PaginatedList<Product>, PaginatedList<ProductDTO>>(resultEntity);
+            data.Results.Where(r => r.IsDeleted == false);
             var result = new ReturnMessage<PaginatedList<ProductDTO>>(false, data, MessageConstants.ListSuccess);
 
             return result;
@@ -122,10 +127,21 @@ namespace Service.Products
 
         public ReturnMessage<ProductDTO> Update(UpdateProductDTO model)
         {
+
+            model.Name = StringExtension.CleanString(model.Name);
+            model.Description = StringExtension.CleanString(model.Description);
+            model.ContentHTML= StringExtension.CleanString(model.ContentHTML);
+            if(model.Name == "null" ||
+               model.Description == "null" ||
+               model.ContentHTML  == "null")
+            {
+                var entity = _mapper.Map<UpdateProductDTO, Product>(model);
+                return new ReturnMessage<ProductDTO>(true, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.Error);
+            }
             try
             {
                 var entity = _mapper.Map<UpdateProductDTO, Product>(model);
-                var category = _categoryRepository.Queryable().Where(it => it.Name == model.CategoryName).FirstOrDefault();
+                var category = _categoryRepository.Find(model.CategoryId);
                 if (category == null)
                 {
                     return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);

@@ -30,6 +30,13 @@ namespace BE.Controllers
             var result = _couponService.SearchPagination(serachPagination);
             return CommonResponse(result);
         }
+        [HttpGet]
+        [Route("by-code")]
+        public IActionResult GetByCode([FromQuery] string code)
+        {
+            var result = _couponService.GetByCode(code);
+            return CommonResponse(result);
+        }
 
         [HttpPost]
         public IActionResult Create([FromBody] CreateCouponDTO model)

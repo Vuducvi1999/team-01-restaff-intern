@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ShopDbContext))]
-    [Migration("20210504101729_update-order-NOTE")]
-    partial class updateorderNOTE
+    [Migration("20210504101101_PromotionDB")]
+    partial class PromotionDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -546,9 +546,6 @@ namespace Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Note")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
@@ -767,6 +764,134 @@ namespace Data.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Promotion", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateByDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedByName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DeleteByDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DeletedByName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndtDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("HasPercent")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateByDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UpdatedByName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Value")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Promotions");
+                });
+
+            modelBuilder.Entity("Domain.Entities.PromotionDetail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateByDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedByName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DeleteByDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DeletedByName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("PriceSale")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PromotionID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdateByDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UpdatedByName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Value")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ValuePercent")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("PromotionID");
+
+                    b.ToTable("PromotionDetails");
+                });
+
             modelBuilder.Entity("Domain.Entities.SocialMedia", b =>
                 {
                     b.Property<Guid>("Id")
@@ -925,6 +1050,25 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Domain.Entities.PromotionDetail", b =>
+                {
+                    b.HasOne("Domain.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Promotion", "Promotion")
+                        .WithMany()
+                        .HasForeignKey("PromotionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Promotion");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>

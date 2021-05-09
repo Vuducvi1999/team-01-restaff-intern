@@ -19,6 +19,10 @@ import {
   ProductModel,
   ReturnMessage,
 } from "src/app/lib/data/models";
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+import { TypeDisplayImage } from "src/app/shared/data";
+registerLocaleData(localeFr, 'fr');
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { RatingService } from "src/app/lib/data/services/rating/rating.service";
@@ -54,6 +58,7 @@ export class ProductDetailsComponent implements OnInit {
   public ImageSrc: string;
   public id: string;
   public dataComment: CommentPassingModel;
+  public typeDisplayImage = TypeDisplayImage;
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
 
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;

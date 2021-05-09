@@ -9,11 +9,11 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <div class="media">
-                            <a [routerLink]="['/shop/product/left/sidebar/', product.name.replace(' ', '-')]">
+                            <a [routerLink]="['/product-details']"  [queryParams]="{ id: product?.id }">
                                 <img class="img-fluid pro-img" [src]="getImage(product.imageUrl)" [alt]="">
                             </a>
                             <div class="media-body align-self-center text-center">
-                                <a [routerLink]="['/shop/product/left/sidebar/', product.name.replace(' ', '-')]">
+                                <a [routerLink]="['/product-details']"  [queryParams]="{ id: product?.id }">
                                     <h6>
                                         <i class="fa fa-check"></i>Item
                                         <span>{{ product.name | titlecase }}</span>

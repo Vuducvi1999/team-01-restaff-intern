@@ -14,7 +14,7 @@ using System.Text;
 
 namespace Service.Coupons
 {
-    public class CouponService: ICouponService
+    public class CouponService : ICouponService
     {
         private readonly IRepository<Coupon> _couponRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -83,7 +83,7 @@ namespace Service.Coupons
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<CouponDTO>(false, _mapper.Map<Coupon, CouponDTO>(entity), MessageConstants.DeleteSuccess);
                     return result;
-                    
+
                 }
                 return new ReturnMessage<CouponDTO>(true, null, MessageConstants.Error);
             }
@@ -122,6 +122,24 @@ namespace Service.Coupons
         {
             coupon.Code = coupon.Code.Trim();
             coupon.Name = coupon.Name.Trim();
+        }
+
+        public ReturnMessage<CouponDTO> GetByCode(string code)
+        {
+            var entity = _couponRepository.Queryable().FirstOrDefault(t => t.Code == code);
+            if (entity.IsNotNullOrEmpty())
+            {
+                if(entity.EndDate < DateTime.Now)
+                {
+                    return new ReturnMessage<CouponDTO>(true, null, MessageConstants.Error);
+
+                }
+                var result = _mapper.Map<CouponDTO>(entity);
+                return new ReturnMessage<CouponDTO>(false, result, MessageConstants.GetPaginationSuccess);
+            }
+
+            return new ReturnMessage<CouponDTO>(true, null, MessageConstants.Error);
+
         }
     }
 }

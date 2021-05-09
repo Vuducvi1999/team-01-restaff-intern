@@ -45,6 +45,7 @@ namespace Domain
             CreateMap<PaginatedList<Category>, PaginatedList<CategoryDTO>>().ReverseMap();
             CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<CreateCategoryDTO, Category>().ReverseMap();
+            CreateMap<UpdateCategoryDTO, Category>().ReverseMap();
 
             //social media
             CreateMap<PaginatedList<SocialMedia>, PaginatedList<SocialMediaDTO>>().ReverseMap();
