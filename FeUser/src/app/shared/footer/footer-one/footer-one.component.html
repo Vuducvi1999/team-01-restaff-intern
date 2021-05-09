@@ -76,8 +76,8 @@
             </div>
             <div class="footer-contant">
               <ul>
-                <li *ngFor="let item of footerModel.categories">
-                  {{ item.name }}
+                <li *ngFor="let item of footerModel.categories| slice:0:5">
+                  <a href="/product?search.categoryName={{item.name}}">{{ item.name }}</a>
                 </li>
               </ul>
             </div>
