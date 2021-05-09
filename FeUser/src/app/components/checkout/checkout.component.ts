@@ -91,12 +91,12 @@ export class CheckoutComponent implements OnInit {
           return this.order.totalAmount = this.totalAmount;
         }
 
-        
+
         if (resp.data.value > this.subTotal) {
           this.couponValue = this.subTotal;
         }
         this.order.couponValue = resp.data.value;
-        this.order.couponPercent = ( this.couponValue / this.subTotal) * 100;
+        this.order.couponPercent = (this.couponValue / this.subTotal) * 100;
         this.couponPercent = `-${this.order.couponPercent}%`;
         this.totalAmount = (this.cart.totalAmount - this.couponValue) < 0 ? 0 : (this.cart.totalAmount - this.couponValue);
         this.order.totalAmount = this.totalAmount;
