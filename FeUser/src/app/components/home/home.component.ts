@@ -21,15 +21,15 @@ export class HomeComponent implements OnInit {
   blogs: BlogModel[] = [];
   banners: BannerModel[] = [];
 
-  constructor(public homeService: HomeService) {
+  constructor(public homeService: HomeService) {}
+
+  public ProductSliderConfig: any = ProductSlider;
+
+  ngOnInit(): void {
     this.getProducts();
     this.getBlogs();
     this.getBanners();
   }
-
-  public ProductSliderConfig: any = ProductSlider;
-
-  ngOnInit(): void {}
 
   getProducts() {
     this.homeService
@@ -40,6 +40,39 @@ export class HomeComponent implements OnInit {
       .catch((e) => {
         console.log(e);
       });
+  }
+
+  getNewProducts() {
+    const result = [...this.products];
+    result.sort(
+      (a, b) =>
+        new Date(a.updateByDate).getTime() - new Date(b.updateByDate).getTime()
+    );
+    return result;
+  }
+  getBestSeller() {
+    const result = [...this.products];
+    result.sort(
+      (a, b) =>
+        new Date(a.updateByDate).getTime() - new Date(b.updateByDate).getTime()
+    );
+    return result;
+  }
+  getFeaturedProducts() {
+    const result = [...this.products];
+    result.sort(
+      (a, b) =>
+        new Date(a.updateByDate).getTime() - new Date(b.updateByDate).getTime()
+    );
+    return result;
+  }
+  getOnSale() {
+    const result = [...this.products];
+    result.sort(
+      (a, b) =>
+        new Date(a.updateByDate).getTime() - new Date(b.updateByDate).getTime()
+    );
+    return result;
   }
 
   getBlogs() {

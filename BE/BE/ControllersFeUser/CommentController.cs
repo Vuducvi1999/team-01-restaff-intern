@@ -25,10 +25,19 @@ namespace BE.ControllersFeUser
             _commentService = commentService;
         }
 
+        [Route(UrlConstants.GetCommentBlog)]
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetBlogPagination([FromQuery] SerachPaginationDTO<CommentDTO> serachPagination)
         {
-            var result = _commentService.GetAll();
+            var result = _commentService.BlogPagination(serachPagination);
+            return CommonResponse(result);
+        }
+
+        [Route(UrlConstants.GetCommentProduct)]
+        [HttpGet]
+        public IActionResult GetProductPagination([FromQuery] SerachPaginationDTO<CommentDTO> serachPagination)
+        {
+            var result = _commentService.ProductPagination(serachPagination);
             return CommonResponse(result);
         }
 

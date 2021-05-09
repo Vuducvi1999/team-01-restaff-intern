@@ -1,20 +1,31 @@
-<app-breadcrumb [title]="product?.name" [breadcrumb]="product?.name"></app-breadcrumb>
+<app-breadcrumb
+  [title]="product?.name"
+  [breadcrumb]="product?.name"
+></app-breadcrumb>
 <!-- section start -->
 <section class="section-b-space">
   <div class="collection-wrapper">
     <div class="container">
       <div class="row">
         <div class="col-lg-4">
-          <owl-carousel-o [options]="ProductDetailsMainSliderConfig" #owlCar class="product-slick">
-            <ng-container *ngFor="let image of product?.imageUrl.split(','); index as i">
+          <owl-carousel-o
+            [options]="ProductDetailsMainSliderConfig"
+            #owlCar
+            class="product-slick"
+          >
+            <ng-container
+              *ngFor="let image of product?.imageUrl.split(','); index as i"
+            >
               <ng-template carouselSlide [id]="i">
                 <div>
-                    <app-image-wapper 
-                    [data]='{url: getImage(image),
-                    type:typeDisplayImage.PRODUCT_DETAIL_MAIN_IMAGE}'
-                    [lazyLoad]="getImage(image)" 
-                    [defaultImage]="getImage(image)" 
-                    (click)="owlCar.to((activeSlide = i.toString()))" 
+                  <app-image-wapper
+                    [data]="{
+                      url: getImage(image),
+                      type: typeDisplayImage.PRODUCT_DETAIL_MAIN_IMAGE
+                    }"
+                    [lazyLoad]="getImage(image)"
+                    [defaultImage]="getImage(image)"
+                    (click)="owlCar.to((activeSlide = i.toString()))"
                     class="img-fluid"
                   ></app-image-wapper>
                 </div>
@@ -24,22 +35,29 @@
           <div class="row">
             <div class="col-12 p-0">
               <div class="slider-nav">
-                <owl-carousel-o *ngIf="product?.imageUrl.split(',').length >= 2" [options]="ProductDetailsThumbConfig" class="product-slick">
-                  <ng-container *ngFor="
+                <owl-carousel-o
+                  *ngIf="product?.imageUrl.split(',').length >= 2"
+                  [options]="ProductDetailsThumbConfig"
+                  class="product-slick"
+                >
+                  <ng-container
+                    *ngFor="
                       let image of product?.imageUrl.split(',');
                       index as i
-                    ">
+                    "
+                  >
                     <ng-template carouselSlide [id]="i">
                       <div class="owl-thumb" [class.active]="i == activeSlide">
-                        <app-image-wapper 
-                          [data]='{url: getImage(image),
-                          type:typeDisplayImage.PRODUCT_DETAIL_IMAGE}'
-                          [lazyLoad]="getImage(image)" 
-                          [defaultImage]="getImage(image)" 
-                          (click)="owlCar.to((activeSlide = i.toString()))" 
+                        <app-image-wapper
+                          [data]="{
+                            url: getImage(image),
+                            type: typeDisplayImage.PRODUCT_DETAIL_IMAGE
+                          }"
+                          [lazyLoad]="getImage(image)"
+                          [defaultImage]="getImage(image)"
+                          (click)="owlCar.to((activeSlide = i.toString()))"
                         ></app-image-wapper>
                       </div>
-
                     </ng-template>
                   </ng-container>
                 </owl-carousel-o>
@@ -55,12 +73,13 @@
               <p>{{ product?.description.substring(0, 200) + "..." }}</p>
             </div>
             <div>
-              <h3>{{ product?.price | currency: 'VND':'symbol':'1.0-0':'fr'}}</h3>
+              <h3>
+                {{ product?.price | currency: "VND":"symbol":"1.0-0":"fr" }}
+              </h3>
             </div>
             <div class="addeffect-section product-description border-product">
               <h3>Description</h3>
-              <div [innerHTML]= "product?.contentHTML">
-              </div>
+              <div [innerHTML]="product?.contentHTML"></div>
             </div>
           </div>
         </div>
@@ -71,9 +90,22 @@
           <div class="col-sm-12 col-lg-12">
             <ngb-tabset [type]="'tabs'" class="nav-material">
               <ngb-tab>
+                <ng-template ngbTabTitle>Comments</ng-template>
+                <ng-template ngbTabContent>
+                  <app-comment-detail
+                    *ngIf="comments"
+                    (action)="changePageIndex($event)"
+                    [comments]="comments"
+                  ></app-comment-detail>
+                </ng-template>
+              </ngb-tab>
+              <ngb-tab *ngIf="user">
                 <ng-template ngbTabTitle>Write Review</ng-template>
                 <ng-template ngbTabContent>
-                  <app-comment [dataComment]="dataComment"></app-comment>
+                  <app-comment
+                    [dataComment]="dataComment"
+                    (action)="getComments()"
+                  ></app-comment>
                 </ng-template>
               </ngb-tab>
             </ngb-tabset>

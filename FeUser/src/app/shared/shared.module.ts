@@ -47,11 +47,12 @@ import { DiscountPipe } from "./pipes/discount.pipe";
 import { ProductBoxComponent } from "./components/product/product-box/product-box.component";
 
 import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
-import { ImageWrapperComponent } from "./components/imageWrapper/imageWapper.component";
+import { ImageWrapperComponent } from "./components/imageWrapper/imageWrapper.component";
 import { UploadFileComponent } from "./components/upload-file/upload-file.component";
 import { FilterPipeModule } from "ngx-filter-pipe";
 import { SearchService } from "../lib/data/services/search/search.service";
 import { CommentComponent } from "./components/comment/comment.component";
+import { CommentDetailComponent } from "./components/comment/comment-detail/comment-detail.component";
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { CommentComponent } from "./components/comment/comment.component";
     ImageWrapperComponent,
     UploadFileComponent,
     CommentComponent,
+    CommentDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -127,6 +129,7 @@ import { CommentComponent } from "./components/comment/comment.component";
     ImageWrapperComponent,
     UploadFileComponent,
     CommentComponent,
+    CommentDetailComponent,
   ],
 })
 export class SharedModule {}

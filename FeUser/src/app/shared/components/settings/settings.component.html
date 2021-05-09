@@ -70,7 +70,14 @@
         <li *ngFor="let product of products">
           <div class="media">
             <a [routerLink]="['/product-details']"  [queryParams]="{ id: product?.id }">
-              <img class="mr-3" [src]="getImage(product?.imageUrl.split(',')[0])" [alt]="product?.categoryName" />
+                <app-image-wrapper
+                [data]="{
+                  url: getImage(product?.imageUrl.split(',')[0]),
+                  typeClass: typeDisPlayImage.SETTING_IMAGE,
+                  title:product?.categoryName,
+                  class: 'mr-3'
+                }"
+              ></app-image-wrapper>
             </a>
             <div class="media-body">
               <a [routerLink]="['/product-details']"  [queryParams]="{ id: product?.id }">

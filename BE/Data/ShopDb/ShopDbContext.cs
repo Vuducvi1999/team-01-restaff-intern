@@ -24,6 +24,7 @@ namespace Data
         public DbSet<PageContent> PageContents { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<CustomerWishList> CustomerWishLists { get; set; }
         public DbSet<InformationWebsite> InformationWebsites { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

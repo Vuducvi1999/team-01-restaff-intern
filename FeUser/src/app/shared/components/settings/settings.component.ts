@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  PLATFORM_ID,
-  Inject,
-} from "@angular/core";
+import { Component, OnInit, PLATFORM_ID, Inject } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
 import { TranslateService } from "@ngx-translate/core";
 import { FileService } from "src/app/lib/data/services";
@@ -12,6 +7,7 @@ import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SearchService } from "src/app/lib/data/services/search/search.service";
 import { CartModel } from "src/app/lib/data/models/cart/cart.model";
+import { TypeDisplayImage } from "../../data";
 
 @Component({
   selector: "app-settings",
@@ -29,6 +25,7 @@ export class SettingsComponent implements OnInit {
   public path: any;
   public id: string;
   public cart: CartModel;
+  public typeDisPlayImage = TypeDisplayImage;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -38,10 +35,9 @@ export class SettingsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private searchService: SearchService
   ) {
-    this.cartService.cartData.subscribe(
-      (response: CartModel) => {
-        (this.products = response.cartDetails)
-      });
+    this.cartService.cartData.subscribe((response: CartModel) => {
+      this.products = response.cartDetails;
+    });
   }
 
   ngOnInit(): void {

@@ -7,71 +7,44 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12 blog-detail">
-        <!-- <img [src]="getImage(data.imageUrl)" class="img-fluid" alt="" /> -->
-        <app-image-wapper
+        <app-image-wrapper
+          *ngIf="data"
           [data]="{
             title: data.title,
             url: getImage(data.imageUrl),
-            type: typeDisplayImage.BLOG_DETAIL
+            typeClass: typeDisplayImage.BLOG_DETAIL
           }"
-        ></app-image-wapper>
+        ></app-image-wrapper>
         <h3>
           {{ data?.title }}
         </h3>
         <ul class="post-social">
           <li>{{ data?.createByDate | date: "mediumDate" }}</li>
           <li>Posted By : {{ data?.createdByName }}</li>
-          <!-- <li><i class="fa fa-heart"></i> 5 Hits</li>
-          <li><i class="fa fa-comments"></i> 10 Comment</li> -->
+          <li>
+            <i class="fa fa-comments"></i>
+            {{ comments?.results.length + " Comment" }}
+          </li>
         </ul>
         <div [innerHTML]="data?.contentHTML"></div>
+
+        <div class="mt-5">
+          <p class="comment-label" #refComment>Comments</p>
+          <app-comment-detail
+            *ngIf="comments"
+            (action)="changePageIndex($event)"
+            [comments]="comments"
+          ></app-comment-detail>
+        </div>
       </div>
-      <div class="col-sm-12 mt-5">
+      <div class="col-sm-12 mt-5" *ngIf="user">
         <h2>Leave Your Message</h2>
-        <app-comment [dataComment]="dataComment"></app-comment>
+        <app-comment
+          [dataComment]="dataComment"
+          (action)="getComments()"
+        ></app-comment>
       </div>
     </div>
     <div></div>
-    <!-- <div class="row blog-contact">
-      <div class="col-sm-12">
-        <h2>Leave Your Comment</h2>
-        <form class="theme-form">
-          <div class="form-row">
-            <div class="col-md-12">
-              <label for="name">Name</label>
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                placeholder="Enter Your name"
-                required=""
-              />
-            </div>
-            <div class="col-md-12">
-              <label for="email">Email</label>
-              <input
-                type="text"
-                class="form-control"
-                id="email"
-                placeholder="Email"
-                required=""
-              />
-            </div>
-            <div class="col-md-12">
-              <label for="exampleFormControlTextarea1">Comment</label>
-              <textarea
-                class="form-control"
-                placeholder="Write Your Comment"
-                id="exampleFormControlTextarea1"
-                rows="6"
-              ></textarea>
-            </div>
-            <div class="col-md-12">
-              <button class="btn btn-solid" type="submit">Post Comment</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div> -->
   </div>
 </section>
