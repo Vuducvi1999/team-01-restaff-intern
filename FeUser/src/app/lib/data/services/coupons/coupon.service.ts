@@ -6,10 +6,14 @@ import { CouponModel } from '../../models/coupons/coupon.model';
 export class CouponService {
   private url = '/api/coupon';
 
-  constructor(private httpClient: HttpClientService) {}
+  constructor(private httpClient: HttpClientService) { }
 
   get(request: any) {
     return this.httpClient.getObservable(this.url, request).toPromise();
+  }
+
+  getByCode(request: any, code: string) {
+    return this.httpClient.getObservable(this.url + '/by-code?code=' + code, request).toPromise();
   }
 
   create(model: CouponModel) {

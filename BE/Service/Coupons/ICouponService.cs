@@ -12,5 +12,7 @@ namespace Service.Coupons
     public interface ICouponService: ICommonCRUDService<CouponDTO, CreateCouponDTO, UpdateCouponDTO, DeleteCouponDTO>
     {
         ReturnMessage<PaginatedList<CouponDTO>> SearchPagination(SerachPaginationDTO<CouponDTO> search);
+        ReturnMessage<CouponDTO> GetByCode(string code);
+
     }
 }

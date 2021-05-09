@@ -1,5 +1,5 @@
 <div class="modal-footer">
-  <button *ngIf="!data.buttons" type="button" class="btn btn-primary" (click)="action()">
+  <button *ngIf="!data?.buttons" type="button" class="btn btn-primary" (click)="action()">
     {{ data?.title }}
   </button>
   <ng-container *ngIf="data.buttons">

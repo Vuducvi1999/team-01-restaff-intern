@@ -15,6 +15,7 @@ import {
 } from "src/app/lib/data/models/customerWishList/customerWishList.model";
 import { UserModel } from "src/app/lib/data/models/users/user.model";
 import { FileService } from "src/app/lib/data/services";
+import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { CustomerWishListService } from "src/app/lib/data/services/customerWishLists/customerWishList.service";
 import {
   ETypeGridLayout,
@@ -23,7 +24,6 @@ import {
   ETypeSizeImage,
   TypeDisplayImage,
 } from "src/app/shared/data";
-import { ProductService } from "src/app/shared/services/product.service";
 import { CartModalComponent } from "../../modal/cart-modal/cart-modal.component";
 import { QuickViewComponent } from "../../modal/quick-view/quick-view.component";
 
@@ -36,7 +36,7 @@ registerLocaleData(localeFr, "fr");
   selector: "app-product-box",
   templateUrl: "./product-box.component.html",
   styleUrls: ["./product-box.component.scss"],
-  providers: [CustomerWishListService],
+    providers: [CartService, CustomerWishListService]
 })
 export class ProductBoxComponent implements OnInit, OnChanges {
   @Input() product: ProductModel;
@@ -56,10 +56,11 @@ export class ProductBoxComponent implements OnInit, OnChanges {
   public ImageSrc: string;
   typeDisplayImage = TypeDisplayImage;
 
-  constructor(
-    private productService: ProductService,
-    private wishListService: CustomerWishListService
-  ) {}
+    constructor(
+        private cartService: CartService,
+        private productService: ProductService,
+        private wishListService: CustomerWishListService
+    ) { }
   ngOnChanges(changes: SimpleChanges): void {
     this.updateTypeGridLayout();
   }
@@ -139,11 +140,11 @@ export class ProductBoxComponent implements OnInit, OnChanges {
   }
 
   addToCart(product: any) {
-    this.productService.addToCart(product);
+    this.cartService.addToCart(product);
   }
 
   addToWishlist(product: any) {
-    this.productService.addToWishlist(product);
+      this.cartService.addToWishlist(product);
 
     const user: UserModel = JSON.parse(localStorage.getItem("user"));
     const model: CreateCustomerWishListModel = {
@@ -157,7 +158,7 @@ export class ProductBoxComponent implements OnInit, OnChanges {
   }
 
   addToCompare(product: any) {
-    this.productService.addToCompare(product);
+    this.cartService.addToCompare(product);
   }
 
   getImage(fileName: string) {

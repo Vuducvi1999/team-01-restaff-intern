@@ -5,38 +5,21 @@
         <img src="assets/images/icon/search.png" class="img-fluid" alt="" />
         <i class="ti-search"></i>
       </div>
-      <div
-        id="search-overlay"
-        class="search-overlay"
-        [ngStyle]="{ display: search ? 'block' : 'none' }"
-      >
+      <div id="search-overlay" class="search-overlay" [ngStyle]="{ display: search ? 'block' : 'none' }">
         <div>
-          <span class="closebtn" title="Close Overlay" (click)="searchToggle()"
-            >×</span
-          >
+          <span class="closebtn" title="Close Overlay" (click)="searchToggle()">×</span>
           <div class="overlay-content">
             <div class="container">
               <div class="row">
                 <div class="col-xl-12">
                   <form>
                     <div class="form-group">
-                      <input
-                        [(ngModel)]="userFilter.name"
-                        type="text"
-                        class="form-control"
-                        id="exampleInputPassword1"
-                        placeholder="Search a Product"
-                        name="name"
-                        (keypress)="onSearch($event)"
-                      />
+                      <input [(ngModel)]="userFilter.name" type="text" class="form-control" id="exampleInputPassword1"
+                        placeholder="Search a Product" name="name" (keypress)="onSearch($event)" />
                       <div *ngIf="userFilter.name">
-                        <ul
-                          class="nav"
-                          *ngFor="let item of data | filterBy: userFilter"
-                        >
+                        <ul class="nav" *ngFor="let item of data | filterBy: userFilter">
                           <li class="nav-item">
-                            <a class="nav-link" (click)="clickRouter(item.id)"
-                              >{{ item.name }}
+                            <a class="nav-link" (click)="clickRouter(item.id)">{{ item.name }}
                             </a>
                           </li>
                         </ul>
@@ -53,30 +36,22 @@
         </div>
       </div>
     </li>
-    <!-- Xóa language vì không sử dụng -->
     <!-- <li class="onhover-div mobile-setting">
       <div>
-        <img
-          src="assets/images/icon/setting.png"
-          class="img-fluid"
-          alt="settong"
-        />
+        <img src="assets/images/icon/setting.png" class="img-fluid" alt="settong" />
         <i class="ti-settings"></i>
       </div>
       <div class="show-div setting">
         <h6>language</h6>
         <ul>
           <li *ngFor="let language of languages">
-            <a
-              href="javascript:void(0)"
-              (click)="changeLanguage(language.code)"
-              >{{ language.name }}</a
-            >
+            <a href="javascript:void(0)" (click)="changeLanguage(language.code)">{{ language.name }}</a>
           </li>
         </ul>
         <h6>currency</h6>
         <ul class="list-inline">
-          <li *ngFor="let currency of currencies"></li>
+          <li *ngFor="let currency of currencies">
+          </li>
         </ul>
       </div>
     </li> -->
@@ -94,44 +69,34 @@
       <ul class="show-div shopping-cart" *ngIf="products?.length">
         <li *ngFor="let product of products">
           <div class="media">
-            <a [routerLink]="['/shop/product/left/sidebar/', product.name]">
-              <app-image-wrapper
+            <a [routerLink]="['/product-details']"  [queryParams]="{ id: product?.id }">
+                <app-image-wrapper
                 [data]="{
                   url: getImage(product?.imageUrl.split(',')[0]),
                   typeClass: typeDisPlayImage.SETTING_IMAGE,
+                  title:product?.categoryName,
                   class: 'mr-3'
                 }"
               ></app-image-wrapper>
             </a>
             <div class="media-body">
-              <a [routerLink]="['/shop/product/left/sidebar/', product.name]">
+              <a [routerLink]="['/product-details']"  [queryParams]="{ id: product?.id }">
                 <h4>{{ product?.name }}</h4>
               </a>
               <h4>
                 <span>
                   {{ product?.quantity }} x
                   {{ product?.price | currency: "VND" }}
-                  <!-- {{ product?.quantity }} x 
-                  {{ product?.price * productService?.Currency.price | discount:product | currency:productService?.Currency.currency:'symbol' }} -->
                 </span>
               </h4>
             </div>
           </div>
-          <div
-            class="close-circle"
-            [swal]="{
+          <div class="close-circle" [swal]="{
               title: 'Do you want to remove product',
               showCancelButton: true
-            }"
-            (confirm)="removeItem(product)"
-          >
+            }" (confirm)="removeItem(product)">
             <a><i class="fa fa-times" aria-hidden="true"></i></a>
           </div>
-        </li>
-        <li>
-          <!-- <div class="total">
-            <h5>subtotal : <span>{{ getTotal | async | currency:productService?.Currency.currency:'symbol' }}</span></h5>
-          </div> -->
         </li>
         <li>
           <div class="buttons">
