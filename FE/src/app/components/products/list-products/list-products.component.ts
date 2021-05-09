@@ -32,7 +32,7 @@ export class ListProductsComponent implements OnInit {
     },
     columns: {
       imageUrl: {
-        title: 'ImageURL',
+        title: 'Image',
         type: 'html',
         filter: false,
         valuePrepareFunction: (file) => {
@@ -84,24 +84,14 @@ export class ListProductsComponent implements OnInit {
   }
 
   openPopup(item: any) {
-    if (item) {
-      var modalRef = this.modalService.open(ProductDetailsComponent, {size: 'lg'});
-      modalRef.componentInstance.item = item.data as ProductModel;
+      var modalRef = this.modalService.open(ProductDetailsComponent, {size: 'xl'});
+      modalRef.componentInstance.item = item?.data;
       return modalRef.result.then(() => {
           this.fetch();
         }, (reason) => {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
       );
-    }
-    var modalRef = this.modalService.open(ProductDetailsComponent, {size: 'lg'});
-    modalRef.componentInstance.item = item as ProductModel;
-    return modalRef.result.then(() => {
-        this.fetch();
-      }, (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      }
-    );
   }
 
   fetch()
@@ -117,7 +107,7 @@ export class ListProductsComponent implements OnInit {
       .catch((er) => {
         if (er.error.hasError)
         {
-          console.log(er.error.message);
+          window.alert("Can not connect to Server !");
         }
       });
   }

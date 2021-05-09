@@ -1,43 +1,22 @@
-﻿using System.Linq;
-
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Common.StringEx
 {
     public class StringExtension
     {
-        public static bool CleanString(object model)
+        public static string CleanString(string model)
         {
-            var stringItems = model.GetType().GetProperties()
-                    .Where(p => p.PropertyType == typeof(string));
-            foreach (var stringItem in stringItems)
+            if (model.Trim() == "")
             {
-                if(stringItem.GetValue(model) == null)
-                {
-                    continue;
-                }
-                
-                if (stringItem.GetValue(model).ToString() == "")
-                {
-                    continue;
-                }
-
-                if(stringItem.GetValue(model).ToString().Trim() == "")
-                {
-                    return false;
-                }
-
-                if(stringItem.GetValue(model).ToString().EndsWith(""))
-                {
-                    return false;
-                }
-                
-                if(stringItem.GetValue(model).ToString().StartsWith(""))
-                {
-                    return false;
-                }
-                var currentItem = stringItem.GetValue(model).ToString().Trim();
+                return "null";
             }
-            return true;
+            string currentItem = "";
+            currentItem = model.Trim();
+            currentItem = Regex.Replace(currentItem, @"\s+", " ");
+
+            return currentItem;
         }
     }
 }
