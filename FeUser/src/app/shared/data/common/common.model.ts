@@ -42,7 +42,9 @@ export enum TypeDisplayImage {
   LOGO_IMAGE,
   WISHLIST_IMAGE,
   SETTING_IMAGE,
-  COMMENT_IMAGE_CUSTOMER
+  COMMENT_IMAGE_CUSTOMER,
+  PRODUCT_DETAIL_IMAGE,
+  PRODUCT_DETAIL_MAIN_IMAGE,
 }
 
 export const TemplateType = {
@@ -53,8 +55,8 @@ export const TemplateType = {
     [TypeDisplayImage.LOGO_IMAGE]: "logo-image",
     [TypeDisplayImage.WISHLIST_IMAGE]: "wish-list-image",
     [TypeDisplayImage.SETTING_IMAGE]: "setting-image",
-    [TypeDisplayImage.COMMENT_IMAGE_CUSTOMER]:'customer-comment-image'
+    [TypeDisplayImage.COMMENT_IMAGE_CUSTOMER]: "customer-comment-image",
     [TypeDisplayImage.PRODUCT_DETAIL_IMAGE]: "product-details",
-    [TypeDisplayImage.PRODUCT_DETAIL_MAIN_IMAGE]: "product-details-main"
+    [TypeDisplayImage.PRODUCT_DETAIL_MAIN_IMAGE]: "product-details-main",
   },
 };
