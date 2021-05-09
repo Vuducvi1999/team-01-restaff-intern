@@ -2,13 +2,11 @@ import { Component, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {
-  FileDtoModel,
   PageModel,
-  ReturnMessage,
+  ReturnMessage
 } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { ProductModel } from 'src/app/lib/data/models/products/product.model';
-import { FileService } from 'src/app/lib/data/services';
 import { CategoryService } from 'src/app/lib/data/services/categories/category.service';
 import { ProductService } from 'src/app/lib/data/services/products/product.service';
 import {
@@ -32,7 +30,7 @@ export class ProductDetailsComponent implements OnInit {
   public product: ProductModel;
   public categories: CategoryModel[];
   public item: ProductModel;
-
+  public regex: string = "^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ]*$";
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];
   submitted = false;
@@ -69,13 +67,13 @@ export class ProductDetailsComponent implements OnInit {
       })
       .catch((er) => {
         if (er.error.hasError) {
-          console.log(er.error.message);
+          window.alert("Can not get Category !");
         }
       });
   }
   save() {
     if (this.productsForm.invalid) {
-      window.alert('Invalid Form !');
+      window.alert("Invalid Form make sure you input valid value !");
       return;
     }
     this.submitted = true;
@@ -86,9 +84,9 @@ export class ProductDetailsComponent implements OnInit {
       imageUrl: this.productsForm.value.imageUrl,
       price: this.productsForm.value.price,
       categoryName: this.categories.filter(
-        (it) => it.id == this.productsForm.value.categoryName
+        (it) => it.id == this.productsForm.value.category
       )[0].name,
-      categoryId: this.productsForm.value.categoryName,
+      categoryId: this.productsForm.value.category,
       displayOrder: this.productsForm.value.displayOrder,
       hasDisplayHomePage: this.productsForm.value.hasDisplayHomePage,
       isImportant: this.productsForm.value.isImportant,
@@ -97,7 +95,7 @@ export class ProductDetailsComponent implements OnInit {
       createdByName: this.item ? this.item.createdByName : '',
       deletedBy: this.item ? this.item.deletedBy : '',
       deletedByName: this.item ? this.item.deletedByName : '',
-      isActive: this.item ? this.item.isActive : false,
+      isActive: this.item ? this.item.isActive : true,
       isDeleted: this.item ? this.item.isDeleted : false,
       updatedBy: this.item ? this.item.updatedBy : '',
       updatedByName: this.item ? this.item.updatedByName : '',
@@ -109,31 +107,39 @@ export class ProductDetailsComponent implements OnInit {
               .then(() => {
                         this.ngbActiveModal.close();
                       })
-                      .catch((er) => {               
-                          console.log(er);
+                      .catch((er) => { 
+                          window.alert("Invalid Value Input");
                       });
   }
 
   loadItem() {
     this.productsForm = this.formBuilder.group({
-      name: [this.item ? this.item.name : '', [Validators.required]],
+      name: [this.item ? this.item.name : '', 
+      [Validators.required, Validators.minLength(3), Validators.maxLength(50),
+       Validators.pattern(this.regex)
+      ]
+    ],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required],
+        [Validators.required, Validators.maxLength(100),
+         Validators.pattern(this.regex)
+        ]
       ],
       contentHTML: [
         this.item ? this.item.contentHTML : '',
-        [Validators.required],
+        [Validators.required, Validators.maxLength(1000)],
       ],
       imageUrl: [this.item ? this.item.imageUrl : ''],
-      price: [this.item ? this.item.price : 0, [Validators.required]],
-      categoryName: [
+      price: [this.item ? this.item.price : this.item,
+         [Validators.required, Validators.min(1), Validators.max(9999999999), Validators.pattern('[0-9]*')]
+      ],
+      category: [
         this.item ? this.item.categoryId : '',
         [Validators.required],
       ],
       displayOrder: [
-        this.item ? this.item.displayOrder : 0,
-        [Validators.required],
+        this.item ? this.item.displayOrder : 1,
+        [Validators.required, Validators.min(1), Validators.max(10), Validators.pattern('[0-9]+')],
       ],
       hasDisplayHomePage: [this.item ? this.item.hasDisplayHomePage : false],
       isImportant: [this.item ? this.item.isImportant : false],

@@ -57,7 +57,7 @@ export class ListInformationWebsiteComponent implements OnInit {
       
       if(er.error.hasError)
       {
-        console.log(er.error.message)
+        window.alert("Can not connect Server");
       }
     });
   }
@@ -79,7 +79,7 @@ export class ListInformationWebsiteComponent implements OnInit {
     this.inforWebForm = this.formBuilder.group({
       address: [
         this.infoWeb ? this.infoWeb.address : '',
-        Validators.required,
+        [Validators.required]
       ],
       phone: [
         this.infoWeb ? this.infoWeb.phone : '',
@@ -101,6 +101,10 @@ export class ListInformationWebsiteComponent implements OnInit {
 
   updateDetails() {
     if (window.confirm('Do you want to update your profile?')) {
+      if(this.inforWebForm.invalid){
+        window.alert("Invalid Form make sure you input valid value !");
+        return;
+      }
       this.infoWeb = {
         address: this.inforWebForm.controls.address.value,
         phone: this.inforWebForm.controls.phone.value,
