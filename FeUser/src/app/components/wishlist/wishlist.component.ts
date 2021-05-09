@@ -1,6 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { ProductService } from "../../shared/services/product.service";
 import { FileService } from "src/app/lib/data/services";
 import {
   PageModel,
@@ -10,10 +8,7 @@ import {
 import { CustomerWishListService } from "src/app/lib/data/services/customerWishLists/customerWishList.service";
 import { UserModel } from "src/app/lib/data/models/users/user.model";
 import { TypeDisplayImage } from "src/app/shared/data";
-import {
-  CustomerWishListModel,
-  DeleteCustomerWishListModel,
-} from "src/app/lib/data/models/customerWishList/customerWishList.model";
+import { DeleteCustomerWishListModel } from "src/app/lib/data/models/customerWishList/customerWishList.model";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
 
 @Component({
@@ -29,9 +24,7 @@ export class WishlistComponent implements OnInit {
   constructor(
     private wishListService: CustomerWishListService,
     public cartService: CartService
-  ) {
-    this.cartService.cartItems.subscribe();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getList();

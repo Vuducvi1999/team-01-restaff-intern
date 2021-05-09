@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  PLATFORM_ID,
-  Inject,
-} from "@angular/core";
+import { Component, OnInit, PLATFORM_ID, Inject } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
 import { TranslateService } from "@ngx-translate/core";
 import { FileService } from "src/app/lib/data/services";
@@ -40,10 +35,9 @@ export class SettingsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private searchService: SearchService
   ) {
-    this.cartService.cartData.subscribe(
-      (response: CartModel) => {
-        (this.products = response.cartDetails)
-      });
+    this.cartService.cartData.subscribe((response: CartModel) => {
+      this.products = response.cartDetails;
+    });
   }
 
   ngOnInit(): void {

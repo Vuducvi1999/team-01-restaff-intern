@@ -14,8 +14,6 @@ import {
   CustomerWishListModel,
 } from "src/app/lib/data/models/customerWishList/customerWishList.model";
 import { UserModel } from "src/app/lib/data/models/users/user.model";
-import { FileService } from "src/app/lib/data/services";
-import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { CustomerWishListService } from "src/app/lib/data/services/customerWishLists/customerWishList.service";
 import {
   ETypeGridLayout,
@@ -30,13 +28,15 @@ import { QuickViewComponent } from "../../modal/quick-view/quick-view.component"
 import { registerLocaleData } from "@angular/common";
 import localeFr from "@angular/common/locales/fr";
 import { ThrowStmt } from "@angular/compiler";
+import { CartService } from "src/app/lib/data/services/cart/cart.service";
+import { FileService } from "src/app/lib/data/services/files/file.service";
 registerLocaleData(localeFr, "fr");
 
 @Component({
   selector: "app-product-box",
   templateUrl: "./product-box.component.html",
   styleUrls: ["./product-box.component.scss"],
-    providers: [CartService, CustomerWishListService]
+  providers: [CartService, CustomerWishListService],
 })
 export class ProductBoxComponent implements OnInit, OnChanges {
   @Input() product: ProductModel;
@@ -56,11 +56,10 @@ export class ProductBoxComponent implements OnInit, OnChanges {
   public ImageSrc: string;
   typeDisplayImage = TypeDisplayImage;
 
-    constructor(
-        private cartService: CartService,
-        private productService: ProductService,
-        private wishListService: CustomerWishListService
-    ) { }
+  constructor(
+    private cartService: CartService,
+    private wishListService: CustomerWishListService
+  ) {}
   ngOnChanges(changes: SimpleChanges): void {
     this.updateTypeGridLayout();
   }
@@ -77,7 +76,7 @@ export class ProductBoxComponent implements OnInit, OnChanges {
 
   getWishlist() {
     const customerId = JSON.parse(localStorage.getItem("user")).id ?? "";
-    console.log(customerId);
+
     this.wishListService.getByCustomer(customerId).then((data) => {
       this.testData = data.data;
     });
@@ -144,7 +143,7 @@ export class ProductBoxComponent implements OnInit, OnChanges {
   }
 
   addToWishlist(product: any) {
-      this.cartService.addToWishlist(product);
+    this.cartService.addToWishlist(product);
 
     const user: UserModel = JSON.parse(localStorage.getItem("user"));
     const model: CreateCustomerWishListModel = {
