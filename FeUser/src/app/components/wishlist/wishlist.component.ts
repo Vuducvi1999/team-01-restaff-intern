@@ -60,7 +60,7 @@ export class WishlistComponent implements OnInit {
 
   checkStock(product: ProductModel) {
     const cartItems: ProductModel[] =
-      JSON.parse(localStorage.getItem("cartItems")) ?? [];
+      JSON.parse(localStorage.getItem("cartItems")).cartDetails ?? [];
 
     return cartItems.some((i) => product.id == i.id);
   }
