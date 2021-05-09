@@ -85,8 +85,8 @@
                   </ul>
                   <ul class="sub-total">
                     <li>Subtotal <span class="count">{{cart.totalAmount | currency:'VND'}}</span></li>
-                    <li>Coupon <span class="count">-{{couponValue | currency:'VND'}}</span></li>
-
+                    <li>Coupon <span class="count">-{{couponValue | currency:'VND'}} <br><br> {{couponPercent}}</span>
+                    </li>
                   </ul>
                   <ul class="total">
                     <li>Total <span class="count">{{cart.totalAmount - couponValue | currency:'VND'}}</span></li>
