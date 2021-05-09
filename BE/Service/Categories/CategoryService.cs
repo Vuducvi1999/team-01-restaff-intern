@@ -27,31 +27,16 @@ namespace Service.Categories
         }
 
 
-        //public bool CleanString(UpdateCategoryDTO model)
-        //{
-        //    var stringItems = model.GetType().GetProperties()
-        //            .Where(p => p.PropertyType == typeof(string));
-        //    foreach (var stringItem in stringItems)
-        //    {
-        //        if (stringItem.GetValue(model).ToString() == ""
-        //            || stringItem.GetValue(model).ToString().Trim() == ""
-        //            || stringItem.GetValue(model).ToString().EndsWith("")
-        //            || stringItem.GetValue(model).ToString().StartsWith(""))
-        //        {
-        //            return false;
-        //        }
-        //        var currentItem = stringItem.GetValue(model).ToString().Trim();
-        //    }
-        //    return true;
-        //}
-
         public ReturnMessage<CategoryDTO> Create(CreateCategoryDTO model)
         {
-            //var stringInput = StringExtension.CleanString(model);
-            //if (!stringInput)
-            //{
-            //    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
-            //}
+            model.Name = StringExtension.CleanString(model.Name);
+            model.Description = StringExtension.CleanString(model.Description);
+            if (model.Name == "null" ||
+               model.Description == "null")
+            {
+                var entity = _mapper.Map<CreateCategoryDTO, Category>(model);
+                return new ReturnMessage<CategoryDTO>(true, _mapper.Map<Category, CategoryDTO>(entity), MessageConstants.Error);
+            }
             try
             {
                 var entity = _mapper.Map<CreateCategoryDTO, Category>(model);
@@ -73,10 +58,7 @@ namespace Service.Categories
             try
             {
                 var entity = _categoryRepository.Find(model.Id);
-                //if (!CleanString(entity))
-                //{
-                //    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
-                //}
+
                
                 var products = _productRepository.Queryable().Where(r => r.CategoryId == model.Id);
 
@@ -133,18 +115,19 @@ namespace Service.Categories
 
         public ReturnMessage<CategoryDTO> Update(UpdateCategoryDTO model)
         {
-            //var stringInput = StringExtension.CleanString(model);
-            //if (!stringInput)
-            //{
-            //    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
-            //}
+            model.Name = StringExtension.CleanString(model.Name);
+            model.Description = StringExtension.CleanString(model.Description);
+            if (model.Name == "null" ||
+               model.Description == "null")
+            {
+                var entity = _mapper.Map<UpdateCategoryDTO, Category>(model);
+                return new ReturnMessage<CategoryDTO>(true, _mapper.Map<Category, CategoryDTO>(entity), MessageConstants.Error);
+            }
+
             try
             {
                 var entity = _categoryRepository.Find(model.Id);
-                //if (!CleanString(entity))
-                //{
-                //    return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);
-                //}
+
                 if (entity.IsNotNullOrEmpty())
                 {
                     entity.Update(model);

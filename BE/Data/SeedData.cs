@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Data
 {
@@ -26,25 +27,7 @@ namespace Data
                         Username = "admin",
                         Password = "E10ADC3949BA59ABBE56E057F20F883E",
                     });
-                }
-                if(!await ctx.Categories.AnyAsync() && !await ctx.Products.AnyAsync())
-                {
-                    var categories = new List<Category>();
-                    for(int i = 0; i < 10; i++)
-                    {
-                        categories.Add(new Category()
-                        {
-                            Name = "Category" + i,
-                            Description = "Hello kitty..."
-                        });
-                    }
-                    ctx.Categories.AddRange(categories);
-
-                    for(int i = 0; i < 100; i++)
-                    {
-
-                    }
-
+                    ctx.SaveChanges();
                 }
                 if (!await ctx.PageContents.AnyAsync())
                 {
@@ -58,18 +41,60 @@ namespace Data
                 }
                 if (!await ctx.InformationWebsites.AnyAsync())
                 {
-                        ctx.InformationWebsites.Add(new InformationWebsite() {
+                    ctx.InformationWebsites.Add(new InformationWebsite()
+                    {
                         Id = CommonConstants.WebSiteInformationId,
-                        Address = "123 Hai Ba Trung",
-                        Email = "email@gmail.com",
-                        Fax = "656565655656",
-                        Logo = "logo1",
-                        Phone = "776767776767",
+                        Address = CommonConstants.Address,
+                        Email = CommonConstants.Email,
+                        Fax = CommonConstants.Fax,
+                        Logo = CommonConstants.Logo,
+                        Phone = CommonConstants.Phone,
                         CreateByDate = DateTime.Now,
                         IsActive = true,
                         ObjectState = Infrastructure.EntityFramework.ObjectState.Added
                     });
                     ctx.SaveChanges();
+                }
+                if (!await ctx.Categories.AnyAsync())
+                {
+                    for (int i = 1; i <= 10; i++)
+                    {
+                        ctx.Categories.Add(new Category()
+                        {
+                            Name = CommonConstantsCategory.Name + i,
+                            Description = CommonConstantsCategory.Description + i,
+                            ImageUrl = CommonConstantsCategory.ImageUrl,
+                            CreateByDate = DateTime.Now,
+                            IsActive = true,
+                            ObjectState = Infrastructure.EntityFramework.ObjectState.Added
+                        });
+                        ctx.SaveChanges();
+                    }
+
+                    
+                }
+                if (!await ctx.Products.AnyAsync())
+                {
+                    for (int i = 1; i <= 50; i++)
+                    {
+                        ctx.Products.Add(new Product()
+                        {
+                            Name = CommonConstantsUser.Name + i,
+                            Description = CommonConstantsUser.Description + i,
+                            ContentHTML = CommonConstantsUser.ContentHTML + i,
+                            CategoryId = ctx.Categories.Select(r => r.Id).First(),
+                            Price = CommonConstantsUser.Price,
+                            DisplayOrder = CommonConstantsUser.DisplayOrder,
+                            IsImportant = false,
+                            IsDeleted = false,
+                            CreateByDate = DateTime.Now,
+                            IsActive = true,
+                            HasDisplayHomePage = false,
+                            ImageUrl = CommonConstantsUser.ImageUrl,
+                            ObjectState = Infrastructure.EntityFramework.ObjectState.Added
+                        });
+                        ctx.SaveChanges();
+                    }
                 }
 
             }

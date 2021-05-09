@@ -93,5 +93,10 @@ namespace Common.Constants
         // CustomerWishList
         public const string BaseCustomerWishList = BaseApi + "/customer-wish-list";
         public const string GetCustomerWishList = BaseApi + "/customer-wish-list/{customerId}";
+
+        public const string BasePromotion = BaseApi + "/promotion";
+
+        public const string BasePromotionDetail = BaseApi + "/promotion-detail";
+
     }
 }

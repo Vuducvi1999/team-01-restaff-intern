@@ -24,6 +24,10 @@ import {
   ReturnMessage,
   SearchPaganationDTO,
 } from "src/app/lib/data/models";
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+import { TypeDisplayImage } from "src/app/shared/data";
+registerLocaleData(localeFr, 'fr');
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
 
 @Component({
@@ -38,6 +42,7 @@ export class ProductDetailsComponent implements OnInit {
   public activeSlide: any = 0;
   public ImageSrc: string;
   public dataComment: CommentPassingModel;
+  public typeDisplayImage = TypeDisplayImage;
   public user: UserDataReturnDTOModel;
   public comments: PageModel<CommentModel>;
   public searchModel: SearchPaganationDTO<SearchCommentModel>;
