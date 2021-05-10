@@ -69,6 +69,14 @@ export class UpdateOrderComponent implements OnInit {
       },
       price: {
         title: 'Price',
+        type: 'text',
+        valuePrepareFunction: (row) => {
+          var price = (row).toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'VND',
+          });
+          return `${price}`;
+        }
       },
       quantity: {
         title: 'Quantity',
@@ -118,21 +126,21 @@ export class UpdateOrderComponent implements OnInit {
           color: 'btn btn-primary',
           title: 'save',
           onAction: (event: any) => {
-            this.save("save");
+            this.save();
           }
         },
         {
           color: 'btn btn-success',
           title: 'approve',
           onAction: (event: any) => {
-            this.save("approve");
+            this.approve();
           }
         },
         {
           color: 'btn btn-danger',
           title: 'reject',
           onAction: (event: any) => {
-            this.save("reject")
+            this.reject();
           }
         }
       ]
@@ -156,18 +164,11 @@ export class UpdateOrderComponent implements OnInit {
 
     };
   }
-  save(event: any) {
+  save() {
     this.loadOrderModel();
-
-    if (event == "approve") {
-      this.order.status = 'Approved';
-    }
-    if (event == "reject") {
-      this.order.status = 'Rejected';
-    }
-
+   
     Swal.fire({
-      title: `Do you want to ${event} the order?`,
+      title: `Do you want to edit the order?`,
       showCancelButton: true,
       confirmButtonText: `Yes`,
       icon: 'question'
@@ -176,47 +177,47 @@ export class UpdateOrderComponent implements OnInit {
         if (result.isConfirmed) {
           this.submitted = true;
           if (this.orderForm.valid) {
-
-            if (event == "reject") {
-              await Swal.fire({
-                title: 'Submit your Github username',
-                input: 'text',
-                showCancelButton: true,
-                confirmButtonText: 'Save',
-              }).then((res) => {
-                if (res.isConfirmed) {
-                  this.order.note = res.value;
-                  // console.log(this.order.note);
-                }
-              })
-            }
-
             this.ordersService
               .update(this.order)
-              .then((res) => {
-
-                if (event == "approve") {
-                  Swal.fire({
-                    icon: 'success',
-                    title: `Order has been approved`,
-                    showConfirmButton: false,
-                    timer: 1500
-                  })
-                }
-
-                if (event == "reject") {
-                  Swal.fire({
-                    icon: 'success',
-                    title: `Order has been rejected`,
-                    showConfirmButton: false,
-                    timer: 1500
-                  })
-                }
+              .then(() => {
                 this.ngbActiveModal.close();
               })
               .catch((er) => {
                 if (er.error.hasError) {
-                  // console.log(er.error.message);
+                  console.log(er.error.message);
+                }
+              });
+          }
+        }
+      })
+  }
+  approve() {
+    this.loadOrderModel();
+    this.order.status = "Approved";
+    Swal.fire({
+      title: `Do you want to approve the order?`,
+      showCancelButton: true,
+      confirmButtonText: `Yes`,
+      icon: 'question'
+    })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          this.submitted = true;
+          if (this.orderForm.valid) {
+            this.ordersService
+              .update(this.order)
+              .then((res) => {
+                Swal.fire({
+                  icon: 'success',
+                  title: `Order has been approved`,
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+                this.ngbActiveModal.close();
+              })
+              .catch((er) => {
+                if (er.error.hasError) {
+                  console.log(er.error.message);
                 }
               });
           }
@@ -224,7 +225,43 @@ export class UpdateOrderComponent implements OnInit {
       })
   }
 
-
+  reject(){
+    this.loadOrderModel();
+    this.order.status = "Rejected";
+    Swal.fire({
+      title: `Do you want to reject the order?`,
+      input:"text",
+      inputPlaceholder:"Why?",
+      showCancelButton: true,
+      confirmButtonText: `Yes`,
+      icon: 'question'
+    })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          this.submitted = true;
+          this.order.note = result.value;
+          console.log(result.value)
+          if (this.orderForm.valid) {
+            this.ordersService
+              .update(this.order)
+              .then((res) => {
+                Swal.fire({
+                  icon: 'success',
+                  title: `Order has been rejected`,
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+                this.ngbActiveModal.close();
+              })
+              .catch((er) => {
+                if (er.error.hasError) {
+                  console.log(er.error.message);
+                }
+              });
+          }
+        }
+      })
+  }
 
   getOrderDetails() {
     this.orderDetailsService.getByOrder(this.item.id, null).then((res: ReturnMessage<OrderDetailModel[]>) => {

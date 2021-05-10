@@ -130,10 +130,10 @@ namespace Service.Products
 
             model.Name = StringExtension.CleanString(model.Name);
             model.Description = StringExtension.CleanString(model.Description);
-            model.ContentHTML= StringExtension.CleanString(model.ContentHTML);
-            if(model.Name == "null" ||
+            model.ContentHTML = StringExtension.CleanString(model.ContentHTML);
+            if (model.Name == "null" ||
                model.Description == "null" ||
-               model.ContentHTML  == "null")
+               model.ContentHTML == "null")
             {
                 var entity = _mapper.Map<UpdateProductDTO, Product>(model);
                 return new ReturnMessage<ProductDTO>(true, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.Error);
@@ -162,6 +162,26 @@ namespace Service.Products
             }
         }
 
-       
+        public ReturnMessage<ProductDTO> GetById(Guid id)
+        {
+            try
+            {
+                var search = _productRepository.Queryable().FirstOrDefault(product => product.Id == id);
+                if (search.IsNotNullOrEmpty())
+                {
+                    var res = _mapper.Map<ProductDTO>(search);
+                    var result = new ReturnMessage<ProductDTO>(false, res, MessageConstants.ListSuccess);
+                    return result;
+                }
+                return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
+
+            }
+
+            catch (Exception ex)
+            {
+                return new ReturnMessage<ProductDTO>(true, null, ex.Message);
+            }
+        }
+
     }
 }
