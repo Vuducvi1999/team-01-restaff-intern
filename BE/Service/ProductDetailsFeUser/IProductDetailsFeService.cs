@@ -13,10 +13,12 @@ namespace Service.ProductDetailsFeUser
     {
         ReturnMessage<ProductDTOFeUser> GetDetails(ProductDTOFeUser search);
 
-        ReturnMessage<ProductRatingDTO> CreateRating(IEnumerable<Claim> claims, CreateProductRatingDTO model);
+        ReturnMessage<ProductRatingDTO> CreateRating(CreateProductRatingDTO model);
 
         ReturnMessage<ProductRatingDTO> UpdateRating(UpdateProductRatingDTO model);
 
-        ReturnMessage<ProductRatingDTO> GetRating(IEnumerable<Claim> claims, Guid productId);
+        ReturnMessage<ProductRatingDTO> GetRating(Guid productId);
+
+        ReturnMessage<decimal> GetRatingPoint(Guid productId);
     }
 }

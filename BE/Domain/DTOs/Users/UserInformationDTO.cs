@@ -16,6 +16,6 @@ namespace Domain.DTOs.Users
         public string ImageUrl { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
-        public Guid? CumstomerId { get; set; }
+        public Guid? CustomerId { get; set; }
     }
 }

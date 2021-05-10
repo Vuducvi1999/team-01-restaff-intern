@@ -20,25 +20,21 @@ namespace Service.ServiceFeUser
 {
     public class ProductDetailsFeService : IProductDetailsFeService
     {
-        private readonly IRepository<User> _userRepository;
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Category> _categoryRepository;
         private readonly IRepository<ProductRating> _productRatingRepository;
-        private readonly IAuthCustomerUserService _authCustomerUserService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IUserManager _userManager;
 
-        public ProductDetailsFeService(IRepository<Category> categoryRepository, IRepository<Product> productRepository, IUnitOfWork unitOfWork, IUserManager userManager, IMapper mapper,  IAuthCustomerUserService authCustomerUserService, IRepository<ProductRating> productRatingRepository, IRepository<User> userRepository)
+        public ProductDetailsFeService(IRepository<Category> categoryRepository, IRepository<Product> productRepository, IUnitOfWork unitOfWork, IUserManager userManager, IMapper mapper, IRepository<ProductRating> productRatingRepository)
         {
-            _authCustomerUserService = authCustomerUserService;
             _productRepository = productRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userManager = userManager;
             _categoryRepository = categoryRepository;
             _productRatingRepository = productRatingRepository;
-            _userRepository = userRepository;
         }
         public ReturnMessage<ProductDTOFeUser> GetDetails(ProductDTOFeUser model)
         {
@@ -58,15 +54,14 @@ namespace Service.ServiceFeUser
 
             return result;
         }
-        public ReturnMessage<ProductRatingDTO> CreateRating(IEnumerable<Claim> claims, CreateProductRatingDTO model)
+        public ReturnMessage<ProductRatingDTO> CreateRating(CreateProductRatingDTO model)
         {
             try
             {
-                var userDecompile = _authCustomerUserService.GetInformationToken(claims);
-                var customer = _userRepository.Find(userDecompile.Id);
+                var userDecompile = _userManager.GetInformationUser();
                 var entity = _mapper.Map<CreateProductRatingDTO, ProductRating>(model);
-                var product = _productRepository.Find(model.ProductId);
-                entity.Insert(customer);
+                entity.CustomerId = userDecompile.CustomerId;
+                entity.Insert();
                 _productRatingRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<ProductRatingDTO>(false, _mapper.Map<ProductRating, ProductRatingDTO>(entity), MessageConstants.CreateSuccess);
@@ -99,23 +94,39 @@ namespace Service.ServiceFeUser
             }
         }
 
-        public ReturnMessage<ProductRatingDTO> GetRating(IEnumerable<Claim> claims, Guid productId)
+        public ReturnMessage<ProductRatingDTO> GetRating(Guid productId)
         {
-            //var user = _userManager.GetInformationAuth();
             if (productId.IsNullOrEmpty() && productId == Guid.Empty)
             {
                 return new ReturnMessage<ProductRatingDTO>(true, null, MessageConstants.Error);
             }
             try 
             {
-                var userDecompile = _authCustomerUserService.GetInformationToken(claims);
-                var customer = _userRepository.Find(userDecompile.Id);
-                var entity = _productRatingRepository.Queryable().FirstOrDefault(p => p.ProductId == productId && p.CustomerId == customer.CustomerId);
+                var userDecompile = _userManager.GetInformationUser();
+                var entity = _productRatingRepository.Queryable().FirstOrDefault(p => p.ProductId == productId && p.CustomerId == userDecompile.CustomerId);
                 return new ReturnMessage<ProductRatingDTO>(false, _mapper.Map<ProductRating, ProductRatingDTO>(entity), MessageConstants.DeleteSuccess);
             }
             catch(Exception ex)
             {
                 return new ReturnMessage<ProductRatingDTO>(true, null, ex.Message);
+            }
+        }
+
+        public ReturnMessage<decimal> GetRatingPoint(Guid productId)
+        {
+            if (productId.IsNullOrEmpty() && productId == Guid.Empty)
+            {
+                return new ReturnMessage<decimal>(true, 0, MessageConstants.Error);
+            }
+            try
+            {
+                var entity = _productRatingRepository.Queryable().Where(p => p.ProductId == productId);
+                decimal ratingPoint =(decimal)Math.Round(entity.Average(x => x.Rating), 1);
+                return new ReturnMessage<decimal>(false, ratingPoint, MessageConstants.DeleteSuccess);
+            }
+            catch(Exception ex)
+            {
+                return new ReturnMessage<decimal>(true, 0, ex.Message);
             }
         }
     }

@@ -24,10 +24,10 @@ import {
   ReturnMessage,
   SearchPaganationDTO,
 } from "src/app/lib/data/models";
-import { registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
+import { registerLocaleData } from "@angular/common";
+import localeFr from "@angular/common/locales/fr";
 import { TypeDisplayImage } from "src/app/shared/data";
-registerLocaleData(localeFr, 'fr');
+registerLocaleData(localeFr, "fr");
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { FormBuilder, FormGroup } from "@angular/forms";
@@ -38,21 +38,23 @@ import { RatingModel } from "src/app/lib/data/models/rating/rating.model";
   selector: "app-product-details",
   templateUrl: "./product-details.component.html",
   styleUrls: ["./product-details.component.scss"],
-  providers: [ProductDetailsService, RatingService],
+  providers: [ProductDetailsService, RatingService, CommentService],
   styles: [
     `
       .star {
-        font-size: 1.5rem;
+        position: relative;
+        display: inline-block;
+        font-size: 2rem;
         color: #b0c4de;
       }
       .filled {
         color: #1e90ff;
       }
-      .bad {
-        color: #deb0b0;
-      }
-      .filled.bad {
-        color: #ff1e1e;
+      .half {
+        position: absolute;
+        display: inline-block;
+        overflow: hidden;
+        color: #1e90ff;
       }
     `,
   ],
@@ -78,15 +80,14 @@ export class ProductDetailsComponent implements OnInit {
   public ratingForm: FormGroup;
   public ratingModel: RatingModel;
   public item: any;
+  public itemPoint: number;
 
   constructor(
     private productService: ProductDetailsService,
     private activatedRoute: ActivatedRoute,
-    private commentService: CommentService
-  ) {
-    private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder,
-    private ratingService: RatingService
+    private commentService: CommentService,
+    private ratingService: RatingService,
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -97,6 +98,7 @@ export class ProductDetailsComponent implements OnInit {
       this.loadFormItem();
       this.getRating();
     }
+    this.getRatingPoint();
   }
 
   getProduct() {
@@ -121,8 +123,20 @@ export class ProductDetailsComponent implements OnInit {
           this.item = it.data;
         });
     });
+    this.getRatingPoint();
   }
 
+  getRatingPoint() {
+    this.activatedRoute.queryParams.subscribe((param) => {
+      const data = { productId: param.id };
+      return this.ratingService
+        .getPoint({ params: data })
+        .then((it: ReturnMessage<number>) => {
+          this.itemPoint = it.data;
+          console.log(this.itemPoint);
+        });
+    });
+  }
   getImage(fileName: string) {
     return FileService.getLinkFile(fileName);
   }

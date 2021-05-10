@@ -36,8 +36,7 @@ namespace BE.ControllersFeUser
         [HttpPost(UrlConstants.BaseRating)]
         public IActionResult AddRating([FromBody] CreateProductRatingDTO model)
         {
-            var claims = HttpContext.User.Claims;
-            var result = _productDetailsFeService.CreateRating(claims, model);
+            var result = _productDetailsFeService.CreateRating(model);
             return CommonResponse(result);
         }
         [Authorize]
@@ -51,11 +50,15 @@ namespace BE.ControllersFeUser
         [HttpGet(UrlConstants.BaseRating)]
         public IActionResult GetRating([FromQuery]Guid productId)
         {
-            var claims = HttpContext.User.Claims;
-            var result = _productDetailsFeService.GetRating(claims, productId);
+            var result = _productDetailsFeService.GetRating(productId);
             return CommonResponse(result);
         }
-
+        [HttpGet(UrlConstants.RatingPoint)]
+        public IActionResult RatingPoint([FromQuery] Guid productId)
+        {
+            var result = _productDetailsFeService.GetRatingPoint(productId);
+            return CommonResponse(result);
+        }
     }
 
 }

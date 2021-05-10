@@ -26,4 +26,9 @@ export class RatingService {
   get(productId: any) {
     return this.httpClient.getObservable(this.url, productId).toPromise();
   }
+
+  getPoint(productId: any) {
+    const urlPoint = this.url + "/point";
+    return this.httpClient.getObservable(urlPoint, productId).toPromise();
+  }
 }

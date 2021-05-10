@@ -72,7 +72,7 @@ namespace Domain
             CreateMap<User, UserDataReturnDTO>().ReverseMap();
             CreateMap<User, UserInformationDTO>()
                 .ForMember(a => a.UserId, b => b.MapFrom(c => c.Id))
-                .ForMember(a => a.CumstomerId, b => b.MapFrom(c => c.CustomerId))
+                .ForMember(a => a.CustomerId, b => b.MapFrom(c => c.CustomerId))
                 .ForMember(a => a.Username, b => b.MapFrom(c => c.Username))
                 .ForMember(a => a.Password, b => b.MapFrom(c => c.Password))
                 .ForMember(a => a.FirstName, b => b.MapFrom(c => c.FirstName))
