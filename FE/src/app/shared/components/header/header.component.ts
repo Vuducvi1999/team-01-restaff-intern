@@ -43,8 +43,4 @@ export class HeaderComponent implements OnInit {
     // this.route.snapshot.data.removeItem('token');
     this.router.navigateByUrl('/login');
   }
-
-  get getImage() {
-    return FileService.getLinkFile(this.userInfo?.imageUrl);
-  }
 }

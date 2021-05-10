@@ -59,7 +59,7 @@ export class UpdateOrderComponent implements OnInit {
             fileExt == 'jpeg' ||
             fileExt == 'icon'
           ) {
-            return `<a href="${FileService.getLinkFile(file.split(',')[0])}"><img width="75px" height="75px" src="${FileService.getLinkFile(file.split(',')[0])}"/></a>`;
+            return `<a href="${file.split(',')[0]}"><img appUiImageLoader width="75px" height="75px" src="${file.split(',')[0]}"/></a>`;
           }
           return `<a href="${FileService.getLinkFile(file.split(',')[0])}">${FileService.getLinkFile(file.split(',')[0])}</a>`;
         },

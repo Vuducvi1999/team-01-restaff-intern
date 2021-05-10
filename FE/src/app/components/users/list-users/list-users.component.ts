@@ -42,7 +42,7 @@ export class ListUsersComponent {
             fileExt == 'jpeg' ||
             fileExt == 'icon'
           ) {
-            return `<a href="${FileService.getLinkFile(file)}"><img width="75px" height="75px" src="${FileService.getLinkFile(file)}"/></a>`;
+            return `<a href="${file}"><img appUiImageLoader width="75px" height="75px" src="${file}"/></a>`;
           }
           return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
         },
