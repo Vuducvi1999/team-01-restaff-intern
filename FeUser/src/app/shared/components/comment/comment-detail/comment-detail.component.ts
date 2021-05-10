@@ -45,7 +45,7 @@ export class CommentDetailComponent implements OnInit {
     const customer: ReturnMessage<UserModel>[] = this.allUser.filter(
       (i) => (i.data.id = customerId)
     );
-    return FileService.getLinkFile(customer[0].data.imageUrl);
+    return customer[0].data.imageUrl;
   }
 
   async getAllUser() {

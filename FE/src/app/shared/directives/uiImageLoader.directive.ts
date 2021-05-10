@@ -26,12 +26,21 @@ export class UiImageLoaderDirective {
   }
   @Input()
   set src(value: string) {
-    if (value.length > 0) {
-      var result = value.includes('http')
-        ? value
-        : `${AppConfig.settings.API_URL}/Files/${value}`;
-        this.sUrl = result;
+    if (!value) {
+      return;
     }
+    var result = `${AppConfig.settings.API_URL}/Files/${value}`;
+    if(value.includes('http'))
+    {
+      result = value;
+    }
+
+    if(value.includes('assets'))
+    {
+      result = value;
+    }
+    
+    this.sUrl = result;
   }
 
   updateUrl()
