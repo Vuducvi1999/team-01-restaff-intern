@@ -39,6 +39,8 @@ export class AuthGuardsAdminService {
           };
           const url: string = this.getStateUrl(route, state.url);
           return true;
+        }).catch(er => {
+          return this.routerHelperService.redirectToLogin();
         });
     }
     return this.routerHelperService.redirectToLogin();
