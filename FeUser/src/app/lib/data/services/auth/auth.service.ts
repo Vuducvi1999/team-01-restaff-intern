@@ -23,4 +23,9 @@ export class AuthService {
   {
     return this.http.postObservable(this.urlRegiter, body).toPromise();
   }
+
+  getInformationUser()
+  {
+    return this.http.getObservable(this.url).toPromise();
+  }
 }

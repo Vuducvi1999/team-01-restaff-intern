@@ -48,7 +48,7 @@ export class PageContentDetailComponent implements OnInit {
 
   save() {
     if (this.pageContentForm.invalid) {
-      console.log(this.pageContentForm);
+      // console.log(this.pageContentForm);
       return;
     }
 

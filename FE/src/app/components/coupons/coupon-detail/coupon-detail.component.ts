@@ -49,11 +49,11 @@ export class CouponDetailComponent implements OnInit {
       ],
     });
     //this.item.startDate.getTime()
-    console.log(this.couponForm);
+    // console.log(this.couponForm);
   }
 
   compareDate(matchTo: string): ValidatorFn {
-    console.log(matchTo);
+    // console.log(matchTo);
     return (control: AbstractControl) => {
       return control?.value > control?.parent?.controls[matchTo].value
         ? null
@@ -92,7 +92,7 @@ export class CouponDetailComponent implements OnInit {
         })
         .catch((er) => {
           if (er.error.hasError) {
-            console.log(er.error.message);
+            // console.log(er.error.message);
           }
         });
     }

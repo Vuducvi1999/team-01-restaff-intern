@@ -53,6 +53,7 @@ import { FilterPipeModule } from "ngx-filter-pipe";
 import { SearchService } from "../lib/data/services/search/search.service";
 import { CommentComponent } from "./components/comment/comment.component";
 import { CommentDetailComponent } from "./components/comment/comment-detail/comment-detail.component";
+import { UiImageLoaderDirective } from "./directives/uiImageLoader.directive";
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { CommentDetailComponent } from "./components/comment/comment-detail/comm
     UploadFileComponent,
     CommentComponent,
     CommentDetailComponent,
+    UiImageLoaderDirective,
   ],
   imports: [
     CommonModule,
@@ -130,6 +132,7 @@ import { CommentDetailComponent } from "./components/comment/comment-detail/comm
     UploadFileComponent,
     CommentComponent,
     CommentDetailComponent,
+    UiImageLoaderDirective,
   ],
 })
 export class SharedModule {}

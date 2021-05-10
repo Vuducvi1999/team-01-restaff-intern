@@ -16,4 +16,8 @@ export class AuthService {
   login(body: AuthLoginModel) {
     return this.http.postObservable(`${this.url}/login`, body).toPromise();
   }
+
+  getInformationUser() {
+    return this.http.getObservable(this.url).toPromise();
+  }
 }

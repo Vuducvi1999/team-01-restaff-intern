@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-lg-6  col-xs-12">
                     <div class="quick-view-img">
-                        <img [src]="ImageSrc ? ImageSrc : getImage(product.imageUrl.split(',')[0])" [alt]="product.categoryName" class="img-fluid">
+                        <img appUiImageLoader [src]="ImageSrc ? ImageSrc : product.imageUrl.split(',')[0]" [alt]="product.categoryName" class="img-fluid">
                     </div>
                 </div>
                 <div class="col-lg-6 rtl-text">

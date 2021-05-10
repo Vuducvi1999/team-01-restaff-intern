@@ -1,7 +1,7 @@
 <div class="media">
     <a [routerLink]="['/shop/product/left/sidebar/', product?.name]">
-        <img [defaultImage]="ImageSrc ? ImageSrc : 'assets/images/product/placeholder.jpg'" 
-             [lazyLoad]="ImageSrc ? ImageSrc : getImage(product.imageUrl.split(',')[0])"  
+        <img appUiImageLoader
+             [src]="product.imageUrl.split(',')[0]"  
              class="img-fluid lazy-loading" alt="{{ product?.categoryName }}">
     </a>
 	<div class="media-body align-self-center">

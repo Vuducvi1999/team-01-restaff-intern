@@ -120,7 +120,7 @@ export class UploadFileComponent implements OnInit {
           null
         );
       })
-      .catch((er) => console.log(er.error));
+      // .catch((er) => console.log(er.error));
   }
 
   actionChange(add: string[], remove: string, removeAll: boolean = false) {
@@ -141,7 +141,7 @@ export class UploadFileComponent implements OnInit {
   }
 
   onRemove(event) {
-    console.log(event);
+    // console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
     this.actionChange(null, event.name);
   }

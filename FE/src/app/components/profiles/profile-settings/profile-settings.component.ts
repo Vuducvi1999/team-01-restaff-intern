@@ -102,7 +102,7 @@ export class ProfileSettingsComponent implements OnInit {
         })
         .catch((er) => {
           if (er.error.hasError) {
-            console.log(er.error.message);
+            // console.log(er.error.message);
           }
         });
     }
@@ -120,10 +120,11 @@ export class ProfileSettingsComponent implements OnInit {
         .then((resp) => {
           this.passwordForm.reset();
           window.alert(resp.message);
+          // console.log(resp);
         })
         .catch((er) => {
           if (er.error.hasError) {
-            console.log(er.error.message);
+            // console.log(er.error.message);
           }
         });
     }
@@ -160,6 +161,7 @@ export class ProfileSettingsComponent implements OnInit {
   }
 
   get getImage() {
-    return FileService.getLinkFile(this.userInfo.imageUrl);
+    // console.log("get image");
+    return this.userInfo.imageUrl;
   }
 }

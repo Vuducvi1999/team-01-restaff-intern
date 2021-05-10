@@ -186,7 +186,7 @@ export class UpdateOrderComponent implements OnInit {
               }).then((res) => {
                 if (res.isConfirmed) {
                   this.order.note = res.value;
-                  console.log(this.order.note);
+                  // console.log(this.order.note);
                 }
               })
             }
@@ -216,7 +216,7 @@ export class UpdateOrderComponent implements OnInit {
               })
               .catch((er) => {
                 if (er.error.hasError) {
-                  console.log(er.error.message);
+                  // console.log(er.error.message);
                 }
               });
           }
@@ -234,7 +234,7 @@ export class UpdateOrderComponent implements OnInit {
     }).catch((er) => {
 
       if (er.error.hasError) {
-        console.log(er.error.message)
+        // console.log(er.error.message)
       }
     });
   }

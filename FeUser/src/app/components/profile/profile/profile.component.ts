@@ -99,7 +99,7 @@ export class ProfileComponent implements OnInit {
           Validators.maxLength(90),
         ],
       ],
-      imageUrl: [this.user ? this.user.imageUrl : "", [Validators.required]],
+      // imageUrl: [this.user ? this.user.imageUrl : "", [Validators.required]],
     });
   }
 
@@ -149,7 +149,7 @@ export class ProfileComponent implements OnInit {
 
     var dataProfileForm: ProfileModel = this.profileForm.value;
     var data: ProfileModel = {
-      imageUrl: dataProfileForm.imageUrl,
+      imageUrl: null,
       email: dataProfileForm.email,
       address: dataProfileForm.address,
       firstName: dataProfileForm.firstName,
@@ -176,31 +176,31 @@ export class ProfileComponent implements OnInit {
     return FileService.getLinkFile(fileName);
   }
 
-  onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {
-    if (event == null) {
-      return;
-    }
+  // onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {
+  //   if (event == null) {
+  //     return;
+  //   }
 
-    if (!this.fileURL) {
-      this.fileURL = [];
-    }
+  //   if (!this.fileURL) {
+  //     this.fileURL = [];
+  //   }
 
-    if (event.add) {
-      this.fileURL = [...this.fileURL, ...event.add];
-    }
+  //   if (event.add) {
+  //     this.fileURL = [...this.fileURL, ...event.add];
+  //   }
 
-    if (event.remove) {
-      this.fileURL.forEach((e : string, i) => {
-        if (e.includes(event.remove)) {
-          this.fileURL.splice(i, 1);
-        }
-      });
-    }
+  //   if (event.remove) {
+  //     this.fileURL.forEach((e : string, i) => {
+  //       if (e.includes(event.remove)) {
+  //         this.fileURL.splice(i, 1);
+  //       }
+  //     });
+  //   }
 
-    if (event.removeAll) {
-      this.fileURL = [];
-    }
+  //   if (event.removeAll) {
+  //     this.fileURL = [];
+  //   }
 
-    this.profileForm.controls.imageUrl.setValue(this.fileURL.join(','));
-  }
+  //   this.profileForm.controls.imageUrl.setValue(this.fileURL.join(','));
+  // }
 }

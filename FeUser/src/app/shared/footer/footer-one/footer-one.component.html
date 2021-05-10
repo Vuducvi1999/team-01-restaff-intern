@@ -50,7 +50,8 @@
           <div class="footer-contant">
             <div class="footer-logo" *ngIf="footerModel.informationWeb">
               <img
-                src="{{ getIcon(footerModel.informationWeb.logo) }}"
+              appUiImageLoader
+                src="{{ footerModel.informationWeb.logo }}"
                 class="img-logo"
                 alt="logo"
               />
@@ -60,7 +61,8 @@
               <ul>
                 <li *ngFor="let item of socialMediasIcons">
                   <img
-                    src="{{ getIcon(item.iconUrl) }}"
+                  appUiImageLoader
+                    src="{{ item.iconUrl }}"
                     width="60"
                     height="60"
                     class="img-60 rounded-circle"

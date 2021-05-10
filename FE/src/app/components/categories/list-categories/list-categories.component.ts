@@ -99,7 +99,7 @@ export class ListCategoriesComponent implements OnInit {
       
       if(er.error.hasError)
       {
-        window.alert("Can not connect to Server !");
+        // console.log(er.error.message)
       }
     });
   }
