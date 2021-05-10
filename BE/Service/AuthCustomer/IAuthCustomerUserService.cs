@@ -11,7 +11,7 @@ namespace Service.AuthCustomer
     {
         ReturnMessage<CustomerDataReturnDTO> CheckLogin(CustomerLoginDTO data);
         ReturnMessage<CustomerDataReturnDTO> CheckRegister(CustomerRegisterDTO data);
-        CustomerDecompileDTO GetInformationToken(IEnumerable<Claim> claims);
-        ReturnMessage<CustomerDataReturnDTO> GetInfomationDTO(IEnumerable<Claim> claims);
+        ReturnMessage<CustomerDataReturnDTO> GetCustomerDataReturnDTO();
+
     }
 }

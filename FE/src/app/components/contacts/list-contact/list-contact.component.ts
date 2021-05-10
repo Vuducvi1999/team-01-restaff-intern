@@ -70,12 +70,12 @@ export class ListContactComponent {
       .then((res: ReturnMessage<ContactModel[]>) => {
         if (!res.hasError) {
           this.contacts = res.data;
-          console.log('contact', res.data);
+          // console.log('contact', res.data);
         }
       })
       .catch((er) => {
         if (er.error.hasError) {
-          console.log(er.error.message);
+          // console.log(er.error.message);
         }
       });
   }

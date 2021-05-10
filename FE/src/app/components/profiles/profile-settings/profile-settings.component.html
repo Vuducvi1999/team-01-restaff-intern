@@ -5,8 +5,8 @@
       <div class="card">
         <div class="card-body">
           <div class="profile-details text-center">
-            <img src="{{getImage}}" alt="" class="img-fluid img-90 rounded-circle blur-up lazyloaded" width="90px"
-              height="90px">
+            <img appUiImageLoader src="{{getImage}}"  alt=""
+              class="img-fluid img-90 rounded-circle blur-up lazyloaded" width="90px" height="90px">
             <h5 class="f-w-600 mb-0">{{userInfo.firstName}} {{userInfo.lastName}}</h5>
             <span>{{userInfo.email}}</span>
             <div class="social">
@@ -55,7 +55,7 @@
                         <tr>
                           <td>Avatar:</td>
                           <!-- <td>{{userInfo.imageUrl}}</td> -->
-                          <img [src]="getImage" style="width: 200px; height: auto;" />
+                          <img [src]="getImage" style="width: 200px; height: 200px;" appUiImageLoader/>
                         </tr>
                       </tbody>
                     </table>

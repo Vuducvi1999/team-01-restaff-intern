@@ -95,7 +95,7 @@ export class ListUsersComponent {
       })
       .catch((er) => {
         if (er.error.hasError) {
-          console.log(er.error.message);
+          // console.log(er.error.message);
         }
       });
   }

@@ -40,6 +40,7 @@ namespace BE.Controllers
         public IActionResult Create([FromBody] CreateUserDTO model)
         {
             var result = _userService.Create(model);
+            var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
             return CommonResponse(result);
         }
 

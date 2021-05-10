@@ -51,7 +51,7 @@ export class ContactDetailComponent implements OnInit {
 
   save() {
     if (this.pageContentForm.invalid) {
-      console.log(this.pageContentForm);
+      // console.log(this.pageContentForm);
       return;
     }
 
@@ -76,7 +76,7 @@ export class ContactDetailComponent implements OnInit {
       })
       .catch((er) => {
         if (er.error.hasError) {
-          console.log(er.error.message);
+          // console.log(er.error.message);
         }
       });
   }

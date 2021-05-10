@@ -10,9 +10,9 @@
               [routerLink]="['/shop/product/left/sidebar/', product?.name]"
             >
               <img
+                appUiImageLoader
                 class="img-fluid"
-                [defaultImage]="'assets/images/product/placeholder.jpg'"
-                [lazyLoad]="getImage(product.imageUrl.split(',')[0])"
+                [src]="product.imageUrl.split(',')[0]"
                 alt=""
                 [style]="typeSizeImage"
               />

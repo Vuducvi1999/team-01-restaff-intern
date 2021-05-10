@@ -89,11 +89,12 @@ export class ListOrdersComponent implements OnInit {
     this.ordersService.get(null).then((res: ReturnMessage<PageModel<OrderModel>>) => {
       if (!res.hasError) {
         this.orders = res.data.results;
+        // console.log(this.orders)
       }
     }).catch((er) => {
 
       if (er.error.hasError) {
-        console.log(er.error.message)
+        // console.log(er.error.message)
       }
     });
 

@@ -7,8 +7,10 @@ using Common.MD5;
 using Data;
 using Domain.DTOs;
 using Domain.DTOs.User;
+using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,16 +21,19 @@ namespace Service.Auth
 {
     public class AuthService : IAuthService
     {
-        private IRepository<Domain.Entities.User> _repository;
-        private IUserManager _jwtManager;
+        private IRepository<User> _userRepository;
+        private IUserManager _userManager;
         private IMapper _mapper;
 
-        public AuthService(IUserManager jwtManager, IRepository<Domain.Entities.User> repository, IMapper mapper)
+        public AuthService(
+            IUserManager userManager, IRepository<User> repository, IMapper mapper,
+            IHttpContextAccessor httpContextAccessor)
         {
-            _jwtManager = jwtManager;
-            _repository = repository;
+            _userManager = userManager;
+            _userRepository = repository;
             _mapper = mapper;
         }
+
         public ReturnMessage<UserDataReturnDTO> CheckLogin(UserLoginDTO data)
         {
             if (data.Username.IsNullOrEmpty() || data.Password.IsNullOrEmpty())
@@ -38,7 +43,7 @@ namespace Service.Auth
 
             try
             {
-                var account = _repository.Queryable().Where(a => a.Type == UserType.Admin && a.Username == data.Username && a.Password == MD5Helper.ToMD5Hash(data.Password)).FirstOrDefault();
+                var account = _userRepository.Queryable().Where(a => a.Type == UserType.Admin && a.Username == data.Username && a.Password == MD5Helper.ToMD5Hash(data.Password)).FirstOrDefault();
                 if (account.IsNullOrEmpty())
                 {
                     return new ReturnMessage<UserDataReturnDTO>(true, null, MessageConstants.InvalidAuthInfoMsg);
@@ -51,8 +56,8 @@ namespace Service.Auth
                 };
 
                 // Generate JWT token
-                var token = _jwtManager.GenerateToken(claims, DateTime.UtcNow);
-                var result = _mapper.Map<Domain.Entities.User, UserDataReturnDTO>(account);
+                var token = _userManager.GenerateToken(claims, DateTime.UtcNow);
+                var result = _mapper.Map<User, UserDataReturnDTO>(account);
                 result.Token = token;
                 return new ReturnMessage<UserDataReturnDTO>(false, result, MessageConstants.LoginSuccess);
             }
@@ -62,14 +67,24 @@ namespace Service.Auth
             }
         }
 
-        public UserDecompileDTO GetInformationToken(IEnumerable<Claim> claims)
+        public ReturnMessage<UserDataReturnDTO> GetInformationUser()
         {
-            var data = new UserDecompileDTO()
+            try
             {
-                Id = Guid.Parse(claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value),
-                Username = claims.First(claim => claim.Type == ClaimTypes.UserData).Value,
-            };
-            return data;
+                var data = _userRepository.Queryable().Where(it => it.Id == _userManager.AuthorizedUserId
+                && it.Type == UserType.Admin).FirstOrDefault();
+                if (data.IsNullOrEmpty())
+                {
+                    return new ReturnMessage<UserDataReturnDTO>(true, null, MessageConstants.Error);
+                }
+
+                var result = _mapper.Map<User, UserDataReturnDTO>(data);
+                return new ReturnMessage<UserDataReturnDTO>(false, result, MessageConstants.LoginSuccess);
+            }
+            catch (Exception ex)
+            {
+                return new ReturnMessage<UserDataReturnDTO>(true, null, ex.Message);
+            }
         }
     }
 }

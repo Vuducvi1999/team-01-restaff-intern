@@ -20,11 +20,9 @@
                 <div>
                   <app-image-wrapper
                     [data]="{
-                      url: getImage(image),
+                      url: image,
                       type: typeDisplayImage.PRODUCT_DETAIL_MAIN_IMAGE
                     }"
-                    [lazyLoad]="getImage(image)"
-                    [defaultImage]="getImage(image)"
                     (click)="owlCar.to((activeSlide = i.toString()))"
                     class="img-fluid"
                   ></app-image-wrapper>
@@ -50,11 +48,9 @@
                       <div class="owl-thumb" [class.active]="i == activeSlide">
                         <app-image-wrapper
                           [data]="{
-                            url: getImage(image),
+                            url: image,
                             type: typeDisplayImage.PRODUCT_DETAIL_IMAGE
                           }"
-                          [lazyLoad]="getImage(image)"
-                          [defaultImage]="getImage(image)"
                           (click)="owlCar.to((activeSlide = i.toString()))"
                         ></app-image-wrapper>
                       </div>

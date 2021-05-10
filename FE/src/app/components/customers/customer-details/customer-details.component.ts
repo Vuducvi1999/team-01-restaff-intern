@@ -67,7 +67,7 @@ export class CustomerDetailsComponent implements OnInit {
 
   save() {
     if (this.usersForm.invalid) {
-      console.log(this.usersForm);
+      // console.log(this.usersForm);
       return;
     }
 
@@ -95,7 +95,7 @@ export class CustomerDetailsComponent implements OnInit {
       })
       .catch((er) => {
         if (er.error.hasError) {
-          console.log(er.error.message);
+          // console.log(er.error.message);
         }
       });
   }

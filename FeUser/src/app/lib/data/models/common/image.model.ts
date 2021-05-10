@@ -5,4 +5,5 @@ export class ImageModel {
   url: string;
   typeClass: TypeDisplayImage;
   class: string;
+  style: string;
 }

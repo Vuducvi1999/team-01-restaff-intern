@@ -12,8 +12,9 @@
         <app-image-wrapper
           [data]="{
             title: product.name,
-            url: getImage(product.imageUrl.split(',')[0]),
-            typeClass: typeDisplayImage.HOME_PRODUCT_IMAGE
+            url: product.imageUrl.split(',')[0],
+            typeClass: typeDisplayImage.HOME_PRODUCT_IMAGE,
+            style: typeSizeImage
           }"
         ></app-image-wrapper>
       </a>
@@ -24,8 +25,9 @@
         [queryParams]="{ id: product?.id }"
       >
         <img
+          appUiImageLoader
           [src]="
-            ImageSrc ? ImageSrc : getImage(product?.imageUrl.split(',')[0])
+            product?.imageUrl.split(',')[0]
           "
           class="img-fluid lazy-loading"
           alt="{{ product.categoryName }}"
@@ -42,7 +44,7 @@
           href="javascript:void(0)"
           (mouseover)="ChangeVariantsImage(getImage(image))"
         >
-          <img [lazyLoad]="getImage(image)" />
+          <img appUiImageLoader [src]="image" />
         </a>
       </li>
     </ul>

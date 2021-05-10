@@ -71,7 +71,7 @@ export class CategoryDetailComponent implements OnInit {
         this.ngbActiveModal.close();
       })
       .catch((er) => {
-        window.alert("Invalid Form make sure you input valid value !");
+        // console.log(er);
       });
   }
 

@@ -19,6 +19,7 @@ import { FileService } from '../lib/data/services';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { UiImageLoaderDirective } from './directives/uiImageLoader.directive';
 @NgModule({
   declarations: [
     ToggleFullscreenDirective,
@@ -32,10 +33,12 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     ModalHeaderComponent,
     ModalFooterComponent,
     UploadFileComponent,
+    UiImageLoaderDirective,
   ],
   imports: [CommonModule, RouterModule, NgbModalModule, NgxDropzoneModule,SweetAlert2Module.forRoot()],
   providers: [NavService, WINDOW_PROVIDERS, FileService],
   exports: [
+    UiImageLoaderDirective,
     FeatherIconsComponent,
     ToggleFullscreenDirective,
     ModalFooterComponent,

@@ -89,7 +89,7 @@ export class HttpClientService {
             }
           }
         });
-        console.log(params);
+        // console.log(params);
         httpOptions = { ...httpOptions, ...{ params } };
         if (param.params.isGenerate) {
           this.location.replaceState(
@@ -289,7 +289,7 @@ export class HttpClientService {
   }
 
   private getFullUrl(url: string) {
-    console.log(AppConfig.settings.API_URL);
+    // console.log(AppConfig.settings.API_URL);
     return `${AppConfig.settings.API_URL}${url}`;
   }
 

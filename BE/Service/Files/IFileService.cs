@@ -13,6 +13,6 @@ namespace Service.Files
     public interface IFileService : ICommonCRUDService<List<FileDTO>,List<CreateFileDTO>,List<UpdateFileDTO>,List<DeleteFileDTO>>
     {
         ReturnMessage<PaginatedList<FileDTO>> SearchPagination(SerachPaginationDTO<FileDTO> search);
-        ReturnMessage<List<FileDTO>> UpdateIdFile(List<FileDTO> files, Guid entityId);
+        ReturnMessage<List<FileDTO>> UpdateIdFile(List<FileDTO> files, Guid? entityId);
     }
 }

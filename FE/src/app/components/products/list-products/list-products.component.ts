@@ -36,6 +36,7 @@ export class ListProductsComponent implements OnInit {
         type: 'html',
         filter: false,
         valuePrepareFunction: (file) => {
+          // console.log(file);
           var fileExt = file.split(',')[0].split('.').pop();
           if (
             fileExt == 'png' ||
@@ -107,7 +108,7 @@ export class ListProductsComponent implements OnInit {
       .catch((er) => {
         if (er.error.hasError)
         {
-          window.alert("Can not connect to Server !");
+          // console.log(er.error.message);
         }
       });
   }
