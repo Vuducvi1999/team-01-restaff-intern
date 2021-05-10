@@ -71,7 +71,8 @@ namespace Service.Auth
         {
             try
             {
-                var data = _userRepository.Find(_userManager.AuthorizedUserId);
+                var data = _userRepository.Queryable().Where(it => it.Id == _userManager.AuthorizedUserId
+                && it.Type == UserType.Admin).FirstOrDefault();
                 if (data.IsNullOrEmpty())
                 {
                     return new ReturnMessage<UserDataReturnDTO>(true, null, MessageConstants.Error);

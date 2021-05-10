@@ -52,6 +52,22 @@ export class ListOrdersComponent implements OnInit {
       note: {
         title: 'Note',
       },
+      couponId:{
+        title:'Coupon ID'
+      },
+      couponName:{
+        title:'Coupon Name'
+      },
+      couponCode:{
+        title:'Coupon Code'
+      },
+      couponPercent:{
+        title:'Coupon Percent'
+      },
+      couponValue:{
+        title:'Coupon value'
+      }
+      ,
       totalItem: {
         title: 'Total Item',
       },

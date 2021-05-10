@@ -50,6 +50,7 @@ namespace BE.Controllers
         [HttpPut]
         public IActionResult UpdateFile([FromForm] List<UpdateFileDTO> dto)
         {
+
             var result = _fileService.Update(dto);
             return CommonResponse(result);
         }

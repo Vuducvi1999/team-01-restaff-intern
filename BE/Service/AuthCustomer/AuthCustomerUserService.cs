@@ -99,14 +99,21 @@ namespace Service.AuthCustomer
 
         public ReturnMessage<CustomerDataReturnDTO> GetCustomerDataReturnDTO()
         {
-            var entity = _userRepository.Queryable().Include(it => it.Customer).Where(it => it.Id == _userManager.AuthorizedUserId).FirstOrDefault();
-            if (entity.IsNullOrEmpty())
+            try
             {
-                return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);
-            }
+                var entity = _userRepository.Queryable().Include(it => it.Customer).Where(it => it.Id == _userManager.AuthorizedUserId && it.Type == UserType.Customer).FirstOrDefault();
+                if (entity.IsNullOrEmpty())
+                {
+                    return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);
+                }
 
-            var result = _mapper.Map<User, CustomerDataReturnDTO>(entity);
-            return new ReturnMessage<CustomerDataReturnDTO>(false, result, MessageConstants.LoginSuccess);
+                var result = _mapper.Map<User, CustomerDataReturnDTO>(entity);
+                return new ReturnMessage<CustomerDataReturnDTO>(false, result, MessageConstants.LoginSuccess);
+            }
+            catch (Exception ex)
+            {
+                return new ReturnMessage<CustomerDataReturnDTO>(true, null, ex.Message);
+            }
         }
     }
 }

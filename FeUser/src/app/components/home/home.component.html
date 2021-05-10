@@ -55,27 +55,6 @@
 </section>
 <!-- Product slider End -->
 
-<!-- Parallax banner start-->
-<section class="p-0">
-  <div
-    class="full-banner parallax-banner1 parallax text-center p-left"
-    [ngStyle]="{ 'background-image': 'url(assets/images/parallax/1.jpg)' }"
-  >
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <div class="banner-contain">
-            <h2>2018</h2>
-            <h3>fashion trends</h3>
-            <h4>special offer</h4>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- Parallax banner End -->
-
 <!-- Tab product start-->
 <div class="title1 section-t-space">
   <h4>exclusive products</h4>
@@ -86,6 +65,7 @@
     <div class="row">
       <div class="col theme-tab">
         <ngb-tabset
+          *ngIf="products.length !== 0"
           [justify]="'center'"
           [type]="'pills'"
           class="tabs tab-title"
@@ -95,7 +75,9 @@
             <ng-template ngbTabTitle>New Products</ng-template>
             <ng-template ngbTabContent>
               <div class="no-slider row">
-                <ng-container *ngFor="let product of products | slice: 0:8">
+                <ng-container
+                  *ngFor="let product of getNewProducts() | slice: 0:8"
+                >
                   <div class="product-box">
                     <app-product-box
                       [product]="product"
@@ -192,7 +174,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row mb-5">
       <div class="col-md-12">
         <app-blog [blogs]="blogs"></app-blog>
       </div>
@@ -200,18 +182,3 @@
   </div>
 </section>
 <!-- blog section End -->
-
-<!-- Instagram section -->
-<!-- <section class="instagram">
-  <div class="container-fluid ">
-    <div class="row">
-      <div class="col-md-12 p-0">
-        <h2 class="title-borderless"># instagram</h2>
-        <app-instagram></app-instagram>
-      </div>
-    </div>
-  </div>
-</section> -->
-<!-- Instagram section End -->
-
-<app-newsletter></app-newsletter>

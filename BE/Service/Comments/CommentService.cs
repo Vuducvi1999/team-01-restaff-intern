@@ -63,26 +63,52 @@ namespace Service.Comments
             }
         }
 
-        public ReturnMessage<PaginatedList<CommentDTO>> SearchPagination(SerachPaginationDTO<CommentDTO> search)
+        public ReturnMessage<PaginatedList<CommentDTO>> BlogPagination(SerachPaginationDTO<CommentDTO> search)
         {
             if (search == null)
             {
                 return new ReturnMessage<PaginatedList<CommentDTO>>(false, null, MessageConstants.GetPaginationFail);
             }
 
-            var resultEntity = _repository.GetPaginatedList(it => search.Search == null ||
+            var resultEntity = _repository.GetPaginatedList(it => it.EntityType.Contains("Blog") && 
                 (
+                    search.Search == null ||
                     (
-                        (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
                         it.Content.Contains(search.Search.Content)||
                         it.FullName.Contains(search.Search.FullName) ||
                         it.CustomerId == (search.Search.CustomerId) ||
-                        it.EntityId == (search.Search.EntityId) ||
-                        it.EntityType.Contains(search.Search.EntityType)
+                        it.EntityId == (search.Search.EntityId)
                     )
                 )
                 , search.PageSize
-                , search.PageIndex
+                , search.PageIndex * search.PageSize
+                , t => t.CreateByDate
+            );
+            var data = _mapper.Map<PaginatedList<Comment>, PaginatedList<CommentDTO>>(resultEntity);
+            var result = new ReturnMessage<PaginatedList<CommentDTO>>(false, data, MessageConstants.GetPaginationSuccess);
+
+            return result;
+        }
+
+        public ReturnMessage<PaginatedList<CommentDTO>> ProductPagination(SerachPaginationDTO<CommentDTO> search)
+        {
+            if (search == null)
+            {
+                return new ReturnMessage<PaginatedList<CommentDTO>>(false, null, MessageConstants.GetPaginationFail);
+            }
+
+            var resultEntity = _repository.GetPaginatedList(it => it.EntityType.Contains("Product") &&
+                (
+                    search.Search == null ||
+                    (
+                        it.Content.Contains(search.Search.Content) ||
+                        it.FullName.Contains(search.Search.FullName) ||
+                        it.CustomerId == (search.Search.CustomerId) ||
+                        it.EntityId == (search.Search.EntityId)
+                    )
+                )
+                , search.PageSize
+                , search.PageIndex * search.PageSize
                 , t => t.CreateByDate
             );
             var data = _mapper.Map<PaginatedList<Comment>, PaginatedList<CommentDTO>>(resultEntity);
@@ -97,7 +123,7 @@ namespace Service.Comments
             {
                 var entity = _repository.Queryable().OrderByDescending(t => t.CreateByDate).ToList();
                 var data = _mapper.Map<List<Comment>, List<CommentDTO>>(entity);
-                var result = new ReturnMessage<List<CommentDTO>>(false, data, MessageConstants.DeleteSuccess);
+                var result = new ReturnMessage<List<CommentDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;
             }
             catch (Exception ex)

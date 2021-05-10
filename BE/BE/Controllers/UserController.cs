@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Files;
 using Service.Users;
+using System;
 
 namespace BE.Controllers
 {
@@ -24,6 +25,14 @@ namespace BE.Controllers
         public IActionResult Get([FromQuery] SerachPaginationDTO<UserDTO> serachPagination)
         {
             var result = _userService.SearchPagination(serachPagination);
+            return CommonResponse(result);
+        }
+
+        [Route(UrlConstants.GetUser)]
+        [HttpGet]
+        public IActionResult GetDetailUser(Guid id)
+        {
+            var result = _userService.GetDetailUser(id);
             return CommonResponse(result);
         }
 

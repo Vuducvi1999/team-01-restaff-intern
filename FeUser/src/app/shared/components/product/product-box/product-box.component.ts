@@ -6,10 +6,15 @@ import {
   SimpleChanges,
   ViewChild,
 } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
-import { ProductModel } from "src/app/lib/data/models";
-import { FileService } from "src/app/lib/data/services";
+import { ProductModel, ReturnMessage } from "src/app/lib/data/models";
+import {
+  CreateCustomerWishListModel,
+  CustomerWishListModel,
+} from "src/app/lib/data/models/customerWishList/customerWishList.model";
+import { UserModel } from "src/app/lib/data/models/users/user.model";
+import { CustomerWishListService } from "src/app/lib/data/services/customerWishLists/customerWishList.service";
 import {
   ETypeGridLayout,
   ETypePositionCart,
@@ -17,14 +22,21 @@ import {
   ETypeSizeImage,
   TypeDisplayImage,
 } from "src/app/shared/data";
-import { ProductService } from "src/app/shared/services/product.service";
 import { CartModalComponent } from "../../modal/cart-modal/cart-modal.component";
 import { QuickViewComponent } from "../../modal/quick-view/quick-view.component";
+
+import { registerLocaleData } from "@angular/common";
+import localeFr from "@angular/common/locales/fr";
+import { ThrowStmt } from "@angular/compiler";
+import { CartService } from "src/app/lib/data/services/cart/cart.service";
+import { FileService } from "src/app/lib/data/services/files/file.service";
+registerLocaleData(localeFr, "fr");
 
 @Component({
   selector: "app-product-box",
   templateUrl: "./product-box.component.html",
   styleUrls: ["./product-box.component.scss"],
+  providers: [CartService, CustomerWishListService],
 })
 export class ProductBoxComponent implements OnInit, OnChanges {
   @Input() product: ProductModel;
@@ -37,14 +49,17 @@ export class ProductBoxComponent implements OnInit, OnChanges {
   @Input() typePositionCart: string = ETypePositionCart.BOX_2;
   @Input() typeSizeImage: string = ETypeSizeImage.NORMAL;
   @Input() typeGridLayout: string = ETypeGridLayout.NORMAL;
-
+  testData: ProductModel[];
   @ViewChild("quickView") QuickView: QuickViewComponent;
   @ViewChild("cartModal") CartModal: CartModalComponent;
 
   public ImageSrc: string;
   typeDisplayImage = TypeDisplayImage;
 
-  constructor(private productService: ProductService, private router: Router) {}
+  constructor(
+    private cartService: CartService,
+    private wishListService: CustomerWishListService
+  ) {}
   ngOnChanges(changes: SimpleChanges): void {
     this.updateTypeGridLayout();
   }
@@ -55,6 +70,20 @@ export class ProductBoxComponent implements OnInit, OnChanges {
         this.loader = false;
       }, 2000); // Skeleton Loader
     }
+
+    this.getWishlist();
+  }
+
+  getWishlist() {
+    const customerId = JSON.parse(localStorage.getItem("user")).id ?? "";
+
+    this.wishListService.getByCustomer(customerId).then((data) => {
+      this.testData = data.data;
+    });
+  }
+
+  compareProductWishList() {
+    return this.testData.some((i) => i.id === this.product.id);
   }
 
   updateTypeGridLayout() {
@@ -110,19 +139,28 @@ export class ProductBoxComponent implements OnInit, OnChanges {
   }
 
   addToCart(product: any) {
-    this.productService.addToCart(product);
+    this.cartService.addToCart(product);
   }
 
   addToWishlist(product: any) {
-    this.productService.addToWishlist(product);
+    this.cartService.addToWishlist(product);
+
+    const user: UserModel = JSON.parse(localStorage.getItem("user"));
+    const model: CreateCustomerWishListModel = {
+      customerId: user.id,
+      productId: product.id,
+    };
+    this.wishListService
+      .create(model)
+      .then(() => this.getWishlist())
+      .catch((e) => console.log(e));
   }
 
   addToCompare(product: any) {
-    this.productService.addToCompare(product);
+    this.cartService.addToCompare(product);
   }
 
   getImage(fileName: string) {
     return FileService.getLinkFile(fileName);
   }
-
 }

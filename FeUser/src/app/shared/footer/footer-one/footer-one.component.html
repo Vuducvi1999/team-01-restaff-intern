@@ -2,7 +2,8 @@
 <footer [class]="class">
   <div class="light-layout" *ngIf="newsletter">
     <div class="container">
-      <section class="small-section border-section border-top-0">
+      <!-- Xóa Know it all first vì không sử dụng -->
+      <!-- <section class="small-section border-section border-top-0">
         <div class="row">
           <div class="col-lg-6">
             <div class="subscribe">
@@ -36,7 +37,7 @@
             </form>
           </div>
         </div>
-      </section>
+      </section> -->
     </div>
   </div>
   <section class="section-b-space light-layout">
@@ -49,7 +50,9 @@
           <div class="footer-contant">
             <div class="footer-logo" *ngIf="footerModel.informationWeb">
               <img
-                src="{{ getIcon(footerModel.informationWeb.logo) }}"
+              appUiImageLoader
+                src="{{ footerModel.informationWeb.logo }}"
+                class="img-logo"
                 alt="logo"
               />
             </div>
@@ -58,7 +61,8 @@
               <ul>
                 <li *ngFor="let item of socialMediasIcons">
                   <img
-                    src="{{ getIcon(item.iconUrl) }}"
+                  appUiImageLoader
+                    src="{{ item.iconUrl }}"
                     width="60"
                     height="60"
                     class="img-60 rounded-circle"
@@ -75,8 +79,8 @@
             </div>
             <div class="footer-contant">
               <ul>
-                <li *ngFor="let item of footerModel.categories">
-                  {{ item.name }}
+                <li *ngFor="let item of footerModel.categories| slice:0:5">
+                  <a href="/product?search.categoryName={{item.name}}">{{ item.name }}</a>
                 </li>
               </ul>
             </div>

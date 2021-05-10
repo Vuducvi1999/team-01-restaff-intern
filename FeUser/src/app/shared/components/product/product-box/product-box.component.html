@@ -5,21 +5,29 @@
       <span class="lable4" *ngIf="product.sale">on sale</span>
     </div> -->
     <div class="front">
-      <a [routerLink]="['/product-details']"  [queryParams]="{ id: product?.id }">
-        <app-image-wapper
+      <a
+        [routerLink]="['/product-details']"
+        [queryParams]="{ id: product?.id }"
+      >
+        <app-image-wrapper
           [data]="{
             title: product.name,
-            url: getImage(product.imageUrl.split(',')[0]),
-            type: typeDisplayImage.PRODUCT_IMAGE
+            url: product.imageUrl.split(',')[0],
+            typeClass: typeDisplayImage.HOME_PRODUCT_IMAGE,
+            style: typeSizeImage
           }"
-        ></app-image-wapper>
+        ></app-image-wrapper>
       </a>
     </div>
     <div class="back" *ngIf="onHowerChangeImage">
-      <a [routerLink]="['/product-details']"  [queryParams]="{ id: product?.id }">
+      <a
+        [routerLink]="['/product-details']"
+        [queryParams]="{ id: product?.id }"
+      >
         <img
+          appUiImageLoader
           [src]="
-            ImageSrc ? ImageSrc : getImage(product?.imageUrl.split(',')[0])
+            product?.imageUrl.split(',')[0]
           "
           class="img-fluid lazy-loading"
           alt="{{ product.categoryName }}"
@@ -36,7 +44,7 @@
           href="javascript:void(0)"
           (mouseover)="ChangeVariantsImage(getImage(image))"
         >
-          <img [lazyLoad]="getImage(image)" />
+          <img appUiImageLoader [src]="image" />
         </a>
       </li>
     </ul>
@@ -62,7 +70,13 @@
         title="Add to Wishlist"
         (click)="addToWishlist(product)"
       >
-        <i class="ti-heart" aria-hidden="true"></i>
+        <i
+          *ngIf="testData"
+          [ngClass]="[
+            compareProductWishList() ? 'fa fa-heart color-red' : 'ti-heart'
+          ]"
+          aria-hidden="true"
+        ></i>
       </a>
       <a
         href="javascript:void(0)"
@@ -71,27 +85,33 @@
       >
         <i class="ti-search" aria-hidden="true"></i>
       </a>
-      <a
+      <!-- Xóa compare vì không sử dụng -->
+      <!-- <a
         href="javascript:void(0)"
         title="Compare"
         (click)="addToCompare(product)"
       >
         <i class="ti-reload" aria-hidden="true"></i>
-      </a>
+      </a> -->
     </div>
   </div>
   <div [class]="typePositionInformation">
     <div>
       <!-- <bar-rating [rate]="5" [readOnly]="true"></bar-rating> -->
       <br />
-      <a [routerLink]="['/product-details']"  [queryParams]="{ id: product?.id }">
+      <a
+        [routerLink]="['/product-details']"
+        [queryParams]="{ id: product?.id }"
+      >
         <h6>{{ product?.name | titlecase }}</h6>
       </a>
       <p>
         {{ product?.description }}
       </p>
       <h4>
-        {{ product?.price | currency: currency?.currency:"symbol" }}
+        {{
+          product?.price | currency: currency?.currency:"symbol":"1.0-0":"fr"
+        }}
         <!-- <del *ngIf="product?.discount"><span class="money"> {{ product?.price * currency?.price | currency:currency?.currency:'symbol' }}</span></del> -->
       </h4>
       <!-- <ul class="color-variant" *ngIf="Color(product?.variants).length">

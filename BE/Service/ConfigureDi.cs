@@ -28,6 +28,7 @@ using Service.CustomerProfileFeUser;
 using Service.OrderDetails;
 using Service.Contacts;
 using Service.Comments;
+using Service.CustomerWishLists;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
@@ -101,6 +102,9 @@ namespace Service
 
             // Comment 
             services.AddScoped<ICommentService, CommentService>();
+
+            // CustomerWishList
+            services.AddScoped<ICustomerWishListService, CustomerWishListService>();
         }
     }
 }

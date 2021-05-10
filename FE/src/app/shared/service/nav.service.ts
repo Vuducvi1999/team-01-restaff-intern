@@ -213,6 +213,19 @@ export class NavService {
         },
       ],
     },
+    {
+      title: 'Customer Wish List',
+      icon: 'info',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/customer-wish-list/list-customer-wish-list',
+          title: 'Customer Wish List',
+          type: 'link',
+        },
+      ],
+    },
   ];
 
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);

@@ -9,11 +9,11 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                         <div class="media">
-                            <a [routerLink]="['/shop/product/left/sidebar/', product.name.replace(' ', '-')]">
-                                <img class="img-fluid pro-img" [src]="getImage(product.imageUrl)" [alt]="">
+                            <a [routerLink]="['/product-details']"  [queryParams]="{ id: product?.id }">
+                                <img appUiImageLoader class="img-fluid pro-img" [src]="product.imageUrl" [alt]="">
                             </a>
                             <div class="media-body align-self-center text-center">
-                                <a [routerLink]="['/shop/product/left/sidebar/', product.name.replace(' ', '-')]">
+                                <a [routerLink]="['/product-details']"  [queryParams]="{ id: product?.id }">
                                     <h6>
                                         <i class="fa fa-check"></i>Item
                                         <span>{{ product.name | titlecase }}</span>
@@ -42,7 +42,7 @@
                                         <div class="img-wrapper">
                                             <div class="front">
                                                 <a [routerLink]="['/shop/product/left/sidebar/', product.name.replace(' ', '-')]">
-                                                    <img [src]="getImage(product.imageUrl)" class="img-fluid mb-1" alt="">
+                                                    <img appUiImageLoader [src]="product.imageUrl" class="img-fluid mb-1" alt="">
                                                 </a>
                                             </div>
                                             <div class="product-detail">

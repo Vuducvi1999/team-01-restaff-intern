@@ -9,7 +9,8 @@
         class="home"
         [ngClass]="textClass"
         [ngStyle]="{
-          'background-image': 'url(' + getImage(slider.imageUrl) + ')'
+          'background-image':
+            'url(' + getImage(slider.imageUrl.split(',')[0]) + ')'
         }"
       >
         <div class="container">
@@ -20,8 +21,7 @@
                   <h4>{{ slider.title }}</h4>
                   <h1>{{ slider.description }}</h1>
                   <a
-                    [routerLink]="['/shop/collection/left/sidebar']"
-                    [queryParams]="{ category: category }"
+                    [routerLink]="['/product']"
                     class="btn btn-solid"
                     [ngClass]="buttonClass"
                   >

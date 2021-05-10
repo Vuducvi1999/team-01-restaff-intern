@@ -132,10 +132,17 @@ namespace Service.Users
             return result;
         }
 
-        public UserDTO GetById(Guid userId)
+        public ReturnMessage<UserDTO> GetDetailUser(Guid id)
         {
-            var user = _userRepository.Find(userId);
-            return _mapper.Map<User, UserDTO>(user);
+            try
+            {
+                var entity = _userRepository.Find(id);
+                return new ReturnMessage<UserDTO>(false, _mapper.Map<User, UserDTO>(entity), MessageConstants.DeleteSuccess);
+            }
+            catch (Exception ex)
+            {
+                return new ReturnMessage<UserDTO>(true, null, ex.Message);
+            }
         }
     }
 }

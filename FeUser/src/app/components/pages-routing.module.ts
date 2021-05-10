@@ -12,6 +12,7 @@ import { ProductDetailsComponent } from "./product/product-details/product-detai
 
 import { ProductListComponent } from "./product/product-list/product-list.component";
 import { ProfileComponent } from "./profile/profile/profile.component";
+import { WishlistComponent } from "./wishlist/wishlist.component";
 
 const routes: Routes = [
   {
@@ -53,6 +54,11 @@ const routes: Routes = [
   {
     path: "profile",
     component: ProfileComponent,
+    canActivate: [AuthGuardsAdminService],
+  },
+  {
+    path: "wishlist",
+    component: WishlistComponent,
     canActivate: [AuthGuardsAdminService],
   },
 ];

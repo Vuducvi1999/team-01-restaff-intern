@@ -2,16 +2,6 @@ import { Routes } from '@angular/router';
 
 export const content: Routes = [
   {
-    path: 'suppliers',
-    loadChildren: () =>
-      import('../../components/suppliers/suppliers.module').then(
-        (m) => m.SuppliersModule
-      ),
-    data: {
-      breadcrumb: 'Suppliers',
-    },
-  },
-  {
     path: 'banners',
     loadChildren: () =>
       import('../../components/banners/banners.module').then(
@@ -150,6 +140,16 @@ export const content: Routes = [
       ),
     data: {
       breadcrumb: 'Comment',
+    },
+  },
+  {
+    path: 'customer-wish-list',
+    loadChildren: () =>
+      import(
+        '../../components/customer-wish-list/customer-wish-list.module'
+      ).then((m) => m.CustomerWishListModule),
+    data: {
+      breadcrumb: 'CustomerWishList',
     },
   },
 ];

@@ -39,6 +39,7 @@ namespace Common.Constants
         public const string BaseCoupon = BaseApi + "/coupon";
 
         public const string BaseUser = BaseApi + "/user";
+        public const string GetUser = BaseUser + "/{id}";
 
         public const string BaseCustomer = BaseApi + "/customer";
 
@@ -87,5 +88,15 @@ namespace Common.Constants
         public const string BaseContact = BaseApi + "/contact";
         // Comment
         public const string BaseComment = BaseApi + "/comment";
+        public const string GetCommentBlog = BaseComment + "/blog";
+        public const string GetCommentProduct= BaseComment + "/product";
+        // CustomerWishList
+        public const string BaseCustomerWishList = BaseApi + "/customer-wish-list";
+        public const string GetCustomerWishList = BaseApi + "/customer-wish-list/{customerId}";
+
+        public const string BasePromotion = BaseApi + "/promotion";
+
+        public const string BasePromotionDetail = BaseApi + "/promotion-detail";
+
     }
 }

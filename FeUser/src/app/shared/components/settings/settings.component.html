@@ -53,34 +53,25 @@
         </div>
       </div>
     </li>
-    <li class="onhover-div mobile-setting">
+    <!-- <li class="onhover-div mobile-setting">
       <div>
-        <img
-          src="assets/images/icon/setting.png"
-          class="img-fluid"
-          alt="settong"
-        />
+        <img src="assets/images/icon/setting.png" class="img-fluid" alt="settong" />
         <i class="ti-settings"></i>
       </div>
       <div class="show-div setting">
         <h6>language</h6>
         <ul>
           <li *ngFor="let language of languages">
-            <a
-              href="javascript:void(0)"
-              (click)="changeLanguage(language.code)"
-              >{{ language.name }}</a
-            >
+            <a href="javascript:void(0)" (click)="changeLanguage(language.code)">{{ language.name }}</a>
           </li>
         </ul>
         <h6>currency</h6>
         <ul class="list-inline">
           <li *ngFor="let currency of currencies">
-            <!-- <a href="javascript:void(0)" (click)="changeCurrency(currency)">{{ currency.name }}</a> -->
           </li>
         </ul>
       </div>
-    </li>
+    </li> -->
     <li class="onhover-div mobile-cart">
       <div>
         <a [routerLink]="['/cart']">
@@ -95,23 +86,30 @@
       <ul class="show-div shopping-cart" *ngIf="products?.length">
         <li *ngFor="let product of products">
           <div class="media">
-            <a [routerLink]="['/shop/product/left/sidebar/', product.name]">
-              <img
-                class="mr-3"
-                [src]="getImage(product?.imageUrl.split(',')[0])"
-                [alt]="product?.categoryName"
-              />
+            <a
+              [routerLink]="['/product-details']"
+              [queryParams]="{ id: product?.id }"
+            >
+              <app-image-wrapper
+                [data]="{
+                  url: getImage(product?.imageUrl.split(',')[0]),
+                  typeClass: typeDisPlayImage.SETTING_IMAGE,
+                  title: product?.categoryName,
+                  class: 'mr-3'
+                }"
+              ></app-image-wrapper>
             </a>
             <div class="media-body">
-              <a [routerLink]="['/shop/product/left/sidebar/', product.name]">
+              <a
+                [routerLink]="['/product-details']"
+                [queryParams]="{ id: product?.id }"
+              >
                 <h4>{{ product?.name }}</h4>
               </a>
               <h4>
                 <span>
                   {{ product?.quantity }} x
                   {{ product?.price | currency: "VND" }}
-                  <!-- {{ product?.quantity }} x 
-                  {{ product?.price * productService?.Currency.price | discount:product | currency:productService?.Currency.currency:'symbol' }} -->
                 </span>
               </h4>
             </div>
@@ -126,11 +124,6 @@
           >
             <a><i class="fa fa-times" aria-hidden="true"></i></a>
           </div>
-        </li>
-        <li>
-          <!-- <div class="total">
-            <h5>subtotal : <span>{{ getTotal | async | currency:productService?.Currency.currency:'symbol' }}</span></h5>
-          </div> -->
         </li>
         <li>
           <div class="buttons">

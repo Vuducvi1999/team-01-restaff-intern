@@ -138,7 +138,7 @@ namespace Service.Files
         {
             if (fileIds.IsNullOrEmpty() || entityId.IsNullOrEmpty() || entityId == Guid.Empty)
             {
-                return new ReturnMessage<List<FileDTO>>(true, null, MessageConstants.Error);
+                return new ReturnMessage<List<FileDTO>>(false, null, MessageConstants.UpdateSuccess);
             }
 
             var files = new List<Domain.Entities.File>();

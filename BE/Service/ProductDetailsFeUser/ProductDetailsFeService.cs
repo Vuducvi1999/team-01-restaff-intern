@@ -28,14 +28,14 @@ namespace Service.ServiceFeUser
             _mapper = mapper;
             _categoryRepository = categoryRepository;
         }
-        public ReturnMessage<ProductDTOFeUser> GetDetails(ProductDTOFeUser search)
+        public ReturnMessage<ProductDTOFeUser> GetDetails(ProductDTOFeUser model)
         {
-            if (search == null)
+            if (model == null)
             {
                 return new ReturnMessage<ProductDTOFeUser>(false, null, MessageConstants.Error);
             }
             
-            var resultEntity = _productRepository.Find(search.Id);
+            var resultEntity = _productRepository.Find(model.Id);
 
             _categoryRepository.Queryable().Where(it => it.Id == resultEntity.CategoryId).FirstOrDefault();
 

@@ -8,6 +8,14 @@ export interface CommentModel extends BaseModel {
   content: string;
 }
 
+export interface SearchCommentModel {
+  fullName?: string;
+  customerId?: string;
+  entityId?: string;
+  entityType?: string;
+  content?: string;
+}
+
 export interface CommentPassingModel {
   fullName: string;
   customerId: string;
