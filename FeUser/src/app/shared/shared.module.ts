@@ -54,6 +54,7 @@ import { SearchService } from "../lib/data/services/search/search.service";
 import { CommentComponent } from "./components/comment/comment.component";
 import { CommentDetailComponent } from "./components/comment/comment-detail/comment-detail.component";
 import { UiImageLoaderDirective } from "./directives/uiImageLoader.directive";
+import { VndFormatPipe } from "./pipes/vnd-format.pipe";
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { UiImageLoaderDirective } from "./directives/uiImageLoader.directive";
     LayoutBoxComponent,
     TapToTopComponent,
     DiscountPipe,
+    VndFormatPipe,
     ImageWrapperComponent,
     UploadFileComponent,
     CommentComponent,
@@ -128,6 +130,7 @@ import { UiImageLoaderDirective } from "./directives/uiImageLoader.directive";
     LayoutBoxComponent,
     TapToTopComponent,
     DiscountPipe,
+    VndFormatPipe,
     ImageWrapperComponent,
     UploadFileComponent,
     CommentComponent,

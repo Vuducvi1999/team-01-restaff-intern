@@ -3,7 +3,10 @@ import { ProductModel } from 'src/app/lib/data/models';
 import { CartModel } from 'src/app/lib/data/models/cart/cart.model';
 import { FileService } from 'src/app/lib/data/services';
 import { CartService } from 'src/app/lib/data/services/cart/cart.service';
-
+import { ProductService } from 'src/app/lib/data/services/products/product.service';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr, 'fr');
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -14,7 +17,7 @@ export class CartComponent implements OnInit, OnChanges {
   // public cartItems = JSON.parse(localStorage.getItem("cartItems"));
   public products: ProductModel[] = [];
   public cart: CartModel;
-  constructor(public cartService: CartService) {
+  constructor(public cartService: CartService, public productService: ProductService) {
   }
   ngOnChanges(changes: SimpleChanges): void {
   }

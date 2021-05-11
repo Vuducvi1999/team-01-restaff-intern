@@ -6,7 +6,7 @@
         <div class="col-lg-6">
           <div class="header-contact" *ngIf="headerModel.informationWeb">
             <ul>
-              <li>Welcome to Our Fashion store</li>
+              <li>{{ headerModel.informationWeb.title }}</li>
               <li>
                 <i class="fa fa-phone" aria-hidden="true"></i>Call Us:
                 {{ headerModel.informationWeb.phone }}

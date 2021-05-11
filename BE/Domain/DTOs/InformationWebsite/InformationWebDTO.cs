@@ -12,5 +12,7 @@ namespace Domain.DTOs.InfomationWeb
         public string Email { get; set; }
         public string Fax { get; set; }
         public string Logo { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
     }
 }
