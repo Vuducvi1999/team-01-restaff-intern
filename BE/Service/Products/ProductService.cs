@@ -7,6 +7,7 @@ using Domain.DTOs.Products;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -166,11 +167,17 @@ namespace Service.Products
         {
             try
             {
-                var search = _productRepository.Queryable().FirstOrDefault(product => product.Id == id);
-                if (search.IsNotNullOrEmpty())
+                var search = _productRepository.Queryable().AsNoTracking().FirstOrDefault(product => product.Id == id);
+                if (search.IsNotNullOrEmpty() && (search.IsDeleted == false))
                 {
-                    var res = _mapper.Map<ProductDTO>(search);
-                    var result = new ReturnMessage<ProductDTO>(false, res, MessageConstants.ListSuccess);
+
+                    var category = _categoryRepository.Find(search.CategoryId);
+                    if (category == null)
+                    {
+                        return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
+                    }
+
+                    var result = new ReturnMessage<ProductDTO>(false, _mapper.Map<ProductDTO>(search), MessageConstants.ListSuccess);
                     return result;
                 }
                 return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
@@ -183,5 +190,29 @@ namespace Service.Products
             }
         }
 
+        public ReturnMessage<ProductDTO> UpdateCount(Guid id, int quantity)
+        {
+            try
+            {
+                var search = this.GetById(id);
+                if (search.HasError == false)
+                {
+                    var dto = search.Data;
+                    dto.SaleCount += quantity;
+                    var entity = _mapper.Map<Product>(dto);
+                    _productRepository.Update(entity);
+                    _unitOfWork.SaveChanges();
+                    var result = new ReturnMessage<ProductDTO>(false, dto, MessageConstants.UpdateSuccess);
+                    return result;
+                }
+                return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
+
+            }
+
+            catch (Exception ex)
+            {
+                return new ReturnMessage<ProductDTO>(true, null, ex.Message);
+            }
+        }
     }
 }

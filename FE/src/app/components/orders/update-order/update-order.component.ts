@@ -180,6 +180,12 @@ export class UpdateOrderComponent implements OnInit {
             this.ordersService
               .update(this.order)
               .then(() => {
+                Swal.fire({
+                  icon: 'success',
+                  title: `Order has been saved`,
+                  showConfirmButton: false,
+                  timer: 1500
+                })
                 this.ngbActiveModal.close();
               })
               .catch((er) => {

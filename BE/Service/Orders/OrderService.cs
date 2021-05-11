@@ -20,13 +20,15 @@ namespace Service.Orders
     {
         private readonly IRepository<Order> _orderRepository;
         private readonly IRepository<Coupon> _couponRepository;
+        private readonly IRepository<Product> _productRepository;
+
         private readonly ICouponService _couponService;
         private readonly IProductService _productService;
 
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public OrderService(IProductService productService, ICouponService couponService, IRepository<Order> orderRepository, IUnitOfWork unitOfWork, IMapper mapper, IRepository<Coupon> couponRepository)
+        public OrderService(IRepository<Product> productRepository, IProductService productService, ICouponService couponService, IRepository<Order> orderRepository, IUnitOfWork unitOfWork, IMapper mapper, IRepository<Coupon> couponRepository)
         {
 
             _orderRepository = orderRepository;
@@ -35,6 +37,7 @@ namespace Service.Orders
             _couponRepository = couponRepository;
             _couponService = couponService;
             _productService = productService;
+            _productRepository = productRepository;
         }
 
         public ReturnMessage<OrderDTO> Create(CreateOrderDTO model)
@@ -52,6 +55,15 @@ namespace Service.Orders
                         if (res.HasError)
                         {
                             invalidProducts = true;
+                        }
+
+                        if (!res.HasError)
+                        {
+                            var update = _productService.UpdateCount(res.Data.Id, detail.Quantity);
+                            if (update.HasError)
+                            {
+                                invalidProducts = true;
+                            }
                         }
                     });
 

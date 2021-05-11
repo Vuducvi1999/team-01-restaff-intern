@@ -58,6 +58,7 @@ export class ListOrdersComponent implements OnInit {
               { value: 'Rejected', title: 'Rejected' },
             ],
           },
+          sort:'true',
         },
       },
       note: {
