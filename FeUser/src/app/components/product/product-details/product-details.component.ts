@@ -24,9 +24,6 @@ import {
   ReturnMessage,
   SearchPaganationDTO,
 } from "src/app/lib/data/models";
-import { registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/fr';
-registerLocaleData(localeFr, 'fr');
 import { TypeDisplayImage } from "src/app/shared/data";
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
@@ -199,12 +196,5 @@ export class ProductDetailsComponent implements OnInit {
       .catch((e) => {
         console.log(e);
       });
-  }
-  formatCurrency(){
-    return this.product?.price.toLocaleString('vi-VN', {
-      style: 'currency',
-      currency: 'VND'
-  });
-    //return Intl.NumberFormat('en-US',{style:'currency', currency: 'VND'}).format(this.product?.price);
   }
 }

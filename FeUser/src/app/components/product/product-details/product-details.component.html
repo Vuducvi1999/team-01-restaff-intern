@@ -70,8 +70,7 @@
             </div>
             <div>
               <h3>
-                {{formatCurrency()}}
-                <!-- {{ product?.price  | currency: productService.Currency?.currency:true:undefined:"en"}} -->
+                {{product?.price | vndFormat}}
               </h3>
             </div>
             <br />
