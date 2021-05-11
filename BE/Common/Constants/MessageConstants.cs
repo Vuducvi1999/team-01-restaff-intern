@@ -6,6 +6,7 @@
         public const string UpdateSuccess = "Update successfully";
         public const string DeleteSuccess = "Delete successfully";
         public const string SearchSuccess = "Search successfully";
+        public const string GetSuccess = "Get successfully";
 
 
         public const string ListSuccess = "List successfully";

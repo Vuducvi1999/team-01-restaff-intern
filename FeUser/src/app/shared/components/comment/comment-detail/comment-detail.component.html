@@ -1,37 +1,56 @@
-<div [ngClass]="['row', class ? class : '']" #refComment>
-  <div class="col-12">
-    <p *ngIf="comments.results.length === 0">Not Found Comments</p>
-  </div>
+<div class="container">
+  <div [ngClass]="['row', class ? class : '']" #refComment>
+    <div class="col-12">
+      <p *ngIf="comments.results.length === 0">Not Found Comments</p>
+    </div>
 
-  <div class="col-12" *ngIf="allUser.length > 0 && comments.results.length > 0">
-    <ul class="comments">
-      <li *ngFor="let comment of comments.results">
-        <div class="media">
-          <app-image-wrapper
-            class="flex-shrink-0"
-            [data]="{
-              url: getCustomerImage(comment.customerId),
-              typeClass: typeDisplayImage.COMMENT_IMAGE_CUSTOMER
-            }"
-          ></app-image-wrapper>
-          <div class="media-body">
-            <h6>
-              {{ comment.fullName }}
-              <span>( {{ getDate(comment.createByDate) }} )</span>
-            </h6>
-            <p>{{ comment.content }}</p>
+    <div
+      class="col-12"
+      *ngIf="allUser.length > 0 && comments.results.length > 0"
+    >
+      <ul class="comments">
+        <li *ngFor="let comment of comments.results">
+          <div class="media">
+            <app-image-wrapper
+              class="flex-shrink-0"
+              [data]="{
+                url: getCustomerImage(comment.customerId),
+                typeClass: typeDisplayImage.COMMENT_IMAGE_CUSTOMER
+              }"
+            ></app-image-wrapper>
+            <div class="media-body">
+              <h6>
+                {{ comment.fullName }}
+                <span>( {{ getDate(comment.createByDate) }} )</span>
+              </h6>
+              <div>
+                <ngb-rating
+                  [max]="5"
+                  [rate]="comment.rating"
+                  formControlName="rating"
+                  [readonly]="true"
+                >
+                  <ng-template let-fill="fill" let-index="index">
+                    <span class="star" [class.filled]="fill === 100"
+                      >&#9733;</span
+                    >
+                  </ng-template>
+                </ngb-rating>
+              </div>
+              <p>{{ comment.content }}</p>
+            </div>
           </div>
-        </div>
-      </li>
-    </ul>
-    <ngb-pagination
-      class="d-flex justify-content-start mt-3"
-      [collectionSize]="comments.totalItem"
-      [(page)]="page"
-      (pageChange)="pageChange($event)"
-      [pageSize]="comments.pageSize"
-      [boundaryLinks]="true"
-      size="sm"
-    ></ngb-pagination>
+        </li>
+      </ul>
+      <ngb-pagination
+        class="d-flex justify-content-start mt-3"
+        [collectionSize]="comments.totalItem"
+        [(page)]="page"
+        (pageChange)="pageChange($event)"
+        [pageSize]="comments.pageSize"
+        [boundaryLinks]="true"
+        size="sm"
+      ></ngb-pagination>
+    </div>
   </div>
 </div>

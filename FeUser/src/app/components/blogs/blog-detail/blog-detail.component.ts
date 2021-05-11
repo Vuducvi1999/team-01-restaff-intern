@@ -31,6 +31,7 @@ export class BlogDetailComponent implements OnInit {
   user: UserDataReturnDTOModel;
   comments: PageModel<CommentModel>;
   searchModel: SearchPaganationDTO<SearchCommentModel>;
+  item: any;
 
   constructor(
     private blogService: BlogService,
@@ -94,6 +95,7 @@ export class BlogDetailComponent implements OnInit {
       customerId: this.user ? this.user.id : "",
       entityId: this.activatedRoute.snapshot.paramMap.get("id"),
       entityType: "Blog",
+      rating: this.item ? this.item.rating : 1,
     };
   }
 }

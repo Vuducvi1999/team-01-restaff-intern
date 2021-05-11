@@ -31,30 +31,29 @@ registerLocaleData(localeFr, "fr");
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { RatingService } from "src/app/lib/data/services/rating/rating.service";
 import { RatingModel } from "src/app/lib/data/models/rating/rating.model";
 
 @Component({
   selector: "app-product-details",
   templateUrl: "./product-details.component.html",
   styleUrls: ["./product-details.component.scss"],
-  providers: [ProductDetailsService, RatingService, CommentService],
+  providers: [ProductDetailsService, CommentService],
   styles: [
     `
       .star {
         position: relative;
         display: inline-block;
-        font-size: 2rem;
-        color: #b0c4de;
+        font-size: 3rem;
+        color: #d3d3d3;
       }
-      .filled {
-        color: #1e90ff;
+      .full {
+        color: blue;
       }
       .half {
         position: absolute;
         display: inline-block;
         overflow: hidden;
-        color: #1e90ff;
+        color: blue;
       }
     `,
   ],
@@ -77,30 +76,33 @@ export class ProductDetailsComponent implements OnInit {
 
   public currentRate: number;
   public token: string;
-  public ratingForm: FormGroup;
-  public ratingModel: RatingModel;
   public item: any;
-  public itemPoint: number;
+
+  public rating: number;
 
   constructor(
     private productService: ProductDetailsService,
     private activatedRoute: ActivatedRoute,
-    private commentService: CommentService,
-    private ratingService: RatingService,
-    private formBuilder: FormBuilder
+    private commentService: CommentService
   ) {}
 
   ngOnInit(): void {
     this.token = localStorage.getItem("token");
     this.getProduct();
     this.initDataComment();
-    if (this.token != null) {
-      this.loadFormItem();
-      this.getRating();
-    }
-    this.getRatingPoint();
+    this.getRating();
   }
 
+  getRating() {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      console.log(params.id);
+      this.commentService
+        .getRating(params.id)
+        .then((res: ReturnMessage<number>) => {
+          this.rating = res.data;
+        });
+    });
+  }
   getProduct() {
     this.activatedRoute.queryParams.subscribe((param) => {
       this.productService
@@ -108,35 +110,11 @@ export class ProductDetailsComponent implements OnInit {
         .then((res: ReturnMessage<ProductDetailsModel>) => {
           this.product = res.data;
         });
-      this.initDataComment();
       this.createSearchModel();
       this.getComments();
     });
   }
 
-  getRating() {
-    this.activatedRoute.queryParams.subscribe((param) => {
-      const data = { productId: param.id };
-      return this.ratingService
-        .get({ params: data })
-        .then((it: ReturnMessage<RatingModel>) => {
-          this.item = it.data;
-        });
-    });
-    this.getRatingPoint();
-  }
-
-  getRatingPoint() {
-    this.activatedRoute.queryParams.subscribe((param) => {
-      const data = { productId: param.id };
-      return this.ratingService
-        .getPoint({ params: data })
-        .then((it: ReturnMessage<number>) => {
-          this.itemPoint = it.data;
-          console.log(this.itemPoint);
-        });
-    });
-  }
   getImage(fileName: string) {
     return FileService.getLinkFile(fileName);
   }
@@ -146,33 +124,11 @@ export class ProductDetailsComponent implements OnInit {
 
     this.dataComment = {
       fullName: this.user ? this.user.firstName + " " + this.user.lastName : "",
-      customerId: this.user ? this.user.id : "",
+      customerId: this.user ? this.user.customerId : "",
       entityId: this.activatedRoute.snapshot.queryParamMap.get("id"),
       entityType: "Product",
+      rating: 1,
     };
-  }
-
-  loadFormItem() {
-    this.ratingForm = this.formBuilder.group({
-      rating: [this.item ? this.item.rating : 1],
-    });
-  }
-
-  saveRating(event: any) {
-    this.ratingModel = {
-      rating: this.ratingForm.controls?.rating.value,
-      productId: this.product.id,
-      customerId: JSON.parse(localStorage.getItem("user")).customerId,
-      id: this.item ? this.item?.id : "",
-    };
-    this.ratingService
-      .save(this.ratingModel)
-      .then(() => {
-        this.getRating();
-      })
-      .catch((er) => {
-        console.log(er);
-      });
   }
 
   createSearchModel() {
@@ -195,6 +151,7 @@ export class ProductDetailsComponent implements OnInit {
       .getProductComments(this.searchModel)
       .then((data: ReturnMessage<PageModel<CommentModel>>) => {
         this.comments = data.data;
+        console.log(this.comments);
       })
       .catch((e) => {
         console.log(e);

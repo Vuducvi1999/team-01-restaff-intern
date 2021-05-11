@@ -20,6 +20,17 @@ import { TypeDisplayImage } from "src/app/shared/data";
   templateUrl: "./comment-detail.component.html",
   styleUrls: ["comment-detail.component.scss"],
   providers: [UserService],
+  styles: [
+    `
+      .star {
+        font-size: 2rem;
+        color: #b0c4de;
+      }
+      .filled {
+        color: #1e90ff;
+      }
+    `,
+  ],
 })
 export class CommentDetailComponent implements OnInit {
   @Input() comments: PageModel<CommentModel>;
@@ -41,12 +52,7 @@ export class CommentDetailComponent implements OnInit {
     return new Date(date).toLocaleString();
   }
 
-  getCustomerImage(customerId) {
-    const customer: ReturnMessage<UserModel>[] = this.allUser.filter(
-      (i) => (i.data.id = customerId)
-    );
-    return customer[0].data.imageUrl;
-  }
+  getCustomerImage(customerId) {}
 
   async getAllUser() {
     const UserIds = this.comments.results
@@ -56,6 +62,7 @@ export class CommentDetailComponent implements OnInit {
     this.allUser = await Promise.all(
       UserIds.map((i) => this.userService.getUserById(i))
     );
+    const a = 1;
   }
 
   pageChange(event) {

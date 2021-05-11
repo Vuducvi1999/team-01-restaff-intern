@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Domain.DTOs.Comments
 {
-    public class CreateCommentDTO
+    public class UpdateCommentDTO
     {
+        public Guid Id { get; set; }
         public string FullName { get; set; }
         public Guid CustomerId { get; set; }
         public Guid EntityId { get; set; }

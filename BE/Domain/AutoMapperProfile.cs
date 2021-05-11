@@ -25,7 +25,6 @@ using Domain.DTOs.PageContent;
 using Domain.DTOs.InfomationWeb;
 using Domain.DTOs.PageContentContact;
 using Domain.DTOs.Contact;
-using Domain.DTOs.ProductRating;
 using Domain.DTOs.Comments;
 using Domain.DTOs.CustomerWishList;
 
@@ -192,12 +191,6 @@ namespace Domain
             // CustomerWishList 
             CreateMap<CustomerWishList, CreateCustomerWishListDTO>().ReverseMap();
             CreateMap<CustomerWishList, CustomerWishListDTO>().ReverseMap();
-
-            //RatingProduct
-            CreateMap<ProductRating, ProductRatingDTO>()
-                .ReverseMap();
-            CreateMap<ProductRating, UpdateProductRatingDTO>().ReverseMap();
-            CreateMap<ProductRating, CreateProductRatingDTO>().ReverseMap();
         }
     }
 }

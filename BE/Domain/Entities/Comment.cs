@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.DTOs.Comments;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,10 +8,11 @@ namespace Domain.Entities
     public class Comment: BaseEntity
     {
         public string FullName { get; set; }
-        public Guid CustomerId { get; set; }
+        public Guid? CustomerId { get; set; }
         public Guid EntityId { get; set; }
         public string EntityType { get; set; }
         public string Content { get; set; }
+        public int Rating { get; set; }
 
         public override void Insert()
         {
@@ -19,6 +21,15 @@ namespace Domain.Entities
         public override void Delete()
         {
             base.Delete();
+        }
+        public void Update(UpdateCommentDTO model)
+        {
+            base.Update();
+            FullName = model.FullName;
+            CustomerId = model.CustomerId;
+            EntityId = model.EntityId;
+            Content = model.Content;
+            //Rating = model.Rating;
         }
     }
 }

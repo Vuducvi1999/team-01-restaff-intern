@@ -72,52 +72,21 @@
               <h3>
                 {{ product?.price | currency: "VND":"symbol":"1.0-0":"fr" }}
               </h3>
-              <h3>Price: {{ product?.price }}</h3>
             </div>
-            <br />
-            <div *ngIf="token != null; else loading">
-              <form [formGroup]="ratingForm">
-                <ngb-rating
-                  [max]="5"
-                  [rate]="item ? item.rating : 0"
-                  formControlName="rating"
-                >
-                  <ng-template let-fill="fill" let-index="index">
-                    <span class="star" [class.filled]="fill === 100"
-                      >&#9733;</span
-                    >
-                  </ng-template>
-                </ngb-rating>
-                <br />
-                <pre>Rate: <b>{{ratingForm.controls?.rating.value}}</b></pre>
-                <br />
-                <button class="btn btn-primary" (click)="saveRating($event)">
-                  Save
-                </button>
-              </form>
-            </div>
-            <ng-template #loading>
-              <button class="btn btn-primary" [routerLink]="['/auth/login']">
-                You need to login to rate this product
-              </button>
+            <ng-template #t let-fill="fill">
+              <span class="star" [class.full]="fill === 100">
+                <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+              </span>
             </ng-template>
+
             <ngb-rating
-              [max]="5"
-              [rate]="itemPoint"
-              formControlName="rating"
-              [readonly]="true"
+              [(rate)]="rating"
               [starTemplate]="t"
-            >
-              <ng-template #t let-fill="fill" let-index="index">
-                <span class="star" [class.filled]="fill === 100">
-                  <span class="half" [style.width.%]="fill"> &#9733;</span>
-                  &#9733;
-                </span>
-              </ng-template>
-            </ngb-rating>
-            <br />
-            <pre>Rate: <b>{{itemPoint}}</b></pre>
-            <br />
+              [readonly]="true"
+              [max]="5"
+            ></ngb-rating>
+            <hr />
+            <pre>Average <b>{{rating}}</b></pre>
 
             <!-- <div class="border-product">
                             <h6 class="product-title">share it</h6>
@@ -158,9 +127,6 @@
                         <div class="border-product rtl-right-text">
                             <app-countdown [date]="'Apr 21 2021'"></app-countdown>
                         </div> -->
-            <h3>
-              {{ product?.price | currency: "VND":"symbol":"1.0-0":"fr" }}
-            </h3>
           </div>
           <div class="addeffect-section product-description border-product">
             <h3>Description</h3>

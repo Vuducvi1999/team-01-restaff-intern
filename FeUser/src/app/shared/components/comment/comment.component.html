@@ -1,16 +1,46 @@
-<form [formGroup]="commentForm" (ngSubmit)="Submit()">
-  <div class="row pt-3">
-    <div class="form-group col-md-12">
-      <label> Write Your Review</label>
-      <textarea
-        class="form-control"
-        rows="4"
-        formControlName="content"
-        placeholder="Leave your review"
-      ></textarea>
+<div class="container">
+  <form [formGroup]="commentForm" (ngSubmit)="Submit()">
+    <div class="row pt-3">
+      <div class="form-group col-md-12">
+        <label> Write Your Review</label>
+        <textarea
+          class="form-control"
+          rows="4"
+          formControlName="content"
+          placeholder="Leave your review"
+        ></textarea>
+      </div>
+      <div class="form-group col-md-12">
+        <ngb-rating [max]="5" [rate]="3" formControlName="rating">
+          <!-- "item ? item.rating : 0" -->
+          <ng-template let-fill="fill" let-index="index">
+            <span class="star" [class.filled]="fill === 100">&#9733;</span>
+          </ng-template>
+        </ngb-rating>
+        <br />
+        <!-- <pre>Rate: <b>{{ratingForm.controls?.rating.value}}</b></pre> -->
+        <br />
+        <!-- <ngb-rating
+                [max]="5"
+                [rate]="itemPoint"
+                formControlName="rating"
+                [readonly]="true"
+                [starTemplate]="t"
+              >
+                <ng-template #t let-fill="fill" let-index="index">
+                  <span class="star" [class.filled]="fill === 100">
+                    <span class="half" [style.width.%]="fill"> &#9733;</span>
+                    &#9733;
+                  </span>
+                </ng-template>
+              </ngb-rating>
+              <br />
+              <pre>Rate: <b>{{itemPoint}}</b></pre>
+              <br /> -->
+      </div>
+      <div class="col-md-12">
+        <button class="btn btn-solid" type="submit">Send</button>
+      </div>
     </div>
-    <div class="col-md-12">
-      <button class="btn btn-solid" type="submit">Send</button>
-    </div>
-  </div>
-</form>
+  </form>
+</div>
