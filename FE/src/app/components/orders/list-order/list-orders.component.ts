@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CheckboxControlValueAccessor } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { OrderDetailModel, OrderModel } from 'src/app/lib/data/models/orders/order.model';
@@ -31,11 +32,11 @@ export class ListOrdersComponent implements OnInit {
       delete: false,
     },
     columns: {
-      fullName: {
-        title: 'Full Name',
-      },
       code: {
         title: 'Code',
+      },
+      fullName: {
+        title: 'Full Name',
       },
       address: {
         title: 'Address',
@@ -48,26 +49,24 @@ export class ListOrdersComponent implements OnInit {
       },
       status: {
         title: 'Status',
+        filter:{
+          type:'list',
+          config: {
+            list: [
+              { value: 'New', title: 'New' },
+              { value: 'Approved', title: 'Approved' },
+              { value: 'Rejected', title: 'Rejected' },
+            ],
+          },
+          sort:'true',
+        },
       },
       note: {
         title: 'Note',
       },
-      couponId:{
-        title:'Coupon ID'
+      hasCoupon:{
+        title:'Coupon Applied'
       },
-      couponName:{
-        title:'Coupon Name'
-      },
-      couponCode:{
-        title:'Coupon Code'
-      },
-      couponPercent:{
-        title:'Coupon Percent'
-      },
-      couponValue:{
-        title:'Coupon value'
-      }
-      ,
       totalItem: {
         title: 'Total Item',
       },
@@ -89,12 +88,17 @@ export class ListOrdersComponent implements OnInit {
     this.ordersService.get(null).then((res: ReturnMessage<PageModel<OrderModel>>) => {
       if (!res.hasError) {
         this.orders = res.data.results;
-        // console.log(this.orders)
+        this.orders.forEach(order=>{
+          order.hasCoupon=false;
+          if(order.couponCode){
+            order.hasCoupon =true;
+          }
+        })
       }
     }).catch((er) => {
 
       if (er.error.hasError) {
-        // console.log(er.error.message)
+        console.log(er.error.message)
       }
     });
 
