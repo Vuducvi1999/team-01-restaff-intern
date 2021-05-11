@@ -168,9 +168,4 @@ export class ListInformationWebsiteComponent implements OnInit {
 
     this.inforWebForm.controls.logo.setValue(this.fileURL.toString());
   }
-
-  get getImage() {
-    return FileService.getLinkFile(this.infoWeb.logo);
-  }
-
 }

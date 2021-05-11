@@ -114,8 +114,6 @@ namespace Service.Blogs
             return result;
         }
 
-
-
         private void TrimData(Blog blog)
         {
             blog.Title = blog.Title.Trim();

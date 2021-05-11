@@ -99,8 +99,4 @@ export class SidebarComponent implements OnInit {
       this.url = reader.result;
     }
   }
-
-  get getImage() {
-    return FileService.getLinkFile(this.userInfo.imageUrl);
-  }
 }

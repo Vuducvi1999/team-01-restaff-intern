@@ -35,7 +35,7 @@ export class UploadFileComponent implements OnInit {
       this.files = [];
       this.fileURL.forEach((res) => {
         if(res == null) return;
-        this.converUrltoFile(FileService.getLinkFile(res.toString())).then(
+        this.converUrltoFile(res.toString()).then(
           (res) => {
             this.files.push(res);
           }
@@ -127,9 +127,9 @@ export class UploadFileComponent implements OnInit {
     this.onChange.emit({ add: add, remove: remove, removeAll: removeAll });
   }
 
-  getImage(imageUrl: string) {
-    return FileService.getLinkFile(imageUrl);
-  }
+  // getImage(imageUrl: string) {
+  //   return FileService.getLinkFile(imageUrl);
+  // }
 
   onSelect(event) {
     if (!this.data.multiBoolen) {

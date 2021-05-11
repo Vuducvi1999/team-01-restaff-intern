@@ -98,5 +98,10 @@ namespace Common.Constants
 
         public const string BasePromotionDetail = BaseApi + "/promotion-detail";
 
+
+
+        //Rating
+        public const string BaseRating = BaseApi + "/rating";
+        public const string RatingPoint = BaseRating + "/point";
     }
 }

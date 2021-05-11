@@ -73,8 +73,9 @@ export class MenuComponent implements OnInit {
       { title: "products", type: "link", path: "/product" },
       {
         title: "blogs",
-        type: "sub",
+        type: "link",
         path: "/blog",
+        active: false,
         children: this.blogsChildren,
       }
     );

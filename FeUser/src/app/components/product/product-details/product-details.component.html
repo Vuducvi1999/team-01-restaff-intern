@@ -72,43 +72,131 @@
               <h3>
                 {{ product?.price | currency: "VND":"symbol":"1.0-0":"fr" }}
               </h3>
+              <h3>Price: {{ product?.price }}</h3>
             </div>
-            <div class="addeffect-section product-description border-product">
-              <h3>Description</h3>
-              <div [innerHTML]="product?.contentHTML"></div>
+            <br />
+            <div *ngIf="token != null; else loading">
+              <form [formGroup]="ratingForm">
+                <ngb-rating
+                  [max]="5"
+                  [rate]="item ? item.rating : 0"
+                  formControlName="rating"
+                >
+                  <ng-template let-fill="fill" let-index="index">
+                    <span class="star" [class.filled]="fill === 100"
+                      >&#9733;</span
+                    >
+                  </ng-template>
+                </ngb-rating>
+                <br />
+                <pre>Rate: <b>{{ratingForm.controls?.rating.value}}</b></pre>
+                <br />
+                <button class="btn btn-primary" (click)="saveRating($event)">
+                  Save
+                </button>
+              </form>
             </div>
+            <ng-template #loading>
+              <button class="btn btn-primary" [routerLink]="['/auth/login']">
+                You need to login to rate this product
+              </button>
+            </ng-template>
+            <ngb-rating
+              [max]="5"
+              [rate]="itemPoint"
+              formControlName="rating"
+              [readonly]="true"
+              [starTemplate]="t"
+            >
+              <ng-template #t let-fill="fill" let-index="index">
+                <span class="star" [class.filled]="fill === 100">
+                  <span class="half" [style.width.%]="fill"> &#9733;</span>
+                  &#9733;
+                </span>
+              </ng-template>
+            </ngb-rating>
+            <br />
+            <pre>Rate: <b>{{itemPoint}}</b></pre>
+            <br />
+
+            <!-- <div class="border-product">
+                            <h6 class="product-title">share it</h6>
+                            <div class="product-icon">
+                                <ul class="product-social">
+                                    <li><a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="https://plus.google.com/discover"><i class="fa fa-google-plus"></i></a></li>
+                                    <li><a href="https://twitter.com/"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a></li>
+                                </ul>
+                                <form class="d-inline-block">
+                                    <button class="wishlist-btn" (click)="addToWishlist(product)"><i class="fa fa-heart"></i><span class="title-font">Add To WishList</span></button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="border-product">
+                            <h6 class="product-title">100% SECURE PAYMENT</h6>
+                            <div class="payment-card-bottom">
+                                <ul>
+                                    <li>
+                                        <a href="javascript:void(0)"><img src="assets/images/icon/visa.png" alt=""></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"><img src="assets/images/icon/mastercard.png" alt=""></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"><img src="assets/images/icon/paypal.png" alt=""></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"><img src="assets/images/icon/american-express.png" alt=""></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"><img src="assets/images/icon/discover.png" alt=""></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="border-product rtl-right-text">
+                            <app-countdown [date]="'Apr 21 2021'"></app-countdown>
+                        </div> -->
+            <h3>
+              {{ product?.price | currency: "VND":"symbol":"1.0-0":"fr" }}
+            </h3>
+          </div>
+          <div class="addeffect-section product-description border-product">
+            <h3>Description</h3>
+            <div [innerHTML]="product?.contentHTML"></div>
           </div>
         </div>
-        <div class="col-lg-4"></div>
       </div>
-      <section class="tab-product m-0">
-        <div class="row">
-          <div class="col-sm-12 col-lg-12">
-            <ngb-tabset [type]="'tabs'" class="nav-material">
-              <ngb-tab>
-                <ng-template ngbTabTitle>Comments</ng-template>
-                <ng-template ngbTabContent>
-                  <app-comment-detail
-                    *ngIf="comments"
-                    (action)="changePageIndex($event)"
-                    [comments]="comments"
-                  ></app-comment-detail>
-                </ng-template>
-              </ngb-tab>
-              <ngb-tab *ngIf="user">
-                <ng-template ngbTabTitle>Write Review</ng-template>
-                <ng-template ngbTabContent>
-                  <app-comment
-                    [dataComment]="dataComment"
-                    (action)="getComments()"
-                  ></app-comment>
-                </ng-template>
-              </ngb-tab>
-            </ngb-tabset>
-          </div>
-        </div>
-      </section>
+      <div class="col-lg-4"></div>
     </div>
+    <section class="tab-product m-0">
+      <div class="row">
+        <div class="col-sm-12 col-lg-12">
+          <ngb-tabset [type]="'tabs'" class="nav-material">
+            <ngb-tab>
+              <ng-template ngbTabTitle>Comments</ng-template>
+              <ng-template ngbTabContent>
+                <app-comment-detail
+                  *ngIf="comments"
+                  (action)="changePageIndex($event)"
+                  [comments]="comments"
+                ></app-comment-detail>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab *ngIf="user">
+              <ng-template ngbTabTitle>Write Review</ng-template>
+              <ng-template ngbTabContent>
+                <app-comment
+                  [dataComment]="dataComment"
+                  (action)="getComments()"
+                ></app-comment>
+              </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
+        </div>
+      </div>
+    </section>
   </div>
 </section>
 <app-size-modal #sizeChart [product]="product"></app-size-modal>
