@@ -4,9 +4,12 @@ import { Pipe, PipeTransform } from "@angular/core";
 @Pipe({ name: 'vndFormat' })
 export class VndFormatPipe implements PipeTransform {
     transform(value: number) {
-        return value === null || value === undefined ? '' : value.toLocaleString('vi-VN', {
+        return value === null || value === undefined || !this.isNumeric(value) ? '' : value.toLocaleString('vi-VN', {
             style: 'currency',
             currency: 'VND'
         })
     }
+    isNumeric(n) {
+        return !isNaN(parseFloat(n)) && isFinite ( n );
+      }
 }

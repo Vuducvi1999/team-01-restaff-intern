@@ -110,7 +110,7 @@
       </p>
       <h4>
         {{
-          formatCurrency()
+          product?.price | vndFormat
         }}
         <!-- <del *ngIf="product?.discount"><span class="money"> {{ product?.price * currency?.price | currency:currency?.currency:'symbol' }}</span></del> -->
       </h4>
