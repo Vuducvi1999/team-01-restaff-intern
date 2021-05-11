@@ -24,6 +24,8 @@ namespace Domain.DTOs.Products
         public decimal Price { get; set; }
         public Guid CategoryId { get; set; }
         public string CategoryName { get; set; }
+        public int SaleCount { get; set; }
+
         public List<FileDTO> Files { get; set; }
     }
 }

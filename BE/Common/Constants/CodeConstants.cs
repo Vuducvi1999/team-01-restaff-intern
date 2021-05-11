@@ -6,7 +6,7 @@ namespace Common.Constants
 {
     public struct CodeConstants
     {
-        public const string Code = "ORD- ";
+        public const string Code = "ORD-";
 
     }
 }
