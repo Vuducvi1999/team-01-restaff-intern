@@ -16,6 +16,9 @@ export class OrdersService {
   getDetails(request: any) {
     return this.httpClient.getObservable(this.url+'-detail', request).toPromise();
   }
+  getByStatus(request:any,status:string){
+    return this.httpClient.getObservable(this.url+'/by-status?status='+status, request).toPromise();
+  }
 
   create(model:OrderModel) {
     return this.httpClient.postObservable(this.url, model).toPromise();
@@ -29,11 +32,5 @@ export class OrdersService {
     const url = `${this.url}?id=${model?.id}`;
     return this.httpClient.deleteObservable(url).toPromise();
   }
-//   save(model: OrderModel) {
-//     if (model.id) {
-//       return this.update(model);
-//     }
-//     return this.create(model);
-//   }
 }
 

@@ -13,6 +13,8 @@ namespace Service.Orders
     {
         ReturnMessage<PaginatedList<OrderDTO>> SearchPagination(SerachPaginationDTO<OrderDTO> search);
         ReturnMessage<OrderDTO> GetById(Guid Id);
+        ReturnMessage<List<OrderDTO>> GetByStatus(string status);
+
 
     }
 }
