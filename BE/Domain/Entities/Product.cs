@@ -20,6 +20,7 @@ namespace Domain.Entities
         public bool HasDisplayHomePage { get; set; }
 
         public int DisplayOrder { get; set; }
+        public int SaleCount { get; set; }
 
         public Guid CategoryId { get; set; }
         public virtual Category Category { get; set; }

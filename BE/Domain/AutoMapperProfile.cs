@@ -101,6 +101,7 @@ namespace Domain
 
             CreateMap<CreateProductDTO, Product>().ReverseMap();
             CreateMap<UpdateProductDTO, Product>().ReverseMap();
+            CreateMap<UpdateProductDTO, ProductDTO>().ReverseMap();
             CreateMap<IQueryable<ProductDTO>, PaginatedList<Product>>().ReverseMap();
             CreateMap<Product, ProductDTOFeUser>().ReverseMap();
 
