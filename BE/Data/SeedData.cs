@@ -55,6 +55,8 @@ namespace Data
                         Logo = CommonConstants.Logo,
                         Phone = CommonConstants.Phone,
                         CreateByDate = DateTime.Now,
+                        Title = CommonConstants.Title,
+                        Description = CommonConstants.Description,
                         IsActive = true,
                         ObjectState = Infrastructure.EntityFramework.ObjectState.Added
                     });

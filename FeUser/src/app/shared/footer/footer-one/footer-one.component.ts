@@ -21,7 +21,7 @@ export class FooterOneComponent implements OnInit {
   public footerModel: FooterModel = {
     socialMedias: [],
     categories: [],
-    informationWeb: {address: '', phone: '', email: '', fax: '', logo: ''}  
+    informationWeb: {address: '', phone: '', email: '', fax: '', logo: '', title: '', description: ''}  
   }
   public socialMediasIcons: any[] = [];
   pageContents: PageContentModel[] = [];
