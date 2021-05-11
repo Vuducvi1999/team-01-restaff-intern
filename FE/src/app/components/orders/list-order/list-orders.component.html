@@ -5,9 +5,17 @@
       <h5>Order Details</h5>
     </div>
     <div class="card-body vendor-table">
+      <h6><strong>Order Status</strong></h6>
+      <div class="btn-group">
+        <button type="button" (click)="statusFilter('New')" class="btn btn-info btn-xs mr-2 ">New</button>
+        <button type="button" (click)="statusFilter('Approved')"class="btn btn-info btn-xs mr-2">Approved</button>
+        <button type="button" (click)="statusFilter('Rejected')" class="btn btn-info btn-xs mr-2">Rejected</button>
+      </div>
+    </div>
+    <div class="card-body vendor-table">
       <div id="batchDelete" class="custom-datatable media-datatable">
         <div class="table-responsive">
-          <ng2-smart-table [settings]="settings" [(source)]="orders" (edit)="openUpdate($event)" >
+          <ng2-smart-table [settings]="settings" [(source)]="orders" (edit)="openUpdate($event)">
           </ng2-smart-table>
         </div>
       </div>

@@ -31,6 +31,14 @@ namespace BE.Controllers
             var result = _orderService.SearchPagination(serachPagination);
             return CommonResponse(result);
         }
+        [HttpGet]
+        [Route("by-status")]
+
+        public IActionResult GetByStatus([FromQuery] string status)
+        {
+            var result = _orderService.GetByStatus(status);
+            return CommonResponse(result);
+        }
 
 
         [HttpGet]
@@ -46,15 +54,6 @@ namespace BE.Controllers
         public IActionResult Create([FromBody] CreateOrderDTO model)
         {
             var result = _orderService.Create(model);
-            //if (model.Files.IsNullOrEmpty() || result.HasError)
-            //{
-            //    return CommonResponse(result);
-            //}
-            //var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
-            //if (uploadImage.HasError)
-            //{
-            //    return CommonResponse(uploadImage);
-            //}
             return CommonResponse(result);
         }
 
@@ -62,15 +61,6 @@ namespace BE.Controllers
         public IActionResult Update([FromBody] UpdateOrderDTO model)
         {
             var result = _orderService.Update(model);
-            //if (model.Files.IsNullOrEmpty() || result.HasError)
-            //{
-            //    return CommonResponse(result);
-            //}
-            //var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
-            //if (uploadImage.HasError)
-            //{
-            //    return CommonResponse(uploadImage);
-            //}
             return CommonResponse(result);
         }
 

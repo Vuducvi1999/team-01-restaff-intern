@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ProductModel } from 'src/app/lib/data/models';
 import { CartModel } from 'src/app/lib/data/models/cart/cart.model';
 import { FileService } from 'src/app/lib/data/services';
@@ -13,7 +13,6 @@ registerLocaleData(localeFr, 'fr');
   providers: [CartService]
 })
 export class CartComponent implements OnInit, OnChanges {
-  // public cartItems = JSON.parse(localStorage.getItem("cartItems"));
   public products: ProductModel[] = [];
   public cart: CartModel;
   constructor(public cartService: CartService) {
