@@ -26,7 +26,7 @@
               >
               <h4>
                 {{
-                  product?.price | currency:'VND'
+                  product?.price * productService.Currency?.price | currency: productService.Currency?.currency:"symbol":undefined:"fr"
                 }}
                 <!-- <del *ngIf="product?.discount">
                   <span class="money">

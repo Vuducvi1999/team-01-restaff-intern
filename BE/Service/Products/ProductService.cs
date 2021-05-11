@@ -103,7 +103,7 @@ namespace Service.Products
             {
                 return new ReturnMessage<PaginatedList<ProductDTO>>(false, null, MessageConstants.Error);
             }
-            var resultEntity = _productRepository.GetPaginatedList(it => search.Search == null ||
+            var resultEntity = _productRepository.GetPaginatedList(it => (search.Search == null ||
                 (
                     (
                         (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
@@ -111,7 +111,7 @@ namespace Service.Products
                         it.Description.Contains(search.Search.Description)
 
                     )
-                )
+                )) && !it.IsDeleted
                 , search.PageSize
                 , search.PageIndex * search.PageSize
                 , t => t.Name
@@ -119,7 +119,6 @@ namespace Service.Products
             );
 
             var data = _mapper.Map<PaginatedList<Product>, PaginatedList<ProductDTO>>(resultEntity);
-            data.Results.Where(r => r.IsDeleted == false);
             var result = new ReturnMessage<PaginatedList<ProductDTO>>(false, data, MessageConstants.ListSuccess);
 
             return result;

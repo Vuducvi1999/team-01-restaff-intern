@@ -30,13 +30,14 @@ import localeFr from "@angular/common/locales/fr";
 import { ThrowStmt } from "@angular/compiler";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { FileService } from "src/app/lib/data/services/files/file.service";
+import { ProductService } from "src/app/lib/data/services/products/product.service";
 registerLocaleData(localeFr, "fr");
 
 @Component({
   selector: "app-product-box",
   templateUrl: "./product-box.component.html",
   styleUrls: ["./product-box.component.scss"],
-  providers: [CartService, CustomerWishListService],
+  providers: [CartService, CustomerWishListService, ProductService],
 })
 export class ProductBoxComponent implements OnInit, OnChanges {
   @Input() product: ProductModel;
@@ -58,7 +59,8 @@ export class ProductBoxComponent implements OnInit, OnChanges {
 
   constructor(
     private cartService: CartService,
-    private wishListService: CustomerWishListService
+    private wishListService: CustomerWishListService,
+    public productService: ProductService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     this.updateTypeGridLayout();
@@ -162,5 +164,11 @@ export class ProductBoxComponent implements OnInit, OnChanges {
 
   getImage(fileName: string) {
     return FileService.getLinkFile(fileName);
+  }
+  formatCurrency(){
+      return this.product?.price.toLocaleString('vi-VN', {
+        style: 'currency',
+        currency: 'VND'
+    });
   }
 }

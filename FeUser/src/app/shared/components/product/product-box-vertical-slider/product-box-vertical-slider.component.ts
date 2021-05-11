@@ -8,11 +8,15 @@ import {
 import { FileService, ProductListService } from "src/app/lib/data/services";
 import { ETypeSizeImage } from "src/app/shared/data";
 
+import { registerLocaleData } from "@angular/common";
+import localeFr from "@angular/common/locales/fr";
+import { ProductService } from "src/app/lib/data/services/products/product.service";
+registerLocaleData(localeFr, "fr");
 @Component({
   selector: "app-product-box-vertical-slider",
   templateUrl: "./product-box-vertical-slider.component.html",
   styleUrls: ["./product-box-vertical-slider.component.scss"],
-  providers: [ProductListService],
+  providers: [ProductListService, ProductService],
 })
 export class ProductBoxVerticalSliderComponent implements OnInit {
   @Input() title: string = "New Product"; // Default
@@ -24,7 +28,8 @@ export class ProductBoxVerticalSliderComponent implements OnInit {
 
   public NewProductSliderConfig: any = NewProductSlider;
 
-  constructor(public productListService: ProductListService) {
+  constructor(public productListService: ProductListService,
+    public productService: ProductService) {
     this.callData();
   }
 

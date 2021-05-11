@@ -9,6 +9,9 @@ using Infrastructure.Extensions;
 using System;
 using System.Linq;
 using Common.StringEx;
+using System.Collections;
+using System.Collections.Generic;
+
 namespace Service.Categories
 {
     public class CategoryService : ICategoryService
@@ -89,25 +92,24 @@ namespace Service.Categories
         {
             if (search == null)
             {
-                return new ReturnMessage<PaginatedList<CategoryDTO>>(false, null, MessageConstants.DeleteSuccess);
+                return new ReturnMessage<PaginatedList<CategoryDTO>>(false, null, MessageConstants.Error);
             }
 
-            var resultEntity = _categoryRepository.GetPaginatedList(it => search.Search == null ||
+            var resultEntity = _categoryRepository.GetPaginatedList(it => (search.Search == null ||
                 (
                     (
                         (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
                         it.Name.Contains(search.Search.Name) ||
                         it.Description.Contains(search.Search.Description)
                     )
-                )
+                  
+                )) && !it.IsDeleted
                 , search.PageSize
                 , search.PageIndex * search.PageSize
-                , t => t.Name
+                , t => t.Name 
             );
-            resultEntity.Results.Where(r => r.ObjectState == ObjectState.Added);
             var data = _mapper.Map<PaginatedList<Category>, PaginatedList<CategoryDTO>>(resultEntity);
-            
-            var result = new ReturnMessage<PaginatedList<CategoryDTO>>(false, data, MessageConstants.UpdateSuccess);
+            var result = new ReturnMessage<PaginatedList<CategoryDTO>>(false, data, MessageConstants.ListSuccess);
 
             return result;
         }
@@ -133,7 +135,7 @@ namespace Service.Categories
                     entity.Update(model);
                     _categoryRepository.Update(entity);
                     _unitOfWork.SaveChanges();
-                    var result = new ReturnMessage<CategoryDTO>(false, _mapper.Map<Category, CategoryDTO>(entity), MessageConstants.DeleteSuccess);
+                    var result = new ReturnMessage<CategoryDTO>(false, _mapper.Map<Category, CategoryDTO>(entity), MessageConstants.UpdateSuccess);
                     return result;
                 }
                 return new ReturnMessage<CategoryDTO>(true, null, MessageConstants.Error);

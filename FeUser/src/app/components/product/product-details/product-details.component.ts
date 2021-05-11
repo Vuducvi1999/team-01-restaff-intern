@@ -26,15 +26,16 @@ import {
 } from "src/app/lib/data/models";
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
-import { TypeDisplayImage } from "src/app/shared/data";
 registerLocaleData(localeFr, 'fr');
+import { TypeDisplayImage } from "src/app/shared/data";
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
+import { ProductService } from "src/app/lib/data/services/products/product.service";
 
 @Component({
   selector: "app-product-details",
   templateUrl: "./product-details.component.html",
   styleUrls: ["./product-details.component.scss"],
-  providers: [ProductDetailsService, CommentService],
+  providers: [ProductDetailsService, CommentService, ProductService],
 })
 export class ProductDetailsComponent implements OnInit {
   public product: ProductDetailsModel;
@@ -53,9 +54,10 @@ export class ProductDetailsComponent implements OnInit {
   public ProductDetailsThumbConfig: any = ProductDetailsThumbSlider;
 
   constructor(
-    private productService: ProductDetailsService,
+    private productDetailsService: ProductDetailsService,
     private activatedRoute: ActivatedRoute,
-    private commentService: CommentService
+    private commentService: CommentService,
+    public productService: ProductService
   ) {
     this.getProduct();
   }
@@ -64,7 +66,7 @@ export class ProductDetailsComponent implements OnInit {
 
   getProduct() {
     this.activatedRoute.queryParams.subscribe((param) => {
-      this.productService
+      this.productDetailsService
         .get(param.id)
         .then((res: ReturnMessage<ProductDetailsModel>) => {
           this.product = res.data;
@@ -114,5 +116,12 @@ export class ProductDetailsComponent implements OnInit {
       .catch((e) => {
         console.log(e);
       });
+  }
+  formatCurrency(){
+    return this.product?.price.toLocaleString('vi-VN', {
+      style: 'currency',
+      currency: 'VND'
+  });
+    //return Intl.NumberFormat('en-US',{style:'currency', currency: 'VND'}).format(this.product?.price);
   }
 }

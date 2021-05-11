@@ -70,7 +70,8 @@
             </div>
             <div>
               <h3>
-                {{ product?.price | currency: "VND":"symbol":"1.0-0":"fr" }}
+                {{formatCurrency()}}
+                <!-- {{ product?.price  | currency: productService.Currency?.currency:true:undefined:"en"}} -->
               </h3>
             </div>
             <div class="addeffect-section product-description border-product">

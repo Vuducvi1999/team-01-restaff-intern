@@ -110,7 +110,7 @@
       </p>
       <h4>
         {{
-          product?.price | currency: currency?.currency:"symbol":"1.0-0":"fr"
+          formatCurrency()
         }}
         <!-- <del *ngIf="product?.discount"><span class="money"> {{ product?.price * currency?.price | currency:currency?.currency:'symbol' }}</span></del> -->
       </h4>

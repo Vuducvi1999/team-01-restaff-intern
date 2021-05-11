@@ -4,6 +4,7 @@ import { ProductModel } from "../../models/products/product.model";
 
 @Injectable()
 export class ProductService {
+  public Currency = { name: 'Vietnamese', currency: 'VND', price: 1 } // Default Currency
   private url = "/api/user/productlist";
   constructor(private httpClient: HttpClientService) {}
 
