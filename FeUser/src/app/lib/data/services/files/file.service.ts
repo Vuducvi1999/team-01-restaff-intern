@@ -18,9 +18,13 @@ export class FileService {
   constructor(private httpClient: HttpClientService) {}
 
   public static getLinkFile(fileName: String) {
+  
+    if(fileName) {
     var result = fileName.includes("http")
       ? fileName
       : `${AppConfig.settings.API_URL}/Files/${fileName}`;
     return result.toString();
+    }
+    return "";
   }
 }

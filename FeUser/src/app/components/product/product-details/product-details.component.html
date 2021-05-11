@@ -64,13 +64,13 @@
         <div class="col-lg-4">
           <div class="product-right product-description-box">
             <h2>{{ product?.name | titlecase }}</h2>
-            <div class="border-product">
-              <h4 class="product-title">product details</h4>
-              <p>{{ product?.description.substring(0, 200) + "..." }}</p>
+            <div class="addeffect-section product-description border-product">
+              <h3>Description</h3>
+              <div [innerHTML]="product?.contentHTML"></div>
             </div>
             <div>
               <h3>
-                {{ product?.price | currency: "VND":"symbol":"1.0-0":"fr" }}
+                {{product?.price | vndFormat}}
               </h3>
             </div>
             <ng-template #t let-fill="fill">

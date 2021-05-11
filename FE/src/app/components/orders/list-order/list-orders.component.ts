@@ -1,4 +1,6 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { CheckboxControlValueAccessor } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { OrderDetailModel, OrderModel } from 'src/app/lib/data/models/orders/order.model';
@@ -11,13 +13,13 @@ import { UpdateOrderComponent } from '../update-order/update-order.component';
   selector: 'app-list-orders',
   templateUrl: './list-orders.component.html',
   styleUrls: ['./list-orders.component.scss'],
-  providers: [OrdersService]
+  providers: [OrdersService, DatePipe]
 })
 export class ListOrdersComponent implements OnInit {
   public orders: OrderModel[];
+  public filter:string ="";
 
-
-  constructor(private modalService: NgbModal, private ordersService: OrdersService) {
+  constructor(private modalService: NgbModal, private ordersService: OrdersService, private datePipe: DatePipe) {
     this.getOrders();
   }
   ngOnInit() {
@@ -31,11 +33,20 @@ export class ListOrdersComponent implements OnInit {
       delete: false,
     },
     columns: {
-      fullName: {
-        title: 'Full Name',
-      },
       code: {
         title: 'Code',
+      },
+      createByDate: {
+        title: 'Created by Date',
+        valuePrepareFunction: (date) => {
+          var raw = new Date(date);
+
+          var formatted = this.datePipe.transform(raw, 'dd MMM yyyy HH:mm:ss');
+          return formatted;
+        }
+      },
+      fullName: {
+        title: 'Full Name',
       },
       address: {
         title: 'Address',
@@ -52,24 +63,8 @@ export class ListOrdersComponent implements OnInit {
       note: {
         title: 'Note',
       },
-      couponId:{
-        title:'Coupon ID'
-      },
-      couponName:{
-        title:'Coupon Name'
-      },
-      couponCode:{
-        title:'Coupon Code'
-      },
-      couponPercent:{
-        title:'Coupon Percent'
-      },
-      couponValue:{
-        title:'Coupon value'
-      }
-      ,
-      totalItem: {
-        title: 'Total Item',
+      hasCoupon: {
+        title: 'Coupon Applied'
       },
       totalAmount: {
         title: 'Total Amount',
@@ -89,12 +84,16 @@ export class ListOrdersComponent implements OnInit {
     this.ordersService.get(null).then((res: ReturnMessage<PageModel<OrderModel>>) => {
       if (!res.hasError) {
         this.orders = res.data.results;
-        // console.log(this.orders)
+        this.orders.forEach(order => {
+          order.hasCoupon = false;
+          if (order.couponCode) {
+            order.hasCoupon = true;
+          }
+        })
       }
     }).catch((er) => {
-
       if (er.error.hasError) {
-        // console.log(er.error.message)
+        console.log(er.error.message)
       }
     });
 
@@ -108,5 +107,26 @@ export class ListOrdersComponent implements OnInit {
     modalRef.result.then(() => this.getOrders());
   }
 
+  statusFilter(status: string) {
+    if(this.filter == status){
+      return this.getOrders();
+    }
+    this.filter = status;
+    this.ordersService.getByStatus(null, status)
+      .then((response) => {
+        this.orders = response.data;
+        this.orders.forEach(order => {
+          order.hasCoupon = false;
+          if (order.couponCode) {
+            order.hasCoupon = true;
+          }
+        })
+      }
+      ).catch((er) => {
 
+        if (er.error.hasError) {
+          console.log(er.error.message)
+        }
+      });
+  }
 }

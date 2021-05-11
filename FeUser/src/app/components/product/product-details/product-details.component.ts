@@ -24,10 +24,7 @@ import {
   ReturnMessage,
   SearchPaganationDTO,
 } from "src/app/lib/data/models";
-import { registerLocaleData } from "@angular/common";
-import localeFr from "@angular/common/locales/fr";
 import { TypeDisplayImage } from "src/app/shared/data";
-registerLocaleData(localeFr, "fr");
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { FormBuilder, FormGroup } from "@angular/forms";
@@ -81,7 +78,7 @@ export class ProductDetailsComponent implements OnInit {
   public rating: number;
 
   constructor(
-    private productService: ProductDetailsService,
+    private productDetailsService: ProductDetailsService,
     private activatedRoute: ActivatedRoute,
     private commentService: CommentService
   ) {}
@@ -106,7 +103,7 @@ export class ProductDetailsComponent implements OnInit {
 
   getProduct() {
     this.activatedRoute.queryParams.subscribe((param) => {
-      this.productService
+      this.productDetailsService
         .get(param.id)
         .then((res: ReturnMessage<ProductDetailsModel>) => {
           this.product = res.data;

@@ -16,7 +16,8 @@ export class OrderModel {
   couponCode?:string;
   couponPercent?:number;
   couponValue?:number;
-
+  hasCoupon?:boolean;
+  createByDate?:string;
 }
 
 export class OrderDetailModel {

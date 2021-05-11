@@ -134,10 +134,10 @@
                 <form [formGroup]="passwordForm" class="needs-validation user-add" novalidate="">
                   <h5 class="f-w-600"> Change Password</h5>
                   <div class="form-group row">
-                    <label for="" class="col-xl-3 col-md-4"><span>*</span>
+                    <label for="" class="col-xl-4 col-md-4"><span>*</span>
                       Password</label>
                     <input class="form-control col-xl-5 col-md-7" id="" type="password" formControlName="password">
-                    <div class="col-md-3 offset-md-3">
+                    <div class="col-md-3 offset-md-4">
                       <span class="text-danger"
                         *ngIf="(passwordFormControl.password.touched || submitted) && passwordFormControl.password.errors?.required">
                         This field is required
@@ -145,11 +145,11 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="validationCustom1" class="col-xl-3 col-md-4"><span>*</span>
+                    <label for="validationCustom1" class="col-xl-4 col-md-4"><span>*</span>
                       New Password</label>
                     <input class="form-control col-xl-5 col-md-7" id="validationCustom1" type="password" required=""
                       formControlName="newPassword">
-                    <div class="col-md-3 offset-md-3"> <span class="text-danger"
+                    <div class="col-md-3 offset-md-4"> <span class="text-danger"
                         *ngIf="(passwordFormControl.newPassword.touched || submitted) && passwordFormControl.newPassword.errors?.required">
                         This field is required
                       </span></div>
@@ -158,11 +158,11 @@
 
 
                   <div class="form-group row">
-                    <label for="validationCustom2" class="col-xl-3 col-md-4"><span>*</span>
+                    <label for="validationCustom2" class="col-xl-4 col-md-4"><span>*</span>
                       Confirm New Password</label>
                     <input class="form-control col-xl-5 col-md-7" id="validationCustom2" type="password" required=""
                       formControlName="confirmNewPassword">
-                    <div class="col-md-3 offset-md-3">
+                    <div class="col-md-5 offset-md-4">
                       <span class="text-danger"
                         *ngIf="(passwordFormControl.confirmNewPassword.touched || submitted) && passwordFormControl.confirmNewPassword.errors?.required">
                         This field is required

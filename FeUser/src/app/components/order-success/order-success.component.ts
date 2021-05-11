@@ -20,7 +20,8 @@ export class OrderSuccessComponent implements OnInit {
 
     this.checkOutOrders = this.route.getCurrentNavigation().extras?.state.data;
     this.checkOutOrderDetails = this.checkOutOrders.orderDetails;
-
+    console.log(this.checkOutOrderDetails)
+    console.log(this.checkOutOrders)
   }
 
 
@@ -28,7 +29,6 @@ export class OrderSuccessComponent implements OnInit {
   }
 
   loadData() {
-
   }
   getImage(fileName: string) {
     return FileService.getLinkFile(fileName);

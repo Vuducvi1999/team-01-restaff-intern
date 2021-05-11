@@ -7,6 +7,7 @@ using Domain.DTOs.Products;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,7 +104,7 @@ namespace Service.Products
             {
                 return new ReturnMessage<PaginatedList<ProductDTO>>(false, null, MessageConstants.Error);
             }
-            var resultEntity = _productRepository.GetPaginatedList(it => search.Search == null ||
+            var resultEntity = _productRepository.GetPaginatedList(it => (search.Search == null ||
                 (
                     (
                         (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
@@ -111,7 +112,7 @@ namespace Service.Products
                         it.Description.Contains(search.Search.Description)
 
                     )
-                )
+                )) && !it.IsDeleted
                 , search.PageSize
                 , search.PageIndex * search.PageSize
                 , t => t.Name
@@ -119,7 +120,6 @@ namespace Service.Products
             );
 
             var data = _mapper.Map<PaginatedList<Product>, PaginatedList<ProductDTO>>(resultEntity);
-            data.Results.Where(r => r.IsDeleted == false);
             var result = new ReturnMessage<PaginatedList<ProductDTO>>(false, data, MessageConstants.ListSuccess);
 
             return result;
@@ -130,10 +130,10 @@ namespace Service.Products
 
             model.Name = StringExtension.CleanString(model.Name);
             model.Description = StringExtension.CleanString(model.Description);
-            model.ContentHTML= StringExtension.CleanString(model.ContentHTML);
-            if(model.Name == "null" ||
+            model.ContentHTML = StringExtension.CleanString(model.ContentHTML);
+            if (model.Name == "null" ||
                model.Description == "null" ||
-               model.ContentHTML  == "null")
+               model.ContentHTML == "null")
             {
                 var entity = _mapper.Map<UpdateProductDTO, Product>(model);
                 return new ReturnMessage<ProductDTO>(true, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.Error);
@@ -162,6 +162,52 @@ namespace Service.Products
             }
         }
 
-       
+        public ReturnMessage<ProductDTO> GetById(Guid id)
+        {
+            try
+            {
+                var search = _productRepository.Queryable().AsNoTracking().FirstOrDefault(product => product.Id == id);
+                if (search.IsNotNullOrEmpty() && (search.IsDeleted == false))
+                {
+
+                    var category = _categoryRepository.Find(search.CategoryId);
+                    if (category == null)
+                    {
+                        return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
+                    }
+
+                    var result = new ReturnMessage<ProductDTO>(false, _mapper.Map<ProductDTO>(search), MessageConstants.ListSuccess);
+                    return result;
+                }
+                return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
+
+            }
+
+            catch (Exception ex)
+            {
+                return new ReturnMessage<ProductDTO>(true, null, ex.Message);
+            }
+        }
+
+        public ReturnMessage<UpdateProductDTO> UpdateCount(UpdateProductDTO product, int quantity)
+        {
+            try
+            {
+
+                product.SaleCount += quantity;
+                var entity = _mapper.Map<Product>(product);
+
+                _productRepository.Update(entity);
+                _unitOfWork.SaveChanges();
+                var result = new ReturnMessage<UpdateProductDTO>(false, product, MessageConstants.UpdateSuccess);
+                return result;
+                
+            }
+
+            catch (Exception ex)
+            {
+                return new ReturnMessage<UpdateProductDTO>(true, null, ex.Message);
+            }
+        }
     }
 }

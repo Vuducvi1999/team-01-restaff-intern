@@ -29,8 +29,7 @@ import { registerLocaleData } from "@angular/common";
 import localeFr from "@angular/common/locales/fr";
 import { ThrowStmt } from "@angular/compiler";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
-import { FileService } from "src/app/lib/data/services/files/file.service";
-registerLocaleData(localeFr, "fr");
+import { FileService } from "src/app/lib/data/services";
 
 @Component({
   selector: "app-product-box",

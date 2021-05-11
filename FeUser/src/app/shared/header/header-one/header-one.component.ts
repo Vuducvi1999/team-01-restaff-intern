@@ -18,7 +18,7 @@ export class HeaderOneComponent implements OnInit {
   typeDisplayImage = TypeDisplayImage;
 
   public headerModel: InfoHeaderModel = {
-    informationWeb: { address: "", phone: "", email: "", fax: "", logo: "" },
+    informationWeb: {address: '', phone: '', email: '', fax: '', logo: '', title: '', description: ''}
   };
   public stick: boolean = false;
   public user: UserDataReturnDTOModel;

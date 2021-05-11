@@ -4,10 +4,13 @@ using Common.Http;
 using Common.Pagination;
 using Common.StringEx;
 using Domain.DTOs.Orders;
+using Domain.DTOs.Products;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Service.Coupons;
+using Service.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +20,25 @@ namespace Service.Orders
     public class OrderService : IOrderService
     {
         private readonly IRepository<Order> _orderRepository;
+        private readonly IRepository<Coupon> _couponRepository;
+        private readonly IRepository<Product> _productRepository;
+
+        private readonly ICouponService _couponService;
+        private readonly IProductService _productService;
+
+
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public OrderService(IRepository<Order> orderRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public OrderService(IRepository<Product> productRepository, IProductService productService, ICouponService couponService, IRepository<Order> orderRepository, IUnitOfWork unitOfWork, IMapper mapper, IRepository<Coupon> couponRepository)
         {
+
             _orderRepository = orderRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _couponRepository = couponRepository;
+            _couponService = couponService;
+            _productService = productService;
+            _productRepository = productRepository;
         }
 
         public ReturnMessage<OrderDTO> Create(CreateOrderDTO model)
@@ -31,16 +46,51 @@ namespace Service.Orders
 
             try
             {
-                var entity = _mapper.Map<CreateOrderDTO, Order>(model);
-                _unitOfWork.BeginTransaction();
-                entity.Insert();
-                _orderRepository.Insert(entity);
+                var coupon = _couponRepository.Queryable().FirstOrDefault(t => t.Id == model.CouponId);
+                if ((coupon.IsNotNullOrEmpty() && _couponService.GetByCode(coupon.Code).HasError == false) || model.CouponCode == null)
+                {
+                    var invalidProducts = false;
+                    model.OrderDetails.ForEach(detail =>
+                    {
+                        var check = _productService.GetById(detail.ProductId);
+                        if (check.HasError)
+                        {
+                            invalidProducts = true;
+                        }
 
-                _unitOfWork.SaveChanges();
-                _unitOfWork.Commit();
+                        if (!check.HasError)
+                        {
+                            var data = check.Data;
+                            var dto = _mapper.Map<UpdateProductDTO>(data);
+                            var update = _productService.UpdateCount(dto, detail.Quantity);
+                            if (update.HasError)
+                            {
+                                invalidProducts = true;
+                            }
+                        }
+                    });
 
-                var result = GetById(entity.Id);
-                return result;
+                    if (invalidProducts)
+                    {
+                        return new ReturnMessage<OrderDTO>(true, null, MessageConstants.Error);
+
+                    }
+
+                    var entity = _mapper.Map<CreateOrderDTO, Order>(model);
+                    _unitOfWork.BeginTransaction();
+                    entity.Insert(coupon);
+
+                    _orderRepository.Insert(entity);
+
+                    _unitOfWork.SaveChanges();
+                    _unitOfWork.Commit();
+
+                    var result = GetById(entity.Id);
+                    return result;
+
+                }
+                return new ReturnMessage<OrderDTO>(true, null, MessageConstants.Error);
+
             }
             catch (Exception ex)
             {
@@ -115,7 +165,7 @@ namespace Service.Orders
                 var entity = _orderRepository.Find(model.Id);
                 if (entity.Status != "New")
                 {
-                    return new ReturnMessage<OrderDTO>(true, null,MessageConstants.UpdateFail);
+                    return new ReturnMessage<OrderDTO>(true, null, MessageConstants.UpdateFail);
                 }
                 if (entity.IsNotNullOrEmpty())
                 {
@@ -132,5 +182,18 @@ namespace Service.Orders
                 return new ReturnMessage<OrderDTO>(true, null, ex.Message);
             }
         }
+
+        public ReturnMessage<List<OrderDTO>> GetByStatus(string status)
+        {
+            var list = _orderRepository.Queryable().Where(t => t.Status == status).ToList();
+            if (list.IsNotNullOrEmpty())
+            {
+                var result = _mapper.Map<List<OrderDTO>>(list);
+                return new ReturnMessage<List<OrderDTO>>(false, result, MessageConstants.ListSuccess);
+            }
+            return new ReturnMessage<List<OrderDTO>>(true, null, MessageConstants.Error);
+
+        }
+
     }
 }

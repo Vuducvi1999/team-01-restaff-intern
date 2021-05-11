@@ -41,6 +41,7 @@ namespace Domain
 
             //category
             CreateMap<PaginatedList<Category>, PaginatedList<CategoryDTO>>().ReverseMap();
+            CreateMap<PaginatedList<Category>, object>().ReverseMap();
             CreateMap<Category, CategoryDTO>().ReverseMap();
             CreateMap<CreateCategoryDTO, Category>().ReverseMap();
             CreateMap<UpdateCategoryDTO, Category>().ReverseMap();
@@ -99,6 +100,7 @@ namespace Domain
 
             CreateMap<CreateProductDTO, Product>().ReverseMap();
             CreateMap<UpdateProductDTO, Product>().ReverseMap();
+            CreateMap<UpdateProductDTO, ProductDTO>().ReverseMap();
             CreateMap<IQueryable<ProductDTO>, PaginatedList<Product>>().ReverseMap();
             CreateMap<Product, ProductDTOFeUser>().ReverseMap();
 
