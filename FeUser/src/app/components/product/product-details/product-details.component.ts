@@ -29,13 +29,35 @@ import localeFr from '@angular/common/locales/fr';
 registerLocaleData(localeFr, 'fr');
 import { TypeDisplayImage } from "src/app/shared/data";
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
-import { ProductService } from "src/app/lib/data/services/products/product.service";
+import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
+import { FormBuilder, FormGroup } from "@angular/forms";
+import { RatingService } from "src/app/lib/data/services/rating/rating.service";
+import { RatingModel } from "src/app/lib/data/models/rating/rating.model";
 
 @Component({
   selector: "app-product-details",
   templateUrl: "./product-details.component.html",
   styleUrls: ["./product-details.component.scss"],
-  providers: [ProductDetailsService, CommentService, ProductService],
+  providers: [ProductDetailsService, RatingService, CommentService],
+  styles: [
+    `
+      .star {
+        position: relative;
+        display: inline-block;
+        font-size: 2rem;
+        color: #b0c4de;
+      }
+      .filled {
+        color: #1e90ff;
+      }
+      .half {
+        position: absolute;
+        display: inline-block;
+        overflow: hidden;
+        color: #1e90ff;
+      }
+    `,
+  ],
 })
 export class ProductDetailsComponent implements OnInit {
   public product: ProductDetailsModel;
@@ -53,16 +75,31 @@ export class ProductDetailsComponent implements OnInit {
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
   public ProductDetailsThumbConfig: any = ProductDetailsThumbSlider;
 
+  public currentRate: number;
+  public token: string;
+  public ratingForm: FormGroup;
+  public ratingModel: RatingModel;
+  public item: any;
+  public itemPoint: number;
+
   constructor(
     private productDetailsService: ProductDetailsService,
     private activatedRoute: ActivatedRoute,
     private commentService: CommentService,
-    public productService: ProductService
-  ) {
-    this.getProduct();
-  }
+    private ratingService: RatingService,
+    private formBuilder: FormBuilder
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.token = localStorage.getItem("token");
+    this.getProduct();
+    this.initDataComment();
+    if (this.token != null) {
+      this.loadFormItem();
+      this.getRating();
+    }
+    this.getRatingPoint();
+  }
 
   getProduct() {
     this.activatedRoute.queryParams.subscribe((param) => {
@@ -77,6 +114,29 @@ export class ProductDetailsComponent implements OnInit {
     });
   }
 
+  getRating() {
+    this.activatedRoute.queryParams.subscribe((param) => {
+      const data = { productId: param.id };
+      return this.ratingService
+        .get({ params: data })
+        .then((it: ReturnMessage<RatingModel>) => {
+          this.item = it.data;
+        });
+    });
+    this.getRatingPoint();
+  }
+
+  getRatingPoint() {
+    this.activatedRoute.queryParams.subscribe((param) => {
+      const data = { productId: param.id };
+      return this.ratingService
+        .getPoint({ params: data })
+        .then((it: ReturnMessage<number>) => {
+          this.itemPoint = it.data;
+          console.log(this.itemPoint);
+        });
+    });
+  }
   getImage(fileName: string) {
     return FileService.getLinkFile(fileName);
   }
@@ -90,6 +150,29 @@ export class ProductDetailsComponent implements OnInit {
       entityId: this.activatedRoute.snapshot.queryParamMap.get("id"),
       entityType: "Product",
     };
+  }
+
+  loadFormItem() {
+    this.ratingForm = this.formBuilder.group({
+      rating: [this.item ? this.item.rating : 1],
+    });
+  }
+
+  saveRating(event: any) {
+    this.ratingModel = {
+      rating: this.ratingForm.controls?.rating.value,
+      productId: this.product.id,
+      customerId: JSON.parse(localStorage.getItem("user")).customerId,
+      id: this.item ? this.item?.id : "",
+    };
+    this.ratingService
+      .save(this.ratingModel)
+      .then(() => {
+        this.getRating();
+      })
+      .catch((er) => {
+        console.log(er);
+      });
   }
 
   createSearchModel() {

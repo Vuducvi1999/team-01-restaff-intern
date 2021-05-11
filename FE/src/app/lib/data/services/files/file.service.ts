@@ -31,13 +31,12 @@ export class FileService {
   }
 
   public static getLinkFile(fileName: String) {
-    if(fileName.length <= 0)
-    {
-      return "";
+    if (fileName.trim()) {
+      var result = fileName.includes('http')
+        ? fileName
+        : `${AppConfig.settings.API_URL}/Files/${fileName}`;
+      return result.toString();
     }
-    var result = fileName.includes('http')
-      ? fileName
-      : `${AppConfig.settings.API_URL}/Files/${fileName}`;
-    return result.toString();
+    return '';
   }
 }

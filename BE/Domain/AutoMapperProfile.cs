@@ -25,6 +25,7 @@ using Domain.DTOs.PageContent;
 using Domain.DTOs.InfomationWeb;
 using Domain.DTOs.PageContentContact;
 using Domain.DTOs.Contact;
+using Domain.DTOs.ProductRating;
 using Domain.DTOs.Comments;
 using Domain.DTOs.CustomerWishList;
 
@@ -72,7 +73,7 @@ namespace Domain
             CreateMap<User, UserDataReturnDTO>().ReverseMap();
             CreateMap<User, UserInformationDTO>()
                 .ForMember(a => a.UserId, b => b.MapFrom(c => c.Id))
-                .ForMember(a => a.CumstomerId, b => b.MapFrom(c => c.CustomerId))
+                .ForMember(a => a.CustomerId, b => b.MapFrom(c => c.CustomerId))
                 .ForMember(a => a.Username, b => b.MapFrom(c => c.Username))
                 .ForMember(a => a.Password, b => b.MapFrom(c => c.Password))
                 .ForMember(a => a.FirstName, b => b.MapFrom(c => c.FirstName))
@@ -192,6 +193,12 @@ namespace Domain
             // CustomerWishList 
             CreateMap<CustomerWishList, CreateCustomerWishListDTO>().ReverseMap();
             CreateMap<CustomerWishList, CustomerWishListDTO>().ReverseMap();
+
+            //RatingProduct
+            CreateMap<ProductRating, ProductRatingDTO>()
+                .ReverseMap();
+            CreateMap<ProductRating, UpdateProductRatingDTO>().ReverseMap();
+            CreateMap<ProductRating, CreateProductRatingDTO>().ReverseMap();
         }
     }
 }

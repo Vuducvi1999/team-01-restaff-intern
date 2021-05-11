@@ -77,11 +77,12 @@ export class ProductBoxComponent implements OnInit, OnChanges {
   }
 
   getWishlist() {
-    const customerId = JSON.parse(localStorage.getItem("user")).id ?? "";
-
-    this.wishListService.getByCustomer(customerId).then((data) => {
-      this.testData = data.data;
-    });
+    const customer = JSON.parse(localStorage.getItem("user")) ?? "";
+    if (customer) {
+      this.wishListService.getByCustomer(customer?.id).then((data) => {
+        this.testData = data.data;
+      });
+    }
   }
 
   compareProductWishList() {
