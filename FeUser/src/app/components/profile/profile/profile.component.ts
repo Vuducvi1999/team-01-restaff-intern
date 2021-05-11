@@ -1,12 +1,13 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Subscription } from "rxjs";
 import {
   ChangePasswordProfileModel,
   ProfileModel,
   ReturnMessage,
 } from "src/app/lib/data/models";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
-import { FileService } from "src/app/lib/data/services";
+import { AuthService, FileService } from "src/app/lib/data/services";
 import { ProfileService } from "src/app/lib/data/services/profiles/profile.service";
 import {
   EntityType,
@@ -18,39 +19,49 @@ import {
   selector: "app-profile",
   templateUrl: "./profile.component.html",
   styleUrls: ["./profile.component.scss"],
-  providers: [ProfileService],
+  providers: [ProfileService, AuthService],
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   updateProfile: boolean = true;
   updatePassword: boolean = true;
   changePasswordForm: FormGroup;
   profileForm: FormGroup;
   user: UserDataReturnDTOModel;
 
+  subDataUser: Subscription;
+
   submittedProfile = false;
   submittedPassword = false;
 
-  public modalFile: ModalFile;
-  public fileURL: (String | ArrayBuffer)[];
+  // public modalFile: ModalFile;
+  // public fileURL: (String | ArrayBuffer)[];
 
   constructor(
     private formBuilder: FormBuilder,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private authService: AuthService,
   ) {
-    this.user = JSON.parse(localStorage.getItem("user"));
-    if (this.user) {
-      this.fileURL = [];
-      this.fileURL.push(this.user.imageUrl);
-    }
-    this.createChangePasswordForm();
-    this.createProfileForm();
-    this.modalFile = new ModalFile();
-    this.modalFile.typeFile = TypeFile.IMAGE;
-    this.modalFile.multiBoolen = false;
-    this.modalFile.enityType = EntityType.CUSTOMER;
+    // this.user = JSON.parse(localStorage.getItem("user"));
+    // if (this.user) {
+    //   this.fileURL = [];
+    //   this.fileURL.push(this.user.imageUrl);
+    // }
+    // this.modalFile = new ModalFile();
+    // this.modalFile.typeFile = TypeFile.IMAGE;
+    // this.modalFile.multiBoolen = false;
+    // this.modalFile.enityType = EntityType.CUSTOMER;
+  }
+  ngOnDestroy(): void {
+    this.subDataUser.unsubscribe();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subDataUser = this.authService.callUserInfo.subscribe(it => {
+      this.user = it;
+      this.createProfileForm();
+    });
+    this.createChangePasswordForm();
+  }
 
   profileSwith() {
     this.updateProfile = !this.updateProfile;
@@ -154,7 +165,7 @@ export class ProfileComponent implements OnInit {
       address: dataProfileForm.address,
       firstName: dataProfileForm.firstName,
       lastName: dataProfileForm.lastName,
-      files: this.modalFile ? this.modalFile.listFile : null,
+      files:  null,
       id: this.user.id,
       phone: dataProfileForm.phone,
     };
@@ -162,8 +173,7 @@ export class ProfileComponent implements OnInit {
     await this.profileService
       .update(data)
       .then((res: ReturnMessage<UserDataReturnDTOModel>) => {
-        this.user = res.data;
-        localStorage.setItem("user", JSON.stringify(this.user));
+        this.authService.changeUserInfo(res.data);
         alert("Update Profile Success");
         this.profileSwith();
       })

@@ -1,6 +1,7 @@
 import { ViewportScroller } from "@angular/common";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { SpinnerVisibilityService } from "ng-http-loader";
 import { Subscription } from "rxjs";
 import {
   ETypeSort,
@@ -39,18 +40,16 @@ export class ProductListComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    public productListService: ProductListService
+    public productListService: ProductListService,
   ) {
-   
   }
   ngOnDestroy(): void {
     this.subscribe.unsubscribe();
   }
 
   ngOnInit(): void {
-     // Get Query params..
-     this.subscribe = this.route.queryParams.subscribe((params) => {
-      
+    // Get Query params..
+    this.subscribe = this.route.queryParams.subscribe((params) => {
       this.products = [];
       this.params = {};
 
@@ -87,6 +86,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
       this.sortBy != ETypeSort.NULL
         ? (this.params.typeSort = this.sortBy)
         : delete this.params.typeSort;
+
+      this.params.pageSize = 24;
+      this.params.loading = true;
       this.addItems();
     });
   }

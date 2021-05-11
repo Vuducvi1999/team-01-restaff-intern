@@ -19,7 +19,7 @@
                <span class="sub-arrow"  *ngIf="menuItem.children"></span>
             </a>
             <!-- Link -->
-            <a [routerLink]="menuItem.path" *ngIf="menuItem.type === 'link'">
+            <a (click)="loadUrlNavaigate(menuItem.path)" style="cursor: pointer;" *ngIf="menuItem.type === 'link'">
                {{menuItem.title}}
                <span class="sub-arrow" *ngIf="menuItem.children"></span>
             </a>

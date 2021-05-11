@@ -1,5 +1,6 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { Subscription } from "rxjs";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import {
   CommentModel,
@@ -12,7 +13,7 @@ import {
   SearchPaganationDTO,
 } from "src/app/lib/data/models/common";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
-import { FileService } from "src/app/lib/data/services";
+import { AuthService, FileService } from "src/app/lib/data/services";
 import { BlogService } from "src/app/lib/data/services/blogs/blog.service";
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
 import { TypeDisplayImage } from "src/app/shared/data";
@@ -21,9 +22,9 @@ import { TypeDisplayImage } from "src/app/shared/data";
   selector: "app-blog-detail",
   styleUrls: ["./blog-detail.component.scss"],
   templateUrl: "./blog-detail.component.html",
-  providers: [CommentService],
+  providers: [CommentService,AuthService],
 })
-export class BlogDetailComponent implements OnInit {
+export class BlogDetailComponent implements OnInit, OnDestroy {
   id: string;
   data: BlogModel;
   dataComment: CommentPassingModel;
@@ -32,13 +33,20 @@ export class BlogDetailComponent implements OnInit {
   comments: PageModel<CommentModel>;
   searchModel: SearchPaganationDTO<SearchCommentModel>;
 
+  subDataUser: Subscription;
+
   constructor(
     private blogService: BlogService,
     private activatedRoute: ActivatedRoute,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private authService: AuthService,
   ) {}
+  ngOnDestroy(): void {
+    this.subDataUser.unsubscribe();
+  }
 
   ngOnInit() {
+    this.subDataUser = this.authService.callUserInfo.subscribe(it => this.user = it);
     this.getBlog();
   }
 
@@ -87,8 +95,6 @@ export class BlogDetailComponent implements OnInit {
   }
 
   initDataComment() {
-    this.user = JSON.parse(localStorage.getItem("user"));
-
     this.dataComment = {
       fullName: this.user ? this.user.firstName + " " + this.user.lastName : "",
       customerId: this.user ? this.user.id : "",

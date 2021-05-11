@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from "@angular/core";
+import { Component, OnInit, Input, ViewChild, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import {
   CommentModel,
@@ -10,7 +10,7 @@ import {
   UserDataReturnDTOModel,
   UserModel,
 } from "src/app/lib/data/models/users/user.model";
-import { FileService } from "src/app/lib/data/services";
+import { AuthService, FileService } from "src/app/lib/data/services";
 import { ProductDetailsService } from "src/app/lib/data/services/products/product-details.service";
 import { SizeModalComponent } from "src/app/shared/components/modal/size-modal/size-modal.component";
 import {
@@ -29,14 +29,15 @@ import localeFr from '@angular/common/locales/fr';
 import { TypeDisplayImage } from "src/app/shared/data";
 registerLocaleData(localeFr, 'fr');
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-product-details",
   templateUrl: "./product-details.component.html",
   styleUrls: ["./product-details.component.scss"],
-  providers: [ProductDetailsService, CommentService],
+  providers: [ProductDetailsService, CommentService, AuthService],
 })
-export class ProductDetailsComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit, OnDestroy {
   public product: ProductDetailsModel;
   public counter: number = 1;
   public activeSlide: any = 0;
@@ -52,15 +53,24 @@ export class ProductDetailsComponent implements OnInit {
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
   public ProductDetailsThumbConfig: any = ProductDetailsThumbSlider;
 
+  subDataUser: Subscription;
+  
   constructor(
     private productService: ProductDetailsService,
     private activatedRoute: ActivatedRoute,
-    private commentService: CommentService
-  ) {
+    private commentService: CommentService,
+    private authService: AuthService,
+    ) {
     this.getProduct();
   }
+  
+  ngOnDestroy(): void {
+    this.subDataUser.unsubscribe();
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subDataUser = this.authService.callUserInfo.subscribe(it => this.user = it);
+  }
 
   getProduct() {
     this.activatedRoute.queryParams.subscribe((param) => {
@@ -80,8 +90,6 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   initDataComment() {
-    this.user = JSON.parse(localStorage.getItem("user"));
-
     this.dataComment = {
       fullName: this.user ? this.user.firstName + " " + this.user.lastName : "",
       customerId: this.user ? this.user.id : "",

@@ -33,20 +33,13 @@ export class LoginComponent implements OnInit {
 
   owlcarousel = [
     {
-      title: 'Welcome to Multikart',
-      desc:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.",
+      title: 'Welcome to Clothing Store',
+      // desc:
+      //   "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.",
     },
     {
-      title: 'Welcome to Multikart',
-      desc:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.",
-    },
-    {
-      title: 'Welcome to Multikart',
-      desc:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.",
-    },
+      title: 'This is the management page'
+    }
   ];
   owlcarouselOptions = {
     loop: true,
@@ -83,7 +76,7 @@ export class LoginComponent implements OnInit {
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
         // alert(data.message);
         localStorage.setItem('token', data.data.token);
-        localStorage.setItem('user', JSON.stringify(data.data));
+        this.authService.changeUserInfo(data.data);
         this.backUrl();
       })
       .catch((er) => {

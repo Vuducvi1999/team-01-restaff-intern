@@ -35,7 +35,7 @@ export class UploadFileComponent implements OnInit {
       this.files = [];
       this.fileURL.forEach((res) => {
         if(res == null) return;
-        this.converUrltoFile(res.toString()).then(
+        this.converUrltoFile(FileService.getLinkFile(res.toString())).then(
           (res) => {
             this.files.push(res);
           }

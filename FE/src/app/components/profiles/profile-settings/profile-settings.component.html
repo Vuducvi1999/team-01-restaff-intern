@@ -7,8 +7,8 @@
           <div class="profile-details text-center">
             <img appUiImageLoader src="{{getImage}}"  alt=""
               class="img-fluid img-90 rounded-circle blur-up lazyloaded" width="90px" height="90px">
-            <h5 class="f-w-600 mb-0">{{userInfo.firstName}} {{userInfo.lastName}}</h5>
-            <span>{{userInfo.email}}</span>
+            <h5 class="f-w-600 mb-0">{{userInfo?.firstName}} {{userInfo?.lastName}}</h5>
+            <span>{{userInfo?.email}}</span>
             <div class="social">
               <div class="form-group btn-showcase">
                 <button class="btn social-btn btn-fb d-inline-block">
@@ -42,15 +42,15 @@
                       <tbody>
                         <tr>
                           <td>First Name:</td>
-                          <td>{{userInfo.firstName}}</td>
+                          <td>{{userInfo?.firstName}}</td>
                         </tr>
                         <tr>
                           <td>Last Name:</td>
-                          <td>{{userInfo.lastName}}</td>
+                          <td>{{userInfo?.lastName}}</td>
                         </tr>
                         <tr>
                           <td>Email:</td>
-                          <td>{{userInfo.email}}</td>
+                          <td>{{userInfo?.email}}</td>
                         </tr>
                         <tr>
                           <td>Avatar:</td>

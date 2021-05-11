@@ -1,7 +1,9 @@
 import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 import { environment } from "src/app/lib/environments/environment";
 import { HttpClientService } from "src/app/lib/http/http-client";
 import { AuthLoginModel, AuthRegistModel, ReturnMessage } from "../../models";
+import { UserDataReturnDTOModel } from "../../models/users/user.model";
 
 @Injectable({
   providedIn: "root",
@@ -27,5 +29,13 @@ export class AuthService {
   getInformationUser()
   {
     return this.http.getObservable(this.url).toPromise();
+  }
+
+  private static userInfo = new BehaviorSubject<UserDataReturnDTOModel>(null);
+  callUserInfo = AuthService.userInfo.asObservable();
+
+  changeUserInfo(userInfo : UserDataReturnDTOModel)
+  {
+    AuthService.userInfo.next(userInfo);
   }
 }

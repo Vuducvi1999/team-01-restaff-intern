@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
         // alert(data.message);
         localStorage.setItem('token', data.data.token);
-        localStorage.setItem('user', JSON.stringify(data.data));
+        this.authService.changeUserInfo(data.data);
         this.backUrl();
       })
       .catch((er) => {

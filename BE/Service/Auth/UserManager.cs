@@ -75,7 +75,7 @@ namespace Service.Auth
         {
             try
             {
-                var user = _userRepository.Queryable().Include(it => it.Customer).Where(it => it.Id == AuthorizedUserId).FirstOrDefault();
+                var user = _userRepository.Queryable().Include(it => it.Customer).Where(it => !it.IsDeleted && it.Id == AuthorizedUserId).FirstOrDefault();
                 if(user.IsNullOrEmpty())
                 {
                     return new UserInformationDTO();

@@ -25,15 +25,7 @@ export class ContentLayoutComponent implements OnInit {
   constructor(public navServices: NavService, public activedRoute: ActivatedRoute) { }
 
   public getRouterOutletState(outlet) {
-    if(!outlet.isActivated)
-    {
-      return '';
-    }
-    if(outlet.activatedRoute.snapshot.data.user)
-    {
-      this.userInfo = outlet.activatedRoute.snapshot.data.user;
-    }
-    return outlet.activatedRoute;
+    return outlet.isActivated? outlet.activatedRoute : '';
   }
 
   public rightSidebar($event) {

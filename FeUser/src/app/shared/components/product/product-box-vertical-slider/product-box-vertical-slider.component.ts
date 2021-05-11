@@ -36,7 +36,7 @@ export class ProductBoxVerticalSliderComponent implements OnInit {
 
   callData() {
     this.productListService
-      .getPageProduct({ params: { pageSize: 12 } })
+      .getPageProduct({ params: { pageSize: 12, loading: true } })
       .then((res: ReturnMessage<PageModel<ProductModel>>) => {
         while (res.data.results.length != 0) {
           this.result.push(res.data.results.splice(0, this.size));

@@ -27,12 +27,12 @@ export class PagesComponent implements OnInit {
       this.authService
         .getInformationUser()
         .then((res: ReturnMessage<UserDataReturnDTOModel>) => {
-          localStorage.setItem("user", JSON.stringify(res.data));
+          this.authService.changeUserInfo(res.data);
         })
         .catch((res) => {
           alert("Login Expires");
           localStorage.removeItem("token");
-          localStorage.removeItem("user");
+          this.authService.changeUserInfo(null);
         });
     }
   }

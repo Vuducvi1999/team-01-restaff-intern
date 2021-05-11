@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FileService } from 'src/app/lib/data/services';
+import { Subscription } from 'rxjs';
+import { AuthService, FileService } from 'src/app/lib/data/services';
 import { NavService } from '../../service/nav.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { NavService } from '../../service/nav.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   public right_sidebar: boolean = false;
   public open: boolean = false;
   public openNav: boolean = false;
@@ -19,9 +20,18 @@ export class HeaderComponent implements OnInit {
   constructor(
     public navServices: NavService,
     public router: Router,
-    private activedRoute: ActivatedRoute
+    private activedRoute: ActivatedRoute,
+    private authService: AuthService,
   ) {}
-  @Input() userInfo: any;
+  ngOnDestroy(): void {
+    if(this.entrySub)
+    {
+      this.entrySub.unsubscribe();
+      this.entrySub = null;
+    }
+  }
+  userInfo: any;
+  entrySub: Subscription;
 
   collapseSidebar() {
     this.open = !this.open;
@@ -36,7 +46,9 @@ export class HeaderComponent implements OnInit {
     this.openNav = !this.openNav;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.callUserInfo.subscribe(it => this.userInfo = it);
+  }
 
   onLogout() {
     localStorage.removeItem('token');

@@ -32,7 +32,7 @@ export class AuthGuardsAdminService {
           if (res.hasError) {
             return this.routerHelperService.redirectToLogin();
           }
-          localStorage.setItem('user', JSON.stringify(res.data));
+          this.authService.changeUserInfo(res.data);
           route.data = {
             user: res.data,
             token: token,
