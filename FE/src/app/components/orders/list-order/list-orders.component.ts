@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { OrderDetailModel, OrderModel } from 'src/app/lib/data/models/orders/order.model';
 import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
+import { CustomViewCellNumberComponent } from 'src/app/shared/components/custom-view-cell-number/custom-view-cell-number.component';
 import { UpdateOrderComponent } from '../update-order/update-order.component';
 
 
@@ -72,14 +73,16 @@ export class ListOrdersComponent implements OnInit {
       },
       totalAmount: {
         title: 'Total Amount',
-        type: 'text',
-        valuePrepareFunction: (row) => {
-          var price = (row).toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'VND',
-          });
-          return `${price}`;
-        }
+        value:'totalAmount',
+        type: 'custom',
+        // valuePrepareFunction: (row) => {
+        //   var price = (row).toLocaleString('en-US', {
+        //     style: 'currency',
+        //     currency: 'VND',
+        //   });
+        //   return `${price}`;
+        // }
+        renderComponent: CustomViewCellNumberComponent
       },
     }
   };

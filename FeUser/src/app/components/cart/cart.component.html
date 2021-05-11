@@ -52,7 +52,7 @@
                 </div>
               </td>
               <td>
-                <h2>{{ product?.price * productService.Currency?.price | currency: "VND":"symbol":"1.0-0":"fr" }}</h2>
+                <h2>{{ product?.price  | vndFormat }}</h2>
               </td>
               <td>
                 <div class="qty-box">
@@ -101,7 +101,7 @@
               </td>
               <td>
                 <h2 class="td-color">
-                  {{ product.quantity * product.price | currency: "VND" }}
+                  {{ product.quantity * product.price | vndFormat }}
                 </h2>
               </td>
             </tr>
@@ -112,7 +112,7 @@
             <tr>
               <td>total price :</td>
               <td>
-                <h2>{{ cart.totalAmount | currency: "VND" }}</h2>
+                <h2>{{ cart.totalAmount | vndFormat }}</h2>
               </td>
             </tr>
           </tfoot>

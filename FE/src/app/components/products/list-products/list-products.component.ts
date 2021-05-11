@@ -4,6 +4,8 @@ import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { ProductModel } from 'src/app/lib/data/models/products/product.model';
 import { FileService } from 'src/app/lib/data/services';
 import { ProductService } from 'src/app/lib/data/services/products/product.service';
+import { CustomViewCellNumberComponent } from 'src/app/shared/components/custom-view-cell-number/custom-view-cell-number.component';
+import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 @Component({
   selector: 'app-list-products',
@@ -54,22 +56,20 @@ export class ListProductsComponent implements OnInit {
       description: {
         title: 'Description',
       },
-      contentHTML: {
-        title: 'Content HTML',
-      },
       price: {
-        title: 'Price',
-        valuePrepareFunction: (value) =>
-         { return value === 'null'? value : Intl.NumberFormat('vi-VN',{style:'currency', currency: 'VND'}).format(value)}
+        value:'price',
+        type: 'custom',
+        title:'Price',
+        renderComponent: CustomViewCellNumberComponent
       },
       categoryName: {
         title: 'Category Name',
       },
       displayOrder: {
         title: 'Display Order',
-      },
-      hasDisplayHomePage: {
-        title: 'Display Home Page',
+        type:'custom',
+        value:'displayOrder',
+        renderComponent: CustomViewCellComponent
       },
       isImportant: {
         title: 'Is Important',
