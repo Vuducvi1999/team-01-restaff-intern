@@ -7,7 +7,7 @@
         public const string DeleteSuccess = "Delete successfully";
         public const string SearchSuccess = "Search successfully";
         public const string GetSuccess = "Get successfully";
-
+        public const string DataError = "Don't find Data";
 
         public const string ListSuccess = "List successfully";
         public const string Error = "Error server";

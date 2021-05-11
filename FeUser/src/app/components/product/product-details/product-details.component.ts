@@ -95,14 +95,15 @@ export class ProductDetailsComponent implements OnInit {
 
   getRating() {
     this.activatedRoute.queryParams.subscribe((params) => {
-      console.log(params.id);
+      const data = { entityId: params.id };
       this.commentService
-        .getRating(params.id)
+        .getRating({ params: data })
         .then((res: ReturnMessage<number>) => {
           this.rating = res.data;
         });
     });
   }
+
   getProduct() {
     this.activatedRoute.queryParams.subscribe((param) => {
       this.productService

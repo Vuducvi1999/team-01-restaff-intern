@@ -64,7 +64,7 @@ export class CommentService {
     return this.httpClient.putObservable(this.url, model).toPromise();
   }
 
-  getRating(entityId: string) {
+  getRating(entityId: any) {
     const urlRating = "/rating";
     return this.httpClient
       .getObservable(this.url + urlRating, entityId)
