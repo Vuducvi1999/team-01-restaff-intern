@@ -83,31 +83,43 @@
                         currency:'VND'}}
                       </span></li>
                   </ul>
-                  <ul class="sub-total">
-                    <li>Subtotal <span class="count">{{cart.totalAmount | currency:'VND'}}</span></li>
-                    <li>Coupon <span class="count">-{{couponValue | currency:'VND'}} <br><br> {{couponPercent}}</span>
+                  <ul class="qty sub-total">
+                    <li>Subtotal <span class="count text-body">{{cart.totalAmount | currency:'VND'}}</span></li>
+                  </ul>
+                  <ul class="qty sub-total" *ngIf="couponDisplay">
+                    <li>Coupon
+                      <span>-{{couponValue |
+                        currency:'VND'}} <br><br> {{couponPercent}}</span>
+                      <br>
+                      ({{couponName}})
+                    </li>
+                    <li>
                     </li>
                   </ul>
+
                   <ul class="total">
-                    <li>Total <span class="count">{{cart.totalAmount - couponValue | currency:'VND'}}</span></li>
+                    <li>Total <span class="count text-success">{{cart.totalAmount - couponValue |
+                        currency:'VND'}}</span></li>
                   </ul>
                 </div>
                 <div class="payment-box">
                   <div class="row">
                     <div class="col-lg-12 col-sm-6 col-xs-12">
                       <div class="row">
-                        <div class="col-lg-8 col-sm-12 col-xs-12">
+                        <div class="col-lg-7 col-sm-12 col-xs-12">
                           <input placeholder="Coupon Code" type="text" id="couponCode" name="couponCode"
-                            #couponCode="ngModel" [(ngModel)]="order.couponCode">
+                            #ctrl="ngModel" [(ngModel)]="couponCode">
                           <div *ngIf="couponInvalid">
-                            <span class="text-danger">APPLY COUPON FAILED</span>
+                            <span class="text-danger"><strong>APPLY COUPON FAILED</strong></span>
                           </div>
                         </div>
-                        <div class="col-lg-4 col-sm-12 col-xs-12">
-                          <div class="text-left">
-                            <button type="button" (click)="applyCoupon()" class="btn-solid btn">Apply</button>
-                          </div>
 
+                        <div class="col-lg-5 col-sm-12 col-xs-12">
+                          <div class="btn-group">
+                            <button type="button" (click)="applyCoupon()" class="btn-solid btn btn-sm">Apply</button>
+                            <button type="button" (click)="removeCoupon()"
+                              class="ml-1 btn-solid btn btn-sm">Remove</button>
+                          </div>
                         </div>
                       </div>
                     </div>

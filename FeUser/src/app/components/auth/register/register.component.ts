@@ -7,6 +7,7 @@ import {
 } from "src/app/lib/data/models";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
 import { AuthService } from "src/app/lib/data/services";
+import Swal from "sweetalert2";
 
 @Component({
   selector: "app-register",
@@ -81,13 +82,21 @@ export class RegisterComponent implements OnInit {
     await this.authService
       .register(data)
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
-        // alert(data.message);
+        Swal.fire(
+          'Register Success',
+          `Wecome ${data.data.firstName}!`,
+          'success'
+        )
         localStorage.setItem("token", data.data.token);
         localStorage.setItem("user", JSON.stringify(data.data));
         this.backUrl();
       })
       .catch((er) => {
-        alert(er.error.message);
+        Swal.fire(
+          'Register Fail',
+          `${er.error.message ?? er.error}`,
+          'error'
+        )
       });
   }
 

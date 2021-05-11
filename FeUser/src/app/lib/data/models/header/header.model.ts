@@ -3,7 +3,7 @@ export interface HeaderModel {
     blogs:any[];
 }
 export interface InfoHeaderModel {
-	informationWeb: {address:string, phone: string, email: string, fax: string, logo: string};
+	informationWeb: {address:string, phone: string, email: string, fax: string, logo: string, title: string, description: string};
 }
 export interface Menu {
 	path?: string;

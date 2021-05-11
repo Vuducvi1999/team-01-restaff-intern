@@ -5,6 +5,7 @@ import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
 import { FileService } from 'src/app/lib/data/services';
 
 import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
+import Swal from 'sweetalert2';
 
 import { BannersDetailComponent } from '../banners-detail/banners-detail.component';
 
@@ -86,12 +87,25 @@ export class ListBannersComponent implements OnInit {
   }
 
   delete(event: any) {
-    // console.log(event);
-    let banner = event.data as BannerModel;
-    if (window.confirm("Do you want to permanently delete this item?")) {
-      this.bannersService.delete(banner).then(res => {
-        this.getBanners();
-      });
-    }
+    Swal.fire({
+      title: `Do you want to delete the banner?`,
+      showCancelButton: true,
+      confirmButtonText: `Yes`,
+      icon: 'question'
+    }).then(res => {
+      if (res.isConfirmed) {
+        let banner = event.data as BannerModel;
+        this.bannersService.delete(banner).then(() => {
+          Swal.fire({
+            icon: 'success',
+            title: `Banner has been deleted`,
+            showConfirmButton: false,
+            timer: 1500
+          })
+          this.getBanners();
+        });
+      }
+    })
+
   }
 }

@@ -1,6 +1,8 @@
 ﻿using BE.Controllers;
 using Common.Constants;
+using Domain.DTOs.ProductRating;
 using Domain.DTOs.ProductsFeUser;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
@@ -28,6 +30,33 @@ namespace BE.ControllersFeUser
         public IActionResult Get([FromQuery] ProductDTOFeUser search)
         {
             var result = _productDetailsFeService.GetDetails(search);
+            return CommonResponse(result);
+        }
+        [Authorize]
+        [HttpPost(UrlConstants.BaseRating)]
+        public IActionResult AddRating([FromBody] CreateProductRatingDTO model)
+        {
+            var result = _productDetailsFeService.CreateRating(model);
+            return CommonResponse(result);
+        }
+        [Authorize]
+        [HttpPut(UrlConstants.BaseRating)]
+        public IActionResult UpdateRating([FromBody] UpdateProductRatingDTO model)
+        {
+            var result = _productDetailsFeService.UpdateRating(model);
+            return CommonResponse(result);
+        }
+        [Authorize]
+        [HttpGet(UrlConstants.BaseRating)]
+        public IActionResult GetRating([FromQuery]Guid productId)
+        {
+            var result = _productDetailsFeService.GetRating(productId);
+            return CommonResponse(result);
+        }
+        [HttpGet(UrlConstants.RatingPoint)]
+        public IActionResult RatingPoint([FromQuery] Guid productId)
+        {
+            var result = _productDetailsFeService.GetRatingPoint(productId);
             return CommonResponse(result);
         }
     }

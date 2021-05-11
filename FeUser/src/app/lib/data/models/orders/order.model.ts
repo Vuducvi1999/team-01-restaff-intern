@@ -13,10 +13,10 @@ export class OrderModel {
   totalItem = 0;
   orderDetails?: OrderDetailModel[] = [];
   couponId?: string;
-  couponName: string;
-  couponCode: string;
-  couponPercent: number;
-  couponValue: number;
+  couponName?: string;
+  couponCode?: string;
+  couponPercent?: number;
+  couponValue?: number;
 }
 
 export class OrderDetailModel {

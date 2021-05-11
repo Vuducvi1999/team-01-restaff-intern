@@ -440,6 +440,56 @@ namespace Data.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("Domain.Entities.CustomerWishList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateByDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedByName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DeleteByDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DeletedByName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdateByDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UpdatedByName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomerWishLists");
+                });
+
             modelBuilder.Entity("Domain.Entities.File", b =>
                 {
                     b.Property<Guid>("Id")
@@ -529,6 +579,9 @@ namespace Data.Migrations
                     b.Property<string>("DeletedByName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -545,6 +598,9 @@ namespace Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdateByDate")
@@ -572,6 +628,21 @@ namespace Data.Migrations
 
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CouponCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CouponId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CouponName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("CouponPercent")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("CouponValue")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreateByDate")
                         .HasColumnType("datetime2");
@@ -605,6 +676,9 @@ namespace Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
@@ -824,6 +898,63 @@ namespace Data.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("Domain.Entities.ProductRating", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateByDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedByName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("CustomerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DeleteByDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DeletedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DeletedByName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdateByDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UpdatedByName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductRatings");
+                });
+
             modelBuilder.Entity("Domain.Entities.SocialMedia", b =>
                 {
                     b.Property<Guid>("Id")
@@ -984,6 +1115,21 @@ namespace Data.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("Domain.Entities.ProductRating", b =>
+                {
+                    b.HasOne("Domain.Entities.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+
+                    b.HasOne("Domain.Entities.Product", "Product")
+                        .WithMany("RatingProducts")
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.HasOne("Domain.Entities.Customer", "Customer")
@@ -1007,6 +1153,11 @@ namespace Data.Migrations
             modelBuilder.Entity("Domain.Entities.Order", b =>
                 {
                     b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Product", b =>
+                {
+                    b.Navigation("RatingProducts");
                 });
 #pragma warning restore 612, 618
         }

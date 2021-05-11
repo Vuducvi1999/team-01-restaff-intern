@@ -2,7 +2,6 @@ import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService, FileService } from 'src/app/lib/data/services';
-import { UserMangermentService } from 'src/app/lib/data/services/users/user-mangerment.service';
 import { NavService, Menu } from '../../service/nav.service';
 
 @Component({
@@ -20,7 +19,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
   userInfo: any;
   entrySub: Subscription;
 
-  constructor(private router: Router, public navServices: NavService, private userManagerService: UserMangermentService, private authService: AuthService) {
+  constructor(private router: Router, public navServices: NavService, private authService: AuthService) {
     // this.userManagerService.UserSubject.subscribe((it) =>{
     //   this.userInfo = it;
     // });

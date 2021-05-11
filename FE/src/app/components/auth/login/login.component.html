@@ -4,8 +4,8 @@
       <div class="row">
         <div class="col-md-5 p-0 card-left">
           <div class="card bg-primary">
-            <img class="svg" src="assets/images/logo.png"/>
-            
+            <img class="svg" src="assets/images/logo.png" />
+
             <!-- <div class="single-item">
               <owl-carousel-o [options]="owlcarouselOptions">
                 <ng-container *ngFor="let data of owlcarousel">
@@ -50,7 +50,18 @@
                             placeholder="Username"
                             id="exampleInputEmail1"
                             formControlName="username"
+                            [ngClass]="{
+                              'is-invalid': submitted && f.username.errors
+                            }"
                           />
+                          <div
+                            *ngIf="submitted && f.username.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f.username.errors.required">
+                              Username is required
+                            </div>
+                          </div>
                         </div>
                         <div class="form-group">
                           <input
@@ -61,7 +72,18 @@
                             class="form-control"
                             placeholder="Password"
                             formControlName="password"
+                            [ngClass]="{
+                              'is-invalid': submitted && f.password.errors
+                            }"
                           />
+                          <div
+                            *ngIf="submitted && f.password.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="f.password.errors.required">
+                              Password is required
+                            </div>
+                          </div>
                         </div>
                         <div class="form-terms">
                           <div class="custom-control custom-checkbox mr-sm-2">

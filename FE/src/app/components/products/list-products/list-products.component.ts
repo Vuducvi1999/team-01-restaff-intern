@@ -5,7 +5,6 @@ import { ProductModel } from 'src/app/lib/data/models/products/product.model';
 import { FileService } from 'src/app/lib/data/services';
 import { ProductService } from 'src/app/lib/data/services/products/product.service';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
-
 @Component({
   selector: 'app-list-products',
   templateUrl: './list-products.component.html',
@@ -60,6 +59,8 @@ export class ListProductsComponent implements OnInit {
       },
       price: {
         title: 'Price',
+        valuePrepareFunction: (value) =>
+         { return value === 'null'? value : Intl.NumberFormat('vi-VN',{style:'currency', currency: 'VND'}).format(value)}
       },
       categoryName: {
         title: 'Category Name',
@@ -102,7 +103,7 @@ export class ListProductsComponent implements OnInit {
       .then((res: ReturnMessage<PageModel<ProductModel>>) => {
         if (!res.hasError) 
         {
-          this.products = res.data.results.filter((r) => r.isDeleted == false);
+          this.products = res.data.results;
         }
       })
       .catch((er) => {

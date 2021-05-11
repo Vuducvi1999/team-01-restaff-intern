@@ -7,7 +7,7 @@
         <div class="card-body">
           <div class="tab-pane fade active show" id="account" role="tabpanel" aria-labelledby="account-tab">
             <form [formGroup]="orderForm" class="needs-validation user-add" novalidate="">
-              <h4>Order</h4>
+              <h4>Order {{item.code}}</h4>
               <div class="form-group row">
                 <label class="col-xl-3 col-md-4"><span>*</span> Full Name</label>
                 <input class="form-control col-xl-8 col-md-7" type="text" required formControlName="fullName" />
@@ -74,4 +74,4 @@
 </div>
 
 <!-- Container-fluid Ends-->
-<app-modal-footer [data]="modalFooter" (onAction)="save($event)"></app-modal-footer>
+<app-modal-footer [data]="modalFooter" (onAction)="save()"></app-modal-footer>

@@ -64,51 +64,74 @@
         <div class="col-lg-4">
           <div class="product-right product-description-box">
             <h2>{{ product?.name | titlecase }}</h2>
-            <div class="border-product">
-              <h4 class="product-title">product details</h4>
-              <p>{{ product?.description.substring(0, 200) + "..." }}</p>
-            </div>
-            <div>
-              <h3>
-                {{ product?.price | currency: "VND":"symbol":"1.0-0":"fr" }}
-              </h3>
-            </div>
             <div class="addeffect-section product-description border-product">
               <h3>Description</h3>
               <div [innerHTML]="product?.contentHTML"></div>
             </div>
+            <div>
+              <h3>
+                {{product?.price | vndFormat}}
+              </h3>
+            </div>
+            <br />
+            <div *ngIf="token != null; else loading">
+              <form [formGroup]="ratingForm">
+                <ngb-rating
+                  [max]="5"
+                  [rate]="item ? item.rating : 0"
+                  formControlName="rating"
+                >
+                  <ng-template let-fill="fill" let-index="index">
+                    <span class="star" [class.filled]="fill === 100"
+                      >&#9733;</span
+                    >
+                  </ng-template>
+                </ngb-rating>
+                <br />
+                <pre>Rate: <b>{{ratingForm.controls?.rating.value}}</b></pre>
+                <br />
+                <button class="btn btn-primary" (click)="saveRating($event)">
+                  Save
+                </button>
+              </form>
+            </div>
+            <ng-template #loading>
+              <button class="btn btn-primary" [routerLink]="['/auth/login']">
+                You need to login to rate this product
+              </button>
+            </ng-template>
           </div>
         </div>
-        <div class="col-lg-4"></div>
       </div>
-      <section class="tab-product m-0">
-        <div class="row">
-          <div class="col-sm-12 col-lg-12">
-            <ngb-tabset [type]="'tabs'" class="nav-material">
-              <ngb-tab>
-                <ng-template ngbTabTitle>Comments</ng-template>
-                <ng-template ngbTabContent>
-                  <app-comment-detail
-                    *ngIf="comments"
-                    (action)="changePageIndex($event)"
-                    [comments]="comments"
-                  ></app-comment-detail>
-                </ng-template>
-              </ngb-tab>
-              <ngb-tab *ngIf="user">
-                <ng-template ngbTabTitle>Write Review</ng-template>
-                <ng-template ngbTabContent>
-                  <app-comment
-                    [dataComment]="dataComment"
-                    (action)="getComments()"
-                  ></app-comment>
-                </ng-template>
-              </ngb-tab>
-            </ngb-tabset>
-          </div>
-        </div>
-      </section>
+      <div class="col-lg-4"></div>
     </div>
+    <section class="tab-product m-0">
+      <div class="row">
+        <div class="col-sm-12 col-lg-12">
+          <ngb-tabset [type]="'tabs'" class="nav-material">
+            <ngb-tab>
+              <ng-template ngbTabTitle>Comments</ng-template>
+              <ng-template ngbTabContent>
+                <app-comment-detail
+                  *ngIf="comments"
+                  (action)="changePageIndex($event)"
+                  [comments]="comments"
+                ></app-comment-detail>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab *ngIf="user">
+              <ng-template ngbTabTitle>Write Review</ng-template>
+              <ng-template ngbTabContent>
+                <app-comment
+                  [dataComment]="dataComment"
+                  (action)="getComments()"
+                ></app-comment>
+              </ng-template>
+            </ngb-tab>
+          </ngb-tabset>
+        </div>
+      </div>
+    </section>
   </div>
 </section>
 <app-size-modal #sizeChart [product]="product"></app-size-modal>

@@ -12,6 +12,8 @@ namespace Common.Constants
         public static string Fax = "656565655656";
         public static string Logo = "https://res.cloudinary.com/tungimage/image/upload/v1620372703/ridn0zmlny900h2sjlmh.png";
         public static string Phone = "776767776767";
+        public static string Title = "Welcome to Our ShopDbTung Store";
+        public static string Description = "This is a page for fashion";
 
     }
     public struct CommonConstantsUser

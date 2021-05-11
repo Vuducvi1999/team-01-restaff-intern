@@ -32,7 +32,7 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
   subDataUser: Subscription;
 
   public headerModel: InfoHeaderModel = {
-    informationWeb: { address: "", phone: "", email: "", fax: "", logo: "" },
+    informationWeb: {address: '', phone: '', email: '', fax: '', logo: '', title: '', description: ''}
   };
   public stick: boolean = false;
   loadUrlNavaigate(url: string) {

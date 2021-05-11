@@ -7,6 +7,7 @@ import {
   UserDataReturnDTOModel,
 } from 'src/app/lib/data/models';
 import { AuthService } from 'src/app/lib/data/services';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ import { AuthService } from 'src/app/lib/data/services';
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public registerForm: FormGroup;
+  submitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,6 +31,10 @@ export class LoginComponent implements OnInit {
     {
       this.backUrl();
     }
+  }
+
+  get f() {
+    return this.loginForm.controls;
   }
 
   owlcarousel = [
@@ -66,6 +72,7 @@ export class LoginComponent implements OnInit {
   }
 
   async onLogin() {
+    this.submitted = true;
     if (!this.loginForm.valid) {
       return;
     }
@@ -74,13 +81,21 @@ export class LoginComponent implements OnInit {
     await this.authService
       .login(data)
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
-        // alert(data.message);
+        Swal.fire(
+          'Login Success',
+          `Wecome ${data.data.firstName}!`,
+          'success'
+        )
         localStorage.setItem('token', data.data.token);
         this.authService.changeUserInfo(data.data);
         this.backUrl();
       })
       .catch((er) => {
-        alert(er.error.message);
+        Swal.fire(
+          'Login Fail',
+          `${er.error.message ?? er.error}`,
+          'error'
+        )
       });
   }
 

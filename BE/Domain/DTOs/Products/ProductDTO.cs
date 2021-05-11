@@ -1,4 +1,5 @@
 ﻿using Domain.DTOs.BaseDTOs;
+using Domain.DTOs.ProductRating;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,5 +23,7 @@ namespace Domain.DTOs.Products
         public string CategoryName { get; set; }
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
+        public int SaleCount { get; set; }
+
     }
 }

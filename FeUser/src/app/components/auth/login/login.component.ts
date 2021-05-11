@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AuthLoginModel, ReturnMessage } from "src/app/lib/data/models";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
 import { AuthService } from "src/app/lib/data/services";
+import Swal from "sweetalert2";
 
 @Component({
   selector: "app-login",
@@ -62,13 +63,21 @@ export class LoginComponent implements OnInit {
     await this.authService
       .login(data)
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
-        // alert(data.message);
+        Swal.fire(
+          'Login Success',
+          `Wecome ${data.data.firstName}!`,
+          'success'
+        )
         localStorage.setItem('token', data.data.token);
         this.authService.changeUserInfo(data.data);
         this.backUrl();
       })
       .catch((er) => {
-        alert(er.error.message);
+        Swal.fire(
+          'Login Fail',
+          `${er.error.message ?? er.error}`,
+          'error'
+        )
       });
   }
 }

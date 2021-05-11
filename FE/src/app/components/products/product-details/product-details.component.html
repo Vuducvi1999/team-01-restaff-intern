@@ -54,10 +54,6 @@
                                 required="" formControlName="displayOrder" />
                               <span class="text-danger"
                                 *ngIf="(productFormsControl.displayOrder.touched || submitted) && productFormsControl.displayOrder.errors?.required">Required</span>
-                              <span class="text-danger" *ngIf="productFormsControl.displayOrder.errors?.max">Value must
-                                in range (1 ~ 10)</span>
-                              <span class="text-danger" *ngIf="productFormsControl.displayOrder.errors?.min">Value must
-                                in range (1 ~ 10)</span>
                             </div>
                             <div class="form-group row">
                               <label for="validationCustom6" class="col-xl-3 col-md-4"><span>*</span> Category
@@ -85,7 +81,6 @@
                           </div>
                           <div class="col-lg-6">
                             <div class="form-group row">
-                              <label for="validationCustom4" class="col-xl-3 col-md-4"><span>*</span> ImageUrl</label>
                               <input class="form-control col-xl-6 col-md-6" id="validationCustom4" type="text"
                                 required="" formControlName="imageUrl" hidden />
                               <span class="text-danger"
@@ -98,12 +93,10 @@
                         </div>
                         <div class="form-group row">
                           <label for="validationCustom3" class="col-xl-6 col-md-4"><span>*</span> Content
-                            Html</label><span class="text-danger"
-                            *ngIf="productFormsControl.contentHTML.hasError('maxlength')">Max: 1000 character</span>
+                            Html</label>
                           <ckeditor [editor]="editor" class="col-xl-12 col-md-12 p-0" id="validationCustom3" type="text"
                             required="" formControlName="contentHTML"></ckeditor>
-                          <span class="text-danger"
-                            *ngIf="(productFormsControl.contentHTML.touched || submitted) && productFormsControl.contentHTML.errors?.required">Required</span>
+                        
                         </div>
                       </form>
                     </div>

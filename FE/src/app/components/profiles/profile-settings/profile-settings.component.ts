@@ -14,11 +14,8 @@ import {
 } from 'src/app/lib/data/services';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {
-  ModalFile,
-  TypeFile,
-  EntityType,
-} from 'src/app/shared/components/modals/models/modal.model';
+import { ModalFile, TypeFile, EntityType } from 'src/app/shared/components/modals/models/modal.model';
+import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -107,51 +104,83 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
     this.update = this.update == true ? false : true;
   }
   updateDetails() {
-    if (window.confirm('Do you want to update your profile?')) {
-      this.updateProfile = {
-        firstName: this.profileForm.controls.firstName.value,
-        lastName: this.profileForm.controls.lastName.value,
-        email: this.profileForm.controls.email.value,
-        imageUrl: this.profileForm.controls.imageUrl.value,
-        id: this.userInfo.id,
-        files: this.modalFile.listFile,
-      };
-      this.profileService
-        .update(this.updateProfile)
-        .then((resp: ReturnMessage<UserDataReturnDTOModel>) => {
-          this.authService.changeUserInfo(resp.data);
-          if (!resp.hasError) {
-            this.updateSwitch();
-          }
-        })
-        .catch((er) => {
-          if (er.error.hasError) {
-            // console.log(er.error.message);
-          }
-        });
-    }
+    this.updateProfile = {
+      firstName: this.profileForm.controls.firstName.value,
+      lastName: this.profileForm.controls.lastName.value,
+      email: this.profileForm.controls.email.value,
+      imageUrl: this.profileForm.controls.imageUrl.value,
+      id: this.userInfo.id,
+      files: this.modalFile.listFile
+    };
+
+    Swal.fire({
+      title: `Do you want to edit your profile?`,
+      showCancelButton: true,
+      confirmButtonText: `Yes`,
+      icon: 'question'
+    })
+      .then(result => {
+        if (result.isConfirmed) {
+          this.profileService
+            .update(this.updateProfile)
+            .then((resp: ReturnMessage<UserDataReturnDTOModel>) => {
+              localStorage.setItem('user', JSON.stringify(resp.data));
+              this.userInfo = resp.data;
+              this.route.snapshot.data.user = resp.data;
+              if (!resp.hasError) {
+                Swal.fire({
+                  icon: 'success',
+                  title: `Profile has been updated`,
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+                this.updateSwitch();
+              }
+            })
+            .catch((er) => {
+              if (er.error.hasError) {
+                console.log(er.error.message);
+              }
+            });
+        }
+      })
+
   }
   changePassword() {
-    if (window.confirm('Do you want to change your password?')) {
-      this.passwordProfile = {
-        password: this.passwordForm.controls.password.value,
-        newPassword: this.passwordForm.controls.newPassword.value,
-        confirmNewPassword: this.passwordForm.controls.confirmNewPassword.value,
-        userName: this.userInfo.username,
-      };
-      this.profileService
-        .changePassword(this.passwordProfile)
-        .then((resp) => {
-          this.passwordForm.reset();
-          window.alert(resp.message);
-          // console.log(resp);
-        })
-        .catch((er) => {
-          if (er.error.hasError) {
-            // console.log(er.error.message);
-          }
-        });
-    }
+    this.passwordProfile = {
+      password: this.passwordForm.controls.password.value,
+      newPassword: this.passwordForm.controls.newPassword.value,
+      confirmNewPassword: this.passwordForm.controls.confirmNewPassword.value,
+      userName: this.userInfo.username,
+    };
+    Swal.fire({
+      title: `Do you want to edit your profile?`,
+      showCancelButton: true,
+      confirmButtonText: `Yes`,
+      icon: 'question'
+    })
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.profileService
+            .changePassword(this.passwordProfile)
+            .then((resp) => {
+              this.passwordForm.reset();
+              Swal.fire({
+                icon: 'success',
+                title: `Password has been changed`,
+                showConfirmButton: false,
+                timer: 1500
+              })
+            })
+            .catch((er) => {
+              if (er.error.hasError) {
+                console.log(er.error.message);
+              }
+            });
+        }
+      })
+
+
   }
 
   onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {

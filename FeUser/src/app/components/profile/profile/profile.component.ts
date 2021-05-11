@@ -14,6 +14,7 @@ import {
   ModalFile,
   TypeFile,
 } from "src/app/shared/modals/models/modal.model";
+import Swal from "sweetalert2";
 
 @Component({
   selector: "app-profile",
@@ -170,16 +171,30 @@ export class ProfileComponent implements OnInit, OnDestroy {
       phone: dataProfileForm.phone,
     };
 
-    await this.profileService
-      .update(data)
-      .then((res: ReturnMessage<UserDataReturnDTOModel>) => {
-        this.authService.changeUserInfo(res.data);
-        alert("Update Profile Success");
-        this.profileSwith();
-      })
-      .catch((er) => {
-        alert(er.error.message ? er.error.message : "Server is disconnected");
-      });
+    await Swal.fire({
+      title: 'Do you want to save the changes?',
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: `Save`,
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.profileService
+        .update(data)
+        .then((res: ReturnMessage<UserDataReturnDTOModel>) => {
+          this.authService.changeUserInfo(res.data);
+          Swal.fire(
+            'Update Profile Success',
+            'success'
+          )
+          this.profileSwith();
+        })
+        .catch((er) => {
+          alert(er.error.message ? er.error.message : "Server is disconnected");
+        });
+      }
+    })
   }
 
   getImage(fileName: string) {

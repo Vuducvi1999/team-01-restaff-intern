@@ -52,7 +52,7 @@
                 </div>
               </td>
               <td>
-                <h2>{{ product.price | currency: "VND" }}</h2>
+                <h2>{{ product?.price * productService.Currency?.price | currency: "VND":"symbol":"1.0-0":"fr" }}</h2>
               </td>
               <td>
                 <div class="qty-box">

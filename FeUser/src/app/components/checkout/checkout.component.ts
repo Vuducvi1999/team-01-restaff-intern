@@ -25,9 +25,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   public subTotal: any;
   public totalAmount: any;
   public totalItem: any;
+
   public couponValue = 0;
   public couponInvalid: boolean;
-
+  public couponDisplay: boolean = false;
+  public couponName: string
+  public couponPercent: string;
+  public couponCode: string;
   public order: OrderModel = new OrderModel();
 
   subDataUser: Subscription;
@@ -42,7 +46,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
   }
-  public couponPercent: string;
 
   ngOnInit(): void {
     this.loadCartItems();
@@ -76,6 +79,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   loadModel() {
+    this.order.orderDetails = [];
     this.order.fullName = `${this.order.firstName} ${this.order.lastName}`;
     this.order.totalAmount = this.totalAmount;
     this.order.totalItem = this.totalItem;
@@ -92,13 +96,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   applyCoupon() {
-    this.couponService
-      .getByCode(null, this.order.couponCode)
+    this.order.couponCode = this.couponCode;
+    this.couponService.getByCode(null, this.order.couponCode)
       .then((resp) => {
         this.couponInvalid = false;
+        this.couponDisplay = true;
 
         this.order.couponId = resp.data.id;
         this.order.couponName = resp.data.name;
+        this.couponName = this.order.couponName;
 
         if (resp.data.hasPercent) {
           this.order.couponPercent = resp.data.value;
@@ -109,21 +115,35 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           return (this.order.totalAmount = this.totalAmount);
         }
 
+        this.order.couponValue = resp.data.value;
+        this.couponValue = this.order.couponValue;
+        this.order.couponPercent = parseFloat(((this.order.couponValue / this.subTotal) * 100).toFixed(2));
+        this.couponPercent = `-${this.order.couponPercent}%`;
         if (resp.data.value > this.subTotal) {
           this.couponValue = this.subTotal;
+          this.couponPercent = "-100%";
         }
-        this.order.couponValue = resp.data.value;
-        this.order.couponPercent = (this.couponValue / this.subTotal) * 100;
-        this.couponPercent = `-${this.order.couponPercent}%`;
-        this.totalAmount =
-          this.cart.totalAmount - this.couponValue < 0
-            ? 0
-            : this.cart.totalAmount - this.couponValue;
+        this.totalAmount = (this.cart.totalAmount - this.couponValue) < 0 ? 0 : (this.cart.totalAmount - this.couponValue);
         this.order.totalAmount = this.totalAmount;
       })
       .catch((er) => {
         console.log(er);
         this.couponInvalid = true;
+        this.removeCoupon();
       });
+
+  }
+  removeCoupon() {
+    this.couponValue = null;
+    this.couponPercent = null;
+    this.couponName = null;
+
+    this.order.couponValue = null;
+    this.order.couponPercent = null;
+    this.order.couponName = null;
+    this.order.couponCode = null;
+    this.order.couponId = null;
+
+    this.couponDisplay = false;
   }
 }
