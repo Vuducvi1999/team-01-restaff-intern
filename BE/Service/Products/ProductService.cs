@@ -190,28 +190,24 @@ namespace Service.Products
             }
         }
 
-        public ReturnMessage<ProductDTO> UpdateCount(Guid id, int quantity)
+        public ReturnMessage<UpdateProductDTO> UpdateCount(UpdateProductDTO product, int quantity)
         {
             try
             {
-                var search = this.GetById(id);
-                if (search.HasError == false)
-                {
-                    var dto = search.Data;
-                    dto.SaleCount += quantity;
-                    var entity = _mapper.Map<Product>(dto);
-                    _productRepository.Update(entity);
-                    _unitOfWork.SaveChanges();
-                    var result = new ReturnMessage<ProductDTO>(false, dto, MessageConstants.UpdateSuccess);
-                    return result;
-                }
-                return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
 
+                product.SaleCount += quantity;
+                var entity = _mapper.Map<Product>(product);
+
+                _productRepository.Update(entity);
+                _unitOfWork.SaveChanges();
+                var result = new ReturnMessage<UpdateProductDTO>(false, product, MessageConstants.UpdateSuccess);
+                return result;
+                
             }
 
             catch (Exception ex)
             {
-                return new ReturnMessage<ProductDTO>(true, null, ex.Message);
+                return new ReturnMessage<UpdateProductDTO>(true, null, ex.Message);
             }
         }
     }

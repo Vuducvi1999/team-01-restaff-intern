@@ -4,6 +4,7 @@ using Common.Http;
 using Common.Pagination;
 using Common.StringEx;
 using Domain.DTOs.Orders;
+using Domain.DTOs.Products;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
@@ -51,15 +52,17 @@ namespace Service.Orders
                     var invalidProducts = false;
                     model.OrderDetails.ForEach(detail =>
                     {
-                        var res = _productService.GetById(detail.ProductId);
-                        if (res.HasError)
+                        var check = _productService.GetById(detail.ProductId);
+                        if (check.HasError)
                         {
                             invalidProducts = true;
                         }
 
-                        if (!res.HasError)
+                        if (!check.HasError)
                         {
-                            var update = _productService.UpdateCount(res.Data.Id, detail.Quantity);
+                            var data = check.Data;
+                            var dto = _mapper.Map<UpdateProductDTO>(data);
+                            var update = _productService.UpdateCount(dto, detail.Quantity);
                             if (update.HasError)
                             {
                                 invalidProducts = true;
