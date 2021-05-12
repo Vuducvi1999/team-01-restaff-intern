@@ -66,7 +66,6 @@ namespace Service.Products
                 if (entity.IsNotNullOrEmpty())
                 {
                     entity.Delete();
-                    entity.IsDeleted = true;
                     _productRepository.Update(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<ProductDTO>(false, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.DeleteSuccess);

@@ -53,10 +53,12 @@ export class ListCategoriesComponent implements OnInit {
           },
         },
         name: {
-          title: 'Name'
+          title: 'Name',
+          filter: false,
         },
         description: {
-          title: 'Description'
+          title: 'Description',
+          filter: false,
         },
       },
     };

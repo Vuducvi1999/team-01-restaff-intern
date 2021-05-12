@@ -27,6 +27,7 @@ export class ListProductsComponent implements OnInit {
   }
 
   public settings = {
+    
     mode: 'external',
     actions: {
       position: 'right',
@@ -52,30 +53,37 @@ export class ListProductsComponent implements OnInit {
       },
       name: {
         title: 'Name',
+        filter: false,
       },
       description: {
         title: 'Description',
+        filter: false,
+      },
+      categoryName: {
+        title: 'Category Name',
+        filter: false,
+      },
+      isImportant: {
+        title: 'Is Important',
+        filter: false,
       },
       price: {
         value:'price',
         type: 'custom',
         title:'Price',
-        renderComponent: CustomViewCellNumberComponent
-      },
-      categoryName: {
-        title: 'Category Name',
+        renderComponent: CustomViewCellNumberComponent,
+        filter: false,
       },
       displayOrder: {
         title: 'Display Order',
         type:'custom',
         value:'displayOrder',
-        renderComponent: CustomViewCellComponent
-      },
-      isImportant: {
-        title: 'Is Important',
+        renderComponent: CustomViewCellComponent,
+        filter: false,
       },
     },
   };
+
   delete(event: any) {
     let product = event.data as ProductModel;
     if (window.confirm('Are you sure to delete this item?')) {
