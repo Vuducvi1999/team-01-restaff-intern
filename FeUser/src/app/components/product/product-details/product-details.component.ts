@@ -24,7 +24,7 @@ import {
   ReturnMessage,
   SearchPaganationDTO,
 } from "src/app/lib/data/models";
-import { TypeDisplayImage } from "src/app/shared/data";
+import { ETypePositionCart, TypeDisplayImage } from "src/app/shared/data";
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
 import { Subscription } from "rxjs";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
@@ -33,6 +33,7 @@ import { RatingService } from "src/app/lib/data/services/rating/rating.service";
 import { RatingModel } from "src/app/lib/data/models/rating/rating.model";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { CartModalComponent } from "src/app/shared/components/modal/cart-modal/cart-modal.component";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-product-details",
@@ -60,6 +61,7 @@ import { CartModalComponent } from "src/app/shared/components/modal/cart-modal/c
   ],
 })
 export class ProductDetailsComponent implements OnInit {
+  @ViewChild("sizeChart") SizeChart: SizeModalComponent;
   public product: ProductDetailsModel;
   public counter: number = 1;
   public activeSlide: any = 0;
@@ -69,9 +71,6 @@ export class ProductDetailsComponent implements OnInit {
   public user: UserDataReturnDTOModel;
   public comments: PageModel<CommentModel>;
   public searchModel: SearchPaganationDTO<SearchCommentModel>;
-  @Input() cartModal: boolean = false; // Default False
-  @ViewChild("sizeChart") SizeChart: SizeModalComponent;
-  @ViewChild("cartModal") CartModal: CartModalComponent;
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
   public ProductDetailsThumbConfig: any = ProductDetailsThumbSlider;
 
@@ -90,7 +89,8 @@ export class ProductDetailsComponent implements OnInit {
     private commentService: CommentService,
     private ratingService: RatingService,
     private formBuilder: FormBuilder,
-    private cartService: CartService
+    private cartService: CartService,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -203,5 +203,6 @@ export class ProductDetailsComponent implements OnInit {
   }
   addToCart(product: any){
     this.cartService.addToCart(product);
+    this.toastrService.success(`${product?.name}` + ' has been added to cart.');
   }
 }
