@@ -33,7 +33,6 @@ namespace Data.Migrations
             migrationBuilder.DropColumn(
                 name: "Title",
                 table: "InformationWebsites");
-
         }
     }
 }

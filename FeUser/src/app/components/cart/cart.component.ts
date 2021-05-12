@@ -5,6 +5,7 @@ import { FileService } from 'src/app/lib/data/services';
 import { CartService } from 'src/app/lib/data/services/cart/cart.service';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { TypeDisplayImage } from 'src/app/shared/data';
 registerLocaleData(localeFr, 'fr');
 @Component({
   selector: 'app-cart',
@@ -15,24 +16,30 @@ registerLocaleData(localeFr, 'fr');
 export class CartComponent implements OnInit, OnChanges {
   public products: ProductModel[] = [];
   public cart: CartModel;
+  typeDisplayImage = TypeDisplayImage
   constructor(public cartService: CartService) {
   }
   ngOnChanges(changes: SimpleChanges): void {
   }
 
   ngOnInit(): void {
-    this.cartService.cartData.subscribe(cart => {   
-         this.products = cart.cartDetails;
-         this.cart = cart;
+    this.loadCart();
+    console.log(this.cart)
+
+  }
+
+  loadCart() {
+    this.cartService.cartData.subscribe(cart => {
+      this.products = cart.cartDetails;
+      this.cart = cart;
     });
-  
   }
   removeItem(product: any) {
     this.cartService.removeCartItem(product);
   }
 
   adjustQuantity(product: any, number: any) {
-    this.cartService.updateCartQuantity(product,number);
+    this.cartService.updateCartQuantity(product, number);
   }
 
   getImage(fileName: string) {
