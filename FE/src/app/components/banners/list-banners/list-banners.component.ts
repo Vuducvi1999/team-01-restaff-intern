@@ -5,6 +5,8 @@ import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
 import { FileService } from 'src/app/lib/data/services';
 
 import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
+import { CustomViewCellNumberComponent } from 'src/app/shared/components/custom-view-cell-number/custom-view-cell-number.component';
+import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import Swal from 'sweetalert2';
 
 import { BannersDetailComponent } from '../banners-detail/banners-detail.component';
@@ -58,6 +60,9 @@ export class ListBannersComponent implements OnInit {
       },
       displayOrder: {
         title: 'Display Order',
+        value:'displayOrder',
+        type: 'custom',
+        renderComponent: CustomViewCellComponent
       },
     },
   };
@@ -66,13 +71,11 @@ export class ListBannersComponent implements OnInit {
     this.bannersService.get(null).then((res: ReturnMessage<PageModel<BannerModel>>) => {
       if (!res.hasError) {
         this.banners = res.data.results;
-        // console.log("banner", this.banners);
-
       }
     }).catch((er) => {
 
       if (er.error.hasError) {
-        // console.log(er.error.message)
+        console.log(er.error.message)
       }
     });
 
