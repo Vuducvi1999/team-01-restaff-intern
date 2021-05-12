@@ -91,11 +91,9 @@ export class BlogsDetailComponent implements OnInit {
         })
         .catch((er) => {
           if (er.error.hasError) {
-            // console.log(er.error.message);
           }
         });
     }
-    // console.log(this.blog);
   }
 
   close(event: any) {
@@ -119,7 +117,7 @@ export class BlogsDetailComponent implements OnInit {
     }
 
     if (event.remove) {
-      this.fileURL.forEach((e : string, i) => {
+      this.fileURL.forEach((e: string, i) => {
         if (e.includes(event.remove)) {
           this.fileURL.splice(i, 1);
         }

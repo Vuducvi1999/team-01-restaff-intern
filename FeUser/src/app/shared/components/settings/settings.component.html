@@ -29,23 +29,30 @@
                         name="name"
                         (keypress)="onSearch($event)"
                       />
-                      <div *ngIf="userFilter.name">
-                        <ul
-                          class="nav"
-                          *ngFor="let item of data | filterBy: userFilter"
-                        >
-                          <li class="nav-item">
-                            <a class="nav-link" (click)="clickRouter(item.id)"
-                              >{{ item.name }}
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
                     </div>
+
                     <button type="submit" class="btn btn-primary">
                       <i class="fa fa-search"></i>
                     </button>
                   </form>
+                  <h5>Product Relevant</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div *ngIf="userFilter.name" class="form-group">
+                  <ul
+                    class="nav"
+                    *ngFor="let item of data | filterBy: userFilter"
+                  >
+                    <li class="nav-item">
+                      <h6
+                        class="product-link mt-3"
+                        (click)="clickRouter(item.id)"
+                      >
+                        {{ item.name }}
+                      </h6>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>

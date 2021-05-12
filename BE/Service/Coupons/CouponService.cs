@@ -81,7 +81,7 @@ namespace Service.Coupons
                     entity.Update(model);
                     _couponRepository.Update(entity);
                     _unitOfWork.SaveChanges();
-                    var result = new ReturnMessage<CouponDTO>(false, _mapper.Map<Coupon, CouponDTO>(entity), MessageConstants.DeleteSuccess);
+                    var result = new ReturnMessage<CouponDTO>(false, _mapper.Map<Coupon, CouponDTO>(entity), MessageConstants.UpdateSuccess);
                     return result;
 
                 }
@@ -97,7 +97,7 @@ namespace Service.Coupons
         {
             if (search == null)
             {
-                return new ReturnMessage<PaginatedList<CouponDTO>>(false, null, MessageConstants.DeleteSuccess);
+                return new ReturnMessage<PaginatedList<CouponDTO>>(false, null, MessageConstants.GetPaginationFail);
             }
 
             var resultEntity = _couponRepository.GetPaginatedList(it => search.Search == null ||
@@ -113,7 +113,7 @@ namespace Service.Coupons
                 , t => t.Name
             );
             var data = _mapper.Map<PaginatedList<Coupon>, PaginatedList<CouponDTO>>(resultEntity);
-            var result = new ReturnMessage<PaginatedList<CouponDTO>>(false, data, MessageConstants.DeleteSuccess);
+            var result = new ReturnMessage<PaginatedList<CouponDTO>>(false, data, MessageConstants.GetPaginationSuccess);
 
             return result;
         }
@@ -135,7 +135,7 @@ namespace Service.Coupons
 
                 }
                 var result = _mapper.Map<CouponDTO>(entity);
-                return new ReturnMessage<CouponDTO>(false, result, MessageConstants.GetPaginationSuccess);
+                return new ReturnMessage<CouponDTO>(false, result, MessageConstants.GetSuccess);
             }
 
             return new ReturnMessage<CouponDTO>(true, null, MessageConstants.Error);
