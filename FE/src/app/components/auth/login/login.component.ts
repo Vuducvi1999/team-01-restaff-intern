@@ -4,9 +4,10 @@ import { ActivatedRoute, Data, Router } from '@angular/router';
 import {
   AuthLoginModel,
   ReturnMessage,
+  TypeSweetAlertIcon,
   UserDataReturnDTOModel,
 } from 'src/app/lib/data/models';
-import { AuthService } from 'src/app/lib/data/services';
+import { AuthService, SweetalertService } from 'src/app/lib/data/services';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -23,12 +24,12 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private activedRoute: ActivatedRoute,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private sweetalertService: SweetalertService
   ) {
     this.createLoginForm();
     this.createRegisterForm();
-    if(localStorage.getItem('token'))
-    {
+    if (localStorage.getItem('token')) {
       this.backUrl();
     }
   }
@@ -44,8 +45,8 @@ export class LoginComponent implements OnInit {
       //   "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.",
     },
     {
-      title: 'This is the management page'
-    }
+      title: 'This is the management page',
+    },
   ];
   owlcarouselOptions = {
     loop: true,
@@ -67,9 +68,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   async onLogin() {
     this.submitted = true;
@@ -81,21 +80,21 @@ export class LoginComponent implements OnInit {
     await this.authService
       .login(data)
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
-        Swal.fire(
+        this.sweetalertService.notification(
           'Login Success',
+          TypeSweetAlertIcon.SUCCESS,
           `Wecome ${data.data.firstName}!`,
-          'success'
-        )
+        );
         localStorage.setItem('token', data.data.token);
         this.authService.changeUserInfo(data.data);
         this.backUrl();
       })
       .catch((er) => {
-        Swal.fire(
+        this.sweetalertService.alert(
           'Login Fail',
+          TypeSweetAlertIcon.ERROR,
           `${er.error.message ?? er.error}`,
-          'error'
-        )
+        );
       });
   }
 

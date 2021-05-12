@@ -5,9 +5,14 @@ import {
   ChangePasswordProfileModel,
   ProfileModel,
   ReturnMessage,
+  TypeSweetAlertIcon,
 } from "src/app/lib/data/models";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
-import { AuthService, FileService } from "src/app/lib/data/services";
+import {
+  AuthService,
+  FileService,
+  SweetalertService,
+} from "src/app/lib/data/services";
 import { ProfileService } from "src/app/lib/data/services/profiles/profile.service";
 import {
   EntityType,
@@ -41,6 +46,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private profileService: ProfileService,
     private authService: AuthService,
+    private sweetalertService: SweetalertService
   ) {
     // this.user = JSON.parse(localStorage.getItem("user"));
     // if (this.user) {
@@ -54,10 +60,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
+    this.subDataUser = null;
   }
 
   ngOnInit(): void {
-    this.subDataUser = this.authService.callUserInfo.subscribe(it => {
+    this.subDataUser = this.authService.callUserInfo.subscribe((it) => {
       this.user = it;
       this.createProfileForm();
     });
@@ -96,8 +103,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
       ],
       phone: [
         this.user ? this.user.phone : "",
-        [Validators.required, Validators.pattern("[0-9]{10}"),
-        Validators.maxLength(11),]
+        [
+          Validators.required,
+          Validators.pattern("[0-9]{10}"),
+          Validators.maxLength(11),
+        ],
       ],
       address: [
         this.user ? this.user.address : "",
@@ -144,11 +154,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
     await this.profileService
       .changePassword(data)
       .then((res: ReturnMessage<null>) => {
-        alert("Change Password Success");
+        this.sweetalertService.notification(
+          "Change Password Success",
+          TypeSweetAlertIcon.SUCCESS
+        );
         this.passwordSwith();
       })
       .catch((er) => {
-        alert(er.error.message ? er.error.message : "Server is disconnected");
+        this.sweetalertService.alert(
+          "Change Password Fail",
+          TypeSweetAlertIcon.ERROR,
+          er.error.message ?? er.error
+        );
       });
   }
 
@@ -166,13 +183,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
       address: dataProfileForm.address,
       firstName: dataProfileForm.firstName,
       lastName: dataProfileForm.lastName,
-      files:  null,
+      files: null,
       id: this.user.id,
       phone: dataProfileForm.phone,
     };
 
     await Swal.fire({
-      title: 'Do you want to save the changes?',
+      title: "Do you want to save the changes?",
       showDenyButton: false,
       showCancelButton: true,
       confirmButtonText: `Save`,
@@ -181,20 +198,24 @@ export class ProfileComponent implements OnInit, OnDestroy {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         this.profileService
-        .update(data)
-        .then((res: ReturnMessage<UserDataReturnDTOModel>) => {
-          this.authService.changeUserInfo(res.data);
-          Swal.fire(
-            'Update Profile Success',
-            'success'
-          )
-          this.profileSwith();
-        })
-        .catch((er) => {
-          alert(er.error.message ? er.error.message : "Server is disconnected");
-        });
+          .update(data)
+          .then((res: ReturnMessage<UserDataReturnDTOModel>) => {
+            this.authService.changeUserInfo(res.data);
+            this.sweetalertService.notification(
+              "Upload Profile Success",
+              TypeSweetAlertIcon.SUCCESS
+            );
+            this.profileSwith();
+          })
+          .catch((er) => {
+            this.sweetalertService.alert(
+              "Upload Profile Fail",
+              TypeSweetAlertIcon.ERROR,
+              er.error.message ?? er.error
+            );
+          });
       }
-    })
+    });
   }
 
   getImage(fileName: string) {

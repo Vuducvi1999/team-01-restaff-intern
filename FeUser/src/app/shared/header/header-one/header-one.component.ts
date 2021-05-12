@@ -46,6 +46,7 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
   ) {}
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
+    this.subDataUser = null;
   }
 
   ngOnInit(): void {

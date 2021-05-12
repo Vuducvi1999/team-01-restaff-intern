@@ -43,6 +43,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
   ) {}
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
+    this.subDataUser = null;
   }
 
   ngOnInit() {

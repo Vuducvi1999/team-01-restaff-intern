@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
-import { ReturnMessage } from "../lib/data/models";
+import { ReturnMessage, TypeSweetAlertIcon } from "../lib/data/models";
 import { UserDataReturnDTOModel } from "../lib/data/models/users/user.model";
-import { AuthService } from "../lib/data/services";
+import { AuthService, SweetalertService } from "../lib/data/services";
 
 @Component({
   selector: "app-pages",
@@ -13,7 +13,7 @@ import { AuthService } from "../lib/data/services";
 export class PagesComponent implements OnInit {
   public url: any;
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(private router: Router, private authService: AuthService, private sweetalertService: SweetalertService) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.url = event.url;
@@ -30,7 +30,7 @@ export class PagesComponent implements OnInit {
           this.authService.changeUserInfo(res.data);
         })
         .catch((res) => {
-          alert("Login Expires");
+          this.sweetalertService.alert("Login Expires",TypeSweetAlertIcon.ERROR);
           localStorage.removeItem("token");
           this.authService.changeUserInfo(null);
         });

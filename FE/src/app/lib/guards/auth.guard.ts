@@ -10,8 +10,12 @@ import { Injectable } from '@angular/core';
 import { RouterHelperService } from '../helpers';
 import { isNull } from '@angular/compiler/src/output/output_ast';
 import { isEmpty } from 'rxjs/operators';
-import { AuthService } from '../data/services';
-import { ReturnMessage, UserDataReturnDTOModel } from '../data/models';
+import { AuthService, SweetalertService } from '../data/services';
+import {
+  ReturnMessage,
+  TypeSweetAlertIcon,
+  UserDataReturnDTOModel,
+} from '../data/models';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +24,8 @@ export class AuthGuardsAdminService {
   constructor(
     private router: Router,
     private routerHelperService: RouterHelperService,
-    private authService: AuthService
+    private authService: AuthService,
+    private sweetalertService: SweetalertService
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -29,9 +34,6 @@ export class AuthGuardsAdminService {
       return this.authService
         .getInformationUser()
         .then((res: ReturnMessage<UserDataReturnDTOModel>) => {
-          if (res.hasError) {
-            return this.routerHelperService.redirectToLogin();
-          }
           this.authService.changeUserInfo(res.data);
           route.data = {
             user: res.data,
@@ -39,8 +41,14 @@ export class AuthGuardsAdminService {
           };
           const url: string = this.getStateUrl(route, state.url);
           return true;
-        }).catch(er => {
-          return this.routerHelperService.redirectToLogin();
+        })
+        .catch((er) => {
+          this.sweetalertService.alert(
+            'Please Log In Again!',
+            TypeSweetAlertIcon.WARNING,
+            'Login Expires'
+          );
+          localStorage.removeItem('token');
         });
     }
     return this.routerHelperService.redirectToLogin();

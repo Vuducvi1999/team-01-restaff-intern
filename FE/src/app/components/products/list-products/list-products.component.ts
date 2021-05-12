@@ -43,9 +43,9 @@ export class ListProductsComponent implements OnInit {
             fileExt == 'jpeg' ||
             fileExt == 'icon'
           ) {
-            return `<a href="${FileService.getLinkFile(file)}"><img width="75px" height="75px" src="${FileService.getLinkFile(file)}"/></a>`;
+            return `<a href="${FileService.getLinkFile(file.split(',')[0])}"><img width="75px" height="75px" src="${FileService.getLinkFile(file.split(',')[0])}"/></a>`;
             }
-          return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
+          return `<a href="${FileService.getLinkFile(file.split(',')[0])}">${FileService.getLinkFile(file.split(',')[0])}</a>`;
         },
       },
       name: {

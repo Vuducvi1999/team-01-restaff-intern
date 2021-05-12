@@ -4,9 +4,10 @@ import { ActivatedRoute, Router } from "@angular/router";
 import {
   AuthRegistModel,
   ReturnMessage,
+  TypeSweetAlertIcon,
 } from "src/app/lib/data/models";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
-import { AuthService } from "src/app/lib/data/services";
+import { AuthService, SweetalertService } from "src/app/lib/data/services";
 import Swal from "sweetalert2";
 
 @Component({
@@ -22,11 +23,11 @@ export class RegisterComponent implements OnInit {
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private activedRoute: ActivatedRoute
+    private activedRoute: ActivatedRoute,
+    private sweetalertService: SweetalertService
   ) {
     this.createRegistForm();
-    if(localStorage.getItem('token'))
-    {
+    if (localStorage.getItem("token")) {
       this.backUrl();
     }
   }
@@ -82,21 +83,21 @@ export class RegisterComponent implements OnInit {
     await this.authService
       .register(data)
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
-        Swal.fire(
-          'Register Success',
-          `Wecome ${data.data.firstName}!`,
-          'success'
-        )
+        this.sweetalertService.notification(
+          "Register Success",
+          TypeSweetAlertIcon.SUCCESS,
+          `Wecome ${data.data.firstName}!`
+        );
         localStorage.setItem("token", data.data.token);
         localStorage.setItem("user", JSON.stringify(data.data));
         this.backUrl();
       })
       .catch((er) => {
-        Swal.fire(
-          'Register Fail',
-          `${er.error.message ?? er.error}`,
-          'error'
-        )
+        this.sweetalertService.alert(
+          "Register Fail",
+          TypeSweetAlertIcon.ERROR,
+          `${er.error.message ?? er.error}`
+        );
       });
   }
 

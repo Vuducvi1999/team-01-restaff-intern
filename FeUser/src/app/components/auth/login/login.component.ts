@@ -1,9 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AuthLoginModel, ReturnMessage } from "src/app/lib/data/models";
+import {
+  AuthLoginModel,
+  ReturnMessage,
+  TypeSweetAlertIcon,
+} from "src/app/lib/data/models";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
-import { AuthService } from "src/app/lib/data/services";
+import { AuthService, SweetalertService } from "src/app/lib/data/services";
 import Swal from "sweetalert2";
 
 @Component({
@@ -20,10 +24,10 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private activedRoute: ActivatedRoute,
+    private sweetalertService: SweetalertService
   ) {
     this.createLoginForm();
-    if(localStorage.getItem('token'))
-    {
+    if (localStorage.getItem("token")) {
       this.backUrl();
     }
   }
@@ -46,13 +50,11 @@ export class LoginComponent implements OnInit {
     this.callUrl(returnUrl);
   }
 
-  callUrl(url: string)
-  {
+  callUrl(url: string) {
     this.router.navigateByUrl(url);
   }
 
-  async onLogin()
-  {
+  async onLogin() {
     this.submitted = true;
     if (this.loginForm.invalid) {
       return;
@@ -63,21 +65,21 @@ export class LoginComponent implements OnInit {
     await this.authService
       .login(data)
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
-        Swal.fire(
-          'Login Success',
-          `Wecome ${data.data.firstName}!`,
-          'success'
-        )
-        localStorage.setItem('token', data.data.token);
+        this.sweetalertService.notification(
+          "Login Success",
+          TypeSweetAlertIcon.SUCCESS,
+          `Wecome ${data.data.firstName}!`
+        );
+        localStorage.setItem("token", data.data.token);
         this.authService.changeUserInfo(data.data);
         this.backUrl();
       })
       .catch((er) => {
-        Swal.fire(
-          'Login Fail',
-          `${er.error.message ?? er.error}`,
-          'error'
-        )
+        this.sweetalertService.alert(
+          "Login Fail",
+          TypeSweetAlertIcon.ERROR,
+          `${er.error.message ?? er.error}`
+        );
       });
   }
 }

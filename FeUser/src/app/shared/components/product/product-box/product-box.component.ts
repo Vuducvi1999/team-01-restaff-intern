@@ -69,6 +69,7 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
   ) {}
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
+    this.subDataUser = null;
   }
   ngOnChanges(changes: SimpleChanges): void {
     this.updateTypeGridLayout();
