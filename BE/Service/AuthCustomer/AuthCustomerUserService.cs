@@ -51,7 +51,7 @@ namespace Service.AuthCustomer
 
             try
             {
-                var account = _userRepository.Queryable().Include(it => it.Customer).Where(a => a.Type == UserType.Customer && a.Username == data.Username && a.Password == MD5Helper.ToMD5Hash(data.Password)).FirstOrDefault();
+                var account = _userRepository.Queryable().Include(it => it.Customer).Where(a => !a.IsDeleted && a.Type == UserType.Customer && a.Username == data.Username && a.Password == MD5Helper.ToMD5Hash(data.Password)).FirstOrDefault();
                 if (account.IsNullOrEmpty())
                 {
                     return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.InvalidAuthInfoMsg);
@@ -101,7 +101,7 @@ namespace Service.AuthCustomer
         {
             try
             {
-                var entity = _userRepository.Queryable().Include(it => it.Customer).Where(it => it.Id == _userManager.AuthorizedUserId && it.Type == UserType.Customer).FirstOrDefault();
+                var entity = _userRepository.Queryable().Include(it => it.Customer).Where(it => !it.IsDeleted && it.Id == _userManager.AuthorizedUserId && it.Type == UserType.Customer).FirstOrDefault();
                 if (entity.IsNullOrEmpty())
                 {
                     return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);

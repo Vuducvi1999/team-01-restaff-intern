@@ -2,6 +2,7 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
   ViewChild,
@@ -13,7 +14,7 @@ import {
   CreateCustomerWishListModel,
   CustomerWishListModel,
 } from "src/app/lib/data/models/customerWishList/customerWishList.model";
-import { UserModel } from "src/app/lib/data/models/users/user.model";
+import { UserDataReturnDTOModel, UserModel } from "src/app/lib/data/models/users/user.model";
 import { CustomerWishListService } from "src/app/lib/data/services/customerWishLists/customerWishList.service";
 import {
   ETypeGridLayout,
@@ -29,15 +30,18 @@ import { registerLocaleData } from "@angular/common";
 import localeFr from "@angular/common/locales/fr";
 import { ThrowStmt } from "@angular/compiler";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
-import { FileService } from "src/app/lib/data/services";
+import { FileService } from "src/app/lib/data/services/files/file.service";
+import { Subscription } from "rxjs";
+import { AuthService } from "src/app/lib/data/services";
+registerLocaleData(localeFr, "fr");
 
 @Component({
   selector: "app-product-box",
   templateUrl: "./product-box.component.html",
   styleUrls: ["./product-box.component.scss"],
-  providers: [CartService, CustomerWishListService],
+  providers: [CartService, CustomerWishListService, AuthService],
 })
-export class ProductBoxComponent implements OnInit, OnChanges {
+export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
   @Input() product: ProductModel;
   @Input() currency: any = "VND"; // Default Currency
   @Input() thumbnail: boolean = false; // Default False
@@ -55,10 +59,18 @@ export class ProductBoxComponent implements OnInit, OnChanges {
   public ImageSrc: string;
   typeDisplayImage = TypeDisplayImage;
 
+  userInfo: UserDataReturnDTOModel;
+  subDataUser: Subscription;
+
   constructor(
     private cartService: CartService,
-    private wishListService: CustomerWishListService
+    private wishListService: CustomerWishListService,
+    private authService: AuthService,
   ) {}
+  ngOnDestroy(): void {
+    this.subDataUser.unsubscribe();
+    this.subDataUser = null;
+  }
   ngOnChanges(changes: SimpleChanges): void {
     this.updateTypeGridLayout();
   }
@@ -70,13 +82,15 @@ export class ProductBoxComponent implements OnInit, OnChanges {
       }, 2000); // Skeleton Loader
     }
 
-    this.getWishlist();
+    this.subDataUser = this.authService.callUserInfo.subscribe(it => {
+      this.userInfo = it;
+      this.getWishlist();
+    })
   }
 
   getWishlist() {
-    const customer = JSON.parse(localStorage.getItem("user")) ?? "";
-    if (customer) {
-      this.wishListService.getByCustomer(customer?.id).then((data) => {
+    if (this.userInfo) {
+      this.wishListService.getByCustomer(this.userInfo?.id).then((data) => {
         this.testData = data.data;
       });
     }
@@ -145,9 +159,8 @@ export class ProductBoxComponent implements OnInit, OnChanges {
   addToWishlist(product: any) {
     this.cartService.addToWishlist(product);
 
-    const user: UserModel = JSON.parse(localStorage.getItem("user"));
     const model: CreateCustomerWishListModel = {
-      customerId: user.id,
+      customerId: this.userInfo?.id,
       productId: product.id,
     };
     this.wishListService

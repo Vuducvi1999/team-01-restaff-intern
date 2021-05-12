@@ -5,6 +5,7 @@ import { BlogModel } from 'src/app/lib/data/models/blogs/blog.model';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models/common';
 import { FileService } from 'src/app/lib/data/services';
 import { BlogService } from 'src/app/lib/data/services/blogs/blog.service';
+import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { BlogsDetailComponent } from '../blogs-detail/blogs-detail.component';
 
 @Component({
@@ -49,21 +50,9 @@ export class ListBlogsComponent implements OnInit {
     },
     columns: {
       imageUrl: {
-        title: 'ImageURL',
-        type: 'html',
-        filter: false,
-        valuePrepareFunction: (file) => {
-          var fileExt = file.split('.').pop();
-          if (
-            fileExt == 'png' ||
-            fileExt == 'jpg' ||
-            fileExt == 'jpeg' ||
-            fileExt == 'icon'
-          ) {
-            return `<a href="${file}"><img appUiImageLoader width="75px" height="75px" src="${file}"/></a>`;
-          }
-          return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
-        },
+        title: 'Image',
+        type: 'custom',
+        renderComponent: ViewImageCellComponent,
       },
       title: {
         title: 'Title',

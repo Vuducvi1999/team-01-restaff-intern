@@ -1,13 +1,16 @@
 import { ViewportScroller } from "@angular/common";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { SpinnerVisibilityService } from "ng-http-loader";
 import { Subscription } from "rxjs";
 import {
   ETypeSort,
   PageModel,
   ProductModel,
   ReturnMessage,
+  TypeSweetAlertIcon,
 } from "src/app/lib/data/models";
+import { SweetalertService } from "src/app/lib/data/services";
 import { HomeService } from "src/app/lib/data/services/home/home.service";
 import { ProductListService } from "src/app/lib/data/services/productlist/productlist.service";
 
@@ -39,18 +42,17 @@ export class ProductListComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    public productListService: ProductListService
-  ) {
-   
-  }
+    public productListService: ProductListService,
+    private sweetalertService: SweetalertService
+  ) {}
   ngOnDestroy(): void {
     this.subscribe.unsubscribe();
+    this.subscribe = null;
   }
 
   ngOnInit(): void {
-     // Get Query params..
-     this.subscribe = this.route.queryParams.subscribe((params) => {
-      
+    // Get Query params..
+    this.subscribe = this.route.queryParams.subscribe((params) => {
       this.products = [];
       this.params = {};
 
@@ -87,6 +89,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
       this.sortBy != ETypeSort.NULL
         ? (this.params.typeSort = this.sortBy)
         : delete this.params.typeSort;
+
+      this.params.pageSize = 24;
+      this.params.loading = true;
       this.addItems();
     });
   }
@@ -105,7 +110,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
         this.products = [...this.products, ...res.data.results];
       })
-      .catch((res) => console.error(res));
+      .catch((res) =>
+        this.sweetalertService.alert(
+          res.error.message ?? res.error,
+          TypeSweetAlertIcon.ERROR
+        )
+      );
   }
 
   // Infinite scroll

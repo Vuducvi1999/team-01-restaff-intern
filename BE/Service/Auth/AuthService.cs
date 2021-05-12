@@ -43,7 +43,7 @@ namespace Service.Auth
 
             try
             {
-                var account = _userRepository.Queryable().Where(a => a.Type == UserType.Admin && a.Username == data.Username && a.Password == MD5Helper.ToMD5Hash(data.Password)).FirstOrDefault();
+                var account = _userRepository.Queryable().Where(a => !a.IsDeleted && a.Type == UserType.Admin && a.Username == data.Username && a.Password == MD5Helper.ToMD5Hash(data.Password)).FirstOrDefault();
                 if (account.IsNullOrEmpty())
                 {
                     return new ReturnMessage<UserDataReturnDTO>(true, null, MessageConstants.InvalidAuthInfoMsg);

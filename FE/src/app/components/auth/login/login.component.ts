@@ -4,9 +4,11 @@ import { ActivatedRoute, Data, Router } from '@angular/router';
 import {
   AuthLoginModel,
   ReturnMessage,
+  TypeSweetAlertIcon,
   UserDataReturnDTOModel,
 } from 'src/app/lib/data/models';
-import { AuthService } from 'src/app/lib/data/services';
+import { AuthService, SweetalertService } from 'src/app/lib/data/services';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -16,36 +18,34 @@ import { AuthService } from 'src/app/lib/data/services';
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public registerForm: FormGroup;
+  submitted = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private activedRoute: ActivatedRoute,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private sweetalertService: SweetalertService
   ) {
     this.createLoginForm();
     this.createRegisterForm();
-    if(localStorage.getItem('token'))
-    {
+    if (localStorage.getItem('token')) {
       this.backUrl();
     }
   }
 
+  get f() {
+    return this.loginForm.controls;
+  }
+
   owlcarousel = [
     {
-      title: 'Welcome to Multikart',
-      desc:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.",
+      title: 'Welcome to Clothing Store',
+      // desc:
+      //   "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.",
     },
     {
-      title: 'Welcome to Multikart',
-      desc:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.",
-    },
-    {
-      title: 'Welcome to Multikart',
-      desc:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.",
+      title: 'This is the management page',
     },
   ];
   owlcarouselOptions = {
@@ -68,11 +68,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   async onLogin() {
+    this.submitted = true;
     if (!this.loginForm.valid) {
       return;
     }
@@ -81,13 +80,21 @@ export class LoginComponent implements OnInit {
     await this.authService
       .login(data)
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
-        // alert(data.message);
+        this.sweetalertService.notification(
+          'Login Success',
+          TypeSweetAlertIcon.SUCCESS,
+          `Wecome ${data.data.firstName}!`,
+        );
         localStorage.setItem('token', data.data.token);
-        localStorage.setItem('user', JSON.stringify(data.data));
+        localStorage.setItem('user',JSON.stringify(data.data));
         this.backUrl();
       })
       .catch((er) => {
-        alert(er.error.message);
+        this.sweetalertService.alert(
+          'Login Fail',
+          TypeSweetAlertIcon.ERROR,
+          `${er.error.message ?? er.error}`,
+        );
       });
   }
 

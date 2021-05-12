@@ -5,6 +5,7 @@ import { ContentLayoutComponent } from './shared/layout/content-layout/content-l
 import { LoginComponent } from './components/auth/login/login.component';
 import { AuthGuardsAdminService } from './lib/guards/auth.guard';
 import { RouterHelperService } from './lib/helpers';
+import { AuthModule } from './components/auth/auth.module';
 
 const routes: Routes = [
   {
@@ -17,11 +18,7 @@ const routes: Routes = [
     component: ContentLayoutComponent,
     children: content,
     canActivate: [AuthGuardsAdminService],
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
+  }
 ];
 
 @NgModule({
@@ -30,6 +27,7 @@ const routes: Routes = [
       scrollPositionRestoration: 'enabled',
       relativeLinkResolution: 'legacy',
     }),
+    AuthModule,
   ],
   exports: [RouterModule],
   providers: [AuthGuardsAdminService, RouterHelperService],
