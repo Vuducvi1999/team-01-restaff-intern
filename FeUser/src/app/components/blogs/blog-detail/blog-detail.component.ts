@@ -1,3 +1,4 @@
+import { ThisReceiver } from "@angular/compiler";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
@@ -22,6 +23,25 @@ import { TypeDisplayImage } from "src/app/shared/data";
   styleUrls: ["./blog-detail.component.scss"],
   templateUrl: "./blog-detail.component.html",
   providers: [CommentService],
+  styles: [
+    `
+      .star {
+        position: relative;
+        display: inline-block;
+        font-size: 1.1rem;
+        color: #d3d3d3;
+      }
+      .full {
+        color: #ffa200;
+      }
+      .half {
+        position: absolute;
+        display: inline-block;
+        overflow: hidden;
+        color: #ffa200;
+      }
+    `,
+  ],
 })
 export class BlogDetailComponent implements OnInit {
   id: string;
@@ -32,6 +52,8 @@ export class BlogDetailComponent implements OnInit {
   comments: PageModel<CommentModel>;
   searchModel: SearchPaganationDTO<SearchCommentModel>;
   item: any;
+  public rating: number;
+  public ratingPoint: number;
 
   constructor(
     private blogService: BlogService,
@@ -41,6 +63,7 @@ export class BlogDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getBlog();
+    this.getRating();
   }
 
   getBlog() {
@@ -57,7 +80,16 @@ export class BlogDetailComponent implements OnInit {
       this.getComments();
     });
   }
-
+  getRating() {
+    this.activatedRoute.paramMap.subscribe((params) => {
+      const data = { entityId: params.get("id") };
+      this.commentService
+        .getRating({ params: data })
+        .then((res: ReturnMessage<number>) => {
+          this.ratingPoint = res.data;
+        });
+    });
+  }
   createSearchModel() {
     this.searchModel = {
       search: { entityId: this.id },
@@ -81,6 +113,7 @@ export class BlogDetailComponent implements OnInit {
       .catch((e) => {
         console.log(e);
       });
+    this.getRating();
   }
 
   getImage(image) {

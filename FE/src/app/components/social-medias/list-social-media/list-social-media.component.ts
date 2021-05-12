@@ -26,13 +26,11 @@ export class ListSocialMediaComponent implements OnInit {
       .get(null)
       .then((res: ReturnMessage<PageModel<SocialMediaModel>>) => {
         if (!res.hasError) {
-          // console.log('social media', res.data);
           this.socialMedias = res.data.results;
         }
       })
       .catch((er) => {
         if (er.error.hasError) {
-          // console.log(er.error.message);
         }
       });
   }
@@ -61,7 +59,9 @@ export class ListSocialMediaComponent implements OnInit {
           ) {
             return `<a href="${file}"><img appUiImageLoader width="75px" height="75px" src="${file}"/></a>`;
           }
-          return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
+          return `<a href="${FileService.getLinkFile(
+            file
+          )}">${FileService.getLinkFile(file)}</a>`;
         },
       },
       title: {

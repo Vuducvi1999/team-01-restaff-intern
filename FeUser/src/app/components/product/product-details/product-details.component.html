@@ -70,7 +70,7 @@
             </div>
             <div>
               <h3>
-                {{product?.price | vndFormat}}
+                {{ product?.price | vndFormat }}
               </h3>
             </div>
             <ng-template #t let-fill="fill">
@@ -86,65 +86,66 @@
               [max]="5"
             ></ngb-rating>
             <hr />
-            <pre>Average <b>{{rating}}</b></pre>
-
-           
+            <div class="product-title">Average Rating: {{ rating }}</div>
           </div>
+          <br />
           <div class="addeffect-section product-description border-product">
-            <h3>Description</h3>
-            <div [innerHTML]="product?.contentHTML"></div>
-            <div *ngIf="product?.contentHTML != '' " class="addeffect-section product-description border-product">
+            <div
+              *ngIf="product?.contentHTML != ''"
+              class="addeffect-section product-description border-product"
+            >
               <h3>Description</h3>
               <div [innerHTML]="product?.contentHTML"></div>
             </div>
             <br />
-            
+
             <div class="addeffect-section product-description border-product">
-                <a 
-                href="javascrip:void(0)" 
-                class="btn btn-solid" 
+              <a
+                href="javascrip:void(0)"
+                class="btn btn-solid"
                 (click)="CartModal.openModal(product)"
-                *ngIf="cartModal">add to cart
+                *ngIf="cartModal"
+                >add to cart
               </a>
               <a
-              href="javascript:void(0)"
-              class="btn btn-solid" 
-              (click)="addToCart(product)"
-              *ngIf="!cartModal"
-              >add to cart
+                href="javascript:void(0)"
+                class="btn btn-solid"
+                (click)="addToCart(product)"
+                *ngIf="!cartModal"
+                >add to cart
               </a>
             </div>
-
-           
           </div>
         </div>
       </div>
       <div class="col-lg-4"></div>
     </div>
     <section class="tab-product m-0">
-      <div class="row">
-        <div class="col-sm-12 col-lg-12">
-          <ngb-tabset [type]="'tabs'" class="nav-material">
-            <ngb-tab>
-              <ng-template ngbTabTitle>Comments</ng-template>
-              <ng-template ngbTabContent>
-                <app-comment-detail
-                  *ngIf="comments"
-                  (action)="changePageIndex($event)"
-                  [comments]="comments"
-                ></app-comment-detail>
-              </ng-template>
-            </ngb-tab>
-            <ngb-tab *ngIf="user">
-              <ng-template ngbTabTitle>Write Review</ng-template>
-              <ng-template ngbTabContent>
-                <app-comment
-                  [dataComment]="dataComment"
-                  (action)="getComments()"
-                ></app-comment>
-              </ng-template>
-            </ngb-tab>
-          </ngb-tabset>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-lg-12">
+            <ngb-tabset [type]="'tabs'" class="nav-material">
+              <ngb-tab>
+                <ng-template ngbTabTitle>Comments</ng-template>
+                <ng-template ngbTabContent>
+                  <app-comment-detail
+                    *ngIf="comments"
+                    (action)="changePageIndex($event)"
+                    [comments]="comments"
+                  ></app-comment-detail>
+                </ng-template>
+              </ngb-tab>
+              <ngb-tab *ngIf="user">
+                <ng-template ngbTabTitle>Write Review</ng-template>
+                <ng-template ngbTabContent>
+                  <app-comment
+                    [dataComment]="dataComment"
+                    (action)="getComments()"
+                  ></app-comment>
+                </ng-template>
+              </ngb-tab>
+            </ngb-tabset>
+          </div>
         </div>
       </div>
     </section>
@@ -153,7 +154,7 @@
 <app-size-modal #sizeChart [product]="product"></app-size-modal>
 <!-- Section ends -->
 <app-cart-modal
-#cartModal
-*ngIf="cartModal"
+  #cartModal
+  *ngIf="cartModal"
   [product]="product"
 ></app-cart-modal>

@@ -5,7 +5,7 @@
     </div>
 
     <div
-      class="col-12"
+      class="col-md-12"
       *ngIf="allUser.length > 0 && comments.results.length > 0"
     >
       <ul class="comments">
@@ -19,25 +19,31 @@
               }"
             ></app-image-wrapper>
             <div class="media-body">
-              <h6>
-                {{ comment.fullName }}
-                <span>( {{ getDate(comment.createByDate) }} )</span>
-              </h6>
-              <div>
-                <ngb-rating
-                  [max]="5"
-                  [rate]="comment.rating"
-                  formControlName="rating"
-                  [readonly]="true"
-                >
-                  <ng-template let-fill="fill" let-index="index">
-                    <span class="star" [class.filled]="fill === 100"
-                      >&#9733;</span
-                    >
-                  </ng-template>
-                </ngb-rating>
+              <div class="form-row">
+                <b>
+                  {{ comment.fullName }}
+                  <span>( {{ getDate(comment.createByDate) }} )</span>
+                </b>
               </div>
-              <p>{{ comment.content }}</p>
+              <div class="form-row">
+                <div class="rating">
+                  <ngb-rating
+                    [max]="5"
+                    [rate]="comment.rating"
+                    [readonly]="true"
+                  >
+                    <ng-template let-fill="fill" let-index="index">
+                      <span class="star-detail" [class.filled]="fill === 100"
+                        >&#9733;</span
+                      >
+                    </ng-template>
+                  </ngb-rating>
+                </div>
+              </div>
+              <br />
+              <div class="form-row">
+                <div>{{ comment.content }}</div>
+              </div>
             </div>
           </div>
         </li>

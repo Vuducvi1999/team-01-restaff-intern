@@ -22,12 +22,14 @@ import { TypeDisplayImage } from "src/app/shared/data";
   providers: [UserService],
   styles: [
     `
-      .star {
-        font-size: 2rem;
+      .star-detail {
+        font-size: 1.5rem;
         color: #b0c4de;
+        vertical-align: middle;
       }
       .filled {
-        color: #1e90ff;
+        vertical-align: middle;
+        color: #ffa200;
       }
     `,
   ],

@@ -138,26 +138,6 @@ namespace Service.Comments
             }
         }
 
-        public ReturnMessage<CommentDTO> Update(UpdateCommentDTO model)
-        {
-            try
-            {
-                var entity = _commentRepository.Find(model.Id);
-                if (entity.IsNotNullOrEmpty())
-                {
-                    entity.Update(model);
-                    _commentRepository.Update(entity);
-                    _unitOfWork.SaveChanges();
-                    var result = new ReturnMessage<CommentDTO>(false, _mapper.Map<Comment, CommentDTO>(entity), MessageConstants.UpdateSuccess);
-                    return result;
-                }
-                return new ReturnMessage<CommentDTO>(true,null, MessageConstants.Error);
-            }
-            catch(Exception ex)
-            {
-                return new ReturnMessage<CommentDTO>(true, null, ex.Message);
-            }
-        }
 
         public ReturnMessage<decimal> GetRating(Guid entityId)
         {
@@ -170,7 +150,7 @@ namespace Service.Comments
                 var entity = _commentRepository.Queryable().Where(p => p.EntityId == entityId);
                 if(entity.Count() == 0)
                 {
-                    return new ReturnMessage<decimal>(true, 0, MessageConstants.DataError);
+                    return new ReturnMessage<decimal>(false, 1, MessageConstants.DataError);
                 }
                 decimal rating = (decimal)Math.Round(entity.Average(x => x.Rating), 1);
                 return new ReturnMessage<decimal>(false, rating, MessageConstants.GetSuccess);

@@ -42,17 +42,17 @@ import { CartModalComponent } from "src/app/shared/components/modal/cart-modal/c
       .star {
         position: relative;
         display: inline-block;
-        font-size: 3rem;
+        font-size: 2.5rem;
         color: #d3d3d3;
       }
       .full {
-        color: blue;
+        color: #ffa200;
       }
       .half {
         position: absolute;
         display: inline-block;
         overflow: hidden;
-        color: blue;
+        color: #ffa200;
       }
     `,
   ],
@@ -83,13 +83,14 @@ export class ProductDetailsComponent implements OnInit {
     private productDetailsService: ProductDetailsService,
     private activatedRoute: ActivatedRoute,
     private commentService: CommentService,
-    private formBuilder: FormBuilder,
     private cartService: CartService
   ) {}
 
   ngOnInit(): void {
     this.token = localStorage.getItem("token");
+
     this.getProduct();
+
     this.initDataComment();
     this.getRating();
   }
@@ -131,6 +132,7 @@ export class ProductDetailsComponent implements OnInit {
       entityType: "Product",
       rating: 1,
     };
+    var a = 1;
   }
 
   createSearchModel() {
@@ -157,6 +159,7 @@ export class ProductDetailsComponent implements OnInit {
       .catch((e) => {
         console.log(e);
       });
+    this.getRating();
   }
   addToCart(product: any) {
     this.cartService.addToCart(product);

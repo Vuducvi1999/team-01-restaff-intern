@@ -55,13 +55,6 @@ namespace BE.ControllersFeUser
             return CommonResponse(result);
         }
 
-        [HttpPut]
-        public IActionResult Update([FromBody] UpdateCommentDTO model)
-        {
-            var result = _commentService.Update(model);
-            return CommonResponse(result);
-        }
-
         [HttpGet(UrlConstants.BaseRating)]
         public IActionResult GetRating([FromQuery] Guid entityId)
         {

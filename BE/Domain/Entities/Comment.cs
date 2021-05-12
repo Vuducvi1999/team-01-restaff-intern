@@ -22,14 +22,6 @@ namespace Domain.Entities
         {
             base.Delete();
         }
-        public void Update(UpdateCommentDTO model)
-        {
-            base.Update();
-            FullName = model.FullName;
-            CustomerId = model.CustomerId;
-            EntityId = model.EntityId;
-            Content = model.Content;
-            //Rating = model.Rating;
-        }
+        
     }
 }

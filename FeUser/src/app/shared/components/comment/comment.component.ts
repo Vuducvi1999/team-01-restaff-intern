@@ -10,19 +10,11 @@ import { CommentService } from "src/app/lib/data/services/comments/comment.servi
   styles: [
     `
       .star {
-        position: relative;
-        display: inline-block;
         font-size: 2rem;
         color: #b0c4de;
       }
       .filled {
-        color: #1e90ff;
-      }
-      .half {
-        position: absolute;
-        display: inline-block;
-        overflow: hidden;
-        color: #1e90ff;
+        color: #ffa200;
       }
     `,
   ],
@@ -40,7 +32,7 @@ export class CommentComponent implements OnInit {
   ngOnInit() {
     this.initForm();
   }
-
+  currentRate = 1;
   initForm() {
     this.commentForm = this.fb.group({
       fullName: [this.dataComment.fullName],
@@ -50,6 +42,7 @@ export class CommentComponent implements OnInit {
       content: [""],
       rating: [this.dataComment.rating],
     });
+    var a = 1;
   }
 
   Submit() {
