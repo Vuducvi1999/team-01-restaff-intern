@@ -4,6 +4,7 @@ import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { FileService } from 'src/app/lib/data/services';
 import { CategoryService } from 'src/app/lib/data/services/categories/category.service';
+import { ImageComponent } from 'src/app/shared/components/image/image.component';
 import { CategoryDetailComponent } from '../categories-details/categories-details.component';
 
 @Component({
@@ -37,20 +38,8 @@ export class ListCategoriesComponent implements OnInit {
       {
         imageUrl: {
           title: 'Image',
-          type: 'html',
-          filter: false,
-          valuePrepareFunction: (file) => {
-            var fileExt = file.split('.').pop();
-            if (
-              fileExt == 'png' ||
-              fileExt == 'jpg' ||
-              fileExt == 'jpeg' ||
-              fileExt == 'icon'
-            ) {
-              return `<a href="${FileService.getLinkFile(file)}"><img width="75px" height="75px" src="${FileService.getLinkFile(file)}"/></a>`;
-            }
-            return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
-          },
+          type: 'custom',
+          renderComponent: ImageComponent,
         },
         name: {
           title: 'Name'

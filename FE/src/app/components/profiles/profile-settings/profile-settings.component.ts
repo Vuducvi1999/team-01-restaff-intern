@@ -124,8 +124,7 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
           this.profileService
             .update(this.updateProfile)
             .then((resp: ReturnMessage<UserDataReturnDTOModel>) => {
-              localStorage.setItem('user', JSON.stringify(resp.data));
-              this.userInfo = resp.data;
+              this.authService.changeUserInfo(resp.data);
               this.route.snapshot.data.user = resp.data;
               if (!resp.hasError) {
                 Swal.fire({

@@ -6,6 +6,7 @@ import { OrderDetailModel, OrderModel } from 'src/app/lib/data/models/orders/ord
 import { FileService } from 'src/app/lib/data/services';
 import { OrderDetailsService } from 'src/app/lib/data/services/orders/order-details.service';
 import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
+import { ImageComponent } from 'src/app/shared/components/image/image.component';
 import {
   ModalFooterModel,
   ModalHeaderModel,
@@ -49,20 +50,8 @@ export class UpdateOrderComponent implements OnInit {
     columns: {
       productImgUrl: {
         title: 'Image',
-        type: 'html',
-        filter: false,
-        valuePrepareFunction: (file) => {
-          var fileExt = file.split(',')[0].split('.').pop();
-          if (
-            fileExt == 'png' ||
-            fileExt == 'jpg' ||
-            fileExt == 'jpeg' ||
-            fileExt == 'icon'
-          ) {
-            return `<a href="${FileService.getLinkFile(file.split(',')[0])}"><img appUiImageLoader width="75px" height="75px" src="${FileService.getLinkFile(file.split(',')[0])}"/></a>`;
-          }
-          return `<a href="${FileService.getLinkFile(file.split(',')[0])}">${FileService.getLinkFile(file.split(',')[0])}</a>`;
-        },
+        type: 'custom',
+        renderComponent: ImageComponent,
       },
       productName: {
         title: 'Product Name',

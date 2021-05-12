@@ -8,7 +8,9 @@ import {
   PageModel,
   ProductModel,
   ReturnMessage,
+  TypeSweetAlertIcon,
 } from "src/app/lib/data/models";
+import { SweetalertService } from "src/app/lib/data/services";
 import { HomeService } from "src/app/lib/data/services/home/home.service";
 import { ProductListService } from "src/app/lib/data/services/productlist/productlist.service";
 
@@ -41,8 +43,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     public productListService: ProductListService,
-  ) {
-  }
+    private sweetalertService: SweetalertService
+  ) {}
   ngOnDestroy(): void {
     this.subscribe.unsubscribe();
     this.subscribe = null;
@@ -108,7 +110,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
         this.products = [...this.products, ...res.data.results];
       })
-      .catch((res) => console.error(res));
+      .catch((res) =>
+        this.sweetalertService.alert(
+          res.error.message ?? res.error,
+          TypeSweetAlertIcon.ERROR
+        )
+      );
   }
 
   // Infinite scroll

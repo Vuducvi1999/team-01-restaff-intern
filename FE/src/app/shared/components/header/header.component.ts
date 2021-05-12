@@ -52,7 +52,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onLogout() {
     localStorage.removeItem('token');
-    // this.route.snapshot.data.removeItem('token');
+    localStorage.removeItem('user');
     this.router.navigateByUrl('/login');
   }
 }

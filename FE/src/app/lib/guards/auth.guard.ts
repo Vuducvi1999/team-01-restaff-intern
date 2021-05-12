@@ -30,37 +30,17 @@ export class AuthGuardsAdminService {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const token = localStorage.getItem('token');
-    if (token) {
-      return this.authService
-        .getInformationUser()
-        .then((res: ReturnMessage<UserDataReturnDTOModel>) => {
-          this.authService.changeUserInfo(res.data);
-          route.data = {
-            user: res.data,
-            token: token,
-          };
-          const url: string = this.getStateUrl(route, state.url);
-          return true;
-        })
-        .catch((er) => {
-          this.sweetalertService.alert(
-            'Please Log In Again!',
-            TypeSweetAlertIcon.WARNING,
-            'Login Expires'
-          );
-          localStorage.removeItem('token');
-        });
+    const user = JSON.parse(localStorage.getItem('user') || null);
+    this.authService.changeUserInfo(user);
+    route.data = {
+      token: token,
+      user: user,
+    };
+    if (token && Object.keys(token).length !== 0) {
+      const url: string = this.getStateUrl(route, state.url);
+      return true;
     }
     return this.routerHelperService.redirectToLogin();
-    // route.data = {
-    //   user: JSON.parse(localStorage.getItem('user')),
-    //   token: localStorage.getItem('token'),
-    // };
-    // const user = route.data?.token;
-    // if (user && Object.keys(user).length !== 0) {
-    //   const url: string = this.getStateUrl(route, state.url);
-    //   return true;
-    // }
   }
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {

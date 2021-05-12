@@ -3,6 +3,7 @@ using Common.Http;
 using Domain.DTOs.Profiles;
 using Domain.DTOs.User;
 using Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Files;
@@ -21,7 +22,7 @@ namespace BE.Controllers
             _profileService = profileService;
         }
 
-
+        [Authorize]
         [HttpPut]
         public IActionResult Update([FromBody] UpdateProfileDTO model)
         {
@@ -30,6 +31,7 @@ namespace BE.Controllers
             return CommonResponse(result);
         }
 
+        [Authorize]
         [HttpPut]
         [Route(UrlConstants.Password)]
         public IActionResult ChangePassword([FromBody] ChangePassworProfileDTO model)

@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit {
           `Wecome ${data.data.firstName}!`,
         );
         localStorage.setItem('token', data.data.token);
-        this.authService.changeUserInfo(data.data);
+        localStorage.setItem('user',JSON.stringify(data.data));
         this.backUrl();
       })
       .catch((er) => {

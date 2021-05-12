@@ -20,6 +20,7 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { UiImageLoaderDirective } from './directives/uiImageLoader.directive';
+import { ImageComponent } from './components/image/image.component';
 @NgModule({
   declarations: [
     ToggleFullscreenDirective,
@@ -34,6 +35,7 @@ import { UiImageLoaderDirective } from './directives/uiImageLoader.directive';
     ModalFooterComponent,
     UploadFileComponent,
     UiImageLoaderDirective,
+    ImageComponent
   ],
   imports: [CommonModule, RouterModule, NgbModalModule, NgxDropzoneModule,SweetAlert2Module.forRoot()],
   providers: [NavService, WINDOW_PROVIDERS, FileService, SweetalertService],
@@ -45,6 +47,7 @@ import { UiImageLoaderDirective } from './directives/uiImageLoader.directive';
     ModalHeaderComponent,
     UploadFileComponent,
     SweetAlert2Module,
+    ImageComponent
   ],
 })
 export class SharedModule {}

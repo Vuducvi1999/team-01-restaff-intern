@@ -4,6 +4,7 @@ import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { ProductModel } from 'src/app/lib/data/models/products/product.model';
 import { FileService } from 'src/app/lib/data/services';
 import { ProductService } from 'src/app/lib/data/services/products/product.service';
+import { ImageComponent } from 'src/app/shared/components/image/image.component';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 @Component({
   selector: 'app-list-products',
@@ -30,23 +31,10 @@ export class ListProductsComponent implements OnInit {
       position: 'right',
     },
     columns: {
-      imageUrl: {
+      imageUrl:{
         title: 'Image',
-        type: 'html',
-        filter: false,
-        valuePrepareFunction: (file) => {
-          // console.log(file);
-          var fileExt = file.split(',')[0].split('.').pop();
-          if (
-            fileExt == 'png' ||
-            fileExt == 'jpg' ||
-            fileExt == 'jpeg' ||
-            fileExt == 'icon'
-          ) {
-            return `<a href="${FileService.getLinkFile(file.split(',')[0])}"><img width="75px" height="75px" src="${FileService.getLinkFile(file.split(',')[0])}"/></a>`;
-            }
-          return `<a href="${FileService.getLinkFile(file.split(',')[0])}">${FileService.getLinkFile(file.split(',')[0])}</a>`;
-        },
+        type: 'custom',
+        renderComponent: ImageComponent,
       },
       name: {
         title: 'Name',

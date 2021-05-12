@@ -2,7 +2,11 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/app/lib/environments/environment';
 import { HttpClientService } from 'src/app/lib/http/http-client';
-import { AuthLoginModel, ReturnMessage, UserDataReturnDTOModel } from '../../models';
+import {
+  AuthLoginModel,
+  ReturnMessage,
+  UserDataReturnDTOModel,
+} from '../../models';
 
 @Injectable({
   providedIn: 'root',
@@ -21,12 +25,14 @@ export class AuthService {
   getInformationUser() {
     return this.http.getObservable(this.url).toPromise();
   }
-  
-  private static userInfo = new BehaviorSubject<UserDataReturnDTOModel>(null);
+
+  private static userInfo = new BehaviorSubject<UserDataReturnDTOModel>(
+    JSON.parse(localStorage['user'] || 'null')
+  );
   callUserInfo = AuthService.userInfo.asObservable();
 
-  changeUserInfo(userInfo : UserDataReturnDTOModel)
-  {
+  changeUserInfo(userInfo: UserDataReturnDTOModel) {
+    localStorage['user'] = JSON.stringify(userInfo);
     AuthService.userInfo.next(userInfo);
   }
 }

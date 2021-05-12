@@ -11,6 +11,7 @@ import {
   FileService,
   SweetalertService,
 } from 'src/app/lib/data/services';
+import { ImageComponent } from 'src/app/shared/components/image/image.component';
 import { CustomerDetailsComponent } from '../customer-details/customer-details.component';
 
 @Component({
@@ -38,30 +39,9 @@ export class ListCustomersComponent implements OnInit {
     },
     columns: {
       imageUrl: {
-        title: 'ImageURL',
-        type: 'html',
-        filter: false,
-        valuePrepareFunction: (file) => {
-          if (file == null) {
-            return;
-          }
-          var fileExt = file.split('.').pop();
-          if (
-            fileExt == 'png' ||
-            fileExt == 'jpg' ||
-            fileExt == 'jpeg' ||
-            fileExt == 'icon'
-          ) {
-            return `<a href="${FileService.getLinkFile(
-              file
-            )}"><img appUiImageLoader width="75px" height="75px" src="${FileService.getLinkFile(
-              file
-            )}"/></a>`;
-          }
-          return `<a href="${FileService.getLinkFile(
-            file
-          )}">${FileService.getLinkFile(file)}</a>`;
-        },
+        title: 'Image',
+        type: 'custom',
+        renderComponent: ImageComponent,
       },
       username: {
         title: 'Username',
@@ -133,7 +113,7 @@ export class ListCustomersComponent implements OnInit {
       })
       .catch((er) => {
         if (er.error.hasError) {
-          // console.log(er.error.message);
+          this.sweetalertService.alert(er.error.message??er.error,TypeSweetAlertIcon.ERROR);
         }
       });
   }
