@@ -1,7 +1,9 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
+import { SweetalertService } from 'src/app/lib/data/services';
 import { CategoryService } from 'src/app/lib/data/services/categories/category.service';
 
 import {
@@ -25,7 +27,8 @@ export class CategoryDetailComponent implements OnInit {
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];
   public item: any;
-  public regex: string = "^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ]*$";
+  public regex: string =
+    '^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ]*$';
   submitted = false;
 
   ngOnChanges(changes: SimpleChanges): void {}
@@ -33,7 +36,8 @@ export class CategoryDetailComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private categoryService: CategoryService,
-    private ngbActiveModal: NgbActiveModal
+    private ngbActiveModal: NgbActiveModal,
+    private sweetalertService: SweetalertService
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -46,7 +50,10 @@ export class CategoryDetailComponent implements OnInit {
   }
   save() {
     if (this.categoriesForm.invalid) {
-      window.alert("Invalid Form make sure you input valid value !");
+      this.sweetalertService.alert(
+        'Invalid Form make sure you input valid value !',
+        TypeSweetAlertIcon.ERROR
+      );
       return;
     }
     this.submitted = true;
@@ -68,10 +75,17 @@ export class CategoryDetailComponent implements OnInit {
     return this.categoryService
       .save(this.category)
       .then(() => {
+        this.sweetalertService.notification(
+          this.item ? 'Update Success' : 'Create Success',
+          TypeSweetAlertIcon.SUCCESS
+        );
         this.ngbActiveModal.close();
       })
       .catch((er) => {
-        // console.log(er);
+        this.sweetalertService.alert(
+          er.error.message ?? er.error,
+          TypeSweetAlertIcon.ERROR
+        );
       });
   }
 
@@ -79,15 +93,21 @@ export class CategoryDetailComponent implements OnInit {
     this.categoriesForm = this.formBuilder.group({
       name: [
         this.item ? this.item.name : '',
-        [Validators.required, Validators.minLength(3), Validators.maxLength(50),
-          Validators.pattern(this.regex)
-         ]
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+          Validators.pattern(this.regex),
+        ],
       ],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required, Validators.minLength(3), Validators.maxLength(100),
-          Validators.pattern(this.regex)
-         ]
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(100),
+          Validators.pattern(this.regex),
+        ],
       ],
       imageUrl: [this.item ? this.item.imageUrl : ''],
     });

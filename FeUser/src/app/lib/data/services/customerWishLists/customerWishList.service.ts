@@ -13,6 +13,7 @@ export class CustomerWishListService {
   constructor(private httpClient: HttpClientService) {}
 
   getByCustomer(id: string, request: any = null) {
+    request = { params: { loading: true } };
     return this.httpClient
       .getObservable(this.url + `/${id}`, request)
       .toPromise();

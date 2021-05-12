@@ -1,19 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { OrderDetailModel, OrderModel, ProductModel } from 'src/app/lib/data/models';
-import { CartModel } from 'src/app/lib/data/models/cart/cart.model';
-import { CartService } from 'src/app/lib/data/services/cart/cart.service';
-import { CouponService } from 'src/app/lib/data/services/coupons/coupon.service';
-import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { Subscription } from "rxjs";
+import {
+  OrderDetailModel,
+  OrderModel,
+  ProductModel,
+} from "src/app/lib/data/models";
+import { CartModel } from "src/app/lib/data/models/cart/cart.model";
+import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
+import { AuthService } from "src/app/lib/data/services";
+import { CartService } from "src/app/lib/data/services/cart/cart.service";
+import { CouponService } from "src/app/lib/data/services/coupons/coupon.service";
+import { OrdersService } from "src/app/lib/data/services/orders/orders.service";
 
 @Component({
-  selector: 'app-checkout',
-  templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.scss'],
-  providers: [CartService, OrdersService, CouponService]
-
+  selector: "app-checkout",
+  templateUrl: "./checkout.component.html",
+  styleUrls: ["./checkout.component.scss"],
+  providers: [CartService, OrdersService, CouponService, AuthService],
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent implements OnInit, OnDestroy {
   public cart: CartModel;
   public products: ProductModel[] = [];
   public subTotal: any;
@@ -27,16 +33,30 @@ export class CheckoutComponent implements OnInit {
   public couponPercent: string;
   public couponCode: string;
   public order: OrderModel = new OrderModel();
+
+  subDataUser: Subscription;
+
   constructor(
     public cartService: CartService,
     public orderService: OrdersService,
     public couponService: CouponService,
-    public routerService: Router) {
+    public routerService: Router,
+    public authService: AuthService
+  ) {}
+  ngOnDestroy(): void {
+    this.subDataUser.unsubscribe();
+    this.subDataUser = null;
   }
-
 
   ngOnInit(): void {
     this.loadCartItems();
+    this.subDataUser = this.authService.callUserInfo.subscribe(it => {
+      this.order.firstName = it?.firstName;
+      this.order.lastName = it?.lastName;
+      this.order.email = it?.email;
+      this.order.phone = it?.phone;
+      this.order.address = it?.address;
+    });
   }
 
   loadCartItems() {
@@ -47,18 +67,16 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
-
-
   onSubmit() {
     this.loadModel();
-    console.log(this.order)
-    this.orderService.create(this.order).then(
-      (resp) => {
+    console.log(this.order);
+    this.orderService
+      .create(this.order)
+      .then((resp) => {
         this.cartService.removeAll();
-        this.routerService.navigate(["checkout/success"], { state: resp })
-      }
-    ).catch((er) => console.log(er));
-
+        this.routerService.navigate(["checkout/success"], { state: resp });
+      })
+      .catch((er) => console.log(er));
   }
 
   loadModel() {
@@ -67,7 +85,7 @@ export class CheckoutComponent implements OnInit {
     this.order.totalAmount = this.totalAmount;
     this.order.totalItem = this.totalItem;
 
-    this.products.forEach(product => {
+    this.products.forEach((product) => {
       var orderDetail = new OrderDetailModel();
       orderDetail.productId = product.id;
       orderDetail.productName = product.name;
@@ -92,10 +110,10 @@ export class CheckoutComponent implements OnInit {
         if (resp.data.hasPercent) {
           this.order.couponPercent = resp.data.value;
           this.couponPercent = `-${this.order.couponPercent}%`;
-          this.order.couponValue = this.subTotal * resp.data.value / 100;
+          this.order.couponValue = (this.subTotal * resp.data.value) / 100;
           this.couponValue = this.order.couponValue;
           this.totalAmount = this.subTotal - this.couponValue;
-          return this.order.totalAmount = this.totalAmount;
+          return (this.order.totalAmount = this.totalAmount);
         }
 
         this.order.couponValue = resp.data.value;

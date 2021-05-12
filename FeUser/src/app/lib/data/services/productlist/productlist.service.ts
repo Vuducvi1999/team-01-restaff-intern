@@ -18,10 +18,10 @@ export class ProductListService {
   getCategory() {
     return this.httpClient.getObservable(this.baseCategory, null).toPromise();
   }
-  
+
   getByCategory(id: any, request: any) {
-    return this.httpClient.getObservable(this.byCategory + id, request).toPromise();
+    return this.httpClient
+      .getObservable(this.byCategory + id, request)
+      .toPromise();
   }
-
-
 }

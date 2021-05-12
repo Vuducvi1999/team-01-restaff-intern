@@ -4,6 +4,7 @@ import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { SocialMediaModel } from 'src/app/lib/data/models/social-medias/social-media.model';
 import { FileService } from 'src/app/lib/data/services';
 import { SocialMediaService } from 'src/app/lib/data/services/social-media/social-media.service';
+import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { SocialMediaDetailComponent } from '../social-media-detail/social-media-detail.component';
 
 @Component({
@@ -48,21 +49,9 @@ export class ListSocialMediaComponent implements OnInit {
     },
     columns: {
       iconUrl: {
-        title: 'ImageURL',
-        type: 'html',
-        filter: false,
-        valuePrepareFunction: (file) => {
-          var fileExt = file.split('.').pop();
-          if (
-            fileExt == 'png' ||
-            fileExt == 'jpg' ||
-            fileExt == 'jpeg' ||
-            fileExt == 'icon'
-          ) {
-            return `<a href="${file}"><img appUiImageLoader width="75px" height="75px" src="${file}"/></a>`;
-          }
-          return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
-        },
+        title: 'Image',
+        type: 'custom',
+        renderComponent: ViewImageCellComponent,
       },
       title: {
         title: 'Title',

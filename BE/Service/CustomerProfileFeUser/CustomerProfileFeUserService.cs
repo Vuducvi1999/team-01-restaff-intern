@@ -38,15 +38,10 @@ namespace Service.CustomerProfileFeUser
             _userManager = userManager;
         }
 
-        public ReturnMessage<CustomerDataReturnDTO> ChangePassword(IEnumerable<Claim> claims, ChangePasswordCustomerProfileFeUserDTO model)
+        public ReturnMessage<CustomerDataReturnDTO> ChangePassword(ChangePasswordCustomerProfileFeUserDTO model)
         {
             try
             {
-                if (claims.IsNullOrEmpty())
-                {
-                    return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);
-                }
-
                 var user = _userRepository.Queryable().FirstOrDefault(it => it.Type == UserType.Customer
                                                                             && it.Id == _userManager.AuthorizedUserId
                                                                             && it.Password == MD5Helper.ToMD5Hash(model.Password));
@@ -56,6 +51,10 @@ namespace Service.CustomerProfileFeUser
                     return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);
                 }
 
+                if(model.Password == model.NewPassword)
+                {
+                    return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.CurrentPasswordEqualNewPassword);
+                }
                 user.ChangePassword(model);
                 _userRepository.Update(user);
                 _unitOfWork.SaveChanges();
@@ -68,15 +67,10 @@ namespace Service.CustomerProfileFeUser
             }
         }
 
-        public ReturnMessage<CustomerDataReturnDTO> Update(IEnumerable<Claim> claims, UpdateCustomerProfileFeUserDTO model)
+        public ReturnMessage<CustomerDataReturnDTO> Update(UpdateCustomerProfileFeUserDTO model)
         {
             try
             {
-                if (claims.IsNullOrEmpty())
-                {
-                    return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);
-                }
-
                 var user = _userRepository.Queryable()
                     .FirstOrDefault(it => it.Type == UserType.Customer && it.Id == _userManager.AuthorizedUserId);
                 if (user.IsNullOrEmpty())

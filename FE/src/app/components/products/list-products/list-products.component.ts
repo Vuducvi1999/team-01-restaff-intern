@@ -4,6 +4,7 @@ import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { ProductModel } from 'src/app/lib/data/models/products/product.model';
 import { FileService } from 'src/app/lib/data/services';
 import { ProductService } from 'src/app/lib/data/services/products/product.service';
+import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { CustomViewCellNumberComponent } from 'src/app/shared/components/custom-view-cell-number/custom-view-cell-number.component';
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
@@ -33,23 +34,10 @@ export class ListProductsComponent implements OnInit {
       position: 'right',
     },
     columns: {
-      imageUrl: {
+      imageUrl:{
         title: 'Image',
-        type: 'html',
-        filter: false,
-        valuePrepareFunction: (file) => {
-          // console.log(file);
-          var fileExt = file.split(',')[0].split('.').pop();
-          if (
-            fileExt == 'png' ||
-            fileExt == 'jpg' ||
-            fileExt == 'jpeg' ||
-            fileExt == 'icon'
-          ) {
-            return `<a href="${FileService.getLinkFile(file.split(',')[0])}"><img appUiImageLoader width="75px" height="75px" src="${FileService.getLinkFile(file.split(',')[0])}"/></a>`;
-          }
-          return `<a href="${FileService.getLinkFile(file.split(',')[0])}">${FileService.getLinkFile(file.split(',')[0])}</a>`;
-        },
+        type: 'custom',
+        renderComponent: ViewImageCellComponent,
       },
       name: {
         title: 'Name',
@@ -68,7 +56,6 @@ export class ListProductsComponent implements OnInit {
         filter: false,
       },
       price: {
-        value:'price',
         type: 'custom',
         title:'Price',
         renderComponent: CustomViewCellNumberComponent,
@@ -77,7 +64,6 @@ export class ListProductsComponent implements OnInit {
       displayOrder: {
         title: 'Display Order',
         type:'custom',
-        value:'displayOrder',
         renderComponent: CustomViewCellComponent,
         filter: false,
       },

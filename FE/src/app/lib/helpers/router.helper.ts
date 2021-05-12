@@ -40,6 +40,8 @@ export class RouterHelperService {
   }
 
   redirectToLogin() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     let returnUrl = ``;
     if (window.location.pathname.length !== 0) {
       returnUrl = `${window.location.pathname}${encodeURIComponent(window.location.search)}`;

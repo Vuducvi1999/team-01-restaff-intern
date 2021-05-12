@@ -1,22 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { HeaderModel, Menu } from 'src/app/lib/data/models/header/header.model';
-import { HeaderService } from 'src/app/lib/data/services';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { HeaderModel, Menu } from "src/app/lib/data/models/header/header.model";
+import { HeaderService } from "src/app/lib/data/services";
 
 @Component({
-  selector: 'app-left-menu',
-  templateUrl: './left-menu.component.html',
-  styleUrls: ['./left-menu.component.scss']
+  selector: "app-left-menu",
+  templateUrl: "./left-menu.component.html",
+  styleUrls: ["./left-menu.component.scss"],
 })
 export class LeftMenuComponent implements OnInit {
-
-  public menuItems: Menu[]=[];
+  public menuItems: Menu[] = [];
   public leftMenu: boolean = false;
   public headerModel: HeaderModel = {
     categories: [],
-    blogs: []
+    blogs: [],
   };
-  constructor(public headerService: HeaderService) {
-  }
+  constructor(public headerService: HeaderService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadMenu();
@@ -28,20 +27,19 @@ export class LeftMenuComponent implements OnInit {
 
   async loadHeaderModel() {
     await this.headerService.getCategories(null).then((res: any) => {
-       this.headerModel.categories = (res.data);
-     })
-   }
+      this.headerModel.categories = res.data;
+    });
+  }
 
-   async loadMenu() {
+  async loadMenu() {
     await this.loadHeaderModel();
 
-    this.headerModel.categories.forEach(item => {
-      this.menuItems.push(
-        {
-          title: item.name,
-          path: '/',
-          type: 'link'
-        })
+    this.headerModel.categories.forEach((item) => {
+      this.menuItems.push({
+        title: item.name,
+        path: `/product?search.categoryName=${item.name}`,
+        type: "link",
+      });
     });
   }
   // Click Toggle menu (Mobile)
@@ -50,11 +48,13 @@ export class LeftMenuComponent implements OnInit {
   }
 
   onHover(menuItem) {
-    if(window.innerWidth > 1200 && menuItem){
-       document.getElementById('unset').classList.add('sidebar-unset')
+    if (window.innerWidth > 1200 && menuItem) {
+      document.getElementById("unset").classList.add("sidebar-unset");
     } else {
-      document.getElementById('unset').classList.remove('sidebar-unset')
+      document.getElementById("unset").classList.remove("sidebar-unset");
     }
   }
-
+  loadUrlNavaigate(url: string) {
+    this.router.navigateByUrl(url);
+  }
 }

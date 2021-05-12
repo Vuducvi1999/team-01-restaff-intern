@@ -5,6 +5,7 @@ import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
 import { FileService } from 'src/app/lib/data/services';
 
 import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
+import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import Swal from 'sweetalert2';
 
 import { BannersDetailComponent } from '../banners-detail/banners-detail.component';
@@ -30,22 +31,10 @@ export class ListBannersComponent implements OnInit {
       position: 'right',
     },
     columns: {
-      imageUrl: {
-        title: 'ImageURL',
-        type: 'html',
-        filter: false,
-        valuePrepareFunction: (file) => {
-          var fileExt = file.split('.').pop();
-          if (
-            fileExt == 'png' ||
-            fileExt == 'jpg' ||
-            fileExt == 'jpeg' ||
-            fileExt == 'icon'
-          ) {
-            return `<a href="${file}"><img appUiImageLoader width="75px" height="75px" src="${file}"/></a>`;
-          }
-          return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
-        },
+      imageUrl:{
+        title: 'Image',
+        type: 'custom',
+        renderComponent: ViewImageCellComponent,
       },
       title: {
         title: 'Title',
