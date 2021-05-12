@@ -86,7 +86,7 @@ export class ProductDetailsComponent implements OnInit {
     private productDetailsService: ProductDetailsService,
     private activatedRoute: ActivatedRoute,
     private commentService: CommentService,
-    
+
     private formBuilder: FormBuilder,
     private cartService: CartService,
     private authService: AuthService
@@ -138,7 +138,6 @@ export class ProductDetailsComponent implements OnInit {
       entityType: "Product",
       rating: 1,
     };
-    var a = 1;
   }
 
   createSearchModel() {
