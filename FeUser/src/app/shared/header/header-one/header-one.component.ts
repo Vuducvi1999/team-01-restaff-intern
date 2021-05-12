@@ -1,37 +1,56 @@
-import { Component, OnInit, Input, HostListener } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  HostListener,
+  OnDestroy,
+} from "@angular/core";
 import { Router } from "@angular/router";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
 import { HeaderModel, InfoHeaderModel } from "src/app/lib/data/models";
-import { FileService, HeaderService } from "src/app/lib/data/services";
+import {
+  AuthService,
+  FileService,
+  HeaderService,
+} from "src/app/lib/data/services";
 import { TypeDisplayImage } from "../../data";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-header-one",
   templateUrl: "./header-one.component.html",
   styleUrls: ["./header-one.component.scss"],
+  providers: [AuthService],
 })
-export class HeaderOneComponent implements OnInit {
+export class HeaderOneComponent implements OnInit, OnDestroy {
   @Input() class: string;
   @Input() themeLogo: string = "assets/images/icon/logo.png"; // Default Logo
   @Input() topbar: boolean = true; // Default True
   @Input() sticky: boolean = false; // Default false
   typeDisplayImage = TypeDisplayImage;
+  user: UserDataReturnDTOModel;
+  subDataUser: Subscription;
 
   public headerModel: InfoHeaderModel = {
     informationWeb: {address: '', phone: '', email: '', fax: '', logo: '', title: '', description: ''}
   };
   public stick: boolean = false;
-  public user: UserDataReturnDTOModel;
   loadUrlNavaigate(url: string) {
     this.router.navigateByUrl(url);
   }
 
-  constructor(private router: Router, public headerService: HeaderService) {}
+  constructor(
+    private router: Router,
+    public headerService: HeaderService,
+    private authService: AuthService
+  ) {}
+  ngOnDestroy(): void {
+    this.subDataUser.unsubscribe();
+    this.subDataUser = null;
+  }
 
   ngOnInit(): void {
-    if (localStorage.getItem("user")) {
-      this.user = JSON.parse(localStorage.getItem("user"));
-    }
+    this.subDataUser = this.authService.callUserInfo.subscribe(it => this.user = it);
     this.loadHeaderModel();
   }
 
@@ -51,7 +70,7 @@ export class HeaderOneComponent implements OnInit {
   }
 
   onLogout() {
-    localStorage.removeItem("user");
+    this.authService.changeUserInfo(null);
     localStorage.removeItem("token");
     this.loadUrlNavaigate("/auth/login");
   }
@@ -59,9 +78,5 @@ export class HeaderOneComponent implements OnInit {
     await this.headerService.getInformationWeb(null).then((res: any) => {
       this.headerModel.informationWeb = res.data;
     });
-  }
-
-  getIcon(model: any) {
-    return FileService.getLinkFile(model);
   }
 }

@@ -33,7 +33,7 @@ namespace Service.UserProductList
         {
             try
             {
-                var listDTO = _productRepository.Queryable().Where(product => product.CategoryId == id).ToList();
+                var listDTO = _productRepository.Queryable().Where(product => !product.IsDeleted && product.CategoryId == id).ToList();
                 var list = _mapper.Map<List<ProductDTO>>(listDTO);
                 var result = new ReturnMessage<List<ProductDTO>>(false, list, MessageConstants.ListSuccess);
                 return result;
@@ -64,7 +64,7 @@ namespace Service.UserProductList
                 return new ReturnMessage<PaginatedList<ProductDTO>>(false, null, MessageConstants.Error);
             }
 
-            var query = _productRepository.Queryable();
+            var query = _productRepository.Queryable().Where(it => !it.IsDeleted);
 
             if (search.MaxPrice > 0)
             {
@@ -78,10 +78,7 @@ namespace Service.UserProductList
 
             if (search.Search.IsNotNullOrEmpty() && search.Search.CategoryName.IsNotNullOrEmpty())
             {
-                foreach (var i in search.Search.CategoryName.Split(','))
-                {
-                    query = query.Where(it => it.Category.Name.Contains(i));
-                }
+                query = query.Where(it => search.Search.CategoryName.Contains(it.Category.Name));
             }
 
             if(search.Search.IsNotNullOrEmpty() && search.Search.Name.IsNotNullOrEmpty())

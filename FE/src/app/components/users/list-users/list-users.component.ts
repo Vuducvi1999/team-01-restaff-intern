@@ -4,6 +4,7 @@ import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { UserModel } from 'src/app/lib/data/models/users/user.model';
 import { FileService } from 'src/app/lib/data/services';
+import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { UserDetailComponent } from '../users-details/users-details.component';
 import { UserService } from './../../../lib/data/services/users/user.service';
 
@@ -31,21 +32,9 @@ export class ListUsersComponent {
     },
     columns: {
       imageUrl: {
-        title: 'ImageURL',
-        type: 'html',
-        filter: false,
-        valuePrepareFunction: (file) => {
-          var fileExt = file.split('.').pop();
-          if (
-            fileExt == 'png' ||
-            fileExt == 'jpg' ||
-            fileExt == 'jpeg' ||
-            fileExt == 'icon'
-          ) {
-            return `<a href="${file}"><img appUiImageLoader width="75px" height="75px" src="${file}"/></a>`;
-          }
-          return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
-        },
+        title: 'Image',
+        type: 'custom',
+        renderComponent: ViewImageCellComponent,
       },
       username: {
         title: 'Username',

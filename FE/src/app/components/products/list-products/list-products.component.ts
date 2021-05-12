@@ -4,6 +4,7 @@ import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { ProductModel } from 'src/app/lib/data/models/products/product.model';
 import { FileService } from 'src/app/lib/data/services';
 import { ProductService } from 'src/app/lib/data/services/products/product.service';
+import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { CustomViewCellNumberComponent } from 'src/app/shared/components/custom-view-cell-number/custom-view-cell-number.component';
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
@@ -15,14 +16,15 @@ import { ProductDetailsComponent } from '../product-details/product-details.comp
 })
 export class ListProductsComponent implements OnInit {
   public products: ProductModel[];
+  public data: PageModel<ProductModel>;
+  params: any = {};
   closeResult = '';
 
-  constructor
-  (
+  constructor(
     private modalService: NgbModal,
     private productService: ProductService
-  ) 
-  { 
+  ) {
+    this.params.pageIndex = 0;
     this.fetch();
   }
 
@@ -34,21 +36,8 @@ export class ListProductsComponent implements OnInit {
     columns: {
       imageUrl: {
         title: 'Image',
-        type: 'html',
-        filter: false,
-        valuePrepareFunction: (file) => {
-          // console.log(file);
-          var fileExt = file.split(',')[0].split('.').pop();
-          if (
-            fileExt == 'png' ||
-            fileExt == 'jpg' ||
-            fileExt == 'jpeg' ||
-            fileExt == 'icon'
-          ) {
-            return `<a href="${FileService.getLinkFile(file.split(',')[0])}"><img appUiImageLoader width="75px" height="75px" src="${FileService.getLinkFile(file.split(',')[0])}"/></a>`;
-          }
-          return `<a href="${FileService.getLinkFile(file.split(',')[0])}">${FileService.getLinkFile(file.split(',')[0])}</a>`;
-        },
+        type: 'custom',
+        renderComponent: ViewImageCellComponent,
       },
       name: {
         title: 'Name',
@@ -57,19 +46,17 @@ export class ListProductsComponent implements OnInit {
         title: 'Description',
       },
       price: {
-        value:'price',
         type: 'custom',
-        title:'Price',
-        renderComponent: CustomViewCellNumberComponent
+        title: 'Price',
+        renderComponent: CustomViewCellNumberComponent,
       },
       categoryName: {
         title: 'Category Name',
       },
       displayOrder: {
         title: 'Display Order',
-        type:'custom',
-        value:'displayOrder',
-        renderComponent: CustomViewCellComponent
+        type: 'custom',
+        renderComponent: CustomViewCellComponent,
       },
       isImportant: {
         title: 'Is Important',
@@ -86,29 +73,31 @@ export class ListProductsComponent implements OnInit {
   }
 
   openPopup(item: any) {
-      var modalRef = this.modalService.open(ProductDetailsComponent, {size: 'xl'});
-      modalRef.componentInstance.item = item?.data;
-      return modalRef.result.then(() => {
-          this.fetch();
-        }, (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
+    var modalRef = this.modalService.open(ProductDetailsComponent, {
+      size: 'xl',
+    });
+    modalRef.componentInstance.item = item?.data;
+    return modalRef.result.then(
+      () => {
+        this.fetch();
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    );
   }
 
-  fetch()
-  {
+  fetch() {
     this.productService
-      .get(null)
+      .get({ params: this.params })
       .then((res: ReturnMessage<PageModel<ProductModel>>) => {
-        if (!res.hasError) 
-        {
+        if (!res.hasError) {
           this.products = res.data.results;
+          this.data = res.data;
         }
       })
       .catch((er) => {
-        if (er.error.hasError)
-        {
+        if (er.error.hasError) {
           // console.log(er.error.message);
         }
       });
@@ -125,4 +114,9 @@ export class ListProductsComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  onPage(event) {
+    this.params.pageIndex = event;
+    this.fetch();
+  }
 }

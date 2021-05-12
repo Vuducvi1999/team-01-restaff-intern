@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { CustomerModel } from 'src/app/lib/data/models';
-import { CustomerService } from 'src/app/lib/data/services';
+import { CustomerModel, TypeSweetAlertIcon } from 'src/app/lib/data/models';
+import { CustomerService, SweetalertService } from 'src/app/lib/data/services';
 import {
   ModalHeaderModel,
   ModalFooterModel,
@@ -28,10 +28,12 @@ export class CustomerDetailsComponent implements OnInit {
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];
 
+  submitted = false;
   constructor(
     private formBuilder: FormBuilder,
     private customerService: CustomerService,
-    private ngbActiveModal: NgbActiveModal
+    private ngbActiveModal: NgbActiveModal,
+    private sweetalerService: SweetalertService
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -65,7 +67,12 @@ export class CustomerDetailsComponent implements OnInit {
     this.modalFooter.title = 'Save';
   }
 
+  get f() {
+    return this.usersForm.controls;
+  }
+
   save() {
+    this.submitted = true;
     if (this.usersForm.invalid) {
       // console.log(this.usersForm);
       return;
@@ -91,12 +98,17 @@ export class CustomerDetailsComponent implements OnInit {
     this.customerService
       .save(this.user)
       .then(() => {
+        this.sweetalerService.notification(
+          this.item ? 'Upload Success' : 'Create Success',
+          TypeSweetAlertIcon.SUCCESS
+        );
         this.ngbActiveModal.close();
       })
       .catch((er) => {
-        if (er.error.hasError) {
-          // console.log(er.error.message);
-        }
+        this.sweetalerService.alert(
+          er.error.message ?? er.error,
+          TypeSweetAlertIcon.ERROR
+        );
       });
   }
 
@@ -118,7 +130,7 @@ export class CustomerDetailsComponent implements OnInit {
     }
 
     if (event.remove) {
-      this.fileURL.forEach((e : string, i) => {
+      this.fileURL.forEach((e: string, i) => {
         if (e.includes(event.remove)) {
           this.fileURL.splice(i, 1);
         }

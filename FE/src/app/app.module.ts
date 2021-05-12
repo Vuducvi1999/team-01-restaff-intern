@@ -21,7 +21,6 @@ import { AuthService } from './lib/data/services';
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     HttpClientModule,
-    AuthModule,
     SharedModule,
     HttpClientModule,
     FilesModule,

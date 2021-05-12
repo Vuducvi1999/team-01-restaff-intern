@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -15,14 +15,16 @@ import { RightSidebarComponent } from './components/right-sidebar/right-sidebar.
 import { ModalHeaderComponent } from './components/modals/modal-header/modal-header.component';
 import { ModalFooterComponent } from './components/modals/modal-footer/modal-footer.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { FileService } from '../lib/data/services';
+import { FileService, SweetalertService } from '../lib/data/services';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { UiImageLoaderDirective } from './directives/uiImageLoader.directive';
+import { ViewImageCellComponent } from './components/viewimagecell/viewimagecell.component';
 import { CustomViewCellComponent } from './components/customViewCell/customViewCell.component';
 import { CustomViewCellNumberComponent } from './components/custom-view-cell-number/custom-view-cell-number.component';
 import { VndFormatPipe } from '../lib/data/services/pipe/vnd-format.pipe';
+import { PagingServerViewComponent } from './components/paging-server-view/paging-server-view.component';
 @NgModule({
   declarations: [
     ToggleFullscreenDirective,
@@ -37,12 +39,21 @@ import { VndFormatPipe } from '../lib/data/services/pipe/vnd-format.pipe';
     ModalFooterComponent,
     UploadFileComponent,
     UiImageLoaderDirective,
+    ViewImageCellComponent,
     CustomViewCellComponent,
     CustomViewCellNumberComponent,
-    VndFormatPipe
+    VndFormatPipe,
+    PagingServerViewComponent,
   ],
-  imports: [CommonModule, RouterModule, NgbModalModule, NgxDropzoneModule,SweetAlert2Module.forRoot()],
-  providers: [NavService, WINDOW_PROVIDERS, FileService],
+  imports: [
+    CommonModule,
+    RouterModule,
+    NgbModalModule,
+    NgxDropzoneModule,
+    SweetAlert2Module.forRoot(),
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
+  providers: [NavService, WINDOW_PROVIDERS, FileService, SweetalertService,],
   exports: [
     UiImageLoaderDirective,
     FeatherIconsComponent,
@@ -51,9 +62,11 @@ import { VndFormatPipe } from '../lib/data/services/pipe/vnd-format.pipe';
     ModalHeaderComponent,
     UploadFileComponent,
     SweetAlert2Module,
+    ViewImageCellComponent,
     CustomViewCellComponent,
     CustomViewCellNumberComponent,
-    VndFormatPipe
+    VndFormatPipe,
+    PagingServerViewComponent,
   ],
 })
 export class SharedModule {}

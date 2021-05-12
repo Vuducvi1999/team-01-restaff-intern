@@ -55,6 +55,7 @@ import { CommentComponent } from "./components/comment/comment.component";
 import { CommentDetailComponent } from "./components/comment/comment-detail/comment-detail.component";
 import { UiImageLoaderDirective } from "./directives/uiImageLoader.directive";
 import { VndFormatPipe } from "./pipes/vnd-format.pipe";
+import { SweetalertService } from "../lib/data/services";
 
 @NgModule({
   declarations: [
@@ -101,7 +102,7 @@ import { VndFormatPipe } from "./pipes/vnd-format.pipe";
     SweetAlert2Module.forRoot(),
     FilterPipeModule,
   ],
-  providers: [SearchService],
+  providers: [SearchService, SweetalertService],
   exports: [
     ProductBoxComponent,
     CommonModule,

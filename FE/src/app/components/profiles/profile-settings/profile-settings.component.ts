@@ -1,18 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { ChangePasswordProfileModel, FileDtoModel, ProfileModel, ReturnMessage, UserDataReturnDTOModel } from 'src/app/lib/data/models';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangePasswordProfileModel,
+  FileDtoModel,
+  ProfileModel,
+  ReturnMessage,
+  UserDataReturnDTOModel,
+} from 'src/app/lib/data/models';
 
-import { FileService, ProfileService } from 'src/app/lib/data/services';
+import {
+  AuthService,
+  FileService,
+  ProfileService,
+} from 'src/app/lib/data/services';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalFile, TypeFile, EntityType } from 'src/app/shared/components/modals/models/modal.model';
 import Swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile-settings',
   templateUrl: './profile-settings.component.html',
   styleUrls: ['./profile-settings.component.scss'],
+  providers: [AuthService],
 })
-export class ProfileSettingsComponent implements OnInit {
+export class ProfileSettingsComponent implements OnInit, OnDestroy {
   public userInfo: UserDataReturnDTOModel;
   public profileForm: FormGroup;
   public passwordForm: FormGroup;
@@ -24,25 +36,37 @@ export class ProfileSettingsComponent implements OnInit {
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];
 
+  entrySub: Subscription;
+
   constructor(
     private formBuilder: FormBuilder,
     private profileService: ProfileService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
     this.modalFile.multiBoolen = false;
     this.modalFile.enityType = EntityType.USER;
   }
+  ngOnDestroy(): void {
+    if(this.entrySub)
+    {
+      this.entrySub.unsubscribe();
+      this.entrySub = null;
+    }
+  }
 
   ngOnInit() {
     // console.log(this.route.parent.parent.parent.snapshot.data);
-    this.userInfo = this.route.parent.parent.parent.snapshot.data.user;
-    this.loadFormItem();
-    if (this.userInfo) {
-      this.fileURL = [];
-      this.fileURL.push(this.userInfo.imageUrl);
-    }
+    this.entrySub = this.authService.callUserInfo.subscribe((it) => {
+      this.userInfo = it;
+      this.loadFormItem();
+      if (this.userInfo) {
+        this.fileURL = [];
+        this.fileURL.push(this.userInfo.imageUrl);
+      }
+    });
   }
 
   get profileFormControl() {
@@ -100,8 +124,7 @@ export class ProfileSettingsComponent implements OnInit {
           this.profileService
             .update(this.updateProfile)
             .then((resp: ReturnMessage<UserDataReturnDTOModel>) => {
-              localStorage.setItem('user', JSON.stringify(resp.data));
-              this.userInfo = resp.data;
+              this.authService.changeUserInfo(resp.data);
               this.route.snapshot.data.user = resp.data;
               if (!resp.hasError) {
                 Swal.fire({
@@ -189,6 +212,6 @@ export class ProfileSettingsComponent implements OnInit {
 
   get getImage() {
     // console.log("get image");
-    return this.userInfo.imageUrl;
+    return this.userInfo?.imageUrl;
   }
 }

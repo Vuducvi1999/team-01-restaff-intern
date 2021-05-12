@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from "@angular/core";
+import { Component, OnInit, Input, ViewChild, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import {
   CommentModel,
@@ -10,7 +10,7 @@ import {
   UserDataReturnDTOModel,
   UserModel,
 } from "src/app/lib/data/models/users/user.model";
-import { FileService } from "src/app/lib/data/services";
+import { AuthService, FileService } from "src/app/lib/data/services";
 import { ProductDetailsService } from "src/app/lib/data/services/products/product-details.service";
 import { SizeModalComponent } from "src/app/shared/components/modal/size-modal/size-modal.component";
 import {
@@ -26,6 +26,7 @@ import {
 } from "src/app/lib/data/models";
 import { TypeDisplayImage } from "src/app/shared/data";
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
+import { Subscription } from "rxjs";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { RatingModel } from "src/app/lib/data/models/rating/rating.model";
@@ -73,6 +74,8 @@ export class ProductDetailsComponent implements OnInit {
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
   public ProductDetailsThumbConfig: any = ProductDetailsThumbSlider;
 
+  subDataUser: Subscription;
+
   public currentRate: number;
   public token: string;
   public item: any;
@@ -83,12 +86,17 @@ export class ProductDetailsComponent implements OnInit {
     private productDetailsService: ProductDetailsService,
     private activatedRoute: ActivatedRoute,
     private commentService: CommentService,
-    private cartService: CartService
+    
+    private formBuilder: FormBuilder,
+    private cartService: CartService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.token = localStorage.getItem("token");
-
+    this.subDataUser = this.authService.callUserInfo.subscribe(
+      (it) => (this.user = it)
+    );
     this.getProduct();
 
     this.initDataComment();
@@ -123,8 +131,6 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   initDataComment() {
-    this.user = JSON.parse(localStorage.getItem("user"));
-
     this.dataComment = {
       fullName: this.user ? this.user.firstName + " " + this.user.lastName : "",
       customerId: this.user ? this.user.customerId : "",

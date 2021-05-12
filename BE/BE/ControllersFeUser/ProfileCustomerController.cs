@@ -29,7 +29,7 @@ namespace BE.ControllersFeUser
         [HttpPut]
         public IActionResult UpdateProfile([FromBody] UpdateCustomerProfileFeUserDTO model)
         {
-            var result = _customerProfileFeUserService.Update(HttpContext.User.Claims, model);
+            var result = _customerProfileFeUserService.Update(model);
             var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data!.Id);
             return CommonResponse(result);
         }
@@ -39,7 +39,7 @@ namespace BE.ControllersFeUser
         public IActionResult ChangePassword([FromBody] ChangePasswordCustomerProfileFeUserDTO dto)
         {
 
-            var result = _customerProfileFeUserService.ChangePassword(HttpContext.User.Claims, dto);
+            var result = _customerProfileFeUserService.ChangePassword(dto);
             return CommonResponse(result);
         }
     }
