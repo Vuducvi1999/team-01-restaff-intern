@@ -45,7 +45,6 @@ export class ListProductsComponent implements OnInit {
         title: 'Description',
       },
       price: {
-        value:'price',
         type: 'custom',
         title:'Price',
         renderComponent: CustomViewCellNumberComponent
@@ -56,7 +55,6 @@ export class ListProductsComponent implements OnInit {
       displayOrder: {
         title: 'Display Order',
         type:'custom',
-        value:'displayOrder',
         renderComponent: CustomViewCellComponent
       },
       isImportant: {

@@ -11,6 +11,7 @@ import {
   FileService,
   SweetalertService,
 } from 'src/app/lib/data/services';
+import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { CustomerDetailsComponent } from '../customer-details/customer-details.component';
 
@@ -51,6 +52,8 @@ export class ListCustomersComponent implements OnInit {
       },
       phone: {
         title: 'Phone',
+        type: 'custom',
+        renderComponent: CustomViewCellComponent,
       },
       address: {
         title: 'Address',
@@ -113,7 +116,10 @@ export class ListCustomersComponent implements OnInit {
       })
       .catch((er) => {
         if (er.error.hasError) {
-          this.sweetalertService.alert(er.error.message??er.error,TypeSweetAlertIcon.ERROR);
+          this.sweetalertService.alert(
+            er.error.message ?? er.error,
+            TypeSweetAlertIcon.ERROR
+          );
         }
       });
   }

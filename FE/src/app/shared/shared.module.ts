@@ -38,7 +38,7 @@ import { VndFormatPipe } from '../lib/data/services/pipe/vnd-format.pipe';
     ModalFooterComponent,
     UploadFileComponent,
     UiImageLoaderDirective,
-    ViewImageCellComponent
+    ViewImageCellComponent,
     CustomViewCellComponent,
     CustomViewCellNumberComponent,
     VndFormatPipe
@@ -53,7 +53,7 @@ import { VndFormatPipe } from '../lib/data/services/pipe/vnd-format.pipe';
     ModalHeaderComponent,
     UploadFileComponent,
     SweetAlert2Module,
-    ViewImageCellComponent
+    ViewImageCellComponent,
     CustomViewCellComponent,
     CustomViewCellNumberComponent,
     VndFormatPipe
