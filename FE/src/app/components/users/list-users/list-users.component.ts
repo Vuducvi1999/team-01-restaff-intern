@@ -4,7 +4,7 @@ import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { UserModel } from 'src/app/lib/data/models/users/user.model';
 import { FileService } from 'src/app/lib/data/services';
-import { ImageComponent } from 'src/app/shared/components/image/image.component';
+import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { UserDetailComponent } from '../users-details/users-details.component';
 import { UserService } from './../../../lib/data/services/users/user.service';
 
@@ -34,7 +34,7 @@ export class ListUsersComponent {
       imageUrl: {
         title: 'Image',
         type: 'custom',
-        renderComponent: ImageComponent,
+        renderComponent: ViewImageCellComponent,
       },
       username: {
         title: 'Username',

@@ -5,7 +5,7 @@ import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
 import { FileService } from 'src/app/lib/data/services';
 
 import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
-import { ImageComponent } from 'src/app/shared/components/image/image.component';
+import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import Swal from 'sweetalert2';
 
 import { BannersDetailComponent } from '../banners-detail/banners-detail.component';
@@ -34,7 +34,7 @@ export class ListBannersComponent implements OnInit {
       imageUrl:{
         title: 'Image',
         type: 'custom',
-        renderComponent: ImageComponent,
+        renderComponent: ViewImageCellComponent,
       },
       title: {
         title: 'Title',

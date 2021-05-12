@@ -4,7 +4,7 @@ import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { FileService } from 'src/app/lib/data/services';
 import { CategoryService } from 'src/app/lib/data/services/categories/category.service';
-import { ImageComponent } from 'src/app/shared/components/image/image.component';
+import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { CategoryDetailComponent } from '../categories-details/categories-details.component';
 
 @Component({
@@ -39,7 +39,7 @@ export class ListCategoriesComponent implements OnInit {
         imageUrl: {
           title: 'Image',
           type: 'custom',
-          renderComponent: ImageComponent,
+          renderComponent: ViewImageCellComponent,
         },
         name: {
           title: 'Name'

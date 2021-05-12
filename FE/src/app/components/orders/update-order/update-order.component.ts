@@ -6,7 +6,7 @@ import { OrderDetailModel, OrderModel } from 'src/app/lib/data/models/orders/ord
 import { FileService } from 'src/app/lib/data/services';
 import { OrderDetailsService } from 'src/app/lib/data/services/orders/order-details.service';
 import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
-import { ImageComponent } from 'src/app/shared/components/image/image.component';
+import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import {
   ModalFooterModel,
   ModalHeaderModel,
@@ -51,7 +51,7 @@ export class UpdateOrderComponent implements OnInit {
       productImgUrl: {
         title: 'Image',
         type: 'custom',
-        renderComponent: ImageComponent,
+        renderComponent: ViewImageCellComponent,
       },
       productName: {
         title: 'Product Name',

@@ -4,7 +4,7 @@ import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { SocialMediaModel } from 'src/app/lib/data/models/social-medias/social-media.model';
 import { FileService } from 'src/app/lib/data/services';
 import { SocialMediaService } from 'src/app/lib/data/services/social-media/social-media.service';
-import { ImageComponent } from 'src/app/shared/components/image/image.component';
+import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { SocialMediaDetailComponent } from '../social-media-detail/social-media-detail.component';
 
 @Component({
@@ -51,7 +51,7 @@ export class ListSocialMediaComponent implements OnInit {
       iconUrl: {
         title: 'Image',
         type: 'custom',
-        renderComponent: ImageComponent,
+        renderComponent: ViewImageCellComponent,
       },
       title: {
         title: 'Title',

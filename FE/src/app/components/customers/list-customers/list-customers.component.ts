@@ -11,7 +11,7 @@ import {
   FileService,
   SweetalertService,
 } from 'src/app/lib/data/services';
-import { ImageComponent } from 'src/app/shared/components/image/image.component';
+import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { CustomerDetailsComponent } from '../customer-details/customer-details.component';
 
 @Component({
@@ -41,7 +41,7 @@ export class ListCustomersComponent implements OnInit {
       imageUrl: {
         title: 'Image',
         type: 'custom',
-        renderComponent: ImageComponent,
+        renderComponent: ViewImageCellComponent,
       },
       username: {
         title: 'Username',

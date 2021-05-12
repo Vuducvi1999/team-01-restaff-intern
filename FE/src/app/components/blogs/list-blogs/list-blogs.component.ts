@@ -5,7 +5,7 @@ import { BlogModel } from 'src/app/lib/data/models/blogs/blog.model';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models/common';
 import { FileService } from 'src/app/lib/data/services';
 import { BlogService } from 'src/app/lib/data/services/blogs/blog.service';
-import { ImageComponent } from 'src/app/shared/components/image/image.component';
+import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { BlogsDetailComponent } from '../blogs-detail/blogs-detail.component';
 
 @Component({
@@ -52,7 +52,7 @@ export class ListBlogsComponent implements OnInit {
       imageUrl: {
         title: 'Image',
         type: 'custom',
-        renderComponent: ImageComponent,
+        renderComponent: ViewImageCellComponent,
       },
       title: {
         title: 'Title',

@@ -4,7 +4,7 @@ import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { ProductModel } from 'src/app/lib/data/models/products/product.model';
 import { FileService } from 'src/app/lib/data/services';
 import { ProductService } from 'src/app/lib/data/services/products/product.service';
-import { ImageComponent } from 'src/app/shared/components/image/image.component';
+import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 @Component({
   selector: 'app-list-products',
@@ -34,7 +34,7 @@ export class ListProductsComponent implements OnInit {
       imageUrl:{
         title: 'Image',
         type: 'custom',
-        renderComponent: ImageComponent,
+        renderComponent: ViewImageCellComponent,
       },
       name: {
         title: 'Name',
