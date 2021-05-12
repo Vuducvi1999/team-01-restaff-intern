@@ -36,7 +36,7 @@ import { CartModalComponent } from "src/app/shared/components/modal/cart-modal/c
   selector: "app-product-details",
   templateUrl: "./product-details.component.html",
   styleUrls: ["./product-details.component.scss"],
-  providers: [ProductDetailsService, CommentService],
+  providers: [ProductDetailsService, CommentService, CartService],
   styles: [
     `
       .star {
@@ -158,7 +158,7 @@ export class ProductDetailsComponent implements OnInit {
         console.log(e);
       });
   }
-  addToCart(product: any){
+  addToCart(product: any) {
     this.cartService.addToCart(product);
   }
 }
