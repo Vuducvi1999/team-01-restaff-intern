@@ -67,35 +67,35 @@
                                 *ngIf="(productFormsControl.category.touched || submitted) && productFormsControl.category.errors?.required">Required</span>
                             </div>
                             <div class="form-group row">
-                              <label for="validationCustom8" class="col-xl-7 col-md-4"><span>*</span> Display Home
+                              <label for="validationCustom8" class="col-xl-7 col-md-4"> Display Home
                                 Page</label>
                               <input class="form-check-input col-xl-10 col-md-6" id="validationCustom8" type="checkbox"
                                 formControlName="hasDisplayHomePage" />
                             </div>
                             <div class="form-group row">
-                              <label for="validationCustom9" class="col-xl-7 col-md-4"><span>*</span> Is
+                              <label for="validationCustom9" class="col-xl-7 col-md-4"> Is
                                 Important</label>
                               <input class="form-check-input col-xl-10 col-md-6" id="validationCustom9" type="checkbox"
                                 formControlName="isImportant" />
                             </div>
                           </div>
-                          <div class="col-lg-6">
+                          <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="form-group row">
-                              <input class="form-control col-xl-6 col-md-6" id="validationCustom4" type="text"
+                              <input class="form-control col-lg-6 col-md-6 col-sm-6" id="validationCustom4" type="text"
                                 required="" formControlName="imageUrl" hidden />
                               <span class="text-danger"
                                 *ngIf="(productFormsControl.imageUrl.touched || submitted) && productFormsControl.imageUrl.errors?.required">Required</span>
-                              <app-upload-file styleFile="width: 450px; height: 300px;" [data]="modalFile"
+                              <app-upload-file styleFile="width: 350px; height: 300px;" [data]="modalFile"
                                 [fileURL]="fileURL" (onChange)="onChangeData($event)">
                               </app-upload-file>
                             </div>
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="validationCustom3" class="col-xl-6 col-md-4"><span>*</span> Content
+                          <label for="validationCustom3" class="col-xl-6 col-md-4"> Content
                             Html</label>
                           <ckeditor [editor]="editor" class="col-xl-12 col-md-12 p-0" id="validationCustom3" type="text"
-                            required="" formControlName="contentHTML"></ckeditor>
+                            formControlName="contentHTML"></ckeditor>
                         
                         </div>
                       </form>

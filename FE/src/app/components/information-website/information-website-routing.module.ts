@@ -9,8 +9,8 @@ const routes: Routes = [
           path: 'list-information-website',
           component: ListInformationWebsiteComponent,
           data: {
-            title: "Information Website",
-            breadcrumb: "Information Website"
+            title: "Website Information",
+            breadcrumb: "Website Information"
           }
         }
       ]

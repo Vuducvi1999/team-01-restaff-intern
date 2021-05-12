@@ -5,6 +5,7 @@ import { PageContentModel } from "src/app/lib/data/models/pageContent/pageConten
 import { FileService } from "src/app/lib/data/services/files/file.service";
 import { FooterService } from "src/app/lib/data/services/footer/footer.service";
 import { PageContentService } from "src/app/lib/data/services/pageContent/pageContent.service";
+import { TypeDisplayImage } from "../../data";
 
 @Component({
   selector: "app-footer-one",
@@ -16,7 +17,7 @@ export class FooterOneComponent implements OnInit {
   @Input() class: string = "footer-light"; // Default class
   @Input() themeLogo: string = "assets/images/icon/logo.png"; // Default Logo
   @Input() newsletter: boolean = true; // Default True
-
+  typeDisplayImage = TypeDisplayImage;
   public today: number = Date.now();
   public footerModel: FooterModel = {
     socialMedias: [],

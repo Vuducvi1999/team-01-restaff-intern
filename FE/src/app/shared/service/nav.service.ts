@@ -36,42 +36,6 @@ export class NavService {
 
   MENUITEMS: Menu[] = [
     {
-      title: 'Account',
-      icon: 'users',
-      type: 'sub',
-      active: false,
-      children: [
-        {
-          path: '/users/list-users',
-          title: 'User',
-          type: 'link',
-        },
-        {
-          path: '/customers/list-customers',
-          title: 'Customer',
-          type: 'link',
-        },
-      ],
-    },
-    {
-      title: 'Website',
-      icon: 'package',
-      type: 'sub',
-      active: false,
-      children: [
-        {
-          path: '/page-content/list-page-content',
-          title: 'Page Content List',
-          type: 'link',
-        },
-        {
-          path: '/information-website/list-information-website',
-          title: 'Information',
-          type: 'link',
-        },
-      ]
-    },
-    {
       title: 'Banners',
       icon: 'users',
       type: 'sub',
@@ -102,6 +66,32 @@ export class NavService {
         {
           path: '/coupons/list-coupons',
           title: 'Coupon List',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      title: 'Settings',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/profiles/profile-settings',
+          title: 'Profiles',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      title: 'Users',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/users/list-users',
+          title: 'User List',
           type: 'link',
         },
       ],
@@ -141,6 +131,45 @@ export class NavService {
         {
           path: '/products/list-products',
           title: 'Product List',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      title: 'Customer',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/customers/list-customers',
+          title: 'Customer List',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      title: 'Page Content',
+      icon: 'users',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/page-content/list-page-content',
+          title: 'Page Content List',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      title: 'Website Information',
+      icon: 'info',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/information-website/list-information-website',
+          title: 'Information',
           type: 'link',
         },
       ],

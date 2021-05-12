@@ -31,12 +31,14 @@ import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { RatingService } from "src/app/lib/data/services/rating/rating.service";
 import { RatingModel } from "src/app/lib/data/models/rating/rating.model";
+import { CartService } from "src/app/lib/data/services/cart/cart.service";
+import { CartModalComponent } from "src/app/shared/components/modal/cart-modal/cart-modal.component";
 
 @Component({
   selector: "app-product-details",
   templateUrl: "./product-details.component.html",
   styleUrls: ["./product-details.component.scss"],
-  providers: [ProductDetailsService, RatingService, CommentService],
+  providers: [ProductDetailsService, RatingService, CommentService, CartService],
   styles: [
     `
       .star {
@@ -67,9 +69,9 @@ export class ProductDetailsComponent implements OnInit {
   public user: UserDataReturnDTOModel;
   public comments: PageModel<CommentModel>;
   public searchModel: SearchPaganationDTO<SearchCommentModel>;
-
+  @Input() cartModal: boolean = false; // Default False
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
-
+  @ViewChild("cartModal") CartModal: CartModalComponent;
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
   public ProductDetailsThumbConfig: any = ProductDetailsThumbSlider;
 
@@ -88,7 +90,8 @@ export class ProductDetailsComponent implements OnInit {
     private commentService: CommentService,
     private ratingService: RatingService,
     private formBuilder: FormBuilder,
-    ){}
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
     this.token = localStorage.getItem("token");
@@ -197,5 +200,8 @@ export class ProductDetailsComponent implements OnInit {
       .catch((e) => {
         console.log(e);
       });
+  }
+  addToCart(product: any){
+    this.cartService.addToCart(product);
   }
 }

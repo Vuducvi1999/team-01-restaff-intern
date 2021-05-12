@@ -21,6 +21,9 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { UiImageLoaderDirective } from './directives/uiImageLoader.directive';
 import { ViewImageCellComponent } from './components/viewimagecell/viewimagecell.component';
+import { CustomViewCellComponent } from './components/customViewCell/customViewCell.component';
+import { CustomViewCellNumberComponent } from './components/custom-view-cell-number/custom-view-cell-number.component';
+import { VndFormatPipe } from '../lib/data/services/pipe/vnd-format.pipe';
 @NgModule({
   declarations: [
     ToggleFullscreenDirective,
@@ -36,6 +39,9 @@ import { ViewImageCellComponent } from './components/viewimagecell/viewimagecell
     UploadFileComponent,
     UiImageLoaderDirective,
     ViewImageCellComponent
+    CustomViewCellComponent,
+    CustomViewCellNumberComponent,
+    VndFormatPipe
   ],
   imports: [CommonModule, RouterModule, NgbModalModule, NgxDropzoneModule,SweetAlert2Module.forRoot()],
   providers: [NavService, WINDOW_PROVIDERS, FileService, SweetalertService],
@@ -48,6 +54,9 @@ import { ViewImageCellComponent } from './components/viewimagecell/viewimagecell
     UploadFileComponent,
     SweetAlert2Module,
     ViewImageCellComponent
+    CustomViewCellComponent,
+    CustomViewCellNumberComponent,
+    VndFormatPipe
   ],
 })
 export class SharedModule {}

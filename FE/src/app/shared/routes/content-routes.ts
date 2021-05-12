@@ -109,7 +109,7 @@ export const content: Routes = [
         (m) => m.InformationWebsiteModule
       ),
     data: {
-      breadcrumb: 'Information Website',
+      breadcrumb: 'Website Information',
     },
   },
   {
