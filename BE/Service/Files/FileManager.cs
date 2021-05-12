@@ -90,58 +90,65 @@ namespace Service.Files
             }
             if (saveFile.Files != null && saveFile.Files.Count > 0)
             {
-                foreach (var formFile in saveFile.Files)
+                try
                 {
-                    var ext = Path.GetExtension(formFile.FileName);
-                    if (!DataType.CheckTypeAccept(saveFile.EntityType, ext))
+                    foreach (var formFile in saveFile.Files)
                     {
-                        continue;
-                    }
-                    var fileName = Guid.NewGuid().ToString() + ext;
-                    var filePath = Path.Combine(filePaths, fileName);
-
-                    var item = _mapper.Map<SaveFileDTO, CreateFileDTO>(saveFile);
-                    if (formFile.Length <= 0)
-                    {
-                        continue;
-                    }
-
-                    if(DataType.TypeAccept[DataType.ETypeFile.Image].Contains(ext) && saveFile.TypeUpload == 1)
-                    {
-                        var uploadParams = new ImageUploadParams();
-
-                        using (var memory = new MemoryStream())
+                        var ext = Path.GetExtension(formFile.FileName);
+                        if (!DataType.CheckTypeAccept(saveFile.EntityType, ext))
                         {
-                            using var fileStream = formFile.OpenReadStream();
-                            byte[] bytes = new byte[formFile.Length];
-                            fileStream.Read(bytes, 0, (int)formFile.Length);
-                            fileStream.Position = 0;
-                            uploadParams.File = new FileDescription(fileName, fileStream);
-                            var result = _cloudinary.Upload(uploadParams);
-
-                            item.Url = result.SecureUrl.ToString();
-                            item.Name = formFile.FileName;
-                            item.FileExt = ext;
-                            item.TypeUpload = 1;
+                            continue;
                         }
-                        createFileDTOs.Add(item);
-                    }
+                        var fileName = Guid.NewGuid().ToString() + ext;
+                        var filePath = Path.Combine(filePaths, fileName);
 
-                    if (!DataType.TypeAccept[DataType.ETypeFile.Image].Contains(ext))
-                    {
-                        using (var stream = System.IO.File.Create(filePath))
+                        var item = _mapper.Map<SaveFileDTO, CreateFileDTO>(saveFile);
+                        if (formFile.Length <= 0)
                         {
-                            //stream.Write();
-                            formFile.CopyTo(stream);
-
-                            //item.Url = Path.Combine(urlPath, fileName);
-                            item.Url = fileName;
-                            item.Name = formFile.FileName;
-                            item.FileExt = ext;
-                            item.TypeUpload = 0;
+                            continue;
                         }
-                        createFileDTOs.Add(item);
+
+                        if (DataType.TypeAccept[DataType.ETypeFile.Image].Contains(ext) && saveFile.TypeUpload == 1)
+                        {
+                            var uploadParams = new ImageUploadParams();
+
+                            using (var memory = new MemoryStream())
+                            {
+                                using var fileStream = formFile.OpenReadStream();
+                                byte[] bytes = new byte[formFile.Length];
+                                fileStream.Read(bytes, 0, (int)formFile.Length);
+                                fileStream.Position = 0;
+                                uploadParams.File = new FileDescription(fileName, fileStream);
+                                var result = _cloudinary.Upload(uploadParams);
+
+                                item.Url = result.SecureUrl.ToString();
+                                item.Name = formFile.FileName;
+                                item.FileExt = ext;
+                                item.TypeUpload = 1;
+                            }
+                            createFileDTOs.Add(item);
+                        }
+
+                        if (!DataType.TypeAccept[DataType.ETypeFile.Image].Contains(ext))
+                        {
+                            using (var stream = System.IO.File.Create(filePath))
+                            {
+                                //stream.Write();
+                                formFile.CopyTo(stream);
+
+                                //item.Url = Path.Combine(urlPath, fileName);
+                                item.Url = fileName;
+                                item.Name = formFile.FileName;
+                                item.FileExt = ext;
+                                item.TypeUpload = 0;
+                            }
+                            createFileDTOs.Add(item);
+                        }
                     }
+                }
+                catch(Exception ex)
+                {
+                    throw new Exception(ex.Message);
                 }
             }
 

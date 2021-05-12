@@ -15,11 +15,12 @@ import { RightSidebarComponent } from './components/right-sidebar/right-sidebar.
 import { ModalHeaderComponent } from './components/modals/modal-header/modal-header.component';
 import { ModalFooterComponent } from './components/modals/modal-footer/modal-footer.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { FileService } from '../lib/data/services';
+import { FileService, SweetalertService } from '../lib/data/services';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { UiImageLoaderDirective } from './directives/uiImageLoader.directive';
+import { ViewImageCellComponent } from './components/viewimagecell/viewimagecell.component';
 import { CustomViewCellComponent } from './components/customViewCell/customViewCell.component';
 import { CustomViewCellNumberComponent } from './components/custom-view-cell-number/custom-view-cell-number.component';
 import { VndFormatPipe } from '../lib/data/services/pipe/vnd-format.pipe';
@@ -37,12 +38,13 @@ import { VndFormatPipe } from '../lib/data/services/pipe/vnd-format.pipe';
     ModalFooterComponent,
     UploadFileComponent,
     UiImageLoaderDirective,
+    ViewImageCellComponent,
     CustomViewCellComponent,
     CustomViewCellNumberComponent,
     VndFormatPipe
   ],
   imports: [CommonModule, RouterModule, NgbModalModule, NgxDropzoneModule,SweetAlert2Module.forRoot()],
-  providers: [NavService, WINDOW_PROVIDERS, FileService],
+  providers: [NavService, WINDOW_PROVIDERS, FileService, SweetalertService],
   exports: [
     UiImageLoaderDirective,
     FeatherIconsComponent,
@@ -51,6 +53,7 @@ import { VndFormatPipe } from '../lib/data/services/pipe/vnd-format.pipe';
     ModalHeaderComponent,
     UploadFileComponent,
     SweetAlert2Module,
+    ViewImageCellComponent,
     CustomViewCellComponent,
     CustomViewCellNumberComponent,
     VndFormatPipe

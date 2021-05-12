@@ -4,8 +4,15 @@ import {
   ReturnMessage,
   PageModel,
   CustomerModel,
+  TypeSweetAlertIcon,
 } from 'src/app/lib/data/models';
-import { CustomerService, FileService } from 'src/app/lib/data/services';
+import {
+  CustomerService,
+  FileService,
+  SweetalertService,
+} from 'src/app/lib/data/services';
+import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
+import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { CustomerDetailsComponent } from '../customer-details/customer-details.component';
 
 @Component({
@@ -19,7 +26,8 @@ export class ListCustomersComponent implements OnInit {
   closeResult = '';
   constructor(
     private modalService: NgbModal,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    private sweetalertService: SweetalertService
   ) {
     this.getList();
   }
@@ -32,24 +40,9 @@ export class ListCustomersComponent implements OnInit {
     },
     columns: {
       imageUrl: {
-        title: 'ImageURL',
-        type: 'html',
-        filter: false,
-        valuePrepareFunction: (file) => {
-          if (file == null) {
-            return;
-          }
-          var fileExt = file.split('.').pop();
-          if (
-            fileExt == 'png' ||
-            fileExt == 'jpg' ||
-            fileExt == 'jpeg' ||
-            fileExt == 'icon'
-          ) {
-            return `<a href="${file}"><img appUiImageLoader width="75px" height="75px" src="${file}"/></a>`;
-          }
-          return `<a href="${FileService.getLinkFile(file)}">${FileService.getLinkFile(file)}</a>`;
-        },
+        title: 'Image',
+        type: 'custom',
+        renderComponent: ViewImageCellComponent,
       },
       username: {
         title: 'Username',
@@ -59,6 +52,8 @@ export class ListCustomersComponent implements OnInit {
       },
       phone: {
         title: 'Phone',
+        type: 'custom',
+        renderComponent: CustomViewCellComponent,
       },
       address: {
         title: 'Address',
@@ -74,11 +69,27 @@ export class ListCustomersComponent implements OnInit {
 
   delete(event: any) {
     let category = event.data as CustomerModel;
-    if (window.confirm('Are u sure?')) {
-      this.customerService.delete(category).then(() => {
-        this.getList();
-      });
-    }
+    this.sweetalertService.confirm('Are you sure?', 'Yes').then((it) => {
+      if (it.isConfirmed) {
+        this.customerService
+          .delete(category)
+          .then((it: CustomerModel) => {
+            this.sweetalertService.notification(
+              `Delete Success`,
+              TypeSweetAlertIcon.SUCCESS,
+              `Item ${it.id}`
+            );
+            this.getList();
+          })
+          .catch((er) => {
+            this.sweetalertService.notification(
+              `Delete Fail`,
+              TypeSweetAlertIcon.ERROR,
+              er.error.message ?? er.error
+            );
+          });
+      }
+    });
   }
 
   openPopup(item: any) {
@@ -105,7 +116,10 @@ export class ListCustomersComponent implements OnInit {
       })
       .catch((er) => {
         if (er.error.hasError) {
-          // console.log(er.error.message);
+          this.sweetalertService.alert(
+            er.error.message ?? er.error,
+            TypeSweetAlertIcon.ERROR
+          );
         }
       });
   }

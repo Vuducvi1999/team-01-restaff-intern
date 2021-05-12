@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from "@angular/core";
+import { Component, OnInit, Input, ViewChild, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import {
   CommentModel,
@@ -10,7 +10,7 @@ import {
   UserDataReturnDTOModel,
   UserModel,
 } from "src/app/lib/data/models/users/user.model";
-import { FileService } from "src/app/lib/data/services";
+import { AuthService, FileService } from "src/app/lib/data/services";
 import { ProductDetailsService } from "src/app/lib/data/services/products/product-details.service";
 import { SizeModalComponent } from "src/app/shared/components/modal/size-modal/size-modal.component";
 import {
@@ -26,6 +26,7 @@ import {
 } from "src/app/lib/data/models";
 import { TypeDisplayImage } from "src/app/shared/data";
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
+import { Subscription } from "rxjs";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { RatingService } from "src/app/lib/data/services/rating/rating.service";
@@ -74,6 +75,8 @@ export class ProductDetailsComponent implements OnInit {
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
   public ProductDetailsThumbConfig: any = ProductDetailsThumbSlider;
 
+  subDataUser: Subscription;
+  
   public currentRate: number;
   public token: string;
   public ratingForm: FormGroup;
@@ -142,8 +145,6 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   initDataComment() {
-    this.user = JSON.parse(localStorage.getItem("user"));
-
     this.dataComment = {
       fullName: this.user ? this.user.firstName + " " + this.user.lastName : "",
       customerId: this.user ? this.user.id : "",

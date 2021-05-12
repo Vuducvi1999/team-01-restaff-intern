@@ -4,8 +4,13 @@ import {
   PageModel,
   ProductModel,
   ReturnMessage,
+  TypeSweetAlertIcon,
 } from "src/app/lib/data/models";
-import { FileService, ProductListService } from "src/app/lib/data/services";
+import {
+  FileService,
+  ProductListService,
+  SweetalertService,
+} from "src/app/lib/data/services";
 import { ETypeSizeImage } from "src/app/shared/data";
 
 @Component({
@@ -24,7 +29,10 @@ export class ProductBoxVerticalSliderComponent implements OnInit {
 
   public NewProductSliderConfig: any = NewProductSlider;
 
-  constructor(public productListService: ProductListService) {
+  constructor(
+    public productListService: ProductListService,
+    private sweetalerService: SweetalertService
+  ) {
     this.callData();
   }
 
@@ -36,13 +44,18 @@ export class ProductBoxVerticalSliderComponent implements OnInit {
 
   callData() {
     this.productListService
-      .getPageProduct({ params: { pageSize: 12 } })
+      .getPageProduct({ params: { pageSize: 12, loading: true } })
       .then((res: ReturnMessage<PageModel<ProductModel>>) => {
         while (res.data.results.length != 0) {
           this.result.push(res.data.results.splice(0, this.size));
         }
       })
-      .catch((res) => console.error(res));
+      .catch((res) =>
+        this.sweetalerService.alert(
+          res.error.message ?? res.error,
+          TypeSweetAlertIcon.ERROR
+        )
+      );
   }
 
   getImage(fileName: string) {

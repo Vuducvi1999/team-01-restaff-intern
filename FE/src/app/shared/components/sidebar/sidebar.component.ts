@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { FileService } from 'src/app/lib/data/services';
-import { UserMangermentService } from 'src/app/lib/data/services/users/user-mangerment.service';
+import { Subscription } from 'rxjs';
+import { AuthService, FileService } from 'src/app/lib/data/services';
 import { NavService, Menu } from '../../service/nav.service';
 
 @Component({
@@ -9,16 +9,17 @@ import { NavService, Menu } from '../../service/nav.service';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  providers: []
+  providers: [AuthService]
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
 
   public menuItems: Menu[];
   public url: any;
   public fileurl: any;
-  @Input() userInfo: any;
+  userInfo: any;
+  entrySub: Subscription;
 
-  constructor(private router: Router, public navServices: NavService, private userManagerService: UserMangermentService) {
+  constructor(private router: Router, public navServices: NavService, private authService: AuthService) {
     // this.userManagerService.UserSubject.subscribe((it) =>{
     //   this.userInfo = it;
     // });
@@ -44,8 +45,15 @@ export class SidebarComponent implements OnInit {
       })
     })
   }
+  ngOnDestroy(): void {
+    if(this.entrySub)
+    {
+      this.entrySub.unsubscribe();
+      this.entrySub = null;
+    }
+  }
   ngOnInit(): void {
-
+    this.authService.callUserInfo.subscribe(it => this.userInfo = it);
   }
 
   // Active Nave state

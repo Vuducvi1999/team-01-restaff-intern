@@ -7,8 +7,12 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
-import { ReturnMessage, FileDtoModel } from 'src/app/lib/data/models';
-import { FileService } from 'src/app/lib/data/services';
+import {
+  ReturnMessage,
+  FileDtoModel,
+  TypeSweetAlertIcon,
+} from 'src/app/lib/data/models';
+import { FileService, SweetalertService } from 'src/app/lib/data/services';
 import { ModalFile, TypeFile } from '../modals/models/modal.model';
 
 @Component({
@@ -26,7 +30,10 @@ export class UploadFileComponent implements OnInit {
 
   public typeIMAGE = TypeFile.IMAGE;
 
-  constructor(private fileService: FileService) {
+  constructor(
+    private fileService: FileService,
+    private sweetalertService: SweetalertService
+  ) {
     this.onRemoveLocal();
     this.styleFile = 'width: 450px; height: 200px;';
   }
@@ -34,19 +41,19 @@ export class UploadFileComponent implements OnInit {
     if (this.fileURL) {
       this.files = [];
       this.fileURL.forEach((res) => {
-        if(res == null) return;
-        this.converUrltoFile(res.toString()).then(
-          (res) => {
-            this.files.push(res);
-          }
-        );
+        if (res) {
+          this.converUrltoFile(FileService.getLinkFile(res.toString())).then(
+            (res) => {
+              this.files.push(res);
+            }
+          );
+        }
       });
     }
   }
 
   ngOnInit() {
-    if(this.data)
-    {
+    if (this.data) {
       this.data.listFile = [];
     }
   }
@@ -111,16 +118,23 @@ export class UploadFileComponent implements OnInit {
     await this.fileService
       .saveFile(formData)
       .then((res: ReturnMessage<FileDtoModel[]>) => {
-        this.data.listFile = [...this.data.listFile,...res.data];
-        // this.data.listFile.forEach((it) => {
-        //   this.converUrltoFile(it.url).then((file) => this.files.push(file));
-        // });
+        this.sweetalertService.notification(
+          'Upload Success',
+          TypeSweetAlertIcon.SUCCESS
+        );
+        this.data.listFile = [...this.data.listFile, ...res.data];
         this.actionChange(
           res.data.map((res) => res.url),
           null
         );
       })
-      // .catch((er) => console.log(er.error));
+      .catch((er) =>
+        this.sweetalertService.alert(
+          'Upload Fail',
+          TypeSweetAlertIcon.ERROR,
+          er.error.message ?? er.error
+        )
+      );
   }
 
   actionChange(add: string[], remove: string, removeAll: boolean = false) {
