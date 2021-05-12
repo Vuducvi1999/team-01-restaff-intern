@@ -162,7 +162,7 @@ export class NavService {
       ],
     },
     {
-      title: 'Information Website',
+      title: 'Website Information',
       icon: 'info',
       type: 'sub',
       active: false,

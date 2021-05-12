@@ -64,9 +64,9 @@
         <div class="col-lg-4">
           <div class="product-right product-description-box">
             <h2>{{ product?.name | titlecase }}</h2>
-            <div class="addeffect-section product-description border-product">
-              <h3>Description</h3>
-              <div [innerHTML]="product?.contentHTML"></div>
+            <div class="border-product">
+              <h4 class="product-title">product details</h4>
+              <p>{{ product?.description.substring(0, 200) + "..." }}</p>
             </div>
             <div>
               <h3>
@@ -88,49 +88,34 @@
             <hr />
             <pre>Average <b>{{rating}}</b></pre>
 
-            <!-- <div class="border-product">
-                            <h6 class="product-title">share it</h6>
-                            <div class="product-icon">
-                                <ul class="product-social">
-                                    <li><a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="https://plus.google.com/discover"><i class="fa fa-google-plus"></i></a></li>
-                                    <li><a href="https://twitter.com/"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a href="https://www.instagram.com/"><i class="fa fa-instagram"></i></a></li>
-                                </ul>
-                                <form class="d-inline-block">
-                                    <button class="wishlist-btn" (click)="addToWishlist(product)"><i class="fa fa-heart"></i><span class="title-font">Add To WishList</span></button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="border-product">
-                            <h6 class="product-title">100% SECURE PAYMENT</h6>
-                            <div class="payment-card-bottom">
-                                <ul>
-                                    <li>
-                                        <a href="javascript:void(0)"><img src="assets/images/icon/visa.png" alt=""></a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)"><img src="assets/images/icon/mastercard.png" alt=""></a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)"><img src="assets/images/icon/paypal.png" alt=""></a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)"><img src="assets/images/icon/american-express.png" alt=""></a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)"><img src="assets/images/icon/discover.png" alt=""></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="border-product rtl-right-text">
-                            <app-countdown [date]="'Apr 21 2021'"></app-countdown>
-                        </div> -->
+           
           </div>
           <div class="addeffect-section product-description border-product">
             <h3>Description</h3>
             <div [innerHTML]="product?.contentHTML"></div>
+            <div *ngIf="product?.contentHTML != '' " class="addeffect-section product-description border-product">
+              <h3>Description</h3>
+              <div [innerHTML]="product?.contentHTML"></div>
+            </div>
+            <br />
+            
+            <div class="addeffect-section product-description border-product">
+                <a 
+                href="javascrip:void(0)" 
+                class="btn btn-solid" 
+                (click)="CartModal.openModal(product)"
+                *ngIf="cartModal">add to cart
+              </a>
+              <a
+              href="javascript:void(0)"
+              class="btn btn-solid" 
+              (click)="addToCart(product)"
+              *ngIf="!cartModal"
+              >add to cart
+              </a>
+            </div>
+
+           
           </div>
         </div>
       </div>
@@ -167,3 +152,8 @@
 </section>
 <app-size-modal #sizeChart [product]="product"></app-size-modal>
 <!-- Section ends -->
+<app-cart-modal
+#cartModal
+*ngIf="cartModal"
+  [product]="product"
+></app-cart-modal>

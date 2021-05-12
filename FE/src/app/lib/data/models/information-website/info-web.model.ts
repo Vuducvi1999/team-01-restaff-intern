@@ -9,5 +9,7 @@ export interface InformationWebModel extends BaseModel, baseDTO{
     email: string;
     fax: string;
     logo: string;
+    title: string;
+    description: string;
     files: FileDtoModel[];
 }

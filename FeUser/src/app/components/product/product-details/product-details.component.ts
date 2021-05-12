@@ -29,6 +29,8 @@ import { CommentService } from "src/app/lib/data/services/comments/comment.servi
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { RatingModel } from "src/app/lib/data/models/rating/rating.model";
+import { CartService } from "src/app/lib/data/services/cart/cart.service";
+import { CartModalComponent } from "src/app/shared/components/modal/cart-modal/cart-modal.component";
 
 @Component({
   selector: "app-product-details",
@@ -65,9 +67,9 @@ export class ProductDetailsComponent implements OnInit {
   public user: UserDataReturnDTOModel;
   public comments: PageModel<CommentModel>;
   public searchModel: SearchPaganationDTO<SearchCommentModel>;
-
+  @Input() cartModal: boolean = false; // Default False
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
-
+  @ViewChild("cartModal") CartModal: CartModalComponent;
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
   public ProductDetailsThumbConfig: any = ProductDetailsThumbSlider;
 
@@ -80,7 +82,9 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private productDetailsService: ProductDetailsService,
     private activatedRoute: ActivatedRoute,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private formBuilder: FormBuilder,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -149,10 +153,12 @@ export class ProductDetailsComponent implements OnInit {
       .getProductComments(this.searchModel)
       .then((data: ReturnMessage<PageModel<CommentModel>>) => {
         this.comments = data.data;
-        console.log(this.comments);
       })
       .catch((e) => {
         console.log(e);
       });
+  }
+  addToCart(product: any){
+    this.cartService.addToCart(product);
   }
 }

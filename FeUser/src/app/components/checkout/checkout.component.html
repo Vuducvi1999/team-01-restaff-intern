@@ -80,16 +80,16 @@
                   </div>
                   <ul class="qty" *ngFor="let product of products">
                     <li>{{product.name}} x {{product.quantity}} <span>{{ product.quantity * product.price |
-                        currency:'VND'}}
+                      vndFormat}}
                       </span></li>
                   </ul>
                   <ul class="qty sub-total">
-                    <li>Subtotal <span class="count text-body">{{cart.totalAmount | currency:'VND'}}</span></li>
+                    <li>Subtotal <span class="count text-body">{{cart.totalAmount | vndFormat}}</span></li>
                   </ul>
                   <ul class="qty sub-total" *ngIf="couponDisplay">
                     <li>Coupon
                       <span>-{{couponValue |
-                        currency:'VND'}} <br><br> {{couponPercent}}</span>
+                        vndFormat}} <br><br> {{couponPercent}}</span>
                       <br>
                       ({{couponName}})
                     </li>
@@ -99,7 +99,7 @@
 
                   <ul class="total">
                     <li>Total <span class="count text-success">{{cart.totalAmount - couponValue |
-                        currency:'VND'}}</span></li>
+                      vndFormat}}</span></li>
                   </ul>
                 </div>
                 <div class="payment-box">

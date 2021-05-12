@@ -1,19 +1,18 @@
-
 <div class="container-fluid">
     <div class="row">
-      <div class="col-xl-8">
+      <div class="col-xl-12">
         <div class="card tab2-card">
           <div class="card-body">
             <ngb-tabset class="tab-coupon profile-tabs">
               <ngb-tab>
                 <ng-template ngbTabTitle>
-                  <app-feather-icons [icon]="'info'"></app-feather-icons>  Information Website
+                  <app-feather-icons [icon]="'info'"></app-feather-icons>Website Information 
                 </ng-template>
             
                 <ng-template ngbTabContent>
                   <div class="tab-pane fade show active" id="top-profile" role="tabpanel"
                     aria-labelledby="top-profile-tab">
-                    <h5 class="f-w-600"> Information Website</h5>
+                    <h5 class="f-w-600">Website Information </h5>
                     <div class="pull-right" *ngIf="!update">
                       <button (click)="updateSwitch()" class="btn btn-primary">Update Information</button>
                     </div>
@@ -21,6 +20,10 @@
                       <table class="table table-responsive">
                         <div *ngIf="infoWeb">
                           <tbody>
+                            <tr>
+                              <td>Title:</td>
+                              <td>{{infoWeb.title}}</td>
+                            </tr>
                             <tr>
                               <td>Address:</td>
                               <td>{{infoWeb.address}}</td>
@@ -38,6 +41,10 @@
                               <td>{{infoWeb.fax}}</td>
                             </tr>
                             <tr>
+                              <td>Description:</td>
+                              <td>{{infoWeb.description}}</td>
+                            </tr>
+                            <tr>
                               <td>Logo:</td>
                               <!-- <td>{{infoWeb.logo}}</td> -->
                               <img appUiImageLoader [src]="infoWeb?.logo" style="width: 200px; height: auto;"/>
@@ -49,6 +56,16 @@
                   </div>
                   <div *ngIf="update">
                     <form [formGroup]="inforWebForm" class="needs-validation user-add" novalidate="">
+                      <div class="form-group row">
+                        <label for="validationCustom5" class="col-xl-3 col-md-4"><span>*</span>
+                          Title</label>
+                        <input class="form-control col-xl-8 col-md-7" id="validationCustom5" type="text" required=""
+                          formControlName="title">
+                        <span class="text-danger"
+                          *ngIf="(inforWebFormControl.title.touched || submitted) && inforWebFormControl.title.errors?.required">
+                          This field is required
+                        </span>
+                      </div>
                       <div class="form-group row">
                         <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
                           Address</label>
@@ -89,6 +106,16 @@
                           formControlName="fax">
                         <span class="text-danger"
                           *ngIf="(inforWebFormControl.fax.touched || submitted) && inforWebFormControl.fax.errors?.required">
+                          This field is required
+                        </span>
+                      </div>
+                      <div class="form-group row">
+                        <label for="validationCustom6" class="col-xl-3 col-md-4"><span>*</span>
+                          Description</label>
+                        <input class="form-control col-xl-8 col-md-7" id="validationCustom6" type="text" required=""
+                          formControlName="description">
+                        <span class="text-danger"
+                          *ngIf="(inforWebFormControl.description.touched || submitted) && inforWebFormControl.description.errors?.required">
                           This field is required
                         </span>
                       </div>
