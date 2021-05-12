@@ -49,12 +49,16 @@
           </div>
           <div class="footer-contant">
             <div class="footer-logo" *ngIf="footerModel.informationWeb">
-              <img
-              appUiImageLoader
-                src="{{ footerModel.informationWeb.logo }}"
-                class="img-logo"
-                alt="logo"
-              />
+              <a routerLink="/home" id="footerlogo">
+                <app-image-wrapper
+                  class="img-logo"
+                  *ngIf="footerModel.informationWeb.logo"
+                  [data]="{
+                    url: getIcon( footerModel.informationWeb.logo ),
+                    typeClass: typeDisplayImage.LOGO_IMAGE_FOOTER
+                  }"
+                ></app-image-wrapper>
+              </a>
             </div>
             <p>{{ footerModel.informationWeb.description }}</p>
             <div class="footer-social">

@@ -77,6 +77,10 @@ export class ListInformationWebsiteComponent implements OnInit {
       this.fileURL.push(this.infoWeb.logo);
     }
     this.inforWebForm = this.formBuilder.group({
+      title:[
+        this.infoWeb ? this.infoWeb.title : '',
+        Validators.required,
+      ],
       address: [
         this.infoWeb ? this.infoWeb.address : '',
         [Validators.required]
@@ -90,6 +94,10 @@ export class ListInformationWebsiteComponent implements OnInit {
       ],
       fax: [
         this.infoWeb ? this.infoWeb.fax : '',
+        Validators.required,
+      ],
+      description:[
+        this.infoWeb ? this.infoWeb.description : '',
         Validators.required,
       ],
       logo: [
@@ -111,6 +119,8 @@ export class ListInformationWebsiteComponent implements OnInit {
         email: this.inforWebForm.controls.email.value,
         fax: this.inforWebForm.controls.fax.value,
         logo: this.inforWebForm.controls.logo.value,
+        title: this.inforWebForm.controls.title.value,
+        description: this.inforWebForm.controls.description.value,
         createdBy: this.infoWeb ? this.infoWeb.createdBy : '',
         createdByName: this.infoWeb ? this.infoWeb.createdByName : '',
         deletedBy: this.infoWeb ? this.infoWeb.deletedBy : '',
