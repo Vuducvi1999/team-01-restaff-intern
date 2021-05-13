@@ -39,10 +39,9 @@
         </ul>
         <div [innerHTML]="data?.contentHTML"></div>
 
-        <div class="mt-5">
-          <h4 class="comment-label" #refComment>Comments</h4>
+        <div class="mt-5" #refComment>
           <app-comment
-            *ngIf="user"
+            [isLoading]="user ? true : false"
             [dataComment]="dataComment"
             (action)="getComments()"
           ></app-comment>

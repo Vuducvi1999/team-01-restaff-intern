@@ -1,5 +1,10 @@
 <div class="container">
-  <form [formGroup]="commentForm" (ngSubmit)="Submit()">
+  <span class="review row text-dark">Reviews</span>
+  <form
+    [formGroup]="commentForm"
+    (ngSubmit)="Submit()"
+    *ngIf="isLoading; else checkLoginToComment"
+  >
     <div class="row pt-3">
       <div class="form-group col-md-12 m-0 p-0">
         <textarea
@@ -22,3 +27,6 @@
     </div>
   </form>
 </div>
+<ng-template #checkLoginToComment>
+  <p class="checkLogin">Login to leave review</p>
+</ng-template>

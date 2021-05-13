@@ -48,7 +48,6 @@ export class HomeComponent implements OnInit {
       .getTopCollectionProducts()
       .then((data: ReturnMessage<ProductModel[]>) => {
         this.productKeeper.topProduct = data.data;
-        console.log(data.data);
       })
       .catch((e) => {
         console.log(e);
