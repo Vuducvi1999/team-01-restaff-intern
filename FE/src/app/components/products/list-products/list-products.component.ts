@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { ProductModel } from 'src/app/lib/data/models/products/product.model';
-import { FileService } from 'src/app/lib/data/services';
 import { ProductService } from 'src/app/lib/data/services/products/product.service';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { CustomViewCellNumberComponent } from 'src/app/shared/components/custom-view-cell-number/custom-view-cell-number.component';
