@@ -23,6 +23,25 @@ import { TypeDisplayImage } from "src/app/shared/data";
   styleUrls: ["./blog-detail.component.scss"],
   templateUrl: "./blog-detail.component.html",
   providers: [CommentService,AuthService],
+  styles: [
+    `
+      .star {
+        position: relative;
+        display: inline-block;
+        font-size: 1.1rem;
+        color: #d3d3d3;
+      }
+      .full {
+        color: #ffa200;
+      }
+      .half {
+        position: absolute;
+        display: inline-block;
+        overflow: hidden;
+        color: #ffa200;
+      }
+    `,
+  ],
 })
 export class BlogDetailComponent implements OnInit, OnDestroy {
   id: string;
@@ -32,6 +51,9 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
   user: UserDataReturnDTOModel;
   comments: PageModel<CommentModel>;
   searchModel: SearchPaganationDTO<SearchCommentModel>;
+  item: any;
+  public rating: number;
+  public ratingPoint: number;
 
   subDataUser: Subscription;
 
@@ -49,6 +71,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subDataUser = this.authService.callUserInfo.subscribe(it => this.user = it);
     this.getBlog();
+    this.getRating();
   }
 
   getBlog() {
@@ -65,7 +88,16 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
       this.getComments();
     });
   }
-
+  getRating() {
+    this.activatedRoute.paramMap.subscribe((params) => {
+      const data = { entityId: params.get("id") };
+      this.commentService
+        .getRating({ params: data })
+        .then((res: ReturnMessage<number>) => {
+          this.ratingPoint = res.data;
+        });
+    });
+  }
   createSearchModel() {
     this.searchModel = {
       search: { entityId: this.id },
@@ -89,6 +121,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
       .catch((e) => {
         console.log(e);
       });
+    this.getRating();
   }
 
   getImage(image) {
@@ -101,6 +134,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
       customerId: this.user ? this.user.id : "",
       entityId: this.activatedRoute.snapshot.paramMap.get("id"),
       entityType: "Blog",
+      rating: this.item ? this.item.rating : 1,
     };
   }
 }

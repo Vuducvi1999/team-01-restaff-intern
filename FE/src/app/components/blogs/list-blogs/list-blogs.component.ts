@@ -34,7 +34,6 @@ export class ListBlogsComponent implements OnInit {
       })
       .catch((er) => {
         if (er.error.hasError) {
-          // console.log(er.error.message);
         }
       });
   }
@@ -81,7 +80,6 @@ export class ListBlogsComponent implements OnInit {
   }
 
   delete(event: any) {
-    // console.log(event);
     let banner = event.data as BlogModel;
     if (window.confirm('Do you want to permanently delete this item?')) {
       this.blogService.delete(banner).then(() => {
