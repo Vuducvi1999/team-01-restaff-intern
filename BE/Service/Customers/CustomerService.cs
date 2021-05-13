@@ -11,6 +11,7 @@ using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Service.Customers
@@ -35,8 +36,22 @@ namespace Service.Customers
             try
             {
                 if (model.Username.Trim() == "")
-                    return new ReturnMessage<CustomerDTO>(false, null, MessageConstants.Error);
+                    return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
 
+                if(_userRepository.Queryable().Any(it => it.Username.CompareTo(model.Username) == 0))
+                {
+                    return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.ExistUsername);
+                }
+
+                if(_userRepository.Queryable().Any(it => it.Email.CompareTo(model.Email) == 0))
+                {
+                    return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.ExistEmail);
+                }
+
+                if(_customerRepository.Queryable().Any(it => model.Phone.IsNotNullOrEmpty() && it.Phone.CompareTo(model.Phone) == 0))
+                {
+                    return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.ExistPhone);
+                }
                 var user = _mapper.Map<CreateCustomerDTO, User>(model);
                 user.Password = MD5Helper.ToMD5Hash(model.Password);
                 user.Insert();
@@ -74,7 +89,7 @@ namespace Service.Customers
         {
             try
             {
-                var user = _userRepository.Find(model.Id);
+                var user = _userRepository.Queryable().FirstOrDefault(it => it.Id == model.Id && it.Type == UserType.Customer && !it.IsDeleted);
                 if (user.IsNullOrEmpty())
                 {
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
@@ -108,8 +123,11 @@ namespace Service.Customers
             try
             {
                 if (model.Username.Trim() == "")
-                    return new ReturnMessage<CustomerDTO>(false, null, MessageConstants.CreateSuccess);
-                var user = _userRepository.Find(model.Id);
+                {
+                    return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
+                }
+
+                var user = _userRepository.Queryable().FirstOrDefault(it => it.Id == model.Id && it.Type == UserType.Customer && !it.IsDeleted);
                 if (user.IsNullOrEmpty())
                 {
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
@@ -119,6 +137,21 @@ namespace Service.Customers
                 if (customer.IsNullOrEmpty())
                 {
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
+                }
+
+                if (_userRepository.Queryable().Any(it => it.Username == model.Username && it.Id != user.Id))
+                {
+                    return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.ExistUsername);
+                }
+
+                if (_userRepository.Queryable().Any(it => it.Email == model.Email && it.Id != user.Id))
+                {
+                    return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.ExistEmail);
+                }
+
+                if (_customerRepository.Queryable().Any(it => model.Phone.IsNotNullOrEmpty() && it.Phone == model.Phone && it.Id != user.CustomerId))
+                {
+                    return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.ExistPhone);
                 }
 
                 _unitOfWork.BeginTransaction();

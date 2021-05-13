@@ -1,5 +1,6 @@
 ﻿using BE.Controllers;
 using Common.Constants;
+using Domain.DTOs.Customer;
 using Domain.DTOs.CustomerProfileFeUser;
 using Infrastructure.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -29,8 +30,16 @@ namespace BE.ControllersFeUser
         [HttpPut]
         public IActionResult UpdateProfile([FromBody] UpdateCustomerProfileFeUserDTO model)
         {
-            var result = _customerProfileFeUserService.Update(model);
-            var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data!.Id);
+            var result = _customerProfileFeUserService.UpdateProfile(model);
+            if(result.HasError)
+            {
+                return CommonResponse(result);
+            }
+            var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
+            if(uploadImage.HasError)
+            {
+                return CommonResponse(uploadImage);
+            }
             return CommonResponse(result);
         }
 
@@ -40,6 +49,27 @@ namespace BE.ControllersFeUser
         {
 
             var result = _customerProfileFeUserService.ChangePassword(dto);
+            return CommonResponse(result);
+        }
+
+        [HttpGet(UrlConstants.CheckEmail)]
+        public IActionResult CheckEmail([FromQuery] CustomerEmailDTO dto)
+        {
+            var result = _customerProfileFeUserService.CheckEmail(dto);
+            return CommonResponse(result);
+        }
+
+        [HttpGet(UrlConstants.CheckPhone)]
+        public IActionResult CheckPhone([FromQuery] CustomerPhoneDTO dto)
+        {
+            var result = _customerProfileFeUserService.CheckPhone(dto);
+            return CommonResponse(result);
+        }
+
+        [HttpGet(UrlConstants.CheckUserName)]
+        public IActionResult CheckUserName([FromQuery] CustomerUserNameDTO dto)
+        {
+            var result = _customerProfileFeUserService.CheckUserName(dto);
             return CommonResponse(result);
         }
     }

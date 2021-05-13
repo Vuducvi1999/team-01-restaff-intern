@@ -74,6 +74,9 @@ namespace Common.Constants
         public const string Blogs = "blogs";
         public const string Banners = "banners";
         public const string Password = "password";
+        public const string CheckEmail = "checkemail";
+        public const string CheckPhone = "checkphone";
+        public const string CheckUserName = "checkusername";
 
         public const string TopBlog = BaseBlog + "/topblog";
         public const string RecentBlog = BaseBlog + "/recentblog";

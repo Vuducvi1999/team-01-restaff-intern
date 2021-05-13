@@ -10,7 +10,10 @@ namespace Service.CustomerProfileFeUser
 {
     public interface ICustomerProfileFeUserService
     {
-        ReturnMessage<CustomerDataReturnDTO> Update(UpdateCustomerProfileFeUserDTO model);
+        ReturnMessage<CustomerDataReturnDTO> UpdateProfile(UpdateCustomerProfileFeUserDTO model);
         ReturnMessage<CustomerDataReturnDTO> ChangePassword(ChangePasswordCustomerProfileFeUserDTO model);
+        ReturnMessage<Boolean> CheckEmail(CustomerEmailDTO model);
+        ReturnMessage<Boolean> CheckUserName(CustomerUserNameDTO model);
+        ReturnMessage<Boolean> CheckPhone(CustomerPhoneDTO model);
     }
 }
