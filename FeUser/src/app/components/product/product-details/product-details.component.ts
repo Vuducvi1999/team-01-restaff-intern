@@ -66,7 +66,7 @@ export class ProductDetailsComponent implements OnInit {
   public typeDisplayImage = TypeDisplayImage;
   public user: UserDataReturnDTOModel;
   public comments: PageModel<CommentModel>;
-  public searchModel: SearchPaganationDTO<SearchCommentModel>;
+  public searchModel;
   @Input() cartModal: boolean = false; // Default False
   @ViewChild("sizeChart") SizeChart: SizeModalComponent;
   @ViewChild("cartModal") CartModal: CartModalComponent;
@@ -142,14 +142,14 @@ export class ProductDetailsComponent implements OnInit {
   createSearchModel() {
     const id = this.activatedRoute.snapshot.queryParamMap.get("id");
     this.searchModel = {
-      search: { entityId: id },
-      pageIndex: 0,
-      pageSize: 10,
+      ["search.entityId"]: id,
+      ["pageIndex"]: 0,
+      ["pageSize"]: 10,
     };
   }
 
   changePageIndex(pageIndex: number) {
-    this.searchModel = { ...this.searchModel, pageIndex: pageIndex - 1 };
+    this.searchModel = { ...this.searchModel, ["pageIndex"]: pageIndex - 1 };
 
     this.getComments();
   }
