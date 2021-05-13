@@ -29,7 +29,6 @@ import { CommentService } from "src/app/lib/data/services/comments/comment.servi
 import { Subscription } from "rxjs";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { RatingModel } from "src/app/lib/data/models/rating/rating.model";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { CartModalComponent } from "src/app/shared/components/modal/cart-modal/cart-modal.component";
 

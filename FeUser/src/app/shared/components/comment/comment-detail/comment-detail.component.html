@@ -1,20 +1,16 @@
 <div class="container">
   <div [ngClass]="['row', class ? class : '']" #refComment>
-    <div class="col-12">
+    <div class="col-12 mt-3 m-0 p-0">
       <p *ngIf="comments.results.length === 0">Not Found Comments</p>
     </div>
 
-    <div
-      class="col-md-12"
-      *ngIf="allUser.length > 0 && comments.results.length > 0"
-    >
+    <div class="col-md-12 m-0 p-0" *ngIf="comments.results.length > 0">
       <ul class="comments">
         <li *ngFor="let comment of comments.results">
           <div class="media">
             <app-image-wrapper
               class="flex-shrink-0"
               [data]="{
-                url: getCustomerImage(comment.customerId),
                 typeClass: typeDisplayImage.COMMENT_IMAGE_CUSTOMER
               }"
             ></app-image-wrapper>
@@ -25,7 +21,7 @@
                   <span>( {{ getDate(comment.createByDate) }} )</span>
                 </b>
               </div>
-              <div class="form-row">
+              <div class="form-row m-0">
                 <div class="rating">
                   <ngb-rating
                     [max]="5"

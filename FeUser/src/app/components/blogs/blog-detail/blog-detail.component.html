@@ -41,19 +41,17 @@
 
         <div class="mt-5">
           <h4 class="comment-label" #refComment>Comments</h4>
+          <app-comment
+            *ngIf="user"
+            [dataComment]="dataComment"
+            (action)="getComments()"
+          ></app-comment>
           <app-comment-detail
             *ngIf="comments"
             (action)="changePageIndex($event)"
             [comments]="comments"
           ></app-comment-detail>
         </div>
-      </div>
-      <div class="col-sm-12 mt-5" *ngIf="user">
-        <h2 class="container">Leave Your Message</h2>
-        <app-comment
-          [dataComment]="dataComment"
-          (action)="getComments()"
-        ></app-comment>
       </div>
     </div>
     <div></div>

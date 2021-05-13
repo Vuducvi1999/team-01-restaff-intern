@@ -1,8 +1,7 @@
 <div class="container">
   <form [formGroup]="commentForm" (ngSubmit)="Submit()">
     <div class="row pt-3">
-      <div class="form-group col-md-12">
-        <label> Write Your Review</label>
+      <div class="form-group col-md-12 m-0 p-0">
         <textarea
           class="form-control"
           rows="4"
@@ -10,17 +9,14 @@
           placeholder="Leave your review"
         ></textarea>
       </div>
-      <div class="form-group col-md-12">
+      <div class="col-md-12 m-0 p-0">
         <ngb-rating [max]="5" [(rate)]="currentRate" formControlName="rating">
           <ng-template let-fill="fill" let-index="index">
             <span class="star" [class.filled]="fill === 100">&#9733;</span>
           </ng-template>
         </ngb-rating>
-        <br />
-        <div class="product-title">Rating: {{ currentRate }}</div>
-        <br />
       </div>
-      <div class="col-md-12">
+      <div class="col-md-12 m-0 p-0">
         <button class="btn btn-solid" type="submit">Send</button>
       </div>
     </div>

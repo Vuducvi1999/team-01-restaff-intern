@@ -6,7 +6,6 @@ namespace Domain.DTOs.CustomerWishList
 {
     public class CreateCustomerWishListDTO
     {
-        public Guid CustomerId { get; set; }
         public Guid ProductId { get; set; }
     }
 }
