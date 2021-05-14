@@ -44,6 +44,7 @@ namespace Domain.Entities
         public virtual void Update()
         {
             UpdateByDate = DateTime.Now;
+            IsActive = true;
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
     }

@@ -27,7 +27,7 @@
                             </div>
                             <div class="form-group row">
                               <label for="validationCustom1" class="col-xl-3 col-md-4"><span>*</span>
-                                Description</label>
+                                Product Details</label>
                               <input class="form-control col-xl-8 col-md-7" id="validationCustom1" type="text"
                                 required="" formControlName="description" />
                               <span class="text-danger"
@@ -43,9 +43,9 @@
                               <span class="text-danger"
                                 *ngIf="(productFormsControl.price.touched || submitted) && productFormsControl.price.errors?.required">Required</span>
                               <span class="text-danger" *ngIf="productFormsControl.price.errors?.max">Value must in
-                                range (1 ~ 9999999999)</span>
+                                range (1 ~ 5000000)</span>
                               <span class="text-danger" *ngIf="productFormsControl.price.errors?.min">Value must in
-                                range (1 ~ 9999999999)</span>
+                                range (1 ~ 5000000)</span>
                             </div>
                             <div class="form-group row">
                               <label for="validationCustom7" class="col-xl-3 col-md-4"><span>*</span> Display
@@ -92,8 +92,7 @@
                           </div>
                         </div>
                         <div class="form-group row">
-                          <label for="validationCustom3" class="col-xl-6 col-md-4"> Content
-                            Html</label>
+                          <label for="validationCustom3" class="col-xl-6 col-md-4"> Description</label>
                           <ckeditor [editor]="editor" class="col-xl-12 col-md-12 p-0" id="validationCustom3" type="text"
                             formControlName="contentHTML"></ckeditor>
                         
