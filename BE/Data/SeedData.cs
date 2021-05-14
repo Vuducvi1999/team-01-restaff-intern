@@ -26,7 +26,7 @@ namespace Data
                     {
                         Id = Guid.NewGuid(),
                         Username = "admin",
-                        Password = "E10ADC3949BA59ABBE56E057F20F883E",
+                        Password = Common.MD5.MD5Helper.ToMD5Hash("123456"),
                         Type = Common.Enums.UserType.Admin,
                         CreateByDate = DateTime.Now,
                         IsActive = true,

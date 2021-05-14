@@ -2,6 +2,7 @@
 using Common.Pagination;
 using Domain.DTOs.Customer;
 using Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
@@ -25,6 +26,7 @@ namespace BE.Controllers
             _customerService = customerService;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Get([FromQuery] SerachPaginationDTO<CustomerDTO> serachPagination)
         {
@@ -32,6 +34,7 @@ namespace BE.Controllers
             return CommonResponse(result);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Create([FromBody] CreateCustomerDTO model)
         {
@@ -48,6 +51,7 @@ namespace BE.Controllers
             return CommonResponse(result);
         }
 
+        [Authorize]
         [HttpPut]
         public IActionResult Update([FromBody] UpdateCustomerDTO model)
         {
@@ -64,6 +68,7 @@ namespace BE.Controllers
             return CommonResponse(result);
         }
 
+        [Authorize]
         [HttpDelete]
         public IActionResult Delete([FromQuery] DeleteCustomerDTO model)
         {
