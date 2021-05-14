@@ -68,7 +68,7 @@ export class ProductDetailsComponent implements OnInit {
   public typeDisplayImage = TypeDisplayImage;
   public user: UserDataReturnDTOModel;
   public comments: PageModel<CommentModel>;
-  public searchModel: SearchPaganationDTO<SearchCommentModel>;
+  public searchModel;
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
   public ProductDetailsThumbConfig: any = ProductDetailsThumbSlider;
 
@@ -167,6 +167,6 @@ export class ProductDetailsComponent implements OnInit {
   }
   addToCart(product: any) {
     this.cartService.addToCart(product);
-    this.toastrService.success(`${product?.name}` + ' has been added to cart.');
+    this.toastrService.success(`${product?.name}` + " has been added to cart.");
   }
 }
