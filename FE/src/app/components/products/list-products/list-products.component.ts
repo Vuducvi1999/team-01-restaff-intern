@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PageModel, ReturnMessage, TypeSweetAlertIcon } from 'src/app/lib/data/models';
+import {
+  PageModel,
+  ReturnMessage,
+  TypeSweetAlertIcon,
+} from 'src/app/lib/data/models';
 import { ProductModel } from 'src/app/lib/data/models/products/product.model';
 import { FileService, SweetalertService } from 'src/app/lib/data/services';
 import { ProductService } from 'src/app/lib/data/services/products/product.service';
@@ -30,7 +34,6 @@ export class ListProductsComponent implements OnInit {
   }
 
   public settings = {
-    
     mode: 'external',
     actions: {
       position: 'right',
@@ -60,31 +63,42 @@ export class ListProductsComponent implements OnInit {
       },
       price: {
         type: 'custom',
-        title:'Price',
+        title: 'Price',
         renderComponent: CustomViewCellNumberComponent,
         filter: false,
       },
       displayOrder: {
         title: 'Display Order',
         type: 'custom',
-          renderComponent: CustomViewCellComponent,
-          filter: false,
+        renderComponent: CustomViewCellComponent,
+        filter: false,
       },
     },
   };
 
   delete(event: any) {
     let product = event.data as ProductModel;
-    this.sweetService.confirm('Are you sure to delete this item?', 'Yes').then((res) =>{
-        if(res.isConfirmed){
-          this.productService.delete(product).then(() => {
-            this.sweetService.notification('Detele successful', TypeSweetAlertIcon.SUCCESS);
-            this.fetch();
-          }).catch((er) =>
-            this.sweetService.notification('Detele fails', TypeSweetAlertIcon.ERROR)
-          );
+    this.sweetService
+      .confirm('Are you sure to delete this item?', 'Yes')
+      .then((res) => {
+        if (res.isConfirmed) {
+          this.productService
+            .delete(product)
+            .then(() => {
+              this.sweetService.notification(
+                'Detele successful',
+                TypeSweetAlertIcon.SUCCESS
+              );
+              this.fetch();
+            })
+            .catch((er) =>
+              this.sweetService.notification(
+                'Detele fails',
+                TypeSweetAlertIcon.ERROR
+              )
+            );
         }
-    })
+      });
   }
 
   openPopup(item: any) {

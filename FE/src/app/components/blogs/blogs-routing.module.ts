@@ -11,7 +11,7 @@ const routes: Routes = [
         component: ListBlogsComponent,
         data: {
           title: 'Blog List',
-          breadcrumb: 'BlogList',
+          breadcrumb: 'Blog List',
         },
       },
     ],
