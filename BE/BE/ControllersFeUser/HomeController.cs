@@ -51,14 +51,6 @@ namespace BE.FeUserControllers
             return CommonResponse(result);
         }
 
-        [HttpGet(UrlConstants.OnSale)]
-        public IActionResult GetOnSaleProducts()
-        {
-
-            var result = _homeService.GetOnSaleProducts();
-            return CommonResponse(result);
-        }
-
         [HttpGet(UrlConstants.Blogs)]
         public IActionResult GetBlogs()
         {

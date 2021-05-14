@@ -147,10 +147,15 @@ namespace Service.Comments
             }
             try
             {
-                var entity = _commentRepository.Queryable().Where(p => p.EntityId == entityId);
-                if(entity.Count() == 0)
+                var entity = _commentRepository.Queryable().Where(p => p.EntityId == entityId)
+                                                .OrderByDescending(i => i.CreateByDate)
+                                                .ToList()
+                                                .GroupBy(t => t.CustomerId)
+                                                .Select(i => i.First());
+
+                if (entity.Count() == 0)
                 {
-                    return new ReturnMessage<decimal>(false, 1, MessageConstants.DataError);
+                    return new ReturnMessage<decimal>(false, 0, MessageConstants.DataError);
                 }
                 decimal rating = (decimal)Math.Round(entity.Average(x => x.Rating), 1);
                 return new ReturnMessage<decimal>(false, rating, MessageConstants.GetSuccess);

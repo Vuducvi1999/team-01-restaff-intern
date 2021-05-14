@@ -18,11 +18,11 @@
   <div class="row">
     <div class="col-lg-6 offset-lg-3">
       <div class="product-para">
-        <p class="text-center">
+        <!-- <p class="text-center">
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry, Lorem Ipsum has been the industry's standard dummy text ever
           since the 1500s.
-        </p>
+        </p> -->
       </div>
     </div>
   </div>
@@ -35,7 +35,9 @@
           class="product-m no-arrow"
           [options]="ProductSliderConfig"
         >
-          <ng-container *ngFor="let product of products | slice: 0:16">
+          <ng-container
+            *ngFor="let product of productKeeper.topProduct | slice: 0:12"
+          >
             <ng-template carouselSlide>
               <div class="product-box">
                 <app-product-box
@@ -43,6 +45,7 @@
                   [currency]="homeService?.Currency"
                   [thumbnail]="true"
                   [cartModal]="true"
+                  (action)="callProducts()"
                 >
                 </app-product-box>
               </div>
@@ -65,7 +68,6 @@
     <div class="row">
       <div class="col theme-tab">
         <ngb-tabset
-          *ngIf="products.length !== 0"
           [justify]="'center'"
           [type]="'pills'"
           class="tabs tab-title"
@@ -76,7 +78,7 @@
             <ng-template ngbTabContent>
               <div class="no-slider row">
                 <ng-container
-                  *ngFor="let product of getNewProducts() | slice: 0:8"
+                  *ngFor="let product of productKeeper.newProduct | slice: 0:8"
                 >
                   <div class="product-box">
                     <app-product-box
@@ -96,7 +98,9 @@
             <ng-template ngbTabTitle>Best Seller</ng-template>
             <ng-template ngbTabContent>
               <div class="no-slider row">
-                <ng-container *ngFor="let product of products | slice: 0:8">
+                <ng-container
+                  *ngFor="let product of productKeeper.bestSeller | slice: 0:8"
+                >
                   <div class="product-box">
                     <app-product-box
                       [product]="product"
@@ -115,26 +119,11 @@
             <ng-template ngbTabTitle>Featured Products</ng-template>
             <ng-template ngbTabContent>
               <div class="no-slider row">
-                <ng-container *ngFor="let product of products | slice: 0:8">
-                  <div class="product-box">
-                    <app-product-box
-                      [product]="product"
-                      [currency]="homeService?.Currency"
-                      [thumbnail]="true"
-                      [cartModal]="true"
-                    >
-                    </app-product-box>
-                  </div>
-                </ng-container>
-              </div>
-            </ng-template>
-          </ngb-tab>
-          <!-- On Sale -->
-          <ngb-tab>
-            <ng-template ngbTabTitle>On Sale</ng-template>
-            <ng-template ngbTabContent>
-              <div class="no-slider row">
-                <ng-container *ngFor="let product of products | slice: 0:8">
+                <ng-container
+                  *ngFor="
+                    let product of productKeeper.featuredProduct | slice: 0:8
+                  "
+                >
                   <div class="product-box">
                     <app-product-box
                       [product]="product"

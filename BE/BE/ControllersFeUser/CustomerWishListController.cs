@@ -2,6 +2,7 @@
 using Common.Constants;
 using Common.Pagination;
 using Domain.DTOs.CustomerWishList;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Contacts;
@@ -22,33 +23,20 @@ namespace BE.ControllersFeUser
             _service = service;
         }
 
+        [Authorize]
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetByCustomer()
         {
-            var result = _service.GetAll();
+            var result = _service.GetByCustomer();
             return CommonResponse(result);
         }
 
-        [Route(UrlConstants.GetCustomerWishList)]
-        [HttpGet]
-        public IActionResult GetByCustomer(Guid customerId)
-        {
-            var result = _service.GetByCustomer(customerId);
-            return CommonResponse(result);
-        }
-
+        [Authorize]
         [HttpPost]
-        public IActionResult Post([FromBody] CreateCustomerWishListDTO model)
+        public IActionResult CreateOrDelete([FromBody] CreateCustomerWishListDTO model)
         {
 
-            var result = _service.Create(model);
-            return CommonResponse(result);
-        }
-
-        [HttpDelete]
-        public IActionResult Delete([FromQuery] DeleteCustomerWishListDTO model)
-        {
-            var result = _service.Delete(model);
+            var result = _service.CreateOrDelete(model);
             return CommonResponse(result);
         }
     }

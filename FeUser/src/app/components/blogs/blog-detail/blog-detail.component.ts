@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
@@ -22,7 +28,7 @@ import { TypeDisplayImage } from "src/app/shared/data";
   selector: "app-blog-detail",
   styleUrls: ["./blog-detail.component.scss"],
   templateUrl: "./blog-detail.component.html",
-  providers: [CommentService,AuthService],
+  providers: [CommentService, AuthService],
   styles: [
     `
       .star {
@@ -50,7 +56,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
   typeDisplayImage = TypeDisplayImage;
   user: UserDataReturnDTOModel;
   comments: PageModel<CommentModel>;
-  searchModel: SearchPaganationDTO<SearchCommentModel>;
+  searchModel;
   item: any;
   public rating: number;
   public ratingPoint: number;
@@ -61,7 +67,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     private blogService: BlogService,
     private activatedRoute: ActivatedRoute,
     private commentService: CommentService,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
@@ -69,7 +75,9 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subDataUser = this.authService.callUserInfo.subscribe(it => this.user = it);
+    this.subDataUser = this.authService.callUserInfo.subscribe(
+      (it) => (this.user = it)
+    );
     this.getBlog();
     this.getRating();
   }
@@ -100,14 +108,14 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
   }
   createSearchModel() {
     this.searchModel = {
-      search: { entityId: this.id },
-      pageIndex: 0,
-      pageSize: 10,
+      ["search.entityId"]: this.id,
+      ["pageIndex"]: 0,
+      ["pageSize"]: 10,
     };
   }
 
   changePageIndex(pageIndex: number) {
-    this.searchModel = { ...this.searchModel, pageIndex: pageIndex - 1 };
+    this.searchModel = { ...this.searchModel, ["pageIndex"]: pageIndex - 1 };
 
     this.getComments();
   }

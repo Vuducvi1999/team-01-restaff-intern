@@ -9,9 +9,7 @@ namespace Service.CustomerWishLists
 {
     public interface ICustomerWishListService
     {
-        public ReturnMessage<List<CustomerWishListDTO>> GetAll();
-        public ReturnMessage<List<ProductDTO>> GetByCustomer(Guid customerId);
-        public ReturnMessage<CustomerWishListDTO> Create(CreateCustomerWishListDTO model);
-        public ReturnMessage<CustomerWishListDTO> Delete(DeleteCustomerWishListDTO model);
+        public ReturnMessage<List<ProductDTO>> GetByCustomer();
+        public ReturnMessage<CustomerWishListDTO> CreateOrDelete(CreateCustomerWishListDTO model);
     }
 }

@@ -86,7 +86,6 @@
               [max]="5"
             ></ngb-rating>
             <hr />
-            <div class="product-title">Average Rating: {{ rating }}</div>
           </div>
           <br />
           <div class="addeffect-section product-description border-product">
@@ -124,27 +123,16 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-12 col-lg-12">
-            <ngb-tabset [type]="'tabs'" class="nav-material">
-              <ngb-tab>
-                <ng-template ngbTabTitle>Comments</ng-template>
-                <ng-template ngbTabContent>
-                  <app-comment-detail
-                    *ngIf="comments"
-                    (action)="changePageIndex($event)"
-                    [comments]="comments"
-                  ></app-comment-detail>
-                </ng-template>
-              </ngb-tab>
-              <ngb-tab *ngIf="user">
-                <ng-template ngbTabTitle>Write Review</ng-template>
-                <ng-template ngbTabContent>
-                  <app-comment
-                    [dataComment]="dataComment"
-                    (action)="getComments()"
-                  ></app-comment>
-                </ng-template>
-              </ngb-tab>
-            </ngb-tabset>
+            <app-comment
+              [isLoading]="user ? true : false"
+              [dataComment]="dataComment"
+              (action)="getComments()"
+            ></app-comment>
+            <app-comment-detail
+              *ngIf="comments"
+              (action)="changePageIndex($event)"
+              [comments]="comments"
+            ></app-comment-detail>
           </div>
         </div>
       </div>

@@ -12,48 +12,14 @@ export class CommentService {
 
   constructor(private httpClient: HttpClientService) {}
 
-  getBlogComments(search: SearchPaganationDTO<SearchCommentModel> = null) {
-    const qs = Object.keys(search.search)
-      .map(
-        (key) =>
-          `search.${encodeURIComponent(key)}=${encodeURIComponent(
-            search.search[key]
-          )}`
-      )
-      .join("&");
-    const qs2 = Object.keys({
-      pageIndex: search.pageIndex,
-      pageSize: search.pageSize,
-    })
-      .map(
-        (key) => `${encodeURIComponent(key)}=${encodeURIComponent(search[key])}`
-      )
-      .join("&");
-
-    const url = this.url + `/blog?${qs}&${qs2}`;
-    return this.httpClient.getObservable(url).toPromise();
+  getBlogComments(request: any) {
+    const url = this.url + `/blog`;
+    return this.httpClient.getObservable(url, { params: request }).toPromise();
   }
 
-  getProductComments(search: SearchPaganationDTO<SearchCommentModel> = null) {
-    const qs = Object.keys(search.search)
-      .map(
-        (key) =>
-          `search.${encodeURIComponent(key)}=${encodeURIComponent(
-            search.search[key]
-          )}`
-      )
-      .join("&");
-    const qs2 = Object.keys({
-      pageIndex: search.pageIndex,
-      pageSize: search.pageSize,
-    })
-      .map(
-        (key) => `${encodeURIComponent(key)}=${encodeURIComponent(search[key])}`
-      )
-      .join("&");
-
-    const url = this.url + `/product?${qs}&${qs2}`;
-    return this.httpClient.getObservable(url).toPromise();
+  getProductComments(request: any) {
+    const url = this.url + `/product`;
+    return this.httpClient.getObservable(url, { params: request }).toPromise();
   }
 
   create(model: CommentModel) {

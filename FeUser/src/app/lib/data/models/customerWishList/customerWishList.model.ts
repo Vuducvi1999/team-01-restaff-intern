@@ -5,12 +5,6 @@ export interface CustomerWishListModel extends BaseModel {
   productId: string;
 }
 
-export interface CreateCustomerWishListModel {
-  customerId: string;
-  productId: string;
-}
-
-export interface DeleteCustomerWishListModel {
-  customerId: string;
+export interface SaveCustomerWishListModel {
   productId: string;
 }

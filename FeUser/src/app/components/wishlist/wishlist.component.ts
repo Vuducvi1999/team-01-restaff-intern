@@ -1,46 +1,33 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { AuthService, FileService } from "src/app/lib/data/services";
+import { Component, OnInit } from "@angular/core";
+import { FileService } from "src/app/lib/data/services";
 import {
   PageModel,
   ProductModel,
   ReturnMessage,
 } from "src/app/lib/data/models";
 import { CustomerWishListService } from "src/app/lib/data/services/customerWishLists/customerWishList.service";
-import { UserDataReturnDTOModel, UserModel } from "src/app/lib/data/models/users/user.model";
+import { UserModel } from "src/app/lib/data/models/users/user.model";
 import { TypeDisplayImage } from "src/app/shared/data";
-import { DeleteCustomerWishListModel } from "src/app/lib/data/models/customerWishList/customerWishList.model";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
-import { Subscription } from "rxjs";
+import { SaveCustomerWishListModel } from "src/app/lib/data/models/customerWishList/customerWishList.model";
 
 @Component({
   selector: "app-wishlist",
   templateUrl: "./wishlist.component.html",
   styleUrls: ["./wishlist.component.scss"],
-  providers: [CustomerWishListService, CartService, AuthService],
+  providers: [CustomerWishListService, CartService],
 })
-export class WishlistComponent implements OnInit, OnDestroy {
+export class WishlistComponent implements OnInit {
   products: ProductModel[] = [];
   typeDisplayImage = TypeDisplayImage;
 
-  userInfo: UserDataReturnDTOModel;
-  subDataUser: Subscription;
-
   constructor(
     private wishListService: CustomerWishListService,
-    public cartService: CartService,
-    private authService: AuthService,
+    public cartService: CartService
   ) {}
-  ngOnDestroy(): void {
-    this.subDataUser.unsubscribe();
-    this.subDataUser = null;
-  }
 
   ngOnInit(): void {
-    this.subDataUser = this.authService.callUserInfo.subscribe(it => {
-      this.userInfo = it;
-      this.getList();
-    });
-    // this.getList();
+    this.getList();
   }
 
   addToCart(product: any) {
@@ -49,20 +36,18 @@ export class WishlistComponent implements OnInit, OnDestroy {
 
   getList() {
     this.wishListService
-      .getByCustomer(this.userInfo.id)
+      .getByCustomer()
       .then((data: ReturnMessage<ProductModel[]>) => {
         this.products = data.data;
       });
   }
 
   removeItem(product: any) {
-    // this.cartService.removeWishlistItem(product);
-
-    const model: DeleteCustomerWishListModel = {
+    this.cartService.removeWishlistItem(product);
+    const model: SaveCustomerWishListModel = {
       productId: product.id,
-      customerId: this.userInfo.id,
     };
-    this.wishListService.delete(model).then(() => this.getList());
+    this.wishListService.createOrDelete(model).then(() => this.getList());
   }
 
   getImage(image: string) {
@@ -70,9 +55,8 @@ export class WishlistComponent implements OnInit, OnDestroy {
   }
 
   checkStock(product: ProductModel) {
-    const cart = JSON.parse(localStorage.getItem("cartItems"));
     const cartItems: ProductModel[] =
-      cart?.cartDetails ?? [];
+      JSON.parse(localStorage.getItem("cartItems"))?.cartDetails ?? [];
 
     return cartItems.some((i) => product.id == i.id);
   }
