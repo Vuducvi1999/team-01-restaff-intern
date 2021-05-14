@@ -11,7 +11,7 @@ const routes: Routes = [
         component: ListCouponComponent,
         data: {
           title: 'Coupon List',
-          breadcrumb: 'CouponList',
+          breadcrumb: 'Coupon List',
         },
       },
     ],
