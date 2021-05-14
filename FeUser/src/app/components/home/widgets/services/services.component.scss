@@ -1,0 +1,6 @@
+.link-page-content {
+  color: black !important;
+  &:hover {
+    color: var(--theme-deafult) !important;
+  }
+}

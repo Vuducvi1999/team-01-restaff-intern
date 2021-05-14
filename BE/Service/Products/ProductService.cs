@@ -47,6 +47,8 @@ namespace Service.Products
                 {
                     return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
                 }
+                entity.CategoryId = category.Id;
+                entity.Category = category;
                 entity.Insert();
                 _productRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
@@ -142,6 +144,7 @@ namespace Service.Products
                 {
                     return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
                 }
+                entity.Category = category;
                 entity.CategoryId = category.Id;
                 if (entity.IsNotNullOrEmpty())
                 {

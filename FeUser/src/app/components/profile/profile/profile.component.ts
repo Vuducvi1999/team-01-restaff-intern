@@ -1,5 +1,10 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
 import { Subscription } from "rxjs";
 import {
   ChangePasswordProfileModel,
@@ -38,6 +43,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   submittedProfile = false;
   submittedPassword = false;
+
+  isCheckEmail: boolean;
+  isCheckPhone: boolean;
 
   // public modalFile: ModalFile;
   // public fileURL: (String | ArrayBuffer)[];
@@ -105,9 +113,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.user ? this.user.phone : "",
         [
           Validators.required,
-          Validators.pattern("[0-9]{10}"),
+          Validators.pattern("[0-9]{10,11}"),
           Validators.maxLength(11),
         ],
+        this.isPhoneExsist.bind(this),
       ],
       address: [
         this.user ? this.user.address : "",
@@ -120,6 +129,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
           Validators.pattern("[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}"),
           Validators.maxLength(90),
         ],
+        this.isEmailExsist.bind(this),
       ],
       // imageUrl: [this.user ? this.user.imageUrl : "", [Validators.required]],
     });
@@ -134,6 +144,48 @@ export class ProfileComponent implements OnInit, OnDestroy {
       },
       { validators: this.checkValidatorsPassword }
     );
+  }
+
+  isEmailExsist(control: FormControl) {
+    this.isCheckEmail = null;
+    const q = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        var email = this.user ? this.user.email : null;
+        if (email == control.value) {
+          return;
+        }
+        this.authService
+          .checkEmail(control.value)
+          .then((res: ReturnMessage<boolean>) => {
+            this.isCheckEmail = false;
+            res.data
+              ? resolve({ isEmailUnique: true })
+              : (this.isCheckEmail = true);
+          });
+      }, 1000);
+    });
+    return q;
+  }
+
+  isPhoneExsist(control: FormControl) {
+    this.isCheckPhone = null;
+    const q = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        var phone = this.user ? this.user.phone : null;
+        if (phone == control.value) {
+          return;
+        }
+        this.authService
+          .checkPhone(control.value)
+          .then((res: ReturnMessage<boolean>) => {
+            this.isCheckPhone = false;
+            res.data
+              ? resolve({ isPhoneUnique: true })
+              : (this.isCheckPhone = true);
+          });
+      }, 1000);
+    });
+    return q;
   }
 
   checkValidatorsPassword(group: FormGroup) {
