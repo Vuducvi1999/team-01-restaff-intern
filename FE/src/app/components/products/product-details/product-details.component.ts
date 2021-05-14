@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   PageModel,
-  ReturnMessage
+  ReturnMessage,
+  TypeSweetAlertIcon
 } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { ProductModel } from 'src/app/lib/data/models/products/product.model';
@@ -17,6 +18,7 @@ import {
   TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { SweetalertService } from 'src/app/lib/data/services';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -41,7 +43,8 @@ export class ProductDetailsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private productService: ProductService,
     private ngbActiveModal: NgbActiveModal,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private sweetalertService: SweetalertService
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -71,7 +74,10 @@ export class ProductDetailsComponent implements OnInit {
   }
   save() {
     if (this.productsForm.invalid) {
-      window.alert("Invalid Form make sure you input valid value !");
+      this.sweetalertService.alert(
+        'Invalid Form make sure you input valid value !',
+        TypeSweetAlertIcon.ERROR
+      );
       return;
     }
     this.submitted = true;
@@ -95,10 +101,17 @@ export class ProductDetailsComponent implements OnInit {
     return this.productService
       .save(this.product)
       .then(() => {
+        this.sweetalertService.notification(
+          this.item ? 'Update Success' : 'Create Success',
+          TypeSweetAlertIcon.SUCCESS
+        );
         this.ngbActiveModal.close();
       })
       .catch((er) => {
-        // console.log(er);
+        this.sweetalertService.alert(
+          er.error.message ?? er.error,
+          TypeSweetAlertIcon.ERROR
+        );
       });
   }
 
