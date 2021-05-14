@@ -23,7 +23,7 @@ namespace Common.Constants
         public static string ContentHTML = "Content for Product ";
         public static decimal Price = 1000000;
         public static int DisplayOrder = 1;
-        public static string ImageUrl = "https://res.cloudinary.com/tungimage/image/upload/v1620230565/x1kv8vatwdtebbjnzkdv.jpg";
+        public static string ImageUrl = "https://res.cloudinary.com/tungimage/image/upload/v1620233950/pyv3241siykegow7phjf.jpg";
     }
     public struct CommonConstantsCategory
     {
