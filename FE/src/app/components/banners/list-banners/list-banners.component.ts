@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
+import { PageModel, ReturnMessage, TypeSweetAlertIcon } from 'src/app/lib/data/models';
 import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
-import { FileService } from 'src/app/lib/data/services';
+import { FileService, SweetalertService } from 'src/app/lib/data/services';
 
 import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
 import { CustomViewCellNumberComponent } from 'src/app/shared/components/custom-view-cell-number/custom-view-cell-number.component';
@@ -21,7 +21,8 @@ import { BannersDetailComponent } from '../banners-detail/banners-detail.compone
 export class ListBannersComponent implements OnInit {
   public banners: BannerModel[];
 
-  constructor(private modalService: NgbModal, private bannersService: BannersService) {
+
+  constructor(private modalService: NgbModal, private bannersService: BannersService, private sweetService: SweetalertService) {
     this.getBanners();
   }
   ngOnInit() {
@@ -33,7 +34,7 @@ export class ListBannersComponent implements OnInit {
       position: 'right',
     },
     columns: {
-      imageUrl:{
+      imageUrl: {
         title: 'Image',
         type: 'custom',
         renderComponent: ViewImageCellComponent,
@@ -49,7 +50,7 @@ export class ListBannersComponent implements OnInit {
       },
       displayOrder: {
         title: 'Display Order',
-        value:'displayOrder',
+        value: 'displayOrder',
         type: 'custom',
         renderComponent: CustomViewCellComponent
       },
@@ -79,25 +80,14 @@ export class ListBannersComponent implements OnInit {
   }
 
   delete(event: any) {
-    Swal.fire({
-      title: `Do you want to delete the banner?`,
-      showCancelButton: true,
-      confirmButtonText: `Yes`,
-      icon: 'question'
-    }).then(res => {
+    this.sweetService.confirm(`Do you want to delete the banner?`, 'Yes').then(res => {
       if (res.isConfirmed) {
         let banner = event.data as BannerModel;
         this.bannersService.delete(banner).then(() => {
-          Swal.fire({
-            icon: 'success',
-            title: `Banner has been deleted`,
-            showConfirmButton: false,
-            timer: 1500
-          })
+          this.sweetService.notification('Banner has been deleted', TypeSweetAlertIcon.SUCCESS);
           this.getBanners();
-        });
+        })
       }
-    })
-
+    });
   }
 }

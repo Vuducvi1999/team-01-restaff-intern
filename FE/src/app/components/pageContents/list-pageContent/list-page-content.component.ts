@@ -6,6 +6,7 @@ import { PageContentModel } from 'src/app/lib/data/models/pageContent/pageConten
 import { UserModel } from 'src/app/lib/data/models/users/user.model';
 import { FileService } from 'src/app/lib/data/services';
 import { PageContentService } from 'src/app/lib/data/services/pageContents/pageContent.service';
+import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { UserService } from '../../../lib/data/services/users/user.service';
 import { PageContentDetailComponent } from '../pageContent-details/page-content-details.component';
 
@@ -45,6 +46,9 @@ export class ListPageContentComponent {
       },
       order: {
         title: 'Order',
+        value: 'order',
+        type: 'custom',
+        renderComponent: CustomViewCellComponent
       },
     },
   };
