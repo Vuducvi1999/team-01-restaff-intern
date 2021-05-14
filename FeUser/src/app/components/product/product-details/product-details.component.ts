@@ -39,7 +39,12 @@ import { ToastrService } from "ngx-toastr";
   selector: "app-product-details",
   templateUrl: "./product-details.component.html",
   styleUrls: ["./product-details.component.scss"],
-  providers: [ProductDetailsService, RatingService, CommentService, CartService],
+  providers: [
+    ProductDetailsService,
+    RatingService,
+    CommentService,
+    CartService,
+  ],
   styles: [
     `
       .star {
@@ -75,7 +80,7 @@ export class ProductDetailsComponent implements OnInit {
   public ProductDetailsThumbConfig: any = ProductDetailsThumbSlider;
 
   subDataUser: Subscription;
-  
+
   public currentRate: number;
   public token: string;
   public ratingForm: FormGroup;
@@ -91,10 +96,14 @@ export class ProductDetailsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private cartService: CartService,
     private toastrService: ToastrService
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.token = localStorage.getItem("token");
+    this.subDataUser = this.authService.callUserInfo.subscribe(
+      (it) => (this.user = it)
+    );
     this.getProduct();
     this.initDataComment();
     if (this.token != null) {
@@ -201,7 +210,7 @@ export class ProductDetailsComponent implements OnInit {
         console.log(e);
       });
   }
-  addToCart(product: any){
+  addToCart(product: any) {
     this.cartService.addToCart(product);
     this.toastrService.success(`${product?.name}` + ' has been added to cart.');
   }

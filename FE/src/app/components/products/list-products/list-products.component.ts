@@ -16,14 +16,15 @@ import { ProductDetailsComponent } from '../product-details/product-details.comp
 })
 export class ListProductsComponent implements OnInit {
   public products: ProductModel[];
+  public data: PageModel<ProductModel>;
+  params: any = {};
   closeResult = '';
 
-  constructor
-  (
+  constructor(
     private modalService: NgbModal,
     private productService: ProductService
-  ) 
-  { 
+  ) {
+    this.params.pageIndex = 0;
     this.fetch();
   }
 
@@ -34,7 +35,7 @@ export class ListProductsComponent implements OnInit {
       position: 'right',
     },
     columns: {
-      imageUrl:{
+      imageUrl: {
         title: 'Image',
         type: 'custom',
         renderComponent: ViewImageCellComponent,
@@ -63,9 +64,13 @@ export class ListProductsComponent implements OnInit {
       },
       displayOrder: {
         title: 'Display Order',
-        type:'custom',
-        renderComponent: CustomViewCellComponent,
-        filter: false,
+        type: 'custom',
+          renderComponent: CustomViewCellComponent,
+          filter: false,
+      },
+      isImportant: {
+          title: 'Is Important',
+          filter: false,
       },
     },
   };
@@ -80,29 +85,31 @@ export class ListProductsComponent implements OnInit {
   }
 
   openPopup(item: any) {
-      var modalRef = this.modalService.open(ProductDetailsComponent, {size: 'xl'});
-      modalRef.componentInstance.item = item?.data;
-      return modalRef.result.then(() => {
-          this.fetch();
-        }, (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
+    var modalRef = this.modalService.open(ProductDetailsComponent, {
+      size: 'xl',
+    });
+    modalRef.componentInstance.item = item?.data;
+    return modalRef.result.then(
+      () => {
+        this.fetch();
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    );
   }
 
-  fetch()
-  {
+  fetch() {
     this.productService
-      .get(null)
+      .get({ params: this.params })
       .then((res: ReturnMessage<PageModel<ProductModel>>) => {
-        if (!res.hasError) 
-        {
+        if (!res.hasError) {
           this.products = res.data.results;
+          this.data = res.data;
         }
       })
       .catch((er) => {
-        if (er.error.hasError)
-        {
+        if (er.error.hasError) {
           // console.log(er.error.message);
         }
       });
@@ -119,4 +126,9 @@ export class ListProductsComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  onPage(event) {
+    this.params.pageIndex = event;
+    this.fetch();
+  }
 }
