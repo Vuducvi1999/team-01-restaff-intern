@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
+import { PageModel, ReturnMessage, TypeSweetAlertIcon } from 'src/app/lib/data/models';
 import { InformationWebModel } from 'src/app/lib/data/models/information-website/info-web.model';
-import { FileService } from 'src/app/lib/data/services';
+import { FileService, SweetalertService } from 'src/app/lib/data/services';
 import { InformationWebsiteService } from 'src/app/lib/data/services/information-website/infoWeb.service';
 import { EntityType, ModalFile, TypeFile } from 'src/app/shared/components/modals/models/modal.model';
 
@@ -23,7 +23,8 @@ export class ListInformationWebsiteComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private inforWebService:InformationWebsiteService)
+    private inforWebService:InformationWebsiteService,
+    private sweetalertService: SweetalertService)
   {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -57,7 +58,6 @@ export class ListInformationWebsiteComponent implements OnInit {
       
       if(er.error.hasError)
       {
-        // console.log(er.error.message)
       }
     });
   }
@@ -110,7 +110,10 @@ export class ListInformationWebsiteComponent implements OnInit {
   updateDetails() {
     if (window.confirm('Do you want to update your profile?')) {
       if(this.inforWebForm.invalid){
-        window.alert("Invalid Form make sure you input valid value !");
+        this.sweetalertService.alert(
+          'Invalid Form make sure you input valid value !',
+          TypeSweetAlertIcon.ERROR
+        );
         return;
       }
       this.infoWeb = {
@@ -136,6 +139,10 @@ export class ListInformationWebsiteComponent implements OnInit {
         .update(this.infoWeb)
         .then((resp: ReturnMessage<InformationWebModel>) => {
           this.infoWeb = resp.data;
+          this.sweetalertService.notification(
+            this.infoWeb ? 'Update Success' : 'Create Success',
+            TypeSweetAlertIcon.SUCCESS
+          );
           if(!resp.hasError)
           {
             this.updateSwitch();

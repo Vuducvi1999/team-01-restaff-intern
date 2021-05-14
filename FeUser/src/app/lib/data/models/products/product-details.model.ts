@@ -1,7 +1,7 @@
 import { BaseModel } from "../common";
 import { baseDTO } from "../common/baseDTO.model";
 
-export interface ProductDetailsModel extends BaseModel, baseDTO{
+export interface ProductDetailsModel extends BaseModel{
     name: string,
     description: string,
     imageUrl: string,

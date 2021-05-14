@@ -50,7 +50,7 @@ export class ListProductsComponent implements OnInit {
         filter: false,
       },
       description: {
-        title: 'Description',
+        title: 'Product Details',
         filter: false,
       },
       categoryName: {
