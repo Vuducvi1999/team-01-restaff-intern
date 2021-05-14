@@ -65,7 +65,7 @@ export class ProductDetailsComponent implements OnInit {
       })
       .catch((er) => {
         if (er.error.hasError) {
-          // console.log(er.error.message);
+          console.log(er.error.message);
         }
       });
   }

@@ -46,7 +46,9 @@ export class BannersDetailComponent implements OnInit {
     this.createModal();
     if (this.item) {
       this.fileURL = [];
-      this.fileURL.push(this.item.imageUrl);
+      this.item.imageUrl.split(',').forEach((it) => {
+        this.fileURL.push(it);
+      });
     }
   }
   loadFormItem() {
@@ -97,7 +99,7 @@ export class BannersDetailComponent implements OnInit {
         })
         .catch((er) => {
           if (er.error.hasError) {
-            // console.log(er.error.message);
+            console.log(er.error.message);
           }
         });
     }
@@ -115,13 +117,11 @@ export class BannersDetailComponent implements OnInit {
     if (!this.fileURL) {
       this.fileURL = [];
     }
-
-    // if (event.add) {
-    this.fileURL = [...this.fileURL, ...event.add];
-    // }
-
+    if (event.add) {
+      this.fileURL = [...this.fileURL, ...event.add];
+    }
     if (event.remove) {
-      this.fileURL.forEach((e : string, i) => {
+      this.fileURL.forEach((e: string, i) => {
         if (e.includes(event.remove)) {
           this.fileURL.splice(i, 1);
         }
