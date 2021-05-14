@@ -10,11 +10,11 @@ import {
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { ProductModel, ReturnMessage } from "src/app/lib/data/models";
+import { SaveCustomerWishListModel } from "src/app/lib/data/models/customerWishList/customerWishList.model";
 import {
-  CreateCustomerWishListModel,
-  CustomerWishListModel,
-} from "src/app/lib/data/models/customerWishList/customerWishList.model";
-import { UserDataReturnDTOModel, UserModel } from "src/app/lib/data/models/users/user.model";
+  UserDataReturnDTOModel,
+  UserModel,
+} from "src/app/lib/data/models/users/user.model";
 import { CustomerWishListService } from "src/app/lib/data/services/customerWishLists/customerWishList.service";
 import {
   ETypeGridLayout,
@@ -33,6 +33,7 @@ import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { FileService } from "src/app/lib/data/services/files/file.service";
 import { Subscription } from "rxjs";
 import { AuthService } from "src/app/lib/data/services";
+import Swal from "sweetalert2";
 registerLocaleData(localeFr, "fr");
 
 @Component({
@@ -65,7 +66,7 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private cartService: CartService,
     private wishListService: CustomerWishListService,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
@@ -82,10 +83,10 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
       }, 2000); // Skeleton Loader
     }
 
-    this.subDataUser = this.authService.callUserInfo.subscribe(it => {
+    this.subDataUser = this.authService.callUserInfo.subscribe((it) => {
       this.userInfo = it;
       this.getWishlist();
-    })
+    });
   }
 
   getWishlist() {
@@ -94,10 +95,6 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
         this.testData = data.data;
       });
     }
-  }
-
-  compareProductWishList() {
-    return this.testData.some((i) => i.id === this.product.id);
   }
 
   updateTypeGridLayout() {
@@ -157,16 +154,27 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   addToWishlist(product: any) {
-    this.cartService.addToWishlist(product);
-
-    const model: CreateCustomerWishListModel = {
-      customerId: this.userInfo?.id,
+    const model: SaveCustomerWishListModel = {
       productId: product.id,
     };
-    this.wishListService
-      .create(model)
-      .then(() => this.getWishlist())
-      .catch((e) => console.log(e));
+    if (this.product.isInWishList) {
+      return Swal.fire({
+        text: "Remove in wish list?",
+        confirmButtonText: "Remove",
+        showCancelButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.wishListService.createOrDelete(model).then(() => {
+            this.product.isInWishList = false;
+            this.cartService.removeWishlistItem(product);
+          });
+        }
+      });
+    }
+    this.wishListService.createOrDelete(model).then(() => {
+      this.product.isInWishList = true;
+      this.cartService.addToWishlist(product);
+    });
   }
 
   addToCompare(product: any) {

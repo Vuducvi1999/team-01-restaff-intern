@@ -1,14 +1,16 @@
-import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
-import { ProductModel } from '../../models';
+import { Injectable } from "@angular/core";
+import { ToastrService } from "ngx-toastr";
+import { Observable } from "rxjs";
+import { ProductModel } from "../../models";
 
 const state = {
-  products: JSON.parse(localStorage['products'] || '[]'),
-  wishlist: JSON.parse(localStorage['wishlistItems'] || '[]'),
-  compare: JSON.parse(localStorage['compareItems'] || '[]'),
-  cart: JSON.parse(localStorage['cartItems'] || '{\"totalAmount\":0,\"cartDetails\":[]}')
-}
+  products: JSON.parse(localStorage["products"] || "[]"),
+  wishlist: JSON.parse(localStorage["wishlistItems"] || "[]"),
+  compare: JSON.parse(localStorage["compareItems"] || "[]"),
+  cart: JSON.parse(
+    localStorage["cartItems"] || '{"totalAmount":0,"cartDetails":[]}'
+  ),
+};
 @Injectable()
 export class CartService {
   public OpenCart: boolean = false;
@@ -16,27 +18,29 @@ export class CartService {
   constructor(private toastrService: ToastrService) {}
 
   public get cartData(): Observable<any> {
-    const itemsStream = new Observable(observer => {
+    const itemsStream = new Observable((observer) => {
       observer.next(state.cart);
       observer.complete();
     });
     return <Observable<any>>itemsStream;
   }
 
-  public processCart (cart : any) : any {
+  public processCart(cart: any): any {
     let totalAmount = 0;
-    cart.cartDetails.forEach(item => {
-      totalAmount +=  (item.price * item.quantity);
+    cart.cartDetails.forEach((item) => {
+      totalAmount += item.price * item.quantity;
     });
     cart.totalAmount = totalAmount;
     return cart;
   }
   // Add to Cart
   public addToCart(product): any {
-    if(!state.cart.cartDetails) {
+    if (!state.cart.cartDetails) {
       state.cart.cartDetails = [];
     }
-    const cartItem = state.cart.cartDetails.find(item => item.id === product.id);
+    const cartItem = state.cart.cartDetails.find(
+      (item) => item.id === product.id
+    );
     const qty = product.quantity ? product.quantity : 1;
     const items = cartItem ? cartItem : product;
     const stock = this.calculateStockCounts(items, qty);
@@ -57,13 +61,19 @@ export class CartService {
   }
 
   // Update Cart Quantity
-  public updateCartQuantity(product: ProductModel, quantity: number): ProductModel | boolean {
+  public updateCartQuantity(
+    product: ProductModel,
+    quantity: number
+  ): ProductModel | boolean {
     return state.cart.cartDetails.find((items, index) => {
       if (items.id === product.id) {
-        const qty = state.cart.cartDetails[index].quantity + quantity
-        const stock = this.calculateStockCounts(state.cart.cartDetails[index], quantity)
+        const qty = state.cart.cartDetails[index].quantity + quantity;
+        const stock = this.calculateStockCounts(
+          state.cart.cartDetails[index],
+          quantity
+        );
         if (qty !== 0 && stock) {
-          state.cart.cartDetails[index].quantity = qty
+          state.cart.cartDetails[index].quantity = qty;
         }
         state.cart = this.processCart(state.cart);
         localStorage.setItem("cartItems", JSON.stringify(state.cart));
@@ -103,8 +113,7 @@ export class CartService {
     return true;
   }
 
-  // Total amount 
-
+  // Total amount
 
   /*
      ---------------------------------------------
@@ -114,7 +123,7 @@ export class CartService {
 
   // Get Wishlist Items
   public get wishlistItems(): Observable<ProductModel[]> {
-    const itemsStream = new Observable(observer => {
+    const itemsStream = new Observable((observer) => {
       observer.next(state.wishlist);
       observer.complete();
     });
@@ -123,15 +132,16 @@ export class CartService {
 
   // Add to Wishlist
   public addToWishlist(product): any {
-    const wishlistItem = state.wishlist.find(item => item.id === product.id)
+    const wishlistItem = state.wishlist.find((item) => item.id === product.id);
     if (!wishlistItem) {
       state.wishlist.push({
-        ...product
-      })
+        ...product,
+      });
+      this.toastrService.success("Product has been added in wishlist.");
+      localStorage.setItem("wishlistItems", JSON.stringify(state.wishlist));
+      return true;
     }
-    this.toastrService.success('Product has been added in wishlist.');
-    localStorage.setItem("wishlistItems", JSON.stringify(state.wishlist));
-    return true
+    return false;
   }
 
   // Remove Wishlist items
@@ -139,7 +149,7 @@ export class CartService {
     const index = state.wishlist.indexOf(product);
     state.wishlist.splice(index, 1);
     localStorage.setItem("wishlistItems", JSON.stringify(state.wishlist));
-    return true
+    return true;
   }
 
   /*
@@ -150,7 +160,7 @@ export class CartService {
 
   // Get Compare Items
   public get compareItems(): Observable<ProductModel[]> {
-    const itemsStream = new Observable(observer => {
+    const itemsStream = new Observable((observer) => {
       observer.next(state.compare);
       observer.complete();
     });
@@ -159,15 +169,15 @@ export class CartService {
 
   // Add to Compare
   public addToCompare(product): any {
-    const compareItem = state.compare.find(item => item.id === product.id)
+    const compareItem = state.compare.find((item) => item.id === product.id);
     if (!compareItem) {
       state.compare.push({
-        ...product
-      })
+        ...product,
+      });
     }
-    this.toastrService.success('Product has been added in compare.');
+    this.toastrService.success("Product has been added in compare.");
     localStorage.setItem("compareItems", JSON.stringify(state.compare));
-    return true
+    return true;
   }
 
   // Remove Compare items
@@ -175,10 +185,6 @@ export class CartService {
     const index = state.compare.indexOf(product);
     state.compare.splice(index, 1);
     localStorage.setItem("compareItems", JSON.stringify(state.compare));
-    return true
+    return true;
   }
-
-
-
-
 }

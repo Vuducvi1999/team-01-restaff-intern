@@ -54,7 +54,7 @@
                   class="img-logo"
                   *ngIf="footerModel.informationWeb.logo"
                   [data]="{
-                    url: getIcon( footerModel.informationWeb.logo ),
+                    url: getIcon(footerModel.informationWeb.logo),
                     typeClass: typeDisplayImage.LOGO_IMAGE_FOOTER
                   }"
                 ></app-image-wrapper>
@@ -65,7 +65,7 @@
               <ul>
                 <li *ngFor="let item of socialMediasIcons">
                   <img
-                  appUiImageLoader
+                    appUiImageLoader
                     src="{{ item.iconUrl }}"
                     width="60"
                     height="60"
@@ -83,8 +83,10 @@
             </div>
             <div class="footer-contant">
               <ul>
-                <li *ngFor="let item of footerModel.categories| slice:0:5">
-                  <a href="/product?search.categoryName={{item.name}}">{{ item.name }}</a>
+                <li *ngFor="let item of footerModel.categories | slice: 0:5">
+                  <a href="/product?search.categoryName={{ item.name }}">{{
+                    item.name
+                  }}</a>
                 </li>
               </ul>
             </div>
@@ -98,7 +100,7 @@
             <div class="footer-contant">
               <ul>
                 <li *ngFor="let pageContent of pageContents">
-                  <a [routerLink]="['/why-we-choose', pageContent.id]">{{
+                  <a [routerLink]="['/page-info', pageContent.id]">{{
                     pageContent.title
                   }}</a>
                 </li>

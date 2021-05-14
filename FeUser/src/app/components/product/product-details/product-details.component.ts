@@ -29,7 +29,6 @@ import { CommentService } from "src/app/lib/data/services/comments/comment.servi
 import { Subscription } from "rxjs";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { RatingModel } from "src/app/lib/data/models/rating/rating.model";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { CartModalComponent } from "src/app/shared/components/modal/cart-modal/cart-modal.component";
 import { ToastrService } from "ngx-toastr";
@@ -143,14 +142,14 @@ export class ProductDetailsComponent implements OnInit {
   createSearchModel() {
     const id = this.activatedRoute.snapshot.queryParamMap.get("id");
     this.searchModel = {
-      search: { entityId: id },
-      pageIndex: 0,
-      pageSize: 10,
+      ["search.entityId"]: id,
+      ["pageIndex"]: 0,
+      ["pageSize"]: 10,
     };
   }
 
   changePageIndex(pageIndex: number) {
-    this.searchModel = { ...this.searchModel, pageIndex: pageIndex - 1 };
+    this.searchModel = { ...this.searchModel, ["pageIndex"]: pageIndex - 1 };
 
     this.getComments();
   }

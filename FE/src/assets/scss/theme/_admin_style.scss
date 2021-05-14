@@ -281,9 +281,9 @@ ngx-datatable {
 }
 ng2-smart-table {
   table {
-    border: 1px solid #e8efff;
+    border: 1px solid #070101;
     .ng2-smart-titles {
-      background-color: $light-body-bg-color;
+      background-color: #fdabab;
       .ng2-smart-th {
         padding: 0.75rem;
       }
@@ -344,7 +344,7 @@ ng2-smart-table {
       }
       &:nth-child(even) {
         td {
-            background-color: rgba(241,244,251,0.5);
+            background-color: rgba(255, 187, 187, 0.5);
         }
       }
       &:nth-child(odd) {

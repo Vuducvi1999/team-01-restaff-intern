@@ -36,88 +36,57 @@ export class NavService {
 
   MENUITEMS: Menu[] = [
     {
-      title: 'Banners',
-      icon: 'users',
-      type: 'sub',
-      active: false,
-      children: [
-        { path: '/banners/list-banners', title: 'Banners List', type: 'link' },
-      ],
-    },
-    {
-      title: 'Social Medias',
-      icon: 'users',
-      type: 'sub',
-      active: false,
-      children: [
-        {
-          path: '/social-medias/list-social-medias',
-          title: 'Social Media List',
-          type: 'link',
-        },
-      ],
-    },
-    {
-      title: 'Coupon',
-      icon: 'users',
-      type: 'sub',
-      active: false,
-      children: [
-        {
-          path: '/coupons/list-coupons',
-          title: 'Coupon List',
-          type: 'link',
-        },
-      ],
-    },
-    {
       title: 'Settings',
-      icon: 'users',
+      icon: 'settings',
       type: 'sub',
       active: false,
       children: [
+        {
+          path: '/banners/list-banners',
+          title: 'Banners',
+          type: 'link',
+        },
         {
           path: '/profiles/profile-settings',
           title: 'Profiles',
           type: 'link',
         },
+        {
+          path: '/social-medias/list-social-medias',
+          title: 'Social Media',
+          type: 'link',
+        },
+        {
+          path: '/users/list-users',
+          title: 'Users',
+          type: 'link',
+        },
+        {
+          path: '/contact/list-contact',
+          title: 'Contact',
+          type: 'link',
+        },
+        {
+          path: '/information-website/list-information-website',
+          title: 'Website Information',
+          type: 'link',
+        },
       ],
     },
     {
-      title: 'Users',
+      title: 'Users and Customers',
       icon: 'users',
       type: 'sub',
       active: false,
       children: [
         {
           path: '/users/list-users',
-          title: 'User List',
+          title: 'Users',
           type: 'link',
         },
-      ],
-    },
-    {
-      title: 'Blogs',
-      icon: 'users',
-      type: 'sub',
-      active: false,
-      children: [
         {
-          path: '/blogs/list-blogs',
-          title: 'Blog List',
-          type: 'link',
-        },
-      ],
-    },
-    {
-      title: 'Category',
-      icon: 'grid',
-      type: 'sub',
-      active: false,
-      children: [
-        {
-          path: '/categories/list-categories',
-          title: 'Category List',
+          path: '/customers/list-customers',
+          title: 'Customers ',
           type: 'link',
         },
       ],
@@ -129,103 +98,45 @@ export class NavService {
       active: false,
       children: [
         {
+          path: '/coupons/list-coupons',
+          title: 'Coupon',
+          type: 'link',
+        },
+        {
+          path: '/categories/list-categories',
+          title: 'Category',
+          type: 'link',
+        },
+        {
           path: '/products/list-products',
-          title: 'Product List',
+          title: 'Products',
           type: 'link',
         },
-      ],
-    },
-    {
-      title: 'Customer',
-      icon: 'users',
-      type: 'sub',
-      active: false,
-      children: [
-        {
-          path: '/customers/list-customers',
-          title: 'Customer List',
-          type: 'link',
-        },
-      ],
-    },
-    {
-      title: 'Page Content',
-      icon: 'users',
-      type: 'sub',
-      active: false,
-      children: [
-        {
-          path: '/page-content/list-page-content',
-          title: 'Page Content List',
-          type: 'link',
-        },
-      ],
-    },
-    {
-      title: 'Website Information',
-      icon: 'info',
-      type: 'sub',
-      active: false,
-      children: [
-        {
-          path: '/information-website/list-information-website',
-          title: 'Information',
-          type: 'link',
-        },
-      ],
-    },
-    {
-      title: 'Contact',
-      icon: 'info',
-      type: 'sub',
-      active: false,
-      children: [
-        {
-          path: '/contact/list-contact',
-          title: 'Contact',
-          type: 'link',
-        },
-      ],
-    },
-    {
-      title: 'Orders',
-      icon: 'users',
-      type: 'sub',
-      active: false,
-      children: [
         {
           path: '/orders/list-orders',
-          title: 'Orders List',
+          title: 'Orders',
           type: 'link',
         },
       ],
     },
     {
-      title: 'Comment',
-      icon: 'info',
+      title: 'Page',
+      icon: 'clipboard',
       type: 'sub',
       active: false,
       children: [
         {
-          path: '/comment/list-comment',
-          title: 'Comment List',
+          path: '/blogs/list-blogs',
+          title: 'Blog List',
           type: 'link',
         },
-      ],
-    },
-    {
-      title: 'Customer Wish List',
-      icon: 'info',
-      type: 'sub',
-      active: false,
-      children: [
         {
-          path: '/customer-wish-list/list-customer-wish-list',
-          title: 'Customer Wish List',
+          path: '/page-content/list-page-content',
+          title: 'Page Content',
           type: 'link',
         },
       ],
-    },
+    }
   ];
 
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);
