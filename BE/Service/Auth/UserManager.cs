@@ -42,7 +42,6 @@ namespace Service.Auth
                 audience: _jwtTokenConfig.Audience,
                 claims: claims,
                 notBefore: now,
-                //expires: now.AddMinutes(_jwtTokenConfig.ExpirationMinutes),
                 signingCredentials: new SigningCredentials(new SymmetricSecurityKey(_secret), SecurityAlgorithms.HmacSha256Signature));
             var accessToken = new JwtSecurityTokenHandler().WriteToken(jwtToken);
             return accessToken;
