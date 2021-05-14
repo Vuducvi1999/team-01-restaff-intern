@@ -18,7 +18,7 @@ import { TypeDisplayImage } from "src/app/shared/data";
   styles: [
     `
       .star-detail {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         color: #b0c4de;
         vertical-align: middle;
       }

@@ -33,7 +33,7 @@ namespace BE.ControllersFeUser
 
         [Authorize]
         [HttpPost]
-        public IActionResult CreateOrDelete([FromBody] CreateCustomerWishListDTO model)
+        public IActionResult CreateOrDelete([FromBody] CreateOrDeleteCustomerWishListDTO model)
         {
 
             var result = _service.CreateOrDelete(model);

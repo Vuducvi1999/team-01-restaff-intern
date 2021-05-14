@@ -191,7 +191,7 @@ namespace Domain
             CreateMap<PaginatedList<Comment>, PaginatedList<CommentDTO>>().ReverseMap();
 
             // CustomerWishList 
-            CreateMap<CustomerWishList, CreateCustomerWishListDTO>().ReverseMap();
+            CreateMap<CustomerWishList, CreateOrDeleteCustomerWishListDTO>().ReverseMap();
             CreateMap<CustomerWishList, CustomerWishListDTO>().ReverseMap();
         }
     }

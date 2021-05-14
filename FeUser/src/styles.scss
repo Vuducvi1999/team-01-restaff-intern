@@ -38,8 +38,8 @@
 }
 
 img.customer-comment-image {
-  height: 65px;
-  width: 65px;
+  height: 50px;
+  width: 50px;
   padding: 0 !important ;
   margin: 0 !important;
   margin-right: 20px !important;
@@ -68,5 +68,8 @@ img.customer-comment-image {
   color: #ffff !important;
 }
 .page-link {
-  color: var(--theme-deafult) !important;
+  color: var(--theme-deafult);
+  &:hover {
+    color: var(--theme-deafult);
+  }
 }

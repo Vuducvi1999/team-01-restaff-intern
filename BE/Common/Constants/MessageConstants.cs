@@ -28,5 +28,8 @@
 
         public const string GetPaginationFail = "Get Pagination Fail";
         public const string GetPaginationSuccess = "Get Pagination Success";
+
+        public const string EmptyContentComment = "Empty Content";
+        public const string CommentAfterATime = "Please comment after ";
     }
 }

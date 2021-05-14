@@ -10,7 +10,7 @@ import { Subscription } from "rxjs";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import {
   CommentModel,
-  CommentPassingModel,
+  CreateCommentModel,
   SearchCommentModel,
 } from "src/app/lib/data/models/comments/comment.model";
 import {
@@ -34,7 +34,7 @@ import { TypeDisplayImage } from "src/app/shared/data";
       .star {
         position: relative;
         display: inline-block;
-        font-size: 1.1rem;
+        font-size: 1.3rem;
         color: #d3d3d3;
       }
       .full {
@@ -52,7 +52,7 @@ import { TypeDisplayImage } from "src/app/shared/data";
 export class BlogDetailComponent implements OnInit, OnDestroy {
   id: string;
   data: BlogModel;
-  dataComment: CommentPassingModel;
+  dataComment: CreateCommentModel;
   typeDisplayImage = TypeDisplayImage;
   user: UserDataReturnDTOModel;
   comments: PageModel<CommentModel>;
@@ -138,8 +138,6 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
 
   initDataComment() {
     this.dataComment = {
-      fullName: this.user ? this.user.firstName + " " + this.user.lastName : "",
-      customerId: this.user ? this.user.id : "",
       entityId: this.activatedRoute.snapshot.paramMap.get("id"),
       entityType: "Blog",
       rating: this.item ? this.item.rating : 1,
