@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FileDtoModel } from 'src/app/lib/data/models';
 import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
-import { FileService } from 'src/app/lib/data/services';
+import { FileService, SweetalertService } from 'src/app/lib/data/services';
 import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
 import {
   EntityType,
@@ -29,11 +29,10 @@ export class BannersDetailComponent implements OnInit {
 
   public modalFile: ModalFile;
   public fileURL: (string | ArrayBuffer)[];
-
   constructor(
     private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
-    private bannersService: BannersService
+    private bannersService: BannersService,
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;

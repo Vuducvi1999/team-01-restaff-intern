@@ -42,7 +42,6 @@ namespace Service.Auth
                 audience: _jwtTokenConfig.Audience,
                 claims: claims,
                 notBefore: now,
-                //expires: now.AddMinutes(_jwtTokenConfig.ExpirationMinutes),
                 signingCredentials: new SigningCredentials(new SymmetricSecurityKey(_secret), SecurityAlgorithms.HmacSha256Signature));
             var accessToken = new JwtSecurityTokenHandler().WriteToken(jwtToken);
             return accessToken;
@@ -52,8 +51,15 @@ namespace Service.Auth
         {
             get
             {
-                var claims = _httpContextAccessor.HttpContext.User.Claims;
-                return Guid.Parse(claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
+                try
+                {
+                    var claims = _httpContextAccessor.HttpContext.User.Claims;
+                    return Guid.Parse(claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
+                }
+                catch
+                {
+                    return Guid.Empty;
+                }
             }
         }
 
