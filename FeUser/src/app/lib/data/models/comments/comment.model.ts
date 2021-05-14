@@ -6,6 +6,7 @@ export interface CommentModel extends BaseModel {
   entityId: string;
   entityType: string;
   content: string;
+  rating: number;
 }
 
 export interface SearchCommentModel {
@@ -14,6 +15,7 @@ export interface SearchCommentModel {
   entityId?: string;
   entityType?: string;
   content?: string;
+  rating?: number;
 }
 
 export interface CommentPassingModel {
@@ -21,4 +23,5 @@ export interface CommentPassingModel {
   customerId: string;
   entityId: string;
   entityType: string;
+  rating: number;
 }

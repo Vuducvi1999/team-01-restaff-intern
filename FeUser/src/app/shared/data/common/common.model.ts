@@ -46,7 +46,7 @@ export enum TypeDisplayImage {
   PRODUCT_DETAIL_IMAGE,
   PRODUCT_DETAIL_MAIN_IMAGE,
   CART_IMAGE_PRODUCT,
-  LOGO_IMAGE_FOOTER
+  LOGO_IMAGE_FOOTER,
 }
 
 export const TemplateType = {

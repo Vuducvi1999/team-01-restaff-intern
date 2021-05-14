@@ -14,6 +14,15 @@ import { TypeDisplayImage } from "../../data";
   templateUrl: "./settings.component.html",
   styleUrls: ["./settings.component.scss"],
   providers: [CartService],
+  styles: [
+    `
+      .product-link {
+        text-decoration: none;
+        color: black;
+        font-size: 25px;
+      }
+    `,
+  ],
 })
 export class SettingsComponent implements OnInit {
   public products: ProductModel[] = [];

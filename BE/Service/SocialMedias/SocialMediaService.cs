@@ -73,7 +73,7 @@ namespace Service.SocialMedias
                     entity.Update(model);
                     _socialMediaRepository.Update(entity);
                     _unitOfWork.SaveChanges();
-                    var result = new ReturnMessage<SocialMediaDTO>(false, _mapper.Map<SocialMedia, SocialMediaDTO>(entity), MessageConstants.DeleteSuccess);
+                    var result = new ReturnMessage<SocialMediaDTO>(false, _mapper.Map<SocialMedia, SocialMediaDTO>(entity), MessageConstants.UpdateSuccess);
                     return result;
                 }
                 return new ReturnMessage<SocialMediaDTO>(true, null, MessageConstants.Error);
@@ -88,7 +88,7 @@ namespace Service.SocialMedias
         {
             if (search == null)
             {
-                return new ReturnMessage<PaginatedList<SocialMediaDTO>>(false, null, MessageConstants.DeleteSuccess);
+                return new ReturnMessage<PaginatedList<SocialMediaDTO>>(false, null, MessageConstants.GetPaginationFail);
             }
 
             var resultEntity = _socialMediaRepository.GetPaginatedList(it => search.Search == null ||

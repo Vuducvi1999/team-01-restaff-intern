@@ -32,6 +32,7 @@ namespace Domain.Entities
             ShortDes = model.ShortDes;
             ContentHTML = model.ContentHTML;
             ImageUrl = model.ImageUrl;
+            ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
     }
 }

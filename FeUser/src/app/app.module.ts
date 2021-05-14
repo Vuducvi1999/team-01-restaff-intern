@@ -17,7 +17,8 @@ import { environment } from "./lib/environments/environment";
 import { AppConfig } from "./lib/environments/config/appConfig";
 import { AuthModule } from "./components/auth/auth.module";
 
-import { NgHttpLoaderModule } from 'ng-http-loader';
+import { NgHttpLoaderModule } from "ng-http-loader";
+import { ImageWrapperComponent } from "./shared/components/imageWrapper/imageWrapper.component";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {

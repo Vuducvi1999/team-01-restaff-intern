@@ -7,6 +7,17 @@ import { CommentService } from "src/app/lib/data/services/comments/comment.servi
   selector: "app-comment",
   templateUrl: "./comment.component.html",
   providers: [CommentService],
+  styles: [
+    `
+      .star {
+        font-size: 2rem;
+        color: #b0c4de;
+      }
+      .filled {
+        color: #ffa200;
+      }
+    `,
+  ],
 })
 export class CommentComponent implements OnInit {
   commentForm: FormGroup;
@@ -21,7 +32,7 @@ export class CommentComponent implements OnInit {
   ngOnInit() {
     this.initForm();
   }
-
+  currentRate = 1;
   initForm() {
     this.commentForm = this.fb.group({
       fullName: [this.dataComment.fullName],
@@ -29,7 +40,9 @@ export class CommentComponent implements OnInit {
       entityId: [this.dataComment.entityId],
       entityType: [this.dataComment.entityType],
       content: [""],
+      rating: [this.dataComment.rating],
     });
+    var a = 1;
   }
 
   Submit() {

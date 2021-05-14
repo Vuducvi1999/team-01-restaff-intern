@@ -70,35 +70,35 @@
             </div>
             <div>
               <h3>
-                {{product?.price | vndFormat}}
+                {{ product?.price | vndFormat }}
               </h3>
             </div>
-            <div *ngIf="product?.contentHTML != '' " class="addeffect-section product-description border-product">
+            <ng-template #t let-fill="fill">
+              <span class="star" [class.full]="fill === 100">
+                <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+              </span>
+            </ng-template>
+
+            <ngb-rating
+              [(rate)]="rating"
+              [starTemplate]="t"
+              [readonly]="true"
+              [max]="5"
+            ></ngb-rating>
+            <hr />
+            <div class="product-title">Average Rating: {{ rating }}</div>
+          </div>
+          <br />
+          <div class="addeffect-section product-description border-product">
+            <div
+              *ngIf="product?.contentHTML != ''"
+              class="addeffect-section product-description border-product"
+            >
               <h3>Description</h3>
               <div [innerHTML]="product?.contentHTML"></div>
             </div>
             <br />
-            <div *ngIf="token != null; else loading"  class="addeffect-section product-description border-product">
-              <form [formGroup]="ratingForm">
-                <ngb-rating
-                  [max]="5"
-                  [rate]="item ? item.rating : 0"
-                  formControlName="rating"
-                >
-                  <ng-template let-fill="fill" let-index="index">
-                    <span class="star" [class.filled]="fill === 100"
-                      >&#9733;</span
-                    >
-                  </ng-template>
-                </ngb-rating>
-                <br />
-                <pre>Rate: <b>{{ratingForm.controls?.rating.value}}</b></pre>
-                <br />
-                <button class="btn btn-primary" (click)="saveRating($event)">
-                  Save
-                </button>
-              </form>
-            </div>
+
             <div class="addeffect-section product-description border-product">
               <a
               class="btn btn-solid" 
@@ -119,29 +119,31 @@
       <div class="col-lg-4"></div>
     </div>
     <section class="tab-product m-0">
-      <div class="row">
-        <div class="col-sm-12 col-lg-12">
-          <ngb-tabset [type]="'tabs'" class="nav-material">
-            <ngb-tab>
-              <ng-template ngbTabTitle>Comments</ng-template>
-              <ng-template ngbTabContent>
-                <app-comment-detail
-                  *ngIf="comments"
-                  (action)="changePageIndex($event)"
-                  [comments]="comments"
-                ></app-comment-detail>
-              </ng-template>
-            </ngb-tab>
-            <ngb-tab *ngIf="user">
-              <ng-template ngbTabTitle>Write Review</ng-template>
-              <ng-template ngbTabContent>
-                <app-comment
-                  [dataComment]="dataComment"
-                  (action)="getComments()"
-                ></app-comment>
-              </ng-template>
-            </ngb-tab>
-          </ngb-tabset>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-lg-12">
+            <ngb-tabset [type]="'tabs'" class="nav-material">
+              <ngb-tab>
+                <ng-template ngbTabTitle>Comments</ng-template>
+                <ng-template ngbTabContent>
+                  <app-comment-detail
+                    *ngIf="comments"
+                    (action)="changePageIndex($event)"
+                    [comments]="comments"
+                  ></app-comment-detail>
+                </ng-template>
+              </ngb-tab>
+              <ngb-tab *ngIf="user">
+                <ng-template ngbTabTitle>Write Review</ng-template>
+                <ng-template ngbTabContent>
+                  <app-comment
+                    [dataComment]="dataComment"
+                    (action)="getComments()"
+                  ></app-comment>
+                </ng-template>
+              </ngb-tab>
+            </ngb-tabset>
+          </div>
         </div>
       </div>
     </section>

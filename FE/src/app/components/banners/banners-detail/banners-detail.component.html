@@ -27,12 +27,12 @@
               </div>
               <div class="form-group row">
                 <label for="" class="col-xl-3 col-md-4"><span>&nbsp;</span> Link</label>
-                <input class="form-control col-xl-8 col-md-7" id="validationCustom1" type="text" required=""
+                <input class="form-control col-xl-8 col-md-7" id="validationCustom1" type="text" 
                   formControlName="link" />
               </div>
               <div class="form-group row">
                 <label for="validationCustom2" class="col-xl-3 col-md-4"><span>*</span> ImageUrl</label>
-                <input class="form-control col-xl-8 col-md-7" id="validationCustom2" type="text" required=""
+                <input class="form-control col-xl-8 col-md-7" id="validationCustom2" type="text" 
                   formControlName="imageUrl" hidden />
                 <app-upload-file [data]="modalFile" [fileURL]="fileURL" styleFile="width: 200px; height: auto;"
                   (onChange)="onChangeData($event)"></app-upload-file>
@@ -40,7 +40,7 @@
                     (bannersFormControl.imageUrl.touched || submitted) &&
                     bannersFormControl.imageUrl.errors?.required
                   ">
-                  ImageURL is required
+                  Image is required
                 </span>
               </div>
               <div class="form-group row">
