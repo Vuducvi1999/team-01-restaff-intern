@@ -57,11 +57,6 @@ export class NavService {
           type: 'link',
         },
         {
-          path: '/users/list-users',
-          title: 'Users',
-          type: 'link',
-        },
-        {
           path: '/contact/list-contact',
           title: 'Contact',
           type: 'link',
@@ -136,7 +131,7 @@ export class NavService {
           type: 'link',
         },
       ],
-    }
+    },
   ];
 
   items = new BehaviorSubject<Menu[]>(this.MENUITEMS);

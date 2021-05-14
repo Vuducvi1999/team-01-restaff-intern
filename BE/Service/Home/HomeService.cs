@@ -56,7 +56,7 @@ namespace Service.Home
                 var result = new ReturnMessage<List<ProductDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;
             }
-            catch
+            catch (Exception ex)
             {
                 return new ReturnMessage<List<ProductDTO>>(true, null, MessageConstants.Error);
             }

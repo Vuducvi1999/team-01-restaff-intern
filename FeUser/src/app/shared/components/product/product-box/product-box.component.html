@@ -65,7 +65,6 @@
         (click)="addToWishlist(product)"
       >
         <i
-          *ngIf="testData"
           [ngClass]="[
             product.isInWishList ? 'fa fa-heart color-red' : 'ti-heart'
           ]"
