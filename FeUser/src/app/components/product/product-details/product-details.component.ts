@@ -95,7 +95,7 @@ export class ProductDetailsComponent implements OnInit {
     private ratingService: RatingService,
     private formBuilder: FormBuilder,
     private cartService: CartService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
     private authService: AuthService
   ) {}
 

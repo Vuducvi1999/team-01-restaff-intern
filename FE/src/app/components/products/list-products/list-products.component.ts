@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
+import { PageModel, ReturnMessage, TypeSweetAlertIcon } from 'src/app/lib/data/models';
 import { ProductModel } from 'src/app/lib/data/models/products/product.model';
-import { FileService } from 'src/app/lib/data/services';
+import { FileService, SweetalertService } from 'src/app/lib/data/services';
 import { ProductService } from 'src/app/lib/data/services/products/product.service';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { CustomViewCellNumberComponent } from 'src/app/shared/components/custom-view-cell-number/custom-view-cell-number.component';
@@ -22,7 +22,8 @@ export class ListProductsComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private productService: ProductService
+    private productService: ProductService,
+    private sweetService: SweetalertService
   ) {
     this.params.pageIndex = 0;
     this.fetch();
@@ -39,6 +40,7 @@ export class ListProductsComponent implements OnInit {
         title: 'Image',
         type: 'custom',
         renderComponent: ViewImageCellComponent,
+        filter: false,
       },
       name: {
         title: 'Name',
@@ -68,20 +70,21 @@ export class ListProductsComponent implements OnInit {
           renderComponent: CustomViewCellComponent,
           filter: false,
       },
-      isImportant: {
-          title: 'Is Important',
-          filter: false,
-      },
     },
   };
 
   delete(event: any) {
     let product = event.data as ProductModel;
-    if (window.confirm('Are you sure to delete this item?')) {
-      this.productService.delete(product).then(() => {
-        this.fetch();
-      });
-    }
+    this.sweetService.confirm('Are you sure to delete this item?', 'Yes').then((res) =>{
+        if(res.isConfirmed){
+          this.productService.delete(product).then(() => {
+            this.sweetService.notification('Detele successful', TypeSweetAlertIcon.SUCCESS);
+            this.fetch();
+          }).catch((er) =>
+            this.sweetService.notification('Detele fails', TypeSweetAlertIcon.ERROR)
+          );
+        }
+    })
   }
 
   openPopup(item: any) {
