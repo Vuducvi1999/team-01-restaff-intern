@@ -84,12 +84,13 @@ namespace Data
                 {
                     for (int i = 1; i <= 50; i++)
                     {
+                        var category = ctx.Categories.Skip(new Random().Next(0, ctx.Categories.Count())).First();
                         ctx.Products.Add(new Product()
                         {
                             Name = CommonConstantsUser.Name + i,
                             Description = CommonConstantsUser.Description + i,
                             ContentHTML = CommonConstantsUser.ContentHTML + i,
-                            CategoryId = ctx.Categories.Select(r => r.Id).First(),
+                            CategoryId = category.Id,
                             Price = CommonConstantsUser.Price,
                             DisplayOrder = CommonConstantsUser.DisplayOrder,
                             IsImportant = false,
@@ -99,7 +100,7 @@ namespace Data
                             HasDisplayHomePage = false,
                             ImageUrl = CommonConstantsUser.ImageUrl,
                             ObjectState = Infrastructure.EntityFramework.ObjectState.Added
-                        });
+                        });;
                         ctx.SaveChanges();
                     }
                 }
