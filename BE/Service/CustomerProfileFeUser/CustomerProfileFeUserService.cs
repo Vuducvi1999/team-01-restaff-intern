@@ -67,15 +67,26 @@ namespace Service.CustomerProfileFeUser
             }
         }
 
-        public ReturnMessage<CustomerDataReturnDTO> Update(UpdateCustomerProfileFeUserDTO model)
+        public ReturnMessage<CustomerDataReturnDTO> UpdateProfile(UpdateCustomerProfileFeUserDTO model)
         {
             try
             {
                 var user = _userRepository.Queryable()
-                    .FirstOrDefault(it => it.Type == UserType.Customer && it.Id == _userManager.AuthorizedUserId);
+                    .FirstOrDefault(it => it.Type == UserType.Customer && it.Id == _userManager.AuthorizedUserId && !it.IsDeleted);
                 if (user.IsNullOrEmpty())
                 {
                     return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);
+                }
+
+
+                if (_userRepository.Queryable().Any(it => it.Email == model.Email && it.Id != user.Id))
+                {
+                    return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.ExistEmail);
+                }
+
+                if (_customerRepository.Queryable().Any(it => model.Phone.IsNotNullOrEmpty() && it.Phone == model.Phone && it.Id != user.CustomerId))
+                {
+                    return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.ExistPhone);
                 }
 
                 var customer = _customerRepository.Find(user.CustomerId);

@@ -24,6 +24,7 @@ namespace BE.Controllers
             _bannerService = bannerService;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Get([FromQuery] SerachPaginationDTO<BannerDTO> serachPagination)
         {
@@ -31,22 +32,41 @@ namespace BE.Controllers
             return CommonResponse(result);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Create([FromBody] CreateBannerDTO model)
         {
             var result = _bannerService.Create(model);
+            if (result.HasError)
+            {
+                return CommonResponse(result);
+            }
             var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
+            if (uploadImage.HasError)
+            {
+                return CommonResponse(uploadImage);
+            }
             return CommonResponse(result);
         }
 
+        [Authorize]
         [HttpPut]
         public IActionResult Update([FromBody] UpdateBannerDTO model)
         {
             var result = _bannerService.Update(model);
+            if (result.HasError)
+            {
+                return CommonResponse(result);
+            }
             var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
+            if (uploadImage.HasError)
+            {
+                return CommonResponse(uploadImage);
+            }
             return CommonResponse(result);
         }
 
+        [Authorize]
         [HttpDelete]
         public IActionResult Delete([FromQuery] DeleteBannerDTO model)
         {

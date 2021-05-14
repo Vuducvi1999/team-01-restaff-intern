@@ -18,6 +18,7 @@
         public const string CurrentPasswordEqualNewPassword = "Current Password don't equal New Password";
         public const string ExistUsername = "Username has exist";
         public const string ExistEmail = "Email has exist";
+        public const string ExistPhone = "Phone has exist";
         public const string LoginSuccess = "Login successfully";
         public const string RegisterSuccess = "Register successfully";
         public const string RegisterFail = "Register fail";

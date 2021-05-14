@@ -20,8 +20,13 @@
                   required=""
                   [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }"
                 />
-                <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-                    <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                <div
+                  *ngIf="submitted && f.firstName.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.firstName.errors.required">
+                    First Name is required
+                  </div>
                 </div>
               </div>
               <div class="col-md-6 form-group">
@@ -36,8 +41,13 @@
                   required=""
                   [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }"
                 />
-                <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-                    <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                <div
+                  *ngIf="submitted && f.lastName.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.lastName.errors.required">
+                    Last Name is required
+                  </div>
                 </div>
               </div>
             </div>
@@ -52,10 +62,25 @@
                   autocomplete="username"
                   placeholder="Username"
                   required=""
-                  [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+                  [ngClass]="{
+                    'is-invalid':
+                      (submitted && f.username.errors) ||
+                      isCheckUserName == false,
+                    'is-valid': isCheckUserName
+                  }"
                 />
-                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-                    <div *ngIf="f.username.errors.required">Username is required</div>
+                <div
+                  *ngIf="
+                    (submitted && f.username.errors) || isCheckUserName == false
+                  "
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.username.errors?.required">
+                    Username is required
+                  </div>
+                  <div *ngIf="f.username.errors?.isUserNameUnique">
+                    UserName is exsist
+                  </div>
                 </div>
               </div>
               <div class="col-md-6 form-group">
@@ -68,11 +93,21 @@
                   autocomplete="email"
                   placeholder="Email"
                   required=""
-                  [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+                  [ngClass]="{
+                    'is-invalid':
+                      (submitted && f.email.errors) || isCheckEmail == false,
+                    'is-valid': isCheckEmail
+                  }"
                 />
-                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                    <div *ngIf="f.email.errors.required">Emaill is required</div>
-                    <div *ngIf="f.email.errors.pattern">Fail type email</div>
+                <div
+                  *ngIf="(submitted && f.email.errors) || isCheckEmail == false"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.email.errors?.required">Emaill is required</div>
+                  <div *ngIf="f.email.errors?.pattern">Fail type email</div>
+                  <div *ngIf="f.email.errors?.isEmailUnique">
+                    Email is exsist
+                  </div>
                 </div>
               </div>
             </div>
@@ -89,8 +124,13 @@
                   required=""
                   [ngClass]="{ 'is-invalid': submitted && f.password.errors }"
                 />
-                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                    <div *ngIf="f.password.errors.required">Password is required</div>
+                <div
+                  *ngIf="submitted && f.password.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.password.errors.required">
+                    Password is required
+                  </div>
                 </div>
               </div>
               <div class="col-md-6 form-group">
@@ -103,15 +143,26 @@
                   autocomplete="new-password"
                   placeholder="Enter your confirm password"
                   required=""
-                  [ngClass]="{ 'is-invalid': submitted && f.confirmpassword.errors }"
+                  [ngClass]="{
+                    'is-invalid': submitted && f.confirmpassword.errors
+                  }"
                 />
-                <div *ngIf="submitted && f.confirmpassword.errors" class="invalid-feedback">
-                    <div *ngIf="f.confirmpassword.errors.required">Confirm Password is required</div>
-                    <div *ngIf="f.confirmpassword.errors.mustMatch">Passwords must match</div>
+                <div
+                  *ngIf="submitted && f.confirmpassword.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="f.confirmpassword.errors.required">
+                    Confirm Password is required
+                  </div>
+                  <div *ngIf="f.confirmpassword.errors.mustMatch">
+                    Passwords must match
+                  </div>
                 </div>
               </div>
             </div>
-            <button class="btn btn-solid" (click)="onRegist()">create Account</button>
+            <button class="btn btn-solid" (click)="onRegist()">
+              create Account
+            </button>
           </form>
         </div>
       </div>

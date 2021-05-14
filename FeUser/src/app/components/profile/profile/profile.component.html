@@ -25,12 +25,12 @@
                 placeholder="Avatar"
                 required=""
                 [ngClass]="{
-                  'is-invalid': submittedProfile && fProfile.imageUrl.errors
+                  'is-invalid': fProfile.imageUrl.errors
                 }"
                 hidden
               />
               <div
-                *ngIf="submittedProfile && fProfile.imageUrl.errors"
+                *ngIf="fProfile.imageUrl.errors"
                 class="invalid-feedback"
               >
                 <div *ngIf="fProfile.imageUrl.errors.required">
@@ -61,7 +61,7 @@
                 type="text"
                 class="form-control"
                 id="name"
-                placeholder="Enter Your name"
+                placeholder="First Name"
                 required=""
                 [readonly]="updateProfile"
                 [ngClass]="{
@@ -84,18 +84,17 @@
                 type="text"
                 class="form-control"
                 id="last-name"
-                placeholder="Email"
+                placeholder="Last Name"
                 [readonly]="updateProfile"
                 required=""
                 [ngClass]="{
                   'is-invalid': submittedProfile && fProfile.lastName.errors
                 }"
               />
-              <div
-                *ngIf="submittedProfile && fProfile.lastName.errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="fProfile.lastName.errors.required">
+              <div *ngIf="fProfile.lastName.errors" class="invalid-feedback">
+                <div
+                  *ngIf="submittedProfile && fProfile.lastName.errors.required"
+                >
                   Last Name is required
                 </div>
               </div>
@@ -107,21 +106,30 @@
                 type="tel"
                 class="form-control"
                 id="review"
-                placeholder="Enter your number"
+                placeholder="Enter your phone"
                 [readonly]="updateProfile"
                 required=""
                 [ngClass]="{
-                  'is-invalid': submittedProfile && fProfile.phone.errors
+                  'is-invalid':
+                    (submittedProfile && fProfile.phone.errors) ||
+                    isCheckPhone == false,
+                  'is-valid': isCheckPhone
                 }"
               />
               <div
-                *ngIf="submittedProfile && fProfile.phone.errors"
+                *ngIf="
+                  (submittedProfile && fProfile.phone.errors) ||
+                  isCheckPhone == false
+                "
                 class="invalid-feedback"
               >
-                <div *ngIf="fProfile.phone.errors.required">
+                <div *ngIf="fProfile.phone.errors?.required">
                   Phone is required
                 </div>
-                <div *ngIf="fProfile.phone.errors.pattern">Fail type phone</div>
+                <div *ngIf="fProfile.phone.errors?.pattern">Fail type phone</div>
+                <div *ngIf="fProfile.phone.errors?.isPhoneUnique">
+                  Phone is exsist
+                </div>
               </div>
             </div>
             <div class="col-md-6 form-group">
@@ -135,17 +143,26 @@
                 [readonly]="updateProfile"
                 required=""
                 [ngClass]="{
-                  'is-invalid': submittedProfile && fProfile.email.errors
+                  'is-invalid':
+                    (submittedProfile && fProfile.email.errors) ||
+                    isCheckEmail == false,
+                  'is-valid': isCheckEmail
                 }"
               />
               <div
-                *ngIf="submittedProfile && fProfile.email.errors"
+                *ngIf="
+                  (submittedProfile && fProfile.email.errors) ||
+                  isCheckEmail == false
+                "
                 class="invalid-feedback"
               >
-                <div *ngIf="fProfile.email.errors.required">
+                <div *ngIf="fProfile.email.errors?.required">
                   Email is required
                 </div>
-                <div *ngIf="fProfile.email.errors.pattern">Fail type email</div>
+                <div *ngIf="fProfile.email.errors?.pattern">Fail type email</div>
+                <div *ngIf="fProfile.email.errors?.isEmailUnique">
+                  Email is exsist
+                </div>
               </div>
             </div>
             <div class="col-md-6 form-group">
@@ -226,11 +243,12 @@
                   'is-invalid': submittedPassword && fPassword.password.errors
                 }"
               />
-              <div
-                *ngIf="submittedPassword && fPassword.password.errors"
-                class="invalid-feedback"
-              >
-                <div *ngIf="fPassword.password.errors.required">
+              <div *ngIf="fPassword.password.errors" class="invalid-feedback">
+                <div
+                  *ngIf="
+                    submittedPassword && fPassword.password.errors.required
+                  "
+                >
                   Current Password is required
                 </div>
               </div>
@@ -251,10 +269,14 @@
                 }"
               />
               <div
-                *ngIf="submittedPassword && fPassword.newPassword.errors"
+                *ngIf="fPassword.newPassword.errors"
                 class="invalid-feedback"
               >
-                <div *ngIf="fPassword.newPassword.errors.required">
+                <div
+                  *ngIf="
+                    submittedPassword && fPassword.newPassword.errors.required
+                  "
+                >
                   New Password is required
                 </div>
               </div>
@@ -275,10 +297,15 @@
                 }"
               />
               <div
-                *ngIf="submittedPassword && fPassword.confirmPassword.errors"
+                *ngIf="fPassword.confirmPassword.errors"
                 class="invalid-feedback"
               >
-                <div *ngIf="fPassword.confirmPassword.errors.required">
+                <div
+                  *ngIf="
+                    submittedPassword &&
+                    fPassword.confirmPassword.errors.required
+                  "
+                >
                   Confirm Password is required
                 </div>
                 <div *ngIf="fPassword.confirmPassword.errors.mustMatch">
