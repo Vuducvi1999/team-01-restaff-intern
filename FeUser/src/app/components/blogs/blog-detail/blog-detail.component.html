@@ -25,11 +25,22 @@
             <i class="fa fa-comments"></i>
             {{ comments?.results.length + " Comment" }}
           </li>
+          <li>
+            Rating :
+            <ngb-rating [max]="5" [rate]="ratingPoint" [starTemplate]="t">
+              <ng-template #t let-fill="fill">
+                <span class="star" [class.full]="fill === 100">
+                  <span class="half" [style.width.%]="fill">&#9733;</span
+                  >&#9733;
+                </span>
+              </ng-template>
+            </ngb-rating>
+          </li>
         </ul>
         <div [innerHTML]="data?.contentHTML"></div>
 
         <div class="mt-5">
-          <p class="comment-label" #refComment>Comments</p>
+          <h4 class="comment-label" #refComment>Comments</h4>
           <app-comment-detail
             *ngIf="comments"
             (action)="changePageIndex($event)"
@@ -38,7 +49,7 @@
         </div>
       </div>
       <div class="col-sm-12 mt-5" *ngIf="user">
-        <h2>Leave Your Message</h2>
+        <h2 class="container">Leave Your Message</h2>
         <app-comment
           [dataComment]="dataComment"
           (action)="getComments()"

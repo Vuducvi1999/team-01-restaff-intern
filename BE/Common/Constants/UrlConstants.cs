@@ -104,7 +104,6 @@ namespace Common.Constants
 
 
         //Rating
-        public const string BaseRating = BaseApi + "/rating";
-        public const string RatingPoint = BaseRating + "/point";
+        public const string BaseRating = BaseComment + "/rating";
     }
 }

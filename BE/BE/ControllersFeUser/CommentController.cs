@@ -44,7 +44,6 @@ namespace BE.ControllersFeUser
         [HttpPost]
         public IActionResult Post([FromBody] CreateCommentDTO model)
         {
-
             var result = _commentService.Create(model);
             return CommonResponse(result);
         }
@@ -55,5 +54,13 @@ namespace BE.ControllersFeUser
             var result = _commentService.Delete(model);
             return CommonResponse(result);
         }
+
+        [HttpGet(UrlConstants.BaseRating)]
+        public IActionResult GetRating([FromQuery] Guid entityId)
+        {
+            var result = _commentService.GetRating(entityId);
+            return CommonResponse(result);
+        }
+
     }
 }

@@ -6,6 +6,7 @@ using Domain.DTOs.Comments;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
+using Service.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,24 +15,29 @@ namespace Service.Comments
 {
     public class CommentService : ICommentService
     {
-        private readonly IRepository<Comment> _repository;
+        private readonly IRepository<Comment> _commentRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUserManager _userManager;
 
-        public CommentService(IRepository<Comment> repository, IUnitOfWork unitOfWork, IMapper mapper)
+
+        public CommentService(IRepository<Comment> commentRepository, IUnitOfWork unitOfWork, IMapper mapper, IUserManager userManager)
         {
-            _repository = repository;
+            _commentRepository = commentRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public ReturnMessage<CommentDTO> Create(CreateCommentDTO model)
         {
             try
             {
+                //var userDecompile = _userManager.GetInformationUser();
                 var entity = _mapper.Map<CreateCommentDTO, Comment>(model);
+                //entity.CustomerId = userDecompile.CustomerId;
                 entity.Insert();
-                _repository.Insert(entity);
+                _commentRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<CommentDTO>(false, _mapper.Map<Comment, CommentDTO>(entity), MessageConstants.CreateSuccess);
                 return result;
@@ -46,11 +52,11 @@ namespace Service.Comments
         {
             try
             {
-                var entity = _repository.Find(model.Id);
+                var entity = _commentRepository.Find(model.Id);
                 if (entity.IsNotNullOrEmpty())
                 {
                     entity.Delete();
-                    _repository.Delete(entity);
+                    _commentRepository.Delete(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<CommentDTO>(false, _mapper.Map<Comment, CommentDTO>(entity), MessageConstants.DeleteSuccess);
                     return result;
@@ -70,7 +76,7 @@ namespace Service.Comments
                 return new ReturnMessage<PaginatedList<CommentDTO>>(false, null, MessageConstants.GetPaginationFail);
             }
 
-            var resultEntity = _repository.GetPaginatedList(it => it.EntityType.Contains("Blog") && 
+            var resultEntity = _commentRepository.GetPaginatedList(it => it.EntityType.Contains("Blog") && 
                 (
                     search.Search == null ||
                     (
@@ -97,7 +103,7 @@ namespace Service.Comments
                 return new ReturnMessage<PaginatedList<CommentDTO>>(false, null, MessageConstants.GetPaginationFail);
             }
 
-            var resultEntity = _repository.GetPaginatedList(it => it.EntityType.Contains("Product") &&
+            var resultEntity = _commentRepository.GetPaginatedList(it => it.EntityType.Contains("Product") &&
                 (
                     search.Search == null ||
                     (
@@ -121,7 +127,7 @@ namespace Service.Comments
         {
             try
             {
-                var entity = _repository.Queryable().OrderByDescending(t => t.CreateByDate).ToList();
+                var entity = _commentRepository.Queryable().OrderByDescending(t => t.CreateByDate).ToList();
                 var data = _mapper.Map<List<Comment>, List<CommentDTO>>(entity);
                 var result = new ReturnMessage<List<CommentDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;
@@ -129,6 +135,29 @@ namespace Service.Comments
             catch (Exception ex)
             {
                 return new ReturnMessage<List<CommentDTO>>(true, null, ex.Message);
+            }
+        }
+
+
+        public ReturnMessage<decimal> GetRating(Guid entityId)
+        {
+            if (entityId.IsNullOrEmpty() && entityId == Guid.Empty)
+            {
+                return new ReturnMessage<decimal>(true, 0, MessageConstants.Error);
+            }
+            try
+            {
+                var entity = _commentRepository.Queryable().Where(p => p.EntityId == entityId);
+                if(entity.Count() == 0)
+                {
+                    return new ReturnMessage<decimal>(false, 1, MessageConstants.DataError);
+                }
+                decimal rating = (decimal)Math.Round(entity.Average(x => x.Rating), 1);
+                return new ReturnMessage<decimal>(false, rating, MessageConstants.GetSuccess);
+            }
+            catch(Exception ex)
+            {
+                return new ReturnMessage<decimal>(true, 0, ex.Message);
             }
         }
     }

@@ -76,7 +76,7 @@ namespace Service.Blogs
                     entity.Update(model);
                     _blogRepository.Update(entity);
                     _unitOfWork.SaveChanges();
-                    var result = new ReturnMessage<BlogDTO>(false, _mapper.Map<Blog, BlogDTO>(entity), MessageConstants.DeleteSuccess);
+                    var result = new ReturnMessage<BlogDTO>(false, _mapper.Map<Blog, BlogDTO>(entity), MessageConstants.UpdateSuccess);
                     return result;
 
                 }
@@ -92,7 +92,7 @@ namespace Service.Blogs
         {
             if (search == null)
             {
-                return new ReturnMessage<PaginatedList<BlogDTO>>(false, null, MessageConstants.DeleteSuccess);
+                return new ReturnMessage<PaginatedList<BlogDTO>>(false, null, MessageConstants.GetPaginationFail);
             }
 
             var resultEntity = _blogRepository.GetPaginatedList(it => search.Search == null ||
@@ -110,7 +110,7 @@ namespace Service.Blogs
                 , t => t.CreateByDate
             );
             var data = _mapper.Map<PaginatedList<Blog>, PaginatedList<BlogDTO>>(resultEntity);
-            var result = new ReturnMessage<PaginatedList<BlogDTO>>(false, data, MessageConstants.DeleteSuccess);
+            var result = new ReturnMessage<PaginatedList<BlogDTO>>(false, data, MessageConstants.GetPaginationSuccess);
             return result;
         }
 

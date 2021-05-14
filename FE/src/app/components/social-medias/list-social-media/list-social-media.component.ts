@@ -27,13 +27,11 @@ export class ListSocialMediaComponent implements OnInit {
       .get(null)
       .then((res: ReturnMessage<PageModel<SocialMediaModel>>) => {
         if (!res.hasError) {
-          // console.log('social media', res.data);
           this.socialMedias = res.data.results;
         }
       })
       .catch((er) => {
         if (er.error.hasError) {
-          // console.log(er.error.message);
         }
       });
   }

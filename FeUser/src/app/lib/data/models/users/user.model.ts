@@ -3,6 +3,7 @@ import { FileDtoModel } from "../files/file.model";
 export interface UserModel extends BaseModel {
   username: string;
   password: string;
+  customerId: string;
   email: string;
   firstName: string;
   lastName: string;
@@ -15,6 +16,7 @@ export interface UserModel extends BaseModel {
 export interface UserDataReturnDTOModel {
   id: string;
   username: string;
+  customerId: string;
   email: string;
   firstName: string;
   lastName: string;

@@ -59,4 +59,15 @@ export class CommentService {
   create(model: CommentModel) {
     return this.httpClient.postObservable(this.url, model).toPromise();
   }
+
+  update(model: CommentModel) {
+    return this.httpClient.putObservable(this.url, model).toPromise();
+  }
+
+  getRating(entityId: any) {
+    const urlRating = "/rating";
+    return this.httpClient
+      .getObservable(this.url + urlRating, entityId)
+      .toPromise();
+  }
 }

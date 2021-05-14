@@ -18,7 +18,7 @@ import { UpdateOrderComponent } from '../update-order/update-order.component';
 })
 export class ListOrdersComponent implements OnInit {
   public orders: OrderModel[];
-  public filter:string ="";
+  public filter: string = "";
 
   constructor(private modalService: NgbModal, private ordersService: OrdersService, private datePipe: DatePipe) {
     this.getOrders();
@@ -69,15 +69,8 @@ export class ListOrdersComponent implements OnInit {
       },
       totalAmount: {
         title: 'Total Amount',
-        value:'totalAmount',
+        value: 'totalAmount',
         type: 'custom',
-        // valuePrepareFunction: (row) => {
-        //   var price = (row).toLocaleString('en-US', {
-        //     style: 'currency',
-        //     currency: 'VND',
-        //   });
-        //   return `${price}`;
-        // }
         renderComponent: CustomViewCellNumberComponent
       },
     }
@@ -99,7 +92,6 @@ export class ListOrdersComponent implements OnInit {
         console.log(er.error.message)
       }
     });
-
   }
 
   openUpdate(event: any) {
@@ -111,7 +103,7 @@ export class ListOrdersComponent implements OnInit {
   }
 
   statusFilter(status: string) {
-    if(this.filter == status){
+    if (this.filter == status) {
       return this.getOrders();
     }
     this.filter = status;
