@@ -52,8 +52,15 @@ namespace Service.Auth
         {
             get
             {
-                var claims = _httpContextAccessor.HttpContext.User.Claims;
-                return Guid.Parse(claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
+                try
+                {
+                    var claims = _httpContextAccessor.HttpContext.User.Claims;
+                    return Guid.Parse(claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value);
+                }
+                catch
+                {
+                    return Guid.Empty;
+                }
             }
         }
 

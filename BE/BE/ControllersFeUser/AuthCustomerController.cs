@@ -45,5 +45,26 @@ namespace BE.ControllersFeUser
             var result = _authCustomerService.GetCustomerDataReturnDTO();
             return CommonResponse(result);
         }
+
+        [HttpGet(UrlConstants.CheckEmail)]
+        public IActionResult CheckEmail([FromQuery] CustomerEmailDTO dto)
+        {
+            var result = _authCustomerService.CheckEmail(dto);
+            return CommonResponse(result);
+        }
+
+        [HttpGet(UrlConstants.CheckPhone)]
+        public IActionResult CheckPhone([FromQuery] CustomerPhoneDTO dto)
+        {
+            var result = _authCustomerService.CheckPhone(dto);
+            return CommonResponse(result);
+        }
+
+        [HttpGet(UrlConstants.CheckUserName)]
+        public IActionResult CheckUserName([FromQuery] CustomerUserNameDTO dto)
+        {
+            var result = _authCustomerService.CheckUserName(dto);
+            return CommonResponse(result);
+        }
     }
 }

@@ -25,6 +25,7 @@ namespace Domain.DTOs.Customer
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$")]
         public string Phone { get; set; }
 
+        [Required]
         public string Username { get; set; }
         public string Password { get; set; }
 

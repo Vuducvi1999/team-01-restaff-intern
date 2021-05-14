@@ -68,7 +68,7 @@ export class ProductDetailsComponent implements OnInit {
   public typeDisplayImage = TypeDisplayImage;
   public user: UserDataReturnDTOModel;
   public comments: PageModel<CommentModel>;
-  public searchModel: SearchPaganationDTO<SearchCommentModel>;
+  public searchModel;
   public ProductDetailsMainSliderConfig: any = ProductDetailsMainSlider;
   public ProductDetailsThumbConfig: any = ProductDetailsThumbSlider;
 

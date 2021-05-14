@@ -19,17 +19,12 @@ namespace BE.Controllers
     public class AuthController : BaseController
     {
         private readonly IAuthService _authService;
-        private readonly IUserManager _authManager;
-        private readonly IUserService _userService;
 
         public AuthController(IAuthService authService,
             IUserManager authManager,
-            IFileService fileService,
-            IUserService userService) : base(authService, authManager, fileService)
+            IFileService fileService) : base(authService, authManager, fileService)
         {
             _authService = authService;
-            _authManager = authManager;
-            _userService = userService;
         }
 
         [HttpPost(UrlConstants.BaseLogin)]
