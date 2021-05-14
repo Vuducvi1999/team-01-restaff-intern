@@ -4,6 +4,7 @@ import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { SocialMediaModel } from 'src/app/lib/data/models/social-medias/social-media.model';
 import { FileService, SweetalertService } from 'src/app/lib/data/services';
 import { SocialMediaService } from 'src/app/lib/data/services/social-media/social-media.service';
+import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { SocialMediaDetailComponent } from '../social-media-detail/social-media-detail.component';
 
@@ -60,6 +61,9 @@ export class ListSocialMediaComponent implements OnInit {
       },
       displayOrder: {
         title: 'Display Order',
+        type: 'custom',
+        renderComponent: CustomViewCellComponent,
+        filter: false,
       },
     },
   };

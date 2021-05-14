@@ -5,6 +5,7 @@ import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { CouponModel } from 'src/app/lib/data/models/coupons/coupon.model';
 import { SweetalertService } from 'src/app/lib/data/services';
 import { CouponService } from 'src/app/lib/data/services/coupons/coupon.service';
+import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { CouponDetailComponent } from '../coupon-detail/coupon-detail.component';
 
 @Component({
@@ -53,11 +54,11 @@ export class ListCouponComponent implements OnInit {
       name: {
         title: 'Name',
       },
-      hasPercent: {
-        title: 'Has Percent',
-      },
       value: {
         title: 'Value',
+        type: 'custom',
+        renderComponent: CustomViewCellComponent,
+        filter: false,
       },
       startDate: {
         title: 'Start Date',
