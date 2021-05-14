@@ -17,7 +17,12 @@ import { ProductSlider } from "src/app/shared/data/slider";
   providers: [HomeService, ProductService],
 })
 export class HomeComponent implements OnInit {
-  products: ProductModel[] = [];
+  productKeeper = {
+    topProduct: [],
+    newProduct: [],
+    bestSeller: [],
+    featuredProduct: [],
+  };
   blogs: BlogModel[] = [];
   banners: BannerModel[] = [];
 
@@ -26,16 +31,23 @@ export class HomeComponent implements OnInit {
   public ProductSliderConfig: any = ProductSlider;
 
   ngOnInit(): void {
-    this.getProducts();
+    this.callProducts();
     this.getBlogs();
     this.getBanners();
+  }
+
+  callProducts() {
+    this.getProducts();
+    this.getNewProducts();
+    this.getBestSeller();
+    this.getFeaturedProducts();
   }
 
   getProducts() {
     this.homeService
       .getTopCollectionProducts()
       .then((data: ReturnMessage<ProductModel[]>) => {
-        this.products = data.data.filter((i) => i.isDeleted === false);
+        this.productKeeper.topProduct = data.data;
       })
       .catch((e) => {
         console.log(e);
@@ -43,36 +55,36 @@ export class HomeComponent implements OnInit {
   }
 
   getNewProducts() {
-    const result = [...this.products];
-    result.sort(
-      (a, b) =>
-        new Date(a.updateByDate).getTime() - new Date(b.updateByDate).getTime()
-    );
-    return result;
+    this.homeService
+      .getNewProducts()
+      .then((data: ReturnMessage<ProductModel[]>) => {
+        this.productKeeper.newProduct = data.data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
+
   getBestSeller() {
-    const result = [...this.products];
-    result.sort(
-      (a, b) =>
-        new Date(a.updateByDate).getTime() - new Date(b.updateByDate).getTime()
-    );
-    return result;
+    this.homeService
+      .getBestSellerProducts()
+      .then((data: ReturnMessage<ProductModel[]>) => {
+        this.productKeeper.bestSeller = data.data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
+
   getFeaturedProducts() {
-    const result = [...this.products];
-    result.sort(
-      (a, b) =>
-        new Date(a.updateByDate).getTime() - new Date(b.updateByDate).getTime()
-    );
-    return result;
-  }
-  getOnSale() {
-    const result = [...this.products];
-    result.sort(
-      (a, b) =>
-        new Date(a.updateByDate).getTime() - new Date(b.updateByDate).getTime()
-    );
-    return result;
+    this.homeService
+      .getFeaturedProducts()
+      .then((data: ReturnMessage<ProductModel[]>) => {
+        this.productKeeper.featuredProduct = data.data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   getBlogs() {

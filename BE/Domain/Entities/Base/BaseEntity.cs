@@ -27,7 +27,7 @@ namespace Domain.Entities
         public virtual void Insert()
         {
             Id = Guid.NewGuid();
-            IsActive = false;
+            IsActive = true;
             IsDeleted = false;
             CreateByDate = DateTime.Now;
             UpdateByDate = DateTime.Now;

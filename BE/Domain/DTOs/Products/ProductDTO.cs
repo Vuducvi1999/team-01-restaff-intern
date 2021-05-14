@@ -1,5 +1,7 @@
 ﻿using Domain.DTOs.BaseDTOs;
+using Domain.DTOs.CustomerWishList;
 using System;
+using System.Collections.Generic;
 
 namespace Domain.DTOs.Products
 {
@@ -21,6 +23,7 @@ namespace Domain.DTOs.Products
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
         public int SaleCount { get; set; }
-
+        public bool IsInWishList { get; set; }
+        public List<CustomerWishListDTO> CustomerWishLists { get; set; }
     }
 }

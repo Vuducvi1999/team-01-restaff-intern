@@ -1,10 +1,15 @@
 ﻿using AutoMapper;
 using Common.Constants;
 using Common.Http;
-using Domain.DTOs.Home;
+using Domain.DTOs.Banners;
+using Domain.DTOs.Blogs;
+using Domain.DTOs.Products;
+using Domain.DTOs.Users;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
+using Microsoft.EntityFrameworkCore;
+using Service.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,135 +22,146 @@ namespace Service.Home
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Blog> _blogRepository;
         private readonly IRepository<Banner> _bannerRepository;
+        private readonly IUserManager _userManager;
         private readonly IMapper _mapper;
+        private UserInformationDTO _userInformationDto;
 
-        public HomeService(IRepository<Product> productRepository, IRepository<Blog> blogRepository,IRepository<Banner> bannerRepository,IMapper mapper)
+        public HomeService(IRepository<Product> productRepository, IUserManager userManager, IRepository<Blog> blogRepository, IRepository<Banner> bannerRepository, IMapper mapper)
         {
             _productRepository = productRepository;
             _bannerRepository = bannerRepository;
             _blogRepository = blogRepository;
             _bannerRepository = bannerRepository;
             _mapper = mapper;
+            _userManager = userManager;
+            _userInformationDto = _userManager.GetInformationUser();
         }
 
-
-        public ReturnMessage<List<HomeProductDTO>> GetTopCollectionProducts()
+        public ReturnMessage<List<ProductDTO>> GetTopCollectionProducts()
         {
             try
             {
-                var resultEntity = _productRepository.DbSet.DynamicIncludeProperty(nameof(Category))
-                                    .AsQueryable()
+                var resultEntity = _productRepository.Queryable()
+                                    .Include(t => t.Category)
+                                    .Include(t => t.CustomerWishLists)
+                                    .Where(i => i.IsDeleted == false)
+                                    .OrderByDescending(i => i.SaleCount)
+                                    .ThenByDescending(i => i.IsImportant)
                                     .Take(12)
                                     .ToList();
-                var data = _mapper.Map<List<Product>, List<HomeProductDTO>>(resultEntity);
-                var result = new ReturnMessage<List<HomeProductDTO>>(false, data, MessageConstants.ListSuccess);
+                var data = _mapper.Map<List<Product>, List<ProductDTO>>(resultEntity);
+
+                data.ForEach(t => t.IsInWishList = t.CustomerWishLists.IsNotNullOrEmpty() && t.CustomerWishLists.Any(k => k.CustomerId == _userInformationDto.CustomerId));
+
+                var result = new ReturnMessage<List<ProductDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;
             }
             catch
             {
-                return new ReturnMessage<List<HomeProductDTO>>(true, null, MessageConstants.Error);
+                return new ReturnMessage<List<ProductDTO>>(true, null, MessageConstants.Error);
             }
         }
 
-        public ReturnMessage<List<HomeProductDTO>> GetBestSellerProducts()
+        public ReturnMessage<List<ProductDTO>> GetNewProducts()
         {
             try
             {
-                var resultEntity = _productRepository.DbSet.DynamicIncludeProperty(nameof(Category))
-                                    .AsQueryable()
+                var resultEntity = _productRepository.Queryable()
+                                    .Include(t => t.Category)
+                                    .Include(t => t.CustomerWishLists)
+                                    .Where(i => i.IsDeleted == false)
+                                    .OrderByDescending(i => i.UpdateByDate)
                                     .Take(12)
                                     .ToList();
-                var data = _mapper.Map<List<Product>, List<HomeProductDTO>>(resultEntity);
-                var result = new ReturnMessage<List<HomeProductDTO>>(false, data, MessageConstants.ListSuccess);
+                var data = _mapper.Map<List<Product>, List<ProductDTO>>(resultEntity);
+
+                data.ForEach(t => t.IsInWishList = t.CustomerWishLists.IsNotNullOrEmpty() && t.CustomerWishLists.Any(k => k.CustomerId == _userInformationDto.CustomerId));
+
+                var result = new ReturnMessage<List<ProductDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;
             }
             catch
             {
-                return new ReturnMessage<List<HomeProductDTO>>(true, null, MessageConstants.Error);
+                return new ReturnMessage<List<ProductDTO>>(true, null, MessageConstants.Error);
             }
         }
 
-        public ReturnMessage<List<HomeProductDTO>> GetFeaturedProducts()
+        public ReturnMessage<List<ProductDTO>> GetBestSellerProducts()
         {
             try
             {
-                var resultEntity = _productRepository.DbSet.DynamicIncludeProperty(nameof(Category))
-                                    .AsQueryable()
+                var resultEntity = _productRepository.Queryable()
+                                    .Include(t => t.Category)
+                                    .Include(t => t.CustomerWishLists)
+                                    .Where(i => i.IsDeleted == false)
+                                    .OrderByDescending(i => i.SaleCount)
                                     .Take(12)
                                     .ToList();
-                var data = _mapper.Map<List<Product>, List<HomeProductDTO>>(resultEntity);
-                var result = new ReturnMessage<List<HomeProductDTO>>(false, data, MessageConstants.ListSuccess);
+                var data = _mapper.Map<List<Product>, List<ProductDTO>>(resultEntity);
+
+                data.ForEach(t => t.IsInWishList = t.CustomerWishLists.IsNotNullOrEmpty() && t.CustomerWishLists.Any(k => k.CustomerId == _userInformationDto.CustomerId));
+
+                var result = new ReturnMessage<List<ProductDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;
             }
             catch
             {
-                return new ReturnMessage<List<HomeProductDTO>>(true, null, MessageConstants.Error);
+                return new ReturnMessage<List<ProductDTO>>(true, null, MessageConstants.Error);
             }
         }
 
-        public ReturnMessage<List<HomeProductDTO>> GetNewProducts()
+        public ReturnMessage<List<ProductDTO>> GetFeaturedProducts()
         {
             try
             {
-                var resultEntity = _productRepository.DbSet.DynamicIncludeProperty(nameof(Category))
+                var resultEntity = _productRepository.Queryable()
                                     .AsQueryable()
+                                    .Include(t => t.Category)
+                                    .Include(t => t.CustomerWishLists)
+                                    .Where(i => i.IsDeleted == false)
+                                    .Where(i => i.IsImportant == true)
+                                    .OrderByDescending(i => i.UpdateByDate)
                                     .Take(12)
                                     .ToList();
-                var data = _mapper.Map<List<Product>, List<HomeProductDTO>>(resultEntity);
-                var result = new ReturnMessage<List<HomeProductDTO>>(false, data, MessageConstants.ListSuccess);
+                var data = _mapper.Map<List<Product>, List<ProductDTO>>(resultEntity);
+                data.ForEach(t => t.IsInWishList = t.CustomerWishLists.IsNotNullOrEmpty() && t.CustomerWishLists.Any(k => k.CustomerId == _userInformationDto.CustomerId));
+
+                var result = new ReturnMessage<List<ProductDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;
             }
             catch
             {
-                return new ReturnMessage<List<HomeProductDTO>>(true, null, MessageConstants.Error);
+                return new ReturnMessage<List<ProductDTO>>(true, null, MessageConstants.Error);
             }
         }
 
-        public ReturnMessage<List<HomeProductDTO>> GetOnSaleProducts()
-        {
-            try
-            {
-                var resultEntity = _productRepository.DbSet.DynamicIncludeProperty(nameof(Category))
-                                    .AsQueryable()
-                                    .Take(12)
-                                    .ToList();
-                var data = _mapper.Map<List<Product>, List<HomeProductDTO>>(resultEntity);
-
-                var result = new ReturnMessage<List<HomeProductDTO>>(false, data, MessageConstants.ListSuccess);
-                return result;
-            }
-            catch
-            {
-                return new ReturnMessage<List<HomeProductDTO>>(true, null, MessageConstants.Error);
-            }
-        }
-
-        public ReturnMessage<List<HomeBlogDTO>> GetBlogs()
+        public ReturnMessage<List<BlogDTO>> GetBlogs()
         {
             try
             {
                 var resultEntity = _blogRepository.Queryable().Take(12).ToList();
-                var data = _mapper.Map<List<Blog>, List<HomeBlogDTO>>(resultEntity);
-                var result = new ReturnMessage<List<HomeBlogDTO>>(false, data, MessageConstants.ListSuccess);
+                var data = _mapper.Map<List<Blog>, List<BlogDTO>>(resultEntity);
+                var result = new ReturnMessage<List<BlogDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;
             }
             catch
             {
-                return new ReturnMessage<List<HomeBlogDTO>>(true, null, MessageConstants.Error);
+                return new ReturnMessage<List<BlogDTO>>(true, null, MessageConstants.Error);
             }
         }
 
-        public ReturnMessage<List<HomeBannerDTO>> GetBanners() {
+        public ReturnMessage<List<BannerDTO>> GetBanners()
+        {
             try
             {
                 var resultEntity = _bannerRepository.Queryable().Take(12).ToList();
-                var data = _mapper.Map<List<Banner>, List<HomeBannerDTO>>(resultEntity);
-                var result = new ReturnMessage<List<HomeBannerDTO>>(false, data, MessageConstants.ListSuccess);
+                var data = _mapper.Map<List<Banner>, List<BannerDTO>>(resultEntity);
+                var result = new ReturnMessage<List<BannerDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;
             }
             catch
             {
-                return new ReturnMessage<List<HomeBannerDTO>>(true, null, MessageConstants.Error);
+                return new ReturnMessage<List<BannerDTO>>(true, null, MessageConstants.Error);
             }
         }
     }

@@ -38,6 +38,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   public finished: boolean = false;
   public params;
   public subscribe: Subscription;
+  public isEmptyProduct: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -97,8 +98,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   addItems() {
+    this.isEmptyProduct = false;
     if (this.pageModel?.totalItem == this.products.length) {
       this.finished = true;
+      this.isEmptyProduct = true;
       return;
     }
     this.productListService

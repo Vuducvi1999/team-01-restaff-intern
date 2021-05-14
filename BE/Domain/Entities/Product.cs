@@ -24,6 +24,7 @@ namespace Domain.Entities
 
         public Guid CategoryId { get; set; }
         public virtual Category Category { get; set; }
+        public ICollection<CustomerWishList> CustomerWishLists { get; set; }
 
         public override void Insert()
         {
