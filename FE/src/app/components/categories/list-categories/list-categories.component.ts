@@ -42,10 +42,12 @@ export class ListCategoriesComponent implements OnInit {
           renderComponent: ViewImageCellComponent,
         },
         name: {
-          title: 'Name'
+          title: 'Name',
+          filter: false,
         },
         description: {
-          title: 'Description'
+          title: 'Description',
+          filter: false,
         },
       },
     };

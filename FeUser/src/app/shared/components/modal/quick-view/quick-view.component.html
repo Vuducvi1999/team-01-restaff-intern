@@ -13,7 +13,7 @@
                 <div class="col-lg-6 rtl-text">
                     <div class="product-right">
                         <h2>{{ product.name | titlecase }}</h2>
-                        <h3>{{ product.price }}
+                        <h3>{{ product.price | vndFormat}}
                             <!-- <del *ngIf="product?.discount"><span class="money">{{ product.price * currency?.price | currency:currency?.currency:'symbol' }}</span></del> -->
                         </h3>
                         <!-- <ul class="color-variant" *ngIf="Color(product.variants).length">
@@ -54,7 +54,10 @@
                         </div> -->
                         <div class="product-buttons">
                             <!-- <a href="javascript:void(0)" class="btn btn-solid" [class.disabled]="counter > product.stock" (click)="addToCart(product)">add to cart</a> -->
-                            <a [routerLink]="['/shop/product/left/sidebar/', product.name]" class="btn btn-solid">view detail</a>
+                            <a [routerLink]="['/product-details']"
+                            [queryParams]="{ id: product?.id }" 
+                            class="btn btn-solid">view detail</a>
+                            
                         </div>
                     </div>
                 </div>

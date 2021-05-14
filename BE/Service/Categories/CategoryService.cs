@@ -70,11 +70,9 @@ namespace Service.Categories
                     foreach (var product in products)
                     {
                         product.Delete();
-                        product.IsDeleted = true;
                         _productRepository.Update(product);
                     }
                     entity.Delete();
-                    entity.IsDeleted = true;
                     _categoryRepository.Update(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<CategoryDTO>(false, _mapper.Map<Category, CategoryDTO>(entity), MessageConstants.DeleteSuccess);
