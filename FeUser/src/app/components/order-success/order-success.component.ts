@@ -18,7 +18,7 @@ export class OrderSuccessComponent implements OnInit {
     private dataRoute: ActivatedRoute,
   ) {
 
-    this.checkOutOrders = this.route.getCurrentNavigation().extras?.state.data;
+    this.checkOutOrders = this.route.getCurrentNavigation().extras?.state?.data;
     this.checkOutOrderDetails = this.checkOutOrders.orderDetails;
     console.log(this.checkOutOrderDetails)
     console.log(this.checkOutOrders)
