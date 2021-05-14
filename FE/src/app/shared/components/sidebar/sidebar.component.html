@@ -1,6 +1,12 @@
 <div class="main-header-left d-none d-lg-block">
-  <div class="logo-wrapper" style="background-color: rgb(255, 115, 138);"><a [routerLink]="'/dashboard/default'"><img class="blur-up lazyloaded"
-        src="assets/images/logo00.png" style="width: 200px; height: 55px;" alt=""></a></div>
+  <div class="logo-wrapper" ><a [routerLink]="'/dashboard/default'">
+    <img 
+    class="blur-up lazyloaded"
+    appUiImageLoader 
+    [src]="infoWeb?.logo" 
+    style="width: 200px; height: 55px;"
+    alt=""></a>
+  </div>
 </div>
 <div class="sidebar custom-scrollbar">
   <div class="sidebar-user text-center">

@@ -47,6 +47,7 @@ namespace Service.Products
                 {
                     return new ReturnMessage<ProductDTO>(true, null, MessageConstants.Error);
                 }
+                entity.Insert();
                 _productRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<ProductDTO>(false, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.CreateSuccess);
@@ -144,6 +145,7 @@ namespace Service.Products
                 entity.CategoryId = category.Id;
                 if (entity.IsNotNullOrEmpty())
                 {
+                    entity.Update(model);
                     _productRepository.Update(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<ProductDTO>(false, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.UpdateSuccess);

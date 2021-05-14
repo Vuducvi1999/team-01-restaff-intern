@@ -1,7 +1,8 @@
 import { Component, Input, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService, FileService } from 'src/app/lib/data/services';
+import { InformationWebModel, ReturnMessage } from 'src/app/lib/data/models';
+import { AuthService, FileService, InformationWebsiteService } from 'src/app/lib/data/services';
 import { NavService, Menu } from '../../service/nav.service';
 
 @Component({
@@ -9,20 +10,24 @@ import { NavService, Menu } from '../../service/nav.service';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  providers: [AuthService]
+  providers: [AuthService, InformationWebsiteService]
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-
+  public infoWeb: InformationWebModel;
   public menuItems: Menu[];
   public url: any;
   public fileurl: any;
   userInfo: any;
   entrySub: Subscription;
 
-  constructor(private router: Router, public navServices: NavService, private authService: AuthService) {
+  constructor(private router: Router,
+     public navServices: NavService,
+    private authService: AuthService,
+    private inforWebService:InformationWebsiteService) {
     // this.userManagerService.UserSubject.subscribe((it) =>{
     //   this.userInfo = it;
     // });
+    this.fetchWebInFo();
     this.navServices.items.subscribe(menuItems => {
       this.menuItems = menuItems
       this.router.events.subscribe((event) => {
@@ -106,5 +111,23 @@ export class SidebarComponent implements OnInit, OnDestroy {
     reader.onload = (_event) => {
       this.url = reader.result;
     }
+  }
+  //Web Information
+      
+  fetchWebInFo()
+  {
+    this.inforWebService
+      .get(null)
+      .then((res : ReturnMessage<InformationWebModel>) => {
+      if(!res.hasError)
+      {
+        this.infoWeb = res.data;
+      }
+    }).catch((er) => {
+      
+      if(er.error.hasError)
+      {
+      }
+    });
   }
 }

@@ -113,7 +113,7 @@ export class CategoryDetailComponent implements OnInit {
     });
 
     this.modalHeader = new ModalHeaderModel();
-    this.modalHeader.title = this.item ? `[Update] ${this.item.name}` : `[Add]`;
+    this.modalHeader.title = this.item ? `Update ${this.item.name}` : `Add`;
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
   }

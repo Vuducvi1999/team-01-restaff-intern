@@ -89,14 +89,6 @@ export class ProductDetailsComponent implements OnInit {
       hasDisplayHomePage: this.productsForm.value.hasDisplayHomePage,
       isImportant: this.productsForm.value.isImportant,
       id: this.item ? this.item.id : '',
-      createdBy: this.item ? this.item.createdBy : '',
-      createdByName: this.item ? this.item.createdByName : '',
-      deletedBy: this.item ? this.item.deletedBy : '',
-      deletedByName: this.item ? this.item.deletedByName : '',
-      isActive: this.item ? this.item.isActive : true,
-      isDeleted: this.item ? this.item.isDeleted : false,
-      updatedBy: this.item ? this.item.updatedBy : '',
-      updatedByName: this.item ? this.item.updatedByName : '',
       files: this.modalFile.listFile,
     };
 
@@ -113,13 +105,16 @@ export class ProductDetailsComponent implements OnInit {
   loadItem() {
     this.productsForm = this.formBuilder.group({
       name: [this.item ? this.item.name : '', 
-      [Validators.required, Validators.minLength(3), Validators.maxLength(50),
+      [Validators.required,
+       Validators.minLength(3), 
+       Validators.maxLength(50),
        Validators.pattern(this.regex)
       ]
     ],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required, Validators.maxLength(100),
+        [Validators.required, 
+         Validators.maxLength(100),
          Validators.pattern(this.regex)
         ]
       ],
@@ -128,7 +123,10 @@ export class ProductDetailsComponent implements OnInit {
       ],
       imageUrl: [this.item ? this.item.imageUrl : ''],
       price: [this.item ? this.item.price : this.item,
-         [Validators.required, Validators.min(1), Validators.max(9999999999), Validators.pattern('[0-9]*')]
+         [Validators.required,
+          Validators.min(1), 
+          Validators.max(5000000), 
+          Validators.pattern('[0-9]*')]
       ],
       category: [
         this.item ? this.item.categoryId : '',
@@ -143,7 +141,7 @@ export class ProductDetailsComponent implements OnInit {
     });
 
     this.modalHeader = new ModalHeaderModel();
-    this.modalHeader.title = this.item ? `[Update] ${this.item.name}` : `[Add]`;
+    this.modalHeader.title = this.item ? `Update ${this.item.name}` : `Add`;
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
   }
