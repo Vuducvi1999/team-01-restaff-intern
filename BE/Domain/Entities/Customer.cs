@@ -28,7 +28,7 @@ namespace Domain.Entities
 
         public Guid? UserId { get; set; }
         public virtual User User { get; set; }
-
+        public ICollection<CustomerWishList> CustomerWishLists { get; set; }
         public override void Insert()
         {
             base.Insert();

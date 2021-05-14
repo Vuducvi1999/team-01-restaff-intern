@@ -48,7 +48,7 @@ const routes: Routes = [
     component: ProductDetailsComponent,
   },
   {
-    path: "why-we-choose/:id",
+    path: "page-info/:id",
     component: PageContentComponent,
   },
   {

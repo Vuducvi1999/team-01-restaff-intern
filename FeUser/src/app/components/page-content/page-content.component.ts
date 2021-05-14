@@ -14,6 +14,7 @@ import { PageContentService } from "src/app/lib/data/services/pageContent/pageCo
 })
 export class PageContentComponent implements OnInit {
   pageContent: PageContentModel;
+  isContactUs: boolean;
 
   constructor(
     public pageContentService: PageContentService,
@@ -29,6 +30,8 @@ export class PageContentComponent implements OnInit {
 
   getCurrentPageContent() {
     const id = this.activeRoute.snapshot.paramMap.get("id");
+    this.isContactUs = id === "00000000-0000-0000-0000-000000000002";
+
     this.pageContentService
       .getById(null, id)
       .then((data: ReturnMessage<PageContentModel>) => {

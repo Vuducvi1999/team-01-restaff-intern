@@ -16,12 +16,21 @@ import { CommentService } from "src/app/lib/data/services/comments/comment.servi
       .filled {
         color: #ffa200;
       }
+      .checkLogin {
+        font-size: 1rem;
+        font-style: italic;
+        margin: 0;
+      }
+      .review {
+        font-size: 1.4rem;
+      }
     `,
   ],
 })
 export class CommentComponent implements OnInit {
   commentForm: FormGroup;
   @Input() dataComment: CommentPassingModel;
+  @Input() isLoading: boolean;
   @Output() action = new EventEmitter();
 
   constructor(
