@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { CouponModel } from 'src/app/lib/data/models/coupons/coupon.model';
+import { SweetalertService } from 'src/app/lib/data/services';
 import { CouponService } from 'src/app/lib/data/services/coupons/coupon.service';
 import { CouponDetailComponent } from '../coupon-detail/coupon-detail.component';
 
@@ -16,7 +17,8 @@ export class ListCouponComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private couponService: CouponService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private sweetAlertService: SweetalertService
   ) {
     this.getCoupons();
   }
@@ -84,11 +86,13 @@ export class ListCouponComponent implements OnInit {
 
   delete(event: any) {
     let coupon = event.data as CouponModel;
-    if (window.confirm('Are you sure to delete?')) {
-      this.couponService.delete(coupon).then(() => {
-        this.getCoupons();
+    this.sweetAlertService
+      .confirm('Do you want to permanently delete this item?', 'Yes')
+      .then((res) => {
+        this.couponService.delete(coupon).then(() => {
+          this.getCoupons();
+        });
       });
-    }
   }
   ngOnInit() {}
 }
