@@ -2,6 +2,7 @@
 using Common.Pagination;
 using Domain.DTOs.Users;
 using Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Files;
@@ -21,6 +22,7 @@ namespace BE.Controllers
             _userService = userService;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Get([FromQuery] SerachPaginationDTO<UserDTO> serachPagination)
         {
@@ -28,6 +30,7 @@ namespace BE.Controllers
             return CommonResponse(result);
         }
 
+        [Authorize]
         [Route(UrlConstants.GetUser)]
         [HttpGet]
         public IActionResult GetDetailUser(Guid id)
@@ -36,22 +39,41 @@ namespace BE.Controllers
             return CommonResponse(result);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Create([FromBody] CreateUserDTO model)
         {
             var result = _userService.Create(model);
+            if (result.HasError)
+            {
+                return CommonResponse(result);
+            }
             var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
+            if (uploadImage.HasError)
+            {
+                return CommonResponse(uploadImage);
+            }
             return CommonResponse(result);
         }
 
+        [Authorize]
         [HttpPut]
         public IActionResult Update([FromBody] UpdateUserDTO model)
         {
             var result = _userService.Update(model);
+            if (result.HasError)
+            {
+                return CommonResponse(result);
+            }
             var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
+            if (uploadImage.HasError)
+            {
+                return CommonResponse(uploadImage);
+            }
             return CommonResponse(result);
         }
 
+        [Authorize]
         [HttpDelete]
         public IActionResult Delete([FromQuery] DeleteUserDTO model)
         {
