@@ -65,7 +65,10 @@ export class ListOrdersComponent implements OnInit {
         title: 'Note',
       },
       hasCoupon: {
-        title: 'Coupon Applied'
+        title: 'Coupon Applied',
+        valuePrepareFunction: (cell,row) => {
+          return cell? row.couponName:'';
+        }
       },
       totalAmount: {
         title: 'Total Amount',

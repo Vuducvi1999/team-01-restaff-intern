@@ -32,7 +32,7 @@ import { ThrowStmt } from "@angular/compiler";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { FileService } from "src/app/lib/data/services/files/file.service";
 import { Subscription } from "rxjs";
-import { AuthService } from "src/app/lib/data/services";
+import { AuthService, SweetalertService } from "src/app/lib/data/services";
 import Swal from "sweetalert2";
 registerLocaleData(localeFr, "fr");
 
@@ -66,7 +66,8 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private cartService: CartService,
     private wishListService: CustomerWishListService,
-    private authService: AuthService
+    private authService: AuthService,
+    private sweetService: SweetalertService
   ) {}
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
@@ -82,7 +83,6 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
         this.loader = false;
       }, 2000); // Skeleton Loader
     }
-
     this.subDataUser = this.authService.callUserInfo.subscribe((it) => {
       this.userInfo = it;
       this.getWishlist();
@@ -158,18 +158,16 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
       productId: product.id,
     };
     if (this.product.isInWishList) {
-      return Swal.fire({
-        text: "Remove in wish list?",
-        confirmButtonText: "Remove",
-        showCancelButton: true,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.wishListService.createOrDelete(model).then(() => {
-            this.product.isInWishList = false;
-            this.cartService.removeWishlistItem(product);
-          });
-        }
-      });
+      return this.sweetService
+        .confirm("Remove in wish list?", "Remove")
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.wishListService.createOrDelete(model).then(() => {
+              this.product.isInWishList = false;
+              this.cartService.removeWishlistItem(product);
+            });
+          }
+        });
     }
     this.wishListService.createOrDelete(model).then(() => {
       this.product.isInWishList = true;

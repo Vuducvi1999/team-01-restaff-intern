@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
+import { PageModel, ReturnMessage, TypeSweetAlertIcon } from 'src/app/lib/data/models';
 import { OrderDetailModel, OrderModel } from 'src/app/lib/data/models/orders/order.model';
-import { FileService } from 'src/app/lib/data/services';
+import { FileService, SweetalertService } from 'src/app/lib/data/services';
 import { OrderDetailsService } from 'src/app/lib/data/services/orders/order-details.service';
 import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
@@ -12,6 +12,8 @@ import {
   ModalHeaderModel,
 } from 'src/app/shared/components/modals/models/modal.model';
 import Swal from 'sweetalert2';
+import { CustomViewCellNumberComponent } from 'src/app/shared/components/custom-view-cell-number/custom-view-cell-number.component';
+import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 
 @Component({
   selector: 'app-update-order',
@@ -33,7 +35,8 @@ export class UpdateOrderComponent implements OnInit {
     private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
     private ordersService: OrdersService,
-    private orderDetailsService: OrderDetailsService
+    private orderDetailsService: OrderDetailsService,
+    private sweetService: SweetalertService
 
   ) { }
 
@@ -58,30 +61,23 @@ export class UpdateOrderComponent implements OnInit {
       },
       price: {
         title: 'Price',
-        type: 'text',
-        valuePrepareFunction: (row) => {
-          var price = (row).toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'VND',
-          });
-          return `${price}`;
-        }
+        value: 'price',
+        type: 'custom',
+        renderComponent: CustomViewCellNumberComponent
       },
       quantity: {
         title: 'Quantity',
+        value: 'quantity',
+        type: 'custom',
+        renderComponent: CustomViewCellComponent
       }
       ,
       totalAmount: {
         title: 'Total Amount',
-        type: 'text',
-        valuePrepareFunction: (row) => {
-          var price = (row).toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'VND',
-          });
-          return `${price}`;
-        }
-      }
+        value: 'totalAmount',
+        type: 'custom',
+        renderComponent: CustomViewCellNumberComponent
+      },
     },
   };
 
@@ -155,72 +151,51 @@ export class UpdateOrderComponent implements OnInit {
   }
   save() {
     this.loadOrderModel();
-   
-    Swal.fire({
-      title: `Do you want to edit the order?`,
-      showCancelButton: true,
-      confirmButtonText: `Yes`,
-      icon: 'question'
-    })
-      .then(async (result) => {
-        if (result.isConfirmed) {
-          this.submitted = true;
-          if (this.orderForm.valid) {
-            this.ordersService
-              .update(this.order)
-              .then(() => {
-                Swal.fire({
-                  icon: 'success',
-                  title: `Order has been saved`,
-                  showConfirmButton: false,
-                  timer: 1500
-                })
-                this.ngbActiveModal.close();
-              })
-              .catch((er) => {
-                if (er.error.hasError) {
-                  console.log(er.error.message);
-                }
-              });
-          }
+    this.sweetService.confirm(`Do you want to edit the order?`, 'Yes').then(async (result) => {
+      if (result.isConfirmed) {
+        this.submitted = true;
+        if (this.orderForm.valid) {
+          this.ordersService
+            .update(this.order)
+            .then(() => {
+              this.sweetService.notification('Banner has been updated', TypeSweetAlertIcon.SUCCESS);
+              this.ngbActiveModal.close();
+            }).catch((er) => {
+              if (er.error.hasError) {
+                console.log(er.error.message);
+              }
+            });;
+
         }
-      })
+      }
+    })
   }
+
   approve() {
     this.loadOrderModel();
     this.order.status = "Approved";
-    Swal.fire({
-      title: `Do you want to approve the order?`,
-      showCancelButton: true,
-      confirmButtonText: `Yes`,
-      icon: 'question'
-    })
-      .then(async (result) => {
-        if (result.isConfirmed) {
-          this.submitted = true;
-          if (this.orderForm.valid) {
-            this.ordersService
-              .update(this.order)
-              .then((res) => {
-                Swal.fire({
-                  icon: 'success',
-                  title: `Order has been approved`,
-                  showConfirmButton: false,
-                  timer: 1500
-                })
-                this.ngbActiveModal.close();
-              })
-              .catch((er) => {
-                if (er.error.hasError) {
-                  console.log(er.error.message);
-                }
-              });
-          }
+
+    this.sweetService.confirm(`Do you want to approve the order?`, 'Yes').then(async (result) => {
+      if (result.isConfirmed) {
+        this.submitted = true;
+        if (this.orderForm.valid) {
+          this.ordersService
+            .update(this.order)
+            .then(() => {
+              this.sweetService.notification('Banner has been approved', TypeSweetAlertIcon.SUCCESS);
+              this.ngbActiveModal.close();
+            }).catch((er) => {
+              if (er.error.hasError) {
+                console.log(er.error.message);
+              }
+            });;
+
         }
-      })
+      }
+    })
   }
 
-  reject(){
+  reject() {
     this.loadOrderModel();
     this.order.status = "Rejected";
     Swal.fire({
@@ -266,7 +241,7 @@ export class UpdateOrderComponent implements OnInit {
     }).catch((er) => {
 
       if (er.error.hasError) {
-        // console.log(er.error.message)
+        console.log(er.error.message)
       }
     });
   }
