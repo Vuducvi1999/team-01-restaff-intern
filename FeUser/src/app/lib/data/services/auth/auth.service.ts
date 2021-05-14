@@ -14,6 +14,9 @@ export class AuthService {
   private url = "/api/user/auth";
   private urlLogin = this.url + "/login";
   private urlRegiter = this.url + "/regist";
+  private urlCheckEmail = this.url + "/checkemail";
+  private urlCheckPhone = this.url + "/checkphone";
+  private urlCheckUserName = this.url + "/checkusername";
 
   ngOnInit(): void {}
 
@@ -37,5 +40,33 @@ export class AuthService {
   changeUserInfo(userInfo: UserDataReturnDTOModel) {
     localStorage["user"] = JSON.stringify(userInfo);
     AuthService.userInfo.next(userInfo);
+  }
+
+  checkEmail(email: string) {
+    return this.http
+      .getObservable(this.urlCheckEmail, {
+        params: { email: email, loading: true },
+        headers: { ignoreLoadingBar: '' },
+      })
+      .toPromise();
+  }
+
+  checkPhone(phone: string){
+    return this.http
+      .getObservable(this.urlCheckPhone, {
+        params: { phone: phone, loading: true },
+        headers: { ignoreLoadingBar: '' },
+      })
+      .toPromise();
+  }
+
+  checkUserName(username: string)
+  {
+    return this.http
+      .getObservable(this.urlCheckUserName, {
+        params: { username: username, loading: true },
+        headers: { ignoreLoadingBar: '' },
+      })
+      .toPromise();
   }
 }

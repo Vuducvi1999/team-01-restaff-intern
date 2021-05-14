@@ -33,7 +33,15 @@ namespace BE.Controllers
         public IActionResult Create([FromBody] CreateProductDTO model)
         {
             var result = _productService.Create(model);
+            if (result.HasError)
+            {
+                return CommonResponse(result);
+            }
             var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
+            if (uploadImage.HasError)
+            {
+                return CommonResponse(uploadImage);
+            }
             return CommonResponse(result);
         }
 
@@ -41,7 +49,15 @@ namespace BE.Controllers
         public IActionResult Update([FromBody] UpdateProductDTO model)
         {
             var result = _productService.Update(model);
+            if (result.HasError)
+            {
+                return CommonResponse(result);
+            }
             var uploadImage = _fileService.UpdateIdFile(model.Files, result.Data.Id);
+            if (uploadImage.HasError)
+            {
+                return CommonResponse(uploadImage);
+            }
             return CommonResponse(result);
         }
 
