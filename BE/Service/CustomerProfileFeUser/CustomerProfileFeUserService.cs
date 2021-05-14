@@ -67,44 +67,6 @@ namespace Service.CustomerProfileFeUser
             }
         }
 
-        public ReturnMessage<bool> CheckEmail(CustomerEmailDTO model)
-        {
-            try
-            {
-                var result = _userRepository.Queryable().Any(it => it.Email == model.Email);
-                return new ReturnMessage<Boolean>(false, result, MessageConstants.SearchSuccess);
-            }catch(Exception ex)
-            {
-                return new ReturnMessage<Boolean>(true, false, ex.Message);
-            }
-        }
-
-        public ReturnMessage<bool> CheckPhone(CustomerPhoneDTO model)
-        {
-            try
-            {
-                var result = _customerRepository.Queryable().Any(it => it.Phone == model.Phone);
-                return new ReturnMessage<Boolean>(false, result, MessageConstants.SearchSuccess);
-            }
-            catch (Exception ex)
-            {
-                return new ReturnMessage<Boolean>(true, false, ex.Message);
-            }
-        }
-
-        public ReturnMessage<bool> CheckUserName(CustomerUserNameDTO model)
-        {
-            try
-            {
-                var result = _userRepository.Queryable().Any(it => it.Username == model.Username);
-                return new ReturnMessage<Boolean>(false, result, MessageConstants.SearchSuccess);
-            }
-            catch (Exception ex)
-            {
-                return new ReturnMessage<Boolean>(true, false, ex.Message);
-            }
-        }
-
         public ReturnMessage<CustomerDataReturnDTO> UpdateProfile(UpdateCustomerProfileFeUserDTO model)
         {
             try

@@ -117,24 +117,17 @@
                 }"
               />
               <div
-                *ngIf="isCheckPhone"
-                class="valid-feedback"
-                style="display: block"
-              >
-                Phone can be used
-              </div>
-              <div
                 *ngIf="
                   (submittedProfile && fProfile.phone.errors) ||
                   isCheckPhone == false
                 "
                 class="invalid-feedback"
               >
-                <div *ngIf="fProfile.phone.errors.required">
+                <div *ngIf="fProfile.phone.errors?.required">
                   Phone is required
                 </div>
-                <div *ngIf="fProfile.phone.errors.pattern">Fail type phone</div>
-                <div *ngIf="fProfile.phone.errors.isPhoneUnique">
+                <div *ngIf="fProfile.phone.errors?.pattern">Fail type phone</div>
+                <div *ngIf="fProfile.phone.errors?.isPhoneUnique">
                   Phone is exsist
                 </div>
               </div>
@@ -157,24 +150,17 @@
                 }"
               />
               <div
-                *ngIf="isCheckEmail"
-                class="valid-feedback"
-                style="display: block"
-              >
-                Email can be used
-              </div>
-              <div
                 *ngIf="
                   (submittedProfile && fProfile.email.errors) ||
                   isCheckEmail == false
                 "
                 class="invalid-feedback"
               >
-                <div *ngIf="fProfile.email.errors.required">
+                <div *ngIf="fProfile.email.errors?.required">
                   Email is required
                 </div>
-                <div *ngIf="fProfile.email.errors.pattern">Fail type email</div>
-                <div *ngIf="fProfile.email.errors.isEmailUnique">
+                <div *ngIf="fProfile.email.errors?.pattern">Fail type email</div>
+                <div *ngIf="fProfile.email.errors?.isEmailUnique">
                   Email is exsist
                 </div>
               </div>

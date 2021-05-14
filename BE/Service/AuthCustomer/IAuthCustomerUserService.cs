@@ -12,6 +12,8 @@ namespace Service.AuthCustomer
         ReturnMessage<CustomerDataReturnDTO> CheckLogin(CustomerLoginDTO data);
         ReturnMessage<CustomerDataReturnDTO> CheckRegister(CustomerRegisterDTO data);
         ReturnMessage<CustomerDataReturnDTO> GetCustomerDataReturnDTO();
-
+        ReturnMessage<Boolean> CheckEmail(CustomerEmailDTO model);
+        ReturnMessage<Boolean> CheckUserName(CustomerUserNameDTO model);
+        ReturnMessage<Boolean> CheckPhone(CustomerPhoneDTO model);
     }
 }

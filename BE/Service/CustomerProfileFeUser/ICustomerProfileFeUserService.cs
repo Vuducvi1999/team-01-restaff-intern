@@ -12,8 +12,5 @@ namespace Service.CustomerProfileFeUser
     {
         ReturnMessage<CustomerDataReturnDTO> UpdateProfile(UpdateCustomerProfileFeUserDTO model);
         ReturnMessage<CustomerDataReturnDTO> ChangePassword(ChangePasswordCustomerProfileFeUserDTO model);
-        ReturnMessage<Boolean> CheckEmail(CustomerEmailDTO model);
-        ReturnMessage<Boolean> CheckUserName(CustomerUserNameDTO model);
-        ReturnMessage<Boolean> CheckPhone(CustomerPhoneDTO model);
     }
 }

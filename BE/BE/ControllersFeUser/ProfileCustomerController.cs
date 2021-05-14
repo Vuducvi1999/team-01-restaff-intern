@@ -51,26 +51,5 @@ namespace BE.ControllersFeUser
             var result = _customerProfileFeUserService.ChangePassword(dto);
             return CommonResponse(result);
         }
-
-        [HttpGet(UrlConstants.CheckEmail)]
-        public IActionResult CheckEmail([FromQuery] CustomerEmailDTO dto)
-        {
-            var result = _customerProfileFeUserService.CheckEmail(dto);
-            return CommonResponse(result);
-        }
-
-        [HttpGet(UrlConstants.CheckPhone)]
-        public IActionResult CheckPhone([FromQuery] CustomerPhoneDTO dto)
-        {
-            var result = _customerProfileFeUserService.CheckPhone(dto);
-            return CommonResponse(result);
-        }
-
-        [HttpGet(UrlConstants.CheckUserName)]
-        public IActionResult CheckUserName([FromQuery] CustomerUserNameDTO dto)
-        {
-            var result = _customerProfileFeUserService.CheckUserName(dto);
-            return CommonResponse(result);
-        }
     }
 }

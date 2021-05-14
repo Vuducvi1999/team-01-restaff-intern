@@ -154,7 +154,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         if (email == control.value) {
           return;
         }
-        this.profileService
+        this.authService
           .checkEmail(control.value)
           .then((res: ReturnMessage<boolean>) => {
             this.isCheckEmail = false;
@@ -175,7 +175,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         if (phone == control.value) {
           return;
         }
-        this.profileService
+        this.authService
           .checkPhone(control.value)
           .then((res: ReturnMessage<boolean>) => {
             this.isCheckPhone = false;
