@@ -98,10 +98,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   addItems() {
-    this.isEmptyProduct = false;
     if (this.pageModel?.totalItem == this.products.length) {
       this.finished = true;
-      this.isEmptyProduct = true;
       return;
     }
     this.productListService
