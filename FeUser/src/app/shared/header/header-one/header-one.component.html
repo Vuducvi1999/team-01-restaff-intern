@@ -16,7 +16,11 @@
         </div>
         <div class="col-lg-6 text-right">
           <ul class="header-dropdown">
-            <li class="mobile-wishlist mr-3" (click)="GotoWishList()">
+            <li
+              class="mobile-wishlist mr-3"
+              (click)="GotoWishList()"
+              *ngIf="user"
+            >
               <!-- <a [routerLink]="['/wishlist']" -->
               <i class="fa fa-heart" aria-hidden="true"></i>Wishlist
             </li>
