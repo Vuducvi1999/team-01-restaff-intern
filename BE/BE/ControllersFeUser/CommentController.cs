@@ -55,12 +55,5 @@ namespace BE.ControllersFeUser
             return CommonResponse(result);
         }
 
-        [HttpGet(UrlConstants.BaseRating)]
-        public IActionResult GetRating([FromQuery] Guid entityId)
-        {
-            var result = _commentService.GetRating(entityId);
-            return CommonResponse(result);
-        }
-
     }
 }

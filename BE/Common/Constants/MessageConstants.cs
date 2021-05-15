@@ -8,6 +8,8 @@
         public const string SearchSuccess = "Search successfully";
         public const string GetSuccess = "Get successfully";
         public const string DataError = "Can't find any data";
+        public const string CreateFail = "Create Fail";
+
 
         public const string ListSuccess = "List successfully";
         public const string Error = "Error server";

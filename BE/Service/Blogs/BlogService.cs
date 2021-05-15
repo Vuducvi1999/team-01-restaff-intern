@@ -120,42 +120,5 @@ namespace Service.Blogs
             blog.ShortDes = blog.ShortDes.Trim();
         }
 
-        public ReturnMessage<List<BlogDTO>> RecentBlog(List<BlogDTO> model)
-        {
-            if (model == null)
-            {
-                return new ReturnMessage<List<BlogDTO>>(false, null, MessageConstants.DeleteSuccess);
-            }
-            var resultRecent = _blogRepository.Queryable().OrderBy(p => p.CreateByDate).Take(5).ToList();
-            var data = _mapper.Map<List<Blog>, List<BlogDTO>>(resultRecent);
-            var result = new ReturnMessage<List<BlogDTO>>(false, data, MessageConstants.SearchSuccess);
-            return result;
-        }
-
-        public ReturnMessage<List<BlogDTO>>TopBlog(List<BlogDTO> model)
-        {
-            if(model == null)
-            {
-                return new ReturnMessage<List<BlogDTO>>(false, null, MessageConstants.DeleteSuccess);
-            }
-            var resultTop = _blogRepository.Queryable().OrderBy(p => p.Title).Take(3).ToList();
-            var data = _mapper.Map<List<Blog>, List<BlogDTO>>(resultTop);
-            var result = new ReturnMessage<List<BlogDTO>>(false, data, MessageConstants.SearchSuccess);
-            return result;
-        }
-
-        public ReturnMessage<BlogDTO> GetBlog(Guid id)
-        {
-            try
-            {
-                var entity = _blogRepository.Find(id);
-                return new ReturnMessage<BlogDTO>(false, _mapper.Map<Blog, BlogDTO>(entity), MessageConstants.DeleteSuccess);
-            }
-            catch (Exception ex)
-            {
-                return new ReturnMessage<BlogDTO>(true, null, ex.Message);
-            }
-            
-        }
     }
 }

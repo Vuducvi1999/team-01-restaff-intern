@@ -51,7 +51,6 @@ export class CommentComponent implements OnInit {
       content: [""],
       rating: [this.dataComment.rating],
     });
-    var a = 1;
   }
 
   Submit() {

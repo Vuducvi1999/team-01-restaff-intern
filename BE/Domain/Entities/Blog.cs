@@ -15,6 +15,8 @@ namespace Domain.Entities
 
         public string ImageUrl { get; set; }
 
+        public decimal RatingScore { get; set; }
+
         public override void Insert()
         {
             base.Insert();

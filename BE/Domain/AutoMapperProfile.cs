@@ -28,6 +28,7 @@ using Domain.DTOs.Contact;
 using Domain.DTOs.Comments;
 using Domain.DTOs.CustomerWishList;
 
+
 namespace Domain
 {
     public class AutoMapperProfile : Profile
@@ -118,6 +119,7 @@ namespace Domain
             CreateMap<Blog, CreateBlogDTO>().ReverseMap();
             CreateMap<Blog, UpdateBlogDTO>().ReverseMap();
             CreateMap<Blog, DeleteBlogDTO>().ReverseMap();
+
 
             //Order
             CreateMap<PaginatedList<Order>, PaginatedList<OrderDTO>>().ReverseMap();

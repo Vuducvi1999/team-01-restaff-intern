@@ -96,21 +96,9 @@ export class ProductDetailsComponent implements OnInit {
     this.subDataUser = this.authService.callUserInfo.subscribe(
       (it) => (this.user = it)
     );
-    this.getProduct();
 
     this.initDataComment();
-    this.getRating();
-  }
-
-  getRating() {
-    this.activatedRoute.queryParams.subscribe((params) => {
-      const data = { entityId: params.id };
-      this.commentService
-        .getRating({ params: data })
-        .then((res: ReturnMessage<number>) => {
-          this.rating = res.data;
-        });
-    });
+    this.getComments();
   }
 
   getProduct() {
@@ -119,9 +107,9 @@ export class ProductDetailsComponent implements OnInit {
         .get(param.id)
         .then((res: ReturnMessage<ProductDetailsModel>) => {
           this.product = res.data;
+          console.log(this.product);
         });
       this.createSearchModel();
-      this.getComments();
     });
   }
 
@@ -163,7 +151,7 @@ export class ProductDetailsComponent implements OnInit {
       .catch((e) => {
         console.log(e);
       });
-    this.getRating();
+    this.getProduct();
   }
   addToCart(product: any) {
     this.cartService.addToCart(product);

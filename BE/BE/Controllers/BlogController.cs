@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 
 namespace BE.Controllers
 {
-    
     [ApiController]
     public class BlogController : BaseController
     {
@@ -72,30 +71,6 @@ namespace BE.Controllers
         public IActionResult Delete([FromQuery] DeleteBlogDTO model)
         {
             var result = _blogService.Delete(model);
-            return CommonResponse(result);
-        }
-
-        [Route(UrlConstants.TopBlog)]
-        [HttpGet]
-        public IActionResult TopBlog([FromQuery] List<BlogDTO> model)
-        {
-            var result = _blogService.TopBlog(model);
-            return CommonResponse(result);
-        }
-
-        [Route(UrlConstants.RecentBlog)]
-        [HttpGet]
-        public IActionResult RecentBlog([FromQuery] List<BlogDTO> model)
-        {
-            var result = _blogService.RecentBlog(model);
-            return CommonResponse(result);
-        }
-
-        [Route(UrlConstants.GetBlog)]
-        [HttpGet]
-        public IActionResult GetBlog(Guid id)
-        {
-            var result = _blogService.GetBlog(id);
             return CommonResponse(result);
         }
     }

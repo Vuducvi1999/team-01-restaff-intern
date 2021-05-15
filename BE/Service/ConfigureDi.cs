@@ -31,6 +31,7 @@ using Service.Comments;
 using Service.CustomerWishLists;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Service.UserBlogs;
 
 namespace Service
 {
@@ -105,6 +106,9 @@ namespace Service
 
             // CustomerWishList
             services.AddScoped<ICustomerWishListService, CustomerWishListService>();
+
+            //BlogUser
+            services.AddScoped<IUserBlogService, UserBlogService>();
         }
     }
 }

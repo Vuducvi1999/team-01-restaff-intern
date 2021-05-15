@@ -23,6 +23,8 @@ namespace Domain.Entities
         public int SaleCount { get; set; }
 
         public Guid CategoryId { get; set; }
+
+        public decimal RatingScore { get; set; }
         public virtual Category Category { get; set; }
         public ICollection<CustomerWishList> CustomerWishLists { get; set; }
 

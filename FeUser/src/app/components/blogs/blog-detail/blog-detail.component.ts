@@ -56,9 +56,9 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
   typeDisplayImage = TypeDisplayImage;
   user: UserDataReturnDTOModel;
   comments: PageModel<CommentModel>;
-  searchModel;
+  searchModel: any;
   item: any;
-  public rating: number;
+
   public ratingPoint: number;
 
   subDataUser: Subscription;
@@ -78,8 +78,8 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     this.subDataUser = this.authService.callUserInfo.subscribe(
       (it) => (this.user = it)
     );
-    this.getBlog();
-    this.getRating();
+    this.getComments();
+    this.initDataComment();
   }
 
   getBlog() {
@@ -92,20 +92,9 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
         });
 
       this.createSearchModel();
-      this.initDataComment();
-      this.getComments();
     });
   }
-  getRating() {
-    this.activatedRoute.paramMap.subscribe((params) => {
-      const data = { entityId: params.get("id") };
-      this.commentService
-        .getRating({ params: data })
-        .then((res: ReturnMessage<number>) => {
-          this.ratingPoint = res.data;
-        });
-    });
-  }
+
   createSearchModel() {
     this.searchModel = {
       ["search.entityId"]: this.id,
@@ -129,7 +118,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
       .catch((e) => {
         console.log(e);
       });
-    this.getRating();
+    this.getBlog();
   }
 
   getImage(image) {

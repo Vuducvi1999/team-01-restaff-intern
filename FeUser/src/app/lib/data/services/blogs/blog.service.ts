@@ -7,13 +7,14 @@ import { BlogModel } from "../../models/blogs/blog.model";
 })
 export class BlogService {
   private url = "/api/blog";
+  private urlUser = this.url + "/user";
   private top = this.url + "/topblog";
   private recent = this.url + "/recentblog";
 
   constructor(private httpClient: HttpClientService) {}
 
   get(request: any) {
-    return this.httpClient.getObservable(this.url, request).toPromise();
+    return this.httpClient.getObservable(this.urlUser, request).toPromise();
   }
 
   getTop(request: any) {

@@ -18,28 +18,58 @@ namespace Service.Comments
         private readonly IRepository<Comment> _commentRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IUserManager _userManager;
+        private readonly IRepository<Product> _productRepository;
+        private readonly IRepository<Blog> _blogRepository;
 
 
-        public CommentService(IRepository<Comment> commentRepository, IUnitOfWork unitOfWork, IMapper mapper, IUserManager userManager)
+        public CommentService(IRepository<Comment> commentRepository, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _commentRepository = commentRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _userManager = userManager;
+        }
+
+        public CommentService(IRepository<Comment> commentRepository, IUnitOfWork unitOfWork, IMapper mapper, IRepository<Product> productRepository, IRepository<Blog> blogRepository)
+        {
+            _commentRepository = commentRepository;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
+            _productRepository = productRepository;
+            _blogRepository = blogRepository;
         }
 
         public ReturnMessage<CommentDTO> Create(CreateCommentDTO model)
         {
             try
             {
-                //var userDecompile = _userManager.GetInformationUser();
+                var dailyRating = _commentRepository.Queryable().Where(p => p.EntityId == model.EntityId && p.CreateByDate.Date == DateTime.Now.Date).Count();
+                if (dailyRating > 5)
+                {
+                    return new ReturnMessage<CommentDTO>(true, null, MessageConstants.CreateSuccess);
+                }
+
                 var entity = _mapper.Map<CreateCommentDTO, Comment>(model);
-                //entity.CustomerId = userDecompile.CustomerId;
                 entity.Insert();
                 _commentRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<CommentDTO>(false, _mapper.Map<Comment, CommentDTO>(entity), MessageConstants.CreateSuccess);
+
+                var ratingEntity = _commentRepository.Queryable().Where(p => p.EntityId == model.EntityId);
+                decimal ratingScore = (decimal)Math.Round(ratingEntity.Average(x => x.Rating), 1);
+
+                var productEntity = _productRepository.Queryable().FirstOrDefault(p => p.Id == model.EntityId);
+                if (productEntity.IsNullOrEmpty())
+                {
+                    var blogEntity = _blogRepository.Queryable().FirstOrDefault(p => p.Id == model.EntityId);
+                    blogEntity.RatingScore = ratingScore;
+                    blogEntity.ObjectState = ObjectState.Modified;
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+
+                productEntity.RatingScore = ratingScore;
+                productEntity.ObjectState = ObjectState.Modified;
+                _unitOfWork.SaveChanges();
                 return result;
             }
             catch
@@ -135,34 +165,6 @@ namespace Service.Comments
             catch (Exception ex)
             {
                 return new ReturnMessage<List<CommentDTO>>(true, null, ex.Message);
-            }
-        }
-
-
-        public ReturnMessage<decimal> GetRating(Guid entityId)
-        {
-            if (entityId.IsNullOrEmpty() && entityId == Guid.Empty)
-            {
-                return new ReturnMessage<decimal>(true, 0, MessageConstants.Error);
-            }
-            try
-            {
-                var entity = _commentRepository.Queryable().Where(p => p.EntityId == entityId)
-                                                .OrderByDescending(i => i.CreateByDate)
-                                                .ToList()
-                                                .GroupBy(t => t.CustomerId)
-                                                .Select(i => i.First());
-
-                if (entity.Count() == 0)
-                {
-                    return new ReturnMessage<decimal>(false, 0, MessageConstants.DataError);
-                }
-                decimal rating = (decimal)Math.Round(entity.Average(x => x.Rating), 1);
-                return new ReturnMessage<decimal>(false, rating, MessageConstants.GetSuccess);
-            }
-            catch(Exception ex)
-            {
-                return new ReturnMessage<decimal>(true, 0, ex.Message);
             }
         }
     }
