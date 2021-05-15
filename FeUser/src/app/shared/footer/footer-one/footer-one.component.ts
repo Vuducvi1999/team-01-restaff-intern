@@ -22,8 +22,16 @@ export class FooterOneComponent implements OnInit {
   public footerModel: FooterModel = {
     socialMedias: [],
     categories: [],
-    informationWeb: {address: '', phone: '', email: '', fax: '', logo: '', title: '', description: ''}  
-  }
+    informationWeb: {
+      address: "",
+      phone: "",
+      email: "",
+      fax: "",
+      logo: "",
+      title: "",
+      description: "",
+    },
+  };
   public socialMediasIcons: any[] = [];
   pageContents: PageContentModel[] = [];
 
@@ -42,12 +50,11 @@ export class FooterOneComponent implements OnInit {
       this.footerModel.socialMedias = res.data;
     });
     await this.footerService.getCategories(null).then((res: any) => {
-      this.footerModel.categories = (res.data);
-    })
+      this.footerModel.categories = res.data;
+    });
     await this.footerService.getInformationWeb(null).then((res: any) => {
       this.footerModel.informationWeb = res.data;
-    })
-
+    });
   }
 
   async sortIcons() {
@@ -63,6 +70,7 @@ export class FooterOneComponent implements OnInit {
       .getList()
       .then((data: ReturnMessage<PageContentModel[]>) => {
         this.pageContents = data.data;
+        console.log(data.data);
       });
   }
 

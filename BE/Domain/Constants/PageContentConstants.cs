@@ -23,9 +23,17 @@ namespace Domain.Constants
             "<p>Many of the most active participants in the <a href=\"https://en.wikipedia.org/wiki/Wikimedia_Foundation\">Wikimedia Foundation</a>, and the developers of the <a href=\"https://en.wikipedia.org/wiki/MediaWiki\">MediaWiki</a> software that powers Wikipedia, are English-speaking users.</p>";
 
         public static readonly Dictionary<Guid, PageContent> ListPageContents = new Dictionary<Guid, PageContent>() {
-            { Shipping, new PageContent(){ Order = 1, Title = "Shipping", Description = ContentShipping } },
-            { ContactUs, new PageContent(){ Order = 2, Title = "Contact Us"}} ,
-            { AboutUs, new PageContent() { Order = 3 , Title = "About Us", Description = ContentShipping} }
+            { Shipping, new PageContent(){  Order = 1,
+                                            Title = "Shipping",
+                                            Description = ContentShipping,
+                                            ShortDes  = "Free Shipping World Wide" } },
+            { ContactUs, new PageContent(){ Order = 2,
+                                            Title = "Contact Us",
+                                            ShortDes = "Online Service For New Customer"}} ,
+            { AboutUs, new PageContent() {  Order = 3 ,
+                                            Title = "About Us",
+                                            Description = ContentShipping,
+                                            ShortDes = "New Online Special Festival Offer"}}
         };
     }
 }
