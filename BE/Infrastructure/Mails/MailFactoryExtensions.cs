@@ -8,7 +8,7 @@ namespace Infrastructure.Mails
         public static IServiceCollection InitMail(this IServiceCollection services)
         {
             services.AddTransient<IEmailService, EmailService>();
-            //services.AddTransient<IEmailConfiguration, EmailConfiguration>();
+            services.AddTransient<IEmailConfiguration, EmailConfiguration>();
             return services;
         }
 

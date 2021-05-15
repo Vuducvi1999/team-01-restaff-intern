@@ -110,6 +110,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.params.pageSize = res.data.pageSize;
 
         this.products = [...this.products, ...res.data.results];
+        this.products
+          ? (this.isEmptyProduct = false)
+          : (this.isEmptyProduct = true);
       })
       .catch((res) =>
         this.sweetalertService.alert(

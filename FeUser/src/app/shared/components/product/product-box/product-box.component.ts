@@ -85,7 +85,6 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
     }
     this.subDataUser = this.authService.callUserInfo.subscribe((it) => {
       this.userInfo = it;
-      this.getWishlist();
     });
   }
 

@@ -47,7 +47,8 @@ namespace Service.UserProductList
 
         public ReturnMessage<IEnumerable<CategoryDTO>> GetCategory()
         {
-            var data = _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(_categoryRepository.GetList());
+            var entity = _categoryRepository.Queryable().Where(it => !it.IsDeleted).OrderBy(it => it.Name).ThenBy(it => it.Name.Length).ToList();
+            var data = _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(entity);
             var result = new ReturnMessage<IEnumerable<CategoryDTO>>(false, data, MessageConstants.ListSuccess);
             return result;
         }
@@ -88,19 +89,19 @@ namespace Service.UserProductList
 
             if (search.TypeSort.Equals((int)ETypeSort.AZ))
             {
-                query = query.OrderBy(t => t.Name.Length).ThenBy(t => t.Name);
+                query = query.OrderBy(t => t.Name).ThenBy(t => t.Name.Length);
             }
             if (search.TypeSort.Equals((int)ETypeSort.ZA))
             {
-                query = query.OrderByDescending(t => t.Name.Length).ThenByDescending(t => t.Name);
+                query = query.OrderByDescending(t => t.Name).ThenByDescending(t => t.Name.Length);
             }
             if (search.TypeSort.Equals((int)ETypeSort.PRICELOW))
             {
-                query = query.OrderBy(t => t.Price).ThenBy(t => t.Name.Length).ThenBy(t => t.Name);
+                query = query.OrderBy(t => t.Price).ThenBy(t => t.Name).ThenBy(t => t.Name.Length);
             }
             if (search.TypeSort.Equals((int)ETypeSort.PRICEHIGH))
             {
-                query = query.OrderByDescending(t => t.Price).ThenBy(t => t.Name.Length).ThenBy(t => t.Name);
+                query = query.OrderByDescending(t => t.Price).ThenBy(t => t.Name).ThenBy(t => t.Name.Length);
             }
 
             var entityPage = new PaginatedList<Product>(query, search.PageSize * search.PageIndex, search.PageSize);
