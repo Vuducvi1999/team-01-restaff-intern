@@ -25,7 +25,8 @@ export class LoginModalComponent {
     private formBuilder: FormBuilder,
     private sweetalertService: SweetalertService,
     private router: Router,
-    private activedRoute: ActivatedRoute
+    private activedRoute: ActivatedRoute,
+    public activeModal: NgbActiveModal
   ) {
     this.createLoginForm();
   }
@@ -69,6 +70,7 @@ export class LoginModalComponent {
         localStorage.setItem("token", data.data.token);
         this.authService.changeUserInfo(data.data);
         this.backUrl();
+        this.activeModal.dismiss();
       })
       .catch((er) => {
         this.sweetalertService.alert(
