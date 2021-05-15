@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BlogModel } from 'src/app/lib/data/models/blogs/blog.model';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models/common';
-import { FileService, SweetalertService } from 'src/app/lib/data/services';
+import { FileService } from 'src/app/lib/data/services';
 import { BlogService } from 'src/app/lib/data/services/blogs/blog.service';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { BlogsDetailComponent } from '../blogs-detail/blogs-detail.component';
 
@@ -20,7 +21,7 @@ export class ListBlogsComponent implements OnInit {
     private modalService: NgbModal,
     private blogService: BlogService,
     private datePipe: DatePipe,
-    private sweetAlertService: SweetalertService
+    private messageService: MessageService
   ) {
     this.getBlogs();
   }
@@ -79,7 +80,7 @@ export class ListBlogsComponent implements OnInit {
 
   delete(event: any) {
     let banner = event.data as BlogModel;
-    this.sweetAlertService
+    this.messageService
       .confirm('Do you want to permanently delete this item?', 'Yes')
       .then((res) => {
         this.blogService.delete(banner).then(() => {

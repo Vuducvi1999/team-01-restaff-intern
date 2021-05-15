@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
-import { SweetalertService } from 'src/app/lib/data/services';
 import { CategoryService } from 'src/app/lib/data/services/categories/category.service';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 
 import {
   EntityType,
@@ -37,7 +37,7 @@ export class CategoryDetailComponent implements OnInit {
     private formBuilder: FormBuilder,
     private categoryService: CategoryService,
     private ngbActiveModal: NgbActiveModal,
-    private sweetalertService: SweetalertService
+    private messageService: MessageService
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -51,7 +51,7 @@ export class CategoryDetailComponent implements OnInit {
   save() {
     if (this.categoriesForm.invalid) {
       console.log(this.categoriesForm);
-      this.sweetalertService.alert(
+      this.messageService.alert(
         'Invalid Form make sure you input valid value !',
         TypeSweetAlertIcon.ERROR
       );
@@ -76,14 +76,14 @@ export class CategoryDetailComponent implements OnInit {
     return this.categoryService
       .save(this.category)
       .then(() => {
-        this.sweetalertService.notification(
+        this.messageService.notification(
           this.item ? 'Update Success' : 'Create Success',
           TypeSweetAlertIcon.SUCCESS
         );
         this.ngbActiveModal.close();
       })
       .catch((er) => {
-        this.sweetalertService.alert(
+        this.messageService.alert(
           er.error.message ?? er.error,
           TypeSweetAlertIcon.ERROR
         );

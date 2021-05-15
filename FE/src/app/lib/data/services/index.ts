@@ -10,4 +10,3 @@ export * from './customers/customer.service';
 export * from './categories/category.service';
 export * from './products/product.service';
 export * from './information-website/infoWeb.service';
-export * from './sweetalert/sweetalert.service';
