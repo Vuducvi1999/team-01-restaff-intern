@@ -70,7 +70,6 @@ export class FooterOneComponent implements OnInit {
       .getList()
       .then((data: ReturnMessage<PageContentModel[]>) => {
         this.pageContents = data.data;
-        console.log(data.data);
       });
   }
 
