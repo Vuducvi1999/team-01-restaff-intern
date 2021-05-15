@@ -35,7 +35,7 @@ export class CommentDetailComponent implements OnInit {
   @Output() action = new EventEmitter();
   page = 0;
   public typeDisplayImage = TypeDisplayImage;
-  @ViewChild("refComment") refComment!: ElementRef;
+  @ViewChild("refComment") refComment: ElementRef;
 
   constructor() {}
 
