@@ -93,7 +93,6 @@ namespace Service.Auth
             {
                 return new UserInformationDTO();
             }
-            throw new NotImplementedException();
         }
     }
 }

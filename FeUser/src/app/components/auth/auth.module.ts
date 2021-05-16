@@ -11,10 +11,11 @@ import { SharedModule } from '../../shared/shared.module';
 import { AuthService } from 'src/app/lib/data/services';
 import { HttpClientService } from 'src/app/lib/http/http-client';
 import { RegisterComponent } from './register/register.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent],
+  declarations: [LoginComponent, RegisterComponent,ForgetPasswordComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,

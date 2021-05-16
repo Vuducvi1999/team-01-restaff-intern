@@ -139,7 +139,7 @@ export class RegisterComponent implements OnInit {
         this.sweetalertService.alert(
           "Register Fail",
           TypeSweetAlertIcon.ERROR,
-          `${er.error.message ?? er.error}`
+          `${er.error.message ?? JSON.stringify(er.error)}`
         );
       });
   }

@@ -47,6 +47,12 @@ export class ListCustomersComponent implements OnInit {
       username: {
         title: 'Username',
       },
+      firstName: {
+        title: 'First Name',
+      },
+      lastName: {
+        title: 'Last Name',
+      },
       email: {
         title: 'Email',
       },
@@ -57,12 +63,6 @@ export class ListCustomersComponent implements OnInit {
       },
       address: {
         title: 'Address',
-      },
-      firstName: {
-        title: 'First Name',
-      },
-      lastName: {
-        title: 'Last Name',
       },
     },
   };

@@ -36,7 +36,7 @@
                   formControlName="imageUrl" hidden />
                 <app-upload-file [data]="modalFile" [fileURL]="fileURL" styleFile="width: 200px; height: auto;"
                   (onChange)="onChangeData($event)"></app-upload-file>
-                <span class="text-danger" *ngIf="
+                <span class="text-danger col-md-5 offset-md-3" *ngIf="
                     (bannersFormControl.imageUrl.touched || submitted) &&
                     bannersFormControl.imageUrl.errors?.required
                   ">

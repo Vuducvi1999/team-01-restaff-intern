@@ -9,6 +9,7 @@ using Domain.DTOs.Users;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
+using Service.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,28 +23,35 @@ namespace Service.Customers
         private readonly IRepository<Customer> _customerRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUserManager _userManager;
 
-        public CustomerService(IRepository<User> userRepository, IUnitOfWork unitOfWork, IMapper mapper, IRepository<Customer> customerRepository)
+        public CustomerService(IRepository<User> userRepository, IUnitOfWork unitOfWork, IMapper mapper, IRepository<Customer> customerRepository, IUserManager userManager)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _customerRepository = customerRepository;
+            _userManager = userManager;
         }
 
         public ReturnMessage<CustomerDTO> Create(CreateCustomerDTO model)
         {
             try
             {
+                var userInfo = _userManager.GetInformationUser();
+                if (userInfo.IsNullOrEmpty())
+                {
+                    return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.CreateFail);
+                }
                 if (model.Username.Trim() == "")
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
 
-                if(_userRepository.Queryable().Any(it => it.Username.CompareTo(model.Username) == 0))
+                if(_userRepository.Queryable().Any(it => it.Type == UserType.Customer && it.Username.CompareTo(model.Username) == 0))
                 {
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.ExistUsername);
                 }
 
-                if(_userRepository.Queryable().Any(it => it.Email.CompareTo(model.Email) == 0))
+                if(_userRepository.Queryable().Any(it =>it.Type == UserType.Customer && it.Email.CompareTo(model.Email) == 0))
                 {
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.ExistEmail);
                 }
@@ -54,11 +62,11 @@ namespace Service.Customers
                 }
                 var user = _mapper.Map<CreateCustomerDTO, User>(model);
                 user.Password = MD5Helper.ToMD5Hash(model.Password);
-                user.Insert();
+                user.Insert(userInfo);
                 user.Type = UserType.Customer;
 
                 var customer = _mapper.Map<CreateCustomerDTO, Customer>(model);
-                customer.Insert();
+                customer.Insert(userInfo);
 
                 _unitOfWork.BeginTransaction();
                 _userRepository.Insert(user);
@@ -89,13 +97,18 @@ namespace Service.Customers
         {
             try
             {
+                var userInfo = _userManager.GetInformationUser();
+                if (userInfo.IsNullOrEmpty())
+                {
+                    return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.CreateFail);
+                }
                 var user = _userRepository.Queryable().FirstOrDefault(it => it.Id == model.Id && it.Type == UserType.Customer && !it.IsDeleted);
                 if (user.IsNullOrEmpty())
                 {
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
                 }
 
-                user.Delete();
+                user.Delete(userInfo);
 
                 var customer = _customerRepository.Find(user.CustomerId);
 
@@ -103,7 +116,7 @@ namespace Service.Customers
                 _userRepository.Update(user);
                 if(customer.IsNotNullOrEmpty())
                 {
-                    customer.Delete();
+                    customer.Delete(userInfo);
                     _customerRepository.Update(customer);
                 }
                 _unitOfWork.SaveChanges();
@@ -122,6 +135,11 @@ namespace Service.Customers
         {
             try
             {
+                var userInfo = _userManager.GetInformationUser();
+                if (userInfo.IsNullOrEmpty())
+                {
+                    return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.CreateFail);
+                }
                 if (model.Username.Trim() == "")
                 {
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
@@ -139,12 +157,12 @@ namespace Service.Customers
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
                 }
 
-                if (_userRepository.Queryable().Any(it => it.Username == model.Username && it.Id != user.Id))
+                if (_userRepository.Queryable().Any(it => it.Type == UserType.Customer && it.Username == model.Username && it.Id != user.Id))
                 {
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.ExistUsername);
                 }
 
-                if (_userRepository.Queryable().Any(it => it.Email == model.Email && it.Id != user.Id))
+                if (_userRepository.Queryable().Any(it => it.Type == UserType.Customer && it.Email == model.Email && it.Id != user.Id))
                 {
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.ExistEmail);
                 }
@@ -155,9 +173,9 @@ namespace Service.Customers
                 }
 
                 _unitOfWork.BeginTransaction();
-                user.Update(model);
+                user.Update(userInfo, model);
                 _userRepository.Update(user);
-                customer.Update(model);
+                customer.Update(userInfo, model);
                 _customerRepository.Update(customer);
                 _unitOfWork.SaveChanges();
                 _unitOfWork.Commit();

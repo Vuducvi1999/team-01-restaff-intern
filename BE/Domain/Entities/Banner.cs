@@ -1,5 +1,6 @@
 ﻿using Domain.DTOs.Banners;
 using Domain.DTOs.Suppliers;
+using Domain.DTOs.Users;
 using System;
 
 namespace Domain.Entities
@@ -22,9 +23,9 @@ namespace Domain.Entities
             base.Delete();
         }
 
-        public void Update(UpdateBannerDTO model)
+        public void Update(UserInformationDTO dto, UpdateBannerDTO model)
         {
-            base.Update();
+            base.Update(dto);
             Title = model.Title;
             Description = model.Description;
             DisplayOrder = model.DisplayOrder;

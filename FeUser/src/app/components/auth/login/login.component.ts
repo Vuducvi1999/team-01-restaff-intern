@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
         this.sweetalertService.alert(
           "Login Fail",
           TypeSweetAlertIcon.ERROR,
-          `${er.error.message ?? er.error}`
+          `${er.error.message ?? 'Connect Server Fail'}`
         );
       });
   }

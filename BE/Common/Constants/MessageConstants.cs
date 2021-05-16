@@ -23,6 +23,7 @@
         public const string RegisterSuccess = "Register successfully";
         public const string RegisterFail = "Register fail";
         public const string UpdateFail = "Updated failed";
+        public const string CreateFail = "Create failed";
 
         public const string EnityTypeError = "Don't find EnityType";
 
