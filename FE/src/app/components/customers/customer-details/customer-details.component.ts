@@ -2,7 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerModel, TypeSweetAlertIcon } from 'src/app/lib/data/models';
-import { CustomerService, SweetalertService } from 'src/app/lib/data/services';
+import { CustomerService } from 'src/app/lib/data/services';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import {
   ModalHeaderModel,
   ModalFooterModel,
@@ -33,7 +34,7 @@ export class CustomerDetailsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private customerService: CustomerService,
     private ngbActiveModal: NgbActiveModal,
-    private sweetalerService: SweetalertService
+    private messageService: MessageService
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -98,14 +99,14 @@ export class CustomerDetailsComponent implements OnInit {
     this.customerService
       .save(this.user)
       .then(() => {
-        this.sweetalerService.notification(
+        this.messageService.notification(
           this.item ? 'Upload Success' : 'Create Success',
           TypeSweetAlertIcon.SUCCESS
         );
         this.ngbActiveModal.close();
       })
       .catch((er) => {
-        this.sweetalerService.alert(
+        this.messageService.alert(
           er.error.message ?? er.error,
           TypeSweetAlertIcon.ERROR
         );

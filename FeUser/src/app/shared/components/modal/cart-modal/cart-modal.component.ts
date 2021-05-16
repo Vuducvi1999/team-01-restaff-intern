@@ -45,7 +45,6 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
     {
     }
   }
-
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {}

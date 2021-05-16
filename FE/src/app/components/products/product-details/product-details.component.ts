@@ -18,7 +18,7 @@ import {
   TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { SweetalertService } from 'src/app/lib/data/services';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -44,7 +44,7 @@ export class ProductDetailsComponent implements OnInit {
     private productService: ProductService,
     private ngbActiveModal: NgbActiveModal,
     private categoryService: CategoryService,
-    private sweetalertService: SweetalertService
+    private messageService: MessageService
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -74,7 +74,7 @@ export class ProductDetailsComponent implements OnInit {
   }
   save() {
     if (this.productsForm.invalid) {
-      this.sweetalertService.alert(
+      this.messageService.alert(
         'Invalid Form make sure you input valid value !',
         TypeSweetAlertIcon.ERROR
       );
@@ -101,14 +101,14 @@ export class ProductDetailsComponent implements OnInit {
     return this.productService
       .save(this.product)
       .then(() => {
-        this.sweetalertService.notification(
+        this.messageService.notification(
           this.item ? 'Update Success' : 'Create Success',
           TypeSweetAlertIcon.SUCCESS
         );
         this.ngbActiveModal.close();
       })
       .catch((er) => {
-        this.sweetalertService.alert(
+        this.messageService.alert(
           er.error.message ?? er.error,
           TypeSweetAlertIcon.ERROR
         );

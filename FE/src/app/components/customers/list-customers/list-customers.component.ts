@@ -9,8 +9,8 @@ import {
 import {
   CustomerService,
   FileService,
-  SweetalertService,
 } from 'src/app/lib/data/services';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { CustomerDetailsComponent } from '../customer-details/customer-details.component';
@@ -27,7 +27,7 @@ export class ListCustomersComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private customerService: CustomerService,
-    private sweetalertService: SweetalertService
+    private messageService: MessageService
   ) {
     this.getList();
   }
@@ -69,12 +69,12 @@ export class ListCustomersComponent implements OnInit {
 
   delete(event: any) {
     let category = event.data as CustomerModel;
-    this.sweetalertService.confirm('Are you sure?', 'Yes').then((it) => {
+    this.messageService.confirm('Are you sure?', 'Yes').then((it) => {
       if (it.isConfirmed) {
         this.customerService
           .delete(category)
           .then((it: CustomerModel) => {
-            this.sweetalertService.notification(
+            this.messageService.notification(
               `Delete Success`,
               TypeSweetAlertIcon.SUCCESS,
               `Item ${it.id}`
@@ -82,7 +82,7 @@ export class ListCustomersComponent implements OnInit {
             this.getList();
           })
           .catch((er) => {
-            this.sweetalertService.notification(
+            this.messageService.notification(
               `Delete Fail`,
               TypeSweetAlertIcon.ERROR,
               er.error.message ?? er.error
@@ -116,7 +116,7 @@ export class ListCustomersComponent implements OnInit {
       })
       .catch((er) => {
         if (er.error.hasError) {
-          this.sweetalertService.alert(
+          this.messageService.alert(
             er.error.message ?? er.error,
             TypeSweetAlertIcon.ERROR
           );
