@@ -5,6 +5,7 @@ import { BlogModel } from 'src/app/lib/data/models/blogs/blog.model';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models/common';
 import { FileService } from 'src/app/lib/data/services';
 import { BlogService } from 'src/app/lib/data/services/blogs/blog.service';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { BlogsDetailComponent } from '../blogs-detail/blogs-detail.component';
 
@@ -19,7 +20,8 @@ export class ListBlogsComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private blogService: BlogService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private messageService: MessageService
   ) {
     this.getBlogs();
   }
@@ -59,9 +61,6 @@ export class ListBlogsComponent implements OnInit {
       shortDes: {
         title: 'Short Description',
       },
-      contentHTML: {
-        title: 'Content HTML',
-      },
       createByDate: {
         title: 'Date Create',
         valuePrepareFunction: (created) => {
@@ -81,11 +80,13 @@ export class ListBlogsComponent implements OnInit {
 
   delete(event: any) {
     let banner = event.data as BlogModel;
-    if (window.confirm('Do you want to permanently delete this item?')) {
-      this.blogService.delete(banner).then(() => {
-        this.getBlogs();
+    this.messageService
+      .confirm('Do you want to permanently delete this item?', 'Yes')
+      .then((res) => {
+        this.blogService.delete(banner).then(() => {
+          this.getBlogs();
+        });
       });
-    }
   }
 
   ngOnInit() {}

@@ -27,6 +27,9 @@ using Domain.DTOs.PageContentContact;
 using Domain.DTOs.Contact;
 using Domain.DTOs.Comments;
 using Domain.DTOs.CustomerWishList;
+using Domain.DTOs.Mails;
+using Infrastructure.Mails;
+using Domain.DTOs.CustomerFE;
 
 namespace Domain
 {
@@ -193,6 +196,10 @@ namespace Domain
             // CustomerWishList 
             CreateMap<CustomerWishList, CreateOrDeleteCustomerWishListDTO>().ReverseMap();
             CreateMap<CustomerWishList, CustomerWishListDTO>().ReverseMap();
+
+            //Gmail
+            CreateMap<SendMailDTO, EmailMessage>().ReverseMap();
+            CreateMap<ReplyEmailDTO, EmailMessage>().ReverseMap();
         }
     }
 }

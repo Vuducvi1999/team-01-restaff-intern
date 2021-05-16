@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   PageModel,
-  ReturnMessage
+  ReturnMessage,
+  TypeSweetAlertIcon
 } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { ProductModel } from 'src/app/lib/data/models/products/product.model';
@@ -17,6 +18,7 @@ import {
   TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -41,7 +43,8 @@ export class ProductDetailsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private productService: ProductService,
     private ngbActiveModal: NgbActiveModal,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private messageService: MessageService
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -71,7 +74,10 @@ export class ProductDetailsComponent implements OnInit {
   }
   save() {
     if (this.productsForm.invalid) {
-      window.alert("Invalid Form make sure you input valid value !");
+      this.messageService.alert(
+        'Invalid Form make sure you input valid value !',
+        TypeSweetAlertIcon.ERROR
+      );
       return;
     }
     this.submitted = true;
@@ -89,37 +95,39 @@ export class ProductDetailsComponent implements OnInit {
       hasDisplayHomePage: this.productsForm.value.hasDisplayHomePage,
       isImportant: this.productsForm.value.isImportant,
       id: this.item ? this.item.id : '',
-      createdBy: this.item ? this.item.createdBy : '',
-      createdByName: this.item ? this.item.createdByName : '',
-      deletedBy: this.item ? this.item.deletedBy : '',
-      deletedByName: this.item ? this.item.deletedByName : '',
-      isActive: this.item ? this.item.isActive : true,
-      isDeleted: this.item ? this.item.isDeleted : false,
-      updatedBy: this.item ? this.item.updatedBy : '',
-      updatedByName: this.item ? this.item.updatedByName : '',
       files: this.modalFile.listFile,
     };
 
     return this.productService
       .save(this.product)
       .then(() => {
+        this.messageService.notification(
+          this.item ? 'Update Success' : 'Create Success',
+          TypeSweetAlertIcon.SUCCESS
+        );
         this.ngbActiveModal.close();
       })
       .catch((er) => {
-        // console.log(er);
+        this.messageService.alert(
+          er.error.message ?? er.error,
+          TypeSweetAlertIcon.ERROR
+        );
       });
   }
 
   loadItem() {
     this.productsForm = this.formBuilder.group({
       name: [this.item ? this.item.name : '', 
-      [Validators.required, Validators.minLength(3), Validators.maxLength(50),
+      [Validators.required,
+       Validators.minLength(3), 
+       Validators.maxLength(50),
        Validators.pattern(this.regex)
       ]
     ],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required, Validators.maxLength(100),
+        [Validators.required, 
+         Validators.maxLength(100),
          Validators.pattern(this.regex)
         ]
       ],
@@ -128,7 +136,10 @@ export class ProductDetailsComponent implements OnInit {
       ],
       imageUrl: [this.item ? this.item.imageUrl : ''],
       price: [this.item ? this.item.price : this.item,
-         [Validators.required, Validators.min(1), Validators.max(9999999999), Validators.pattern('[0-9]*')]
+         [Validators.required,
+          Validators.min(1), 
+          Validators.max(5000000), 
+          Validators.pattern('[0-9]*')]
       ],
       category: [
         this.item ? this.item.categoryId : '',
@@ -143,7 +154,7 @@ export class ProductDetailsComponent implements OnInit {
     });
 
     this.modalHeader = new ModalHeaderModel();
-    this.modalHeader.title = this.item ? `[Update] ${this.item.name}` : `[Add]`;
+    this.modalHeader.title = this.item ? `Update ${this.item.name}` : `Add`;
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
   }

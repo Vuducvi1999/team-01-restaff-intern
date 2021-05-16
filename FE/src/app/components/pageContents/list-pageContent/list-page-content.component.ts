@@ -75,7 +75,7 @@ export class ListPageContentComponent {
       .then((res: ReturnMessage<PageContentModel[]>) => {
         if (!res.hasError) {
           this.pageContents = res.data;
-          // console.log('page content', res.data);
+          //console.log('page content', res.data);
         }
       })
       .catch((er) => {

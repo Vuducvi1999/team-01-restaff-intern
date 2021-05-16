@@ -50,9 +50,9 @@ namespace Domain.Entities
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
 
-        public void Update(UpdateCustomerDTO model)
+        public void Update(UserInformationDTO dto, UpdateCustomerDTO model)
         {
-            base.Update();
+            base.Update(dto);
             Username = model.Username;
             //Password = MD5Helper.ToMD5Hash(model.Password);
             Email = model.Email;
@@ -72,9 +72,9 @@ namespace Domain.Entities
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
 
-        public void UpdateProfile(UpdateCustomerProfileFeUserDTO model)
+        public void UpdateProfile(UserInformationDTO dto, UpdateCustomerProfileFeUserDTO model)
         {
-            base.Update();
+            base.Update(dto);
             Email = model.Email;
             FirstName = model.FirstName;
             LastName = model.LastName;
@@ -89,9 +89,9 @@ namespace Domain.Entities
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
 
-        public void ChangePassword(ChangePasswordCustomerProfileFeUserDTO model)
+        public void ChangePassword(UserInformationDTO dto, ChangePasswordCustomerProfileFeUserDTO model)
         {
-            base.Update();
+            base.Update(dto);
             model.NewPassword = MD5Helper.ToMD5Hash(model.NewPassword);
             Password = model.NewPassword;
         }

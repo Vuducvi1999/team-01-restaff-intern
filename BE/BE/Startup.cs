@@ -47,6 +47,10 @@ namespace BE
 
             //CloudFile
             FileCloudConfig.Setup(services, Configuration);
+
+            //Gmail
+            GmailConfig.Setup(services, Configuration);
+
             ////AuthCustomer
             //JwtAuthCustomerConfig.Setup(services, Configuration);
 

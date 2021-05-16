@@ -6,6 +6,7 @@ using Domain.DTOs.Categories;
 using Domain.DTOs.Files;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
+using Service.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Service.Files
         private readonly IRepository<Domain.Entities.File> _fileRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUserManager _userManager;
 
         public FileService(IMapper mapper, IUnitOfWork unitOfWork, IRepository<Domain.Entities.File> fileRepository)
         {
@@ -35,11 +37,16 @@ namespace Service.Files
 
             try
             {
+                var userInfo = _userManager.GetInformationUser();
+                if (userInfo.IsNullOrEmpty())
+                {
+                    return new ReturnMessage<List<FileDTO>>(true, null, MessageConstants.CreateFail);
+                }
                 var entities = _mapper.Map<List<CreateFileDTO>, List<Domain.Entities.File>>(model);
-                entities.ForEach(it => it.Insert());
+                entities.ForEach(it => it.Insert(userInfo));
                 _unitOfWork.BeginTransaction();
                 _fileRepository.InsertRange(entities);
- 
+
                 _unitOfWork.SaveChanges();
                 _unitOfWork.Commit();
                 var result = new ReturnMessage<List<FileDTO>>(false, _mapper.Map<List<Domain.Entities.File>, List<FileDTO>>(entities), MessageConstants.CreateSuccess + " " + model.Count + " files");
@@ -61,11 +68,15 @@ namespace Service.Files
 
             try
             {
-
+                var userInfo = _userManager.GetInformationUser();
+                if (userInfo.IsNullOrEmpty())
+                {
+                    return new ReturnMessage<List<FileDTO>>(true, null, MessageConstants.CreateFail);
+                }
                 var entities = _fileRepository.Queryable().Where(it => model.IndexOf(_mapper.Map<Domain.Entities.File, DeleteFileDTO>(it)) > -1);
                 entities.ToList().ForEach(it =>
                 {
-                    it.Delete();
+                    it.Delete(userInfo);
                     it.IsDeleted = true;
                 });
                 _unitOfWork.BeginTransaction();
@@ -117,8 +128,13 @@ namespace Service.Files
 
             try
             {
+                var userInfo = _userManager.GetInformationUser();
+                if (userInfo.IsNullOrEmpty())
+                {
+                    return new ReturnMessage<List<FileDTO>>(true, null, MessageConstants.CreateFail);
+                }
                 var entities = _mapper.Map<List<UpdateFileDTO>, List<Domain.Entities.File>>(model);
-                entities.ForEach(it => it.Update());
+                entities.ForEach(it => it.Update(userInfo));
                 _unitOfWork.BeginTransaction();
                 _fileRepository.UpdateRange(entities);
                 _unitOfWork.SaveChanges();
@@ -145,16 +161,19 @@ namespace Service.Files
 
             try
             {
+                var userInfo = _userManager.GetInformationUser();
+                if (userInfo.IsNullOrEmpty())
+                {
+                    return new ReturnMessage<List<FileDTO>>(true, null, MessageConstants.CreateFail);
+                }
                 foreach (var fileId in fileIds)
                 {
                     var item = _fileRepository.Find(fileId.Id);
+                    if (item.IsNotNullOrEmpty())
                     {
-                        if (item.IsNotNullOrEmpty())
-                        {
-                            item.EntityId = entityId.ToString();
-                            item.Update();
-                            files.Add(item);
-                        }
+                        item.EntityId = entityId.ToString();
+                        item.Update(userInfo);
+                        files.Add(item);
                     }
                 }
                 _unitOfWork.BeginTransaction();

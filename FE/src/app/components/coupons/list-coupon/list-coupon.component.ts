@@ -4,6 +4,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { CouponModel } from 'src/app/lib/data/models/coupons/coupon.model';
 import { CouponService } from 'src/app/lib/data/services/coupons/coupon.service';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
+import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { CouponDetailComponent } from '../coupon-detail/coupon-detail.component';
 
 @Component({
@@ -16,7 +18,8 @@ export class ListCouponComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private couponService: CouponService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private messageService: MessageService
   ) {
     this.getCoupons();
   }
@@ -51,11 +54,11 @@ export class ListCouponComponent implements OnInit {
       name: {
         title: 'Name',
       },
-      hasPercent: {
-        title: 'Has Percent',
-      },
       value: {
         title: 'Value',
+        type: 'custom',
+        renderComponent: CustomViewCellComponent,
+        filter: false,
       },
       startDate: {
         title: 'Start Date',
@@ -84,11 +87,13 @@ export class ListCouponComponent implements OnInit {
 
   delete(event: any) {
     let coupon = event.data as CouponModel;
-    if (window.confirm('Are you sure to delete?')) {
-      this.couponService.delete(coupon).then(() => {
-        this.getCoupons();
+    this.messageService
+      .confirm('Do you want to permanently delete this item?', 'Yes')
+      .then((res) => {
+        this.couponService.delete(coupon).then(() => {
+          this.getCoupons();
+        });
       });
-    }
   }
-  ngOnInit() {}
+  ngOnInit() { }
 }

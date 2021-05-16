@@ -50,6 +50,8 @@ export enum TypeDisplayImage {
   CART_MODAL_IMAGE,
   CART_MODAL_BIG_IMAGE,
   LOGO_PAGE_CONTENT,
+  CART_DROPDOWN,
+
 }
 
 export const TemplateType = {
@@ -68,5 +70,7 @@ export const TemplateType = {
     [TypeDisplayImage.CART_MODAL_IMAGE]: "cart-modal-image",
     [TypeDisplayImage.CART_MODAL_BIG_IMAGE]: "cart-modal-big-image",
     [TypeDisplayImage.LOGO_PAGE_CONTENT]: "logo-page-content",
+    [TypeDisplayImage.CART_DROPDOWN]: "cart-dropdown",
+
   },
 };

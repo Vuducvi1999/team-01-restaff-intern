@@ -12,7 +12,8 @@ import {
   FileDtoModel,
   TypeSweetAlertIcon,
 } from 'src/app/lib/data/models';
-import { FileService, SweetalertService } from 'src/app/lib/data/services';
+import { FileService } from 'src/app/lib/data/services';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { ModalFile, TypeFile } from '../modals/models/modal.model';
 
 @Component({
@@ -33,7 +34,7 @@ export class UploadFileComponent implements OnInit {
 
   constructor(
     private fileService: FileService,
-    private sweetalertService: SweetalertService
+    private messageService: MessageService
   ) {
     this.onRemoveLocal();
     this.styleFile = 'width: 450px; height: 200px;';
@@ -119,7 +120,7 @@ export class UploadFileComponent implements OnInit {
     await this.fileService
       .saveFile(formData)
       .then((res: ReturnMessage<FileDtoModel[]>) => {
-        this.sweetalertService.notification(
+        this.messageService.notification(
           'Upload Success',
           TypeSweetAlertIcon.SUCCESS
         );
@@ -130,7 +131,7 @@ export class UploadFileComponent implements OnInit {
         );
       })
       .catch((er) =>
-        this.sweetalertService.alert(
+        this.messageService.alert(
           'Upload Fail',
           TypeSweetAlertIcon.ERROR,
           er.error.message ?? er.error

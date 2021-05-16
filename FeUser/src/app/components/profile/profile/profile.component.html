@@ -62,7 +62,6 @@
                 class="form-control"
                 id="name"
                 placeholder="First Name"
-                required=""
                 [readonly]="updateProfile"
                 [ngClass]="{
                   'is-invalid': submittedProfile && fProfile.firstName.errors
@@ -86,7 +85,6 @@
                 id="last-name"
                 placeholder="Last Name"
                 [readonly]="updateProfile"
-                required=""
                 [ngClass]="{
                   'is-invalid': submittedProfile && fProfile.lastName.errors
                 }"
@@ -108,7 +106,6 @@
                 id="review"
                 placeholder="Enter your phone"
                 [readonly]="updateProfile"
-                required=""
                 [ngClass]="{
                   'is-invalid':
                     (submittedProfile && fProfile.phone.errors) ||
@@ -141,7 +138,6 @@
                 id="email"
                 placeholder="Email"
                 [readonly]="updateProfile"
-                required=""
                 [ngClass]="{
                   'is-invalid':
                     (submittedProfile && fProfile.email.errors) ||
@@ -174,7 +170,6 @@
                 id="address-two"
                 placeholder="Address"
                 [readonly]="updateProfile"
-                required=""
                 [ngClass]="{
                   'is-invalid': submittedProfile && fProfile.address.errors
                 }"
@@ -238,7 +233,6 @@
                 autocomplete="new-password"
                 placeholder="Current Passwor"
                 formControlName="password"
-                required=""
                 [ngClass]="{
                   'is-invalid': submittedPassword && fPassword.password.errors
                 }"
@@ -262,7 +256,6 @@
                 placeholder="New Password"
                 formControlName="newPassword"
                 autocomplete="new-password"
-                required=""
                 [ngClass]="{
                   'is-invalid':
                     submittedPassword && fPassword.newPassword.errors
@@ -290,7 +283,6 @@
                 formControlName="confirmPassword"
                 placeholder="Confirm Password"
                 autocomplete="new-password"
-                required=""
                 [ngClass]="{
                   'is-invalid':
                     submittedPassword && fPassword.confirmPassword.errors

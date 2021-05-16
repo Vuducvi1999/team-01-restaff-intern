@@ -2,7 +2,7 @@ import { baseDTO } from "../categories/baseDTO.model";
 import { BaseModel } from "../common";
 import { FileDtoModel } from "../files/file.model";
 
-export interface ProductModel extends BaseModel, baseDTO{
+export interface ProductModel extends BaseModel{
     name: string,
     description: string,
     imageUrl: string,
