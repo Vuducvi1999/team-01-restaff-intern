@@ -89,8 +89,8 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
         .getBlog(this.id)
         .then((res: ReturnMessage<BlogModel>) => {
           this.data = res.data;
+          console.log(this.data);
         });
-
       this.createSearchModel();
     });
   }

@@ -42,10 +42,12 @@ namespace Service.Comments
         {
             try
             {
-                var dailyRating = _commentRepository.Queryable().Where(p => p.EntityId == model.EntityId && p.CreateByDate.Date == DateTime.Now.Date).Count();
+                var dailyRating = _commentRepository.Queryable().Where(p => p.EntityId == model.EntityId
+                                                                       && p.CreateByDate.Date == DateTime.Now.Date
+                                                                       && p.CustomerId == model.CustomerId).Count();
                 if (dailyRating > 5)
                 {
-                    return new ReturnMessage<CommentDTO>(true, null, MessageConstants.CreateSuccess);
+                    return new ReturnMessage<CommentDTO>(true, null, MessageConstants.CreateFail);
                 }
 
                 var entity = _mapper.Map<CreateCommentDTO, Comment>(model);

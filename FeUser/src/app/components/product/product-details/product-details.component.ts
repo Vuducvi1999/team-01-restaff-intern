@@ -107,7 +107,6 @@ export class ProductDetailsComponent implements OnInit {
         .get(param.id)
         .then((res: ReturnMessage<ProductDetailsModel>) => {
           this.product = res.data;
-          console.log(this.product);
         });
       this.createSearchModel();
     });

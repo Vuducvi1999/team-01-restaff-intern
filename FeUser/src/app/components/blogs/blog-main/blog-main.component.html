@@ -27,8 +27,9 @@
                   >
                   <ul class="post-social">
                     <li>Posted By : {{ item.createdByName }}</li>
-                    <!-- <li><i class="fa fa-heart"></i> 5 Hits</li>
-                    <li><i class="fa fa-comments"></i> 10 Comment</li> -->
+                    <li>
+                      <i class="fa fa-star"></i> {{ item.ratingScore }} star
+                    </li>
                   </ul>
                   <p>
                     {{ item.shortDes }}
@@ -57,7 +58,6 @@
                     <a [routerLink]="['/blog/', item.id]">
                       <h6>{{ item.title }}</h6>
                     </a>
-                    <!-- <p>0 hits</p> -->
                     <p>{{ item.createByDate | date: "mediumDate" }}</p>
                   </div>
                 </div>

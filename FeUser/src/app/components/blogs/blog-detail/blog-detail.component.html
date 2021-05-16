@@ -27,7 +27,12 @@
           </li>
           <li>
             Rating :
-            <ngb-rating [max]="5" [rate]="ratingPoint" [starTemplate]="t">
+            <ngb-rating
+              [max]="5"
+              [rate]="data?.ratingScore"
+              [starTemplate]="t"
+              [readonly]="true"
+            >
               <ng-template #t let-fill="fill">
                 <span class="star" [class.full]="fill === 100">
                   <span class="half" [style.width.%]="fill">&#9733;</span
