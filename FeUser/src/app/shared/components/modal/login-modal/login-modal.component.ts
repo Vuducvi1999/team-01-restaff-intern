@@ -8,8 +8,8 @@ import {
   TypeSweetAlertIcon,
 } from "src/app/lib/data/models";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
+import { MessageService } from "src/app/lib/data/services";
 import { AuthService } from "src/app/lib/data/services/auth/auth.service";
-import { SweetalertService } from "src/app/lib/data/services/sweetalert/sweetalert.service";
 
 @Component({
   selector: "app-login-modal",
@@ -23,7 +23,7 @@ export class LoginModalComponent {
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private sweetalertService: SweetalertService,
+    private messageService: MessageService,
     private router: Router,
     private activedRoute: ActivatedRoute,
     public activeModal: NgbActiveModal
@@ -62,7 +62,7 @@ export class LoginModalComponent {
     await this.authService
       .login(data)
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
-        this.sweetalertService.notification(
+        this.messageService.notification(
           "Login Success",
           TypeSweetAlertIcon.SUCCESS,
           `Wecome ${data.data.firstName}!`
@@ -73,7 +73,7 @@ export class LoginModalComponent {
         this.activeModal.dismiss();
       })
       .catch((er) => {
-        this.sweetalertService.alert(
+        this.messageService.alert(
           "Login Fail",
           TypeSweetAlertIcon.ERROR,
           `${er.error.message ?? er.error}`

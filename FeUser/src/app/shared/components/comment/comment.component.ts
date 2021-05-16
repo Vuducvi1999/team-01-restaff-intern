@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { CreateCommentModel } from "src/app/lib/data/models/comments/comment.model";
-import { SweetalertService } from "src/app/lib/data/services";
+import { MessageService } from "src/app/lib/data/services";
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
 
 @Component({
@@ -38,7 +38,7 @@ export class CommentComponent implements OnInit {
   constructor(
     private commentService: CommentService,
     private fb: FormBuilder,
-    private sweetAlertService: SweetalertService
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -62,7 +62,7 @@ export class CommentComponent implements OnInit {
         this.action.emit();
       })
       .catch((e) => {
-        this.sweetAlertService.alert(e.error.message);
+        this.messageService.alert(e.error.message);
       });
   }
 }

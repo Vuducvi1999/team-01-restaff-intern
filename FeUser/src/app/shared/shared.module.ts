@@ -56,7 +56,6 @@ import { CommentDetailComponent } from "./components/comment/comment-detail/comm
 import { UiImageLoaderDirective } from "./directives/uiImageLoader.directive";
 import { VndFormatPipe } from "./pipes/vnd-format.pipe";
 import { MessageService } from "../lib/data/services";
-import { SweetalertService } from "../lib/data/services";
 import { LoginModalComponent } from "./components/modal/login-modal/login-modal.component";
 
 @NgModule({
