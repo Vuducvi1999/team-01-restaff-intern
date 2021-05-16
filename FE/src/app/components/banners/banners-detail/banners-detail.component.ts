@@ -12,6 +12,7 @@ import {
   ModalHeaderModel,
   TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
+import { SocialMediasRoutingModule } from '../../social-medias/social-medias-routing.module';
 
 @Component({
   selector: 'app-banners-detail',
@@ -32,7 +33,7 @@ export class BannersDetailComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
-    private bannersService: BannersService,
+    private bannersService: BannersService
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
