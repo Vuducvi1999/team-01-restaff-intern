@@ -3,7 +3,6 @@ import { NavService } from '../../service/nav.service';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { bounce, zoomOut, zoomIn, fadeIn, bounceIn } from 'ng-animate';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService, SweetalertService } from 'src/app/lib/data/services';
 import { ReturnMessage, TypeSweetAlertIcon, UserDataReturnDTOModel } from 'src/app/lib/data/models';
 import { RouterHelperService } from 'src/app/lib/helpers';
 

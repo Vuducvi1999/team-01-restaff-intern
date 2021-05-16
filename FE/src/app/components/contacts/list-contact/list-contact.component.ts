@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
 import { ReturnMessage } from 'src/app/lib/data/models/common/return-message.model';
 import { ContactModel } from 'src/app/lib/data/models/contact/contact.model';
 import { PageContentModel } from 'src/app/lib/data/models/pageContent/pageContent.model';
 import { ContactService } from 'src/app/lib/data/services/contacts/contact.service';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { PageContentService } from 'src/app/lib/data/services/pageContents/pageContent.service';
 import { ContactDetailComponent } from '../contact-details/contact-details.component';
 
@@ -16,7 +18,10 @@ import { ContactDetailComponent } from '../contact-details/contact-details.compo
 export class ListContactComponent {
   public contacts: ContactModel[];
 
-  constructor(private modalService: NgbModal, private service: ContactService) {
+  constructor(private modalService: NgbModal,
+    private contactService: ContactService,
+    private messageService: MessageService
+  ) {
     this.getList();
   }
 
@@ -51,21 +56,24 @@ export class ListContactComponent {
       (close) => {
         this.getList();
       },
-      (dismiss) => {}
+      (dismiss) => { }
     );
   }
 
   delete(event: any) {
-    let category = event.data as ContactModel;
-    if (window.confirm('Are u sure?')) {
-      this.service.delete(category).then(() => {
-        this.getList();
-      });
-    }
+    this.messageService.confirm(`Do you want to delete the category?`, 'Yes').then(res => {
+      if (res.isConfirmed) {
+        let contact = event.data as ContactModel;
+        this.contactService.delete(contact).then(() => {
+          this.messageService.notification('Contact has been deleted', TypeSweetAlertIcon.SUCCESS);
+          this.getList();
+        })
+      }
+    });
   }
 
   getList() {
-    this.service
+    this.contactService
       .getList(null)
       .then((res: ReturnMessage<ContactModel[]>) => {
         if (!res.hasError) {

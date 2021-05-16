@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FileDtoModel } from 'src/app/lib/data/models';
+import { FileDtoModel, TypeSweetAlertIcon } from 'src/app/lib/data/models';
 import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
-import { FileService, SweetalertService } from 'src/app/lib/data/services';
+import { FileService } from 'src/app/lib/data/services';
 import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import {
   EntityType,
   ModalFile,
@@ -33,6 +34,8 @@ export class BannersDetailComponent implements OnInit {
     private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
     private bannersService: BannersService,
+    private messageService: MessageService
+
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -89,18 +92,23 @@ export class BannersDetailComponent implements OnInit {
     this.submitted = true;
 
     if (this.bannersForm.valid) {
-      this.bannersService
-        .save(this.banner)
-        .then((res) => {
-          this.bannersForm.reset();
-          this.submitted = false;
-          this.ngbActiveModal.close();
-        })
-        .catch((er) => {
-          if (er.error.hasError) {
-            console.log(er.error.message);
-          }
-        });
+
+      this.messageService.confirm(`Do you want to edit the banner?`, 'Yes').then(res => {
+        if (res.isConfirmed) {
+          this.bannersService
+          .save(this.banner)
+          .then((res) => {
+            this.messageService.notification('Banner has been edited', TypeSweetAlertIcon.SUCCESS);
+            this.bannersForm.reset();
+            this.submitted = false;
+            this.ngbActiveModal.close();
+          })
+          .catch((er) => {
+            this.messageService.alert(er.error.message ?? JSON.stringify(er.error),
+            TypeSweetAlertIcon.ERROR)
+          });
+        }
+      });
     }
   }
 

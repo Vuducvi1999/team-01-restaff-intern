@@ -9,7 +9,7 @@ import {
 import {
   FileService,
   ProductListService,
-  SweetalertService,
+  MessageService,
 } from "src/app/lib/data/services";
 import { ETypeSizeImage } from "src/app/shared/data";
 
@@ -31,7 +31,7 @@ export class ProductBoxVerticalSliderComponent implements OnInit {
 
   constructor(
     public productListService: ProductListService,
-    private sweetalerService: SweetalertService
+    private sweetalerService: MessageService
   ) {
     this.callData();
   }

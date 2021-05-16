@@ -10,7 +10,7 @@ import {
   ReturnMessage,
   TypeSweetAlertIcon,
 } from "src/app/lib/data/models";
-import { SweetalertService } from "src/app/lib/data/services";
+import { MessageService } from "src/app/lib/data/services";
 import { HomeService } from "src/app/lib/data/services/home/home.service";
 import { ProductListService } from "src/app/lib/data/services/productlist/productlist.service";
 
@@ -44,7 +44,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     public productListService: ProductListService,
-    private sweetalertService: SweetalertService
+    private sweetalertService: MessageService
   ) {}
   ngOnDestroy(): void {
     this.subscribe.unsubscribe();

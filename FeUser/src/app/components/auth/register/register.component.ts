@@ -12,7 +12,7 @@ import {
   TypeSweetAlertIcon,
 } from "src/app/lib/data/models";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
-import { AuthService, SweetalertService } from "src/app/lib/data/services";
+import { AuthService, MessageService } from "src/app/lib/data/services";
 import Swal from "sweetalert2";
 
 @Component({
@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private activedRoute: ActivatedRoute,
-    private sweetalertService: SweetalertService
+    private sweetalertService: MessageService
   ) {
     this.createRegistForm();
     if (localStorage.getItem("token")) {

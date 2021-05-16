@@ -1,6 +1,5 @@
 import { FileDtoModel } from "../files/file.model";
 export interface ProfileModel {
-    id: string;
     firstName: string;
     lastName: string;
     address: string;

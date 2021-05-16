@@ -56,5 +56,6 @@ export class LeftMenuComponent implements OnInit {
   }
   loadUrlNavaigate(url: string) {
     this.router.navigateByUrl(url);
+    this.leftMenuToggle();
   }
 }

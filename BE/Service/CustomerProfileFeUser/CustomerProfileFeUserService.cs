@@ -50,7 +50,7 @@ namespace Service.CustomerProfileFeUser
 
                 if (user.IsNullOrEmpty())
                 {
-                    return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);
+                    return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.InvalidAuthInfoMsg);
                 }
 
                 if (model.Password == model.NewPassword)
@@ -78,7 +78,7 @@ namespace Service.CustomerProfileFeUser
                     .FirstOrDefault(it => it.Type == UserType.Customer && it.Id == _userManager.AuthorizedUserId && !it.IsDeleted);
                 if (user.IsNullOrEmpty())
                 {
-                    return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);
+                    return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.InvalidAuthInfoMsg);
                 }
 
 

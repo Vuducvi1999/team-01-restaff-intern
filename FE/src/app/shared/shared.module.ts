@@ -15,7 +15,7 @@ import { RightSidebarComponent } from './components/right-sidebar/right-sidebar.
 import { ModalHeaderComponent } from './components/modals/modal-header/modal-header.component';
 import { ModalFooterComponent } from './components/modals/modal-footer/modal-footer.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { FileService, SweetalertService } from '../lib/data/services';
+import { FileService } from '../lib/data/services';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -25,6 +25,7 @@ import { CustomViewCellComponent } from './components/customViewCell/customViewC
 import { CustomViewCellNumberComponent } from './components/custom-view-cell-number/custom-view-cell-number.component';
 import { VndFormatPipe } from '../lib/data/services/pipe/vnd-format.pipe';
 import { PagingServerViewComponent } from './components/paging-server-view/paging-server-view.component';
+import { MessageService } from '../lib/data/services/messages/message.service';
 @NgModule({
   declarations: [
     ToggleFullscreenDirective,
@@ -53,7 +54,7 @@ import { PagingServerViewComponent } from './components/paging-server-view/pagin
     SweetAlert2Module.forRoot(),
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-  providers: [NavService, WINDOW_PROVIDERS, FileService, SweetalertService,],
+  providers: [NavService, WINDOW_PROVIDERS, FileService,MessageService],
   exports: [
     UiImageLoaderDirective,
     FeatherIconsComponent,

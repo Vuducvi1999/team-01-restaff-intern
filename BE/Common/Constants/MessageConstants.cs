@@ -14,7 +14,7 @@
 
         public const string CommonError = "Error !";
 
-        public const string InvalidAuthInfoMsg = "Invalid email or password";
+        public const string InvalidAuthInfoMsg = "Invalid username or password";
         public const string CurrentPasswordEqualNewPassword = "Current Password don't equal New Password";
         public const string ExistUsername = "Username has exist";
         public const string ExistEmail = "Email has exist";

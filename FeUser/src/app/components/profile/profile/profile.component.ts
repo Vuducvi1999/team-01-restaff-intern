@@ -16,7 +16,7 @@ import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model
 import {
   AuthService,
   FileService,
-  SweetalertService,
+  MessageService,
 } from "src/app/lib/data/services";
 import { ProfileService } from "src/app/lib/data/services/profiles/profile.service";
 import {
@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private profileService: ProfileService,
     private authService: AuthService,
-    private sweetalertService: SweetalertService
+    private messageService: MessageService
   ) {
     // this.user = JSON.parse(localStorage.getItem("user"));
     // if (this.user) {
@@ -111,17 +111,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
       ],
       phone: [
         this.user ? this.user.phone : "",
-        [
-          Validators.required,
-          Validators.pattern("[0-9]{10,11}"),
-          Validators.maxLength(11),
-        ],
-        this.isPhoneExsist.bind(this),
+        [Validators.pattern("[0-9]{10,11}"), Validators.maxLength(11)],
       ],
-      address: [
-        this.user ? this.user.address : "",
-        [Validators.required, Validators.maxLength(90)],
-      ],
+      address: [this.user ? this.user.address : "", [Validators.maxLength(90)]],
       email: [
         this.user ? this.user.email : "",
         [
@@ -129,7 +121,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
           Validators.pattern("[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}"),
           Validators.maxLength(90),
         ],
-        this.isEmailExsist.bind(this),
       ],
       // imageUrl: [this.user ? this.user.imageUrl : "", [Validators.required]],
     });
@@ -203,28 +194,36 @@ export class ProfileComponent implements OnInit, OnDestroy {
       return;
     }
     var data: ChangePasswordProfileModel = this.changePasswordForm.value;
-    await this.profileService
-      .changePassword(data)
-      .then((res: ReturnMessage<null>) => {
-        this.sweetalertService.notification(
-          "Change Password Success",
-          TypeSweetAlertIcon.SUCCESS
-        );
-        this.passwordSwith();
-      })
-      .catch((er) => {
-        this.sweetalertService.alert(
-          "Change Password Fail",
-          TypeSweetAlertIcon.ERROR,
-          er.error.message ?? er.error
-        );
+
+    await this.messageService
+      .confirm("Do you want to save the changes?", "Save")
+      .then((res) => {
+        if (res.isConfirmed) {
+          this.profileService
+            .changePassword(data)
+            .then((res: ReturnMessage<null>) => {
+              this.messageService.notification(
+                "Change Password Success",
+                TypeSweetAlertIcon.SUCCESS
+              );
+              this.passwordSwith();
+            })
+            .catch((er) => {
+              this.messageService.alert(
+                "Change Password Fail",
+                TypeSweetAlertIcon.ERROR,
+                er.error.message ?? er.error.error ?? "Server Disconnected"
+              );
+            });
+        }
       });
   }
 
   async onUpdateProfile() {
     this.submittedProfile = true;
 
-    if (this.profileForm.invalid && this.user?.id) {
+    if (this.profileForm.invalid) {
+      console.log(this.profileForm.invalid);
       return;
     }
 
@@ -236,38 +235,34 @@ export class ProfileComponent implements OnInit, OnDestroy {
       firstName: dataProfileForm.firstName,
       lastName: dataProfileForm.lastName,
       files: null,
-      id: this.user.id,
       phone: dataProfileForm.phone,
     };
 
-    await Swal.fire({
-      title: "Do you want to save the changes?",
-      showDenyButton: false,
-      showCancelButton: true,
-      confirmButtonText: `Save`,
-      denyButtonText: `Don't save`,
-    }).then((result) => {
-      /* Read more about isConfirmed, isDenied below */
-      if (result.isConfirmed) {
-        this.profileService
-          .update(data)
-          .then((res: ReturnMessage<UserDataReturnDTOModel>) => {
-            this.authService.changeUserInfo(res.data);
-            this.sweetalertService.notification(
-              "Upload Profile Success",
-              TypeSweetAlertIcon.SUCCESS
-            );
-            this.profileSwith();
-          })
-          .catch((er) => {
-            this.sweetalertService.alert(
-              "Upload Profile Fail",
-              TypeSweetAlertIcon.ERROR,
-              er.error.message ?? er.error
-            );
-          });
-      }
-    });
+    await this.messageService
+      .confirm("Do you want to save the changes?", "Save")
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.profileService
+            .update(data)
+            .then((res: ReturnMessage<UserDataReturnDTOModel>) => {
+              this.authService.changeUserInfo(res.data);
+              this.messageService.notification(
+                "Upload Profile Success",
+                TypeSweetAlertIcon.SUCCESS
+              );
+              this.profileSwith();
+            })
+            .catch((er) => {
+              this.messageService.alert(
+                "Upload Profile Fail",
+                TypeSweetAlertIcon.ERROR,
+                er.error.message ??
+                  JSON.stringify(er.error.error) ??
+                  "Server Disconnected"
+              );
+            });
+        }
+      });
   }
 
   getImage(fileName: string) {
