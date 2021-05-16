@@ -1,6 +1,7 @@
 ﻿using BE.Controllers;
 using Common.Constants;
 using Domain.DTOs.PageContent;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Files;
@@ -36,6 +37,7 @@ namespace BE.ControllersFeUser
             return CommonResponse(result);
         }
 
+        [Authorize]
         [HttpPut]
         public IActionResult Put([FromBody] UpdatePageContentDTO model)
         {
