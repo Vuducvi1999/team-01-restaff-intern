@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
 import { ReturnMessage, TypeSweetAlertIcon } from "../lib/data/models";
 import { UserDataReturnDTOModel } from "../lib/data/models/users/user.model";
-import { AuthService, SweetalertService } from "../lib/data/services";
+import { AuthService, MessageService } from "../lib/data/services";
 
 @Component({
   selector: "app-pages",
@@ -13,7 +13,7 @@ import { AuthService, SweetalertService } from "../lib/data/services";
 export class PagesComponent implements OnInit {
   public url: any;
 
-  constructor(private router: Router, private authService: AuthService, private sweetalertService: SweetalertService) {
+  constructor(private router: Router, private authService: AuthService, private sweetalertService: MessageService) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.url = event.url;

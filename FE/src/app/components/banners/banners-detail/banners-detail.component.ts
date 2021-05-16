@@ -104,9 +104,8 @@ export class BannersDetailComponent implements OnInit {
             this.ngbActiveModal.close();
           })
           .catch((er) => {
-            if (er.error.hasError) {
-              console.log(er.error.message);
-            }
+            this.messageService.alert(er.error.message ?? JSON.stringify(er.error),
+            TypeSweetAlertIcon.ERROR)
           });
         }
       });

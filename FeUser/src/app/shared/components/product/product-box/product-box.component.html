@@ -65,7 +65,7 @@
         (click)="addToWishlist(product)"
       >
         <i
-          *ngIf="testData"
+          *ngIf="userInfo"
           [ngClass]="[
             product.isInWishList ? 'fa fa-heart color-red' : 'ti-heart'
           ]"
@@ -97,7 +97,8 @@
         [routerLink]="['/product-details']"
         [queryParams]="{ id: product?.id }"
       >
-        <h6>{{ product?.name | titlecase }}</h6>
+        <h6>{{ product?.name }}</h6>
+        <!-- <h6>{{ product?.name | titlecase }}</h6> -->
       </a>
       <p>
         {{ product?.description }}

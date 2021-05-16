@@ -27,7 +27,6 @@ namespace Infrastructure.Mails
 
     public class EmailMessage
     {
-
         public EmailAddress ToAddresse { get; set; }
         public EmailAddress FromAddresse { get; set; }
         public EmailAddress ReplyAddresse { get; set; }

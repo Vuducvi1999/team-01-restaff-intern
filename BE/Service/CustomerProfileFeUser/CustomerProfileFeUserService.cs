@@ -4,7 +4,9 @@ using Common.Enums;
 using Common.Http;
 using Common.MD5;
 using Domain.DTOs.Customer;
+using Domain.DTOs.CustomerFE;
 using Domain.DTOs.CustomerProfileFeUser;
+using Domain.DTOs.Users;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
@@ -48,14 +50,15 @@ namespace Service.CustomerProfileFeUser
 
                 if (user.IsNullOrEmpty())
                 {
-                    return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);
+                    return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.InvalidAuthInfoMsg);
                 }
 
-                if(model.Password == model.NewPassword)
+                if (model.Password == model.NewPassword)
                 {
                     return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.CurrentPasswordEqualNewPassword);
                 }
-                user.ChangePassword(model);
+                var userInfo = _mapper.Map<User, UserInformationDTO>(user);
+                user.ChangePassword(userInfo, model);
                 _userRepository.Update(user);
                 _unitOfWork.SaveChanges();
 
@@ -75,7 +78,7 @@ namespace Service.CustomerProfileFeUser
                     .FirstOrDefault(it => it.Type == UserType.Customer && it.Id == _userManager.AuthorizedUserId && !it.IsDeleted);
                 if (user.IsNullOrEmpty())
                 {
-                    return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);
+                    return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.InvalidAuthInfoMsg);
                 }
 
 
@@ -90,13 +93,14 @@ namespace Service.CustomerProfileFeUser
                 }
 
                 var customer = _customerRepository.Find(user.CustomerId);
-                if(customer.IsNullOrEmpty())
+                if (customer.IsNullOrEmpty())
                 {
                     return new ReturnMessage<CustomerDataReturnDTO>(true, null, MessageConstants.Error);
                 }
 
-                user.UpdateProfile(model);
-                customer.UpdateProfile(model);
+                var userInfo = _mapper.Map<User, UserInformationDTO>(user);
+                user.UpdateProfile(userInfo, model);
+                customer.UpdateProfile(userInfo, model);
 
                 _unitOfWork.BeginTransaction();
                 _userRepository.Update(user);

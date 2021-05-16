@@ -6,6 +6,7 @@ using Domain.DTOs.Banners;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
+using Service.Auth;
 using System;
 
 namespace Service.Banners
@@ -15,22 +16,27 @@ namespace Service.Banners
         private readonly IRepository<Banner> _bannerRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUserManager _userManager;
 
-        public BannerService(IRepository<Banner> bannerRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public BannerService(IRepository<Banner> bannerRepository, IUnitOfWork unitOfWork, IMapper mapper, IUserManager userManager)
         {
             _bannerRepository = bannerRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public ReturnMessage<BannerDTO> Create(CreateBannerDTO model)
         {
             try
             {
-
+                var userInfo = _userManager.GetInformationUser();
+                if (userInfo.IsNullOrEmpty())
+                {
+                    return new ReturnMessage<BannerDTO>(true, null, MessageConstants.CreateFail);
+                }
                 var entity = _mapper.Map<CreateBannerDTO, Banner>(model);
-
-                entity.Insert();
+                entity.Insert(userInfo);
                 _bannerRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<BannerDTO>(false, _mapper.Map<Banner, BannerDTO>(entity), MessageConstants.CreateSuccess);
@@ -46,10 +52,15 @@ namespace Service.Banners
         {
             try
             {
+                var userInfo = _userManager.GetInformationUser();
+                if (userInfo.IsNullOrEmpty())
+                {
+                    return new ReturnMessage<BannerDTO>(true, null, MessageConstants.CreateFail);
+                }
                 var entity = _bannerRepository.Find(model.Id);
                 if (entity.IsNotNullOrEmpty())
                 {
-                    entity.Delete();
+                    entity.Delete(userInfo);
                     _bannerRepository.Delete(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<BannerDTO>(false, _mapper.Map<Banner, BannerDTO>(entity), MessageConstants.DeleteSuccess);
@@ -66,10 +77,15 @@ namespace Service.Banners
         {
             try
             {
+                var userInfo = _userManager.GetInformationUser();
+                if (userInfo.IsNullOrEmpty())
+                {
+                    return new ReturnMessage<BannerDTO>(true, null, MessageConstants.CreateFail);
+                }
                 var entity = _bannerRepository.Find(model.Id);
                 if (entity.IsNotNullOrEmpty())
                 {
-                    entity.Update(model);
+                    entity.Update(userInfo, model);
                     _bannerRepository.Update(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<BannerDTO>(false, _mapper.Map<Banner, BannerDTO>(entity), MessageConstants.DeleteSuccess);

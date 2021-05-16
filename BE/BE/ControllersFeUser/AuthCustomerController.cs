@@ -1,6 +1,8 @@
 ﻿using BE.Controllers;
 using Common.Constants;
 using Domain.DTOs.Customer;
+using Domain.DTOs.CustomerFE;
+using Infrastructure.Mails;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,9 +21,11 @@ namespace BE.ControllersFeUser
     public class AuthCustomerController : BaseController
     {
         private readonly IAuthCustomerUserService _authCustomerService;
-        public AuthCustomerController(IAuthService authService, IUserManager userManager, IFileService fileService, IAuthCustomerUserService authCustomerService) : base(authService, userManager, fileService)
+        private readonly IEmailService _emailService;
+        public AuthCustomerController(IAuthService authService, IUserManager userManager, IFileService fileService, IAuthCustomerUserService authCustomerService, IEmailService emailService) : base(authService, userManager, fileService)
         {
             _authCustomerService = authCustomerService;
+            _emailService = emailService;
         }
 
         [HttpPost(UrlConstants.BaseLoginCustomer)]
@@ -35,6 +39,13 @@ namespace BE.ControllersFeUser
         public IActionResult Register([FromBody] CustomerRegisterDTO data)
         {
             var result = _authCustomerService.CheckRegister(data);
+            return CommonResponse(result);
+        }
+
+        [HttpGet("forgetpassword")]
+        public IActionResult Forgetpassword ([FromQuery] CustomerEmailDTO model)
+        {
+            var result = _authCustomerService.ForgetPassword(model);
             return CommonResponse(result);
         }
 
