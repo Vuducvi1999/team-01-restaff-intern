@@ -64,13 +64,16 @@
             <div class="footer-social">
               <ul>
                 <li *ngFor="let item of socialMediasIcons">
+                  <a href="https://www.{{item.link}}">
                   <img
                     appUiImageLoader
                     src="{{ item.iconUrl }}"
                     width="30"
                     height="30"
                     class="img-30 rounded-circle"
+                    
                   />
+                </a>
                 </li>
               </ul>
             </div>
