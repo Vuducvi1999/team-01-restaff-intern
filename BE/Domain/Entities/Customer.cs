@@ -1,5 +1,6 @@
 ﻿using Domain.DTOs.Customer;
 using Domain.DTOs.CustomerProfileFeUser;
+using Domain.DTOs.Users;
 using Infrastructure.Extensions;
 using System;
 using System.Collections.Generic;
@@ -46,9 +47,9 @@ namespace Domain.Entities
             base.Update();
         }
 
-        public void Update(UpdateCustomerDTO dto)
+        public void Update(UserInformationDTO userInformation, UpdateCustomerDTO dto)
         {
-            base.Update();
+            base.Update(userInformation);
             FirstName = dto.FirstName;
             LastName = dto.LastName;
             Email = dto.Email;
@@ -56,9 +57,9 @@ namespace Domain.Entities
             Address = dto.Address;
         }
 
-        public void UpdateProfile(UpdateCustomerProfileFeUserDTO dto)
+        public void UpdateProfile(UserInformationDTO userInformation, UpdateCustomerProfileFeUserDTO dto)
         {
-            base.Update();
+            base.Update(userInformation);
             FirstName = dto.FirstName;
             LastName = dto.LastName;
             Email = dto.Email;

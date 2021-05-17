@@ -2,7 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CustomerModel, TypeSweetAlertIcon } from 'src/app/lib/data/models';
-import { CustomerService, SweetalertService } from 'src/app/lib/data/services';
+import { CustomerService } from 'src/app/lib/data/services';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import {
   ModalHeaderModel,
   ModalFooterModel,
@@ -33,7 +34,7 @@ export class CustomerDetailsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private customerService: CustomerService,
     private ngbActiveModal: NgbActiveModal,
-    private sweetalerService: SweetalertService
+    private messageService: MessageService
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -53,9 +54,9 @@ export class CustomerDetailsComponent implements OnInit {
     this.usersForm = this.formBuilder.group({
       username: [this.item ? this.item.username : '', [Validators.required]],
       password: [this.item ? this.item.password : '', [Validators.required]],
-      email: [this.item ? this.item.email : ''],
-      firstName: [this.item ? this.item.firstName : ''],
-      lastName: [this.item ? this.item.lastName : ''],
+      email: [this.item ? this.item.email : '', [Validators.required]],
+      firstName: [this.item ? this.item.firstName : '', [Validators.required]],
+      lastName: [this.item ? this.item.lastName : '', [Validators.required]],
       imageUrl: [this.item ? this.item.imageUrl : ''],
       address: [this.item ? this.item.address : ''],
       phone: [this.item ? this.item.phone : ''],
@@ -98,15 +99,15 @@ export class CustomerDetailsComponent implements OnInit {
     this.customerService
       .save(this.user)
       .then(() => {
-        this.sweetalerService.notification(
+        this.messageService.notification(
           this.item ? 'Upload Success' : 'Create Success',
           TypeSweetAlertIcon.SUCCESS
         );
         this.ngbActiveModal.close();
       })
       .catch((er) => {
-        this.sweetalerService.alert(
-          er.error.message ?? er.error,
+        this.messageService.alert(
+          er.error.message ?? JSON.stringify(er.error),
           TypeSweetAlertIcon.ERROR
         );
       });

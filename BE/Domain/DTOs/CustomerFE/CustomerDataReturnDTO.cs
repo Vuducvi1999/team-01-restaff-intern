@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Domain.DTOs.Customer
+namespace Domain.DTOs.CustomerFE
 {
     public class CustomerDataReturnDTO
     {

@@ -1,5 +1,6 @@
 ﻿using Common.Http;
 using Domain.DTOs.Customer;
+using Domain.DTOs.CustomerFE;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -12,6 +13,7 @@ namespace Service.AuthCustomer
         ReturnMessage<CustomerDataReturnDTO> CheckLogin(CustomerLoginDTO data);
         ReturnMessage<CustomerDataReturnDTO> CheckRegister(CustomerRegisterDTO data);
         ReturnMessage<CustomerDataReturnDTO> GetCustomerDataReturnDTO();
+        ReturnMessage<String> ForgetPassword(CustomerEmailDTO model);
         ReturnMessage<Boolean> CheckEmail(CustomerEmailDTO model);
         ReturnMessage<Boolean> CheckUserName(CustomerUserNameDTO model);
         ReturnMessage<Boolean> CheckPhone(CustomerPhoneDTO model);

@@ -10,12 +10,13 @@ import { Injectable } from '@angular/core';
 import { RouterHelperService } from '../helpers';
 import { isNull } from '@angular/compiler/src/output/output_ast';
 import { isEmpty } from 'rxjs/operators';
-import { AuthService, SweetalertService } from '../data/services';
+import { AuthService } from '../data/services';
 import {
   ReturnMessage,
   TypeSweetAlertIcon,
   UserDataReturnDTOModel,
 } from '../data/models';
+import { MessageService } from '../data/services/messages/message.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,7 @@ export class AuthGuardsAdminService {
     private router: Router,
     private routerHelperService: RouterHelperService,
     private authService: AuthService,
-    private sweetalertService: SweetalertService
+    private messageService: MessageService
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {

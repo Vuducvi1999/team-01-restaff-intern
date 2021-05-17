@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage, TypeSweetAlertIcon } from 'src/app/lib/data/models';
 import { OrderDetailModel, OrderModel } from 'src/app/lib/data/models/orders/order.model';
-import { FileService, SweetalertService } from 'src/app/lib/data/services';
+ 
 import { OrderDetailsService } from 'src/app/lib/data/services/orders/order-details.service';
 import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
@@ -14,6 +14,7 @@ import {
 import Swal from 'sweetalert2';
 import { CustomViewCellNumberComponent } from 'src/app/shared/components/custom-view-cell-number/custom-view-cell-number.component';
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 
 @Component({
   selector: 'app-update-order',
@@ -36,7 +37,7 @@ export class UpdateOrderComponent implements OnInit {
     private ngbActiveModal: NgbActiveModal,
     private ordersService: OrdersService,
     private orderDetailsService: OrderDetailsService,
-    private sweetService: SweetalertService
+    private messageService: MessageService
 
   ) { }
 
@@ -151,14 +152,14 @@ export class UpdateOrderComponent implements OnInit {
   }
   save() {
     this.loadOrderModel();
-    this.sweetService.confirm(`Do you want to edit the order?`, 'Yes').then(async (result) => {
+    this.messageService.confirm(`Do you want to edit the order?`, 'Yes').then(async (result) => {
       if (result.isConfirmed) {
         this.submitted = true;
         if (this.orderForm.valid) {
           this.ordersService
             .update(this.order)
             .then(() => {
-              this.sweetService.notification('Banner has been updated', TypeSweetAlertIcon.SUCCESS);
+              this.messageService.notification('Banner has been updated', TypeSweetAlertIcon.SUCCESS);
               this.ngbActiveModal.close();
             }).catch((er) => {
               if (er.error.hasError) {
@@ -175,14 +176,14 @@ export class UpdateOrderComponent implements OnInit {
     this.loadOrderModel();
     this.order.status = "Approved";
 
-    this.sweetService.confirm(`Do you want to approve the order?`, 'Yes').then(async (result) => {
+    this.messageService.confirm(`Do you want to approve the order?`, 'Yes').then(async (result) => {
       if (result.isConfirmed) {
         this.submitted = true;
         if (this.orderForm.valid) {
           this.ordersService
             .update(this.order)
             .then(() => {
-              this.sweetService.notification('Banner has been approved', TypeSweetAlertIcon.SUCCESS);
+              this.messageService.notification('Banner has been approved', TypeSweetAlertIcon.SUCCESS);
               this.ngbActiveModal.close();
             }).catch((er) => {
               if (er.error.hasError) {

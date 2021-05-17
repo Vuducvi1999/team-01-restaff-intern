@@ -3,6 +3,7 @@ using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Files;
 using Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Files;
@@ -39,6 +40,7 @@ namespace BE.Controllers
             return CommonResponse(new ReturnMessage<KeyValuePair<string,string>[]>(false, result, MessageConstants.SearchSuccess));
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> SaveFile([FromForm] SaveFileDTO dto)
         {
@@ -47,6 +49,7 @@ namespace BE.Controllers
             return CommonResponse(result);
         }
 
+        [Authorize]
         [HttpPut]
         public IActionResult UpdateFile([FromForm] List<UpdateFileDTO> dto)
         {

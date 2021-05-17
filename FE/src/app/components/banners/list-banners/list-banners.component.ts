@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage, TypeSweetAlertIcon } from 'src/app/lib/data/models';
 import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
-import { FileService, SweetalertService } from 'src/app/lib/data/services';
 
 import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
-import { CustomViewCellNumberComponent } from 'src/app/shared/components/custom-view-cell-number/custom-view-cell-number.component';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
-import Swal from 'sweetalert2';
 
 import { BannersDetailComponent } from '../banners-detail/banners-detail.component';
 
@@ -22,7 +20,8 @@ export class ListBannersComponent implements OnInit {
   public banners: BannerModel[];
 
 
-  constructor(private modalService: NgbModal, private bannersService: BannersService, private sweetService: SweetalertService) {
+
+  constructor(private modalService: NgbModal, private bannersService: BannersService, private messageService: MessageService) {
     this.getBanners();
   }
   ngOnInit() {
@@ -80,11 +79,11 @@ export class ListBannersComponent implements OnInit {
   }
 
   delete(event: any) {
-    this.sweetService.confirm(`Do you want to delete the banner?`, 'Yes').then(res => {
+    this.messageService.confirm(`Do you want to delete the banner?`, 'Yes').then(res => {
       if (res.isConfirmed) {
         let banner = event.data as BannerModel;
         this.bannersService.delete(banner).then(() => {
-          this.sweetService.notification('Banner has been deleted', TypeSweetAlertIcon.SUCCESS);
+          this.messageService.notification('Banner has been deleted', TypeSweetAlertIcon.SUCCESS);
           this.getBanners();
         })
       }

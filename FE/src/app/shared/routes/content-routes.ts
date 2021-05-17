@@ -131,25 +131,5 @@ export const content: Routes = [
     data: {
       breadcrumb: 'Contact',
     },
-  },
-  {
-    path: 'comment',
-    loadChildren: () =>
-      import('../../components/comments/comment.module').then(
-        (m) => m.CommentModule
-      ),
-    data: {
-      breadcrumb: 'Comment',
-    },
-  },
-  {
-    path: 'customer-wish-list',
-    loadChildren: () =>
-      import(
-        '../../components/customer-wish-list/customer-wish-list.module'
-      ).then((m) => m.CustomerWishListModule),
-    data: {
-      breadcrumb: 'CustomerWishList',
-    },
-  },
+  }
 ];
