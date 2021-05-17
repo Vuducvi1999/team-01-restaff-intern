@@ -45,7 +45,7 @@ namespace Service.Home
                                     .Include(t => t.Category)
                                     .Include(t => t.CustomerWishLists)
                                     .Where(i => i.IsDeleted == false)
-                                    .OrderByDescending(i => i.SaleCount)
+                                    .OrderByDescending(i => i.RatingScore)
                                     .ThenByDescending(i => i.IsImportant)
                                     .Take(12)
                                     .ToList();

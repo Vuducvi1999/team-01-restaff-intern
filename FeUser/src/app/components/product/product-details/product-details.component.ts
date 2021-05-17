@@ -146,6 +146,7 @@ export class ProductDetailsComponent implements OnInit {
       .getProductComments(this.searchModel)
       .then((data: ReturnMessage<PageModel<CommentModel>>) => {
         this.comments = data.data;
+        console.log(this.comments);
       })
       .catch((e) => {
         console.log(e);
