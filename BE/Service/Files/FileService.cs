@@ -21,11 +21,15 @@ namespace Service.Files
         private readonly IMapper _mapper;
         private readonly IUserManager _userManager;
 
-        public FileService(IMapper mapper, IUnitOfWork unitOfWork, IRepository<Domain.Entities.File> fileRepository)
+        public FileService(IMapper mapper,
+            IUnitOfWork unitOfWork,
+            IRepository<Domain.Entities.File> fileRepository,
+            IUserManager userManager)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _fileRepository = fileRepository;
+            _userManager = userManager;
         }
 
         public ReturnMessage<List<FileDTO>> Create(List<CreateFileDTO> model)
