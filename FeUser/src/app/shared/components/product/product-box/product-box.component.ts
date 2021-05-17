@@ -85,6 +85,8 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
     this.subDataUser = this.authService.callUserInfo.subscribe((it) => {
       this.userInfo = it;
     });
+
+    this.ImageSrc = this.product.imageUrl.split(",")[0];
   }
 
   updateTypeGridLayout() {
