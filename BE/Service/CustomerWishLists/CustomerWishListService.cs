@@ -30,7 +30,7 @@ namespace Service.CustomerWishLists
             _userManager = userManager;
         }
 
-        public ReturnMessage<CustomerWishListDTO> CreateOrDelete(CreateCustomerWishListDTO model)
+        public ReturnMessage<CustomerWishListDTO> CreateOrDelete(CreateOrDeleteCustomerWishListDTO model)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace Service.CustomerWishLists
                         return new ReturnMessage<CustomerWishListDTO>(false, _result, MessageConstants.DeleteSuccess);
                     }
 
-                    var entity = _mapper.Map<CreateCustomerWishListDTO, CustomerWishList>(model);
+                    var entity = _mapper.Map<CreateOrDeleteCustomerWishListDTO, CustomerWishList>(model);
                     entity.CustomerId = userInfo.CustomerId.GetValueOrDefault();
                     entity.Insert();
                     _wishListRepository.Insert(entity);

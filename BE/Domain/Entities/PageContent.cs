@@ -11,12 +11,15 @@ namespace Domain.Entities
         public string ShortDes { get; set; }
         public string Description { get; set; }
         public int Order { get; set; }
+        public string ImageUrl { get; set; }
+
         public void Update(UpdatePageContentDTO model)
         {
             base.Update();
             Title = model.Title;
             ShortDes = model.ShortDes;
             Description = model.Description;
+            ImageUrl = model.ImageUrl;
         }
     }
 }

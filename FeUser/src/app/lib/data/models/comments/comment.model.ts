@@ -18,9 +18,7 @@ export interface SearchCommentModel {
   rating?: number;
 }
 
-export interface CommentPassingModel {
-  fullName: string;
-  customerId: string;
+export interface CreateCommentModel {
   entityId: string;
   entityType: string;
   rating: number;

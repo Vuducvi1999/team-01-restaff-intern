@@ -13,6 +13,7 @@ import {
   ModalHeaderModel,
   TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
+import { SocialMediasRoutingModule } from '../../social-medias/social-medias-routing.module';
 
 @Component({
   selector: 'app-banners-detail',

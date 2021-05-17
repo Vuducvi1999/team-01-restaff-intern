@@ -11,5 +11,6 @@ namespace Domain.DTOs.PageContent
         public string ShortDes { get; set; }
         public string Description { get; set; }
         public int Order { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

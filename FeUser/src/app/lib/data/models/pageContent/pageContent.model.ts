@@ -5,6 +5,7 @@ export interface PageContentModel extends BaseModel {
   order: number;
   shortDes: string;
   description: string;
+  imageUrl: string;
 }
 
 export interface PageContentInfoModel extends BaseModel {
