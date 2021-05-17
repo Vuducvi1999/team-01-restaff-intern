@@ -204,7 +204,7 @@ export class UpdateOrderComponent implements OnInit {
               .update(this.order)
               .then(() => {
                 this.messageService.notification(
-                  'Banner has been approved',
+                  'Order has been approved',
                   TypeSweetAlertIcon.SUCCESS
                 );
                 this.ngbActiveModal.close();

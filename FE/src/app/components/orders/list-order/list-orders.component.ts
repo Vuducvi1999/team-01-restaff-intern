@@ -115,6 +115,7 @@ export class ListOrdersComponent implements OnInit {
 
   statusFilter(status: string) {
     if (this.filter == status) {
+      this.filter = '';
       return this.getOrders();
     }
     this.filter = status;
