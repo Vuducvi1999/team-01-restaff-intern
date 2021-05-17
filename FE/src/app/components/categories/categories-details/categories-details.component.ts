@@ -84,7 +84,7 @@ export class CategoryDetailComponent implements OnInit {
       })
       .catch((er) => {
         this.messageService.alert(
-          er.error.message ?? er.error,
+          er.error.message ?? JSON.stringify(er.error.error) ?? 'Server Disconnected',
           TypeSweetAlertIcon.ERROR
         );
       });
