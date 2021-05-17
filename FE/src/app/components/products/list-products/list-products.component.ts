@@ -92,8 +92,10 @@ export class ListProductsComponent implements OnInit {
               this.fetch();
             })
             .catch((er) =>
-              this.messageService.notification(
-                'Detele fails',
+              this.messageService.alert(
+                er.error.message ??
+                  JSON.stringify(er.error.error) ??
+                  'Server Disconnected',
                 TypeSweetAlertIcon.ERROR
               )
             );
@@ -126,9 +128,15 @@ export class ListProductsComponent implements OnInit {
         }
       })
       .catch((er) => {
-        if (er.error.hasError) {
-          // console.log(er.error.message);
-        }
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        );
+        // if (er.error.hasError) {
+        //   // console.log(er.error.message);
+        // }
       });
   }
 

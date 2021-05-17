@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { PageModel, ReturnMessage } from "src/app/lib/data/models";
+import { PageModel, ReturnMessage, TypeSweetAlertIcon } from "src/app/lib/data/models";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
-import { FileService } from "src/app/lib/data/services";
+import { FileService, MessageService } from "src/app/lib/data/services";
 import { BlogService } from "src/app/lib/data/services/blogs/blog.service";
 
 @Component({
@@ -18,7 +18,8 @@ export class BlogMainComponent implements OnInit {
 
   constructor(
     private blogService: BlogService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messageService: MessageService
   ) {}
 
   getBlogs() {
@@ -30,9 +31,10 @@ export class BlogMainComponent implements OnInit {
         }
       })
       .catch((er) => {
-        if (er.error.hasError) {
-          console.log(er.error.message);
-        }
+        this.messageService.alert(
+          er.error.message ?? JSON.stringify(er.error.error) ?? 'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        )
       });
   }
   getTopBlogs() {
@@ -45,9 +47,10 @@ export class BlogMainComponent implements OnInit {
         }
       })
       .catch((er) => {
-        if (er.error.hasError) {
-          console.log(er.error.message);
-        }
+        this.messageService.alert(
+          er.error.message ?? JSON.stringify(er.error.error) ?? 'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        )
       });
   }
 
@@ -61,9 +64,10 @@ export class BlogMainComponent implements OnInit {
         }
       })
       .catch((er) => {
-        if (er.error.hasError) {
-          console.log(er.error.message);
-        }
+        this.messageService.alert(
+          er.error.message ?? JSON.stringify(er.error.error) ?? 'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        )
       });
   }
   ngOnInit() {

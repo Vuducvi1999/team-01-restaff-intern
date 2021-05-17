@@ -25,5 +25,6 @@ namespace Domain.DTOs.Products
         public int SaleCount { get; set; }
         public bool IsInWishList { get; set; }
         public List<CustomerWishListDTO> CustomerWishLists { get; set; }
+        //public decimal RatingScore { get; set; } = 0;
     }
 }

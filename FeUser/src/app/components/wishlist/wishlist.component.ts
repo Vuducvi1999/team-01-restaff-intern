@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FileService } from "src/app/lib/data/services";
+import { FileService, MessageService } from "src/app/lib/data/services";
 import {
   PageModel,
   ProductModel,
@@ -23,7 +23,8 @@ export class WishlistComponent implements OnInit {
 
   constructor(
     private wishListService: CustomerWishListService,
-    public cartService: CartService
+    public cartService: CartService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -43,11 +44,17 @@ export class WishlistComponent implements OnInit {
   }
 
   removeItem(product: any) {
-    this.cartService.removeWishlistItem(product);
-    const model: SaveCustomerWishListModel = {
-      productId: product.id,
-    };
-    this.wishListService.createOrDelete(model).then(() => this.getList());
+    this.messageService
+      .confirm("Do you want to remove?", "Yes", "No", false)
+      .then((confirm) => {
+        if (confirm.isConfirmed) {
+          this.cartService.removeWishlistItem(product);
+          const model: SaveCustomerWishListModel = {
+            productId: product.id,
+          };
+          this.wishListService.createOrDelete(model).then(() => this.getList());
+        }
+      });
   }
 
   getImage(image: string) {

@@ -1,18 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PageModel, ReturnMessage, TypeSweetAlertIcon } from 'src/app/lib/data/models';
+import {
+  PageModel,
+  ReturnMessage,
+  TypeSweetAlertIcon,
+} from 'src/app/lib/data/models';
 import { InformationWebModel } from 'src/app/lib/data/models/information-website/info-web.model';
 import { FileService } from 'src/app/lib/data/services';
 import { InformationWebsiteService } from 'src/app/lib/data/services/information-website/infoWeb.service';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
-import { EntityType, ModalFile, TypeFile } from 'src/app/shared/components/modals/models/modal.model';
+import {
+  EntityType,
+  ModalFile,
+  TypeFile,
+} from 'src/app/shared/components/modals/models/modal.model';
 
 @Component({
   selector: 'app-list-information-website',
   templateUrl: './list-information-website.component.html',
   styleUrls: ['./list-information-website.component.scss'],
-  providers: [InformationWebsiteService]
+  providers: [InformationWebsiteService],
 })
 export class ListInformationWebsiteComponent implements OnInit {
   public infoWeb: InformationWebModel;
@@ -25,7 +33,8 @@ export class ListInformationWebsiteComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private inforWebService: InformationWebsiteService,
-    private messageService: MessageService) {
+    private messageService: MessageService
+  ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
     this.modalFile.multiBoolen = false;
@@ -43,7 +52,6 @@ export class ListInformationWebsiteComponent implements OnInit {
     return this.inforWebForm.controls;
   }
 
-
   fetch() {
     this.inforWebService
       .get(null)
@@ -51,10 +59,16 @@ export class ListInformationWebsiteComponent implements OnInit {
         if (!res.hasError) {
           this.infoWeb = res.data;
         }
-      }).catch((er) => {
-
-        if (er.error.hasError) {
-        }
+      })
+      .catch((er) => {
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        );
+        // if (er.error.hasError) {
+        // }
       });
   }
   updateSwitch() {
@@ -72,38 +86,23 @@ export class ListInformationWebsiteComponent implements OnInit {
       this.fileURL.push(this.infoWeb.logo);
     }
     this.inforWebForm = this.formBuilder.group({
-      title: [
-        this.infoWeb ? this.infoWeb.title : '',
-        Validators.required,
-      ],
+      title: [this.infoWeb ? this.infoWeb.title : '', Validators.required],
       address: [
         this.infoWeb ? this.infoWeb.address : '',
-        [Validators.required]
+        [Validators.required],
       ],
-      phone: [
-        this.infoWeb ? this.infoWeb.phone : '',
-        Validators.required,
-      ],
-      email: [this.infoWeb ? this.infoWeb.email : '',
-      Validators.required
-      ],
-      fax: [
-        this.infoWeb ? this.infoWeb.fax : '',
-        Validators.required,
-      ],
+      phone: [this.infoWeb ? this.infoWeb.phone : '', Validators.required],
+      email: [this.infoWeb ? this.infoWeb.email : '', Validators.required],
+      fax: [this.infoWeb ? this.infoWeb.fax : '', Validators.required],
       description: [
         this.infoWeb ? this.infoWeb.description : '',
         Validators.required,
       ],
-      logo: [
-        this.infoWeb ? this.infoWeb.logo : '',
-        Validators.required,
-      ],
+      logo: [this.infoWeb ? this.infoWeb.logo : '', Validators.required],
     });
   }
 
   updateDetails() {
-
     if (this.inforWebForm.invalid) {
       this.messageService.alert(
         'Invalid Form make sure you input valid value !',
@@ -128,7 +127,7 @@ export class ListInformationWebsiteComponent implements OnInit {
       updatedBy: this.infoWeb ? this.infoWeb.updatedBy : '',
       updatedByName: this.infoWeb ? this.infoWeb.updatedByName : '',
       id: this.infoWeb.id,
-      files: this.modalFile.listFile
+      files: this.modalFile.listFile,
     };
     this.inforWebService
       .update(this.infoWeb)
@@ -143,11 +142,16 @@ export class ListInformationWebsiteComponent implements OnInit {
         }
       })
       .catch((er) => {
-        if (er.error.hasError) {
-          // console.log(er.error.message);
-        }
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        );
+        // if (er.error.hasError) {
+        //   // console.log(er.error.message);
+        // }
       });
-
   }
   onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {
     if (event == null) {

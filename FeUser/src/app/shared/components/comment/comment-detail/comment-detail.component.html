@@ -21,7 +21,7 @@
                   <span>( {{ getDate(comment.createByDate) }} )</span>
                 </b>
               </div>
-              <div class="form-row m-0">
+              <div class="form-row">
                 <div class="rating">
                   <ngb-rating
                     [max]="5"
@@ -36,9 +36,8 @@
                   </ngb-rating>
                 </div>
               </div>
-              <br />
-              <div class="form-row">
-                <div>{{ comment.content }}</div>
+              <div class="form-row content">
+                <p>{{ comment.content }}</p>
               </div>
             </div>
           </div>

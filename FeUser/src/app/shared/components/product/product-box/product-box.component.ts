@@ -53,7 +53,6 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
   @Input() typePositionCart: string = ETypePositionCart.BOX_2;
   @Input() typeSizeImage: string = ETypeSizeImage.NORMAL;
   @Input() typeGridLayout: string = ETypeGridLayout.NORMAL;
-  testData: ProductModel[];
   @ViewChild("quickView") QuickView: QuickViewComponent;
   @ViewChild("cartModal") CartModal: CartModalComponent;
 
@@ -86,14 +85,8 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
     this.subDataUser = this.authService.callUserInfo.subscribe((it) => {
       this.userInfo = it;
     });
-  }
 
-  getWishlist() {
-    if (this.userInfo) {
-      this.wishListService.getByCustomer(this.userInfo?.id).then((data) => {
-        this.testData = data.data;
-      });
-    }
+    this.ImageSrc = this.product.imageUrl.split(",")[0];
   }
 
   updateTypeGridLayout() {

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { CommentPassingModel } from "src/app/lib/data/models/comments/comment.model";
+import { CreateCommentModel } from "src/app/lib/data/models/comments/comment.model";
+import { MessageService } from "src/app/lib/data/services";
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
 
 @Component({
@@ -29,37 +30,31 @@ import { CommentService } from "src/app/lib/data/services/comments/comment.servi
 })
 export class CommentComponent implements OnInit {
   commentForm: FormGroup;
-  @Input() dataComment: CommentPassingModel;
+  @Input() dataComment: CreateCommentModel;
   @Input() isLoading: boolean;
   @Output() action = new EventEmitter();
+  currentRate = 1;
 
   constructor(
     private commentService: CommentService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
     this.initForm();
   }
-  currentRate = 1;
+
   initForm() {
     this.commentForm = this.fb.group({
-      fullName: [this.dataComment.fullName],
-      customerId: [this.dataComment.customerId],
       entityId: [this.dataComment.entityId],
       entityType: [this.dataComment.entityType],
       content: [""],
       rating: [this.dataComment.rating],
     });
-    var a = 1;
   }
 
   Submit() {
-    if (!this.dataComment.customerId) {
-      alert("Please login first!");
-      return;
-    }
-
     this.commentService
       .create(this.commentForm.value)
       .then((data) => {
@@ -67,8 +62,7 @@ export class CommentComponent implements OnInit {
         this.action.emit();
       })
       .catch((e) => {
-        console.log(e);
-        alert("Submit fail");
+        this.messageService.alert(e.error.message);
       });
   }
 }
