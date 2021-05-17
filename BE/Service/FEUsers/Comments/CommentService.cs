@@ -19,16 +19,20 @@ namespace Service.Comments
         private readonly IRepository<Comment> _commentRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IRepository<Product> _productRepository;
+        private readonly IRepository<Blog> _blogRepository;
         private readonly IUserManager _userManager;
         private readonly UserInformationDTO _userInformation;
 
-        public CommentService(IRepository<Comment> commentRepository, IUnitOfWork unitOfWork, IMapper mapper, IUserManager userManager)
+        public CommentService(IRepository<Comment> commentRepository, IUnitOfWork unitOfWork, IMapper mapper, IUserManager userManager, IRepository<Product> productRepository, IRepository<Blog> blogRepository)
         {
             _commentRepository = commentRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userManager = userManager;
             _userInformation = _userManager.GetInformationUser();
+            _productRepository = productRepository;
+            _blogRepository = blogRepository;
         }
 
         public ReturnMessage<CommentDTO> Create(CreateCommentDTO model)
@@ -60,6 +64,23 @@ namespace Service.Comments
                 _commentRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<CommentDTO>(false, _mapper.Map<Comment, CommentDTO>(entity), MessageConstants.CreateSuccess);
+
+                var ratingEntity = _commentRepository.Queryable().Where(p => p.EntityId == model.EntityId);
+                decimal ratingScore = (decimal)Math.Round(ratingEntity.Average(x => x.Rating), 1);
+
+                var productEntity = _productRepository.Queryable().FirstOrDefault(p => p.Id == model.EntityId);
+                if (productEntity.IsNullOrEmpty())
+                {
+                    var blogEntity = _blogRepository.Queryable().FirstOrDefault(p => p.Id == model.EntityId);
+                    blogEntity.RatingScore = ratingScore;
+                    blogEntity.ObjectState = ObjectState.Modified;
+                    _unitOfWork.SaveChanges();
+                    return result;
+                }
+
+                productEntity.RatingScore = ratingScore;
+                productEntity.ObjectState = ObjectState.Modified;
+                _unitOfWork.SaveChanges();
                 return result;
             }
             catch
@@ -143,25 +164,26 @@ namespace Service.Comments
             return result;
         }
 
-
         public ReturnMessage<decimal> GetRating(Guid entityId)
         {
-            if (entityId.IsNullOrEmpty() && entityId == Guid.Empty)
-            {
-                return new ReturnMessage<decimal>(true, 0, MessageConstants.Error);
-            }
             try
             {
-                var entity = _commentRepository.Queryable().Where(p => p.EntityId == entityId);
-
-                if (entity.Count() == 0)
+                var entity = _commentRepository.Queryable().FirstOrDefault(p => p.EntityId == entityId);
+                if (entity.IsNotNullOrEmpty())
                 {
-                    return new ReturnMessage<decimal>(false, 0, MessageConstants.DataError);
+                    decimal ratingPoint = 0;
+                    if (entity.EntityType.Contains("Product"))
+                    {
+                        ratingPoint = _productRepository.Queryable().FirstOrDefault(p => p.Id == entityId).RatingScore;
+                        return new ReturnMessage<decimal>(false, ratingPoint, MessageConstants.ListSuccess);
+                    }
+                    ratingPoint = _blogRepository.Queryable().FirstOrDefault(p => p.Id == entityId).RatingScore;
+                    var result = new ReturnMessage<decimal>(false, ratingPoint, MessageConstants.ListSuccess);
+                    return result;
                 }
-                decimal rating = (decimal)Math.Round(entity.Average(x => x.Rating), 1);
-                return new ReturnMessage<decimal>(false, rating, MessageConstants.GetSuccess);
+                return new ReturnMessage<decimal>(false, 0, MessageConstants.CreateFail);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new ReturnMessage<decimal>(true, 0, ex.Message);
             }

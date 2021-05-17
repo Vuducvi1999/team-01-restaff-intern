@@ -81,6 +81,7 @@ namespace Common.Constants
         public const string TopBlog = BaseBlog + "/topblog";
         public const string RecentBlog = BaseBlog + "/recentblog";
         public const string GetBlog = BaseBlog + "/{id}";
+        public const string GetUserBlog = BaseBlog + "/user";
 
         public const string BaseInformationWebsite = BaseApi + "/info-website";
 
@@ -93,6 +94,7 @@ namespace Common.Constants
         public const string BaseComment = BaseApi + "/comment";
         public const string GetCommentBlog = BaseComment + "/blog";
         public const string GetCommentProduct= BaseComment + "/product";
+        public const string GetRating = BaseRating + "/rating";
         // CustomerWishList
         public const string BaseCustomerWishList = BaseApi + "/customer-wish-list";
         public const string GetCustomerWishList = BaseApi + "/customer-wish-list/{customerId}";

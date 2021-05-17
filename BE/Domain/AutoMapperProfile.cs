@@ -30,6 +30,7 @@ using Domain.DTOs.Mails;
 using Infrastructure.Mails;
 using Domain.DTOs.CustomerFE;
 
+
 namespace Domain
 {
     public class AutoMapperProfile : Profile
@@ -111,6 +112,7 @@ namespace Domain
             CreateMap<Blog, CreateBlogDTO>().ReverseMap();
             CreateMap<Blog, UpdateBlogDTO>().ReverseMap();
             CreateMap<Blog, DeleteBlogDTO>().ReverseMap();
+
 
             //Order
             CreateMap<PaginatedList<Order>, PaginatedList<OrderDTO>>().ReverseMap();

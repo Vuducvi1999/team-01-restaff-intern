@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, HostListener, Input, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { PageModel, ReturnMessage, TypeSweetAlertIcon } from "src/app/lib/data/models";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";

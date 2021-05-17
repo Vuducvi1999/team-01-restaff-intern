@@ -31,9 +31,7 @@ export class CommentService {
   }
 
   getRating(entityId: any) {
-    const urlRating = "/rating";
-    return this.httpClient
-      .getObservable(this.url + urlRating, entityId)
-      .toPromise();
+    const url = this.url + `/rating`;
+    return this.httpClient.getObservable(url, entityId).toPromise();
   }
 }
