@@ -107,7 +107,7 @@ export class CustomerDetailsComponent implements OnInit {
       })
       .catch((er) => {
         this.messageService.alert(
-          er.error.message ?? JSON.stringify(er.error),
+          er.error.message ?? JSON.stringify(er.error.error) ?? "Server Disconnected",
           TypeSweetAlertIcon.ERROR
         );
       });

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PageModel, ReturnMessage, TypeSweetAlertIcon } from 'src/app/lib/data/models';
+import {
+  PageModel,
+  ReturnMessage,
+  TypeSweetAlertIcon,
+} from 'src/app/lib/data/models';
 import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
 
 import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
@@ -14,20 +18,20 @@ import { BannersDetailComponent } from '../banners-detail/banners-detail.compone
   selector: 'app-list-banners',
   templateUrl: './list-banners.component.html',
   styleUrls: ['./list-banners.component.scss'],
-  providers: []
+  providers: [],
 })
 export class ListBannersComponent implements OnInit {
   public banners: BannerModel[];
 
-
-
-  constructor(private modalService: NgbModal, private bannersService: BannersService, private messageService: MessageService) {
+  constructor(
+    private modalService: NgbModal,
+    private bannersService: BannersService,
+    private messageService: MessageService
+  ) {
     this.getBanners();
   }
-  ngOnInit() {
-  }
+  ngOnInit() {}
   public settings = {
-
     mode: 'external',
     actions: {
       position: 'right',
@@ -51,42 +55,61 @@ export class ListBannersComponent implements OnInit {
         title: 'Display Order',
         value: 'displayOrder',
         type: 'custom',
-        renderComponent: CustomViewCellComponent
+        renderComponent: CustomViewCellComponent,
       },
     },
   };
 
   getBanners() {
-    this.bannersService.get(null).then((res: ReturnMessage<PageModel<BannerModel>>) => {
-      if (!res.hasError) {
-        this.banners = res.data.results;
-      }
-    }).catch((er) => {
-
-      if (er.error.hasError) {
-        console.log(er.error.message)
-      }
-    });
-
+    this.bannersService
+      .get(null)
+      .then((res: ReturnMessage<PageModel<BannerModel>>) => {
+        if (!res.hasError) {
+          this.banners = res.data.results;
+        }
+      })
+      .catch((er) => {
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        );
+      });
   }
 
   openDetails(event: any) {
     var modalRef = this.modalService.open(BannersDetailComponent, {
-      size: 'lg'
+      size: 'lg',
     });
     modalRef.componentInstance.item = event?.data;
     modalRef.result.then(() => this.getBanners());
   }
 
   delete(event: any) {
-    this.messageService.confirm(`Do you want to delete the banner?`, 'Yes').then(res => {
-      if (res.isConfirmed) {
-        let banner = event.data as BannerModel;
-        this.bannersService.delete(banner).then(() => {
-          this.messageService.notification('Banner has been deleted', TypeSweetAlertIcon.SUCCESS);
-          this.getBanners();
-        })
-      }
-    });
+    this.messageService
+      .confirm(`Do you want to delete the banner?`, 'Yes')
+      .then((res) => {
+        if (res.isConfirmed) {
+          let banner = event.data as BannerModel;
+          this.bannersService
+            .delete(banner)
+            .then(() => {
+              this.messageService.notification(
+                'Banner has been deleted',
+                TypeSweetAlertIcon.SUCCESS
+              );
+              this.getBanners();
+            })
+            .catch((er) => {
+              this.messageService.alert(
+                er.error.message ??
+                  JSON.stringify(er.error.error) ??
+                  'Server Disconnected',
+                TypeSweetAlertIcon.ERROR
+              );
+            });
+        }
+      });
   }
 }

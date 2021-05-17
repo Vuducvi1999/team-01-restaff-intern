@@ -24,9 +24,6 @@ export class RegisterComponent implements OnInit {
   registForm: FormGroup;
   submitted = false;
 
-  isCheckEmail: boolean;
-  isCheckUserName: boolean;
-
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
@@ -46,7 +43,7 @@ export class RegisterComponent implements OnInit {
       {
         firstName: [null, [Validators.required]],
         lastName: [null, [Validators.required]],
-        username: [null, [Validators.required], this.isUserNameExsist.bind(this)],
+        username: [null, [Validators.required]],
         email: [
           null,
           [
@@ -55,7 +52,6 @@ export class RegisterComponent implements OnInit {
               "[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}"
             ),
           ],
-          this.isEmailExsist.bind(this),
         ],
         password: [null, [Validators.required]],
         confirmpassword: [null, [Validators.required]],
@@ -74,40 +70,6 @@ export class RegisterComponent implements OnInit {
     if (pass.value !== confirmpass.value) {
       confirmpass.setErrors({ mustMatch: true });
     }
-  }
-
-  isEmailExsist(control: FormControl) {
-    this.isCheckEmail = null;
-    const q = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        this.authService
-          .checkEmail(control.value)
-          .then((res: ReturnMessage<boolean>) => {
-            this.isCheckEmail = false;
-            res.data
-              ? resolve({ isEmailUnique: true })
-              : (this.isCheckEmail = true);
-          });
-      }, 1000);
-    });
-    return q;
-  }
-
-  isUserNameExsist(control: FormControl) {
-    this.isCheckUserName = null;
-    const q = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        this.authService
-          .checkUserName(control.value)
-          .then((res: ReturnMessage<boolean>) => {
-            this.isCheckUserName = false;
-            res.data
-              ? resolve({ isUserNameUnique: true })
-              : (this.isCheckUserName = true);
-          });
-      }, 1000);
-    });
-    return q;
   }
 
   async onRegist() {
@@ -139,7 +101,9 @@ export class RegisterComponent implements OnInit {
         this.sweetalertService.alert(
           "Register Fail",
           TypeSweetAlertIcon.ERROR,
-          `${er.error.message ?? JSON.stringify(er.error)}`
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            "Server Disconnected"
         );
       });
   }
