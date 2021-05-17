@@ -98,7 +98,20 @@ export class ProductDetailsComponent implements OnInit {
     );
 
     this.initDataComment();
-    this.getComments();
+    this.getProduct();
+  }
+
+  getRating() {
+    this.activatedRoute.queryParams.subscribe((param) => {
+      const data = { entityId: param.id };
+      this.commentService
+        .getRating({ params: data })
+        .then((res: ReturnMessage<number>) => {
+          this.rating = res.data;
+          console.log(this.rating);
+        })
+        .catch((e) => {});
+    });
   }
 
   getProduct() {
@@ -109,6 +122,7 @@ export class ProductDetailsComponent implements OnInit {
           this.product = res.data;
         });
       this.createSearchModel();
+      this.getComments();
     });
   }
 
@@ -146,12 +160,9 @@ export class ProductDetailsComponent implements OnInit {
       .getProductComments(this.searchModel)
       .then((data: ReturnMessage<PageModel<CommentModel>>) => {
         this.comments = data.data;
-        console.log(this.comments);
       })
-      .catch((e) => {
-        console.log(e);
-      });
-    this.getProduct();
+      .catch((e) => {});
+    this.getRating();
   }
   addToCart(product: any) {
     this.cartService.addToCart(product);

@@ -17,5 +17,7 @@ namespace Service.Comments
         public ReturnMessage<CommentDTO> Create(CreateCommentDTO model);
         public ReturnMessage<CommentDTO> Delete(DeleteCommentDTO model);
 
+        public ReturnMessage<decimal> GetRating(Guid entityId);
+
     }
 }

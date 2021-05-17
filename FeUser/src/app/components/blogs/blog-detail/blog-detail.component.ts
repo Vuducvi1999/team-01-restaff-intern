@@ -59,7 +59,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
   searchModel: any;
   item: any;
 
-  public ratingPoint: number;
+  public rating: number;
 
   subDataUser: Subscription;
 
@@ -78,10 +78,22 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     this.subDataUser = this.authService.callUserInfo.subscribe(
       (it) => (this.user = it)
     );
-    this.getComments();
     this.initDataComment();
+    this.getBlog();
   }
 
+  getRating() {
+    this.activatedRoute.paramMap.subscribe((param) => {
+      const data = { entityId: param.get("id") };
+      this.commentService
+        .getRating({ params: data })
+        .then((res: ReturnMessage<number>) => {
+          this.rating = res.data;
+          console.log(this.rating);
+        })
+        .catch((e) => {});
+    });
+  }
   getBlog() {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.id = params.get("id");
@@ -92,6 +104,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
           console.log(this.data);
         });
       this.createSearchModel();
+      this.getComments();
     });
   }
 
@@ -118,7 +131,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
       .catch((e) => {
         console.log(e);
       });
-    this.getBlog();
+    this.getRating();
   }
 
   getImage(image) {

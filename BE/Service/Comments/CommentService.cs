@@ -169,5 +169,30 @@ namespace Service.Comments
                 return new ReturnMessage<List<CommentDTO>>(true, null, ex.Message);
             }
         }
+
+        public ReturnMessage<decimal> GetRating(Guid entityId)
+        {
+            try
+            {
+                var entity = _commentRepository.Queryable().FirstOrDefault(p => p.EntityId == entityId);
+                if (entity.IsNotNullOrEmpty())
+                {
+                    decimal ratingPoint = 0;
+                    if (entity.EntityType.Contains("Product"))
+                    {
+                        ratingPoint = _productRepository.Queryable().FirstOrDefault(p => p.Id == entityId).RatingScore;
+                        return new ReturnMessage<decimal>(false, ratingPoint, MessageConstants.ListSuccess);
+                    }
+                    ratingPoint = _blogRepository.Queryable().FirstOrDefault(p => p.Id == entityId).RatingScore;
+                    var result = new ReturnMessage<decimal>(false, ratingPoint, MessageConstants.ListSuccess);
+                    return result;
+                }
+                return new ReturnMessage<decimal>(false, 0, MessageConstants.CreateFail);
+            }
+            catch (Exception ex)
+            {
+                return new ReturnMessage<decimal>(true, 0, ex.Message);
+            }
+        }
     }
 }
