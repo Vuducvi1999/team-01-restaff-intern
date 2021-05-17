@@ -4,6 +4,8 @@ import {
   Input,
   HostListener,
   OnDestroy,
+  ViewChild,
+  ElementRef,
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
@@ -32,6 +34,8 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
   typeDisplayImage = TypeDisplayImage;
   user: UserDataReturnDTOModel;
   subDataUser: Subscription;
+  @ViewChild("headerRef") headerRef: ElementRef;
+  offsetHeight: number = 0;
 
   public headerModel: InfoHeaderModel = {
     informationWeb: {
@@ -65,6 +69,10 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
       (it) => (this.user = it)
     );
     this.loadHeaderModel();
+
+    setTimeout(() => {
+      this.offsetHeight = this.headerRef.nativeElement.offsetHeight;
+    }, 0);
   }
 
   // @HostListener Decorator
