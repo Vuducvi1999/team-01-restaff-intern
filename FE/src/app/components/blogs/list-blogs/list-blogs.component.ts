@@ -17,7 +17,8 @@ import { BlogsDetailComponent } from '../blogs-detail/blogs-detail.component';
 })
 export class ListBlogsComponent implements OnInit {
   public blogs: BlogModel[];
-
+  public data: PageModel<BlogModel>;
+  params: any = {};
   constructor(
     private modalService: NgbModal,
     private blogService: BlogService,
@@ -27,24 +28,25 @@ export class ListBlogsComponent implements OnInit {
 
   getBlogs() {
     this.blogService
-      .get(null)
+      .get({ params: this.params })
       .then((res: ReturnMessage<PageModel<BlogModel>>) => {
         if (!res.hasError) {
           this.blogs = res.data.results;
+          this.data = res.data;
         }
       })
       .catch((er) => {
-        if (er.error.hasError) {
-        }
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        );
       });
   }
 
   public settings = {
     mode: 'external',
-    pager: {
-      display: true,
-      perPage: 10,
-    },
     actions: {
       position: 'right',
     },
@@ -53,6 +55,7 @@ export class ListBlogsComponent implements OnInit {
         title: 'Image',
         type: 'custom',
         renderComponent: ViewImageCellComponent,
+        filter: false,
       },
       title: {
         title: 'Title',
@@ -94,7 +97,12 @@ export class ListBlogsComponent implements OnInit {
       });
   }
 
+  onPage(event) {
+    this.params.pageIndex = event;
+    this.getBlogs();
+  }
   ngOnInit() {
+    this.params.pageIndex = 0;
     this.getBlogs();
   }
 }

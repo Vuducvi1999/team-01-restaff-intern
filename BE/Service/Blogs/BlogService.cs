@@ -104,9 +104,9 @@ namespace Service.Blogs
                         it.ContentHTML.Contains(search.Search.ContentHTML) ||
                         it.ImageUrl.Contains(search.Search.ImageUrl)
                     )
-                )
+                ) && !it.IsDeleted
                 , search.PageSize
-                , search.PageIndex
+                , search.PageIndex * search.PageSize
                 , t => t.CreateByDate
             );
             var data = _mapper.Map<PaginatedList<Blog>, PaginatedList<BlogDTO>>(resultEntity);

@@ -44,9 +44,6 @@ export class ListCouponComponent implements OnInit {
             'Server Disconnected',
           TypeSweetAlertIcon.ERROR
         );
-        // if (er.error.hasError) {
-        //   // console.log(er.error.message);
-        // }
       });
   }
   public settings = {

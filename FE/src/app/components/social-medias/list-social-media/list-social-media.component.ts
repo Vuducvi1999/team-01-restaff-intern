@@ -19,7 +19,8 @@ import { SocialMediaDetailComponent } from '../social-media-detail/social-media-
 })
 export class ListSocialMediaComponent implements OnInit {
   public socialMedias: SocialMediaModel[];
-
+  public data: PageModel<SocialMediaModel>;
+  params: any = {};
   constructor(
     private modalService: NgbModal,
     private socialService: SocialMediaService,
@@ -28,10 +29,11 @@ export class ListSocialMediaComponent implements OnInit {
 
   getSocialMedias() {
     this.socialService
-      .get(null)
+      .get({ params: this.params })
       .then((res: ReturnMessage<PageModel<SocialMediaModel>>) => {
         if (!res.hasError) {
           this.socialMedias = res.data.results;
+          this.data = res.data;
         }
       })
       .catch((er) => {
@@ -42,10 +44,6 @@ export class ListSocialMediaComponent implements OnInit {
 
   public settings = {
     mode: 'external',
-    pager: {
-      display: true,
-      perPage: 10,
-    },
     actions: {
       position: 'right',
     },
@@ -88,7 +86,7 @@ export class ListSocialMediaComponent implements OnInit {
           let socialMedia = event.data as SocialMediaModel;
           this.socialService.delete(socialMedia).then(() => {
             this.messageService.notification(
-              'Social has been deleted',
+              'Social media has been deleted',
               TypeSweetAlertIcon.SUCCESS
             );
             this.getSocialMedias();
@@ -97,7 +95,12 @@ export class ListSocialMediaComponent implements OnInit {
       });
   }
 
+  onPage(event) {
+    this.params.pageIndex = event;
+    this.getSocialMedias();
+  }
   ngOnInit(): void {
+    this.params.pageIndex = 0;
     this.getSocialMedias();
   }
 }

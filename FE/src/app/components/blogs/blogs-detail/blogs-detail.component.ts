@@ -86,7 +86,7 @@ export class BlogsDetailComponent implements OnInit {
 
     if (this.blogForm.valid) {
       this.messageService
-        .confirm(`Do you want to edit the banner?`, 'Yes')
+        .confirm(`Do you want to edit the blog?`, 'Yes')
         .then((res) => {
           if (res.isConfirmed) {
             this.blogService

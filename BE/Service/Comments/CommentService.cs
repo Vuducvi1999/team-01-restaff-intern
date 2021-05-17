@@ -24,20 +24,13 @@ namespace Service.Comments
         private readonly IUserManager _userManager;
         private readonly UserInformationDTO _userInformation;
 
-        public CommentService(IRepository<Comment> commentRepository, IUnitOfWork unitOfWork, IMapper mapper, IUserManager userManager)
+        public CommentService(IRepository<Comment> commentRepository, IUnitOfWork unitOfWork, IMapper mapper, IUserManager userManager, IRepository<Product> productRepository, IRepository<Blog> blogRepository)
         {
             _commentRepository = commentRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userManager = userManager;
             _userInformation = _userManager.GetInformationUser();
-        }
-
-        public CommentService(IRepository<Comment> commentRepository, IUnitOfWork unitOfWork, IMapper mapper, IRepository<Product> productRepository, IRepository<Blog> blogRepository)
-        {
-            _commentRepository = commentRepository;
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
             _productRepository = productRepository;
             _blogRepository = blogRepository;
         }
@@ -46,14 +39,6 @@ namespace Service.Comments
         {
             try
             {
-                //var dailyRating = _commentRepository.Queryable().Where(p => p.EntityId == model.EntityId
-                //                                                       && p.CreateByDate.Date == DateTime.Now.Date
-                //                                                       && p.CustomerId == model.CustomerId).Count();
-                //if (dailyRating > 5)
-                //{
-                //    return new ReturnMessage<CommentDTO>(true, null, MessageConstants.CreateFail);
-                //}
-
                 if(String.IsNullOrEmpty(model.Content.Trim()))
                     return new ReturnMessage<CommentDTO>(true, null, MessageConstants.EmptyContentComment);
 

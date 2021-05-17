@@ -99,6 +99,15 @@
                   >
                     Value is required
                   </span>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      CouponFormControl.value.errors?.min ||
+                      CouponFormControl.value.errors?.max
+                    "
+                  >
+                    Value must be in range 1 to 99
+                  </span>
                 </div>
               </div>
               <div class="form-group row">

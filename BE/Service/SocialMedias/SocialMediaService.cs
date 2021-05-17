@@ -99,9 +99,9 @@ namespace Service.SocialMedias
                         it.Link.Contains(search.Search.Link) ||
                         it.IconUrl.Contains(search.Search.IconUrl)
                     )
-                )
+                ) && !it.IsDeleted
                 , search.PageSize
-                , search.PageIndex
+                , search.PageIndex * search.PageSize
                 , t => t.Title
             );
             var data = _mapper.Map<PaginatedList<SocialMedia>, PaginatedList<SocialMediaDTO>>(resultEntity);

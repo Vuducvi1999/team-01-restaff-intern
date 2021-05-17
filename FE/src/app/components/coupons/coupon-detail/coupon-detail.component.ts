@@ -40,7 +40,10 @@ export class CouponDetailComponent implements OnInit {
       code: [this.item ? this.item.code : '', Validators.required],
       name: [this.item ? this.item.name : '', Validators.required],
       hasPercent: [this.item?.hasPercent ? true : false],
-      value: [this.item ? this.item.value : '', Validators.required],
+      value: [
+        this.item ? this.item.value : '',
+        [Validators.required, Validators.min(1), Validators.max(99)],
+      ],
       startDate: [
         this.item ? formatDate(this.item.startDate, 'yyyy-MM-dd', 'en') : '',
         Validators.required,
