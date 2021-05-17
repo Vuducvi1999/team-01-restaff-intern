@@ -134,7 +134,7 @@ namespace Service.Products
                model.Description == "null")
             {
                 var entity = _mapper.Map<UpdateProductDTO, Product>(model);
-                return new ReturnMessage<ProductDTO>(true, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.Error);
+                return new ReturnMessage<ProductDTO>(true, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.UpdateFail);
             }
             try
             {

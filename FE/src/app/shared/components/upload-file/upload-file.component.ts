@@ -24,6 +24,7 @@ export class UploadFileComponent implements OnInit {
   @Input() data: ModalFile;
   @Input() styleFile: string;
   @Input() fileURL: (string | ArrayBuffer)[];
+  @Input() sizeImage: string;
   @Output() onChange = new EventEmitter();
 
   public files: File[];

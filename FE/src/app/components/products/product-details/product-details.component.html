@@ -85,8 +85,12 @@
                                  formControlName="imageUrl" hidden />
                               <span class="text-danger"
                                 *ngIf="(productFormsControl.imageUrl.touched || submitted) && productFormsControl.imageUrl.errors?.required">Required</span>
-                              <app-upload-file styleFile="width: 350px; height: 300px;" [data]="modalFile"
-                                [fileURL]="fileURL" (onChange)="onChangeData($event)">
+                              <app-upload-file 
+                                styleFile="width: 350px; height: 300px;"
+                                [data]="modalFile"
+                                [fileURL]="fileURL"
+                                sizeImage = "650 x 700" 
+                                (onChange)="onChangeData($event)">
                               </app-upload-file>
                             </div>
                           </div>

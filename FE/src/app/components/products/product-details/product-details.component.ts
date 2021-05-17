@@ -68,7 +68,10 @@ export class ProductDetailsComponent implements OnInit {
       })
       .catch((er) => {
         if (er.error.hasError) {
-          console.log(er.error.message);
+          this.sweetalertService.alert(
+            er.error.message ?? er.error,
+            TypeSweetAlertIcon.ERROR
+          );
         }
       });
   }

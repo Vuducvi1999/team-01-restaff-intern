@@ -55,9 +55,11 @@ export class ListInformationWebsiteComponent implements OnInit {
         this.infoWeb = res.data;
       }
     }).catch((er) => {
-      
-      if(er.error.hasError)
-      {
+      if (er.error.hasError) {
+        this.sweetalertService.alert(
+          er.error.message ?? er.error,
+          TypeSweetAlertIcon.ERROR
+        );
       }
     });
   }
@@ -67,6 +69,7 @@ export class ListInformationWebsiteComponent implements OnInit {
     if(this.update){
       this.loadForminfoWeb();
     }
+    this.fetch();
   }
 
   //Address , Phone, Email, Fax, Logo
@@ -108,7 +111,6 @@ export class ListInformationWebsiteComponent implements OnInit {
   }
 
   updateDetails() {
-    if (window.confirm('Do you want to update your profile?')) {
       if(this.inforWebForm.invalid){
         this.sweetalertService.alert(
           'Invalid Form make sure you input valid value !',
@@ -150,10 +152,12 @@ export class ListInformationWebsiteComponent implements OnInit {
         })
         .catch((er) => {
           if (er.error.hasError) {
-            // console.log(er.error.message);
+            this.sweetalertService.alert(
+              er.error.message ?? er.error,
+              TypeSweetAlertIcon.ERROR
+            );
           }
         });
-    }
   }
   onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {
     if (event == null) {

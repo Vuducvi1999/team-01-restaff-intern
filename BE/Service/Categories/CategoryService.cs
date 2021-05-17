@@ -121,7 +121,7 @@ namespace Service.Categories
                model.Description == "null")
             {
                 var entity = _mapper.Map<UpdateCategoryDTO, Category>(model);
-                return new ReturnMessage<CategoryDTO>(true, _mapper.Map<Category, CategoryDTO>(entity), MessageConstants.Error);
+                return new ReturnMessage<CategoryDTO>(true, _mapper.Map<Category, CategoryDTO>(entity), MessageConstants.UpdateFail);
             }
 
             try

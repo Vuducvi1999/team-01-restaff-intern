@@ -5,7 +5,7 @@
     accept="{{ data.typeFile }}"
     [style]="styleFile"
   >
-    <ngx-dropzone-label>Upload file</ngx-dropzone-label>
+    <ngx-dropzone-label>Upload Image {{sizeImage}}</ngx-dropzone-label>
     <ng-container *ngIf="data.typeFile != typeIMAGE">
       <ngx-dropzone-preview
         *ngFor="let f of files"

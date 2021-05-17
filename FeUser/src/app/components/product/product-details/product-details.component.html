@@ -89,11 +89,8 @@
           </div>
           <br />
           <div class="addeffect-section product-description border-product">
-            <div
-              *ngIf="product?.contentHTML != ''"
-              class="addeffect-section product-description border-product"
-            >
-              <h3>Description</h3>
+            <div *ngIf="product?.contentHTML != ''">
+              <h3 style="color: black;">Description</h3>
               <div [innerHTML]="product?.contentHTML"></div>
             </div>
             <br />
