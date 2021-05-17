@@ -58,16 +58,16 @@ namespace Service.Orders
                             invalidProducts = true;
                         }
 
-                        if (!check.HasError)
-                        {
-                            var data = check.Data;
-                            var dto = _mapper.Map<UpdateProductDTO>(data);
-                            var update = _productService.UpdateCount(dto, detail.Quantity);
-                            if (update.HasError)
-                            {
-                                invalidProducts = true;
-                            }
-                        }
+                        //if (!check.HasError)
+                        //{
+                        //    var data = check.Data;
+                        //    var dto = _mapper.Map<UpdateProductDTO>(data);
+                        //    var update = _productService.UpdateCount(dto, detail.Quantity);
+                        //    if (update.HasError)
+                        //    {
+                        //        invalidProducts = true;
+                        //    }
+                        //}
                     });
 
                     if (invalidProducts)
@@ -162,13 +162,28 @@ namespace Service.Orders
         {
             try
             {
-                var entity = _orderRepository.Find(model.Id);
+                var entity = _orderRepository.Queryable().AsNoTracking().Include(t => t.OrderDetails).FirstOrDefault(t=> t.Id == model.Id);
                 if (entity.Status != "New")
                 {
                     return new ReturnMessage<OrderDTO>(true, null, MessageConstants.UpdateFail);
                 }
                 if (entity.IsNotNullOrEmpty())
                 {
+                    if (model.Status == "Approved")
+                    {
+                        entity.Status = model.Status;
+                        model = _mapper.Map<UpdateOrderDTO>(entity);
+                        model.OrderDetails.ForEach(detail =>
+                        {
+                            var check = _productService.GetById(detail.ProductId);
+                            if (!check.HasError)
+                            {
+                                var data = check.Data;
+                                var dto = _mapper.Map<UpdateProductDTO>(data);
+                                var update = _productService.UpdateCount(dto, detail.Quantity);
+                            }
+                        });
+                    }
                     entity.Update(model);
                     _orderRepository.Update(entity);
                     _unitOfWork.SaveChanges();

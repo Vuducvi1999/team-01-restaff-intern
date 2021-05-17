@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
+import {
+  PageModel,
+  ReturnMessage,
+  TypeSweetAlertIcon,
+} from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { FileService } from 'src/app/lib/data/services';
 import { CategoryService } from 'src/app/lib/data/services/categories/category.service';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { CategoryDetailComponent } from '../categories-details/categories-details.component';
 
@@ -11,91 +16,106 @@ import { CategoryDetailComponent } from '../categories-details/categories-detail
   selector: 'app-list-categories',
   templateUrl: './list-categories.component.html',
   styleUrls: ['./list-categories.component.scss'],
-  providers: [CategoryService, FileService]
+  providers: [CategoryService, FileService],
 })
 export class ListCategoriesComponent implements OnInit {
-
   public categories: CategoryModel[];
   closeResult = '';
-  constructor
-  (
+  constructor(
     private modalService: NgbModal,
-    private categoryService:CategoryService,
-  )
-  {
+    private categoryService: CategoryService,
+    private messageService: MessageService
+  ) {
     this.fetch();
   }
 
-
-   public settings = 
-   {
-      mode :'external',
-      actions: 
-      {
-        position: 'right'
+  public settings = {
+    mode: 'external',
+    actions: {
+      position: 'right',
+    },
+    columns: {
+      imageUrl: {
+        title: 'Image',
+        type: 'custom',
+        renderComponent: ViewImageCellComponent,
       },
-      columns: 
-      {
-        imageUrl: {
-          title: 'Image',
-          type: 'custom',
-          renderComponent: ViewImageCellComponent,
-        },
-        name: {
-          title: 'Name',
-          filter: false,
-        },
-        description: {
-          title: 'Description',
-          filter: false,
-        },
+      name: {
+        title: 'Name',
+        filter: false,
       },
-    };
+      description: {
+        title: 'Description',
+        filter: false,
+      },
+    },
+  };
 
-
-  delete(event: any){
-    let category = event.data as CategoryModel;
-    if (window.confirm("Are u sure?")) {
-      this.categoryService.delete(category).then(() => {
-        this.fetch();
+  delete(event: any) {
+    this.messageService
+      .confirm(`Do you want to delete the category?`, 'Yes')
+      .then((res) => {
+        if (res.isConfirmed) {
+          let category = event.data as CategoryModel;
+          this.categoryService
+            .delete(category)
+            .then(() => {
+              this.messageService.notification(
+                'Category has been deleted',
+                TypeSweetAlertIcon.SUCCESS
+              );
+              this.fetch();
+            })
+            .catch((er) => {
+              this.messageService.alert(
+                er.error.message ??
+                  JSON.stringify(er.error.error) ??
+                  'Server Disconnected',
+                TypeSweetAlertIcon.ERROR
+              );
+            });
+        }
       });
-    }
-
   }
 
-  openPopup(item:any){
-    var modalRef = this.modalService.open(CategoryDetailComponent, {size: 'xl'});
+  openPopup(item: any) {
+    var modalRef = this.modalService.open(CategoryDetailComponent, {
+      size: 'xl',
+    });
     modalRef.componentInstance.item = item?.data;
-    return modalRef.result.then(() => {
+    return modalRef.result.then(
+      () => {
         this.fetch();
-      }, (reason) => {
+      },
+      (reason) => {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       }
     );
-    }
-
-
-
-
-  fetch()
-  {
-    this.categoryService
-      .get(null)
-      .then((res : ReturnMessage<PageModel<CategoryModel>>) => {
-      if(!res.hasError)
-      {
-        this.categories = res.data.results.filter(r => r.isDeleted == false);
-      }
-    }).catch((er) => {
-      
-      if(er.error.hasError)
-      {
-        // console.log(er.error.message)
-      }
-    });
   }
 
-  
+  fetch() {
+    this.categoryService
+      .get(null)
+      .then((res: ReturnMessage<PageModel<CategoryModel>>) => {
+        if (!res.hasError) {
+          this.categories = res.data.results.filter(
+            (r) => r.isDeleted == false
+          );
+        }
+      })
+      .catch((er) => {
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        );
+        // if (er.error.hasError) {
+        //   // console.log(er.error.message)
+        // }
+      });
+  }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -106,6 +126,5 @@ export class ListCategoriesComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

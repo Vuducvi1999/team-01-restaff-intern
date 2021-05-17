@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
 import { SocialMediaModel } from 'src/app/lib/data/models/social-medias/social-media.model';
-import { FileService, SweetalertService } from 'src/app/lib/data/services';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { SocialMediaService } from 'src/app/lib/data/services/social-media/social-media.service';
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
@@ -19,7 +19,7 @@ export class ListSocialMediaComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private socialService: SocialMediaService,
-    private sweetAlertService: SweetalertService
+    private messageService: MessageService
   ) {
     this.getSocialMedias();
   }
@@ -80,7 +80,7 @@ export class ListSocialMediaComponent implements OnInit {
 
   delete(event: any) {
     let socialMedia = event.data as SocialMediaModel;
-    this.sweetAlertService
+    this.messageService
       .confirm('Do you want to permanently delete this item?', 'Yes')
       .then((res) => {
         this.socialService.delete(socialMedia).then(() => {

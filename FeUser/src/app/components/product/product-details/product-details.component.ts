@@ -1,15 +1,11 @@
-import { Component, OnInit, Input, ViewChild, OnDestroy } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import {
   CommentModel,
-  CommentPassingModel,
-  SearchCommentModel,
+  CreateCommentModel,
 } from "src/app/lib/data/models/comments/comment.model";
 import { ProductDetailsModel } from "src/app/lib/data/models/products/product-details.model";
-import {
-  UserDataReturnDTOModel,
-  UserModel,
-} from "src/app/lib/data/models/users/user.model";
+import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
 import { AuthService, FileService } from "src/app/lib/data/services";
 import { ProductDetailsService } from "src/app/lib/data/services/products/product-details.service";
 import { SizeModalComponent } from "src/app/shared/components/modal/size-modal/size-modal.component";
@@ -18,19 +14,11 @@ import {
   ProductDetailsThumbSlider,
 } from "src/app/shared/data/slider";
 
-import {
-  PageModel,
-  ProductModel,
-  ReturnMessage,
-  SearchPaganationDTO,
-} from "src/app/lib/data/models";
-import { ETypePositionCart, TypeDisplayImage } from "src/app/shared/data";
+import { PageModel, ReturnMessage } from "src/app/lib/data/models";
+import { TypeDisplayImage } from "src/app/shared/data";
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
 import { Subscription } from "rxjs";
-import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
-import { FormBuilder, FormGroup } from "@angular/forms";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
-import { CartModalComponent } from "src/app/shared/components/modal/cart-modal/cart-modal.component";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -64,7 +52,7 @@ export class ProductDetailsComponent implements OnInit {
   public counter: number = 1;
   public activeSlide: any = 0;
   public ImageSrc: string;
-  public dataComment: CommentPassingModel;
+  public dataComment: CreateCommentModel;
   public typeDisplayImage = TypeDisplayImage;
   public user: UserDataReturnDTOModel;
   public comments: PageModel<CommentModel>;
@@ -84,8 +72,6 @@ export class ProductDetailsComponent implements OnInit {
     private productDetailsService: ProductDetailsService,
     private activatedRoute: ActivatedRoute,
     private commentService: CommentService,
-
-    private formBuilder: FormBuilder,
     private cartService: CartService,
     private toastrService: ToastrService,
     private authService: AuthService
@@ -131,11 +117,9 @@ export class ProductDetailsComponent implements OnInit {
 
   initDataComment() {
     this.dataComment = {
-      fullName: this.user ? this.user.firstName + " " + this.user.lastName : "",
-      customerId: this.user ? this.user.customerId : "",
       entityId: this.activatedRoute.snapshot.queryParamMap.get("id"),
       entityType: "Product",
-      rating: 1,
+      rating: 0,
     };
   }
 

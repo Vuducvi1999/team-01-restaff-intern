@@ -7,6 +7,7 @@ using Domain.DTOs.SocialMedias;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Service.Header
 {
@@ -36,7 +37,7 @@ namespace Service.Header
 
         public ReturnMessage<List<CategoryDTO>> GetCategories()
         {
-            var listDTO = _categoryRepository.GetList();
+            var listDTO = _categoryRepository.Queryable().Where(it => !it.IsDeleted).OrderBy(it => it.Name).ThenBy(it => it.Name.Length).ToList();
             var list = _mapper.Map<List<CategoryDTO>>(listDTO);
             var result = new ReturnMessage<List<CategoryDTO>>(false, list, MessageConstants.ListSuccess);
             return result;

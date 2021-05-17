@@ -19,6 +19,7 @@ import {
 import { ProductModel } from "src/app/lib/data/models/products/product.model";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { FileService, ProductListService } from "src/app/lib/data/services";
+import { TypeDisplayImage } from "src/app/shared/data";
 
 @Component({
   selector: "app-cart-modal",
@@ -35,16 +36,14 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
   public closeResult: string;
   public modalOpen: boolean = false;
   public products: ProductModel[] = [];
+  public typeDisplayImage = TypeDisplayImage;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private modalService: NgbModal,
     private productListService: ProductListService,
     private cartService: CartService
-  ) {
-    {
-    }
-  }
+  ) {}
 
   ngOnInit(): void {}
 

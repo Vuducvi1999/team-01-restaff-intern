@@ -46,7 +46,7 @@ namespace Service.Profiles
                     var result = new ReturnMessage<UpdateProfileDTO>(false, _mapper.Map<User, UpdateProfileDTO>(entity), MessageConstants.UpdateSuccess);
                     return result;
                 }
-                return new ReturnMessage<UpdateProfileDTO>(false, null, MessageConstants.InvalidAuthInfoMsg);
+                return new ReturnMessage<UpdateProfileDTO>(true, null, MessageConstants.InvalidAuthInfoMsg);
             }
             catch (Exception ex)
             {

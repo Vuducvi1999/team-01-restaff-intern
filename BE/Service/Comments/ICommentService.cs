@@ -13,7 +13,6 @@ namespace Service.Comments
     {
         public ReturnMessage<PaginatedList<CommentDTO>> BlogPagination(SerachPaginationDTO<CommentDTO> search);
         public ReturnMessage<PaginatedList<CommentDTO>> ProductPagination(SerachPaginationDTO<CommentDTO> search);
-        public ReturnMessage<List<CommentDTO>> GetAll();
         public ReturnMessage<CommentDTO> Create(CreateCommentDTO model);
         public ReturnMessage<CommentDTO> Delete(DeleteCommentDTO model);
         public ReturnMessage<decimal> GetRating(Guid entityId);

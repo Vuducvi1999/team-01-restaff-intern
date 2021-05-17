@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
+import {
+  PageModel,
+  ReturnMessage,
+  TypeSweetAlertIcon,
+} from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { PageContentModel } from 'src/app/lib/data/models/pageContent/pageContent.model';
 import { UserModel } from 'src/app/lib/data/models/users/user.model';
 import { FileService } from 'src/app/lib/data/services';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { PageContentService } from 'src/app/lib/data/services/pageContents/pageContent.service';
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { UserService } from '../../../lib/data/services/users/user.service';
@@ -21,7 +26,8 @@ export class ListPageContentComponent {
 
   constructor(
     private modalService: NgbModal,
-    private service: PageContentService
+    private service: PageContentService,
+    private messageService: MessageService
   ) {
     this.getList();
   }
@@ -48,7 +54,7 @@ export class ListPageContentComponent {
         title: 'Order',
         value: 'order',
         type: 'custom',
-        renderComponent: CustomViewCellComponent
+        renderComponent: CustomViewCellComponent,
       },
     },
   };
@@ -75,13 +81,18 @@ export class ListPageContentComponent {
       .then((res: ReturnMessage<PageContentModel[]>) => {
         if (!res.hasError) {
           this.pageContents = res.data;
-          //console.log('page content', res.data);
         }
       })
       .catch((er) => {
-        if (er.error.hasError) {
-          // console.log(er.error.message);
-        }
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        );
+        // if (er.error.hasError) {
+        //   // console.log(er.error.message);
+        // }
       });
   }
 }

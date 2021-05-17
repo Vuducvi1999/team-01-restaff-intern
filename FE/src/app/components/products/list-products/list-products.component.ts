@@ -6,12 +6,12 @@ import {
   TypeSweetAlertIcon,
 } from 'src/app/lib/data/models';
 import { ProductModel } from 'src/app/lib/data/models/products/product.model';
-import { FileService, SweetalertService } from 'src/app/lib/data/services';
 import { ProductService } from 'src/app/lib/data/services/products/product.service';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { CustomViewCellNumberComponent } from 'src/app/shared/components/custom-view-cell-number/custom-view-cell-number.component';
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 @Component({
   selector: 'app-list-products',
   templateUrl: './list-products.component.html',
@@ -27,7 +27,7 @@ export class ListProductsComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     private productService: ProductService,
-    private sweetService: SweetalertService
+    private messageService: MessageService
   ) {
     this.params.pageIndex = 0;
     this.fetch();
@@ -78,22 +78,24 @@ export class ListProductsComponent implements OnInit {
 
   delete(event: any) {
     let product = event.data as ProductModel;
-    this.sweetService
+    this.messageService
       .confirm('Are you sure to delete this item?', 'Yes')
       .then((res) => {
         if (res.isConfirmed) {
           this.productService
             .delete(product)
             .then(() => {
-              this.sweetService.notification(
+              this.messageService.notification(
                 'Detele successful',
                 TypeSweetAlertIcon.SUCCESS
               );
               this.fetch();
             })
             .catch((er) =>
-              this.sweetService.notification(
-                'Detele fails',
+              this.messageService.alert(
+                er.error.message ??
+                  JSON.stringify(er.error.error) ??
+                  'Server Disconnected',
                 TypeSweetAlertIcon.ERROR
               )
             );
@@ -126,9 +128,15 @@ export class ListProductsComponent implements OnInit {
         }
       })
       .catch((er) => {
-        if (er.error.hasError) {
-          // console.log(er.error.message);
-        }
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        );
+        // if (er.error.hasError) {
+        //   // console.log(er.error.message);
+        // }
       });
   }
 

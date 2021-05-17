@@ -15,6 +15,8 @@ import {
 } from "src/app/lib/data/services";
 import { TypeDisplayImage } from "../../data";
 import { Subscription } from "rxjs";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { LoginModalComponent } from "../../components/modal/login-modal/login-modal.component";
 
 @Component({
   selector: "app-header-one",
@@ -32,7 +34,15 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
   subDataUser: Subscription;
 
   public headerModel: InfoHeaderModel = {
-    informationWeb: {address: '', phone: '', email: '', fax: '', logo: '', title: '', description: ''}
+    informationWeb: {
+      address: "",
+      phone: "",
+      email: "",
+      fax: "",
+      logo: "",
+      title: "",
+      description: "",
+    },
   };
   public stick: boolean = false;
   loadUrlNavaigate(url: string) {
@@ -42,7 +52,8 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     public headerService: HeaderService,
-    private authService: AuthService
+    private authService: AuthService,
+    private modalService: NgbModal
   ) {}
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
@@ -50,7 +61,9 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subDataUser = this.authService.callUserInfo.subscribe(it => this.user = it);
+    this.subDataUser = this.authService.callUserInfo.subscribe(
+      (it) => (this.user = it)
+    );
     this.loadHeaderModel();
   }
 
@@ -78,5 +91,13 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
     await this.headerService.getInformationWeb(null).then((res: any) => {
       this.headerModel.informationWeb = res.data;
     });
+  }
+
+  GotoWishList() {
+    if (!this.user) {
+      const modalRef = this.modalService.open(LoginModalComponent);
+      return;
+    }
+    this.loadUrlNavaigate("wishlist");
   }
 }

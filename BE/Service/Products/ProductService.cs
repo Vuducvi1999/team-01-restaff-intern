@@ -146,6 +146,7 @@ namespace Service.Products
                 }
                 entity.Category = category;
                 entity.CategoryId = category.Id;
+                entity.Update();
                 if (entity.IsNotNullOrEmpty())
                 {
                     entity.Update(model);

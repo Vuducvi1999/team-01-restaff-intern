@@ -55,7 +55,8 @@ import { CommentComponent } from "./components/comment/comment.component";
 import { CommentDetailComponent } from "./components/comment/comment-detail/comment-detail.component";
 import { UiImageLoaderDirective } from "./directives/uiImageLoader.directive";
 import { VndFormatPipe } from "./pipes/vnd-format.pipe";
-import { SweetalertService } from "../lib/data/services";
+import { MessageService } from "../lib/data/services";
+import { LoginModalComponent } from "./components/modal/login-modal/login-modal.component";
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { SweetalertService } from "../lib/data/services";
     CommentComponent,
     CommentDetailComponent,
     UiImageLoaderDirective,
+    LoginModalComponent,
   ],
   imports: [
     CommonModule,
@@ -95,14 +97,13 @@ import { SweetalertService } from "../lib/data/services";
     CarouselModule,
     BarRatingModule,
     NgxDropzoneModule,
-    LazyLoadImageModule.forRoot({
-    }),
+    LazyLoadImageModule.forRoot({}),
     NgxSkeletonLoaderModule,
     TranslateModule,
     SweetAlert2Module.forRoot(),
     FilterPipeModule,
   ],
-  providers: [SearchService, SweetalertService],
+  providers: [SearchService, MessageService],
   exports: [
     ProductBoxComponent,
     CommonModule,
@@ -137,6 +138,7 @@ import { SweetalertService } from "../lib/data/services";
     CommentComponent,
     CommentDetailComponent,
     UiImageLoaderDirective,
+    LoginModalComponent,
   ],
 })
 export class SharedModule {}

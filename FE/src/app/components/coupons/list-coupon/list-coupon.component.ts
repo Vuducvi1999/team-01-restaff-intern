@@ -1,10 +1,14 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
+import {
+  PageModel,
+  ReturnMessage,
+  TypeSweetAlertIcon,
+} from 'src/app/lib/data/models';
 import { CouponModel } from 'src/app/lib/data/models/coupons/coupon.model';
-import { SweetalertService } from 'src/app/lib/data/services';
 import { CouponService } from 'src/app/lib/data/services/coupons/coupon.service';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { CouponDetailComponent } from '../coupon-detail/coupon-detail.component';
 
@@ -19,7 +23,7 @@ export class ListCouponComponent implements OnInit {
     private modalService: NgbModal,
     private couponService: CouponService,
     private datePipe: DatePipe,
-    private sweetAlertService: SweetalertService
+    private messageService: MessageService
   ) {
     this.getCoupons();
   }
@@ -33,9 +37,15 @@ export class ListCouponComponent implements OnInit {
         }
       })
       .catch((er) => {
-        if (er.error.hasError) {
-          // console.log(er.error.message);
-        }
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        );
+        // if (er.error.hasError) {
+        //   // console.log(er.error.message);
+        // }
       });
   }
   public settings = {
@@ -87,12 +97,28 @@ export class ListCouponComponent implements OnInit {
 
   delete(event: any) {
     let coupon = event.data as CouponModel;
-    this.sweetAlertService
+    this.messageService
       .confirm('Do you want to permanently delete this item?', 'Yes')
       .then((res) => {
-        this.couponService.delete(coupon).then(() => {
-          this.getCoupons();
-        });
+        if (res.isConfirmed) {
+          this.couponService
+            .delete(coupon)
+            .then(() => {
+              this.messageService.notification(
+                'Delete item successfully',
+                TypeSweetAlertIcon.SUCCESS
+              );
+              this.getCoupons();
+            })
+            .catch((er) => {
+              this.messageService.alert(
+                er.error.message ??
+                  JSON.stringify(er.error.error) ??
+                  'Server Disconnected',
+                TypeSweetAlertIcon.ERROR
+              );
+            });
+        }
       });
   }
   ngOnInit() {}

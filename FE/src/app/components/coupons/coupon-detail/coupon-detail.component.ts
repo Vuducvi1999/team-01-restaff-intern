@@ -15,6 +15,8 @@ import {
   ModalHeaderModel,
 } from 'src/app/shared/components/modals/models/modal.model';
 import { formatDate } from '@angular/common';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
+import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
 @Component({
   selector: 'app-coupon-detail',
   templateUrl: './coupon-detail.component.html',
@@ -31,7 +33,8 @@ export class CouponDetailComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
-    private couponService: CouponService
+    private couponService: CouponService,
+    private messageService: MessageService
   ) {}
   loadItemForm() {
     this.couponForm = this.formBuilder.group({
@@ -86,10 +89,19 @@ export class CouponDetailComponent implements OnInit {
           this.couponForm.reset();
           this.submitted = false;
           this.ngbActiveModal.close();
+          this.messageService.notification(
+            'Save item successfully',
+            TypeSweetAlertIcon.SUCCESS
+          );
         })
         .catch((er) => {
-          if (er.error.hasError) {
-          }
+          this.messageService.alert(
+            er.error.message ??
+              JSON.stringify(er.error.error) ??
+              'Server Disconnected'
+          );
+          // if (er.error.hasError) {
+          // }
         });
     }
   }

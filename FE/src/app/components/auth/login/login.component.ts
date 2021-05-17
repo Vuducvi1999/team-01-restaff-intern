@@ -7,8 +7,8 @@ import {
   TypeSweetAlertIcon,
   UserDataReturnDTOModel,
 } from 'src/app/lib/data/models';
-import { AuthService, SweetalertService } from 'src/app/lib/data/services';
-import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/lib/data/services';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     private activedRoute: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private sweetalertService: SweetalertService
+    private messageService: MessageService,
   ) {
     this.createLoginForm();
     this.createRegisterForm();
@@ -41,8 +41,7 @@ export class LoginComponent implements OnInit {
   owlcarousel = [
     {
       title: 'Welcome to Clothing Store',
-      // desc:
-      //   "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy.",
+
     },
     {
       title: 'This is the management page',
@@ -68,7 +67,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   async onLogin() {
     this.submitted = true;
@@ -80,20 +79,20 @@ export class LoginComponent implements OnInit {
     await this.authService
       .login(data)
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
-        this.sweetalertService.notification(
+        this.messageService.notification(
           'Login Success',
           TypeSweetAlertIcon.SUCCESS,
           `Wecome ${data.data.firstName}!`,
         );
         localStorage.setItem('token', data.data.token);
-        localStorage.setItem('user',JSON.stringify(data.data));
+        localStorage.setItem('user', JSON.stringify(data.data));
         this.backUrl();
       })
       .catch((er) => {
-        this.sweetalertService.alert(
+        this.messageService.alert(
           'Login Fail',
           TypeSweetAlertIcon.ERROR,
-          `${er.error.message ?? er.error}`,
+          er.error.message ?? JSON.stringify(er.error.error) ?? "Server Disconnected",
         );
       });
   }

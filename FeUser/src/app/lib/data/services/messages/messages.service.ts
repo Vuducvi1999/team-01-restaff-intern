@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Injectable()
-export class SweetalertService {
+export class MessageService {
   alert(title: string, type: SweetAlertIcon = null, detail: string = null) {
     return Swal.fire({
         title: title,

@@ -4,7 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   PageModel,
   ReturnMessage,
-  TypeSweetAlertIcon
+  TypeSweetAlertIcon,
 } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { ProductModel } from 'src/app/lib/data/models/products/product.model';
@@ -18,7 +18,7 @@ import {
   TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { SweetalertService } from 'src/app/lib/data/services';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -32,7 +32,8 @@ export class ProductDetailsComponent implements OnInit {
   public product: ProductModel;
   public categories: CategoryModel[];
   public item: ProductModel;
-  public regex: string = "^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ]*$";
+  public regex: string =
+    '^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ]*$';
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];
   submitted = false;
@@ -44,7 +45,7 @@ export class ProductDetailsComponent implements OnInit {
     private productService: ProductService,
     private ngbActiveModal: NgbActiveModal,
     private categoryService: CategoryService,
-    private sweetalertService: SweetalertService
+    private messageService: MessageService
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -67,17 +68,20 @@ export class ProductDetailsComponent implements OnInit {
         }
       })
       .catch((er) => {
-        if (er.error.hasError) {
-          this.sweetalertService.alert(
-            er.error.message ?? er.error,
-            TypeSweetAlertIcon.ERROR
-          );
-        }
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        );
+        // if (er.error.hasError) {
+        //   console.log(er.error.message);
+        // }
       });
   }
   save() {
     if (this.productsForm.invalid) {
-      this.sweetalertService.alert(
+      this.messageService.alert(
         'Invalid Form make sure you input valid value !',
         TypeSweetAlertIcon.ERROR
       );
@@ -104,15 +108,17 @@ export class ProductDetailsComponent implements OnInit {
     return this.productService
       .save(this.product)
       .then(() => {
-        this.sweetalertService.notification(
+        this.messageService.notification(
           this.item ? 'Update Success' : 'Create Success',
           TypeSweetAlertIcon.SUCCESS
         );
         this.ngbActiveModal.close();
       })
       .catch((er) => {
-        this.sweetalertService.alert(
-          er.error.message ?? er.error,
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
           TypeSweetAlertIcon.ERROR
         );
       });
@@ -120,37 +126,42 @@ export class ProductDetailsComponent implements OnInit {
 
   loadItem() {
     this.productsForm = this.formBuilder.group({
-      name: [this.item ? this.item.name : '', 
-      [Validators.required,
-       Validators.minLength(3), 
-       Validators.maxLength(50),
-       Validators.pattern(this.regex)
-      ]
-    ],
+      name: [
+        this.item ? this.item.name : '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+          Validators.pattern(this.regex),
+        ],
+      ],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required, 
-         Validators.maxLength(100),
-         Validators.pattern(this.regex)
-        ]
+        [
+          Validators.required,
+          Validators.maxLength(100),
+          Validators.pattern(this.regex),
+        ],
       ],
-      contentHTML: [
-        this.item ? this.item.contentHTML : ''
-      ],
+      contentHTML: [this.item ? this.item.contentHTML : ''],
       imageUrl: [this.item ? this.item.imageUrl : ''],
-      price: [this.item ? this.item.price : this.item,
-         [Validators.required,
-          Validators.min(1), 
-          Validators.max(5000000), 
-          Validators.pattern('[0-9]*')]
+      price: [
+        this.item ? this.item.price : this.item,
+        [
+          Validators.required,
+          Validators.min(1),
+          Validators.max(5000000),
+          Validators.pattern('[0-9]*'),
+        ],
       ],
-      category: [
-        this.item ? this.item.categoryId : '',
-        [Validators.required],
-      ],
+      category: [this.item ? this.item.categoryId : '', [Validators.required]],
       displayOrder: [
         this.item ? this.item.displayOrder : 1,
-        [Validators.required, Validators.max(1000000), Validators.pattern('[0-9]+')],
+        [
+          Validators.required,
+          Validators.max(1000000),
+          Validators.pattern('[0-9]+'),
+        ],
       ],
       hasDisplayHomePage: [this.item ? this.item.hasDisplayHomePage : false],
       isImportant: [this.item ? this.item.isImportant : false],

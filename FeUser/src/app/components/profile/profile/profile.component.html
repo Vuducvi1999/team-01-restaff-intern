@@ -62,7 +62,6 @@
                 class="form-control"
                 id="name"
                 placeholder="First Name"
-                required=""
                 [readonly]="updateProfile"
                 [ngClass]="{
                   'is-invalid': submittedProfile && fProfile.firstName.errors
@@ -86,7 +85,6 @@
                 id="last-name"
                 placeholder="Last Name"
                 [readonly]="updateProfile"
-                required=""
                 [ngClass]="{
                   'is-invalid': submittedProfile && fProfile.lastName.errors
                 }"
@@ -108,25 +106,20 @@
                 id="review"
                 placeholder="Enter your phone"
                 [readonly]="updateProfile"
-                required=""
                 [ngClass]="{
-                  'is-invalid':
-                    (submittedProfile && fProfile.phone.errors) ||
-                    isCheckPhone == false,
-                  'is-valid': isCheckPhone
+                  'is-invalid': submittedProfile && fProfile.phone.errors
                 }"
               />
               <div
-                *ngIf="
-                  (submittedProfile && fProfile.phone.errors) ||
-                  isCheckPhone == false
-                "
+                *ngIf="submittedProfile && fProfile.phone.errors"
                 class="invalid-feedback"
               >
                 <div *ngIf="fProfile.phone.errors?.required">
                   Phone is required
                 </div>
-                <div *ngIf="fProfile.phone.errors?.pattern">Fail type phone</div>
+                <div *ngIf="fProfile.phone.errors?.pattern">
+                  Fail type phone
+                </div>
                 <div *ngIf="fProfile.phone.errors?.isPhoneUnique">
                   Phone is exsist
                 </div>
@@ -141,25 +134,20 @@
                 id="email"
                 placeholder="Email"
                 [readonly]="updateProfile"
-                required=""
                 [ngClass]="{
-                  'is-invalid':
-                    (submittedProfile && fProfile.email.errors) ||
-                    isCheckEmail == false,
-                  'is-valid': isCheckEmail
+                  'is-invalid': submittedProfile && fProfile.email.errors
                 }"
               />
               <div
-                *ngIf="
-                  (submittedProfile && fProfile.email.errors) ||
-                  isCheckEmail == false
-                "
+                *ngIf="submittedProfile && fProfile.email.errors"
                 class="invalid-feedback"
               >
                 <div *ngIf="fProfile.email.errors?.required">
                   Email is required
                 </div>
-                <div *ngIf="fProfile.email.errors?.pattern">Fail type email</div>
+                <div *ngIf="fProfile.email.errors?.pattern">
+                  Fail type email
+                </div>
                 <div *ngIf="fProfile.email.errors?.isEmailUnique">
                   Email is exsist
                 </div>
@@ -174,7 +162,6 @@
                 id="address-two"
                 placeholder="Address"
                 [readonly]="updateProfile"
-                required=""
                 [ngClass]="{
                   'is-invalid': submittedProfile && fProfile.address.errors
                 }"
@@ -238,7 +225,6 @@
                 autocomplete="new-password"
                 placeholder="Current Passwor"
                 formControlName="password"
-                required=""
                 [ngClass]="{
                   'is-invalid': submittedPassword && fPassword.password.errors
                 }"
@@ -262,7 +248,6 @@
                 placeholder="New Password"
                 formControlName="newPassword"
                 autocomplete="new-password"
-                required=""
                 [ngClass]="{
                   'is-invalid':
                     submittedPassword && fPassword.newPassword.errors
@@ -290,7 +275,6 @@
                 formControlName="confirmPassword"
                 placeholder="Confirm Password"
                 autocomplete="new-password"
-                required=""
                 [ngClass]="{
                   'is-invalid':
                     submittedPassword && fPassword.confirmPassword.errors

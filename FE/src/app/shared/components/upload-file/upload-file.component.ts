@@ -12,7 +12,8 @@ import {
   FileDtoModel,
   TypeSweetAlertIcon,
 } from 'src/app/lib/data/models';
-import { FileService, SweetalertService } from 'src/app/lib/data/services';
+import { FileService } from 'src/app/lib/data/services';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { ModalFile, TypeFile } from '../modals/models/modal.model';
 
 @Component({
@@ -24,6 +25,7 @@ export class UploadFileComponent implements OnInit {
   @Input() data: ModalFile;
   @Input() styleFile: string;
   @Input() fileURL: (string | ArrayBuffer)[];
+  @Input() isBannerUpload = false;
   @Input() sizeImage: string;
   @Output() onChange = new EventEmitter();
 
@@ -33,7 +35,7 @@ export class UploadFileComponent implements OnInit {
 
   constructor(
     private fileService: FileService,
-    private sweetalertService: SweetalertService
+    private messageService: MessageService
   ) {
     this.onRemoveLocal();
     this.styleFile = 'width: 450px; height: 200px;';
@@ -119,7 +121,7 @@ export class UploadFileComponent implements OnInit {
     await this.fileService
       .saveFile(formData)
       .then((res: ReturnMessage<FileDtoModel[]>) => {
-        this.sweetalertService.notification(
+        this.messageService.notification(
           'Upload Success',
           TypeSweetAlertIcon.SUCCESS
         );
@@ -130,7 +132,7 @@ export class UploadFileComponent implements OnInit {
         );
       })
       .catch((er) =>
-        this.sweetalertService.alert(
+        this.messageService.alert(
           'Upload Fail',
           TypeSweetAlertIcon.ERROR,
           er.error.message ?? er.error
@@ -147,12 +149,35 @@ export class UploadFileComponent implements OnInit {
   // }
 
   onSelect(event) {
+    if (this.isBannerUpload) {
+      var reader = new FileReader();
+      reader.readAsDataURL(event.addedFiles[0]);
+      reader.onload = () => {
+        const img = new Image();
+        img.src = reader.result as string;
+        img.onload = () => {
+          const height = img.naturalHeight;
+          const width = img.naturalWidth;
+
+          if (height < 500 || width < 250)
+            return this.messageService.alert('Size image must over 500x250');
+          if (width < height)
+            return this.messageService.alert('Be aware width > height');
+          this.exceptUpload(event);
+        };
+      };
+      return;
+    }
+
+    this.exceptUpload(event);
+  }
+
+  exceptUpload(event) {
     if (!this.data.multiBoolen) {
       this.onRemoveLocal();
       this.actionChange(null, null, true);
     }
     this.createImage(event.addedFiles);
-    // console.log(this.files);
   }
 
   onRemove(event) {

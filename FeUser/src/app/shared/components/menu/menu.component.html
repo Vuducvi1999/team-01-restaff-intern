@@ -41,7 +41,7 @@
         </a>
 
         <!-- 2nd Level Menu -->
-        <ul class="nav-submenu" [class.opensubmenu]="menuItem.active" *ngIf="menuItem.children">
+        <ul class="nav-submenu" [class.opensubmenu]="menuItem.active" *ngIf="menuItem.children" style="width: max-content;">
           <li *ngFor="let childrenItem of menuItem.children">
             <!-- Sub -->
             <a href="javascript:void(0)" *ngIf="childrenItem.type === 'sub'" 

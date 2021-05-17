@@ -32,7 +32,7 @@ import { ThrowStmt } from "@angular/compiler";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { FileService } from "src/app/lib/data/services/files/file.service";
 import { Subscription } from "rxjs";
-import { AuthService, SweetalertService } from "src/app/lib/data/services";
+import { AuthService, MessageService } from "src/app/lib/data/services";
 import Swal from "sweetalert2";
 registerLocaleData(localeFr, "fr");
 
@@ -53,7 +53,6 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
   @Input() typePositionCart: string = ETypePositionCart.BOX_2;
   @Input() typeSizeImage: string = ETypeSizeImage.NORMAL;
   @Input() typeGridLayout: string = ETypeGridLayout.NORMAL;
-  testData: ProductModel[];
   @ViewChild("quickView") QuickView: QuickViewComponent;
   @ViewChild("cartModal") CartModal: CartModalComponent;
 
@@ -67,7 +66,7 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
     private cartService: CartService,
     private wishListService: CustomerWishListService,
     private authService: AuthService,
-    private sweetService: SweetalertService
+    private sweetService: MessageService
   ) {}
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
@@ -83,19 +82,11 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
         this.loader = false;
       }, 2000); // Skeleton Loader
     }
-
     this.subDataUser = this.authService.callUserInfo.subscribe((it) => {
       this.userInfo = it;
-      this.getWishlist();
     });
-  }
 
-  getWishlist() {
-    if (this.userInfo) {
-      this.wishListService.getByCustomer(this.userInfo?.id).then((data) => {
-        this.testData = data.data;
-      });
-    }
+    this.ImageSrc = this.product.imageUrl.split(",")[0];
   }
 
   updateTypeGridLayout() {

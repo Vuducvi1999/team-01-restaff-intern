@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
+import {
+  PageModel,
+  ReturnMessage,
+  TypeSweetAlertIcon,
+} from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { UserModel } from 'src/app/lib/data/models/users/user.model';
 import { FileService } from 'src/app/lib/data/services';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { UserDetailComponent } from '../users-details/users-details.component';
 import { UserService } from './../../../lib/data/services/users/user.service';
@@ -17,7 +22,11 @@ import { UserService } from './../../../lib/data/services/users/user.service';
 export class ListUsersComponent {
   public users: UserModel[];
   closeResult = '';
-  constructor(private modalService: NgbModal, private service: UserService) {
+  constructor(
+    private modalService: NgbModal,
+    private userService: UserService,
+    private messageService: MessageService
+  ) {
     this.getList();
   }
 
@@ -52,12 +61,30 @@ export class ListUsersComponent {
   };
 
   delete(event: any) {
-    let category = event.data as UserModel;
-    if (window.confirm('Are u sure?')) {
-      this.service.delete(category).then(() => {
-        this.getList();
+    this.messageService
+      .confirm(`Do you want to delete the user?`, 'Yes')
+      .then((res) => {
+        if (res.isConfirmed) {
+          let user = event.data as UserModel;
+          this.userService
+            .delete(user)
+            .then(() => {
+              this.messageService.notification(
+                'User has been deleted',
+                TypeSweetAlertIcon.SUCCESS
+              );
+              this.getList();
+            })
+            .catch((er) => {
+              this.messageService.alert(
+                er.error.message ??
+                  JSON.stringify(er.error.error) ??
+                  'Server Disconnected',
+                TypeSweetAlertIcon.ERROR
+              );
+            });
+        }
       });
-    }
   }
 
   openPopup(item: any) {
@@ -75,7 +102,7 @@ export class ListUsersComponent {
   }
 
   getList() {
-    this.service
+    this.userService
       .get(null)
       .then((res: ReturnMessage<PageModel<UserModel>>) => {
         if (!res.hasError) {

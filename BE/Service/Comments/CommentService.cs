@@ -3,6 +3,7 @@ using Common.Constants;
 using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Comments;
+using Domain.DTOs.Users;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
@@ -19,7 +20,7 @@ namespace Service.Comments
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IUserManager _userManager;
-
+        private readonly UserInformationDTO _userInformation;
 
         public CommentService(IRepository<Comment> commentRepository, IUnitOfWork unitOfWork, IMapper mapper, IUserManager userManager)
         {
@@ -27,16 +28,35 @@ namespace Service.Comments
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _userManager = userManager;
+            _userInformation = _userManager.GetInformationUser();
         }
 
         public ReturnMessage<CommentDTO> Create(CreateCommentDTO model)
         {
             try
             {
-                //var userDecompile = _userManager.GetInformationUser();
+                if(String.IsNullOrEmpty(model.Content.Trim()))
+                    return new ReturnMessage<CommentDTO>(true, null, MessageConstants.EmptyContentComment);
+
+                var beforeComment = _commentRepository.Queryable()
+                                    .Where(i => i.CustomerId == _userInformation.CustomerId && i.EntityId == model.EntityId)
+                                    .OrderByDescending(i => i.CreateByDate)
+                                    .FirstOrDefault();
+                if(beforeComment.IsNotNullOrEmpty())
+                {
+                    var SubtractionTime = (DateTime.Now - beforeComment.CreateByDate);
+                    if (SubtractionTime.TotalHours < 1)
+                    {
+                        var NextTimeToComment = Convert.ToInt32((beforeComment.CreateByDate.AddMinutes(60) - DateTime.Now).TotalMinutes).ToString();
+                        return new ReturnMessage<CommentDTO>(true, null, MessageConstants.CommentAfterATime + NextTimeToComment + " minutes");
+                    }
+                }
+
                 var entity = _mapper.Map<CreateCommentDTO, Comment>(model);
-                //entity.CustomerId = userDecompile.CustomerId;
+                entity.CustomerId = _userInformation.CustomerId;
+                entity.FullName = _userInformation.FirstName + " " + _userInformation.LastName;
                 entity.Insert();
+                
                 _commentRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<CommentDTO>(false, _mapper.Map<Comment, CommentDTO>(entity), MessageConstants.CreateSuccess);
@@ -123,21 +143,6 @@ namespace Service.Comments
             return result;
         }
 
-        public ReturnMessage<List<CommentDTO>> GetAll()
-        {
-            try
-            {
-                var entity = _commentRepository.Queryable().OrderByDescending(t => t.CreateByDate).ToList();
-                var data = _mapper.Map<List<Comment>, List<CommentDTO>>(entity);
-                var result = new ReturnMessage<List<CommentDTO>>(false, data, MessageConstants.ListSuccess);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                return new ReturnMessage<List<CommentDTO>>(true, null, ex.Message);
-            }
-        }
-
 
         public ReturnMessage<decimal> GetRating(Guid entityId)
         {
@@ -147,11 +152,7 @@ namespace Service.Comments
             }
             try
             {
-                var entity = _commentRepository.Queryable().Where(p => p.EntityId == entityId)
-                                                .OrderByDescending(i => i.CreateByDate)
-                                                .ToList()
-                                                .GroupBy(t => t.CustomerId)
-                                                .Select(i => i.First());
+                var entity = _commentRepository.Queryable().Where(p => p.EntityId == entityId);
 
                 if (entity.Count() == 0)
                 {
