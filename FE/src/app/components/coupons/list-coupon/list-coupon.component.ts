@@ -37,7 +37,17 @@ export class ListCouponComponent implements OnInit {
           this.data = res.data;
         }
       })
-      .catch((er) => {});
+      .catch((er) => {
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        );
+        // if (er.error.hasError) {
+        //   // console.log(er.error.message);
+        // }
+      });
   }
   public settings = {
     mode: 'external',

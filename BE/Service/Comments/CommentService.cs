@@ -3,6 +3,7 @@ using Common.Constants;
 using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Comments;
+using Domain.DTOs.Users;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
@@ -20,13 +21,16 @@ namespace Service.Comments
         private readonly IMapper _mapper;
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Blog> _blogRepository;
+        private readonly IUserManager _userManager;
+        private readonly UserInformationDTO _userInformation;
 
-
-        public CommentService(IRepository<Comment> commentRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public CommentService(IRepository<Comment> commentRepository, IUnitOfWork unitOfWork, IMapper mapper, IUserManager userManager)
         {
             _commentRepository = commentRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userManager = userManager;
+            _userInformation = _userManager.GetInformationUser();
         }
 
         public CommentService(IRepository<Comment> commentRepository, IUnitOfWork unitOfWork, IMapper mapper, IRepository<Product> productRepository, IRepository<Blog> blogRepository)
@@ -42,16 +46,36 @@ namespace Service.Comments
         {
             try
             {
-                var dailyRating = _commentRepository.Queryable().Where(p => p.EntityId == model.EntityId
-                                                                       && p.CreateByDate.Date == DateTime.Now.Date
-                                                                       && p.CustomerId == model.CustomerId).Count();
-                if (dailyRating > 5)
+                //var dailyRating = _commentRepository.Queryable().Where(p => p.EntityId == model.EntityId
+                //                                                       && p.CreateByDate.Date == DateTime.Now.Date
+                //                                                       && p.CustomerId == model.CustomerId).Count();
+                //if (dailyRating > 5)
+                //{
+                //    return new ReturnMessage<CommentDTO>(true, null, MessageConstants.CreateFail);
+                //}
+
+                if(String.IsNullOrEmpty(model.Content.Trim()))
+                    return new ReturnMessage<CommentDTO>(true, null, MessageConstants.EmptyContentComment);
+
+                var beforeComment = _commentRepository.Queryable()
+                                    .Where(i => i.CustomerId == _userInformation.CustomerId && i.EntityId == model.EntityId)
+                                    .OrderByDescending(i => i.CreateByDate)
+                                    .FirstOrDefault();
+                if(beforeComment.IsNotNullOrEmpty())
                 {
-                    return new ReturnMessage<CommentDTO>(true, null, MessageConstants.CreateFail);
+                    var SubtractionTime = (DateTime.Now - beforeComment.CreateByDate);
+                    if (SubtractionTime.TotalHours < 1)
+                    {
+                        var NextTimeToComment = Convert.ToInt32((beforeComment.CreateByDate.AddMinutes(60) - DateTime.Now).TotalMinutes).ToString();
+                        return new ReturnMessage<CommentDTO>(true, null, MessageConstants.CommentAfterATime + NextTimeToComment + " minutes");
+                    }
                 }
 
                 var entity = _mapper.Map<CreateCommentDTO, Comment>(model);
+                entity.CustomerId = _userInformation.CustomerId;
+                entity.FullName = _userInformation.FirstName + " " + _userInformation.LastName;
                 entity.Insert();
+                
                 _commentRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<CommentDTO>(false, _mapper.Map<Comment, CommentDTO>(entity), MessageConstants.CreateSuccess);
@@ -153,21 +177,6 @@ namespace Service.Comments
             var result = new ReturnMessage<PaginatedList<CommentDTO>>(false, data, MessageConstants.GetPaginationSuccess);
 
             return result;
-        }
-
-        public ReturnMessage<List<CommentDTO>> GetAll()
-        {
-            try
-            {
-                var entity = _commentRepository.Queryable().OrderByDescending(t => t.CreateByDate).ToList();
-                var data = _mapper.Map<List<Comment>, List<CommentDTO>>(entity);
-                var result = new ReturnMessage<List<CommentDTO>>(false, data, MessageConstants.ListSuccess);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                return new ReturnMessage<List<CommentDTO>>(true, null, ex.Message);
-            }
         }
 
         public ReturnMessage<decimal> GetRating(Guid entityId)

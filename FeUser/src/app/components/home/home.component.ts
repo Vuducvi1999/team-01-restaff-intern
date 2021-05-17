@@ -7,14 +7,13 @@ import {
 import { BannerModel } from "src/app/lib/data/models/banners/banner.model";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { HomeService } from "src/app/lib/data/services/home/home.service";
-import { ProductService } from "src/app/lib/data/services/products/product.service";
 import { ProductSlider } from "src/app/shared/data/slider";
 
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.scss"],
-  providers: [HomeService, ProductService],
+  providers: [HomeService],
 })
 export class HomeComponent implements OnInit {
   productKeeper = {
@@ -26,7 +25,7 @@ export class HomeComponent implements OnInit {
   blogs: BlogModel[] = [];
   banners: BannerModel[] = [];
 
-  constructor(public homeService: HomeService) {}
+  constructor(private homeService: HomeService) {}
 
   public ProductSliderConfig: any = ProductSlider;
 
@@ -48,6 +47,7 @@ export class HomeComponent implements OnInit {
       .getTopCollectionProducts()
       .then((data: ReturnMessage<ProductModel[]>) => {
         this.productKeeper.topProduct = data.data;
+        console.log(data.data);
       })
       .catch((e) => {
         console.log(e);

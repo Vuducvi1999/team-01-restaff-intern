@@ -27,7 +27,7 @@ namespace Service.PageContents
         {
             try
             {
-                var resultEntity = _pageContentRepository.Queryable().Take(12).ToList();
+                var resultEntity = _pageContentRepository.Queryable().OrderBy(i=>i.Order).Take(12).ToList();
                 var data = _mapper.Map<List<PageContent>, List<PageContentDTO>>(resultEntity);
                 var result = new ReturnMessage<List<PageContentDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;

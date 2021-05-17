@@ -4,7 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   PageModel,
   ReturnMessage,
-  TypeSweetAlertIcon
+  TypeSweetAlertIcon,
 } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { ProductModel } from 'src/app/lib/data/models/products/product.model';
@@ -32,7 +32,8 @@ export class ProductDetailsComponent implements OnInit {
   public product: ProductModel;
   public categories: CategoryModel[];
   public item: ProductModel;
-  public regex: string = "^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ]*$";
+  public regex: string =
+    '^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ]*$';
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];
   submitted = false;
@@ -67,9 +68,15 @@ export class ProductDetailsComponent implements OnInit {
         }
       })
       .catch((er) => {
-        if (er.error.hasError) {
-          console.log(er.error.message);
-        }
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        );
+        // if (er.error.hasError) {
+        //   console.log(er.error.message);
+        // }
       });
   }
   save() {
@@ -109,7 +116,9 @@ export class ProductDetailsComponent implements OnInit {
       })
       .catch((er) => {
         this.messageService.alert(
-          er.error.message ?? er.error,
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
           TypeSweetAlertIcon.ERROR
         );
       });
@@ -117,37 +126,42 @@ export class ProductDetailsComponent implements OnInit {
 
   loadItem() {
     this.productsForm = this.formBuilder.group({
-      name: [this.item ? this.item.name : '', 
-      [Validators.required,
-       Validators.minLength(3), 
-       Validators.maxLength(50),
-       Validators.pattern(this.regex)
-      ]
-    ],
+      name: [
+        this.item ? this.item.name : '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(50),
+          Validators.pattern(this.regex),
+        ],
+      ],
       description: [
         this.item ? this.item.description : '',
-        [Validators.required, 
-         Validators.maxLength(100),
-         Validators.pattern(this.regex)
-        ]
+        [
+          Validators.required,
+          Validators.maxLength(100),
+          Validators.pattern(this.regex),
+        ],
       ],
-      contentHTML: [
-        this.item ? this.item.contentHTML : ''
-      ],
+      contentHTML: [this.item ? this.item.contentHTML : ''],
       imageUrl: [this.item ? this.item.imageUrl : ''],
-      price: [this.item ? this.item.price : this.item,
-         [Validators.required,
-          Validators.min(1), 
-          Validators.max(5000000), 
-          Validators.pattern('[0-9]*')]
+      price: [
+        this.item ? this.item.price : this.item,
+        [
+          Validators.required,
+          Validators.min(1),
+          Validators.max(5000000),
+          Validators.pattern('[0-9]*'),
+        ],
       ],
-      category: [
-        this.item ? this.item.categoryId : '',
-        [Validators.required],
-      ],
+      category: [this.item ? this.item.categoryId : '', [Validators.required]],
       displayOrder: [
         this.item ? this.item.displayOrder : 1,
-        [Validators.required, Validators.max(1000000), Validators.pattern('[0-9]+')],
+        [
+          Validators.required,
+          Validators.max(1000000),
+          Validators.pattern('[0-9]+'),
+        ],
       ],
       hasDisplayHomePage: [this.item ? this.item.hasDisplayHomePage : false],
       isImportant: [this.item ? this.item.isImportant : false],

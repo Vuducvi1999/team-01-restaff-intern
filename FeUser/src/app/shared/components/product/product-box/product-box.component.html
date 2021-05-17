@@ -8,7 +8,7 @@
         <app-image-wrapper
           [data]="{
             title: product.name,
-            url: product.imageUrl.split(',')[0],
+            url: ImageSrc,
             typeClass: typeDisplayImage.HOME_PRODUCT_IMAGE,
             style: typeSizeImage
           }"
@@ -36,7 +36,7 @@
       >
         <a
           href="javascript:void(0)"
-          (mouseover)="ChangeVariantsImage(getImage(image))"
+          (click)="ChangeVariantsImage(getImage(image))"
         >
           <img appUiImageLoader [src]="image" />
         </a>
@@ -65,7 +65,6 @@
         (click)="addToWishlist(product)"
       >
         <i
-          *ngIf="userInfo"
           [ngClass]="[
             product.isInWishList ? 'fa fa-heart color-red' : 'ti-heart'
           ]"

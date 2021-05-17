@@ -2,6 +2,7 @@
 using Common.Constants;
 using Common.Pagination;
 using Domain.DTOs.Comments;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Comments;
@@ -41,6 +42,7 @@ namespace BE.ControllersFeUser
             return CommonResponse(result);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Post([FromBody] CreateCommentDTO model)
         {

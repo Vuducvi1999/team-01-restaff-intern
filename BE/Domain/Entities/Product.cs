@@ -27,6 +27,7 @@ namespace Domain.Entities
         public decimal RatingScore { get; set; }
         public virtual Category Category { get; set; }
         public ICollection<CustomerWishList> CustomerWishLists { get; set; }
+        //public decimal RatingScore { get; set; }
 
         public override void Insert()
         {
