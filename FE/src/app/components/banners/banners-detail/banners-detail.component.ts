@@ -36,7 +36,6 @@ export class BannersDetailComponent implements OnInit {
     private ngbActiveModal: NgbActiveModal,
     private bannersService: BannersService,
     private messageService: MessageService
-
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -93,23 +92,29 @@ export class BannersDetailComponent implements OnInit {
     this.submitted = true;
 
     if (this.bannersForm.valid) {
-
-      this.messageService.confirm(`Do you want to edit the banner?`, 'Yes').then(res => {
-        if (res.isConfirmed) {
-          this.bannersService
-          .save(this.banner)
-          .then((res) => {
-            this.messageService.notification('Banner has been edited', TypeSweetAlertIcon.SUCCESS);
-            this.bannersForm.reset();
-            this.submitted = false;
-            this.ngbActiveModal.close();
-          })
-          .catch((er) => {
-            this.messageService.alert(er.error.message ?? JSON.stringify(er.error),
-            TypeSweetAlertIcon.ERROR)
-          });
-        }
-      });
+      this.messageService
+        .confirm(`Do you want to edit the banner?`, 'Yes')
+        .then((res) => {
+          if (res.isConfirmed) {
+            this.bannersService
+              .save(this.banner)
+              .then((res) => {
+                this.messageService.notification(
+                  'Banner has been edited',
+                  TypeSweetAlertIcon.SUCCESS
+                );
+                this.bannersForm.reset();
+                this.submitted = false;
+                this.ngbActiveModal.close();
+              })
+              .catch((er) => {
+                this.messageService.alert(
+                  er.error.message ?? JSON.stringify(er.error.error) ?? "Server Disconnected",
+                  TypeSweetAlertIcon.ERROR
+                );
+              });
+          }
+        });
     }
   }
 

@@ -31,6 +31,7 @@ using Service.Comments;
 using Service.CustomerWishLists;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Service.UserBlogs;
 using Service.Gmails;
 
 namespace Service
@@ -106,6 +107,9 @@ namespace Service
 
             // CustomerWishList
             services.AddScoped<ICustomerWishListService, CustomerWishListService>();
+
+            //BlogUser
+            services.AddScoped<IUserBlogService, UserBlogService>();
 
             //Gmail
             services.AddScoped<IGmailService, GmailService>();

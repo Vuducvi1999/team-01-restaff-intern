@@ -56,9 +56,8 @@ namespace BE.ControllersFeUser
             var result = _commentService.Delete(model);
             return CommonResponse(result);
         }
-
         [HttpGet(UrlConstants.BaseRating)]
-        public IActionResult GetRating([FromQuery] Guid entityId)
+        public IActionResult Rating([FromQuery] Guid entityId)
         {
             var result = _commentService.GetRating(entityId);
             return CommonResponse(result);

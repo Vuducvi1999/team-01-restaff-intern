@@ -107,23 +107,19 @@
                 placeholder="Enter your phone"
                 [readonly]="updateProfile"
                 [ngClass]="{
-                  'is-invalid':
-                    (submittedProfile && fProfile.phone.errors) ||
-                    isCheckPhone == false,
-                  'is-valid': isCheckPhone
+                  'is-invalid': submittedProfile && fProfile.phone.errors
                 }"
               />
               <div
-                *ngIf="
-                  (submittedProfile && fProfile.phone.errors) ||
-                  isCheckPhone == false
-                "
+                *ngIf="submittedProfile && fProfile.phone.errors"
                 class="invalid-feedback"
               >
                 <div *ngIf="fProfile.phone.errors?.required">
                   Phone is required
                 </div>
-                <div *ngIf="fProfile.phone.errors?.pattern">Fail type phone</div>
+                <div *ngIf="fProfile.phone.errors?.pattern">
+                  Fail type phone
+                </div>
                 <div *ngIf="fProfile.phone.errors?.isPhoneUnique">
                   Phone is exsist
                 </div>
@@ -139,23 +135,19 @@
                 placeholder="Email"
                 [readonly]="updateProfile"
                 [ngClass]="{
-                  'is-invalid':
-                    (submittedProfile && fProfile.email.errors) ||
-                    isCheckEmail == false,
-                  'is-valid': isCheckEmail
+                  'is-invalid': submittedProfile && fProfile.email.errors
                 }"
               />
               <div
-                *ngIf="
-                  (submittedProfile && fProfile.email.errors) ||
-                  isCheckEmail == false
-                "
+                *ngIf="submittedProfile && fProfile.email.errors"
                 class="invalid-feedback"
               >
                 <div *ngIf="fProfile.email.errors?.required">
                   Email is required
                 </div>
-                <div *ngIf="fProfile.email.errors?.pattern">Fail type email</div>
+                <div *ngIf="fProfile.email.errors?.pattern">
+                  Fail type email
+                </div>
                 <div *ngIf="fProfile.email.errors?.isEmailUnique">
                   Email is exsist
                 </div>

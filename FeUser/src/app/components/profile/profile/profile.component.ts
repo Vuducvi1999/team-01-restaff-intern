@@ -44,9 +44,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   submittedProfile = false;
   submittedPassword = false;
 
-  isCheckEmail: boolean;
-  isCheckPhone: boolean;
-
   // public modalFile: ModalFile;
   // public fileURL: (String | ArrayBuffer)[];
 
@@ -135,48 +132,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       },
       { validators: this.checkValidatorsPassword }
     );
-  }
-
-  isEmailExsist(control: FormControl) {
-    this.isCheckEmail = null;
-    const q = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        var email = this.user ? this.user.email : null;
-        if (email == control.value) {
-          return;
-        }
-        this.authService
-          .checkEmail(control.value)
-          .then((res: ReturnMessage<boolean>) => {
-            this.isCheckEmail = false;
-            res.data
-              ? resolve({ isEmailUnique: true })
-              : (this.isCheckEmail = true);
-          });
-      }, 1000);
-    });
-    return q;
-  }
-
-  isPhoneExsist(control: FormControl) {
-    this.isCheckPhone = null;
-    const q = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        var phone = this.user ? this.user.phone : null;
-        if (phone == control.value) {
-          return;
-        }
-        this.authService
-          .checkPhone(control.value)
-          .then((res: ReturnMessage<boolean>) => {
-            this.isCheckPhone = false;
-            res.data
-              ? resolve({ isPhoneUnique: true })
-              : (this.isCheckPhone = true);
-          });
-      }, 1000);
-    });
-    return q;
   }
 
   checkValidatorsPassword(group: FormGroup) {

@@ -7,6 +7,7 @@ import {
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
+import { TypeSweetAlertIcon } from "src/app/lib/data/models";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import {
   CommentModel,
@@ -19,7 +20,11 @@ import {
   SearchPaganationDTO,
 } from "src/app/lib/data/models/common";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
-import { AuthService, FileService } from "src/app/lib/data/services";
+import {
+  AuthService,
+  FileService,
+  MessageService,
+} from "src/app/lib/data/services";
 import { BlogService } from "src/app/lib/data/services/blogs/blog.service";
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
 import { TypeDisplayImage } from "src/app/shared/data";
@@ -56,10 +61,10 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
   typeDisplayImage = TypeDisplayImage;
   user: UserDataReturnDTOModel;
   comments: PageModel<CommentModel>;
-  searchModel;
+  searchModel: any;
   item: any;
+
   public rating: number;
-  public ratingPoint: number;
 
   subDataUser: Subscription;
 
@@ -67,7 +72,8 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     private blogService: BlogService,
     private activatedRoute: ActivatedRoute,
     private commentService: CommentService,
-    private authService: AuthService
+    private authService: AuthService,
+    private messageService: MessageService
   ) {}
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
@@ -78,10 +84,22 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     this.subDataUser = this.authService.callUserInfo.subscribe(
       (it) => (this.user = it)
     );
+    this.initDataComment();
     this.getBlog();
-    this.getRating();
   }
 
+  getRating() {
+    this.activatedRoute.paramMap.subscribe((param) => {
+      const data = { entityId: param.get("id") };
+      this.commentService
+        .getRating({ params: data })
+        .then((res: ReturnMessage<number>) => {
+          this.rating = res.data;
+          console.log(this.rating);
+        })
+        .catch((e) => {});
+    });
+  }
   getBlog() {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.id = params.get("id");
@@ -89,23 +107,20 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
         .getBlog(this.id)
         .then((res: ReturnMessage<BlogModel>) => {
           this.data = res.data;
+        })
+        .catch((er) => {
+          this.messageService.alert(
+            er.error.message ??
+              JSON.stringify(er.error.error) ??
+              "Server Disconnected",
+            TypeSweetAlertIcon.ERROR
+          );
         });
-
       this.createSearchModel();
-      this.initDataComment();
       this.getComments();
     });
   }
-  getRating() {
-    this.activatedRoute.paramMap.subscribe((params) => {
-      const data = { entityId: params.get("id") };
-      this.commentService
-        .getRating({ params: data })
-        .then((res: ReturnMessage<number>) => {
-          this.ratingPoint = res.data;
-        });
-    });
-  }
+
   createSearchModel() {
     this.searchModel = {
       ["search.entityId"]: this.id,
@@ -126,8 +141,13 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
       .then((data: ReturnMessage<PageModel<CommentModel>>) => {
         this.comments = data.data;
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((er) => {
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            "Server Disconnected",
+          TypeSweetAlertIcon.ERROR
+        );
       });
     this.getRating();
   }

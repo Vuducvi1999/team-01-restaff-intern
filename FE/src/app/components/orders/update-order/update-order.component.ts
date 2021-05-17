@@ -1,9 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { PageModel, ReturnMessage, TypeSweetAlertIcon } from 'src/app/lib/data/models';
-import { OrderDetailModel, OrderModel } from 'src/app/lib/data/models/orders/order.model';
- 
+import {
+  PageModel,
+  ReturnMessage,
+  TypeSweetAlertIcon,
+} from 'src/app/lib/data/models';
+import {
+  OrderDetailModel,
+  OrderModel,
+} from 'src/app/lib/data/models/orders/order.model';
+
 import { OrderDetailsService } from 'src/app/lib/data/services/orders/order-details.service';
 import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
@@ -31,16 +38,13 @@ export class UpdateOrderComponent implements OnInit {
   submitted = false;
   public orderDetails: OrderDetailModel[];
 
-
   constructor(
     private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
     private ordersService: OrdersService,
     private orderDetailsService: OrderDetailsService,
     private messageService: MessageService
-
-  ) { }
-
+  ) {}
 
   ngOnInit() {
     this.loadFormItem();
@@ -64,29 +68,34 @@ export class UpdateOrderComponent implements OnInit {
         title: 'Price',
         value: 'price',
         type: 'custom',
-        renderComponent: CustomViewCellNumberComponent
+        renderComponent: CustomViewCellNumberComponent,
       },
       quantity: {
         title: 'Quantity',
         value: 'quantity',
         type: 'custom',
-        renderComponent: CustomViewCellComponent
-      }
-      ,
+        renderComponent: CustomViewCellComponent,
+      },
       totalAmount: {
         title: 'Total Amount',
         value: 'totalAmount',
         type: 'custom',
-        renderComponent: CustomViewCellNumberComponent
+        renderComponent: CustomViewCellNumberComponent,
       },
     },
   };
 
   loadFormItem() {
-    var check = this.item.status != "New"
+    var check = this.item.status != 'New';
     this.orderForm = this.formBuilder.group({
-      fullName: [{ value: this.item.fullName, disabled: check }, Validators.required],
-      address: [{ value: this.item.address, disabled: check }, Validators.required],
+      fullName: [
+        { value: this.item.fullName, disabled: check },
+        Validators.required,
+      ],
+      address: [
+        { value: this.item.address, disabled: check },
+        Validators.required,
+      ],
       email: [{ value: this.item.email, disabled: check }, Validators.required],
       phone: [{ value: this.item.phone, disabled: check }, Validators.required],
     });
@@ -94,8 +103,7 @@ export class UpdateOrderComponent implements OnInit {
 
   createModal() {
     this.modalHeader = new ModalHeaderModel();
-    this.modalHeader.title =
-      `Update Order`;
+    this.modalHeader.title = `Update Order`;
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.buttons = [
       {
@@ -103,33 +111,33 @@ export class UpdateOrderComponent implements OnInit {
         title: 'back',
         onAction: (event: any) => {
           this.ngbActiveModal.close();
-        }
-      }
-    ]
-    if (this.item.status == "New") {
+        },
+      },
+    ];
+    if (this.item.status == 'New') {
       this.modalFooter.buttons = [
         {
           color: 'btn btn-primary',
           title: 'save',
           onAction: (event: any) => {
             this.save();
-          }
+          },
         },
         {
           color: 'btn btn-success',
           title: 'approve',
           onAction: (event: any) => {
             this.approve();
-          }
+          },
         },
         {
           color: 'btn btn-danger',
           title: 'reject',
           onAction: (event: any) => {
             this.reject();
-          }
-        }
-      ]
+          },
+        },
+      ];
     }
   }
 
@@ -145,109 +153,140 @@ export class UpdateOrderComponent implements OnInit {
       phone: this.orderForm.controls.phone.value,
       status: this.item.status,
       id: this.item.id,
-      totalAmount: (this.item.totalAmount),
-      totalItem: this.item.totalItem
-
+      totalAmount: this.item.totalAmount,
+      totalItem: this.item.totalItem,
     };
   }
   save() {
     this.loadOrderModel();
-    this.messageService.confirm(`Do you want to edit the order?`, 'Yes').then(async (result) => {
-      if (result.isConfirmed) {
-        this.submitted = true;
-        if (this.orderForm.valid) {
-          this.ordersService
-            .update(this.order)
-            .then(() => {
-              this.messageService.notification('Banner has been updated', TypeSweetAlertIcon.SUCCESS);
-              this.ngbActiveModal.close();
-            }).catch((er) => {
-              if (er.error.hasError) {
-                console.log(er.error.message);
-              }
-            });;
-
+    this.messageService
+      .confirm(`Do you want to edit the order?`, 'Yes')
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          this.submitted = true;
+          if (this.orderForm.valid) {
+            this.ordersService
+              .update(this.order)
+              .then(() => {
+                this.messageService.notification(
+                  'Banner has been updated',
+                  TypeSweetAlertIcon.SUCCESS
+                );
+                this.ngbActiveModal.close();
+              })
+              .catch((er) => {
+                this.messageService.alert(
+                  er.error.message ??
+                    JSON.stringify(er.error.error) ??
+                    'Server Disconnected',
+                  TypeSweetAlertIcon.ERROR
+                );
+                // if (er.error.hasError) {
+                //   console.log(er.error.message);
+                // }
+              });
+          }
         }
-      }
-    })
+      });
   }
 
   approve() {
     this.loadOrderModel();
-    this.order.status = "Approved";
+    this.order.status = 'Approved';
 
-    this.messageService.confirm(`Do you want to approve the order?`, 'Yes').then(async (result) => {
-      if (result.isConfirmed) {
-        this.submitted = true;
-        if (this.orderForm.valid) {
-          this.ordersService
-            .update(this.order)
-            .then(() => {
-              this.messageService.notification('Banner has been approved', TypeSweetAlertIcon.SUCCESS);
-              this.ngbActiveModal.close();
-            }).catch((er) => {
-              if (er.error.hasError) {
-                console.log(er.error.message);
-              }
-            });;
-
+    this.messageService
+      .confirm(`Do you want to approve the order?`, 'Yes')
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          this.submitted = true;
+          if (this.orderForm.valid) {
+            this.ordersService
+              .update(this.order)
+              .then(() => {
+                this.messageService.notification(
+                  'Order has been approved',
+                  TypeSweetAlertIcon.SUCCESS
+                );
+                this.ngbActiveModal.close();
+              })
+              .catch((er) => {
+                this.messageService.alert(
+                  er.error.message ??
+                    JSON.stringify(er.error.error) ??
+                    'Server Disconnected',
+                  TypeSweetAlertIcon.ERROR
+                );
+                // if (er.error.hasError) {
+                //   console.log(er.error.message);
+                // }
+              });
+          }
         }
-      }
-    })
+      });
   }
 
   reject() {
     this.loadOrderModel();
-    this.order.status = "Rejected";
+    this.order.status = 'Rejected';
     Swal.fire({
       title: `Do you want to reject the order?`,
-      input:"text",
-      inputPlaceholder:"Why?",
+      input: 'text',
+      inputPlaceholder: 'Why?',
       showCancelButton: true,
       confirmButtonText: `Yes`,
-      icon: 'question'
-    })
-      .then(async (result) => {
-        if (result.isConfirmed) {
-          this.submitted = true;
-          this.order.note = result.value;
-          console.log(result.value)
-          if (this.orderForm.valid) {
-            this.ordersService
-              .update(this.order)
-              .then((res) => {
-                Swal.fire({
-                  icon: 'success',
-                  title: `Order has been rejected`,
-                  showConfirmButton: false,
-                  timer: 1500
-                })
-                this.ngbActiveModal.close();
-              })
-              .catch((er) => {
-                if (er.error.hasError) {
-                  console.log(er.error.message);
-                }
-              });
-          }
+      icon: 'question',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        this.submitted = true;
+        this.order.note = result.value;
+        console.log(result.value);
+        if (this.orderForm.valid) {
+          this.ordersService
+            .update(this.order)
+            .then((res) => {
+              this.messageService.notification(
+                'Order has been rejected',
+                TypeSweetAlertIcon.SUCCESS
+              );
+              this.ngbActiveModal.close();
+            })
+            .catch((er) => {
+              this.messageService.alert(
+                er.error.message ??
+                  JSON.stringify(er.error.error) ??
+                  'Server Disconnected',
+                TypeSweetAlertIcon.ERROR
+              );
+              // if (er.error.hasError) {
+              //   console.log(er.error.message);
+              // }
+            });
         }
-      })
+      }
+    });
   }
 
   getOrderDetails() {
-    this.orderDetailsService.getByOrder(this.item.id, null).then((res: ReturnMessage<OrderDetailModel[]>) => {
-      if (!res.hasError) {
-        this.orderDetails = res.data;
-      }
-    }).catch((er) => {
-
-      if (er.error.hasError) {
-        console.log(er.error.message)
-      }
-    });
+    this.orderDetailsService
+      .getByOrder(this.item.id, null)
+      .then((res: ReturnMessage<OrderDetailModel[]>) => {
+        if (!res.hasError) {
+          this.orderDetails = res.data;
+        }
+      })
+      .catch((er) => {
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        );
+        // if (er.error.hasError) {
+        //   console.log(er.error.message);
+        // }
+      });
   }
   close(event: any) {
     this.ngbActiveModal.close();
   }
-
 }

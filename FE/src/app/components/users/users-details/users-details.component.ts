@@ -8,9 +8,10 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { VirtualTimeScheduler } from 'rxjs';
-import { FileDtoModel, ReturnMessage } from 'src/app/lib/data/models';
+import { FileDtoModel, ReturnMessage, TypeSweetAlertIcon } from 'src/app/lib/data/models';
 import { UserModel } from 'src/app/lib/data/models/users/user.model';
 import { FileService } from 'src/app/lib/data/services';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { UserService } from 'src/app/lib/data/services/users/user.service';
 
 import {
@@ -41,7 +42,8 @@ export class UserDetailComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private ngbActiveModal: NgbActiveModal
+    private ngbActiveModal: NgbActiveModal,
+    private messageService: MessageService
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -99,10 +101,14 @@ export class UserDetailComponent implements OnInit {
     this.userService
       .save(this.user)
       .then((data: ReturnMessage<UserModel>) => {
+        this.messageService.notification('Save item successfully',TypeSweetAlertIcon.SUCCESS);
         this.ngbActiveModal.close();
       })
-      .catch((e) => {
-        if (e.error.message) this.messageFail = e.error.message;
+      .catch((er) => {
+        this.messageService.alert(
+          er.error.message ?? JSON.stringify(er.error.error) ?? 'Server Disconnected'
+        )
+        if (er.error.message) this.messageFail = er.error.message;
         // console.log(e);
       });
   }
