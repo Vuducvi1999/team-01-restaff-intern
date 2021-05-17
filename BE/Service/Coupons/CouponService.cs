@@ -107,9 +107,9 @@ namespace Service.Coupons
                         it.Code.Contains(search.Search.Code) ||
                         it.Name.Contains(search.Search.Name)
                     )
-                )
+                ) && !it.IsDeleted
                 , search.PageSize
-                , search.PageIndex
+                , search.PageIndex * search.PageSize
                 , t => t.Name
             );
             var data = _mapper.Map<PaginatedList<Coupon>, PaginatedList<CouponDTO>>(resultEntity);

@@ -19,21 +19,22 @@ import { CouponDetailComponent } from '../coupon-detail/coupon-detail.component'
 })
 export class ListCouponComponent implements OnInit {
   public coupons: CouponModel[];
+  public data: PageModel<CouponModel>;
+  params: any = {};
   constructor(
     private modalService: NgbModal,
     private couponService: CouponService,
     private datePipe: DatePipe,
     private messageService: MessageService
-  ) {
-    this.getCoupons();
-  }
+  ) {}
 
   getCoupons() {
     this.couponService
-      .get(null)
+      .get({ params: this.params })
       .then((res: ReturnMessage<PageModel<CouponModel>>) => {
         if (!res.hasError) {
           this.coupons = res.data.results;
+          this.data = res.data;
         }
       })
       .catch((er) => {
@@ -43,17 +44,10 @@ export class ListCouponComponent implements OnInit {
             'Server Disconnected',
           TypeSweetAlertIcon.ERROR
         );
-        // if (er.error.hasError) {
-        //   // console.log(er.error.message);
-        // }
       });
   }
   public settings = {
     mode: 'external',
-    pager: {
-      display: true,
-      perPage: 10,
-    },
     actions: {
       position: 'right',
     },
@@ -96,30 +90,27 @@ export class ListCouponComponent implements OnInit {
   }
 
   delete(event: any) {
-    let coupon = event.data as CouponModel;
     this.messageService
-      .confirm('Do you want to permanently delete this item?', 'Yes')
+      .confirm(`Do you want to delete the coupon?`, 'Yes')
       .then((res) => {
         if (res.isConfirmed) {
-          this.couponService
-            .delete(coupon)
-            .then(() => {
-              this.messageService.notification(
-                'Delete item successfully',
-                TypeSweetAlertIcon.SUCCESS
-              );
-              this.getCoupons();
-            })
-            .catch((er) => {
-              this.messageService.alert(
-                er.error.message ??
-                  JSON.stringify(er.error.error) ??
-                  'Server Disconnected',
-                TypeSweetAlertIcon.ERROR
-              );
-            });
+          let coupon = event.data as CouponModel;
+          this.couponService.delete(coupon).then(() => {
+            this.messageService.notification(
+              'Coupon has been deleted',
+              TypeSweetAlertIcon.SUCCESS
+            );
+            this.getCoupons();
+          });
         }
       });
   }
-  ngOnInit() {}
+  onPage(event) {
+    this.params.pageIndex = event;
+    this.getCoupons();
+  }
+  ngOnInit() {
+    this.params.pageIndex = 0;
+    this.getCoupons();
+  }
 }

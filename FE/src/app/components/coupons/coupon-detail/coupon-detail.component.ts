@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
-  FormArray,
   FormBuilder,
   FormGroup,
   ValidatorFn,
@@ -38,10 +37,13 @@ export class CouponDetailComponent implements OnInit {
   ) {}
   loadItemForm() {
     this.couponForm = this.formBuilder.group({
-      code: [this.item ? this.item.code : '', [Validators.required]],
-      name: [this.item ? this.item.name : '', [Validators.required]],
+      code: [this.item ? this.item.code : '', Validators.required],
+      name: [this.item ? this.item.name : '', Validators.required],
       hasPercent: [this.item?.hasPercent ? true : false],
-      value: [this.item ? this.item.value : '', Validators.required],
+      value: [
+        this.item ? this.item.value : '',
+        [Validators.required, Validators.min(1), Validators.max(99)],
+      ],
       startDate: [
         this.item ? formatDate(this.item.startDate, 'yyyy-MM-dd', 'en') : '',
         Validators.required,
@@ -83,25 +85,28 @@ export class CouponDetailComponent implements OnInit {
     this.submitted = true;
 
     if (this.couponForm.valid) {
-      return this.couponService
-        .save(this.coupon)
-        .then(() => {
-          this.couponForm.reset();
-          this.submitted = false;
-          this.ngbActiveModal.close();
-          this.messageService.notification(
-            'Save item successfully',
-            TypeSweetAlertIcon.SUCCESS
-          );
-        })
-        .catch((er) => {
-          this.messageService.alert(
-            er.error.message ??
-              JSON.stringify(er.error.error) ??
-              'Server Disconnected'
-          );
-          // if (er.error.hasError) {
-          // }
+      this.messageService
+        .confirm(`Do you want to edit the coupon?`, 'Yes')
+        .then((res) => {
+          if (res.isConfirmed) {
+            this.couponService
+              .save(this.coupon)
+              .then((res) => {
+                this.messageService.notification(
+                  'Banner has been edited',
+                  TypeSweetAlertIcon.SUCCESS
+                );
+                this.couponForm.reset();
+                this.submitted = false;
+                this.ngbActiveModal.close();
+              })
+              .catch((er) => {
+                this.messageService.alert(
+                  er.error.message ?? JSON.stringify(er.error),
+                  TypeSweetAlertIcon.ERROR
+                );
+              });
+          }
         });
     }
   }

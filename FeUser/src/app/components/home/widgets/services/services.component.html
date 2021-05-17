@@ -4,7 +4,7 @@
       <a class="link-page-content" [routerLink]="['/page-info', pageContent.id]"
         ><app-image-wrapper
           [data]="{
-            url: pageContent.imageUrl.split(',')[0],
+            url: pageContent.imageUrl?.split(',')[0],
             typeClass: typeDisplayImage.LOGO_PAGE_CONTENT
           }"
         ></app-image-wrapper
