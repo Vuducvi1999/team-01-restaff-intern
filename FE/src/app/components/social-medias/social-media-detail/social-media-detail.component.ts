@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FileDtoModel } from 'src/app/lib/data/models';
+import { FileDtoModel, TypeSweetAlertIcon } from 'src/app/lib/data/models';
 import { SocialMediaModel } from 'src/app/lib/data/models/social-medias/social-media.model';
 import { FileService } from 'src/app/lib/data/services';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { SocialMediaService } from 'src/app/lib/data/services/social-media/social-media.service';
 import {
   EntityType,
@@ -32,7 +33,8 @@ export class SocialMediaDetailComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
-    private socialService: SocialMediaService
+    private socialService: SocialMediaService,
+    private messageService: MessageService
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -42,13 +44,7 @@ export class SocialMediaDetailComponent implements OnInit {
 
   loadItemForm() {
     this.socialMediaForm = this.formBuilder.group({
-      title: [
-        this.item ? this.item.title : '',
-        [
-          Validators.required,
-          Validators.pattern('^(?=.*[a-zA-Z0-9])([a-zA-Z0-9]+)$'),
-        ],
-      ],
+      title: [this.item ? this.item.title : '', [Validators.required]],
       link: [this.item ? this.item.link : '', [Validators.required]],
       iconUrl: [this.item ? this.item.iconUrl : '', [Validators.required]],
       displayOrder: [
@@ -79,15 +75,27 @@ export class SocialMediaDetailComponent implements OnInit {
     this.submitted = true;
 
     if (this.socialMediaForm.valid) {
-      return this.socialService
-        .save(this.socialMedia)
+      this.messageService
+        .confirm(`Do you want to edit the Social Media?`, 'Yes')
         .then((res) => {
-          this.socialMediaForm.reset();
-          this.submitted = false;
-          this.ngbActiveModal.close();
-        })
-        .catch((er) => {
-          if (er.error.hasError) {
+          if (res.isConfirmed) {
+            this.socialService
+              .save(this.socialMedia)
+              .then((res) => {
+                this.messageService.notification(
+                  'Social Media has been edited',
+                  TypeSweetAlertIcon.SUCCESS
+                );
+                this.socialMediaForm.reset();
+                this.submitted = false;
+                this.ngbActiveModal.close();
+              })
+              .catch((er) => {
+                this.messageService.alert(
+                  er.error.message ?? JSON.stringify(er.error),
+                  TypeSweetAlertIcon.ERROR
+                );
+              });
           }
         });
     }

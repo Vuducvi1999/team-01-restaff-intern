@@ -86,7 +86,7 @@ export class ListProductsComponent implements OnInit {
             .delete(product)
             .then(() => {
               this.messageService.notification(
-                'Detele successful',
+                'Delete successful',
                 TypeSweetAlertIcon.SUCCESS
               );
               this.fetch();

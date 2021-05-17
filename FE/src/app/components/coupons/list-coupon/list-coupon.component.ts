@@ -1,7 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
+import {
+  PageModel,
+  ReturnMessage,
+  TypeSweetAlertIcon,
+} from 'src/app/lib/data/models';
 import { CouponModel } from 'src/app/lib/data/models/coupons/coupon.model';
 import { CouponService } from 'src/app/lib/data/services/coupons/coupon.service';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
@@ -15,35 +19,28 @@ import { CouponDetailComponent } from '../coupon-detail/coupon-detail.component'
 })
 export class ListCouponComponent implements OnInit {
   public coupons: CouponModel[];
+  public data: PageModel<CouponModel>;
+  params: any = {};
   constructor(
     private modalService: NgbModal,
     private couponService: CouponService,
     private datePipe: DatePipe,
     private messageService: MessageService
-  ) {
-    this.getCoupons();
-  }
+  ) {}
 
   getCoupons() {
     this.couponService
-      .get(null)
+      .get({ params: this.params })
       .then((res: ReturnMessage<PageModel<CouponModel>>) => {
         if (!res.hasError) {
           this.coupons = res.data.results;
+          this.data = res.data;
         }
       })
-      .catch((er) => {
-        if (er.error.hasError) {
-          // console.log(er.error.message);
-        }
-      });
+      .catch((er) => {});
   }
   public settings = {
     mode: 'external',
-    pager: {
-      display: true,
-      perPage: 10,
-    },
     actions: {
       position: 'right',
     },
@@ -86,14 +83,27 @@ export class ListCouponComponent implements OnInit {
   }
 
   delete(event: any) {
-    let coupon = event.data as CouponModel;
     this.messageService
-      .confirm('Do you want to permanently delete this item?', 'Yes')
+      .confirm(`Do you want to delete the coupon?`, 'Yes')
       .then((res) => {
-        this.couponService.delete(coupon).then(() => {
-          this.getCoupons();
-        });
+        if (res.isConfirmed) {
+          let coupon = event.data as CouponModel;
+          this.couponService.delete(coupon).then(() => {
+            this.messageService.notification(
+              'Coupon has been deleted',
+              TypeSweetAlertIcon.SUCCESS
+            );
+            this.getCoupons();
+          });
+        }
       });
   }
-  ngOnInit() { }
+  onPage(event) {
+    this.params.pageIndex = event;
+    this.getCoupons();
+  }
+  ngOnInit() {
+    this.params.pageIndex = 0;
+    this.getCoupons();
+  }
 }

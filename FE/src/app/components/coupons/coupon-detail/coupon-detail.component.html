@@ -1,84 +1,154 @@
-<app-modal-header [data]="modalHeader" (onAction)="close($event)"></app-modal-header>
+<app-modal-header
+  [data]="modalHeader"
+  (onAction)="close($event)"
+></app-modal-header>
 <!-- Container-fluid starts-->
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-12">
       <div class="card tab2-card">
         <div class="card-body">
-          <div class="tab-pane fade active show" id="account" role="tabpanel" aria-labelledby="account-tab">
-            <form [formGroup]="couponForm" class="needs-validation user-add" novalidate="">
+          <div
+            class="tab-pane fade active show"
+            id="account"
+            role="tabpanel"
+            aria-labelledby="account-tab"
+          >
+            <form
+              [formGroup]="couponForm"
+              class="needs-validation user-add"
+              novalidate=""
+            >
               <h4>Coupon Details</h4>
               <div class="form-group row">
-                <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span> Code</label>
-                <input class="form-control col-xl-8 col-md-7" id="validationCustom0" type="text" required=""
-                  formControlName="code" />
+                <label for="validationCustom0" class="col-xl-3 col-md-4"
+                  ><span>*</span> Code</label
+                >
+                <input
+                  class="form-control col-xl-8 col-md-7"
+                  id="validationCustom0"
+                  type="text"
+                  required=""
+                  formControlName="code"
+                />
                 <div class="col-md-5 offset-md-3">
-                  <span class="text-danger" *ngIf="
-                    (CouponFormControl.code.touched || submitted) &&
-                    CouponFormControl.code.errors?.required
-                  ">
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (CouponFormControl.code.touched || submitted) &&
+                      CouponFormControl.code.errors?.required
+                    "
+                  >
                     Code is required
                   </span>
                 </div>
               </div>
 
               <div class="form-group row">
-                <label for="validationCustom1" class="col-xl-3 col-md-4"><span>*</span> Name</label>
-                <input class="form-control col-xl-8 col-md-7" id="validationCustom1" type="text" required=""
-                  formControlName="name" />
+                <label for="validationCustom1" class="col-xl-3 col-md-4"
+                  ><span>*</span> Name</label
+                >
+                <input
+                  class="form-control col-xl-8 col-md-7"
+                  id="validationCustom1"
+                  type="text"
+                  required=""
+                  formControlName="name"
+                />
                 <div class="col-md-5 offset-md-3">
-                  <span class="text-danger" *ngIf="
-                    (CouponFormControl.name.touched || submitted) &&
-                    CouponFormControl.name.errors?.required
-                  ">
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (CouponFormControl.name.touched || submitted) &&
+                      CouponFormControl.name.errors?.required
+                    "
+                  >
                     Name is required
                   </span>
                 </div>
               </div>
               <div class="form-group row">
-                <label for="validationCustom2" class="col-xl-3 col-md-4"><span>*</span> HasPercent</label>
-                <input class="form-check-input col-xl-7 col-md-6" id="" type="checkbox"
-                  formControlName="hasPercent" />
+                <label for="validationCustom2" class="col-xl-3 col-md-4"
+                  >HasPercent</label
+                >
+                <input
+                  class="form-check-input col-xl-7 col-md-6"
+                  id=""
+                  type="checkbox"
+                  formControlName="hasPercent"
+                />
               </div>
               <div class="form-group row">
-                <label for="validationCustom3" class="col-xl-3 col-md-4"><span>*</span> Value</label>
-                <input class="form-control col-xl-8 col-md-7" id="validationCustom3" type="number" required=""
-                  formControlName="value" />
+                <label for="validationCustom3" class="col-xl-3 col-md-4"
+                  ><span>*</span> Value</label
+                >
+                <input
+                  class="form-control col-xl-8 col-md-7"
+                  id="validationCustom3"
+                  type="number"
+                  required=""
+                  formControlName="value"
+                />
                 <div class="col-md-5 offset-md-3">
-                  <span class="text-danger" *ngIf="
-                    (CouponFormControl.value.touched || submitted) &&
-                    CouponFormControl.value.errors?.required
-                  ">
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (CouponFormControl.value.touched || submitted) &&
+                      CouponFormControl.value.errors?.required
+                    "
+                  >
                     Value is required
                   </span>
                 </div>
               </div>
               <div class="form-group row">
-                <label for="validateStartDate" class="col-xl-3 col-md-4"><span>*</span> Start Date</label>
-                <input class="form-control col-xl-8 col-md-7" id="validateStartDate" type="date"
-                  value="{{ item?.startDate | date: 'dd-MM-yyyy' }}" formControlName="startDate" required="" />
+                <label for="validateStartDate" class="col-xl-3 col-md-4"
+                  ><span>*</span> Start Date</label
+                >
+                <input
+                  class="form-control col-xl-8 col-md-7"
+                  id="validateStartDate"
+                  type="date"
+                  value="{{ item?.startDate | date: 'dd-MM-yyyy' }}"
+                  formControlName="startDate"
+                  required=""
+                />
                 <div class="col-md-5 offset-md-3">
-                  <span class="text-danger" *ngIf="
-                    (CouponFormControl.startDate.touched || submitted) &&
-                    CouponFormControl.startDate.errors?.required
-                  ">
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (CouponFormControl.startDate.touched || submitted) &&
+                      CouponFormControl.startDate.errors?.required
+                    "
+                  >
                     Start Date is required or Invalid
                   </span>
                 </div>
               </div>
               <div class="form-group row">
-                <label for="validationEndDate" class="col-xl-3 col-md-4"><span>*</span> End Date</label>
-                <input class="form-control col-xl-8 col-md-7" id="validationEndDate" type="date"
-                  value="{{ item?.endDate | date: 'dd-MM-yyyy' }}" formControlName="endDate" required="" />
-                  <div class="col-md-5 offset-md-3">
-                <span class="text-danger" *ngIf="
-                    (CouponFormControl.endDate.touched || submitted) &&
-                    (CouponFormControl.endDate.errors?.required ||
-                      CouponFormControl.endDate.errors?.compared)
-                  ">
-                  End Date is required or Invalid
-                </span>
-              </div>
+                <label for="validationEndDate" class="col-xl-3 col-md-4"
+                  ><span>*</span> End Date</label
+                >
+                <input
+                  class="form-control col-xl-8 col-md-7"
+                  id="validationEndDate"
+                  type="date"
+                  value="{{ item?.endDate | date: 'dd-MM-yyyy' }}"
+                  formControlName="endDate"
+                  required=""
+                />
+                <div class="col-md-5 offset-md-3">
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (CouponFormControl.endDate.touched || submitted) &&
+                      (CouponFormControl.endDate.errors?.required ||
+                        CouponFormControl.endDate.errors?.compared)
+                    "
+                  >
+                    End Date is required or Invalid
+                  </span>
+                </div>
               </div>
             </form>
           </div>
@@ -88,4 +158,7 @@
   </div>
 </div>
 <!-- Container-fluid Ends-->
-<app-modal-footer [data]="modalFooter" (onAction)="saveCoupon($event)"></app-modal-footer>
+<app-modal-footer
+  [data]="modalFooter"
+  (onAction)="saveCoupon($event)"
+></app-modal-footer>

@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
+import {
+  PageModel,
+  ReturnMessage,
+  TypeSweetAlertIcon,
+} from 'src/app/lib/data/models';
 import { SocialMediaModel } from 'src/app/lib/data/models/social-medias/social-media.model';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { SocialMediaService } from 'src/app/lib/data/services/social-media/social-media.service';
@@ -20,9 +24,7 @@ export class ListSocialMediaComponent implements OnInit {
     private modalService: NgbModal,
     private socialService: SocialMediaService,
     private messageService: MessageService
-  ) {
-    this.getSocialMedias();
-  }
+  ) {}
 
   getSocialMedias() {
     this.socialService
@@ -79,15 +81,23 @@ export class ListSocialMediaComponent implements OnInit {
   }
 
   delete(event: any) {
-    let socialMedia = event.data as SocialMediaModel;
     this.messageService
-      .confirm('Do you want to permanently delete this item?', 'Yes')
+      .confirm(`Do you want to delete the social media?`, 'Yes')
       .then((res) => {
-        this.socialService.delete(socialMedia).then(() => {
-          this.getSocialMedias();
-        });
+        if (res.isConfirmed) {
+          let socialMedia = event.data as SocialMediaModel;
+          this.socialService.delete(socialMedia).then(() => {
+            this.messageService.notification(
+              'Social has been deleted',
+              TypeSweetAlertIcon.SUCCESS
+            );
+            this.getSocialMedias();
+          });
+        }
       });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getSocialMedias();
+  }
 }

@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
 import { BlogModel } from 'src/app/lib/data/models/blogs/blog.model';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models/common';
 import { FileService } from 'src/app/lib/data/services';
@@ -22,9 +23,7 @@ export class ListBlogsComponent implements OnInit {
     private blogService: BlogService,
     private datePipe: DatePipe,
     private messageService: MessageService
-  ) {
-    this.getBlogs();
-  }
+  ) {}
 
   getBlogs() {
     this.blogService
@@ -79,15 +78,23 @@ export class ListBlogsComponent implements OnInit {
   }
 
   delete(event: any) {
-    let banner = event.data as BlogModel;
     this.messageService
-      .confirm('Do you want to permanently delete this item?', 'Yes')
+      .confirm(`Do you want to delete the Blog?`, 'Yes')
       .then((res) => {
-        this.blogService.delete(banner).then(() => {
-          this.getBlogs();
-        });
+        if (res.isConfirmed) {
+          let blog = event.data as BlogModel;
+          this.blogService.delete(blog).then(() => {
+            this.messageService.notification(
+              'Blog has been deleted',
+              TypeSweetAlertIcon.SUCCESS
+            );
+            this.getBlogs();
+          });
+        }
       });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getBlogs();
+  }
 }
