@@ -92,7 +92,7 @@ export class LoginComponent implements OnInit {
         this.messageService.alert(
           'Login Fail',
           TypeSweetAlertIcon.ERROR,
-          `${er.error.message ?? er.error}`,
+          er.error.message ?? JSON.stringify(er.error.error) ?? "Server Disconnected",
         );
       });
   }

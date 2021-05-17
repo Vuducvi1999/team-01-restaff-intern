@@ -8,6 +8,8 @@ import {
   ModalFooterModel,
   ModalHeaderModel,
 } from 'src/app/shared/components/modals/models/modal.model';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
+import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
 @Component({
   selector: 'app-page-content-details',
   templateUrl: './page-content-details.component.html',
@@ -26,7 +28,8 @@ export class PageContentDetailComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private pageContentService: PageContentService,
-    private ngbActiveModal: NgbActiveModal
+    private ngbActiveModal: NgbActiveModal,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -67,11 +70,21 @@ export class PageContentDetailComponent implements OnInit {
       .update(this.pageContent)
       .then(() => {
         this.ngbActiveModal.close();
+        this.messageService.notification(
+          'Save item successfully',
+          TypeSweetAlertIcon.SUCCESS
+        );
       })
       .catch((er) => {
-        if (er.error.hasError) {
-          console.log(er.error.message);
-        }
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        );
+        // if (er.error.hasError) {
+        //   console.log(er.error.message);
+        // }
       });
   }
 

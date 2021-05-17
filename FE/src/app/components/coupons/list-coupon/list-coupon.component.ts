@@ -1,7 +1,11 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PageModel, ReturnMessage } from 'src/app/lib/data/models';
+import {
+  PageModel,
+  ReturnMessage,
+  TypeSweetAlertIcon,
+} from 'src/app/lib/data/models';
 import { CouponModel } from 'src/app/lib/data/models/coupons/coupon.model';
 import { CouponService } from 'src/app/lib/data/services/coupons/coupon.service';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
@@ -33,9 +37,15 @@ export class ListCouponComponent implements OnInit {
         }
       })
       .catch((er) => {
-        if (er.error.hasError) {
-          // console.log(er.error.message);
-        }
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        );
+        // if (er.error.hasError) {
+        //   // console.log(er.error.message);
+        // }
       });
   }
   public settings = {
@@ -90,10 +100,26 @@ export class ListCouponComponent implements OnInit {
     this.messageService
       .confirm('Do you want to permanently delete this item?', 'Yes')
       .then((res) => {
-        this.couponService.delete(coupon).then(() => {
-          this.getCoupons();
-        });
+        if (res.isConfirmed) {
+          this.couponService
+            .delete(coupon)
+            .then(() => {
+              this.messageService.notification(
+                'Delete item successfully',
+                TypeSweetAlertIcon.SUCCESS
+              );
+              this.getCoupons();
+            })
+            .catch((er) => {
+              this.messageService.alert(
+                er.error.message ??
+                  JSON.stringify(er.error.error) ??
+                  'Server Disconnected',
+                TypeSweetAlertIcon.ERROR
+              );
+            });
+        }
       });
   }
-  ngOnInit() { }
+  ngOnInit() {}
 }
