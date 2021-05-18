@@ -29,7 +29,7 @@
             Rating :
             <ngb-rating
               [max]="5"
-              [rate]="rating"
+              [rate]="data?.ratingScore"
               [starTemplate]="t"
               [readonly]="true"
             >
@@ -48,7 +48,7 @@
           <app-comment
             [isLoading]="user ? true : false"
             [dataComment]="dataComment"
-            (action)="getComments()"
+            (action)="getBlog()"
           ></app-comment>
           <app-comment-detail
             *ngIf="comments"

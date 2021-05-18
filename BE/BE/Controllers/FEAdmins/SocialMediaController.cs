@@ -5,6 +5,7 @@ using Common.Pagination;
 using Domain.DTOs.SocialMedias;
 using Domain.Entities;
 using Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
@@ -31,7 +32,6 @@ namespace BE.Controllers.FEAdmins
         [HttpGet]
         public IActionResult Get([FromQuery] SearchPaginationDTO<SocialMediaDTO> serachPagination)
         {
-
             var result = _socialMediaService.SearchPagination(serachPagination);
             return CommonResponse(result);
         }

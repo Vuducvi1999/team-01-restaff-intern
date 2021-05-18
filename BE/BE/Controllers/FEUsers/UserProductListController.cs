@@ -45,8 +45,14 @@ namespace BE.Controllers.FEUsers
         [Route(UrlConstants.ByCategory)]
         public IActionResult GetByCategory([FromQuery] Guid id)
         {
-
             var result = _userProductListService.GetByCategory(id);
+            return CommonResponse(result);
+        }
+
+        [HttpGet(UrlConstants.RevelantProduct)]
+        public IActionResult RelevantProduct([FromQuery] string name)
+        {
+            var result = _userProductListService.RelevantProduct(name);
             return CommonResponse(result);
         }
     }
