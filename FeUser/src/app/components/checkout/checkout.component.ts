@@ -29,7 +29,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   public couponValue = 0;
   public couponInvalid: boolean;
   public couponDisplay: boolean = false;
-  public couponName: string
+  public couponName: string;
   public couponPercent: string;
   public couponCode: string;
   public order: OrderModel = new OrderModel();
@@ -50,7 +50,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadCartItems();
-    this.subDataUser = this.authService.callUserInfo.subscribe(it => {
+    this.subDataUser = this.authService.callUserInfo.subscribe((it) => {
       this.order.firstName = it?.firstName;
       this.order.lastName = it?.lastName;
       this.order.email = it?.email;
@@ -69,14 +69,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.loadModel();
-    console.log(this.order);
+    // console.log(this.order);
     this.orderService
       .create(this.order)
       .then((resp) => {
         this.cartService.removeAll();
         this.routerService.navigate(["checkout/success"], { state: resp });
       })
-      .catch((er) => console.log(er));
+      .catch((er) => {
+        // console.log(er);
+      });
   }
 
   loadModel() {
@@ -98,7 +100,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   applyCoupon() {
     this.order.couponCode = this.couponCode;
-    this.couponService.getByCode(null, this.order.couponCode)
+    this.couponService
+      .getByCode(null, this.order.couponCode)
       .then((resp) => {
         this.couponInvalid = false;
         this.couponDisplay = true;
@@ -118,21 +121,25 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
         this.order.couponValue = resp.data.value;
         this.couponValue = this.order.couponValue;
-        this.order.couponPercent = parseFloat(((this.order.couponValue / this.subTotal) * 100).toFixed(2));
+        this.order.couponPercent = parseFloat(
+          ((this.order.couponValue / this.subTotal) * 100).toFixed(2)
+        );
         this.couponPercent = `-${this.order.couponPercent}%`;
         if (resp.data.value > this.subTotal) {
           this.couponValue = this.subTotal;
           this.couponPercent = "-100%";
         }
-        this.totalAmount = (this.cart.totalAmount - this.couponValue) < 0 ? 0 : (this.cart.totalAmount - this.couponValue);
+        this.totalAmount =
+          this.cart.totalAmount - this.couponValue < 0
+            ? 0
+            : this.cart.totalAmount - this.couponValue;
         this.order.totalAmount = this.totalAmount;
       })
       .catch((er) => {
-        console.log(er);
+        // console.log(er);
         this.couponInvalid = true;
         this.removeCoupon();
       });
-
   }
   removeCoupon() {
     this.couponValue = null;
