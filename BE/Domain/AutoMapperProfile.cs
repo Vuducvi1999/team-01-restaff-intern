@@ -3,7 +3,6 @@ using Domain.DTOs.Categories;
 using Domain.DTOs.Banners;
 using Domain.DTOs.SocialMedias;
 using Domain.DTOs.Files;
-using Domain.DTOs.Suppliers;
 using Domain.DTOs.User;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
@@ -31,17 +30,13 @@ using Domain.DTOs.Mails;
 using Infrastructure.Mails;
 using Domain.DTOs.CustomerFE;
 
+
 namespace Domain
 {
     public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
         {
-            //supplier
-            CreateMap<PaginatedList<Supplier>, PaginatedList<SupplierDTO>>().ReverseMap();
-            CreateMap<Supplier, SupplierDTO>().ReverseMap();
-            CreateMap<CreateSupplierDTO, Supplier>().ReverseMap();
-
             //category
             CreateMap<PaginatedList<Category>, PaginatedList<CategoryDTO>>().ReverseMap();
             CreateMap<PaginatedList<Category>, object>().ReverseMap();
@@ -53,10 +48,6 @@ namespace Domain
             CreateMap<PaginatedList<SocialMedia>, PaginatedList<SocialMediaDTO>>().ReverseMap();
             CreateMap<SocialMedia, SocialMediaDTO>().ReverseMap();
             CreateMap<CreateSocialMediaDTO, SocialMedia>().ReverseMap();
-
-            CreateMap<Supplier, CreateSupplierDTO>().ReverseMap();
-            CreateMap<Supplier, DeleteSupplierDTO>().ReverseMap();
-            CreateMap<Supplier, UpdateSupplierDTO>().ReverseMap();
 
             //banner
             CreateMap<PaginatedList<Banner>, PaginatedList<BannerDTO>>().ReverseMap();
@@ -121,6 +112,7 @@ namespace Domain
             CreateMap<Blog, CreateBlogDTO>().ReverseMap();
             CreateMap<Blog, UpdateBlogDTO>().ReverseMap();
             CreateMap<Blog, DeleteBlogDTO>().ReverseMap();
+
 
             //Order
             CreateMap<PaginatedList<Order>, PaginatedList<OrderDTO>>().ReverseMap();

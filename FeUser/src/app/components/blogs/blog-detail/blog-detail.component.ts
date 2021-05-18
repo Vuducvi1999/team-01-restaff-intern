@@ -61,10 +61,10 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
   typeDisplayImage = TypeDisplayImage;
   user: UserDataReturnDTOModel;
   comments: PageModel<CommentModel>;
-  searchModel;
+  searchModel: any;
   item: any;
+
   public rating: number;
-  public ratingPoint: number;
 
   subDataUser: Subscription;
 
@@ -84,10 +84,22 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     this.subDataUser = this.authService.callUserInfo.subscribe(
       (it) => (this.user = it)
     );
+    this.initDataComment();
     this.getBlog();
-    this.getRating();
   }
 
+  getRating() {
+    this.activatedRoute.paramMap.subscribe((param) => {
+      const data = { entityId: param.get("id") };
+      this.commentService
+        .getRating({ params: data })
+        .then((res: ReturnMessage<number>) => {
+          this.rating = res.data;
+          console.log(this.rating);
+        })
+        .catch((e) => {});
+    });
+  }
   getBlog() {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.id = params.get("id");
@@ -104,30 +116,11 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
             TypeSweetAlertIcon.ERROR
           );
         });
-
       this.createSearchModel();
-      this.initDataComment();
       this.getComments();
     });
   }
-  getRating() {
-    this.activatedRoute.paramMap.subscribe((params) => {
-      const data = { entityId: params.get("id") };
-      this.commentService
-        .getRating({ params: data })
-        .then((res: ReturnMessage<number>) => {
-          this.ratingPoint = res.data;
-        })
-        .catch((er) => {
-          this.messageService.alert(
-            er.error.message ??
-              JSON.stringify(er.error.error) ??
-              "Server Disconnected",
-            TypeSweetAlertIcon.ERROR
-          );
-        });
-    });
-  }
+
   createSearchModel() {
     this.searchModel = {
       ["search.entityId"]: this.id,

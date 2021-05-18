@@ -12,6 +12,8 @@ import {
 } from 'src/app/shared/components/modals/models/modal.model';
 
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { MessageService } from 'src/app/lib/data/services/messages/message.service';
+import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
 
 @Component({
   selector: 'app-blogs-detail',
@@ -33,7 +35,8 @@ export class BlogsDetailComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private ngbActiveModal: NgbActiveModal,
-    private blogService: BlogService
+    private blogService: BlogService,
+    private messageService: MessageService
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -82,15 +85,23 @@ export class BlogsDetailComponent implements OnInit {
     this.submitted = true;
 
     if (this.blogForm.valid) {
-      this.blogService
-        .save(this.blog)
-        .then(() => {
-          this.blogForm.reset();
-          this.submitted = false;
-          this.ngbActiveModal.close();
-        })
-        .catch((er) => {
-          if (er.error.hasError) {
+      this.messageService
+        .confirm(`Do you want to edit the blog?`, 'Yes')
+        .then((res) => {
+          if (res.isConfirmed) {
+            this.blogService
+              .save(this.blog)
+              .then(() => {
+                this.blogForm.reset();
+                this.submitted = false;
+                this.ngbActiveModal.close();
+              })
+              .catch((er) => {
+                this.messageService.alert(
+                  er.error.message ?? JSON.stringify(er.error),
+                  TypeSweetAlertIcon.ERROR
+                );
+              });
           }
         });
     }

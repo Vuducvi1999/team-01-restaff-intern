@@ -8,16 +8,16 @@ import {
 } from "src/app/lib/data/models";
 import {
   FileService,
-  ProductListService,
   MessageService,
 } from "src/app/lib/data/services";
 import { ETypeSizeImage } from "src/app/shared/data";
+import { HomeService } from "src/app/lib/data/services/home/home.service";
 
 @Component({
   selector: "app-product-box-vertical-slider",
   templateUrl: "./product-box-vertical-slider.component.html",
   styleUrls: ["./product-box-vertical-slider.component.scss"],
-  providers: [ProductListService],
+  providers: [HomeService],
 })
 export class ProductBoxVerticalSliderComponent implements OnInit {
   @Input() title: string = "New Product"; // Default
@@ -30,7 +30,7 @@ export class ProductBoxVerticalSliderComponent implements OnInit {
   public NewProductSliderConfig: any = NewProductSlider;
 
   constructor(
-    public productListService: ProductListService,
+    public homeService: HomeService,
     private sweetalerService: MessageService
   ) {
     this.callData();
@@ -43,19 +43,19 @@ export class ProductBoxVerticalSliderComponent implements OnInit {
   }
 
   callData() {
-    this.productListService
-      .getPageProduct({ params: { pageSize: 12, loading: true } })
-      .then((res: ReturnMessage<PageModel<ProductModel>>) => {
-        while (res.data.results.length != 0) {
-          this.result.push(res.data.results.splice(0, this.size));
+    this.homeService
+      .getNewProducts()
+      .then((res: ReturnMessage<ProductModel[]>) => {
+        while (res.data.length != 0) {
+          this.result.push(res.data.splice(0, this.size));
         }
       })
-      .catch((res) =>
-        this.sweetalerService.alert(
-          res.error.message ?? res.error,
-          TypeSweetAlertIcon.ERROR
-        )
-      );
+      // .catch((res) =>
+      //   this.sweetalerService.alert(
+      //     res.error.message ?? res.error,
+      //     TypeSweetAlertIcon.ERROR
+      //   )
+      // );
   }
 
   getImage(fileName: string) {
