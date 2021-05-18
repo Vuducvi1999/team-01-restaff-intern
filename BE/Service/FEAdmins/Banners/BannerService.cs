@@ -82,6 +82,12 @@ namespace Service.Banners
         }
         public ReturnMessage<BannerDTO> Update(UpdateBannerDTO model)
         {
+
+            model.Title = StringExtension.CleanString(model.Title);
+            if (model.Title == null)
+            {
+                return new ReturnMessage<BannerDTO>(true, null, MessageConstants.InvalidString);
+            }
             try
             {
                 var userInfo = _userManager.GetInformationUser();

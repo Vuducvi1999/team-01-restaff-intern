@@ -2,6 +2,7 @@
 using Common.Constants;
 using Common.Http;
 using Common.Pagination;
+using Common.StringEx;
 using Domain.DTOs.SocialMedias;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
@@ -27,6 +28,11 @@ namespace Service.SocialMedias
 
         public ReturnMessage<SocialMediaDTO> Create(CreateSocialMediaDTO model)
         {
+            model.Title = StringExtension.CleanString(model.Title);
+            if(model.Title == null)
+            {
+                return new ReturnMessage<SocialMediaDTO>(true, null, MessageConstants.InvalidString);
+            }
             try
             {
                 var entity = _mapper.Map<CreateSocialMediaDTO, SocialMedia>(model);
@@ -65,6 +71,11 @@ namespace Service.SocialMedias
 
         public ReturnMessage<SocialMediaDTO> Update(UpdateSocialMediaDTO model)
         {
+            model.Title = StringExtension.CleanString(model.Title);
+            if (model.Title == null)
+            {
+                return new ReturnMessage<SocialMediaDTO>(true, null, MessageConstants.InvalidString);
+            }
             try
             {
                 var entity = _socialMediaRepository.Find(model.Id);
