@@ -50,7 +50,7 @@ export class CategoryDetailComponent implements OnInit {
   }
   save() {
     if (this.categoriesForm.invalid) {
-      console.log(this.categoriesForm);
+      // console.log(this.categoriesForm);
       this.messageService.alert(
         'Invalid Form make sure you input valid value !',
         TypeSweetAlertIcon.ERROR

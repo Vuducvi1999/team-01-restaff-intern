@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
         this.productKeeper.topProduct = data.data;
       })
       .catch((e) => {
-        console.log(e);
+        // console.log(e);
       });
   }
 
@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
         this.productKeeper.newProduct = data.data;
       })
       .catch((e) => {
-        console.log(e);
+        // console.log(e);
       });
   }
 
@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
         this.productKeeper.bestSeller = data.data;
       })
       .catch((e) => {
-        console.log(e);
+        // console.log(e);
       });
   }
 
@@ -83,7 +83,7 @@ export class HomeComponent implements OnInit {
         this.productKeeper.featuredProduct = data.data;
       })
       .catch((e) => {
-        console.log(e);
+        // console.log(e);
       });
   }
 
@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit {
         this.blogs = data.data;
       })
       .catch((e) => {
-        console.log(e);
+        // console.log(e);
       });
   }
 
@@ -105,7 +105,7 @@ export class HomeComponent implements OnInit {
         this.banners = data.data;
       })
       .catch((e) => {
-        console.log(e);
+        // console.log(e);
       });
   }
 }
