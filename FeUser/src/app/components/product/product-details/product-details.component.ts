@@ -87,19 +87,6 @@ export class ProductDetailsComponent implements OnInit {
     this.getProduct();
   }
 
-  getRating() {
-    this.activatedRoute.queryParams.subscribe((param) => {
-      const data = { entityId: param.id };
-      this.commentService
-        .getRating({ params: data })
-        .then((res: ReturnMessage<number>) => {
-          this.rating = res.data;
-          console.log(this.rating);
-        })
-        .catch((e) => {});
-    });
-  }
-
   getProduct() {
     this.activatedRoute.queryParams.subscribe((param) => {
       this.productDetailsService
@@ -146,7 +133,6 @@ export class ProductDetailsComponent implements OnInit {
         this.comments = data.data;
       })
       .catch((e) => {});
-    this.getRating();
   }
   addToCart(product: any) {
     this.cartService.addToCart(product);

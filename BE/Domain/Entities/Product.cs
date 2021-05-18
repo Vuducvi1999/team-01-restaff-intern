@@ -52,5 +52,11 @@ namespace Domain.Entities
             Price = model.Price;
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
+
+        public void UpdateRating(decimal ratingScore)
+        {
+            RatingScore = ratingScore;
+            ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
+        }
     }
 }

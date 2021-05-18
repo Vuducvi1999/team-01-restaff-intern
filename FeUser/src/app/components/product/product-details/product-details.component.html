@@ -80,7 +80,7 @@
             </ng-template>
 
             <ngb-rating
-              [rate]="rating"
+              [rate]="product?.ratingScore"
               [starTemplate]="t"
               [readonly]="true"
               [max]="5"
@@ -121,7 +121,7 @@
             <app-comment
               [isLoading]="user ? true : false"
               [dataComment]="dataComment"
-              (action)="getComments()"
+              (action)="getProduct()"
             ></app-comment>
             <app-comment-detail
               *ngIf="comments"

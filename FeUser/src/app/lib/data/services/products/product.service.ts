@@ -4,7 +4,7 @@ import { ProductModel } from "../../models/products/product.model";
 
 @Injectable()
 export class ProductService {
-  public Currency = { name: 'Vietnamese', currency: 'VND', price: 1 } // Default Currency
+  public Currency = { name: "Vietnamese", currency: "VND", price: 1 }; // Default Currency
   private url = "/api/user/productlist";
   constructor(private httpClient: HttpClientService) {}
 
@@ -29,10 +29,5 @@ export class ProductService {
   delete(model: ProductModel) {
     const url = `${this.url}/?Id=${model?.id}`;
     return this.httpClient.deleteObservable(url).toPromise();
-  }
-
-  findByName(name: string) {
-    const urlSearch = `${this.url}/?name=${name}`;
-    return this.httpClient.getObservable(urlSearch).toPromise();
   }
 }

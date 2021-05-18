@@ -31,4 +31,15 @@ namespace Common.Constants
         public static string Description = "Description for Category ";
         public static string ImageUrl = "https://res.cloudinary.com/tungimage/image/upload/v1620233950/pyv3241siykegow7phjf.jpg";
     }
+
+    public struct CommonConstantsBlog
+    {
+        public static string CreateByName = "admin";
+    }
+
+    public struct CommonConstantsComment
+    {
+        public static string Minutes = " minutes";
+        public static string Product = "Product";
+    }
 }

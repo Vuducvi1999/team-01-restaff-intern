@@ -63,6 +63,7 @@ namespace Common.Constants
         public const string Product = "product";
         public const string Category = "category";
         public const string ByCategory = "by-category";
+        public const string RevelantProduct = "relevant";
 
         public const string BaseHome = BaseApi + "/home";
 
@@ -94,7 +95,6 @@ namespace Common.Constants
         public const string BaseComment = BaseApi + "/comment";
         public const string GetCommentBlog = BaseComment + "/blog";
         public const string GetCommentProduct= BaseComment + "/product";
-        public const string GetRating = BaseRating + "/rating";
         // CustomerWishList
         public const string BaseCustomerWishList = BaseApi + "/customer-wish-list";
         public const string GetCustomerWishList = BaseApi + "/customer-wish-list/{customerId}";
@@ -105,7 +105,6 @@ namespace Common.Constants
 
 
 
-        //Rating
-        public const string BaseRating = BaseComment + "/rating";
+
     }
 }

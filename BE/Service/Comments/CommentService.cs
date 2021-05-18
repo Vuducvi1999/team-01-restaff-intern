@@ -39,20 +39,20 @@ namespace Service.Comments
         {
             try
             {
-                if(String.IsNullOrEmpty(model.Content.Trim()))
+                if (String.IsNullOrEmpty(model.Content.Trim()))
                     return new ReturnMessage<CommentDTO>(true, null, MessageConstants.EmptyContentComment);
 
                 var beforeComment = _commentRepository.Queryable()
                                     .Where(i => i.CustomerId == _userInformation.CustomerId && i.EntityId == model.EntityId)
                                     .OrderByDescending(i => i.CreateByDate)
                                     .FirstOrDefault();
-                if(beforeComment.IsNotNullOrEmpty())
+                if (beforeComment.IsNotNullOrEmpty())
                 {
                     var SubtractionTime = (DateTime.Now - beforeComment.CreateByDate);
-                    if (SubtractionTime.TotalHours < 1)
+                    if (SubtractionTime.TotalMinutes < 15)
                     {
-                        var NextTimeToComment = Convert.ToInt32((beforeComment.CreateByDate.AddMinutes(60) - DateTime.Now).TotalMinutes).ToString();
-                        return new ReturnMessage<CommentDTO>(true, null, MessageConstants.CommentAfterATime + NextTimeToComment + " minutes");
+                        var NextTimeToComment = Convert.ToInt32((beforeComment.CreateByDate.AddMinutes(15) - DateTime.Now).TotalMinutes).ToString();
+                        return new ReturnMessage<CommentDTO>(true, null, MessageConstants.CommentAfterATime + NextTimeToComment + CommonConstantsComment.Minutes);
                     }
                 }
 
@@ -63,23 +63,17 @@ namespace Service.Comments
                 
                 _commentRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
-                var result = new ReturnMessage<CommentDTO>(false, _mapper.Map<Comment, CommentDTO>(entity), MessageConstants.CreateSuccess);
-
-                var ratingEntity = _commentRepository.Queryable().Where(p => p.EntityId == model.EntityId);
-                decimal ratingScore = (decimal)Math.Round(ratingEntity.Average(x => x.Rating), 1);
-
+                var result = new ReturnMessage<CommentDTO>(false, _mapper.Map<Comment, CommentDTO>(entity), MessageConstants.UpdateRatingSuccess);
+                decimal ratingScore = CalculateRating(model);
                 var productEntity = _productRepository.Queryable().FirstOrDefault(p => p.Id == model.EntityId);
                 if (productEntity.IsNullOrEmpty())
                 {
                     var blogEntity = _blogRepository.Queryable().FirstOrDefault(p => p.Id == model.EntityId);
-                    blogEntity.RatingScore = ratingScore;
-                    blogEntity.ObjectState = ObjectState.Modified;
+                    blogEntity.UpdateRating(ratingScore);
                     _unitOfWork.SaveChanges();
                     return result;
                 }
-
-                productEntity.RatingScore = ratingScore;
-                productEntity.ObjectState = ObjectState.Modified;
+                productEntity.UpdateRating(ratingScore);
                 _unitOfWork.SaveChanges();
                 return result;
             }
@@ -89,6 +83,7 @@ namespace Service.Comments
             }
         }
 
+        
         public ReturnMessage<CommentDTO> Delete(DeleteCommentDTO model)
         {
             try
@@ -164,29 +159,12 @@ namespace Service.Comments
             return result;
         }
 
-        public ReturnMessage<decimal> GetRating(Guid entityId)
+        private decimal CalculateRating(CreateCommentDTO model)
         {
-            try
-            {
-                var entity = _commentRepository.Queryable().FirstOrDefault(p => p.EntityId == entityId);
-                if (entity.IsNotNullOrEmpty())
-                {
-                    decimal ratingPoint = 0;
-                    if (entity.EntityType.Contains("Product"))
-                    {
-                        ratingPoint = _productRepository.Queryable().FirstOrDefault(p => p.Id == entityId).RatingScore;
-                        return new ReturnMessage<decimal>(false, ratingPoint, MessageConstants.ListSuccess);
-                    }
-                    ratingPoint = _blogRepository.Queryable().FirstOrDefault(p => p.Id == entityId).RatingScore;
-                    var result = new ReturnMessage<decimal>(false, ratingPoint, MessageConstants.ListSuccess);
-                    return result;
-                }
-                return new ReturnMessage<decimal>(false, 0, MessageConstants.CreateFail);
-            }
-            catch (Exception ex)
-            {
-                return new ReturnMessage<decimal>(true, 0, ex.Message);
-            }
+            var ratingEntity = _commentRepository.Queryable().Where(p => p.EntityId == model.EntityId);
+            decimal ratingScore = (decimal)Math.Round(ratingEntity.Average(x => x.Rating), 1);
+            return ratingScore;
         }
+
     }
 }
