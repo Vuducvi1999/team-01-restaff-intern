@@ -6,7 +6,6 @@ using Service.SocialMedias;
 using Service.Categories;
 using Service.Banners;
 using Service.Auth;
-using Service.Suppliers;
 using Service.Files;
 using Service.Coupons;
 using Service.Profiles;
@@ -48,8 +47,6 @@ namespace Service
             services.AddScoped<IUnitOfWorkAsync, UnitOfWork>();
             services.AddScoped(typeof(IRepositoryAsync<>), typeof(BaseRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
-
-            services.AddScoped<ISupplierService, SupplierService>();
 
             services.AddScoped<ICouponService, CouponService>();
             //scoped

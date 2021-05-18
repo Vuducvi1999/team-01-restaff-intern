@@ -19,7 +19,7 @@
                <span class="sub-arrow"  *ngIf="menuItem.children"></span>
             </a>
             <!-- Link -->
-            <a (click)="loadUrlNavaigate(menuItem.path)" style="cursor: pointer;" *ngIf="menuItem.type === 'link'">
+            <a (click)="loadUrlNavaigate(menuItem.path)" style="cursor: pointer;" *ngIf="menuItem.type === 'link'" (mouseenter)="bigImg($event.target.style)" (mouseleave)="normalImg($event.target.style)">
                {{menuItem.title}}
                <span class="sub-arrow" *ngIf="menuItem.children"></span>
             </a>
