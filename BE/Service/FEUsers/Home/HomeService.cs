@@ -46,6 +46,7 @@ namespace Service.Home
                                     .Include(t => t.CustomerWishLists)
                                     .Where(i => i.IsDeleted == false)
                                     .OrderByDescending(i => i.RatingScore)
+                                    .ThenByDescending(i => i.UpdateByDate)
                                     .ThenByDescending(i => i.IsImportant)
                                     .Take(12)
                                     .ToList();
@@ -95,6 +96,7 @@ namespace Service.Home
                                     .Include(t => t.CustomerWishLists)
                                     .Where(i => i.IsDeleted == false)
                                     .OrderByDescending(i => i.SaleCount)
+                                    .ThenByDescending(i => i.UpdateByDate)
                                     .Take(12)
                                     .ToList();
                 var data = _mapper.Map<List<Product>, List<ProductDTO>>(resultEntity);
