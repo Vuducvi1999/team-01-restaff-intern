@@ -19,12 +19,6 @@ import {
   MessageService,
 } from "src/app/lib/data/services";
 import { ProfileService } from "src/app/lib/data/services/profiles/profile.service";
-import {
-  EntityType,
-  ModalFile,
-  TypeFile,
-} from "src/app/shared/modals/models/modal.model";
-import Swal from "sweetalert2";
 
 @Component({
   selector: "app-profile",
@@ -178,7 +172,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.submittedProfile = true;
 
     if (this.profileForm.invalid) {
-      console.log(this.profileForm.invalid);
+      // console.log(this.profileForm.invalid);
       return;
     }
 

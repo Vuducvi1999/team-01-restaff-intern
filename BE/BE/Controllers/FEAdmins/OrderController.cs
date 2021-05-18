@@ -31,7 +31,7 @@ namespace BE.Controllers.FEAdmins
             return CommonResponse(result);
         }
         [HttpGet]
-        [Route("by-status")]
+        [Route(UrlConstants.OrderStatus)]
 
         public IActionResult GetByStatus([FromQuery] string status)
         {
@@ -41,7 +41,7 @@ namespace BE.Controllers.FEAdmins
 
 
         [HttpGet]
-        [Route("by-id")]
+        [Route(UrlConstants.OrderId)]
         public IActionResult GetById([FromQuery] Guid id)
         {
             var result = _orderService.GetById(id);

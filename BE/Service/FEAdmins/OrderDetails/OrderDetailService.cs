@@ -30,20 +30,7 @@ namespace Service.OrderDetails
         public ReturnMessage<OrderDetailDTO> Create(CreateOrderDetailDTO model)
         {
 
-            //try
-            //{
-            //    var entity = _mapper.Map<CreateOrderDetailDTO, OrderDetail>(model);
-
-            //    entity.Insert();
-            //    _orderDetailRepository.Insert(entity);
-            //    _unitOfWork.SaveChanges();
-            //    var result = new ReturnMessage<OrderDetailDTO>(false, _mapper.Map<OrderDetail, OrderDetailDTO>(entity), MessageConstants.CreateSuccess);
-            //    return result;
-            //}
-            //catch (Exception ex)
-            //{
                 return new ReturnMessage<OrderDetailDTO>(false, null, null);
-            //}
         }
 
         public ReturnMessage<OrderDetailDTO> Delete(DeleteOrderDetailDTO model)
@@ -85,8 +72,6 @@ namespace Service.OrderDetails
                 , search.PageIndex
                 ,t=>t.Product
                 ,nameof(Product)
-                //??????????? how to get product name in paging?
-                
             );
             var data = _mapper.Map<PaginatedList<OrderDetail>, PaginatedList<OrderDetailDTO>>(resultEntity);
             var result = new ReturnMessage<PaginatedList<OrderDetailDTO>>(false, data, MessageConstants.GetPaginationSuccess);

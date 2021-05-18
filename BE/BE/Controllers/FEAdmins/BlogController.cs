@@ -15,8 +15,8 @@ using System.Threading.Tasks;
 
 namespace BE.Controllers.FEAdmins
 {
-    [Route(UrlConstants.BaseBlog)]
     [ApiController]
+    [Route(UrlConstants.BaseBlog)]
     public class BlogController : BaseController
     {
         private readonly IBlogService _blogService;

@@ -2,7 +2,7 @@ import { Component, OnInit, PLATFORM_ID, Inject } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
 import { TranslateService } from "@ngx-translate/core";
 import { FileService } from "src/app/lib/data/services";
-import { ProductModel } from "src/app/lib/data/models";
+import { ProductModel, ReturnMessage } from "src/app/lib/data/models";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SearchService } from "src/app/lib/data/services/search/search.service";
@@ -51,7 +51,6 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getRoute();
-    this.getItem();
   }
 
   searchToggle() {
@@ -87,10 +86,14 @@ export class SettingsComponent implements OnInit {
       this.search = false;
     }
   }
-  getItem() {
-    this.searchService.get(null).then((res: any) => {
-      this.data = res.data.results;
-    });
+  getItem(event: KeyboardEvent) {
+    var search = "";
+    search += (event.target as HTMLInputElement).value;
+    this.searchService
+      .findByName(null, search)
+      .then((res: ReturnMessage<ProductModel[]>) => {
+        this.data = res.data;
+      });
     this.path = "product-details?id={item.id}`";
   }
 
@@ -98,7 +101,7 @@ export class SettingsComponent implements OnInit {
     const url = `/product-details?id=${id}`;
     this.activatedRoute.queryParams.subscribe((params) => {
       id = params["id"];
-      console.log(params["id"]);
+      // console.log(params["id"]);
     });
 
     this.router.navigateByUrl(url);

@@ -1,6 +1,7 @@
 ﻿using BE.Controllers;
 using Common.Constants;
 using Domain.DTOs.Contact;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Contacts;
@@ -28,6 +29,7 @@ namespace BE.FeUserControllers.FEAdmins
             return CommonResponse(result);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Post([FromBody] CreateContactDTO model)
         {
@@ -36,6 +38,7 @@ namespace BE.FeUserControllers.FEAdmins
             return CommonResponse(result);
         }
 
+        [Authorize]
         [HttpPut]
         public IActionResult Put([FromBody] UpdateContactDTO model)
         {
@@ -43,6 +46,7 @@ namespace BE.FeUserControllers.FEAdmins
             return CommonResponse(result);
         }
 
+        [Authorize]
         [HttpDelete]
         public IActionResult Delete([FromQuery] DeleteContactDTO model)
         {

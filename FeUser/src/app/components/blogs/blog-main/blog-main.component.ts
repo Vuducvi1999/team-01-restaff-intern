@@ -1,6 +1,10 @@
 import { Component, HostListener, Input, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { PageModel, ReturnMessage, TypeSweetAlertIcon } from "src/app/lib/data/models";
+import {
+  PageModel,
+  ReturnMessage,
+  TypeSweetAlertIcon,
+} from "src/app/lib/data/models";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { FileService, MessageService } from "src/app/lib/data/services";
 import { BlogService } from "src/app/lib/data/services/blogs/blog.service";
@@ -32,9 +36,11 @@ export class BlogMainComponent implements OnInit {
       })
       .catch((er) => {
         this.messageService.alert(
-          er.error.message ?? JSON.stringify(er.error.error) ?? 'Server Disconnected',
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            "Server Disconnected",
           TypeSweetAlertIcon.ERROR
-        )
+        );
       });
   }
   getTopBlogs() {
@@ -43,14 +49,16 @@ export class BlogMainComponent implements OnInit {
       .then((res: ReturnMessage<BlogModel[]>) => {
         if (!res.hasError) {
           this.topBlogs = res.data;
-          console.log(res.data);
+          // console.log(res.data);
         }
       })
       .catch((er) => {
         this.messageService.alert(
-          er.error.message ?? JSON.stringify(er.error.error) ?? 'Server Disconnected',
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            "Server Disconnected",
           TypeSweetAlertIcon.ERROR
-        )
+        );
       });
   }
 
@@ -60,14 +68,16 @@ export class BlogMainComponent implements OnInit {
       .then((res: ReturnMessage<BlogModel[]>) => {
         if (!res.hasError) {
           this.recentBlogs = res.data;
-          console.log(res);
+          // console.log(res);
         }
       })
       .catch((er) => {
         this.messageService.alert(
-          er.error.message ?? JSON.stringify(er.error.error) ?? 'Server Disconnected',
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            "Server Disconnected",
           TypeSweetAlertIcon.ERROR
-        )
+        );
       });
   }
   ngOnInit() {

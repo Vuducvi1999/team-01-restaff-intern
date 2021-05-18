@@ -57,17 +57,6 @@ namespace Service.Orders
                         {
                             invalidProducts = true;
                         }
-
-                        //if (!check.HasError)
-                        //{
-                        //    var data = check.Data;
-                        //    var dto = _mapper.Map<UpdateProductDTO>(data);
-                        //    var update = _productService.UpdateCount(dto, detail.Quantity);
-                        //    if (update.HasError)
-                        //    {
-                        //        invalidProducts = true;
-                        //    }
-                        //}
                     });
 
                     if (invalidProducts)
@@ -163,13 +152,13 @@ namespace Service.Orders
             try
             {
                 var entity = _orderRepository.Queryable().AsNoTracking().Include(t => t.OrderDetails).FirstOrDefault(t=> t.Id == model.Id);
-                if (entity.Status != "New")
+                if (entity.Status != CodeConstants.NewOrder)
                 {
                     return new ReturnMessage<OrderDTO>(true, null, MessageConstants.UpdateFail);
                 }
                 if (entity.IsNotNullOrEmpty())
                 {
-                    if (model.Status == "Approved")
+                    if (model.Status == CodeConstants.ApprovedOrder)
                     {
                         entity.Status = model.Status;
                         model = _mapper.Map<UpdateOrderDTO>(entity);
@@ -200,14 +189,20 @@ namespace Service.Orders
 
         public ReturnMessage<List<OrderDTO>> GetByStatus(string status)
         {
-            var list = _orderRepository.Queryable().Where(t => t.Status == status).ToList();
-            if (list.IsNotNullOrEmpty())
+            try
             {
-                var result = _mapper.Map<List<OrderDTO>>(list);
-                return new ReturnMessage<List<OrderDTO>>(false, result, MessageConstants.ListSuccess);
+                var list = _orderRepository.Queryable().Where(t => t.Status == status).ToList();
+                if (list.IsNotNullOrEmpty())
+                {
+                    var result = _mapper.Map<List<OrderDTO>>(list);
+                    return new ReturnMessage<List<OrderDTO>>(false, result, MessageConstants.ListSuccess);
+                }
+                return new ReturnMessage<List<OrderDTO>>(false, null, MessageConstants.Error);
             }
-            return new ReturnMessage<List<OrderDTO>>(true, null, MessageConstants.Error);
-
+            catch(Exception ex)
+            {
+                return new ReturnMessage<List<OrderDTO>>(true, null, ex.Message);
+            }
         }
 
     }

@@ -21,6 +21,10 @@ import { UpdateOrderComponent } from '../update-order/update-order.component';
 export class ListOrdersComponent implements OnInit {
   public orders: OrderModel[];
   public filter: string = '';
+  params: any = {};
+  public data: PageModel<OrderModel>;
+
+  isGetOrders: boolean = false;
 
   constructor(
     private modalService: NgbModal,
@@ -28,6 +32,7 @@ export class ListOrdersComponent implements OnInit {
     private datePipe: DatePipe,
     private messageService: MessageService
   ) {
+    this.params.pageIndex = 0;
     this.getOrders();
   }
   ngOnInit() {}
@@ -85,10 +90,12 @@ export class ListOrdersComponent implements OnInit {
   };
 
   getOrders() {
+    this.isGetOrders = false;
     this.ordersService
-      .get(null)
+      .get({ params: this.params })
       .then((res: ReturnMessage<PageModel<OrderModel>>) => {
         if (!res.hasError) {
+          this.data = res.data;
           this.orders = res.data.results;
           this.orders.forEach((order) => {
             order.hasCoupon = false;
@@ -110,10 +117,11 @@ export class ListOrdersComponent implements OnInit {
       size: 'lg',
     });
     modalRef.componentInstance.item = event?.data;
-    modalRef.result.then(() => this.getOrders());
+    modalRef.result.then(() => this.getOrders(),(dismiss)=>{});
   }
 
   statusFilter(status: string) {
+    this.isGetOrders = true;
     if (this.filter == status) {
       this.filter = '';
       return this.getOrders();
@@ -141,5 +149,10 @@ export class ListOrdersComponent implements OnInit {
         //   console.log(er.error.message)
         // }
       });
+  }
+
+  onPage(event) {
+    this.params.pageIndex = event;
+    this.getOrders();
   }
 }

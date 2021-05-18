@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import {
   PageModel,
   ProductModel,
@@ -8,6 +8,7 @@ import { BannerModel } from "src/app/lib/data/models/banners/banner.model";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { HomeService } from "src/app/lib/data/services/home/home.service";
 import { ProductSlider } from "src/app/shared/data/slider";
+import { HeaderOneComponent } from "src/app/shared/header/header-one/header-one.component";
 
 @Component({
   selector: "app-home",
@@ -49,7 +50,7 @@ export class HomeComponent implements OnInit {
         this.productKeeper.topProduct = data.data;
       })
       .catch((e) => {
-        console.log(e);
+        // console.log(e);
       });
   }
 
@@ -60,7 +61,7 @@ export class HomeComponent implements OnInit {
         this.productKeeper.newProduct = data.data;
       })
       .catch((e) => {
-        console.log(e);
+        // console.log(e);
       });
   }
 
@@ -71,7 +72,7 @@ export class HomeComponent implements OnInit {
         this.productKeeper.bestSeller = data.data;
       })
       .catch((e) => {
-        console.log(e);
+        // console.log(e);
       });
   }
 
@@ -82,7 +83,7 @@ export class HomeComponent implements OnInit {
         this.productKeeper.featuredProduct = data.data;
       })
       .catch((e) => {
-        console.log(e);
+        // console.log(e);
       });
   }
 
@@ -93,7 +94,7 @@ export class HomeComponent implements OnInit {
         this.blogs = data.data;
       })
       .catch((e) => {
-        console.log(e);
+        // console.log(e);
       });
   }
 
@@ -104,7 +105,7 @@ export class HomeComponent implements OnInit {
         this.banners = data.data;
       })
       .catch((e) => {
-        console.log(e);
+        // console.log(e);
       });
   }
 }
