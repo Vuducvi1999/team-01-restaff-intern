@@ -86,7 +86,7 @@ export class ListCouponComponent implements OnInit {
     if (event) {
       modalRef.componentInstance.item = event?.data;
     }
-    modalRef.result.then(() => this.getCoupons());
+    modalRef.result.then(() => this.getCoupons(),(dismiss)=>{});
   }
 
   delete(event: any) {
