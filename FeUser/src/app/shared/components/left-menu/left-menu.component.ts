@@ -15,6 +15,7 @@ export class LeftMenuComponent implements OnInit {
     categories: [],
     blogs: [],
   };
+  event: any = {};
   constructor(public headerService: HeaderService, private router: Router) {}
 
   ngOnInit(): void {
@@ -57,5 +58,17 @@ export class LeftMenuComponent implements OnInit {
   loadUrlNavaigate(url: string) {
     this.router.navigateByUrl(url);
     this.leftMenuToggle();
+  }
+
+  bigImg(event) {
+    this.event["font-weight"] = event["font-weight"];
+
+    event["font-weight"] = "bold";
+  }
+
+  normalImg(event) {
+    if (this.event) {
+      event["font-weight"] = this.event["font-weight"];
+    }
   }
 }
