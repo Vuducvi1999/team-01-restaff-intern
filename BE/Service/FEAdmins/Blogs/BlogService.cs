@@ -29,6 +29,7 @@ namespace Service.Blogs
         {
             try
             {
+
                 var entity = _mapper.Map<CreateBlogDTO, Blog>(model);
                 TrimData(entity);
                 entity.CreatedByName = "admin";

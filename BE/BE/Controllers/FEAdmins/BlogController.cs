@@ -2,6 +2,7 @@
 using Common.Pagination;
 using Domain.DTOs.Blogs;
 using Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace BE.Controllers.FEAdmins
 {
+    [Route(UrlConstants.BaseBlog)]
     [ApiController]
     public class BlogController : BaseController
     {
@@ -24,7 +26,7 @@ namespace BE.Controllers.FEAdmins
             _blogService = blogService;
         }
 
-        [Route(UrlConstants.BaseBlog)]
+        [Authorize]
         [HttpGet]
         public IActionResult Get([FromQuery] SearchPaginationDTO<BlogDTO> serachPagination)
         {
@@ -32,7 +34,7 @@ namespace BE.Controllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Route(UrlConstants.BaseBlog)]
+        [Authorize]
         [HttpPost]
         public IActionResult Create([FromBody] CreateBlogDTO model)
         {
@@ -49,7 +51,7 @@ namespace BE.Controllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Route(UrlConstants.BaseBlog)]
+        [Authorize]
         [HttpPut]
         public IActionResult Update([FromBody] UpdateBlogDTO model)
         {
@@ -66,7 +68,7 @@ namespace BE.Controllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Route(UrlConstants.BaseBlog)]
+        [Authorize]
         [HttpDelete]
         public IActionResult Delete([FromQuery] DeleteBlogDTO model)
         {
