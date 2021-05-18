@@ -1,4 +1,5 @@
-﻿using Domain.DTOs.Blogs;
+﻿using Common.Constants;
+using Domain.DTOs.Blogs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,6 +21,7 @@ namespace Domain.Entities
         public override void Insert()
         {
             base.Insert();
+            CreatedByName = CommonConstantsBlog.CreateByName;
         }
 
         public override void Delete()

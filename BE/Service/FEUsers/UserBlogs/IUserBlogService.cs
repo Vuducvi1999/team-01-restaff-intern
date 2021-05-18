@@ -13,5 +13,6 @@ namespace Service.UserBlogs
         ReturnMessage<List<BlogDTO>> TopBlog(List<BlogDTO> model);
         ReturnMessage<List<BlogDTO>> RecentBlog(List<BlogDTO> model);
         ReturnMessage<PaginatedList<BlogDTO>> SearchPagination(SearchPaginationDTO<BlogDTO> search);
+
     }
 }
