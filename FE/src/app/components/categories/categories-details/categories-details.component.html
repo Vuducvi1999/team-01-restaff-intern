@@ -35,10 +35,10 @@
                     </div>
                     <div class="form-group row">
                       <label for="validationCustom2" class="col-xl-3 col-md-4"><span>*</span> ImageUrl</label>
-                      <input class="form-control col-xl-8 col-md-7" id="validationCustom2" type="text" required=""
+                      <input class="form-control col-xl-8 col-md-7" id="validationCustom2" type="text"
                         formControlName="imageUrl" hidden />
                       <span class="text-danger"
-                        *ngIf="(categoryFormsControl.imageUrl.touched || submitted) && categoryFormsControl.imageUrl.errors?.required">Required</span>
+                        *ngIf="(categoryFormsControl.imageUrl.touched || submitted)">Required</span>
                       <app-upload-file [data]="modalFile" [fileURL]="fileURL" styleFile="width: 200px; height: auto;"
                         (onChange)="onChangeData($event)"></app-upload-file>
                     </div>
