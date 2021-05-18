@@ -122,7 +122,7 @@ export class UploadFileComponent implements OnInit {
         );
       })
       .catch((er) => {
-        console.log(er.error);
+        // console.log(er.error);
       });
   }
 

@@ -28,9 +28,9 @@
                         placeholder="Search a Product"
                         name="name"
                         (keypress)="onSearch($event)"
+                        (keyup)="getItem($event)"
                       />
                     </div>
-
                     <button type="submit" class="btn btn-primary">
                       <i class="fa fa-search"></i>
                     </button>

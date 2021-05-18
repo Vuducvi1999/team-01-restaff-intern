@@ -29,9 +29,4 @@ export class CommentService {
   update(model: CommentModel) {
     return this.httpClient.putObservable(this.url, model).toPromise();
   }
-
-  getRating(entityId: any) {
-    const url = this.url + `/rating`;
-    return this.httpClient.getObservable(url, entityId).toPromise();
-  }
 }

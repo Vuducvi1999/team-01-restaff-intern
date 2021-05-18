@@ -88,18 +88,6 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     this.getBlog();
   }
 
-  getRating() {
-    this.activatedRoute.paramMap.subscribe((param) => {
-      const data = { entityId: param.get("id") };
-      this.commentService
-        .getRating({ params: data })
-        .then((res: ReturnMessage<number>) => {
-          this.rating = res.data;
-          console.log(this.rating);
-        })
-        .catch((e) => {});
-    });
-  }
   getBlog() {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.id = params.get("id");
@@ -149,7 +137,6 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
           TypeSweetAlertIcon.ERROR
         );
       });
-    this.getRating();
   }
 
   getImage(image) {

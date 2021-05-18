@@ -36,5 +36,11 @@ namespace Domain.Entities
             ImageUrl = model.ImageUrl;
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
+
+        public void UpdateRating(decimal ratingScore)
+        {
+            RatingScore = ratingScore;
+            ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
+        }
     }
 }

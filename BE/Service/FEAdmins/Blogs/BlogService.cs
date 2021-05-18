@@ -40,8 +40,10 @@ namespace Service.Blogs
             }
             try
             {
+
                 var entity = _mapper.Map<CreateBlogDTO, Blog>(model);
-                entity.CreatedByName = "admin";
+                TrimData(entity);
+                entity.CreatedByName = CommonConstantsBlog.CreateByName;
                 entity.Insert();
                 _blogRepository.Insert(entity);
                 _unitOfWork.SaveChanges();

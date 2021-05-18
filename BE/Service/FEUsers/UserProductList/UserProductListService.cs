@@ -124,5 +124,15 @@ namespace Service.UserProductList
                 return new ReturnMessage<PaginatedList<ProductDTO>>(true, null, ex.Message);
             }
         }
+
+        public ReturnMessage<List<ProductDTO>> RelevantProduct(string name)
+        {
+            var resultRevelant = _productRepository.Queryable()
+                .Where(p => p.Name.Contains(name) && p.IsDeleted == false)
+                .OrderBy(p => p.CreateByDate).Take(5).ToList();
+            var data = _mapper.Map<List<Product>, List<ProductDTO>>(resultRevelant);
+            var result = new ReturnMessage<List<ProductDTO>>(false, data, MessageConstants.SearchSuccess);
+            return result;
+        }
     }
 }

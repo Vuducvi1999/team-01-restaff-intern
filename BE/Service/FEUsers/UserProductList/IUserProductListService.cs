@@ -14,5 +14,6 @@ namespace Service.UserProductList
         public ReturnMessage<IEnumerable<CategoryDTO>> GetCategory();
         ReturnMessage<List<ProductDTO>> GetByCategory(Guid id);
         ReturnMessage<PaginatedList<ProductDTO>> SearchPagination(SearchPaginationUserFEDTO<ProductDTO> search);
+        ReturnMessage<List<ProductDTO>> RelevantProduct(string name);
     }
 }
