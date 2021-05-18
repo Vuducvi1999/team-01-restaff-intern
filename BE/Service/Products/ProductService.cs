@@ -32,8 +32,8 @@ namespace Service.Products
         {
             model.Name = StringExtension.CleanString(model.Name);
             model.Description = StringExtension.CleanString(model.Description);
-            if (model.Name == "null" ||
-               model.Description == "null")
+            if (model.Name == null ||
+               model.Description == null)
             {
                 var entity = _mapper.Map<CreateProductDTO, Product>(model);
                 return new ReturnMessage<ProductDTO>(true, _mapper.Map<Product, ProductDTO>(entity), MessageConstants.Error);
