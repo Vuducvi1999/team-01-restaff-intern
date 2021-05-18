@@ -110,7 +110,7 @@ export class ListOrdersComponent implements OnInit {
       size: 'lg',
     });
     modalRef.componentInstance.item = event?.data;
-    modalRef.result.then(() => this.getOrders());
+    modalRef.result.then(() => this.getOrders(),(dismiss)=>{});
   }
 
   statusFilter(status: string) {

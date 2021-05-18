@@ -77,7 +77,7 @@ export class ListBlogsComponent implements OnInit {
       size: 'lg',
     });
     modalRef.componentInstance.item = event?.data;
-    modalRef.result.then(() => this.getBlogs());
+    modalRef.result.then(() => this.getBlogs(),(dismiss)=>{});
   }
 
   delete(event: any) {
