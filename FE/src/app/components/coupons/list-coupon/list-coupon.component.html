@@ -15,6 +15,10 @@
           ></ng2-smart-table>
         </div>
       </div>
+      <app-paging-server-view
+        [data]="data"
+        (page)="onPage($event)"
+      ></app-paging-server-view>
     </div>
   </div>
 </div>

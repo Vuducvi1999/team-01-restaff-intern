@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
 import { BlogModel } from 'src/app/lib/data/models/blogs/blog.model';
 import { PageModel, ReturnMessage } from 'src/app/lib/data/models/common';
 import { FileService } from 'src/app/lib/data/services';
@@ -16,36 +17,36 @@ import { BlogsDetailComponent } from '../blogs-detail/blogs-detail.component';
 })
 export class ListBlogsComponent implements OnInit {
   public blogs: BlogModel[];
-
+  public data: PageModel<BlogModel>;
+  params: any = {};
   constructor(
     private modalService: NgbModal,
     private blogService: BlogService,
     private datePipe: DatePipe,
     private messageService: MessageService
-  ) {
-    this.getBlogs();
-  }
+  ) {}
 
   getBlogs() {
     this.blogService
-      .get(null)
+      .get({ params: this.params })
       .then((res: ReturnMessage<PageModel<BlogModel>>) => {
         if (!res.hasError) {
           this.blogs = res.data.results;
+          this.data = res.data;
         }
       })
       .catch((er) => {
-        if (er.error.hasError) {
-        }
+        this.messageService.alert(
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
+        );
       });
   }
 
   public settings = {
     mode: 'external',
-    pager: {
-      display: true,
-      perPage: 10,
-    },
     actions: {
       position: 'right',
     },
@@ -54,6 +55,7 @@ export class ListBlogsComponent implements OnInit {
         title: 'Image',
         type: 'custom',
         renderComponent: ViewImageCellComponent,
+        filter: false,
       },
       title: {
         title: 'Title',
@@ -75,19 +77,32 @@ export class ListBlogsComponent implements OnInit {
       size: 'lg',
     });
     modalRef.componentInstance.item = event?.data;
-    modalRef.result.then(() => this.getBlogs());
+    modalRef.result.then(() => this.getBlogs(),(dismiss)=>{});
   }
 
   delete(event: any) {
-    let banner = event.data as BlogModel;
     this.messageService
-      .confirm('Do you want to permanently delete this item?', 'Yes')
+      .confirm(`Do you want to delete the Blog?`, 'Yes')
       .then((res) => {
-        this.blogService.delete(banner).then(() => {
-          this.getBlogs();
-        });
+        if (res.isConfirmed) {
+          let blog = event.data as BlogModel;
+          this.blogService.delete(blog).then(() => {
+            this.messageService.notification(
+              'Blog has been deleted',
+              TypeSweetAlertIcon.SUCCESS
+            );
+            this.getBlogs();
+          });
+        }
       });
   }
 
-  ngOnInit() {}
+  onPage(event) {
+    this.params.pageIndex = event;
+    this.getBlogs();
+  }
+  ngOnInit() {
+    this.params.pageIndex = 0;
+    this.getBlogs();
+  }
 }

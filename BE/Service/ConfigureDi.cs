@@ -6,7 +6,6 @@ using Service.SocialMedias;
 using Service.Categories;
 using Service.Banners;
 using Service.Auth;
-using Service.Suppliers;
 using Service.Files;
 using Service.Coupons;
 using Service.Profiles;
@@ -31,6 +30,7 @@ using Service.Comments;
 using Service.CustomerWishLists;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Service.UserBlogs;
 using Service.Gmails;
 
 namespace Service
@@ -47,8 +47,6 @@ namespace Service
             services.AddScoped<IUnitOfWorkAsync, UnitOfWork>();
             services.AddScoped(typeof(IRepositoryAsync<>), typeof(BaseRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
-
-            services.AddScoped<ISupplierService, SupplierService>();
 
             services.AddScoped<ICouponService, CouponService>();
             //scoped
@@ -106,6 +104,9 @@ namespace Service
 
             // CustomerWishList
             services.AddScoped<ICustomerWishListService, CustomerWishListService>();
+
+            //BlogUser
+            services.AddScoped<IUserBlogService, UserBlogService>();
 
             //Gmail
             services.AddScoped<IGmailService, GmailService>();
