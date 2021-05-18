@@ -34,8 +34,8 @@ export class PageContentDetailComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private pageContentService: PageContentService,
-      private ngbActiveModal: NgbActiveModal,
-      private messageService: MessageService
+    private ngbActiveModal: NgbActiveModal,
+    private messageService: MessageService
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -57,7 +57,7 @@ export class PageContentDetailComponent implements OnInit {
     this.pageContentForm = this.formBuilder.group({
       title: [this.item ? this.item.title : ''],
       shortDes: [this.item ? this.item.shortDes : ''],
-      imageUrl: [this.item ? this.item.imageUrl : ''],
+      imageUrl: [this.item ? this.item.imageUrl : '', Validators.required],
       description: [this.item ? this.item.description : ''],
     });
 

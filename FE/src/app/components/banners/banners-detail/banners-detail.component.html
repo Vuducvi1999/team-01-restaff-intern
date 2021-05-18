@@ -76,13 +76,15 @@
                   formControlName="imageUrl"
                   hidden
                 />
-                <app-upload-file
-                  [data]="modalFile"
-                  [fileURL]="fileURL"
-                  [isBannerUpload]="true"
-                  styleFile="width: 200px; height: auto;"
-                  (onChange)="onChangeData($event)"
-                ></app-upload-file>
+                <div class="col-xl-8 col-md-7 p-0">
+                  <app-upload-file
+                    [data]="modalFile"
+                    [fileURL]="fileURL"
+                    [isBannerUpload]="true"
+                    styleFile="width: 100%; height: auto;"
+                    (onChange)="onChangeData($event)"
+                  ></app-upload-file>
+                </div>
                 <span
                   class="text-danger"
                   *ngIf="

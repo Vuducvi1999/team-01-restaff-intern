@@ -35,11 +35,11 @@ export class ListCategoriesComponent implements OnInit {
       position: 'right',
     },
     columns: {
-      imageUrl: {
-        title: 'Image',
-        type: 'custom',
-        renderComponent: ViewImageCellComponent,
-      },
+      // imageUrl: {
+      //   title: 'Image',
+      //   type: 'custom',
+      //   renderComponent: ViewImageCellComponent,
+      // },
       name: {
         title: 'Name',
         filter: false,

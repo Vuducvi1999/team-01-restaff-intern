@@ -160,8 +160,6 @@ export class UploadFileComponent implements OnInit {
 
           if (height < 500 || width < 250)
             return this.messageService.alert('Size image must over 500x250');
-          if (width < height)
-            return this.messageService.alert('Be aware width > height');
           this.exceptUpload(event);
         };
       };

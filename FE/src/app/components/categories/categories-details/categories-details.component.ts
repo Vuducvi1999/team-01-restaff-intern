@@ -50,7 +50,6 @@ export class CategoryDetailComponent implements OnInit {
   }
   save() {
     if (this.categoriesForm.invalid) {
-      console.log(this.categoriesForm);
       this.messageService.alert(
         'Invalid Form make sure you input valid value !',
         TypeSweetAlertIcon.ERROR
@@ -84,9 +83,12 @@ export class CategoryDetailComponent implements OnInit {
       })
       .catch((er) => {
         this.messageService.alert(
-          er.error.message ?? JSON.stringify(er.error.error) ?? 'Server Disconnected',
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
           TypeSweetAlertIcon.ERROR
         );
+        console.log(er);
       });
   }
 
@@ -98,7 +100,7 @@ export class CategoryDetailComponent implements OnInit {
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(50),
-          Validators.pattern(this.regex),
+          // Validators.pattern(this.regex),
         ],
       ],
       description: [
@@ -107,7 +109,7 @@ export class CategoryDetailComponent implements OnInit {
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(100),
-          Validators.pattern(this.regex),
+          // Validators.pattern(this.regex),
         ],
       ],
       imageUrl: [this.item ? this.item.imageUrl : ''],

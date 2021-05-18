@@ -1,66 +1,126 @@
-<app-modal-header [data]="modalHeader" (onAction)="close($event)"></app-modal-header>
+<app-modal-header
+  [data]="modalHeader"
+  (onAction)="close($event)"
+></app-modal-header>
 <!-- Container-fluid starts-->
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-12">
       <div class="card tab2-card">
         <div class="card-body">
-          <div class="tab-pane fade active show" id="account" role="tabpanel" aria-labelledby="account-tab">
-            <form [formGroup]="socialMediaForm" class="needs-validation user-add" novalidate="">
+          <div
+            class="tab-pane fade active show"
+            id="account"
+            role="tabpanel"
+            aria-labelledby="account-tab"
+          >
+            <form
+              [formGroup]="socialMediaForm"
+              class="needs-validation user-add"
+              novalidate=""
+            >
               <h4>Social Media Details</h4>
               <div class="form-group row">
-                <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span> Title</label>
-                <input class="form-control col-xl-8 col-md-7" id="validationCustom0" type="text" required
-                  formControlName="title" />
+                <label for="validationCustom0" class="col-xl-3 col-md-4"
+                  ><span>*</span> Title</label
+                >
+                <input
+                  class="form-control col-xl-8 col-md-7"
+                  id="validationCustom0"
+                  type="text"
+                  required
+                  formControlName="title"
+                />
                 <div class="col-md-5 offset-md-3">
-                  <span class="text-danger" *ngIf="
-                    (SocialMediaFormControl.title.touched || submitted) &&
-                    (SocialMediaFormControl.title.errors?.required ||
-                      SocialMediaFormControl.title.errors?.pattern)
-                  ">
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (SocialMediaFormControl.title.touched || submitted) &&
+                      (SocialMediaFormControl.title.errors?.required ||
+                        SocialMediaFormControl.title.errors?.pattern)
+                    "
+                  >
                     Title is required
                   </span>
                 </div>
               </div>
 
               <div class="form-group row">
-                <label for="validationCustom1" class="col-xl-3 col-md-4"><span>*</span> Link </label>
-                <input class="form-control col-xl-8 col-md-7" id="validationCustom1" type="text" required=""
-                  formControlName="link" />
+                <label for="validationCustom1" class="col-xl-3 col-md-4"
+                  ><span>*</span> Link
+                </label>
+                <input
+                  class="form-control col-xl-8 col-md-7"
+                  id="validationCustom1"
+                  type="text"
+                  required=""
+                  formControlName="link"
+                />
                 <div class="col-md-5 offset-md-3">
-                  <span class="text-danger" *ngIf="
-                    (SocialMediaFormControl.link.touched || submitted) &&
-                    SocialMediaFormControl.link.errors?.required
-                  ">
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (SocialMediaFormControl.link.touched || submitted) &&
+                      SocialMediaFormControl.link.errors?.required
+                    "
+                  >
                     Link is required
                   </span>
                 </div>
               </div>
               <div class="form-group row">
-                <label for="validationCustom2" class="col-xl-3 col-md-4"><span>*</span> IconUrl</label>
-                <input class="form-control col-xl-8 col-md-7" id="validationCustom2" type="text" required=""
-                  formControlName="iconUrl" hidden />
-                <app-upload-file [data]="modalFile" [fileURL]="fileURL" styleFile="width: 200px; height: auto;"
-                  (onChange)="onChangeData($event)"></app-upload-file>
+                <label for="validationCustom2" class="col-xl-3 col-md-4"
+                  ><span>*</span> IconUrl</label
+                >
+                <input
+                  class="form-control col-xl-8 col-md-7"
+                  id="validationCustom2"
+                  type="text"
+                  required=""
+                  formControlName="iconUrl"
+                  hidden
+                />
+
+                <div class="col-xl-8 col-md-7 p-0">
+                  <app-upload-file
+                    [data]="modalFile"
+                    [fileURL]="fileURL"
+                    styleFile="width: 100%; height: auto;"
+                    (onChange)="onChangeData($event)"
+                  ></app-upload-file>
+                </div>
                 <div class="col-md-5 offset-md-3">
-                  <span class="text-danger" *ngIf="
-                    (SocialMediaFormControl.iconUrl.touched || submitted) &&
-                    SocialMediaFormControl.iconUrl.errors?.required
-                  ">
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (SocialMediaFormControl.iconUrl.touched || submitted) &&
+                      SocialMediaFormControl.iconUrl.errors?.required
+                    "
+                  >
                     Icon URL is required
                   </span>
                 </div>
               </div>
               <div class="form-group row">
-                <label for="validationCustom3" class="col-xl-3 col-md-4"><span>*</span> Display Order</label>
-                <input class="form-control col-xl-8 col-md-7" id="validationCustom3" type="number" required=""
-                  formControlName="displayOrder" />
+                <label for="validationCustom3" class="col-xl-3 col-md-4"
+                  ><span>*</span> Display Order</label
+                >
+                <input
+                  class="form-control col-xl-8 col-md-7"
+                  id="validationCustom3"
+                  type="number"
+                  required=""
+                  formControlName="displayOrder"
+                />
                 <div class="col-md-5 offset-md-3">
-                  <span class="text-danger" *ngIf="
-                    (SocialMediaFormControl.displayOrder.touched ||
-                      submitted) &&
-                    SocialMediaFormControl.displayOrder.errors?.required
-                  ">
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (SocialMediaFormControl.displayOrder.touched ||
+                        submitted) &&
+                      SocialMediaFormControl.displayOrder.errors?.required
+                    "
+                  >
                     Display Order is required
                   </span>
                 </div>
@@ -73,4 +133,7 @@
   </div>
 </div>
 <!-- Container-fluid Ends-->
-<app-modal-footer [data]="modalFooter" (onAction)="saveSocialMedia($event)"></app-modal-footer>
+<app-modal-footer
+  [data]="modalFooter"
+  (onAction)="saveSocialMedia($event)"
+></app-modal-footer>
