@@ -37,6 +37,10 @@ namespace Common.Constants
         public const string BaseFileGetType = BaseFile + "/type";
 
         public const string BaseCoupon = BaseApi + "/coupon";
+        public const string CouponCode = "by-code";
+
+
+
 
         public const string BaseUser = BaseApi + "/user";
         public const string GetUser = BaseUser + "/{id}";
@@ -55,6 +59,8 @@ namespace Common.Constants
         public const string BaseBlog = BaseApi + "/blog";
         public const string BaseOrder = BaseApi + "/order";
         public const string BaseOrderDetail = BaseApi + "/order-detail";
+        public const string OrderStatus = "by-status";
+        public const string OrderId = "by-id";
 
 
 
@@ -103,9 +109,10 @@ namespace Common.Constants
 
         public const string BasePromotionDetail = BaseApi + "/promotion-detail";
 
-
+        
 
         //Rating
         public const string BaseRating = BaseComment + "/rating";
+
     }
 }
