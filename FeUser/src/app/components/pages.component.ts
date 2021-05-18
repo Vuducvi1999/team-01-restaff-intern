@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { Router, NavigationEnd } from "@angular/router";
 import { ReturnMessage, TypeSweetAlertIcon } from "../lib/data/models";
 import { UserDataReturnDTOModel } from "../lib/data/models/users/user.model";
 import { AuthService, MessageService } from "../lib/data/services";
+import { HeaderOneComponent } from "../shared/header/header-one/header-one.component";
 
 @Component({
   selector: "app-pages",
@@ -12,8 +13,13 @@ import { AuthService, MessageService } from "../lib/data/services";
 })
 export class PagesComponent implements OnInit {
   public url: any;
+  @ViewChild("headerRef") headerRef: HeaderOneComponent;
 
-  constructor(private router: Router, private authService: AuthService, private sweetalertService: MessageService) {
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private sweetalertService: MessageService
+  ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.url = event.url;
@@ -30,7 +36,10 @@ export class PagesComponent implements OnInit {
           this.authService.changeUserInfo(res.data);
         })
         .catch((res) => {
-          this.sweetalertService.alert("Login Expires",TypeSweetAlertIcon.ERROR);
+          this.sweetalertService.alert(
+            "Login Expires",
+            TypeSweetAlertIcon.ERROR
+          );
           localStorage.removeItem("token");
           this.authService.changeUserInfo(null);
         });
@@ -39,5 +48,11 @@ export class PagesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getInformationUser();
+    setTimeout(() => {
+      localStorage.setItem(
+        "header",
+        JSON.stringify(this.headerRef.offsetHeight)
+      );
+    }, 1000);
   }
 }
