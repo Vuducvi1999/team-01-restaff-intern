@@ -2,6 +2,7 @@
 using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Coupons;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
@@ -16,6 +17,7 @@ namespace BE.Controllers
 {
     [Route(UrlConstants.BaseCoupon)]
     [ApiController]
+    [Authorize]
     public class CouponController : BaseController
     {
         private readonly ICouponService _couponService;
@@ -28,13 +30,6 @@ namespace BE.Controllers
         public IActionResult Get([FromQuery] SerachPaginationDTO<CouponDTO> serachPagination)
         {
             var result = _couponService.SearchPagination(serachPagination);
-            return CommonResponse(result);
-        }
-        [HttpGet]
-        [Route("by-code")]
-        public IActionResult GetByCode([FromQuery] string code)
-        {
-            var result = _couponService.GetByCode(code);
             return CommonResponse(result);
         }
 
