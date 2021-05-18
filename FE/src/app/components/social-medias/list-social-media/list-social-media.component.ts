@@ -75,7 +75,7 @@ export class ListSocialMediaComponent implements OnInit {
     if (event) {
       modalRef.componentInstance.item = event?.data;
     }
-    modalRef.result.then(() => this.getSocialMedias());
+    modalRef.result.then(() => this.getSocialMedias(),(dismiss)=>{});
   }
 
   delete(event: any) {

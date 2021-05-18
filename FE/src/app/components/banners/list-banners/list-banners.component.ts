@@ -83,7 +83,7 @@ export class ListBannersComponent implements OnInit {
       size: 'lg',
     });
     modalRef.componentInstance.item = event?.data;
-    modalRef.result.then(() => this.getBanners());
+    modalRef.result.then((close) => this.getBanners(),(dismiss)=>{});
   }
 
   delete(event: any) {

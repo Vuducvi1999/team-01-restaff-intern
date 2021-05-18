@@ -5,17 +5,17 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-} from '@angular/core';
-import { Observable, Observer } from 'rxjs';
-import { ReturnMessage } from 'src/app/lib/data/models';
-import { FileDtoModel } from 'src/app/lib/data/models/files/file.model';
-import { FileService } from 'src/app/lib/data/services';
-import { ModalFile, TypeFile } from '../../modals/models/modal.model';
+} from "@angular/core";
+import { Observable, Observer } from "rxjs";
+import { ReturnMessage } from "src/app/lib/data/models";
+import { FileDtoModel } from "src/app/lib/data/models/files/file.model";
+import { FileService } from "src/app/lib/data/services";
+import { ModalFile, TypeFile } from "../../modals/models/modal.model";
 
 @Component({
-  selector: 'app-upload-file',
-  templateUrl: './upload-file.component.html',
-  styleUrls: ['./upload-file.component.scss'],
+  selector: "app-upload-file",
+  templateUrl: "./upload-file.component.html",
+  styleUrls: ["./upload-file.component.scss"],
   providers: [FileService],
 })
 export class UploadFileComponent implements OnInit {
@@ -30,13 +30,13 @@ export class UploadFileComponent implements OnInit {
 
   constructor(private fileService: FileService) {
     this.onRemoveLocal();
-    this.styleFile = 'width: 450px; height: 200px;';
+    this.styleFile = "width: 450px; height: 200px;";
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (this.fileURL) {
       this.files = [];
       this.fileURL.forEach((res) => {
-        if(res == null) return;
+        if (res == null) return;
         this.converUrltoFile(FileService.getLinkFile(res.toString())).then(
           (res) => {
             this.files.push(res);
@@ -47,8 +47,7 @@ export class UploadFileComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.data)
-    {
+    if (this.data) {
       this.data.listFile = [];
     }
   }
@@ -106,14 +105,14 @@ export class UploadFileComponent implements OnInit {
     }
     var formData = new FormData();
     files.forEach((file) => {
-      formData.append('files', file);
+      formData.append("files", file);
     });
-    formData.append('entityType', this.data.enityType);
-    formData.append('entityId', this.data.enityId);
+    formData.append("entityType", this.data.enityType);
+    formData.append("entityId", this.data.enityId);
     await this.fileService
       .saveFile(formData)
       .then((res: ReturnMessage<FileDtoModel[]>) => {
-        this.data.listFile = [...this.data.listFile,...res.data];
+        this.data.listFile = [...this.data.listFile, ...res.data];
         // this.data.listFile.forEach((it) => {
         //   this.converUrltoFile(it.url).then((file) => this.files.push(file));
         // });
@@ -122,7 +121,9 @@ export class UploadFileComponent implements OnInit {
           null
         );
       })
-      .catch((er) => console.log(er.error));
+      .catch((er) => {
+        console.log(er.error);
+      });
   }
 
   actionChange(add: string[], remove: string, removeAll: boolean = false) {
@@ -143,7 +144,7 @@ export class UploadFileComponent implements OnInit {
   }
 
   onRemove(event) {
-    console.log(event);
+    // console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
     this.actionChange(null, event.name);
   }

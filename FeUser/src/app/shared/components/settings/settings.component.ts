@@ -101,6 +101,7 @@ export class SettingsComponent implements OnInit {
     const url = `/product-details?id=${id}`;
     this.activatedRoute.queryParams.subscribe((params) => {
       id = params["id"];
+      // console.log(params["id"]);
     });
 
     this.router.navigateByUrl(url);

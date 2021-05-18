@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import {
   PageModel,
   ProductModel,
@@ -8,6 +8,7 @@ import { BannerModel } from "src/app/lib/data/models/banners/banner.model";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { HomeService } from "src/app/lib/data/services/home/home.service";
 import { ProductSlider } from "src/app/shared/data/slider";
+import { HeaderOneComponent } from "src/app/shared/header/header-one/header-one.component";
 
 @Component({
   selector: "app-home",

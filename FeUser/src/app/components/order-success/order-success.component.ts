@@ -1,37 +1,71 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FileService } from 'src/app/lib/data/services';
-import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
+import { Breakpoints } from "@angular/cdk/layout";
+import { Component, HostListener, OnInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
-  selector: 'app-order-success',
-  templateUrl: './order-success.component.html',
-  styleUrls: ['./order-success.component.scss'],
-  providers: []
+  selector: "app-order-success",
+  templateUrl: "./order-success.component.html",
+  styleUrls: ["./order-success.component.scss"],
+  providers: [],
 })
 export class OrderSuccessComponent implements OnInit {
-  public checkOutOrders: any
-  public checkOutOrderDetails: any
+  public checkOutOrders: any;
+  public checkOutOrderDetails: any;
+  public offsetHeightHeader = 0;
+  public offsetHeightFixedElement = 0;
+  public offsetTopFooter = 0;
+  public offsetTopFlagElement = 0;
+  public breakPoint = 0;
+  public blockTop = false;
+  public blockBottom = false;
+  public bottomMargin = 0;
 
-  constructor(
-    private route: Router,
-    private dataRoute: ActivatedRoute,
-  ) {
-
+  constructor(private route: Router, private dataRoute: ActivatedRoute) {
     this.checkOutOrders = this.route.getCurrentNavigation().extras?.state?.data;
     this.checkOutOrderDetails = this.checkOutOrders.orderDetails;
-    console.log(this.checkOutOrderDetails)
-    console.log(this.checkOutOrders)
   }
-
 
   ngOnInit(): void {
+    this.offsetHeightHeader =
+      document.getElementById("header-one").offsetHeight + 10;
   }
 
-  loadData() {
-  }
-  getImage(fileName: string) {
-    return FileService.getLinkFile(fileName);
-  }
+  @HostListener("document:scroll")
+  scrolling() {
+    this.offsetTopFlagElement =
+      document.getElementById("FlagElementToFixed").offsetTop;
+    this.offsetHeightFixedElement =
+      document.getElementById("ElementFixed").offsetHeight;
+    this.offsetTopFooter = +document.getElementById("footer-one").offsetTop;
 
+    if (
+      window.scrollY + this.offsetHeightHeader > this.offsetTopFlagElement &&
+      window.scrollY +
+        this.offsetHeightHeader +
+        this.offsetHeightFixedElement <=
+        this.offsetTopFooter
+    ) {
+      this.blockTop = true;
+      this.blockBottom = false;
+      return;
+    } else if (
+      window.scrollY +
+        this.offsetHeightHeader +
+        this.offsetHeightFixedElement +
+        10 >
+      this.offsetTopFooter
+    ) {
+      this.bottomMargin =
+        window.innerHeight -
+        document.getElementById("footer-one").getBoundingClientRect().top +
+        10;
+
+      this.blockBottom = true;
+      this.blockTop = false;
+      return;
+    }
+
+    this.blockBottom = false;
+    this.blockTop = false;
+  }
 }

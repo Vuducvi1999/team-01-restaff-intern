@@ -72,8 +72,8 @@
         <h5>Your cart is currently empty.</h5>
       </ul>
 
-      <ul class="show-div shopping-cart" *ngIf="products?.length">
-        <li>
+      <ul class="show-div shopping-cart pt-0" *ngIf="products?.length">
+        <li class="stickyOptions">
           <div class="buttons">
             <a [routerLink]="['/cart']" class="view-cart">view cart</a>
             <a [routerLink]="['/checkout']" class="checkout">checkout</a>
