@@ -34,11 +34,11 @@ namespace Service.Categories
         {
             model.Name = StringExtension.CleanString(model.Name);
             model.Description = StringExtension.CleanString(model.Description);
-            if (model.Name == "null" ||
-               model.Description == "null")
+            if (model.Name == null ||
+               model.Description == null)
             {
                 var entity = _mapper.Map<CreateCategoryDTO, Category>(model);
-                return new ReturnMessage<CategoryDTO>(true, _mapper.Map<Category, CategoryDTO>(entity), MessageConstants.Error);
+                return new ReturnMessage<CategoryDTO>(true, _mapper.Map<Category, CategoryDTO>(entity), MessageConstants.InvalidString);
             }
             try
             {
@@ -117,8 +117,8 @@ namespace Service.Categories
         {
             model.Name = StringExtension.CleanString(model.Name);
             model.Description = StringExtension.CleanString(model.Description);
-            if (model.Name == "null" ||
-               model.Description == "null")
+            if (model.Name == null ||
+               model.Description == null)
             {
                 var entity = _mapper.Map<UpdateCategoryDTO, Category>(model);
                 return new ReturnMessage<CategoryDTO>(true, _mapper.Map<Category, CategoryDTO>(entity), MessageConstants.UpdateFail);

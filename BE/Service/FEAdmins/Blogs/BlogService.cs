@@ -10,6 +10,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using Common.StringEx;
 
 namespace Service.Blogs
 {
@@ -27,10 +28,19 @@ namespace Service.Blogs
 
         public ReturnMessage<BlogDTO> Create(CreateBlogDTO model)
         {
+            model.Title = StringExtension.CleanString(model.Title);
+            model.ShortDes = StringExtension.CleanString(model.ShortDes);
+            model.ContentHTML = StringExtension.CleanString(model.ContentHTML);
+            if(model.Title == null ||
+               model.ShortDes == null ||
+               model.ContentHTML == null)
+            {
+                var entity = _mapper.Map<CreateBlogDTO, Blog>(model);
+                return new ReturnMessage<BlogDTO>(true, _mapper.Map<Blog, BlogDTO>(entity), MessageConstants.InvalidString);
+            }
             try
             {
                 var entity = _mapper.Map<CreateBlogDTO, Blog>(model);
-                TrimData(entity);
                 entity.CreatedByName = "admin";
                 entity.Insert();
                 _blogRepository.Insert(entity);
@@ -67,10 +77,19 @@ namespace Service.Blogs
 
         public ReturnMessage<BlogDTO> Update(UpdateBlogDTO model)
         {
+            model.Title = StringExtension.CleanString(model.Title);
+            model.ShortDes = StringExtension.CleanString(model.ShortDes);
+            model.ContentHTML = StringExtension.CleanString(model.ContentHTML);
+            if (model.Title == null ||
+               model.ShortDes == null ||
+               model.ContentHTML == null)
+            {
+                var entity = _mapper.Map<UpdateBlogDTO, Blog>(model);
+                return new ReturnMessage<BlogDTO>(true, _mapper.Map<Blog, BlogDTO>(entity), MessageConstants.UpdateFail);
+            }
             try
             {
                 var entity = _blogRepository.Find(model.Id);
-                TrimData(entity);
                 if (entity.IsNotNullOrEmpty())
                 {
                     entity.Update(model);
@@ -112,12 +131,6 @@ namespace Service.Blogs
             var data = _mapper.Map<PaginatedList<Blog>, PaginatedList<BlogDTO>>(resultEntity);
             var result = new ReturnMessage<PaginatedList<BlogDTO>>(false, data, MessageConstants.GetPaginationSuccess);
             return result;
-        }
-
-        private void TrimData(Blog blog)
-        {
-            blog.Title = blog.Title.Trim();
-            blog.ShortDes = blog.ShortDes.Trim();
         }
 
     }

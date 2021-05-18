@@ -2,6 +2,7 @@
 using Common.Constants;
 using Common.Http;
 using Common.Pagination;
+using Common.StringEx;
 using Domain.DTOs.Coupons;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
@@ -29,10 +30,16 @@ namespace Service.Coupons
 
         public ReturnMessage<CouponDTO> Create(CreateCouponDTO model)
         {
+            model.Code = StringExtension.CleanString(model.Code);
+            model.Name = StringExtension.CleanString(model.Name);
+            if (model.Code == null || model.Name == null)
+            {
+                var entity = _mapper.Map<CreateCouponDTO, Coupon>(model);
+                return new ReturnMessage<CouponDTO>(true, _mapper.Map<Coupon, CouponDTO>(entity), MessageConstants.InvalidString);
+            }
             try
             {
                 var entity = _mapper.Map<CreateCouponDTO, Coupon>(model);
-                TrimData(entity);
                 if (DateTime.Compare(entity.StartDate, entity.EndDate) < 0)
                 {
                     entity.Insert();
@@ -72,10 +79,16 @@ namespace Service.Coupons
 
         public ReturnMessage<CouponDTO> Update(UpdateCouponDTO model)
         {
+            model.Code = StringExtension.CleanString(model.Code);
+            model.Name = StringExtension.CleanString(model.Name);
+            if (model.Code == null || model.Name == null)
+            {
+                var entity = _mapper.Map<UpdateCouponDTO, Coupon>(model);
+                return new ReturnMessage<CouponDTO>(true, _mapper.Map<Coupon, CouponDTO>(entity), MessageConstants.UpdateFail);
+            }
             try
             {
                 var entity = _couponRepository.Find(model.Id);
-                TrimData(entity);
                 if (entity.IsNotNullOrEmpty() || DateTime.Compare(entity.StartDate, entity.EndDate) < 0)
                 {
                     entity.Update(model);

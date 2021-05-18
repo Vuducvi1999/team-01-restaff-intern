@@ -45,11 +45,11 @@ namespace Service.InformationWebsiteServices
             model.Email = StringExtension.CleanString(model.Email);
             model.Phone = StringExtension.CleanString(model.Phone);
             model.Fax = StringExtension.CleanString(model.Fax);
-            if(model.Title == "null" ||
-               model.Description == "null" ||
-               model.Email == "null" ||
-               model.Phone == "null" ||
-               model.Fax == "null" )
+            if(model.Title == null||
+               model.Description == null ||
+               model.Email == null ||
+               model.Phone == null ||
+               model.Fax == null)
             {
                 return new ReturnMessage<InformationWebDTO>(true, null, MessageConstants.UpdateFail);
             }
