@@ -9,6 +9,7 @@ import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
 
 import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
+import { CustomViewCellStringComponent } from 'src/app/shared/components/custom-view-cell-string/custom-view-cell-string.component';
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 
@@ -22,6 +23,8 @@ import { BannersDetailComponent } from '../banners-detail/banners-detail.compone
 })
 export class ListBannersComponent implements OnInit {
   public banners: BannerModel[];
+  public data: PageModel<BannerModel>;
+  params: any = {};
 
   constructor(
     private modalService: NgbModal,
@@ -44,6 +47,8 @@ export class ListBannersComponent implements OnInit {
       },
       title: {
         title: 'Title',
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
       },
       description: {
         title: 'Description',
@@ -62,10 +67,11 @@ export class ListBannersComponent implements OnInit {
 
   getBanners() {
     this.bannersService
-      .get(null)
+      .get({params: this.params})
       .then((res: ReturnMessage<PageModel<BannerModel>>) => {
         if (!res.hasError) {
           this.banners = res.data.results;
+          this.data = res.data;
         }
       })
       .catch((er) => {
@@ -111,5 +117,10 @@ export class ListBannersComponent implements OnInit {
             });
         }
       });
+  }
+
+  onPage(event) {
+    this.params.pageIndex = event;
+    this.getBanners();
   }
 }

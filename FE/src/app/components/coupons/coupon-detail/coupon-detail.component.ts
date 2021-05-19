@@ -36,7 +36,7 @@ export class CouponDetailComponent implements OnInit {
     private ngbActiveModal: NgbActiveModal,
     private couponService: CouponService,
     private messageService: MessageService
-  ) {}
+  ) { }
   loadItemForm() {
     this.couponForm = this.formBuilder.group(
       {
@@ -134,7 +134,7 @@ export class CouponDetailComponent implements OnInit {
   }
 
   close(event: any) {
-    this.ngbActiveModal.close();
+    this.ngbActiveModal.dismiss();
   }
   ngOnInit(): void {
     this.loadItemForm();

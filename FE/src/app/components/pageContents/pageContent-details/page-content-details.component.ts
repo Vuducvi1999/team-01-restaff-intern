@@ -34,8 +34,8 @@ export class PageContentDetailComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private pageContentService: PageContentService,
-      private ngbActiveModal: NgbActiveModal,
-      private messageService: MessageService
+    private ngbActiveModal: NgbActiveModal,
+    private messageService: MessageService
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -95,14 +95,20 @@ export class PageContentDetailComponent implements OnInit {
     this.pageContentService
       .update(this.pageContent)
       .then(() => {
+        if (this.item) {
+          this.messageService.notification(
+            'Page content has been edited',
+            TypeSweetAlertIcon.SUCCESS
+          );
+        }
         this.ngbActiveModal.close();
         this.submitted = false;
       })
       .catch((er) => {
         this.messageService.alert(
           er.error.message ??
-            JSON.stringify(er.error.error) ??
-            'Server Disconnected',
+          JSON.stringify(er.error.error) ??
+          'Server Disconnected',
           TypeSweetAlertIcon.ERROR
         );
         // if (er.error.hasError) {
@@ -112,7 +118,7 @@ export class PageContentDetailComponent implements OnInit {
   }
 
   close(event: any) {
-    this.ngbActiveModal.close();
+    this.ngbActiveModal.dismiss();
   }
 
   onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {

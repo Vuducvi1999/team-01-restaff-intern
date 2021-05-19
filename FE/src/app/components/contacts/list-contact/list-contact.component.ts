@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
+import { PageModel, TypeSweetAlertIcon } from 'src/app/lib/data/models';
 import { ReturnMessage } from 'src/app/lib/data/models/common/return-message.model';
 import { ContactModel } from 'src/app/lib/data/models/contact/contact.model';
 import { PageContentModel } from 'src/app/lib/data/models/pageContent/pageContent.model';
 import { ContactService } from 'src/app/lib/data/services/contacts/contact.service';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { PageContentService } from 'src/app/lib/data/services/pageContents/pageContent.service';
+import { CustomViewCellStringComponent } from 'src/app/shared/components/custom-view-cell-string/custom-view-cell-string.component';
+import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ContactDetailComponent } from '../contact-details/contact-details.component';
 
 @Component({
@@ -17,6 +19,8 @@ import { ContactDetailComponent } from '../contact-details/contact-details.compo
 })
 export class ListContactComponent {
   public contacts: ContactModel[];
+  public data: PageModel<ContactModel>;
+  params: any = {};
 
   constructor(private modalService: NgbModal,
     private contactService: ContactService,
@@ -35,9 +39,21 @@ export class ListContactComponent {
       position: 'right',
     },
     columns: {
-      firstName: { title: 'First Name' },
-      lastName: { title: 'Last Name' },
-      phoneNumber: { title: 'Phone Number' },
+      firstName: { 
+        title: 'First Name',
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent, 
+      },
+      lastName: { 
+        title: 'Last Name',
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
+      },
+      phoneNumber: { 
+        title: 'Phone Number',
+        type: 'custom',
+        renderComponent: CustomViewCellComponent,
+      },
       email: { title: 'Email' },
       message: { title: 'Message' },
       status: { title: 'Status' },
@@ -86,5 +102,10 @@ export class ListContactComponent {
           // console.log(er.error.message);
         }
       });
+  }
+
+  onPage(event) {
+    this.params.pageIndex = event;
+    this.getList();
   }
 }

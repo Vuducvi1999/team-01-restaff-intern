@@ -21,7 +21,8 @@
                   <app-image-wrapper
                     [data]="{
                       url: image,
-                      type: typeDisplayImage.PRODUCT_DETAIL_MAIN_IMAGE
+                      typeClass: typeDisplayImage.PRODUCT_DETAIL_MAIN_IMAGE,
+                      style: typeSizeImage.LARGE
                     }"
                     (click)="owlCar.to((activeSlide = i.toString()))"
                     class="img-fluid"
@@ -49,7 +50,8 @@
                         <app-image-wrapper
                           [data]="{
                             url: image,
-                            type: typeDisplayImage.PRODUCT_DETAIL_IMAGE
+                            typeClass: typeDisplayImage.PRODUCT_DETAIL_IMAGE,
+                            style: typeSizeImage.SMALL
                           }"
                           (click)="owlCar.to((activeSlide = i.toString()))"
                         ></app-image-wrapper>

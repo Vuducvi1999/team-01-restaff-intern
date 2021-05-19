@@ -10,6 +10,7 @@ import {
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
 import { CustomViewCellNumberComponent } from 'src/app/shared/components/custom-view-cell-number/custom-view-cell-number.component';
+import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { UpdateOrderComponent } from '../update-order/update-order.component';
 
 @Component({
@@ -64,6 +65,8 @@ export class ListOrdersComponent implements OnInit {
       },
       phone: {
         title: 'Phone',
+        type: 'custom',
+        renderComponent: CustomViewCellComponent,
       },
       email: {
         title: 'Email',
@@ -122,12 +125,13 @@ export class ListOrdersComponent implements OnInit {
 
   statusFilter(status: string) {
     this.isGetOrders = true;
-    if (this.filter == status) {
+    if (this.filter == status || status == '') {
       this.filter = '';
+      this.params.pageIndex = 0;
       return this.getOrders();
     }
     this.filter = status;
-    this.ordersService
+    return this.ordersService
       .getByStatus(null, status)
       .then((response) => {
         this.orders = response.data;
