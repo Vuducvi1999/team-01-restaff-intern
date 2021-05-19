@@ -44,11 +44,8 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   // async loadHeaderModel() {
-  //   await this.headerService.getBlogs(null).then((res: any) => {
-  //     this.headerModel.blogs = res.data;
-  //   });
-  //   await this.headerService.getCategories(null).then((res: any) => {
-  //     this.headerModel.categories = res.data;
+  //   await this.headerService.getHeader(null).then((res: any) => {
+  //     this.headerModel = res.data;
   //   });
   // }
 
