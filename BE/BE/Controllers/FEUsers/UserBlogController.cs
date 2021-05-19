@@ -31,28 +31,27 @@ namespace BE.Controllers.FEUsers
             return CommonResponse(result);
         }
 
-        [Route(UrlConstants.TopBlog)]
-        [HttpGet]
+        [HttpGet(UrlConstants.TopBlog)]
         public IActionResult TopBlog([FromQuery] List<BlogDTO> model)
         {
             var result = _userBlogService.TopBlog(model);
             return CommonResponse(result);
         }
 
-        [Route(UrlConstants.RecentBlog)]
-        [HttpGet]
+        [HttpGet(UrlConstants.RecentBlog)]
         public IActionResult RecentBlog([FromQuery] List<BlogDTO> model)
         {
             var result = _userBlogService.RecentBlog(model);
             return CommonResponse(result);
         }
 
-        [Route(UrlConstants.GetBlog)]
-        [HttpGet]
+        [HttpGet(UrlConstants.GetBlog)]
         public IActionResult GetBlog(Guid id)
         {
             var result = _userBlogService.GetBlog(id);
             return CommonResponse(result);
         }
+
+        
     }
 }

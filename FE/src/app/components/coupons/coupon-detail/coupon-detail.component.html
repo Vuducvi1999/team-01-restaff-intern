@@ -94,18 +94,13 @@
                     class="text-danger"
                     *ngIf="
                       (CouponFormControl.value.touched || submitted) &&
-                      CouponFormControl.value.errors?.required
+                      CouponFormControl.value.errors?.required &&
+                      !couponForm.errors?.percent
                     "
                   >
                     Value is required
                   </span>
-                  <span
-                    class="text-danger"
-                    *ngIf="
-                      CouponFormControl.value.errors?.min ||
-                      CouponFormControl.value.errors?.max
-                    "
-                  >
+                  <span class="text-danger" *ngIf="couponForm.errors?.percent">
                     Value must be in range 1 to 99
                   </span>
                 </div>
@@ -127,7 +122,8 @@
                     class="text-danger"
                     *ngIf="
                       (CouponFormControl.startDate.touched || submitted) &&
-                      CouponFormControl.startDate.errors?.required
+                      (CouponFormControl.startDate.errors?.required ||
+                        CouponFormControl.startDate.errors?.currentDate)
                     "
                   >
                     Start Date is required or Invalid

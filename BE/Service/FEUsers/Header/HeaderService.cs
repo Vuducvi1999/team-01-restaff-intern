@@ -29,9 +29,9 @@ namespace Service.Header
 
         public ReturnMessage<List<BlogDTO>> GetBlogs()
         {
-            var listDTO = _blogRepository.GetList();
-            var list = _mapper.Map<List<BlogDTO>>(listDTO);
-            var result = new ReturnMessage<List<BlogDTO>>(false, list, MessageConstants.ListSuccess);
+            var resultTop = _blogRepository.Queryable().OrderBy(p => p.Title).Take(5).ToList();
+            var data = _mapper.Map<List<Blog>, List<BlogDTO>>(resultTop);
+            var result = new ReturnMessage<List<BlogDTO>>(false, data, MessageConstants.SearchSuccess);
             return result;
         }
 
