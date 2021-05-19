@@ -44,14 +44,14 @@ namespace Service.Contacts
             try
             {
                 var entity = _repository.Find(model.Id); 
-                if (entity.IsNotNullOrEmpty())
+                if (entity.IsNotNullOrEmpty() && entity.Status != "Done" )
                 {
                     entity.Update(model);
                     _repository.Update(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<ContactDTO>(false, _mapper.Map<Contact, ContactDTO>(entity), MessageConstants.DeleteSuccess);
                     return result;
-                }
+                }   
                 return new ReturnMessage<ContactDTO>(true, null, MessageConstants.Error);
             }
             catch (Exception ex)
