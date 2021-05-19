@@ -115,7 +115,7 @@ export class CouponDetailComponent implements OnInit {
   }
 
   close(event: any) {
-    this.ngbActiveModal.close();
+    this.ngbActiveModal.dismiss();
   }
   ngOnInit(): void {
     this.loadItemForm();

@@ -22,6 +22,8 @@ import { UserService } from './../../../lib/data/services/users/user.service';
 export class ListUsersComponent {
   public users: UserModel[];
   closeResult = '';
+  public data: PageModel<UserModel>;
+  params: any = {};
   constructor(
     private modalService: NgbModal,
     private userService: UserService,
@@ -103,7 +105,7 @@ export class ListUsersComponent {
 
   getList() {
     this.userService
-      .get(null)
+      .get({params: this.params})
       .then((res: ReturnMessage<PageModel<UserModel>>) => {
         if (!res.hasError) {
           this.users = res.data.results;
@@ -114,5 +116,9 @@ export class ListUsersComponent {
           // console.log(er.error.message);
         }
       });
+  }
+  onPage(event) {
+    this.params.pageIndex = event;
+    this.getList();
   }
 }

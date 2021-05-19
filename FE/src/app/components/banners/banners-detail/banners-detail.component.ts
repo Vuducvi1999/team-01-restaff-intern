@@ -92,14 +92,14 @@ export class BannersDetailComponent implements OnInit {
 
     if (this.bannersForm.valid) {
       this.messageService
-        .confirm(`Do you want to edit the banner?`, 'Yes')
+        .confirm(`Do you want to save the banner?`, 'Yes')
         .then((res) => {
           if (res.isConfirmed) {
             this.bannersService
               .save(this.banner)
               .then((res) => {
                 this.messageService.notification(
-                  'Banner has been edited',
+                  'Banner has been saved',
                   TypeSweetAlertIcon.SUCCESS
                 );
                 this.bannersForm.reset();
@@ -118,7 +118,7 @@ export class BannersDetailComponent implements OnInit {
   }
 
   close(event: any) {
-    this.ngbActiveModal.close();
+    this.ngbActiveModal.dismiss();
   }
 
   onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {

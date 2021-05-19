@@ -86,7 +86,7 @@ export class BlogsDetailComponent implements OnInit {
 
     if (this.blogForm.valid) {
       this.messageService
-        .confirm(`Do you want to edit the blog?`, 'Yes')
+        .confirm(`Do you want to save the blog?`, 'Yes')
         .then((res) => {
           if (res.isConfirmed) {
             this.blogService
@@ -108,7 +108,7 @@ export class BlogsDetailComponent implements OnInit {
   }
 
   close(event: any) {
-    this.ngbActiveModal.close();
+    this.ngbActiveModal.dismiss();
   }
   get blogFormControl() {
     return this.blogForm.controls;

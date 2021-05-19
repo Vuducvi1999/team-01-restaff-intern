@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
+import { PageModel, TypeSweetAlertIcon } from 'src/app/lib/data/models';
 import { ReturnMessage } from 'src/app/lib/data/models/common/return-message.model';
 import { ContactModel } from 'src/app/lib/data/models/contact/contact.model';
 import { PageContentModel } from 'src/app/lib/data/models/pageContent/pageContent.model';
@@ -17,6 +17,8 @@ import { ContactDetailComponent } from '../contact-details/contact-details.compo
 })
 export class ListContactComponent {
   public contacts: ContactModel[];
+  public data: PageModel<ContactModel>;
+  params: any = {};
 
   constructor(private modalService: NgbModal,
     private contactService: ContactService,
@@ -86,5 +88,10 @@ export class ListContactComponent {
           // console.log(er.error.message);
         }
       });
+  }
+
+  onPage(event) {
+    this.params.pageIndex = event;
+    this.getList();
   }
 }
