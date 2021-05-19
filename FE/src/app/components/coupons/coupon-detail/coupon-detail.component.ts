@@ -17,7 +17,6 @@ import {
 import { formatDate } from '@angular/common';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
-import { Console } from 'node:console';
 @Component({
   selector: 'app-coupon-detail',
   templateUrl: './coupon-detail.component.html',
