@@ -7,6 +7,7 @@ import { PageContentModel } from 'src/app/lib/data/models/pageContent/pageConten
 import { ContactService } from 'src/app/lib/data/services/contacts/contact.service';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { PageContentService } from 'src/app/lib/data/services/pageContents/pageContent.service';
+import { CustomViewCellStringComponent } from 'src/app/shared/components/custom-view-cell-string/custom-view-cell-string.component';
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ContactDetailComponent } from '../contact-details/contact-details.component';
 
@@ -36,8 +37,16 @@ export class ListContactComponent {
       position: 'right',
     },
     columns: {
-      firstName: { title: 'First Name' },
-      lastName: { title: 'Last Name' },
+      firstName: { 
+        title: 'First Name',
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent, 
+      },
+      lastName: { 
+        title: 'Last Name',
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
+      },
       phoneNumber: { 
         title: 'Phone Number',
         type: 'custom',

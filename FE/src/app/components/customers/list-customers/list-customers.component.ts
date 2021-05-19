@@ -8,6 +8,7 @@ import {
 } from 'src/app/lib/data/models';
 import { CustomerService, FileService } from 'src/app/lib/data/services';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
+import { CustomViewCellStringComponent } from 'src/app/shared/components/custom-view-cell-string/custom-view-cell-string.component';
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { CustomerDetailsComponent } from '../customer-details/customer-details.component';
@@ -43,6 +44,8 @@ export class ListCustomersComponent implements OnInit {
       },
       username: {
         title: 'Username',
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
       },
       firstName: {
         title: 'First Name',
