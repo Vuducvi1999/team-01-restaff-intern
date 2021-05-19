@@ -139,7 +139,7 @@ export class BannersDetailComponent implements OnInit {
         if (e.includes(event.remove)) {
           this.fileURL.splice(i, 1);
         }
-      });
+    });
     }
 
     if (event.removeAll) {

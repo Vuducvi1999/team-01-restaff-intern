@@ -29,7 +29,6 @@ namespace BE.FeUserControllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Authorize]
         [HttpPost]
         public IActionResult Post([FromBody] CreateContactDTO model)
         {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, ɵConsole } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
@@ -74,6 +74,7 @@ export class PageContentInfoComponent implements OnInit, OnDestroy {
   }
 
   Submit() {
+    console.log(this.contactForm);
     if (this.contactForm.invalid) {
       return;
     }
@@ -87,7 +88,10 @@ export class PageContentInfoComponent implements OnInit, OnDestroy {
         );
       })
       .catch((e) => {
-        this.messageService.alert(e.error.message, TypeSweetAlertIcon.ERROR);
+        this.messageService.alert(
+          e.error ? e.error.message : "Error Server",
+          TypeSweetAlertIcon.ERROR
+        );
       });
   }
 }
