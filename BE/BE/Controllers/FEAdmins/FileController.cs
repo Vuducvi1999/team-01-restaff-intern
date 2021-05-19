@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 
 namespace BE.Controllers.FEAdmins
 {
+    [Authorize]
     [Route(UrlConstants.BaseFile)]
     [ApiController]
     public class FileController : BaseController
@@ -37,10 +38,9 @@ namespace BE.Controllers.FEAdmins
         public IActionResult GetFileType()
         {
             var result = DataType.TypeName.ToArray();
-            return CommonResponse(new ReturnMessage<KeyValuePair<string,string>[]>(false, result, MessageConstants.SearchSuccess));
+            return CommonResponse(new ReturnMessage<KeyValuePair<string, string>[]>(false, result, MessageConstants.SearchSuccess));
         }
 
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> SaveFile([FromForm] SaveFileDTO dto)
         {
@@ -49,7 +49,6 @@ namespace BE.Controllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Authorize]
         [HttpPut]
         public IActionResult UpdateFile([FromForm] List<UpdateFileDTO> dto)
         {

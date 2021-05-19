@@ -10,7 +10,7 @@ namespace BE.Controllers.FEUsers
     [Route(UrlConstants.BaseHeader)]
     [ApiController]
 
-    public class HeaderController:BaseController
+    public class HeaderController : BaseController
     {
         private readonly IHeaderService _headerService;
 
@@ -19,13 +19,13 @@ namespace BE.Controllers.FEUsers
             _headerService = headerService;
         }
 
-        [HttpGet]
-        [Route(CodeConstants.Categories)]
-        public IActionResult GetCategories()
-        {
-            var result = _headerService.GetCategories();
-            return CommonResponse(result);
-        }
+        //[HttpGet]
+        //[Route("categories")]
+        //public IActionResult GetCategories()
+        //{
+        //    var result = _headerService.GetCategories();
+        //    return CommonResponse(result);
+        //}
 
         //[HttpGet]
         //[Route("social-medias")]
@@ -35,13 +35,19 @@ namespace BE.Controllers.FEUsers
         //    return CommonResponse(result);
         //}
 
+        //[HttpGet]
+        //[Route("blogs")]
+        //public IActionResult GetBlogs()
+        //{
+        //    var result = _headerService.GetBlogs();
+        //    return CommonResponse(result);
+        //}
+
         [HttpGet]
-        [Route(CodeConstants.Blogs)]
-        public IActionResult GetBlogs()
+        public IActionResult GetHeader()
         {
-            var result = _headerService.GetBlogs();
+            var result = _headerService.GetHeader();
             return CommonResponse(result);
         }
-
     }
 }

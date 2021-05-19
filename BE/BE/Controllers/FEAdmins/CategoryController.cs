@@ -3,6 +3,7 @@ using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Categories;
 using Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Categories;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 
 namespace BE.Controllers.FEAdmins
 {
+    [Authorize]
     [Route(UrlConstants.BaseCategory)]
     [ApiController]
     public class CategoryController : BaseController

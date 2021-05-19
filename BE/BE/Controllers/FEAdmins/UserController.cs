@@ -11,6 +11,7 @@ using System;
 
 namespace BE.Controllers.FEAdmins
 {
+    [Authorize]
     [Route(UrlConstants.BaseUser)]
     [ApiController]
     public class UserController : BaseController

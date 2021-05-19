@@ -29,7 +29,7 @@ namespace Service.Contacts
         {
             try
             {
-                var entities= _repository.Queryable().ToList();
+                var entities= _repository.Queryable().OrderByDescending(it => it.CreateByDate).ToList();
                 var result = new ReturnMessage<List<ContactDTO>>(false, _mapper.Map<List<Contact>, List<ContactDTO>>(entities), MessageConstants.CreateSuccess);
                 return result;
             }

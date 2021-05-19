@@ -18,13 +18,14 @@ using System.Threading.Tasks;
 
 namespace BE.Controllers.FEAdmins
 {
+    [Authorize]
     [Route(UrlConstants.BaseSocialMedia)]
     [ApiController]
     public class SocialMediaController : BaseController
     {
         private readonly ISocialMediaService _socialMediaService;
 
-        public SocialMediaController(ISocialMediaService socialMediaService, IAuthService authService, IUserManager userManager, IFileService fileService) : base(authService,userManager, fileService)
+        public SocialMediaController(ISocialMediaService socialMediaService, IAuthService authService, IUserManager userManager, IFileService fileService) : base(authService, userManager, fileService)
         {
             _socialMediaService = socialMediaService;
         }

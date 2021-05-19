@@ -11,6 +11,7 @@ using Service.Files;
 
 namespace BE.Controllers.FEAdmins
 {
+    [Authorize]
     [Route(UrlConstants.BaseBanner)]
     [ApiController]
     public class BannerController : BaseController
@@ -23,7 +24,6 @@ namespace BE.Controllers.FEAdmins
             _bannerService = bannerService;
         }
 
-        [Authorize]
         [HttpGet]
         public IActionResult Get([FromQuery] SearchPaginationDTO<BannerDTO> serachPagination)
         {
@@ -31,7 +31,6 @@ namespace BE.Controllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Authorize]
         [HttpPost]
         public IActionResult Create([FromBody] CreateBannerDTO model)
         {
@@ -48,7 +47,6 @@ namespace BE.Controllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Authorize]
         [HttpPut]
         public IActionResult Update([FromBody] UpdateBannerDTO model)
         {
@@ -65,7 +63,6 @@ namespace BE.Controllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Authorize]
         [HttpDelete]
         public IActionResult Delete([FromQuery] DeleteBannerDTO model)
         {

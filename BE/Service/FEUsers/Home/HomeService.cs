@@ -155,7 +155,7 @@ namespace Service.Home
         {
             try
             {
-                var resultEntity = _bannerRepository.Queryable().Take(12).ToList();
+                var resultEntity = _bannerRepository.Queryable().Take(12).OrderBy(it => it.DisplayOrder).ToList();
                 var data = _mapper.Map<List<Banner>, List<BannerDTO>>(resultEntity);
                 var result = new ReturnMessage<List<BannerDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;

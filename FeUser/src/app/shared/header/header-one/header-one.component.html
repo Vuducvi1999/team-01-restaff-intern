@@ -4,12 +4,12 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6">
-          <div class="header-contact" *ngIf="headerModel.informationWeb">
+          <div class="header-contact" *ngIf="headerModel?.informationWeb">
             <ul>
-              <li>{{ headerModel.informationWeb.title }}</li>
+              <li>{{ headerModel?.informationWeb?.title }}</li>
               <li>
                 <i class="fa fa-phone" aria-hidden="true"></i>Call Us:
-                {{ headerModel.informationWeb.phone }}
+                {{ headerModel?.informationWeb?.phone }}
               </li>
             </ul>
           </div>
@@ -63,9 +63,9 @@
             <div class="brand-logo">
               <a routerLink="/home" id="headerlogo">
                 <app-image-wrapper
-                  *ngIf="headerModel.informationWeb.logo"
+                  *ngIf="headerModel?.informationWeb?.logo"
                   [data]="{
-                    url: headerModel.informationWeb.logo,
+                    url: headerModel?.informationWeb?.logo,
                     typeClass: typeDisplayImage.LOGO_IMAGE
                   }"
                 ></app-image-wrapper>
@@ -74,7 +74,7 @@
           </div>
           <div class="menu-right pull-right">
             <div>
-              <app-menu></app-menu>
+              <app-menu> </app-menu>
             </div>
             <div>
               <app-settings></app-settings>

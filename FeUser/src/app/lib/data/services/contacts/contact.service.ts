@@ -4,7 +4,7 @@ import { ContactModel } from "../../models/contacts/contact.model";
 
 @Injectable()
 export class ContactService {
-  private url = "/api/contact";
+  private url = "/api/user/contact";
 
   constructor(private httpClient: HttpClientService) {}
 
