@@ -15,7 +15,7 @@ export class MenuComponent implements OnInit {
   public menuItems: Menu[] = [];
   public mainMenu: boolean = false;
 
-  @Input() public headerModel: HeaderModel;
+  public headerModel: HeaderModel;
   public categoriesChildren: Menu[] = [];
   public blogsChildren: Menu[] = [];
 
@@ -36,16 +36,13 @@ export class MenuComponent implements OnInit {
   }
 
   // async loadHeaderModel() {
-  //   await this.headerService.getBlogs(null).then((res: any) => {
-  //     this.headerModel.blogs = res.data;
-  //   });
-  //   await this.headerService.getCategories(null).then((res: any) => {
-  //     this.headerModel.categories = res.data;
+  //   await this.headerService.getHeader(null).then((res: any) => {
+  //     this.headerModel = res.data;
   //   });
   // }
 
   async loadMenu() {
-    // await this.loadHeaderModel();
+    //await this.loadHeaderModel();
 
     this.headerModel?.categories.forEach((item) => {
       this.categoriesChildren.push({
