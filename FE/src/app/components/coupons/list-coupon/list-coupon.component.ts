@@ -69,12 +69,16 @@ export class ListCouponComponent implements OnInit {
         valuePrepareFunction: (created) => {
           return this.datePipe.transform(new Date(created), 'dd/MM/yyyy');
         },
+        type: 'custom',
+        renderComponent: CustomViewCellComponent,
       },
       endDate: {
         title: 'End Date',
         valuePrepareFunction: (created) => {
           return this.datePipe.transform(new Date(created), 'dd/MM/yyyy');
         },
+        type: 'custom',
+        renderComponent: CustomViewCellComponent,
       },
     },
   };
