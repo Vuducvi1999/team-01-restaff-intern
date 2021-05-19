@@ -33,7 +33,7 @@ export class ProductDetailsComponent implements OnInit {
   public categories: CategoryModel[];
   public item: ProductModel;
   public regex: string =
-    '^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ]*$';
+    '^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ,-.]*$';
   public modalFile: ModalFile;
   public fileURL: (String | ArrayBuffer)[];
   submitted = false;
@@ -139,7 +139,7 @@ export class ProductDetailsComponent implements OnInit {
         this.item ? this.item.description : '',
         [
           Validators.required,
-          Validators.maxLength(100),
+          Validators.maxLength(300),
           Validators.pattern(this.regex),
         ],
       ],

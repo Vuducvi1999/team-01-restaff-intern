@@ -65,8 +65,8 @@
           <div class="product-right product-description-box">
             <h2>{{ product?.name | titlecase }}</h2>
             <div class="border-product">
-              <h4 class="product-title">product details</h4>
-              <p>{{ product?.description.substring(0, 200) + "..." }}</p>
+              <h4 class="product-title">product code</h4>
+              <p>{{ product?.description.substring(0, 200)}}</p>
             </div>
             <div>
               <h3>
@@ -89,21 +89,17 @@
           </div>
           <br />
           <div class="addeffect-section product-description border-product">
-            <div
-              *ngIf="product?.contentHTML != ''"
-              class="addeffect-section product-description border-product"
-            >
-              <h3>Description</h3>
+            <a class="btn btn-solid" (click)="addToCart(product)"
+              >add to cart
+            </a>
+          </div>
+          <br />
+          <div class="addeffect-section product-description border-product">
+            <div *ngIf="product?.contentHTML != ''">
+              <h3 style="color: black;">Description</h3>
               <div [innerHTML]="product?.contentHTML"></div>
             </div>
             <br />
-
-            <div class="addeffect-section product-description border-product">
-              <a class="btn btn-solid" (click)="addToCart(product)"
-                >add to cart
-              </a>
-            </div>
-
             <ng-template #loading>
               <button class="btn btn-primary" [routerLink]="['/auth/login']">
                 You need to login to rate this product

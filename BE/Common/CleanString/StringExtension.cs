@@ -10,7 +10,7 @@ namespace Common.StringEx
         {
             if (model.Trim() == "")
             {
-                return "null";
+                return null;
             }
             string currentItem = "";
             currentItem = model.Trim();

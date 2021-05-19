@@ -7,6 +7,7 @@ using Domain.Entities;
 using AutoMapper;
 using Common.Constants;
 using Infrastructure.Extensions;
+using Common.StringEx;
 
 namespace Service.InformationWebsiteServices
 {
@@ -39,6 +40,19 @@ namespace Service.InformationWebsiteServices
 
         public ReturnMessage<InformationWebDTO> Update(UpdateInformationWebDTO model)
         {
+            model.Title = StringExtension.CleanString(model.Title);
+            model.Description = StringExtension.CleanString(model.Description);
+            model.Email = StringExtension.CleanString(model.Email);
+            model.Phone = StringExtension.CleanString(model.Phone);
+            model.Fax = StringExtension.CleanString(model.Fax);
+            if(model.Title == null||
+               model.Description == null ||
+               model.Email == null ||
+               model.Phone == null ||
+               model.Fax == null)
+            {
+                return new ReturnMessage<InformationWebDTO>(true, null, MessageConstants.UpdateFail);
+            }
             try
             {
                 var entity = _informationWebRepository.Find(CommonConstants.WebSiteInformationId);
