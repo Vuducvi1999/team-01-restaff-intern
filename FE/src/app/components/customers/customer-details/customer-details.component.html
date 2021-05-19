@@ -1,4 +1,7 @@
-<app-modal-header [data]="modalHeader" (onAction)="close($event)"></app-modal-header>
+<app-modal-header
+  [data]="modalHeader"
+  (onAction)="close($event)"
+></app-modal-header>
 <!-- Container-fluid starts-->
 <div class="container-fluid">
   <div class="row">
@@ -120,6 +123,7 @@
                   class="invalid-feedback col-md-5 offset-md-3"
                 >
                   <div *ngIf="f.email.errors.required">Email is required</div>
+                  <div *ngIf="f.email.errors.email">Wrong type email</div>
                 </div>
               </div>
               <div class="form-group row">

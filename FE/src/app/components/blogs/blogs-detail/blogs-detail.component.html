@@ -30,16 +30,23 @@
                   type="text"
                   required
                   formControlName="title"
+                  [ngClass]="{
+                    'is-invalid ':
+                      (blogFormControl.title.touched || submitted) &&
+                      blogFormControl.title.errors?.required
+                  }"
                 />
-                <span
-                  class="text-danger"
-                  *ngIf="
-                    (blogFormControl.title.touched || submitted) &&
-                    blogFormControl.title.errors?.required
-                  "
-                >
-                  Title is required or invalid
-                </span>
+                <div class="invalid-feedback col-md-5 offset-md-3">
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (blogFormControl.title.touched || submitted) &&
+                      blogFormControl.title.errors?.required
+                    "
+                  >
+                    Title is required or invalid
+                  </span>
+                </div>
               </div>
               <div class="form-group row">
                 <label for="" class="col-xl-3 col-md-4"
@@ -50,16 +57,23 @@
                   id=""
                   type="text"
                   formControlName="shortDes"
+                  [ngClass]="{
+                    'is-invalid ':
+                      (blogFormControl.shortDes.touched || submitted) &&
+                      blogFormControl.shortDes.errors?.required
+                  }"
                 />
-                <span
-                  class="text-danger"
-                  *ngIf="
-                    (blogFormControl.shortDes.touched || submitted) &&
-                    blogFormControl.shortDes.errors?.required
-                  "
-                >
-                  ShortDes is required or invalid
-                </span>
+                <div class="invalid-feedback col-md-5 offset-md-3">
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (blogFormControl.shortDes.touched || submitted) &&
+                      blogFormControl.shortDes.errors?.required
+                    "
+                  >
+                    ShortDes is required or invalid
+                  </span>
+                </div>
               </div>
               <div class="form-group row">
                 <label for="validationCustom2" class="col-xl-3 col-md-4"
@@ -69,9 +83,13 @@
                   class="form-control col-xl-8 col-md-7"
                   id="validationCustom2"
                   type="text"
-                  required=""
                   formControlName="imageUrl"
                   hidden
+                  [ngClass]="{
+                    'is-invalid ':
+                      (blogFormControl.imageUrl.touched || submitted) &&
+                      blogFormControl.imageUrl.errors?.required
+                  }"
                 />
                 <div class="col-xl-8 col-md-7 p-0">
                   <app-upload-file
@@ -80,6 +98,17 @@
                     styleFile="width: 100%; height: auto;"
                     (onChange)="onChangeData($event)"
                   ></app-upload-file>
+                </div>
+                <div class="invalid-feedback col-md-5 offset-md-3">
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (blogFormControl.imageUrl.touched || submitted) &&
+                      blogFormControl.imageUrl.errors?.required
+                    "
+                  >
+                    Image is required
+                  </span>
                 </div>
               </div>
               <div class="form-group row">
@@ -93,16 +122,23 @@
                   type="text"
                   required=""
                   formControlName="contentHTML"
+                  [ngClass]="{
+                    'is-invalid ':
+                      (blogFormControl.shortDes.touched || submitted) &&
+                      blogFormControl.shortDes.errors?.required
+                  }"
                 ></ckeditor>
-                <span
-                  class="text-danger"
-                  *ngIf="
-                    (blogFormControl.contentHTML.touched || submitted) &&
-                    blogFormControl.contentHTML.errors?.required
-                  "
-                >
-                  Content Html is required
-                </span>
+                <div class="invalid-feedback col-md-5 offset-md-3">
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (blogFormControl.contentHTML.touched || submitted) &&
+                      blogFormControl.contentHTML.errors?.required
+                    "
+                  >
+                    Content Html is required
+                  </span>
+                </div>
               </div>
             </form>
           </div>

@@ -30,8 +30,13 @@
                   type="text"
                   required=""
                   formControlName="code"
+                  [ngClass]="{
+                    'is-invalid':
+                      (CouponFormControl.code.touched || submitted) &&
+                      CouponFormControl.code.errors?.required
+                  }"
                 />
-                <div class="col-md-5 offset-md-3">
+                <div class="invalid-feedback col-md-5 offset-md-3">
                   <span
                     class="text-danger"
                     *ngIf="
@@ -54,8 +59,13 @@
                   type="text"
                   required=""
                   formControlName="name"
+                  [ngClass]="{
+                    'is-invalid ':
+                      (CouponFormControl.name.touched || submitted) &&
+                      CouponFormControl.name.errors?.required
+                  }"
                 />
-                <div class="col-md-5 offset-md-3">
+                <div class="invalid-feedback col-md-5 offset-md-3">
                   <span
                     class="text-danger"
                     *ngIf="
@@ -76,6 +86,7 @@
                   id=""
                   type="checkbox"
                   formControlName="hasPercent"
+                  style="left: 0"
                 />
               </div>
               <div class="form-group row">
@@ -88,8 +99,13 @@
                   type="number"
                   required=""
                   formControlName="value"
+                  [ngClass]="{
+                    'is-invalid ':
+                      (CouponFormControl.value.touched || submitted) &&
+                      CouponFormControl.value.errors?.required
+                  }"
                 />
-                <div class="col-md-5 offset-md-3">
+                <div class="invalid-feedback col-md-5 offset-md-3">
                   <span
                     class="text-danger"
                     *ngIf="
@@ -116,18 +132,30 @@
                   value="{{ item?.startDate | date: 'dd-MM-yyyy' }}"
                   formControlName="startDate"
                   required=""
-                />
-                <div class="col-md-5 offset-md-3">
-                  <span
-                    class="text-danger"
-                    *ngIf="
+                  [ngClass]="{
+                    'is-invalid ':
                       (CouponFormControl.startDate.touched || submitted) &&
                       (CouponFormControl.startDate.errors?.required ||
                         CouponFormControl.startDate.errors?.currentDate)
+                  }"
+                />
+                <div class="invalid-feedback col-md-5 offset-md-3">
+                  <div
+                    *ngIf="
+                      (CouponFormControl.startDate.touched || submitted) &&
+                      CouponFormControl.startDate.errors?.required
                     "
                   >
-                    Start Date is required or Invalid
-                  </span>
+                    Start Date is required
+                  </div>
+                  <div
+                    *ngIf="
+                      (CouponFormControl.startDate.touched || submitted) &&
+                      CouponFormControl.startDate.errors?.currentDate
+                    "
+                  >
+                    Start Date is Invalid
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
@@ -141,18 +169,30 @@
                   value="{{ item?.endDate | date: 'dd-MM-yyyy' }}"
                   formControlName="endDate"
                   required=""
-                />
-                <div class="col-md-5 offset-md-3">
-                  <span
-                    class="text-danger"
-                    *ngIf="
+                  [ngClass]="{
+                    'is-invalid ':
                       (CouponFormControl.endDate.touched || submitted) &&
                       (CouponFormControl.endDate.errors?.required ||
                         CouponFormControl.endDate.errors?.compared)
+                  }"
+                />
+                <div class="invalid-feedback col-md-5 offset-md-3">
+                  <div
+                    *ngIf="
+                      (CouponFormControl.endDate.touched || submitted) &&
+                      CouponFormControl.endDate.errors?.required
                     "
                   >
-                    End Date is required or Invalid
-                  </span>
+                    End Date is required
+                  </div>
+                  <div
+                    *ngIf="
+                      (CouponFormControl.endDate.touched || submitted) &&
+                      CouponFormControl.endDate.errors?.compared
+                    "
+                  >
+                    End Date is Invalid
+                  </div>
                 </div>
               </div>
             </form>

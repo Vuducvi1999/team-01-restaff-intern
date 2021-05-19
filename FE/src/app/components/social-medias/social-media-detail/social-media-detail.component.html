@@ -30,8 +30,14 @@
                   type="text"
                   required
                   formControlName="title"
+                  [ngClass]="{
+                    'is-invalid ':
+                      (SocialMediaFormControl.title.touched || submitted) &&
+                      (SocialMediaFormControl.title.errors?.required ||
+                        SocialMediaFormControl.title.errors?.pattern)
+                  }"
                 />
-                <div class="col-md-5 offset-md-3">
+                <div class="invalid-feedback col-md-5 offset-md-3">
                   <span
                     class="text-danger"
                     *ngIf="
@@ -55,8 +61,13 @@
                   type="text"
                   required=""
                   formControlName="link"
+                  [ngClass]="{
+                    'is-invalid ':
+                      (SocialMediaFormControl.link.touched || submitted) &&
+                      SocialMediaFormControl.link.errors?.required
+                  }"
                 />
-                <div class="col-md-5 offset-md-3">
+                <div class="invalid-feedback col-md-5 offset-md-3">
                   <span
                     class="text-danger"
                     *ngIf="
@@ -89,9 +100,11 @@
                     (onChange)="onChangeData($event)"
                   ></app-upload-file>
                 </div>
-                <div class="col-md-5 offset-md-3">
+                <div
+                  class="invalid-feedback col-md-5 offset-md-3"
+                  style="display: block"
+                >
                   <span
-                    class="text-danger"
                     *ngIf="
                       (SocialMediaFormControl.iconUrl.touched || submitted) &&
                       SocialMediaFormControl.iconUrl.errors?.required
@@ -111,8 +124,14 @@
                   type="number"
                   required=""
                   formControlName="displayOrder"
+                  [ngClass]="{
+                    'is-invalid ':
+                      (SocialMediaFormControl.displayOrder.touched ||
+                        submitted) &&
+                      SocialMediaFormControl.displayOrder.errors?.required
+                  }"
                 />
-                <div class="col-md-5 offset-md-3">
+                <div class="invalid-feedback col-md-5 offset-md-3">
                   <span
                     class="text-danger"
                     *ngIf="

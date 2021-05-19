@@ -54,7 +54,10 @@ export class CustomerDetailsComponent implements OnInit {
     this.usersForm = this.formBuilder.group({
       username: [this.item ? this.item.username : '', [Validators.required]],
       password: [this.item ? this.item.password : '', [Validators.required]],
-      email: [this.item ? this.item.email : '', [Validators.required]],
+      email: [
+        this.item ? this.item.email : '',
+        [Validators.required, Validators.email],
+      ],
       firstName: [this.item ? this.item.firstName : '', [Validators.required]],
       lastName: [this.item ? this.item.lastName : '', [Validators.required]],
       imageUrl: [this.item ? this.item.imageUrl : ''],

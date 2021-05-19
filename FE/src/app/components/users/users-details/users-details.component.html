@@ -1,4 +1,7 @@
-<app-modal-header [data]="modalHeader" (onAction)="close($event)"></app-modal-header>
+<app-modal-header
+  [data]="modalHeader"
+  (onAction)="close($event)"
+></app-modal-header>
 <!-- Container-fluid starts-->
 <div class="container-fluid">
   <div class="row">
@@ -50,7 +53,18 @@
                   class="form-control col-xl-8 col-md-7"
                   type="text"
                   formControlName="email"
+                  [ngClass]="{
+                    'is-invalid':
+                      usersForm.controls.email.dirty &&
+                      usersForm.controls.email.errors?.email
+                  }"
                 />
+                <div
+                  *ngIf="usersForm.controls.email.errors?.email"
+                  class="invalid-feedback col-md-5 offset-md-3"
+                >
+                  <div>Wrong email type</div>
+                </div>
               </div>
               <div class="form-group row">
                 <label for="validationCustom2" class="col-xl-3 col-md-4">
