@@ -22,7 +22,8 @@ export class ListContactComponent {
   public data: PageModel<ContactModel>;
   params: any = {};
 
-  constructor(private modalService: NgbModal,
+  constructor(
+    private modalService: NgbModal,
     private contactService: ContactService,
     private messageService: MessageService
   ) {
@@ -57,7 +58,6 @@ export class ListContactComponent {
         renderComponent: CustomViewCellComponent,
       },
       email: { title: 'Email' },
-      message: { title: 'Message' },
       status: { title: 'Status' },
     },
   };
@@ -74,20 +74,25 @@ export class ListContactComponent {
       (close) => {
         this.getList();
       },
-      (dismiss) => { }
+      (dismiss) => {}
     );
   }
 
   delete(event: any) {
-    this.messageService.confirm(`Do you want to delete the category?`, 'Yes').then(res => {
-      if (res.isConfirmed) {
-        let contact = event.data as ContactModel;
-        this.contactService.delete(contact).then(() => {
-          this.messageService.notification('Contact has been deleted', TypeSweetAlertIcon.SUCCESS);
-          this.getList();
-        })
-      }
-    });
+    this.messageService
+      .confirm(`Do you want to delete the category?`, 'Yes')
+      .then((res) => {
+        if (res.isConfirmed) {
+          let contact = event.data as ContactModel;
+          this.contactService.delete(contact).then(() => {
+            this.messageService.notification(
+              'Contact has been deleted',
+              TypeSweetAlertIcon.SUCCESS
+            );
+            this.getList();
+          });
+        }
+      });
   }
 
   getList() {

@@ -3,7 +3,11 @@ import { NavService } from '../../service/nav.service';
 import { trigger, transition, useAnimation } from '@angular/animations';
 import { bounce, zoomOut, zoomIn, fadeIn, bounceIn } from 'ng-animate';
 import { ActivatedRoute } from '@angular/router';
-import { ReturnMessage, TypeSweetAlertIcon, UserDataReturnDTOModel } from 'src/app/lib/data/models';
+import {
+  ReturnMessage,
+  TypeSweetAlertIcon,
+  UserDataReturnDTOModel,
+} from 'src/app/lib/data/models';
 import { RouterHelperService } from 'src/app/lib/helpers';
 
 @Component({
@@ -30,7 +34,7 @@ export class ContentLayoutComponent implements OnInit {
 
   constructor(
     public navServices: NavService,
-    public activedRoute: ActivatedRoute,
+    public activedRoute: ActivatedRoute
   ) {}
 
   public getRouterOutletState(outlet) {
@@ -53,6 +57,5 @@ export class ContentLayoutComponent implements OnInit {
     }
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

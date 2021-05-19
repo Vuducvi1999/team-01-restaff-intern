@@ -49,7 +49,6 @@ export class BlogMainComponent implements OnInit {
       .then((res: ReturnMessage<BlogModel[]>) => {
         if (!res.hasError) {
           this.topBlogs = res.data;
-          // console.log(res.data);
         }
       })
       .catch((er) => {
@@ -68,7 +67,6 @@ export class BlogMainComponent implements OnInit {
       .then((res: ReturnMessage<BlogModel[]>) => {
         if (!res.hasError) {
           this.recentBlogs = res.data;
-          // console.log(res);
         }
       })
       .catch((er) => {

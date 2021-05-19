@@ -60,7 +60,7 @@ export class BlogsDetailComponent implements OnInit {
         this.item ? this.item.contentHTML : '',
         Validators.required,
       ],
-      imageUrl: [this.item ? this.item.imageUrl : ''],
+      imageUrl: [this.item ? this.item.imageUrl : '', Validators.required],
     });
   }
 
@@ -85,7 +85,6 @@ export class BlogsDetailComponent implements OnInit {
     this.submitted = true;
 
     if (this.blogForm.valid) {
-
       this.blogService
         .save(this.blog)
         .then(() => {

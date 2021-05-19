@@ -30,8 +30,13 @@
                   type="text"
                   required
                   formControlName="title"
+                  [ngClass]="{
+                    'is-invalid ':
+                      (bannersFormControl.title.touched || submitted) &&
+                      bannersFormControl.title.errors?.required
+                  }"
                 />
-                <div class="col-md-3 offset-md-3">
+                <div class="invalid-feedback col-md-3 offset-md-3">
                   <span
                     class="text-danger"
                     *ngIf="
@@ -67,7 +72,7 @@
               </div>
               <div class="form-group row">
                 <label for="validationCustom2" class="col-xl-3 col-md-4"
-                  ><span>*</span> ImageUrl</label
+                  ><span>*</span> Image</label
                 >
                 <input
                   class="form-control col-xl-8 col-md-7"
@@ -75,23 +80,33 @@
                   type="text"
                   formControlName="imageUrl"
                   hidden
+                  [ngClass]="{
+                    'is-invalid ':
+                      (bannersFormControl.imageUrl.touched || submitted) &&
+                      bannersFormControl.imageUrl.errors?.required
+                  }"
                 />
-                <app-upload-file
-                  [data]="modalFile"
-                  [fileURL]="fileURL"
-                  [isBannerUpload]="true"
-                  styleFile="width: 200px; height: auto;"
-                  (onChange)="onChangeData($event)"
-                ></app-upload-file>
-                <span
-                  class="text-danger"
-                  *ngIf="
-                    (bannersFormControl.imageUrl.touched || submitted) &&
-                    bannersFormControl.imageUrl.errors?.required
-                  "
-                >
-                  Image is required
-                </span>
+                <div class="col-xl-8 col-md-7 p-0">
+                  <app-upload-file
+                    [data]="modalFile"
+                    [fileURL]="fileURL"
+                    [isBannerUpload]="true"
+                    styleFile="width: 100%; height: auto;"
+                    (onChange)="onChangeData($event)"
+                  ></app-upload-file>
+                </div>
+
+                <div class="invalid-feedback col-md-3 offset-md-3">
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (bannersFormControl.imageUrl.touched || submitted) &&
+                      bannersFormControl.imageUrl.errors?.required
+                    "
+                  >
+                    Image is required
+                  </span>
+                </div>
               </div>
               <div class="form-group row">
                 <label for="validationCustom3" class="col-xl-3 col-md-4"
@@ -103,8 +118,13 @@
                   type="number"
                   required=""
                   formControlName="displayOrder"
+                  [ngClass]="{
+                    'is-invalid ':
+                      (bannersFormControl.displayOrder.touched || submitted) &&
+                      bannersFormControl.displayOrder.errors?.required
+                  }"
                 />
-                <div class="col-md-5 offset-md-3">
+                <div class="invalid-feedback col-md-5 offset-md-3">
                   <span
                     class="text-danger"
                     *ngIf="

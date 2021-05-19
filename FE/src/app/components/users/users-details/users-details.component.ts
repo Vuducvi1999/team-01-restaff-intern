@@ -8,7 +8,11 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { VirtualTimeScheduler } from 'rxjs';
-import { FileDtoModel, ReturnMessage, TypeSweetAlertIcon } from 'src/app/lib/data/models';
+import {
+  FileDtoModel,
+  ReturnMessage,
+  TypeSweetAlertIcon,
+} from 'src/app/lib/data/models';
 import { UserModel } from 'src/app/lib/data/models/users/user.model';
 import { FileService } from 'src/app/lib/data/services';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
@@ -63,7 +67,7 @@ export class UserDetailComponent implements OnInit {
     this.usersForm = this.formBuilder.group({
       username: [this.item ? this.item.username : '', [Validators.required]],
       password: [this.item ? this.item.password : '', [Validators.required]],
-      email: [this.item ? this.item.email : ''],
+      email: [this.item ? this.item.email : '', [Validators.email]],
       firstName: [this.item ? this.item.firstName : ''],
       lastName: [this.item ? this.item.lastName : ''],
       imageUrl: [this.item ? this.item.imageUrl : ''],
@@ -74,6 +78,7 @@ export class UserDetailComponent implements OnInit {
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
   }
+
 
   save() {
     this.messageFail = '';
@@ -101,13 +106,18 @@ export class UserDetailComponent implements OnInit {
     this.userService
       .save(this.user)
       .then((data: ReturnMessage<UserModel>) => {
-        this.messageService.notification('Save item successfully',TypeSweetAlertIcon.SUCCESS);
+        this.messageService.notification(
+          'Save item successfully',
+          TypeSweetAlertIcon.SUCCESS
+        );
         this.ngbActiveModal.close();
       })
       .catch((er) => {
         this.messageService.alert(
-          er.error.message ?? JSON.stringify(er.error.error) ?? 'Server Disconnected'
-        )
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected'
+        );
         if (er.error.message) this.messageFail = er.error.message;
         // console.log(e);
       });
@@ -131,7 +141,7 @@ export class UserDetailComponent implements OnInit {
     }
 
     if (event.remove) {
-      this.fileURL.forEach((e : string, i) => {
+      this.fileURL.forEach((e: string, i) => {
         if (e.includes(event.remove)) {
           this.fileURL.splice(i, 1);
         }

@@ -11,7 +11,7 @@ const routes: Routes = [
         component: ListPageContentComponent,
         data: {
           title: 'Page Content List',
-          breadcrumb: 'PageContent List',
+          breadcrumb: 'Page Content List',
         },
       },
     ],
