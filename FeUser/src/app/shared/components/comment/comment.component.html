@@ -26,7 +26,11 @@
       </div>
     </div>
   </form>
+  <ng-template #checkLoginToComment>
+    <div class="row mt-3 m-0 p-0">
+      <a class="checkLogin btn btn-solid" [routerLink]="['/auth/login']"
+        >Login to leave review
+      </a>
+    </div>
+  </ng-template>
 </div>
-<ng-template #checkLoginToComment>
-  <p class="checkLogin">Login to leave review</p>
-</ng-template>
