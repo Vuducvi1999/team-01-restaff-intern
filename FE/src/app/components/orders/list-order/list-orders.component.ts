@@ -10,6 +10,7 @@ import {
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { OrdersService } from 'src/app/lib/data/services/orders/orders.service';
 import { CustomViewCellNumberComponent } from 'src/app/shared/components/custom-view-cell-number/custom-view-cell-number.component';
+import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { UpdateOrderComponent } from '../update-order/update-order.component';
 
 @Component({
@@ -64,6 +65,8 @@ export class ListOrdersComponent implements OnInit {
       },
       phone: {
         title: 'Phone',
+        type: 'custom',
+        renderComponent: CustomViewCellComponent,
       },
       email: {
         title: 'Email',

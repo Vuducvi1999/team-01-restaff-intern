@@ -7,9 +7,6 @@ using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
 using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
 using Common.StringEx;
 
 namespace Service.Blogs

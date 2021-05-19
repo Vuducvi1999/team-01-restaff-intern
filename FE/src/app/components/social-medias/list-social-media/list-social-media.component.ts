@@ -8,6 +8,7 @@ import {
 import { SocialMediaModel } from 'src/app/lib/data/models/social-medias/social-media.model';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { SocialMediaService } from 'src/app/lib/data/services/social-media/social-media.service';
+import { CustomViewCellStringComponent } from 'src/app/shared/components/custom-view-cell-string/custom-view-cell-string.component';
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { SocialMediaDetailComponent } from '../social-media-detail/social-media-detail.component';
@@ -55,6 +56,8 @@ export class ListSocialMediaComponent implements OnInit {
       },
       title: {
         title: 'Title',
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
       },
       link: {
         title: 'Link',

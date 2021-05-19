@@ -9,6 +9,7 @@ import { CategoryModel } from 'src/app/lib/data/models/categories/category.model
 import { FileService } from 'src/app/lib/data/services';
 import { CategoryService } from 'src/app/lib/data/services/categories/category.service';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
+import { CustomViewCellStringComponent } from 'src/app/shared/components/custom-view-cell-string/custom-view-cell-string.component';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { CategoryDetailComponent } from '../categories-details/categories-details.component';
 
@@ -45,6 +46,8 @@ export class ListCategoriesComponent implements OnInit {
       name: {
         title: 'Name',
         filter: false,
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
       },
       description: {
         title: 'Description',
