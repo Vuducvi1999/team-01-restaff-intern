@@ -53,9 +53,6 @@ export class ListBannersComponent implements OnInit {
       description: {
         title: 'Description',
       },
-      link: {
-        title: 'Link',
-      },
       displayOrder: {
         title: 'Display Order',
         value: 'displayOrder',
@@ -89,7 +86,10 @@ export class ListBannersComponent implements OnInit {
       size: 'lg',
     });
     modalRef.componentInstance.item = event?.data;
-    modalRef.result.then((close) => this.getBanners(),(dismiss)=>{});
+    modalRef.result.then(
+      (close) => this.getBanners(),
+      (dismiss) => {}
+    );
   }
 
   delete(event: any) {

@@ -57,7 +57,7 @@ export class PageContentDetailComponent implements OnInit {
     this.pageContentForm = this.formBuilder.group({
       title: [this.item ? this.item.title : ''],
       shortDes: [this.item ? this.item.shortDes : ''],
-      imageUrl: [this.item ? this.item.imageUrl : ''],
+      imageUrl: [this.item ? this.item.imageUrl : '', Validators.required],
       description: [this.item ? this.item.description : ''],
     });
 
@@ -72,11 +72,6 @@ export class PageContentDetailComponent implements OnInit {
   }
 
   save() {
-    if (this.pageContentForm.invalid) {
-      // console.log(this.pageContentForm);
-      return;
-    }
-
     this.submitted = true;
 
     this.pageContent = {
@@ -111,9 +106,6 @@ export class PageContentDetailComponent implements OnInit {
           'Server Disconnected',
           TypeSweetAlertIcon.ERROR
         );
-        // if (er.error.hasError) {
-        //   console.log(er.error.message);
-        // }
       });
   }
 

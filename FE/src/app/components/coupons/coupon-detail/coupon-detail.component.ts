@@ -35,7 +35,7 @@ export class CouponDetailComponent implements OnInit {
     private ngbActiveModal: NgbActiveModal,
     private couponService: CouponService,
     private messageService: MessageService
-  ) { }
+  ) {}
   loadItemForm() {
     this.couponForm = this.formBuilder.group(
       {
@@ -78,9 +78,16 @@ export class CouponDetailComponent implements OnInit {
   checkCurrentDay(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const startDate = this.item?.startDate;
-      const convertDate = new Date(control?.value).getTime();
+      console.log(control?.value);
+      const convertDate = new Date(control?.value).getDate();
+      const convertMonth = new Date(control?.value).getMonth();
+      const convertYear = new Date(control?.value).getFullYear();
       if (startDate == null) {
-        return convertDate < Date.now() ? { currentDate: true } : null;
+        return convertDate < new Date().getDate() ||
+          convertMonth < new Date().getMonth() ||
+          convertYear < new Date().getFullYear()
+          ? { currentDate: true }
+          : null;
       }
     };
   }

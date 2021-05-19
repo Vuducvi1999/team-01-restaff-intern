@@ -5,34 +5,73 @@
     <div class="col-sm-12">
       <div class="card tab2-card">
         <div class="card-body">
-          <div class="tab-pane fade active show" id="account" role="tabpanel" aria-labelledby="account-tab">
-            <form [formGroup]="pageContentForm" class="needs-validation user-add" novalidate="">
+          <div
+            class="tab-pane fade active show"
+            id="account"
+            role="tabpanel"
+            aria-labelledby="account-tab"
+          >
+            <form
+              [formGroup]="pageContentForm"
+              class="needs-validation user-add"
+              novalidate=""
+            >
               <h4>Page Content Details</h4>
               <div class="form-group row">
                 <label class="col-xl-3 col-md-4"> Title</label>
-                <input class="form-control col-xl-9 col-md-8" type="text" formControlName="title" />
+                <input
+                  class="form-control col-xl-9 col-md-8"
+                  type="text"
+                  formControlName="title"
+                />
               </div>
               <div class="form-group row">
-                <label class="col-xl-3 col-md-4">
-                  Short Description</label>
-                <textarea class="form-control col-xl-9 col-md-8" rows="4" formControlName="shortDes"></textarea>
+                <label class="col-xl-3 col-md-4"> Short Description</label>
+                <textarea
+                  class="form-control col-xl-9 col-md-8"
+                  rows="4"
+                  formControlName="shortDes"
+                ></textarea>
               </div>
               <div class="form-group row">
-                <label for="validationCustom2" class="col-xl-3 col-md-4"><span>*</span> ImageUrl</label>
-                <input class="form-control col-xl-8 col-md-7" id="validationCustom2" type="text"
-                  formControlName="imageUrl" hidden />
-                <app-upload-file [data]="modalFile" [fileURL]="fileURL" styleFile="width: 200px; height: auto;"
-                  (onChange)="onChangeData($event)"></app-upload-file>
-                <span class="text-danger" *ngIf="
-                          (pageContentFormControl.imageUrl.touched || submitted) &&
-                          pageContentFormControl.imageUrl.errors?.required
-                        ">
-                  Image is required
-                </span>
+                <label
+                  for="validationCustom2"
+                  class="col-xl-3 col-md-4 d-flex flex-column"
+                  ><div><span>*</span> Image</div>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      submitted &&
+                      pageContentFormControl.imageUrl.errors?.required
+                    "
+                  >
+                    Image is required
+                  </span></label
+                >
+                <input
+                  class="form-control col-xl-8 col-md-7"
+                  id="validationCustom2"
+                  type="text"
+                  formControlName="imageUrl"
+                  hidden
+                />
+                <div class="col-xl-9 col-md-8 p-0">
+                  <app-upload-file
+                    [data]="modalFile"
+                    [fileURL]="fileURL"
+                    styleFile="width: 100%; height: auto;"
+                    (onChange)="onChangeData($event)"
+                  ></app-upload-file>
+                </div>
               </div>
               <div class="form-group row">
                 <label class="col-11 pb-2"> Description</label>
-                <ckeditor [editor]="editor" class="col-12 p-0" type="text" formControlName="description"></ckeditor>
+                <ckeditor
+                  [editor]="editor"
+                  class="col-12 p-0"
+                  type="text"
+                  formControlName="description"
+                ></ckeditor>
               </div>
             </form>
           </div>
