@@ -42,7 +42,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     public couponService: CouponService,
     public routerService: Router,
     public authService: AuthService
-  ) {}
+  ) { }
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
     this.subDataUser = null;
@@ -142,15 +142,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       });
   }
   removeCoupon() {
-    this.couponValue = null;
-    this.couponPercent = null;
+    this.couponValue = 0;
+    this.couponPercent = `0`;
     this.couponName = null;
 
-    this.order.couponValue = null;
-    this.order.couponPercent = null;
-    this.order.couponName = null;
-    this.order.couponCode = null;
-    this.order.couponId = null;
+    delete this.order.couponValue;
+    delete this.order.couponPercent;
+    delete this.order.couponName;
+    delete this.order.couponCode;
+    delete this.order.couponId;
 
     this.couponDisplay = false;
   }
