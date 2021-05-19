@@ -47,11 +47,6 @@ export class NavService {
           type: 'link',
         },
         {
-          path: '/profiles/profile-settings',
-          title: 'Profiles',
-          type: 'link',
-        },
-        {
           path: '/social-medias/list-social-medias',
           title: 'Social Media',
           type: 'link',

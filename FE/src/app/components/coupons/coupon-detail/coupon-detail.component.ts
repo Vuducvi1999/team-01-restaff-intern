@@ -34,7 +34,7 @@ export class CouponDetailComponent implements OnInit {
     private ngbActiveModal: NgbActiveModal,
     private couponService: CouponService,
     private messageService: MessageService
-  ) {}
+  ) { }
   loadItemForm() {
     this.couponForm = this.formBuilder.group({
       code: [this.item ? this.item.code : '', Validators.required],
@@ -85,28 +85,24 @@ export class CouponDetailComponent implements OnInit {
     this.submitted = true;
 
     if (this.couponForm.valid) {
-      this.messageService
-        .confirm(`Do you want to edit the coupon?`, 'Yes')
+      this.couponService
+        .save(this.coupon)
         .then((res) => {
-          if (res.isConfirmed) {
-            this.couponService
-              .save(this.coupon)
-              .then((res) => {
-                this.messageService.notification(
-                  'Banner has been edited',
-                  TypeSweetAlertIcon.SUCCESS
-                );
-                this.couponForm.reset();
-                this.submitted = false;
-                this.ngbActiveModal.close();
-              })
-              .catch((er) => {
-                this.messageService.alert(
-                  er.error.message ?? JSON.stringify(er.error),
-                  TypeSweetAlertIcon.ERROR
-                );
-              });
+          if (this.item) {
+            this.messageService.notification(
+              'Coupon has been edited',
+              TypeSweetAlertIcon.SUCCESS
+            );
           }
+          this.couponForm.reset();
+          this.submitted = false;
+          this.ngbActiveModal.close();
+        })
+        .catch((er) => {
+          this.messageService.alert(
+            er.error.message ?? JSON.stringify(er.error),
+            TypeSweetAlertIcon.ERROR
+          );
         });
     }
   }

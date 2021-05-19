@@ -50,30 +50,20 @@
           <div class="footer-contant">
             <div class="footer-logo" *ngIf="footerModel.informationWeb">
               <a routerLink="/home" id="footerlogo">
-                <app-image-wrapper
-                  class="img-logo"
-                  *ngIf="footerModel.informationWeb.logo"
-                  [data]="{
+                <app-image-wrapper class="img-logo" *ngIf="footerModel.informationWeb.logo" [data]="{
                     url: getIcon(footerModel.informationWeb.logo),
                     typeClass: typeDisplayImage.LOGO_IMAGE_FOOTER
-                  }"
-                ></app-image-wrapper>
+                  }"></app-image-wrapper>
               </a>
             </div>
             <p>{{ footerModel.informationWeb.description }}</p>
             <div class="footer-social">
               <ul>
                 <li *ngFor="let item of socialMediasIcons">
-                  <a href="{{item.link}}">
-                  <img
-                    appUiImageLoader
-                    src="{{ item.iconUrl }}"
-                    width="30"
-                    height="30"
-                    class="img-30 rounded-circle"
-                    
-                  />
-                </a>
+                  <a href="{{item.link}}" target="_blank">
+                    <img appUiImageLoader src="{{ item.iconUrl }}" width="30" height="30"
+                      class="img-30 rounded-circle" />
+                  </a>
                 </li>
               </ul>
             </div>
@@ -89,7 +79,7 @@
                 <li *ngFor="let item of footerModel.categories | slice: 0:5">
                   <a href="/product?search.categoryName={{ item.name }}">{{
                     item.name
-                  }}</a>
+                    }}</a>
                 </li>
               </ul>
             </div>
@@ -105,7 +95,7 @@
                 <li *ngFor="let pageContent of pageContents">
                   <a [routerLink]="['/page-info', pageContent.id]">{{
                     pageContent.title
-                  }}</a>
+                    }}</a>
                 </li>
               </ul>
             </div>
@@ -119,19 +109,19 @@
             <div class="footer-contant" *ngIf="footerModel.informationWeb">
               <ul class="contact-list">
                 <li>
-                  <i class="fa fa-map-marker"></i
-                  >{{ footerModel.informationWeb.address }}
+                  <i class="fa fa-map-marker"></i>
+                  {{ footerModel.informationWeb.address }}
                 </li>
                 <li>
-                  <i class="fa fa-phone"></i
-                  >{{ footerModel.informationWeb.phone }}
-                </li>
-                <li>
-                  <i class="fa fa-envelope-o"></i>Email Us:
+                  <i class="fa fa-envelope-o"></i>
                   <a> {{ footerModel.informationWeb.email }}</a>
                 </li>
                 <li>
-                  <i class="fa fa-fax"></i>Fax:
+                  <i class="fa fa-phone"></i>
+                  {{ footerModel.informationWeb.phone }}
+                </li>
+                <li>
+                  <i class="fa fa-fax"></i>
                   {{ footerModel.informationWeb.fax }}
                 </li>
               </ul>
