@@ -3,6 +3,7 @@ import {
   AbstractControl,
   FormBuilder,
   FormGroup,
+  ValidationErrors,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
@@ -16,6 +17,7 @@ import {
 import { formatDate } from '@angular/common';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
+import { Console } from 'node:console';
 @Component({
   selector: 'app-coupon-detail',
   templateUrl: './coupon-detail.component.html',
@@ -36,23 +38,23 @@ export class CouponDetailComponent implements OnInit {
     private messageService: MessageService
   ) { }
   loadItemForm() {
-    this.couponForm = this.formBuilder.group({
-      code: [this.item ? this.item.code : '', Validators.required],
-      name: [this.item ? this.item.name : '', Validators.required],
-      hasPercent: [this.item?.hasPercent ? true : false],
-      value: [
-        this.item ? this.item.value : '',
-        [Validators.required, Validators.min(1), Validators.max(99)],
-      ],
-      startDate: [
-        this.item ? formatDate(this.item.startDate, 'yyyy-MM-dd', 'en') : '',
-        Validators.required,
-      ],
-      endDate: [
-        this.item ? formatDate(this.item.endDate, 'yyyy-MM-dd', 'en') : '',
-        [Validators.required, this.compareDate('startDate')],
-      ],
-    });
+    this.couponForm = this.formBuilder.group(
+      {
+        code: [this.item ? this.item.code : '', Validators.required],
+        name: [this.item ? this.item.name : '', Validators.required],
+        hasPercent: [this.item?.hasPercent ? true : false],
+        value: [this.item ? this.item.value : '', Validators.required],
+        startDate: [
+          this.item ? formatDate(this.item.startDate, 'yyyy-MM-dd', 'en') : '',
+          [Validators.required, this.checkCurrentDay()],
+        ],
+        endDate: [
+          this.item ? formatDate(this.item.endDate, 'yyyy-MM-dd', 'en') : '',
+          [Validators.required, this.compareDate('startDate')],
+        ],
+      },
+      { validators: this.checkPercent('hasPercent', 'value') }
+    );
   }
 
   compareDate(matchTo: string): ValidatorFn {
@@ -60,6 +62,27 @@ export class CouponDetailComponent implements OnInit {
       return control?.value > control?.parent?.controls[matchTo].value
         ? null
         : { compared: true };
+    };
+  }
+
+  checkPercent(firstControl: string, secondControl: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const hasPercent = control.get(firstControl)?.value;
+      const confirm = control.get(secondControl)?.value;
+      if (hasPercent == true) {
+        return confirm < 1 || confirm > 100 ? { percent: true } : null;
+      }
+      return null;
+    };
+  }
+
+  checkCurrentDay(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const startDate = this.item?.startDate;
+      const convertDate = new Date(control?.value).getTime();
+      if (startDate == null) {
+        return convertDate < Date.now() ? { currentDate: true } : null;
+      }
     };
   }
 
@@ -85,24 +108,24 @@ export class CouponDetailComponent implements OnInit {
     this.submitted = true;
 
     if (this.couponForm.valid) {
-      this.couponService
-        .save(this.coupon)
+      this.messageService
+        .confirm(`Do you want to edit the coupon?`, 'Yes')
         .then((res) => {
-          if (this.item) {
-            this.messageService.notification(
-              'Coupon has been edited',
-              TypeSweetAlertIcon.SUCCESS
-            );
+          if (res.isConfirmed) {
+            this.couponService
+              .save(this.coupon)
+              .then(() => {
+                this.couponForm.reset();
+                this.submitted = false;
+                this.ngbActiveModal.close();
+              })
+              .catch((er) => {
+                this.messageService.alert(
+                  er.error.message ?? JSON.stringify(er.error),
+                  TypeSweetAlertIcon.ERROR
+                );
+              });
           }
-          this.couponForm.reset();
-          this.submitted = false;
-          this.ngbActiveModal.close();
-        })
-        .catch((er) => {
-          this.messageService.alert(
-            er.error.message ?? JSON.stringify(er.error),
-            TypeSweetAlertIcon.ERROR
-          );
         });
     }
   }

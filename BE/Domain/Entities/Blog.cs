@@ -1,4 +1,5 @@
-﻿using Domain.DTOs.Blogs;
+﻿using Common.Constants;
+using Domain.DTOs.Blogs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,6 +21,7 @@ namespace Domain.Entities
         public override void Insert()
         {
             base.Insert();
+            CreatedByName = CommonConstantsBlog.CreateByName;
         }
 
         public override void Delete()
@@ -34,6 +36,7 @@ namespace Domain.Entities
             ShortDes = model.ShortDes;
             ContentHTML = model.ContentHTML;
             ImageUrl = model.ImageUrl;
+            CreatedByName = CommonConstantsBlog.CreateByName;
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
 

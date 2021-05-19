@@ -25,7 +25,7 @@ namespace BE.Controllers.FEUsers
         }
 
         [HttpGet]
-        [Route("categories")]
+        [Route(CodeConstants.Categories)]
         public IActionResult GetCategories()
         {
             var result = _footerService.GetCategories();
@@ -33,7 +33,7 @@ namespace BE.Controllers.FEUsers
         }
 
         [HttpGet]
-        [Route("social-medias")]
+        [Route(CodeConstants.SocialMedias)]
         public IActionResult GetSocialMedias()
         {
             var result = _footerService.GetSocialMedias();
