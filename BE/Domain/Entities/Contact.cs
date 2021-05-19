@@ -14,7 +14,7 @@ namespace Domain.Entities
         public override void Insert()
         {
             base.Insert();
-            Status = StatusContact.InProgress;
+            Status = StatusContact.Pending;
         }
         public override void Delete()
         {
