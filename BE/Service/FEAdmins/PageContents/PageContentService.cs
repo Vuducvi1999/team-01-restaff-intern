@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Common.Constants;
 using Common.Http;
+using Common.StringEx;
 using Domain.DTOs.PageContent;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
@@ -56,6 +57,12 @@ namespace Service.PageContents
 
         public ReturnMessage<PageContentDTO> Update(UpdatePageContentDTO model)
         {
+            model.Title = StringExtension.CleanString(model.Title);
+            model.Description = StringExtension.CleanString(model.Description);
+            if(model.Title == null || model.Description == null)
+            {
+                return new ReturnMessage<PageContentDTO>(true, null, MessageConstants.InvalidString);
+            }
             try
             {
                 var entity = _pageContentRepository.Find(model.Id);

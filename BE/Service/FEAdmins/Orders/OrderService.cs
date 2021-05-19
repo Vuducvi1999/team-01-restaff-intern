@@ -189,14 +189,20 @@ namespace Service.Orders
 
         public ReturnMessage<List<OrderDTO>> GetByStatus(string status)
         {
-            var list = _orderRepository.Queryable().Where(t => t.Status == status).ToList();
-            if (list.IsNotNullOrEmpty())
+            try
             {
-                var result = _mapper.Map<List<OrderDTO>>(list);
-                return new ReturnMessage<List<OrderDTO>>(false, result, MessageConstants.ListSuccess);
+                var list = _orderRepository.Queryable().Where(t => t.Status == status).ToList();
+                if (list.IsNotNullOrEmpty())
+                {
+                    var result = _mapper.Map<List<OrderDTO>>(list);
+                    return new ReturnMessage<List<OrderDTO>>(false, result, MessageConstants.ListSuccess);
+                }
+                return new ReturnMessage<List<OrderDTO>>(false, null, MessageConstants.Error);
             }
-            return new ReturnMessage<List<OrderDTO>>(true, null, MessageConstants.Error);
-
+            catch(Exception ex)
+            {
+                return new ReturnMessage<List<OrderDTO>>(true, null, ex.Message);
+            }
         }
 
     }

@@ -11,6 +11,7 @@ using System;
 using Domain.DTOs.Users;
 using Common.Enums;
 using System.Linq;
+using Common.StringEx;
 
 namespace Service.Users
 {
@@ -29,8 +30,15 @@ namespace Service.Users
 
         public ReturnMessage<UserDTO> Create(CreateUserDTO model)
         {
-            if (model.Username.Trim() == "" || model.Password.Trim() == "")
-                return new ReturnMessage<UserDTO>(true, null, MessageConstants.Error);
+            //if (model.Username.Trim() == "" || model.Password.Trim() == "")
+            //    return new ReturnMessage<UserDTO>(true, null, MessageConstants.Error);
+
+            model.Username = StringExtension.CleanString(model.Username);
+            model.Password = StringExtension.CleanString(model.Password);
+            if(model.Username == null || model.Password == null)
+            {
+                return new ReturnMessage<UserDTO>(true, null, MessageConstants.InvalidString);
+            }
 
             if (_userRepository.Queryable().Any(it => it.Username == model.Username && it.Type == UserType.Admin))
             {
@@ -81,10 +89,16 @@ namespace Service.Users
 
         public ReturnMessage<UserDTO> Update(UpdateUserDTO model)
         {
+            model.Username = StringExtension.CleanString(model.Username);
+            model.Password = StringExtension.CleanString(model.Password);
+            if (model.Username == null || model.Password == null)
+            {
+                return new ReturnMessage<UserDTO>(true, null, MessageConstants.InvalidString);
+            }
             try
             {
-                if (model.Username.Trim() == "")
-                    return new ReturnMessage<UserDTO>(false, null, MessageConstants.CreateSuccess);
+                //if (model.Username.Trim() == "")
+                //    return new ReturnMessage<UserDTO>(false, null, MessageConstants.CreateSuccess);
                 var entity = _userRepository.Find(model.Id);
                 if (entity.IsNotNullOrEmpty())
                 {

@@ -32,6 +32,8 @@
 
         public const string EmptyContentComment = "Empty Content";
         public const string CommentAfterATime = "Please comment after ";
+
+        public const string InvalidString = "Invalid input value";
         public const string UpdateRatingSuccess = "Update rating point successfully";
         public const string ImageRequired = "Image required";
     }
