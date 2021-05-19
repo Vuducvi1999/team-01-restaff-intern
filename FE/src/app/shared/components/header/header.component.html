@@ -17,18 +17,6 @@
         <div class="nav-right col">
             <ul class="nav-menus" [ngClass]="{'open' : openNav}">
                 <li>
-                    <form class="form-inline search-form">
-                        <div class="form-group">
-                            <input class="form-control-plaintext" [class.open]="isOpenMobile" type="search"
-                                placeholder="Search..">
-                            <span class="d-sm-none mobile-search">
-                                <app-feather-icons [icon]="'search'" (click)="isOpenMobile=!isOpenMobile">
-                                </app-feather-icons>
-                            </span>
-                        </div>
-                    </form>
-                </li>
-                <li>
                     <a href="javascript:void(0)" class="text-dark" toggleFullscreen>
                         <app-feather-icons [icon]="'maximize-2'"></app-feather-icons>
                     </a>
