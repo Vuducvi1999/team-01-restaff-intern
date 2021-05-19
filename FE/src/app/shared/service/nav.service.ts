@@ -52,11 +52,6 @@ export class NavService {
           type: 'link',
         },
         {
-          path: '/contact/list-contact',
-          title: 'Contact',
-          type: 'link',
-        },
-        {
           path: '/information-website/list-information-website',
           title: 'Website Information',
           type: 'link',
@@ -77,6 +72,11 @@ export class NavService {
         {
           path: '/customers/list-customers',
           title: 'Customers ',
+          type: 'link',
+        },
+        {
+          path: '/contact/list-contact',
+          title: 'Contact',
           type: 'link',
         },
       ],
