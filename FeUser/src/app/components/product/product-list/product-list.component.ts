@@ -1,5 +1,5 @@
 import { ViewportScroller } from "@angular/common";
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SpinnerVisibilityService } from "ng-http-loader";
 import { Subscription } from "rxjs";
@@ -59,6 +59,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
       this.tags = [];
       this.finished = false;
+      this.isEmptyProduct = false;
+      this.pageModel = null;
 
       this.minPrice = params.minPrice ? params.minPrice : this.minPrice;
       this.maxPrice = params.maxPrice ? params.maxPrice : this.maxPrice;
@@ -110,9 +112,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.params.pageSize = res.data.pageSize;
 
         this.products = [...this.products, ...res.data.results];
-        this.products
-          ? (this.isEmptyProduct = false)
-          : (this.isEmptyProduct = true);
+        this.products.length == 0
+          ? (this.isEmptyProduct = true)
+          : (this.isEmptyProduct = false);
       })
       .catch((res) =>
         this.sweetalertService.alert(

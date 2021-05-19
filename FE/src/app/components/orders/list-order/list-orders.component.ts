@@ -122,12 +122,13 @@ export class ListOrdersComponent implements OnInit {
 
   statusFilter(status: string) {
     this.isGetOrders = true;
-    if (this.filter == status) {
+    if (this.filter == status || status == '') {
       this.filter = '';
+      this.params.pageIndex = 0;
       return this.getOrders();
     }
     this.filter = status;
-    this.ordersService
+    return this.ordersService
       .getByStatus(null, status)
       .then((response) => {
         this.orders = response.data;

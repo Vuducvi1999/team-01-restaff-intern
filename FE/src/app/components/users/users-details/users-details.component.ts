@@ -114,7 +114,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   close(event: any) {
-    this.ngbActiveModal.close();
+    this.ngbActiveModal.dismiss();
   }
 
   onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {
