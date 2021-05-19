@@ -9,10 +9,9 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
-import { HeaderModel, InfoHeaderModel, ReturnMessage } from "src/app/lib/data/models";
+import { HeaderModel, ReturnMessage } from "src/app/lib/data/models";
 import {
   AuthService,
-  FileService,
   HeaderService,
 } from "src/app/lib/data/services";
 import { TypeDisplayImage } from "../../data";
@@ -89,6 +88,7 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
   async loadHeaderModel() {
     await this.headerService.getHeader().then((res: ReturnMessage<HeaderModel>) => {
       this.headerModel = res.data;
+      this.headerService.changeHeaderModel(res.data);
     });
   }
 

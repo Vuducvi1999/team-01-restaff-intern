@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { Subscription } from "rxjs";
 import { CategoryModel } from "src/app/lib/data/models";
 import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { HeaderModel, Menu } from "src/app/lib/data/models/header/header.model";
@@ -10,20 +11,27 @@ import { HeaderService } from "src/app/lib/data/services";
   templateUrl: "./menu.component.html",
   styleUrls: ["./menu.component.scss"],
 })
-export class MenuComponent implements OnInit {
-
+export class MenuComponent implements OnInit, OnDestroy {
   public menuItems: Menu[] = [];
   public mainMenu: boolean = false;
 
-  @Input() public headerModel: HeaderModel;
+  public headerModel: HeaderModel;
   public categoriesChildren: Menu[] = [];
   public blogsChildren: Menu[] = [];
 
-  constructor(public headerService: HeaderService, private router: Router) {
+  public subHeader: Subscription;
+
+  constructor(public headerService: HeaderService, private router: Router) {}
+  ngOnDestroy(): void {
+    this.subHeader.unsubscribe();
+    this.subHeader = null;
   }
 
   ngOnInit() {
-    this.loadMenu();
+    this.subHeader = this.headerService.callHeaderModel.subscribe((res) => {
+      this.headerModel = res;
+      this.loadMenu();
+    });
   }
 
   mainMenuToggle(): void {
@@ -44,7 +52,10 @@ export class MenuComponent implements OnInit {
   //   });
   // }
 
-  async loadMenu() {
+  loadMenu() {
+    this.menuItems = [];
+    this.blogsChildren = [];
+    this.categoriesChildren = [];
     // await this.loadHeaderModel();
 
     this.headerModel?.categories.forEach((item) => {
