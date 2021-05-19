@@ -103,6 +103,7 @@ export class HomeComponent implements OnInit {
       .getBanners()
       .then((data: ReturnMessage<BannerModel[]>) => {
         this.banners = data.data;
+        console.log(data.data);
       })
       .catch((e) => {
         // console.log(e);

@@ -36,11 +36,6 @@ export class ListCustomersComponent implements OnInit {
       position: 'right',
     },
     columns: {
-      imageUrl: {
-        title: 'Image',
-        type: 'custom',
-        renderComponent: ViewImageCellComponent,
-      },
       username: {
         title: 'Username',
       },
@@ -57,9 +52,6 @@ export class ListCustomersComponent implements OnInit {
         title: 'Phone',
         type: 'custom',
         renderComponent: CustomViewCellComponent,
-      },
-      address: {
-        title: 'Address',
       },
     },
   };
