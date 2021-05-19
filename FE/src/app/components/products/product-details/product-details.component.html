@@ -33,7 +33,7 @@
                               <span class="text-danger"
                                 *ngIf="(productFormsControl.description.touched || submitted) && productFormsControl.description.errors?.required">Required</span>
                               <span class="text-danger"
-                                *ngIf="productFormsControl.description.hasError('maxlength')">Max: 100 character</span>
+                                *ngIf="productFormsControl.description.hasError('maxlength')">Max: 300 character</span>
                             </div>
                             <div class="form-group row">
                               <label for="validationCustom5" class="col-xl-3 col-md-4"><span>*</span> Price</label>
@@ -85,8 +85,12 @@
                                  formControlName="imageUrl" hidden />
                               <span class="text-danger"
                                 *ngIf="(productFormsControl.imageUrl.touched || submitted) && productFormsControl.imageUrl.errors?.required">Required</span>
-                              <app-upload-file styleFile="width: 350px; height: 300px;" [data]="modalFile"
-                                [fileURL]="fileURL" (onChange)="onChangeData($event)">
+                              <app-upload-file 
+                                styleFile="width: 350px; height: 300px;"
+                                [data]="modalFile"
+                                [fileURL]="fileURL"
+                                sizeImage = "650 x 700" 
+                                (onChange)="onChangeData($event)">
                               </app-upload-file>
                             </div>
                           </div>

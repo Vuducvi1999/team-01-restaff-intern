@@ -77,6 +77,7 @@ export class ListInformationWebsiteComponent implements OnInit {
     if (this.update) {
       this.loadForminfoWeb();
     }
+    this.fetch();
   }
 
   //Address , Phone, Email, Fax, Logo

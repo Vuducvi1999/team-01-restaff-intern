@@ -2,6 +2,7 @@
 using Common.Constants;
 using Common.Http;
 using Common.Pagination;
+using Common.StringEx;
 using Domain.DTOs.Banners;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
@@ -28,6 +29,12 @@ namespace Service.Banners
 
         public ReturnMessage<BannerDTO> Create(CreateBannerDTO model)
         {
+            model.Title = StringExtension.CleanString(model.Title);
+            if(model.Title == null)
+            {
+                var entity = _mapper.Map<CreateBannerDTO, Banner>(model);
+                return new ReturnMessage<BannerDTO>(true, _mapper.Map<Banner, BannerDTO>(entity), MessageConstants.InvalidString);
+            }
             try
             {
                 var userInfo = _userManager.GetInformationUser();
@@ -75,6 +82,12 @@ namespace Service.Banners
         }
         public ReturnMessage<BannerDTO> Update(UpdateBannerDTO model)
         {
+
+            model.Title = StringExtension.CleanString(model.Title);
+            if (model.Title == null)
+            {
+                return new ReturnMessage<BannerDTO>(true, null, MessageConstants.InvalidString);
+            }
             try
             {
                 var userInfo = _userManager.GetInformationUser();
