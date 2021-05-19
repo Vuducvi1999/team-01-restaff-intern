@@ -11,6 +11,7 @@ using Service.Profiles;
 
 namespace BE.Controllers.FEAdmins
 {
+    [Authorize]
     [Route(UrlConstants.BaseProfile)]
     [ApiController]
     public class ProfileController : BaseController
@@ -22,7 +23,6 @@ namespace BE.Controllers.FEAdmins
             _profileService = profileService;
         }
 
-        [Authorize]
         [HttpPut]
         public IActionResult Update([FromBody] UpdateProfileDTO model)
         {
@@ -39,7 +39,6 @@ namespace BE.Controllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Authorize]
         [HttpPut]
         [Route(UrlConstants.Password)]
         public IActionResult ChangePassword([FromBody] ChangePassworProfileDTO model)

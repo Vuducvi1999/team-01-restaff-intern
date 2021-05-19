@@ -1,5 +1,6 @@
 ﻿using Common.Constants;
 using Domain.DTOs.InfomationWeb;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace BE.Controllers.FEAdmins
 {
+    [Authorize]
     [Route(UrlConstants.BaseInformationWebsite)]
     [ApiController]
     public class InformationWebsiteController : BaseController

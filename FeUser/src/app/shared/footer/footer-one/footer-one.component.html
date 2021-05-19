@@ -48,22 +48,31 @@
             <h4>about</h4>
           </div>
           <div class="footer-contant">
-            <div class="footer-logo" *ngIf="footerModel.informationWeb">
+            <div class="footer-logo" *ngIf="footerModel?.informationWeb">
               <a routerLink="/home" id="footerlogo">
-                <app-image-wrapper class="img-logo" *ngIf="footerModel.informationWeb.logo" [data]="{
-                    url: getIcon(footerModel.informationWeb.logo),
+                <app-image-wrapper
+                  class="img-logo"
+                  *ngIf="footerModel?.informationWeb?.logo"
+                  [data]="{
+                    url: footerModel?.informationWeb?.logo,
                     typeClass: typeDisplayImage.LOGO_IMAGE_FOOTER
                   }"></app-image-wrapper>
               </a>
             </div>
-            <p>{{ footerModel.informationWeb.description }}</p>
+            <p>{{ footerModel?.informationWeb?.description }}</p>
             <div class="footer-social">
-              <ul>
-                <li *ngFor="let item of socialMediasIcons">
-                  <a href="{{item.link}}" target="_blank">
-                    <img appUiImageLoader src="{{ item.iconUrl }}" width="30" height="30"
-                      class="img-30 rounded-circle" />
-                  </a>
+              <ul *ngIf="footerModel?.socialMedias">
+                <li *ngFor="let item of footerModel?.socialMedias">
+                  <a href="{{item.link}}">
+                  <img
+                    appUiImageLoader
+                    src="{{ item.iconUrl }}"
+                    width="30"
+                    height="30"
+                    class="img-30 rounded-circle"
+                    
+                  />
+                </a>
                 </li>
               </ul>
             </div>
@@ -75,8 +84,8 @@
               <h4>Categories</h4>
             </div>
             <div class="footer-contant">
-              <ul>
-                <li *ngFor="let item of footerModel.categories | slice: 0:5">
+              <ul *ngIf="footerModel?.categories">
+                <li *ngFor="let item of footerModel?.categories | slice: 0:5">
                   <a href="/product?search.categoryName={{ item.name }}">{{
                     item.name
                     }}</a>
@@ -91,8 +100,8 @@
               <h4>why we choose</h4>
             </div>
             <div class="footer-contant">
-              <ul>
-                <li *ngFor="let pageContent of pageContents">
+              <ul *ngIf="footerModel?.pageContents">
+                <li *ngFor="let pageContent of footerModel?.pageContents">
                   <a [routerLink]="['/page-info', pageContent.id]">{{
                     pageContent.title
                     }}</a>
@@ -106,23 +115,23 @@
             <div class="footer-title">
               <h4>store information</h4>
             </div>
-            <div class="footer-contant" *ngIf="footerModel.informationWeb">
+            <div class="footer-contant" *ngIf="footerModel?.informationWeb">
               <ul class="contact-list">
                 <li>
-                  <i class="fa fa-map-marker"></i>
-                  {{ footerModel.informationWeb.address }}
+                  <i class="fa fa-map-marker"></i
+                  >{{ footerModel?.informationWeb?.address }}
                 </li>
                 <li>
-                  <i class="fa fa-envelope-o"></i>
-                  <a> {{ footerModel.informationWeb.email }}</a>
+                  <i class="fa fa-phone"></i
+                  >{{ footerModel?.informationWeb?.phone }}
                 </li>
                 <li>
-                  <i class="fa fa-phone"></i>
-                  {{ footerModel.informationWeb.phone }}
+                  <i class="fa fa-envelope-o"></i>Email Us:
+                  <a> {{ footerModel?.informationWeb?.email }}</a>
                 </li>
                 <li>
-                  <i class="fa fa-fax"></i>
-                  {{ footerModel.informationWeb.fax }}
+                  <i class="fa fa-fax"></i>Fax:
+                  {{ footerModel?.informationWeb?.fax }}
                 </li>
               </ul>
             </div>

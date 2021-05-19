@@ -25,20 +25,10 @@ namespace BE.Controllers.FEUsers
         }
 
         [HttpGet]
-        [Route(CodeConstants.Categories)]
-        public IActionResult GetCategories()
+        public IActionResult GetFooter()
         {
-            var result = _footerService.GetCategories();
+            var result = _footerService.GetFooter();
             return CommonResponse(result);
         }
-
-        [HttpGet]
-        [Route(CodeConstants.SocialMedias)]
-        public IActionResult GetSocialMedias()
-        {
-            var result = _footerService.GetSocialMedias();
-            return CommonResponse(result);
-        }
-
     }
 }
