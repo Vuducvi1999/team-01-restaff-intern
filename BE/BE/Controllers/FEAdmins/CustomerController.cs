@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace BE.Controllers.FEAdmins
 {
+    [Authorize]
     [Route(UrlConstants.BaseCustomer)]
     [ApiController]
     public class CustomerController : BaseController
@@ -26,7 +27,6 @@ namespace BE.Controllers.FEAdmins
             _customerService = customerService;
         }
 
-        [Authorize]
         [HttpGet]
         public IActionResult Get([FromQuery] SearchPaginationDTO<CustomerDTO> serachPagination)
         {
@@ -34,7 +34,6 @@ namespace BE.Controllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Authorize]
         [HttpPost]
         public IActionResult Create([FromBody] CreateCustomerDTO model)
         {
@@ -51,7 +50,6 @@ namespace BE.Controllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Authorize]
         [HttpPut]
         public IActionResult Update([FromBody] UpdateCustomerDTO model)
         {
@@ -68,7 +66,6 @@ namespace BE.Controllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Authorize]
         [HttpDelete]
         public IActionResult Delete([FromQuery] DeleteCustomerDTO model)
         {
