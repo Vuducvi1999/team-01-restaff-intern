@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
+import { Router } from "@angular/router";
 import { BannerModel } from "src/app/lib/data/models/banners/banner.model";
 import { FileService } from "src/app/lib/data/services";
 import { HomeSlider } from "src/app/shared/data/slider";
@@ -16,7 +17,7 @@ export class SliderComponent implements OnInit {
   @Input() buttonText: string;
   @Input() buttonClass: string;
 
-  constructor() {}
+  constructor(private route: Router) {}
 
   ngOnInit(): void {}
 
@@ -24,5 +25,9 @@ export class SliderComponent implements OnInit {
 
   getImage(image: string) {
     return FileService.getLinkFile(image);
+  }
+
+  BannerClick(slider: BannerModel) {
+    if (slider.link) window.open(slider.link, "_blank");
   }
 }

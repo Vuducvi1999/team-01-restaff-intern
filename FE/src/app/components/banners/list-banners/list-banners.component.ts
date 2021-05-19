@@ -48,9 +48,6 @@ export class ListBannersComponent implements OnInit {
       description: {
         title: 'Description',
       },
-      link: {
-        title: 'Link',
-      },
       displayOrder: {
         title: 'Display Order',
         value: 'displayOrder',
