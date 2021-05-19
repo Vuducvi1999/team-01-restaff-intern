@@ -68,6 +68,8 @@ namespace Service.PageContents
                 var entity = _pageContentRepository.Find(model.Id);
                 if (!entity.IsNotNullOrEmpty())
                     return new ReturnMessage<PageContentDTO>(true, null, MessageConstants.Error);
+                if(String.IsNullOrEmpty(model.ImageUrl))
+                    return new ReturnMessage<PageContentDTO>(true, null, MessageConstants.ImageRequired);
                 entity.Update(model);
                 _pageContentRepository.Update(entity);
                 _unitOfWork.SaveChanges();

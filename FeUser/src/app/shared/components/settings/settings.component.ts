@@ -20,6 +20,7 @@ import { TypeDisplayImage } from "../../data";
         text-decoration: none;
         color: black;
         font-size: 25px;
+        cursor: pointer;
       }
     `,
   ],
@@ -101,7 +102,6 @@ export class SettingsComponent implements OnInit {
     const url = `/product-details?id=${id}`;
     this.activatedRoute.queryParams.subscribe((params) => {
       id = params["id"];
-      // console.log(params["id"]);
     });
 
     this.router.navigateByUrl(url);

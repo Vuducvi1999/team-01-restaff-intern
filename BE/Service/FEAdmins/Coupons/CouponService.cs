@@ -89,7 +89,7 @@ namespace Service.Coupons
             try
             {
                 var entity = _couponRepository.Find(model.Id);
-                if (entity.IsNotNullOrEmpty() || DateTime.Compare(entity.StartDate, entity.EndDate) < 0)
+                if (entity.IsNotNullOrEmpty() || DateTime.Compare(entity.StartDate, entity.EndDate) < 0 || DateTime.Compare(DateTime.Now , entity.StartDate) < 0)
                 {
                     entity.Update(model);
                     _couponRepository.Update(entity);
@@ -131,11 +131,6 @@ namespace Service.Coupons
             return result;
         }
 
-        private void TrimData(Coupon coupon)
-        {
-            coupon.Code = coupon.Code.Trim();
-            coupon.Name = coupon.Name.Trim();
-        }
 
         public ReturnMessage<CouponDTO> GetByCode(string code)
         {

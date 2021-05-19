@@ -3,6 +3,7 @@ import {
   AbstractControl,
   FormBuilder,
   FormGroup,
+  ValidationErrors,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
@@ -36,23 +37,23 @@ export class CouponDetailComponent implements OnInit {
     private messageService: MessageService
   ) {}
   loadItemForm() {
-    this.couponForm = this.formBuilder.group({
-      code: [this.item ? this.item.code : '', Validators.required],
-      name: [this.item ? this.item.name : '', Validators.required],
-      hasPercent: [this.item?.hasPercent ? true : false],
-      value: [
-        this.item ? this.item.value : '',
-        [Validators.required, Validators.min(1), Validators.max(99)],
-      ],
-      startDate: [
-        this.item ? formatDate(this.item.startDate, 'yyyy-MM-dd', 'en') : '',
-        Validators.required,
-      ],
-      endDate: [
-        this.item ? formatDate(this.item.endDate, 'yyyy-MM-dd', 'en') : '',
-        [Validators.required, this.compareDate('startDate')],
-      ],
-    });
+    this.couponForm = this.formBuilder.group(
+      {
+        code: [this.item ? this.item.code : '', Validators.required],
+        name: [this.item ? this.item.name : '', Validators.required],
+        hasPercent: [this.item?.hasPercent ? true : false],
+        value: [this.item ? this.item.value : '', Validators.required],
+        startDate: [
+          this.item ? formatDate(this.item.startDate, 'yyyy-MM-dd', 'en') : '',
+          [Validators.required, this.checkCurrentDay()],
+        ],
+        endDate: [
+          this.item ? formatDate(this.item.endDate, 'yyyy-MM-dd', 'en') : '',
+          [Validators.required, this.compareDate('startDate')],
+        ],
+      },
+      { validators: this.checkPercent('hasPercent', 'value') }
+    );
   }
 
   compareDate(matchTo: string): ValidatorFn {
@@ -60,6 +61,34 @@ export class CouponDetailComponent implements OnInit {
       return control?.value > control?.parent?.controls[matchTo].value
         ? null
         : { compared: true };
+    };
+  }
+
+  checkPercent(firstControl: string, secondControl: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const hasPercent = control.get(firstControl)?.value;
+      const confirm = control.get(secondControl)?.value;
+      if (hasPercent == true) {
+        return confirm < 1 || confirm > 100 ? { percent: true } : null;
+      }
+      return null;
+    };
+  }
+
+  checkCurrentDay(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const startDate = this.item?.startDate;
+      console.log(control?.value);
+      const convertDate = new Date(control?.value).getDate();
+      const convertMonth = new Date(control?.value).getMonth();
+      const convertYear = new Date(control?.value).getFullYear();
+      if (startDate == null) {
+        return convertDate < new Date().getDate() ||
+          convertMonth < new Date().getMonth() ||
+          convertYear < new Date().getFullYear()
+          ? { currentDate: true }
+          : null;
+      }
     };
   }
 
@@ -91,11 +120,7 @@ export class CouponDetailComponent implements OnInit {
           if (res.isConfirmed) {
             this.couponService
               .save(this.coupon)
-              .then((res) => {
-                this.messageService.notification(
-                  'Banner has been edited',
-                  TypeSweetAlertIcon.SUCCESS
-                );
+              .then(() => {
                 this.couponForm.reset();
                 this.submitted = false;
                 this.ngbActiveModal.close();

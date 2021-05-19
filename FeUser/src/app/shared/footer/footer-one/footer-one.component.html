@@ -56,8 +56,7 @@
                   [data]="{
                     url: footerModel?.informationWeb?.logo,
                     typeClass: typeDisplayImage.LOGO_IMAGE_FOOTER
-                  }"
-                ></app-image-wrapper>
+                  }"></app-image-wrapper>
               </a>
             </div>
             <p>{{ footerModel?.informationWeb?.description }}</p>
@@ -89,7 +88,7 @@
                 <li *ngFor="let item of footerModel?.categories | slice: 0:5">
                   <a href="/product?search.categoryName={{ item.name }}">{{
                     item.name
-                  }}</a>
+                    }}</a>
                 </li>
               </ul>
             </div>
@@ -105,7 +104,7 @@
                 <li *ngFor="let pageContent of footerModel?.pageContents">
                   <a [routerLink]="['/page-info', pageContent.id]">{{
                     pageContent.title
-                  }}</a>
+                    }}</a>
                 </li>
               </ul>
             </div>

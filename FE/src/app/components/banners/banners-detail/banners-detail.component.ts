@@ -91,28 +91,25 @@ export class BannersDetailComponent implements OnInit {
     this.submitted = true;
 
     if (this.bannersForm.valid) {
-      this.messageService
-        .confirm(`Do you want to save the banner?`, 'Yes')
+
+      this.bannersService
+        .save(this.banner)
         .then((res) => {
-          if (res.isConfirmed) {
-            this.bannersService
-              .save(this.banner)
-              .then((res) => {
-                this.messageService.notification(
-                  'Banner has been saved',
-                  TypeSweetAlertIcon.SUCCESS
-                );
-                this.bannersForm.reset();
-                this.submitted = false;
-                this.ngbActiveModal.close();
-              })
-              .catch((er) => {
-                this.messageService.alert(
-                  er.error.message ?? JSON.stringify(er.error.error) ?? "Server Disconnected",
-                  TypeSweetAlertIcon.ERROR
-                );
-              });
+          if (this.item) {
+            this.messageService.notification(
+              'Banner has been edited',
+              TypeSweetAlertIcon.SUCCESS
+            )
           }
+          this.bannersForm.reset();
+          this.submitted = false;
+          this.ngbActiveModal.close();
+        })
+        .catch((er) => {
+          this.messageService.alert(
+            er.error.message ?? JSON.stringify(er.error.error) ?? "Server Disconnected",
+            TypeSweetAlertIcon.ERROR
+          );
         });
     }
   }
@@ -137,7 +134,7 @@ export class BannersDetailComponent implements OnInit {
         if (e.includes(event.remove)) {
           this.fileURL.splice(i, 1);
         }
-      });
+    });
     }
 
     if (event.removeAll) {
@@ -145,5 +142,6 @@ export class BannersDetailComponent implements OnInit {
     }
 
     this.bannersForm.controls.imageUrl.setValue(this.fileURL.join(','));
+    console.log(this.fileURL);
   }
 }

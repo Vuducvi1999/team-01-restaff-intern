@@ -7,6 +7,8 @@ import { PageContentModel } from 'src/app/lib/data/models/pageContent/pageConten
 import { ContactService } from 'src/app/lib/data/services/contacts/contact.service';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { PageContentService } from 'src/app/lib/data/services/pageContents/pageContent.service';
+import { CustomViewCellStringComponent } from 'src/app/shared/components/custom-view-cell-string/custom-view-cell-string.component';
+import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ContactDetailComponent } from '../contact-details/contact-details.component';
 
 @Component({
@@ -20,7 +22,8 @@ export class ListContactComponent {
   public data: PageModel<ContactModel>;
   params: any = {};
 
-  constructor(private modalService: NgbModal,
+  constructor(
+    private modalService: NgbModal,
     private contactService: ContactService,
     private messageService: MessageService
   ) {
@@ -35,13 +38,26 @@ export class ListContactComponent {
     },
     actions: {
       position: 'right',
+      add: false,
+      delete:false,
     },
     columns: {
-      firstName: { title: 'First Name' },
-      lastName: { title: 'Last Name' },
-      phoneNumber: { title: 'Phone Number' },
+      firstName: {
+        title: 'First Name',
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
+      },
+      lastName: {
+        title: 'Last Name',
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
+      },
+      phoneNumber: {
+        title: 'Phone Number',
+        type: 'custom',
+        renderComponent: CustomViewCellComponent,
+      },
       email: { title: 'Email' },
-      message: { title: 'Message' },
       status: { title: 'Status' },
     },
   };
@@ -58,20 +74,25 @@ export class ListContactComponent {
       (close) => {
         this.getList();
       },
-      (dismiss) => { }
+      (dismiss) => {}
     );
   }
 
   delete(event: any) {
-    this.messageService.confirm(`Do you want to delete the category?`, 'Yes').then(res => {
-      if (res.isConfirmed) {
-        let contact = event.data as ContactModel;
-        this.contactService.delete(contact).then(() => {
-          this.messageService.notification('Contact has been deleted', TypeSweetAlertIcon.SUCCESS);
-          this.getList();
-        })
-      }
-    });
+    this.messageService
+      .confirm(`Do you want to delete the category?`, 'Yes')
+      .then((res) => {
+        if (res.isConfirmed) {
+          let contact = event.data as ContactModel;
+          this.contactService.delete(contact).then(() => {
+            this.messageService.notification(
+              'Contact has been deleted',
+              TypeSweetAlertIcon.SUCCESS
+            );
+            this.getList();
+          });
+        }
+      });
   }
 
   getList() {

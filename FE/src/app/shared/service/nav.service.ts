@@ -47,18 +47,8 @@ export class NavService {
           type: 'link',
         },
         {
-          path: '/profiles/profile-settings',
-          title: 'Profiles',
-          type: 'link',
-        },
-        {
           path: '/social-medias/list-social-medias',
           title: 'Social Media',
-          type: 'link',
-        },
-        {
-          path: '/contact/list-contact',
-          title: 'Contact',
           type: 'link',
         },
         {
@@ -82,6 +72,11 @@ export class NavService {
         {
           path: '/customers/list-customers',
           title: 'Customers ',
+          type: 'link',
+        },
+        {
+          path: '/contact/list-contact',
+          title: 'Contact',
           type: 'link',
         },
       ],

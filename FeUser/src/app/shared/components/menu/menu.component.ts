@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { CategoryModel } from "src/app/lib/data/models";
@@ -18,6 +18,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   public headerModel: HeaderModel;
   public categoriesChildren: Menu[] = [];
   public blogsChildren: Menu[] = [];
+  @ViewChild("Containermenu") Containermenu: ElementRef;
 
   public subHeader: Subscription;
 
@@ -65,7 +66,10 @@ export class MenuComponent implements OnInit, OnDestroy {
 
     this.headerModel?.blogs.forEach((item) => {
       this.blogsChildren.push({
-        title: item.title,
+        title:
+          item.title.length <= 25
+            ? item.title
+            : item.title.slice(0, 25) + "...",
         path: `/blog/${item.id}`,
         type: "link",
       });

@@ -27,11 +27,57 @@ export class ContactDetailComponent implements OnInit {
     private formBuilder: FormBuilder,
     private pageContentService: ContactService,
     private ngbActiveModal: NgbActiveModal
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadItem();
+    this.createModal();
   }
+
+  createModal() {
+    this.modalHeader = new ModalHeaderModel();
+    this.modalHeader.title = `Update Contact`;
+    this.modalFooter = new ModalFooterModel();
+    this.modalFooter.buttons = [
+      {
+        color: 'btn btn-primary',
+        title: 'back',
+        onAction: (event: any) => {
+          this.ngbActiveModal.close();
+        },
+      },
+    ];
+    if (this.item.status == 'Pending') {
+      this.modalFooter.buttons = [
+        {
+          color: 'btn btn-success',
+          title: 'Progress',
+          onAction: (event: any) => {
+            this.progress();
+          },
+        },
+        {
+          color: 'btn btn-primary',
+          title: 'Complete',
+          onAction: (event: any) => {
+            this.complete();
+          },
+        },
+      ];
+    }
+    if (this.item.status == 'In Progress') {
+      this.modalFooter.buttons = [
+        {
+          color: 'btn btn-primary',
+          title: 'Complete',
+          onAction: (event: any) => {
+            this.complete();
+          },
+        },
+      ];
+    }
+  }
+
 
   loadItem() {
     this.pageContentForm = this.formBuilder.group({
@@ -42,19 +88,9 @@ export class ContactDetailComponent implements OnInit {
       message: [this.item ? this.item.message : ''],
       status: [this.item ? this.item.status : ''],
     });
-
-    this.modalHeader = new ModalHeaderModel();
-    this.modalHeader.title = this.item ? `Update` : `Add`;
-    this.modalFooter = new ModalFooterModel();
-    this.modalFooter.title = 'Save';
   }
 
-  save() {
-    if (this.pageContentForm.invalid) {
-      // console.log(this.pageContentForm);
-      return;
-    }
-
+  loadModel() {
     this.contact = {
       id: this.item ? this.item.id : '',
       firstName: this.pageContentForm.value.firstName,
@@ -62,10 +98,8 @@ export class ContactDetailComponent implements OnInit {
       email: this.pageContentForm.value.email,
       phoneNumber: this.pageContentForm.value.phoneNumber,
       message: this.pageContentForm.value.message,
-      status: this.pageContentForm.value.status,
+      status: this.item.status,
     };
-
-    this.callServiceToSave();
   }
 
   callServiceToSave() {
@@ -79,6 +113,28 @@ export class ContactDetailComponent implements OnInit {
           // console.log(er.error.message);
         }
       });
+  }
+
+  progress() {
+    if (this.pageContentForm.invalid) {
+      // console.log(this.pageContentForm);
+      return;
+    }
+
+    this.loadModel();
+    this.contact.status = "In Progress";
+    this.callServiceToSave();
+  }
+
+  complete() {
+    if (this.pageContentForm.invalid) {
+      // console.log(this.pageContentForm);
+      return;
+    }
+
+    this.loadModel();
+    this.contact.status = "Done";
+    this.callServiceToSave();
   }
 
   close(event: any) {

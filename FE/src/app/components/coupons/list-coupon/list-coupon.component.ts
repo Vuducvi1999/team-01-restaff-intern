@@ -9,6 +9,7 @@ import {
 import { CouponModel } from 'src/app/lib/data/models/coupons/coupon.model';
 import { CouponService } from 'src/app/lib/data/services/coupons/coupon.service';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
+import { CustomViewCellStringComponent } from 'src/app/shared/components/custom-view-cell-string/custom-view-cell-string.component';
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { CouponDetailComponent } from '../coupon-detail/coupon-detail.component';
 
@@ -54,9 +55,13 @@ export class ListCouponComponent implements OnInit {
     columns: {
       code: {
         title: 'Code',
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
       },
       name: {
         title: 'Name',
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
       },
       value: {
         title: 'Value',
@@ -69,12 +74,16 @@ export class ListCouponComponent implements OnInit {
         valuePrepareFunction: (created) => {
           return this.datePipe.transform(new Date(created), 'dd/MM/yyyy');
         },
+        type: 'custom',
+        renderComponent: CustomViewCellComponent,
       },
       endDate: {
         title: 'End Date',
         valuePrepareFunction: (created) => {
           return this.datePipe.transform(new Date(created), 'dd/MM/yyyy');
         },
+        type: 'custom',
+        renderComponent: CustomViewCellComponent,
       },
     },
   };

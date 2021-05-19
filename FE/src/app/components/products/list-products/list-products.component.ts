@@ -12,6 +12,7 @@ import { CustomViewCellNumberComponent } from 'src/app/shared/components/custom-
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
+import { CustomViewCellStringComponent } from 'src/app/shared/components/custom-view-cell-string/custom-view-cell-string.component';
 @Component({
   selector: 'app-list-products',
   templateUrl: './list-products.component.html',
@@ -48,6 +49,8 @@ export class ListProductsComponent implements OnInit {
       name: {
         title: 'Name',
         filter: false,
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
       },
       description: {
         title: 'Product Details',

@@ -34,8 +34,8 @@ export class PageContentDetailComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private pageContentService: PageContentService,
-      private ngbActiveModal: NgbActiveModal,
-      private messageService: MessageService
+    private ngbActiveModal: NgbActiveModal,
+    private messageService: MessageService
   ) {
     this.modalFile = new ModalFile();
     this.modalFile.typeFile = TypeFile.IMAGE;
@@ -57,7 +57,7 @@ export class PageContentDetailComponent implements OnInit {
     this.pageContentForm = this.formBuilder.group({
       title: [this.item ? this.item.title : ''],
       shortDes: [this.item ? this.item.shortDes : ''],
-      imageUrl: [this.item ? this.item.imageUrl : ''],
+      imageUrl: [this.item ? this.item.imageUrl : '', Validators.required],
       description: [this.item ? this.item.description : ''],
     });
 
@@ -72,11 +72,6 @@ export class PageContentDetailComponent implements OnInit {
   }
 
   save() {
-    if (this.pageContentForm.invalid) {
-      // console.log(this.pageContentForm);
-      return;
-    }
-
     this.submitted = true;
 
     this.pageContent = {
@@ -95,19 +90,22 @@ export class PageContentDetailComponent implements OnInit {
     this.pageContentService
       .update(this.pageContent)
       .then(() => {
+        if (this.item) {
+          this.messageService.notification(
+            'Page content has been edited',
+            TypeSweetAlertIcon.SUCCESS
+          );
+        }
         this.ngbActiveModal.close();
         this.submitted = false;
       })
       .catch((er) => {
         this.messageService.alert(
           er.error.message ??
-            JSON.stringify(er.error.error) ??
-            'Server Disconnected',
+          JSON.stringify(er.error.error) ??
+          'Server Disconnected',
           TypeSweetAlertIcon.ERROR
         );
-        // if (er.error.hasError) {
-        //   console.log(er.error.message);
-        // }
       });
   }
 

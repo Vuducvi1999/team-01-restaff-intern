@@ -72,13 +72,13 @@
         [ngClass]="{
           'is-invalid':
             contactForm.controls.firstName.errors &&
-            contactForm.controls.firstName.dirty
+            (contactForm.controls.firstName.dirty || submitted)
         }"
       />
       <div
         *ngIf="
           contactForm.controls.firstName.errors &&
-          contactForm.controls.firstName.dirty
+          (contactForm.controls.firstName.dirty || submitted)
         "
         class="invalid-feedback"
       >
@@ -97,13 +97,13 @@
         [ngClass]="{
           'is-invalid':
             contactForm.controls.lastName.errors &&
-            contactForm.controls.lastName.dirty
+            (contactForm.controls.lastName.dirty || submitted)
         }"
       />
       <div
         *ngIf="
           contactForm.controls.lastName.errors &&
-          contactForm.controls.lastName.dirty
+          (contactForm.controls.lastName.dirty || submitted)
         "
         class="invalid-feedback"
       >
@@ -122,13 +122,13 @@
         [ngClass]="{
           'is-invalid':
             contactForm.controls.phoneNumber.errors &&
-            contactForm.controls.phoneNumber.dirty
+            (contactForm.controls.phoneNumber.dirty || submitted)
         }"
       />
       <div
         *ngIf="
           contactForm.controls.phoneNumber.errors &&
-          contactForm.controls.phoneNumber.dirty
+          (contactForm.controls.phoneNumber.dirty || submitted)
         "
         class="invalid-feedback"
       >
@@ -153,12 +153,13 @@
         [ngClass]="{
           'is-invalid':
             contactForm.controls.email.errors &&
-            contactForm.controls.email.dirty
+            (contactForm.controls.email.dirty || submitted)
         }"
       />
       <div
         *ngIf="
-          contactForm.controls.email.errors && contactForm.controls.email.dirty
+          contactForm.controls.email.errors &&
+          (contactForm.controls.email.dirty || submitted)
         "
         class="invalid-feedback"
       >
@@ -178,7 +179,7 @@
         [ngClass]="{
           'is-invalid':
             contactForm.controls.message.errors &&
-            contactForm.controls.message.dirty
+            (contactForm.controls.message.dirty || submitted)
         }"
       ></textarea>
       <div style="display: flex; justify-content: space-between">
@@ -186,7 +187,7 @@
           <div
             *ngIf="
               contactForm.controls.message.errors &&
-              contactForm.controls.message.dirty
+              (contactForm.controls.message.dirty || submitted)
             "
             class="invalid-feedback"
             style="display: block"

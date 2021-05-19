@@ -99,7 +99,7 @@ export const content: Routes = [
         (m) => m.PageContentModule
       ),
     data: {
-      breadcrumb: 'page-content',
+      breadcrumb: 'Page Contents',
     },
   },
   {
@@ -131,5 +131,5 @@ export const content: Routes = [
     data: {
       breadcrumb: 'Contact',
     },
-  }
+  },
 ];

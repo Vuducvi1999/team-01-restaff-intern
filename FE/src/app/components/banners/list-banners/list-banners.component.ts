@@ -9,6 +9,7 @@ import { BannerModel } from 'src/app/lib/data/models/banners/banner.model';
 
 import { BannersService } from 'src/app/lib/data/services/banners/banners.service';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
+import { CustomViewCellStringComponent } from 'src/app/shared/components/custom-view-cell-string/custom-view-cell-string.component';
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 
@@ -46,12 +47,11 @@ export class ListBannersComponent implements OnInit {
       },
       title: {
         title: 'Title',
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
       },
       description: {
         title: 'Description',
-      },
-      link: {
-        title: 'Link',
       },
       displayOrder: {
         title: 'Display Order',
@@ -86,7 +86,10 @@ export class ListBannersComponent implements OnInit {
       size: 'lg',
     });
     modalRef.componentInstance.item = event?.data;
-    modalRef.result.then((close) => this.getBanners(),(dismiss)=>{});
+    modalRef.result.then(
+      (close) => this.getBanners(),
+      (dismiss) => {}
+    );
   }
 
   delete(event: any) {
