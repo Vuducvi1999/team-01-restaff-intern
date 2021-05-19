@@ -90,21 +90,27 @@ export class PageContentDetailComponent implements OnInit {
     this.pageContentService
       .update(this.pageContent)
       .then(() => {
+        if (this.item) {
+          this.messageService.notification(
+            'Page content has been edited',
+            TypeSweetAlertIcon.SUCCESS
+          );
+        }
         this.ngbActiveModal.close();
         this.submitted = false;
       })
       .catch((er) => {
         this.messageService.alert(
           er.error.message ??
-            JSON.stringify(er.error.error) ??
-            'Server Disconnected',
+          JSON.stringify(er.error.error) ??
+          'Server Disconnected',
           TypeSweetAlertIcon.ERROR
         );
       });
   }
 
   close(event: any) {
-    this.ngbActiveModal.close();
+    this.ngbActiveModal.dismiss();
   }
 
   onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {

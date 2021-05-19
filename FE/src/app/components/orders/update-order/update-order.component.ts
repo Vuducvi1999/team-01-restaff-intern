@@ -287,6 +287,6 @@ export class UpdateOrderComponent implements OnInit {
       });
   }
   close(event: any) {
-    this.ngbActiveModal.close();
+    this.ngbActiveModal.dismiss();
   }
 }

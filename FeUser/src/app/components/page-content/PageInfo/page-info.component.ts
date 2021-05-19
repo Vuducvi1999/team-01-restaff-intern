@@ -1,6 +1,9 @@
+import { HttpParams } from "@angular/common/http";
+import { Component, OnDestroy, OnInit, Sanitizer } from "@angular/core";
 import { Component, OnDestroy, OnInit, ɵConsole } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute } from "@angular/router";
+import { DomSanitizer } from "@angular/platform-browser";
+import { ActivatedRoute, Params } from "@angular/router";
 import { Subscription } from "rxjs";
 import { ReturnMessage, TypeSweetAlertIcon } from "src/app/lib/data/models";
 import {
@@ -23,12 +26,14 @@ export class PageContentInfoComponent implements OnInit, OnDestroy {
   contactForm: FormGroup;
   userInfo: UserDataReturnDTOModel;
   subDataUser: Subscription;
+  src = this.sanitizer.bypassSecurityTrustResourceUrl('');
   constructor(
     private pageContentService: PageContentService,
     private contactService: ContactService,
     private messageService: MessageService,
     private authservice: AuthService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private sanitizer: DomSanitizer,
   ) {}
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
@@ -70,6 +75,9 @@ export class PageContentInfoComponent implements OnInit, OnDestroy {
       .getInfo()
       .then((data: ReturnMessage<PageContentInfoModel>) => {
         this.pageContentInfo = data.data;
+        var params = new HttpParams();
+        params = params.set("q",data.data.address);
+        this.src = this.sanitizer.bypassSecurityTrustResourceUrl(`https://maps.google.com/maps?${params.toString()}&t=&z=13&ie=UTF8&iwloc=&output=embed`);
       });
   }
 

@@ -8,6 +8,7 @@ import {
 } from 'src/app/lib/data/models';
 import { CustomerService, FileService } from 'src/app/lib/data/services';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
+import { CustomViewCellStringComponent } from 'src/app/shared/components/custom-view-cell-string/custom-view-cell-string.component';
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { CustomerDetailsComponent } from '../customer-details/customer-details.component';
@@ -21,6 +22,9 @@ import { CustomerDetailsComponent } from '../customer-details/customer-details.c
 export class ListCustomersComponent implements OnInit {
   public customers: CustomerModel[];
   closeResult = '';
+  public data: PageModel<CustomerModel>;
+  params: any = {};
+
   constructor(
     private modalService: NgbModal,
     private customerService: CustomerService,
@@ -37,18 +41,25 @@ export class ListCustomersComponent implements OnInit {
     },
     columns: {
       username: {
+        filter: false,
         title: 'Username',
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
       },
       firstName: {
+        filter: false,
         title: 'First Name',
       },
       lastName: {
+        filter: false,
         title: 'Last Name',
       },
       email: {
+        filter: false,
         title: 'Email',
       },
       phone: {
+        filter: false,
         title: 'Phone',
         type: 'custom',
         renderComponent: CustomViewCellComponent,
@@ -99,10 +110,11 @@ export class ListCustomersComponent implements OnInit {
 
   getList() {
     this.customerService
-      .get(null)
+      .get({params: this.params})
       .then((res: ReturnMessage<PageModel<CustomerModel>>) => {
         if (!res.hasError) {
           this.customers = res.data.results;
+          this.data = res.data;
         }
       })
       .catch((er) => {
@@ -113,5 +125,10 @@ export class ListCustomersComponent implements OnInit {
           TypeSweetAlertIcon.ERROR
         );
       });
+  }
+
+  onPage(event) {
+    this.params.pageIndex = event;
+    this.getList();
   }
 }

@@ -91,36 +91,31 @@ export class BannersDetailComponent implements OnInit {
     this.submitted = true;
 
     if (this.bannersForm.valid) {
-      this.messageService
-        .confirm(`Do you want to edit the banner?`, 'Yes')
+
+      this.bannersService
+        .save(this.banner)
         .then((res) => {
-          if (res.isConfirmed) {
-            this.bannersService
-              .save(this.banner)
-              .then((res) => {
-                this.messageService.notification(
-                  'Banner has been edited',
-                  TypeSweetAlertIcon.SUCCESS
-                );
-                this.bannersForm.reset();
-                this.submitted = false;
-                this.ngbActiveModal.close();
-              })
-              .catch((er) => {
-                this.messageService.alert(
-                  er.error.message ??
-                    JSON.stringify(er.error.error) ??
-                    'Server Disconnected',
-                  TypeSweetAlertIcon.ERROR
-                );
-              });
+          if (this.item) {
+            this.messageService.notification(
+              'Banner has been edited',
+              TypeSweetAlertIcon.SUCCESS
+            )
           }
+          this.bannersForm.reset();
+          this.submitted = false;
+          this.ngbActiveModal.close();
+        })
+        .catch((er) => {
+          this.messageService.alert(
+            er.error.message ?? JSON.stringify(er.error.error) ?? "Server Disconnected",
+            TypeSweetAlertIcon.ERROR
+          );
         });
     }
   }
 
   close(event: any) {
-    this.ngbActiveModal.close();
+    this.ngbActiveModal.dismiss();
   }
 
   onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {

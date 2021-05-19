@@ -9,6 +9,7 @@ import { CategoryModel } from 'src/app/lib/data/models/categories/category.model
 import { UserModel } from 'src/app/lib/data/models/users/user.model';
 import { FileService } from 'src/app/lib/data/services';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
+import { CustomViewCellStringComponent } from 'src/app/shared/components/custom-view-cell-string/custom-view-cell-string.component';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { UserDetailComponent } from '../users-details/users-details.component';
 import { UserService } from './../../../lib/data/services/users/user.service';
@@ -22,6 +23,8 @@ import { UserService } from './../../../lib/data/services/users/user.service';
 export class ListUsersComponent {
   public users: UserModel[];
   closeResult = '';
+  public data: PageModel<UserModel>;
+  params: any = {};
   constructor(
     private modalService: NgbModal,
     private userService: UserService,
@@ -47,6 +50,8 @@ export class ListUsersComponent {
       },
       username: {
         title: 'Username',
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
       },
       email: {
         title: 'Email',
@@ -103,7 +108,7 @@ export class ListUsersComponent {
 
   getList() {
     this.userService
-      .get(null)
+      .get({params: this.params})
       .then((res: ReturnMessage<PageModel<UserModel>>) => {
         if (!res.hasError) {
           this.users = res.data.results;
@@ -114,5 +119,9 @@ export class ListUsersComponent {
           // console.log(er.error.message);
         }
       });
+  }
+  onPage(event) {
+    this.params.pageIndex = event;
+    this.getList();
   }
 }

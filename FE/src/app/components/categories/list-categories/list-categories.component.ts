@@ -9,6 +9,7 @@ import { CategoryModel } from 'src/app/lib/data/models/categories/category.model
 import { FileService } from 'src/app/lib/data/services';
 import { CategoryService } from 'src/app/lib/data/services/categories/category.service';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
+import { CustomViewCellStringComponent } from 'src/app/shared/components/custom-view-cell-string/custom-view-cell-string.component';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { CategoryDetailComponent } from '../categories-details/categories-details.component';
 
@@ -21,6 +22,8 @@ import { CategoryDetailComponent } from '../categories-details/categories-detail
 export class ListCategoriesComponent implements OnInit {
   public categories: CategoryModel[];
   closeResult = '';
+  public data: PageModel<CategoryModel>;
+  params: any = {};
   constructor(
     private modalService: NgbModal,
     private categoryService: CategoryService,
@@ -43,6 +46,8 @@ export class ListCategoriesComponent implements OnInit {
       name: {
         title: 'Name',
         filter: false,
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
       },
       description: {
         title: 'Description',
@@ -95,12 +100,11 @@ export class ListCategoriesComponent implements OnInit {
 
   fetch() {
     this.categoryService
-      .get(null)
+      .get({params: this.params})
       .then((res: ReturnMessage<PageModel<CategoryModel>>) => {
         if (!res.hasError) {
-          this.categories = res.data.results.filter(
-            (r) => r.isDeleted == false
-          );
+          this.categories = res.data.results;
+          this.data = res.data;
         }
       })
       .catch((er) => {
@@ -127,4 +131,9 @@ export class ListCategoriesComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  onPage(event) {
+    this.params.pageIndex = event;
+    this.fetch();
+  }
 }

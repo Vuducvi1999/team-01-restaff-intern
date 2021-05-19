@@ -7,6 +7,8 @@ import { PageModel, ReturnMessage } from 'src/app/lib/data/models/common';
 import { FileService } from 'src/app/lib/data/services';
 import { BlogService } from 'src/app/lib/data/services/blogs/blog.service';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
+import { CustomViewCellStringComponent } from 'src/app/shared/components/custom-view-cell-string/custom-view-cell-string.component';
+import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
 import { BlogsDetailComponent } from '../blogs-detail/blogs-detail.component';
 
@@ -59,6 +61,8 @@ export class ListBlogsComponent implements OnInit {
       },
       title: {
         title: 'Title',
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
       },
       shortDes: {
         title: 'Short Description',
@@ -68,6 +72,8 @@ export class ListBlogsComponent implements OnInit {
         valuePrepareFunction: (created) => {
           return this.datePipe.transform(new Date(created), 'dd/MM/yyyy');
         },
+        type: 'custom',
+        renderComponent: CustomViewCellComponent,
       },
     },
   };
