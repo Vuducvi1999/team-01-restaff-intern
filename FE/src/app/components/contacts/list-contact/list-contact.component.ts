@@ -37,19 +37,21 @@ export class ListContactComponent {
     },
     actions: {
       position: 'right',
+      add: false,
+      delete:false,
     },
     columns: {
-      firstName: { 
+      firstName: {
         title: 'First Name',
         type: 'custom',
-        renderComponent: CustomViewCellStringComponent, 
+        renderComponent: CustomViewCellStringComponent,
       },
-      lastName: { 
+      lastName: {
         title: 'Last Name',
         type: 'custom',
         renderComponent: CustomViewCellStringComponent,
       },
-      phoneNumber: { 
+      phoneNumber: {
         title: 'Phone Number',
         type: 'custom',
         renderComponent: CustomViewCellComponent,

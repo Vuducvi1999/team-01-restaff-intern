@@ -48,18 +48,19 @@ namespace Service.UserBlogs
             return result;
         }
 
+       
+
         public ReturnMessage<List<BlogDTO>> TopBlog(List<BlogDTO> model)
         {
             if (model == null)
             {
                 return new ReturnMessage<List<BlogDTO>>(false, null, MessageConstants.DeleteSuccess);
             }
-            var resultTop = _blogRepository.Queryable().OrderBy(p => p.Title).Take(3).ToList();
-            var data = _mapper.Map<List<Blog>, List<BlogDTO>>(resultTop);
-            var result = new ReturnMessage<List<BlogDTO>>(false, data, MessageConstants.SearchSuccess);
-            return result;
+            return TakeBlog(3);
         }
 
+
+        
         public ReturnMessage<PaginatedList<BlogDTO>> SearchPagination(SearchPaginationDTO<BlogDTO> search)
         {
             if (search == null)
@@ -83,6 +84,13 @@ namespace Service.UserBlogs
             );
             var data = _mapper.Map<PaginatedList<Blog>, PaginatedList<BlogDTO>>(resultEntity);
             var result = new ReturnMessage<PaginatedList<BlogDTO>>(false, data, MessageConstants.GetPaginationSuccess);
+            return result;
+        }
+        private ReturnMessage<List<BlogDTO>> TakeBlog(int number)
+        {
+            var resultTop = _blogRepository.Queryable().OrderBy(p => p.Title).Take(number).ToList();
+            var data = _mapper.Map<List<Blog>, List<BlogDTO>>(resultTop);
+            var result = new ReturnMessage<List<BlogDTO>>(false, data, MessageConstants.SearchSuccess);
             return result;
         }
     }

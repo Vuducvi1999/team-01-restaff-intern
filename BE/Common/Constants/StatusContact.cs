@@ -3,9 +3,8 @@ namespace Common.Constants
 {
     public struct StatusContact
     {
-        public const string WaitForDelivery = "Waiting for delivery";
-        public const string Shipping = "Shipping";
-        public const string Arrived = "Arrived";
-        public const string Cancel = "Cancel";
+        public const string Pending = "Pending";
+        public const string InProgress = "In Progress";
+        public const string Done = "Done";
     }
 }
