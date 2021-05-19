@@ -10,9 +10,9 @@ namespace Domain.DTOs.FEUsers.Footers
 {
     public class FooterDTO
     {
-        List<CategoryDTO> categorys { get; set; }
-        List<SocialMediaDTO> socialMedias { get; set; }
-        List<PageContentDTO> pageContents { get; set; }
-        InformationWebDTO informationWeb { get; set; }
+        public List<CategoryDTO> categories { get; set; }
+        public List<SocialMediaDTO> socialMedias { get; set; }
+        public List<PageContentDTO> pageContents { get; set; }
+        public InformationWebDTO informationWeb { get; set; }
     }
 }
