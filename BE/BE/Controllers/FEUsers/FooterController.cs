@@ -23,5 +23,12 @@ namespace BE.Controllers.FEUsers
         {
             _footerService = footerService;
         }
+
+        [HttpGet]
+        public IActionResult GetFooter()
+        {
+            var result = _footerService.GetFooter();
+            return CommonResponse(result);
+        }
     }
 }

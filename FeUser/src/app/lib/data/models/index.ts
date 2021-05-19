@@ -7,3 +7,4 @@ export * from "./auth/auth.model";
 export * from "./profile/profile.model";
 export * from "./orders/order.model";
 export * from "./sweetalert/sweetalert.model";
+export * from "./informationweb/informationweb.model";
