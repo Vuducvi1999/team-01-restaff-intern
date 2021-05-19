@@ -1,27 +1,7 @@
-<!-- Container-fluid starts-->
+  <!-- Container-fluid starts-->
 <div class="container-fluid">
   <div class="row">
-    <div class="col-xl-4">
-      <div class="card">
-        <div class="card-body">
-          <div class="profile-details text-center">
-            <img appUiImageLoader src="{{getImage}}"  alt=""
-              class="img-fluid img-90 rounded-circle blur-up lazyloaded" width="90px" height="90px">
-            <h5 class="f-w-600 mb-0">{{userInfo?.firstName}} {{userInfo?.lastName}}</h5>
-            <span>{{userInfo?.email}}</span>
-            <div class="social">
-              <div class="form-group btn-showcase">
-                <button class="btn social-btn btn-fb d-inline-block">
-                  <i class="fa fa-facebook"></i></button>
-                <button class="btn social-btn btn-twitter d-inline-block"><i class="fa fa-google"></i></button>
-                <button class="btn social-btn btn-google d-inline-block mr-0"><i class="fa fa-twitter"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-xl-8">
+    <div class="col-xl-6">
       <div class="card tab2-card">
         <div class="card-body">
           <ngb-tabset class="tab-coupon profile-tabs">
@@ -34,9 +14,7 @@
                 <div class="tab-pane fade show active" id="top-profile" role="tabpanel"
                   aria-labelledby="top-profile-tab">
                   <h5 class="f-w-600"> Profile</h5>
-                  <div class="pull-right" *ngIf="!update">
-                    <button (click)="updateSwitch()" class="btn btn-primary">Update Profile</button>
-                  </div>
+
                   <div class="table-responsive profile-table" *ngIf="!update">
                     <table class="table table-responsive">
                       <tbody>
@@ -60,13 +38,16 @@
                       </tbody>
                     </table>
                   </div>
+                  <div class="pull-right" *ngIf="!update">
+                    <button (click)="updateSwitch()" class="btn btn-primary">Update Profile</button>
+                  </div>
                 </div>
                 <div *ngIf="update">
                   <form [formGroup]="profileForm" class="needs-validation user-add" novalidate="">
                     <div class="form-group row">
                       <label for="validationCustom0" class="col-xl-3 col-md-4"><span>*</span>
                         First name</label>
-                      <input class="form-control col-xl-8 col-md-7" id="validationCustom0" type="text" required
+                      <input class="form-control col-xl-4 col-md-7" id="validationCustom0" type="text" required
                         formControlName="firstName">
                       <div class="col-md-3 offset-md-3">
                         <span class="text-danger"
@@ -78,7 +59,7 @@
                     <div class="form-group row">
                       <label for="" class="col-xl-3 col-md-4"><span>*</span>
                         Last name</label>
-                      <input class="form-control col-xl-8 col-md-7" id="" type="text" formControlName="lastName">
+                      <input class="form-control col-xl-4 col-md-7" id="" type="text" formControlName="lastName">
                       <div class="col-md-3 offset-md-3">
                         <span class="text-danger"
                           *ngIf="(profileFormControl.lastName.touched || submitted) && profileFormControl.lastName.errors?.required">
@@ -89,7 +70,7 @@
                     <div class="form-group row">
                       <label for="validationCustom1" class="col-xl-3 col-md-4"><span>*</span>
                         Email</label>
-                      <input class="form-control col-xl-8 col-md-7" id="validationCustom1" type="text" required=""
+                      <input class="form-control col-xl-4 col-md-7" id="validationCustom1" type="text" required=""
                         formControlName="email">
                       <div class="col-md-3 offset-md-3">
                         <span class="text-danger"
@@ -136,7 +117,7 @@
                   <div class="form-group row">
                     <label for="" class="col-xl-4 col-md-4"><span>*</span>
                       Password</label>
-                    <input class="form-control col-xl-5 col-md-7" id="" type="password" formControlName="password">
+                    <input class="form-control col-xl-4 col-md-7" id="" type="password" formControlName="password">
                     <div class="col-md-3 offset-md-4">
                       <span class="text-danger"
                         *ngIf="(passwordFormControl.password.touched || submitted) && passwordFormControl.password.errors?.required">
@@ -147,7 +128,7 @@
                   <div class="form-group row">
                     <label for="validationCustom1" class="col-xl-4 col-md-4"><span>*</span>
                       New Password</label>
-                    <input class="form-control col-xl-5 col-md-7" id="validationCustom1" type="password" required=""
+                    <input class="form-control col-xl-4 col-md-7" id="validationCustom1" type="password" required=""
                       formControlName="newPassword">
                     <div class="col-md-3 offset-md-4"> <span class="text-danger"
                         *ngIf="(passwordFormControl.newPassword.touched || submitted) && passwordFormControl.newPassword.errors?.required">
@@ -160,7 +141,7 @@
                   <div class="form-group row">
                     <label for="validationCustom2" class="col-xl-4 col-md-4"><span>*</span>
                       Confirm New Password</label>
-                    <input class="form-control col-xl-5 col-md-7" id="validationCustom2" type="password" required=""
+                    <input class="form-control col-xl-4 col-md-7" id="validationCustom2" type="password" required=""
                       formControlName="confirmNewPassword">
                     <div class="col-md-5 offset-md-4">
                       <span class="text-danger"

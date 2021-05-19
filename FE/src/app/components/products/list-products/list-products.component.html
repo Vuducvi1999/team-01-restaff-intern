@@ -16,7 +16,7 @@
         </div>
       </div>
 
-      <app-paging-server-view
+      <app-paging-server-view *ngIf="data?.totalPage > 1"
         [data]="data"
         (page)="onPage($event)"
       ></app-paging-server-view>

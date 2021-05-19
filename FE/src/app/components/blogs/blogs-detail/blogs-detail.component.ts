@@ -85,30 +85,31 @@ export class BlogsDetailComponent implements OnInit {
     this.submitted = true;
 
     if (this.blogForm.valid) {
-      this.messageService
-        .confirm(`Do you want to edit the blog?`, 'Yes')
-        .then((res) => {
-          if (res.isConfirmed) {
-            this.blogService
-              .save(this.blog)
-              .then(() => {
-                this.blogForm.reset();
-                this.submitted = false;
-                this.ngbActiveModal.close();
-              })
-              .catch((er) => {
-                this.messageService.alert(
-                  er.error.message ?? JSON.stringify(er.error),
-                  TypeSweetAlertIcon.ERROR
-                );
-              });
+
+      this.blogService
+        .save(this.blog)
+        .then(() => {
+          if (this.item) {
+            this.messageService.notification(
+              'Blog has been edited',
+              TypeSweetAlertIcon.SUCCESS
+            );
           }
+          this.blogForm.reset();
+          this.submitted = false;
+          this.ngbActiveModal.close();
+        })
+        .catch((er) => {
+          this.messageService.alert(
+            er.error.message ?? JSON.stringify(er.error),
+            TypeSweetAlertIcon.ERROR
+          );
         });
     }
   }
 
   close(event: any) {
-    this.ngbActiveModal.close();
+    this.ngbActiveModal.dismiss();
   }
   get blogFormControl() {
     return this.blogForm.controls;
