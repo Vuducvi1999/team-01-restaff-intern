@@ -20,7 +20,7 @@ namespace BE.Controllers.FEUsers
         }
 
         [HttpGet]
-        [Route("categories")]
+        [Route(CodeConstants.Categories)]
         public IActionResult GetCategories()
         {
             var result = _headerService.GetCategories();
@@ -36,7 +36,7 @@ namespace BE.Controllers.FEUsers
         //}
 
         [HttpGet]
-        [Route("blogs")]
+        [Route(CodeConstants.Blogs)]
         public IActionResult GetBlogs()
         {
             var result = _headerService.GetBlogs();

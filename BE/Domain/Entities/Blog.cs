@@ -36,6 +36,7 @@ namespace Domain.Entities
             ShortDes = model.ShortDes;
             ContentHTML = model.ContentHTML;
             ImageUrl = model.ImageUrl;
+            CreatedByName = CommonConstantsBlog.CreateByName;
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;
         }
 
