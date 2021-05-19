@@ -59,14 +59,14 @@ export class NavService {
       ],
     },
     {
-      title: 'Users and Customers',
+      title: 'Admins and Customers',
       icon: 'users',
       type: 'sub',
       active: false,
       children: [
         {
           path: '/users/list-users',
-          title: 'Users',
+          title: 'Admins',
           type: 'link',
         },
         {

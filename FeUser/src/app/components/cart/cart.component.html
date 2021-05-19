@@ -20,7 +20,7 @@
               <td>
                 <app-image-wrapper
                 [data]="{
-                  url: product.imageUrl,
+                  url: product.imageUrl.split(',')[0],
                   typeClass: typeDisplayImage.CART_IMAGE_PRODUCT
                 }"
               ></app-image-wrapper>
