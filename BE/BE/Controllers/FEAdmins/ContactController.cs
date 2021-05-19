@@ -11,6 +11,7 @@ using System.Collections.Generic;
 
 namespace BE.FeUserControllers.FEAdmins
 {
+    [Authorize]
     [Route(UrlConstants.BaseContact)]
     [ApiController]
     public class ContactController : BaseController
@@ -29,7 +30,6 @@ namespace BE.FeUserControllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Authorize]
         [HttpPost]
         public IActionResult Post([FromBody] CreateContactDTO model)
         {
@@ -38,7 +38,6 @@ namespace BE.FeUserControllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Authorize]
         [HttpPut]
         public IActionResult Put([FromBody] UpdateContactDTO model)
         {
@@ -46,7 +45,6 @@ namespace BE.FeUserControllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Authorize]
         [HttpDelete]
         public IActionResult Delete([FromQuery] DeleteContactDTO model)
         {

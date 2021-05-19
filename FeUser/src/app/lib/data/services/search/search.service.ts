@@ -12,7 +12,7 @@ export class SearchService {
   }
 
   findByName(request: any, name: string) {
-    const urlSearch = `${this.urlRelevant}/relevant?name=` + name;
+    const urlSearch = `${this.urlRelevant}/relevant?loading=true&name=` + name;
     return this.httpClient.getObservable(urlSearch, request).toPromise();
   }
 }

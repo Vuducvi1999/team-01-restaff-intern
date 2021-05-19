@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace BE.Controllers.FEAdmins
 {
+    [Authorize]
     [ApiController]
     [Route(UrlConstants.BaseBlog)]
     public class BlogController : BaseController
@@ -26,7 +27,6 @@ namespace BE.Controllers.FEAdmins
             _blogService = blogService;
         }
 
-        [Authorize]
         [HttpGet]
         public IActionResult Get([FromQuery] SearchPaginationDTO<BlogDTO> serachPagination)
         {
@@ -34,7 +34,6 @@ namespace BE.Controllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Authorize]
         [HttpPost]
         public IActionResult Create([FromBody] CreateBlogDTO model)
         {
@@ -51,7 +50,6 @@ namespace BE.Controllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Authorize]
         [HttpPut]
         public IActionResult Update([FromBody] UpdateBlogDTO model)
         {
@@ -68,7 +66,6 @@ namespace BE.Controllers.FEAdmins
             return CommonResponse(result);
         }
 
-        [Authorize]
         [HttpDelete]
         public IActionResult Delete([FromQuery] DeleteBlogDTO model)
         {

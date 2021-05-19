@@ -1,6 +1,7 @@
 ﻿using Common.Constants;
 using Common.Pagination;
 using Domain.DTOs.PromotionDetails;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace BE.Controllers.FEAdmins
 {
+    [Authorize]
     [Route(UrlConstants.BasePromotionDetail)]
     [ApiController]
     public class PromotionDetailsController : BaseController

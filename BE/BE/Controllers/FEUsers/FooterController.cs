@@ -23,22 +23,5 @@ namespace BE.Controllers.FEUsers
         {
             _footerService = footerService;
         }
-
-        [HttpGet]
-        [Route("categories")]
-        public IActionResult GetCategories()
-        {
-            var result = _footerService.GetCategories();
-            return CommonResponse(result);
-        }
-
-        [HttpGet]
-        [Route("social-medias")]
-        public IActionResult GetSocialMedias()
-        {
-            var result = _footerService.GetSocialMedias();
-            return CommonResponse(result);
-        }
-
     }
 }

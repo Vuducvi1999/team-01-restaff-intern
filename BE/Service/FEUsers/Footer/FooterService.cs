@@ -2,6 +2,7 @@
 using Common.Constants;
 using Common.Http;
 using Domain.DTOs.Categories;
+using Domain.DTOs.FEUsers.Footers;
 using Domain.DTOs.SocialMedias;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
@@ -29,6 +30,13 @@ namespace Service.Footer
             var list = _mapper.Map<List<CategoryDTO>>(listDTO);
             var result = new ReturnMessage<List<CategoryDTO>>(false, list, MessageConstants.ListSuccess);
             return result;
+        }
+
+        public ReturnMessage<FooterDTO> GetFooter()
+        {
+            var queryCategories = _categoryRepository.Queryable().Where(it => !it.IsDeleted).OrderBy(it => it.Name).ThenBy(it => it.Name.Length).ToList();
+            var categories = _mapper.Map<List<CategoryDTO>>(queryCategories);
+            throw new System.NotImplementedException();
         }
 
         public ReturnMessage<List<SocialMediaDTO>> GetSocialMedias()

@@ -3,6 +3,7 @@ using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Products;
 using Infrastructure.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Files;
@@ -11,6 +12,7 @@ using Service.Products;
 
 namespace BE.Controllers.FEAdmins
 {
+    [Authorize]
     [Route(UrlConstants.BaseProduct)]
     [ApiController]
     public class ProductController : BaseController
