@@ -15,7 +15,7 @@ import {
 } from "src/app/shared/data/slider";
 
 import { PageModel, ReturnMessage } from "src/app/lib/data/models";
-import { TypeDisplayImage } from "src/app/shared/data";
+import { ETypeSizeImage, TypeDisplayImage } from "src/app/shared/data";
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
 import { Subscription } from "rxjs";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
@@ -54,6 +54,7 @@ export class ProductDetailsComponent implements OnInit {
   public ImageSrc: string;
   public dataComment: CreateCommentModel;
   public typeDisplayImage = TypeDisplayImage;
+  public typeSizeImage = ETypeSizeImage;
   public user: UserDataReturnDTOModel;
   public comments: PageModel<CommentModel>;
   public searchModel: any;
@@ -75,7 +76,9 @@ export class ProductDetailsComponent implements OnInit {
     private cartService: CartService,
     private toastrService: ToastrService,
     private authService: AuthService
-  ) {}
+  ) {
+    
+  }
 
   ngOnInit(): void {
     this.token = localStorage.getItem("token");
