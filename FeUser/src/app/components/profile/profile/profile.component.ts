@@ -172,7 +172,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.submittedProfile = true;
 
     if (this.profileForm.invalid) {
-      console.log(this.profileForm.invalid);
+      // console.log(this.profileForm.invalid);
       return;
     }
 

@@ -28,7 +28,7 @@ export class CategoryDetailComponent implements OnInit {
   public fileURL: (String | ArrayBuffer)[];
   public item: any;
   public regex: string =
-    '^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ]*$';
+    '^[a-z|A-Z|ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ|0-9 ,-.]*$';
   submitted = false;
 
   ngOnChanges(changes: SimpleChanges): void {}
@@ -50,7 +50,7 @@ export class CategoryDetailComponent implements OnInit {
   }
   save() {
     if (this.categoriesForm.invalid) {
-      console.log(this.categoriesForm);
+      // console.log(this.categoriesForm);
       this.messageService.alert(
         'Invalid Form make sure you input valid value !',
         TypeSweetAlertIcon.ERROR

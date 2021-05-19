@@ -4,6 +4,7 @@ using Common.Enums;
 using Common.Http;
 using Common.MD5;
 using Common.Pagination;
+using Common.StringEx;
 using Domain.DTOs.Customer;
 using Domain.DTOs.Users;
 using Domain.Entities;
@@ -36,6 +37,13 @@ namespace Service.Customers
 
         public ReturnMessage<CustomerDTO> Create(CreateCustomerDTO model)
         {
+            model.Username = StringExtension.CleanString(model.Username);
+            model.Password = StringExtension.CleanString(model.Password);
+            if(model.Username == null || model.Password == null)
+            {
+                var entity = _mapper.Map<CreateCustomerDTO, Customer>(model);
+                return new ReturnMessage<CustomerDTO>(true, _mapper.Map<Customer, CustomerDTO>(entity), MessageConstants.InvalidString);
+            }
             try
             {
                 var userInfo = _userManager.GetInformationUser();
@@ -133,6 +141,13 @@ namespace Service.Customers
 
         public ReturnMessage<CustomerDTO> Update(UpdateCustomerDTO model)
         {
+            model.Username = StringExtension.CleanString(model.Username);
+            model.Password = StringExtension.CleanString(model.Password);
+            if (model.Username == null || model.Password == null)
+            {
+                var entity = _mapper.Map<UpdateCustomerDTO, Customer>(model);
+                return new ReturnMessage<CustomerDTO>(true, _mapper.Map<Customer, CustomerDTO>(entity), MessageConstants.InvalidString);
+            }
             try
             {
                 var userInfo = _userManager.GetInformationUser();
@@ -140,10 +155,10 @@ namespace Service.Customers
                 {
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.CreateFail);
                 }
-                if (model.Username.Trim() == "")
-                {
-                    return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
-                }
+                //if (model.Username.Trim() == "")
+                //{
+                //    return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
+                //}
 
                 var user = _userRepository.Queryable().FirstOrDefault(it => it.Id == model.Id && it.Type == UserType.Customer && !it.IsDeleted);
                 if (user.IsNullOrEmpty())
