@@ -26,6 +26,9 @@ import { TypeDisplayImage } from "src/app/shared/data";
         vertical-align: middle;
         color: #ffa200;
       }
+      ul.comments li:last-child .media {
+        border: none;
+      }
     `,
   ],
 })
