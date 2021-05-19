@@ -21,6 +21,9 @@ import { CustomerDetailsComponent } from '../customer-details/customer-details.c
 export class ListCustomersComponent implements OnInit {
   public customers: CustomerModel[];
   closeResult = '';
+  public data: PageModel<CustomerModel>;
+  params: any = {};
+
   constructor(
     private modalService: NgbModal,
     private customerService: CustomerService,
@@ -36,31 +39,36 @@ export class ListCustomersComponent implements OnInit {
       position: 'right',
     },
     columns: {
-      imageUrl: {
-        title: 'Image',
-        type: 'custom',
-        renderComponent: ViewImageCellComponent,
-      },
+      // imageUrl: {
+      //   title: 'Image',
+      //   type: 'custom',
+      //   renderComponent: ViewImageCellComponent,
+      // },
       username: {
+        filter: false,
         title: 'Username',
       },
       firstName: {
+        filter: false,
         title: 'First Name',
       },
       lastName: {
+        filter: false,
         title: 'Last Name',
       },
       email: {
+        filter: false,
         title: 'Email',
       },
       phone: {
+        filter: false,
         title: 'Phone',
         type: 'custom',
         renderComponent: CustomViewCellComponent,
       },
-      address: {
-        title: 'Address',
-      },
+      // address: {
+      //   title: 'Address',
+      // },
     },
   };
 
@@ -107,10 +115,11 @@ export class ListCustomersComponent implements OnInit {
 
   getList() {
     this.customerService
-      .get(null)
+      .get({params: this.params})
       .then((res: ReturnMessage<PageModel<CustomerModel>>) => {
         if (!res.hasError) {
           this.customers = res.data.results;
+          this.data = res.data;
         }
       })
       .catch((er) => {
@@ -121,5 +130,10 @@ export class ListCustomersComponent implements OnInit {
           TypeSweetAlertIcon.ERROR
         );
       });
+  }
+
+  onPage(event) {
+    this.params.pageIndex = event;
+    this.getList();
   }
 }

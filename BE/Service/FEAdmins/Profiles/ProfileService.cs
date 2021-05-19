@@ -2,6 +2,7 @@
 using Common.Constants;
 using Common.Http;
 using Common.MD5;
+using Common.StringEx;
 using Domain.DTOs.Profiles;
 using Domain.DTOs.User;
 using Domain.DTOs.Users;
@@ -56,6 +57,13 @@ namespace Service.Profiles
 
         public ReturnMessage<UserDataReturnDTO> Update(UpdateProfileDTO model)
         {
+            model.FirstName = StringExtension.CleanString(model.FirstName);
+            model.LastName = StringExtension.CleanString(model.LastName);
+            model.Email = StringExtension.CleanString(model.Email);
+            if (model.FirstName == null || model.LastName == null || model.Email == null)
+            {
+                return new ReturnMessage<UserDataReturnDTO>(true, null, MessageConstants.InvalidString);
+            }
             try
             {
                 var entity = _userRepository.Find(model.Id);

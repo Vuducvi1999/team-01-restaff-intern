@@ -118,7 +118,7 @@ export class PageContentDetailComponent implements OnInit {
   }
 
   close(event: any) {
-    this.ngbActiveModal.close();
+    this.ngbActiveModal.dismiss();
   }
 
   onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {

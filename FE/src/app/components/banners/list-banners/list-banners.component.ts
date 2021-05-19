@@ -22,6 +22,8 @@ import { BannersDetailComponent } from '../banners-detail/banners-detail.compone
 })
 export class ListBannersComponent implements OnInit {
   public banners: BannerModel[];
+  public data: PageModel<BannerModel>;
+  params: any = {};
 
   constructor(
     private modalService: NgbModal,
@@ -62,10 +64,11 @@ export class ListBannersComponent implements OnInit {
 
   getBanners() {
     this.bannersService
-      .get(null)
+      .get({params: this.params})
       .then((res: ReturnMessage<PageModel<BannerModel>>) => {
         if (!res.hasError) {
           this.banners = res.data.results;
+          this.data = res.data;
         }
       })
       .catch((er) => {
@@ -111,5 +114,10 @@ export class ListBannersComponent implements OnInit {
             });
         }
       });
+  }
+
+  onPage(event) {
+    this.params.pageIndex = event;
+    this.getBanners();
   }
 }

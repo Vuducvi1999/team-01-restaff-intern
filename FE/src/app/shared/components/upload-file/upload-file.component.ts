@@ -26,6 +26,7 @@ export class UploadFileComponent implements OnInit {
   @Input() styleFile: string;
   @Input() fileURL: (string | ArrayBuffer)[];
   @Input() isBannerUpload = false;
+  @Input() sizeImage: string;
   @Output() onChange = new EventEmitter();
 
   public files: File[];

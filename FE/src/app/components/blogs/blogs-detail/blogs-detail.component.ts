@@ -109,7 +109,7 @@ export class BlogsDetailComponent implements OnInit {
   }
 
   close(event: any) {
-    this.ngbActiveModal.close();
+    this.ngbActiveModal.dismiss();
   }
   get blogFormControl() {
     return this.blogForm.controls;

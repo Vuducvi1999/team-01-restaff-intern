@@ -95,11 +95,11 @@ export class BannersDetailComponent implements OnInit {
       this.bannersService
         .save(this.banner)
         .then((res) => {
-          if(this.item){
+          if (this.item) {
             this.messageService.notification(
               'Banner has been edited',
               TypeSweetAlertIcon.SUCCESS
-            );
+            )
           }
           this.bannersForm.reset();
           this.submitted = false;
@@ -115,7 +115,7 @@ export class BannersDetailComponent implements OnInit {
   }
 
   close(event: any) {
-    this.ngbActiveModal.close();
+    this.ngbActiveModal.dismiss();
   }
 
   onChangeData(event: { add: string[]; remove: string; removeAll: boolean }) {
