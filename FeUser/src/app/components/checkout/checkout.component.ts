@@ -145,7 +145,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.couponValue = 0;
     this.couponPercent = `0`;
     this.couponName = null;
-
+    this.couponCode = "";
+    
     delete this.order.couponValue;
     delete this.order.couponPercent;
     delete this.order.couponName;
