@@ -9,7 +9,7 @@ using Service.Files;
 using Service.Home;
 using System.Collections.Generic;
 
-namespace BE.FeUserControllers.FEAdmins
+namespace BE.FeUserControllers.FEUsers
 {
     [Route(UrlConstants.BaseContact)]
     [ApiController]
@@ -22,26 +22,12 @@ namespace BE.FeUserControllers.FEAdmins
             _contactService = contactService;
         }
 
-        [HttpGet]
-        public IActionResult GetList()
-        {
-            var result = _contactService.GetList();
-            return CommonResponse(result);
-        }
 
-        [Authorize]
-        [HttpPut]
-        public IActionResult Put([FromBody] UpdateContactDTO model)
+        [HttpPost]
+        public IActionResult Post([FromBody] CreateContactDTO model)
         {
-            var result = _contactService.Update(model);
-            return CommonResponse(result);
-        }
 
-        [Authorize]
-        [HttpDelete]
-        public IActionResult Delete([FromQuery] DeleteContactDTO model)
-        {
-            var result = _contactService.Delete(model);
+            var result = _contactService.Create(model);
             return CommonResponse(result);
         }
     }

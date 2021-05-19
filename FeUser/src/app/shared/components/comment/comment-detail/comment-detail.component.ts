@@ -49,8 +49,6 @@ export class CommentDetailComponent implements OnInit {
 
   pageChange(event) {
     this.action.emit(event);
-    // console.log([this.refComment.nativeElement.getBoundingClientRect()]);
-    // console.log(window);
     window.scrollTo(
       this.refComment.nativeElement.getBoundingClientRect().left +
         window.scrollX,

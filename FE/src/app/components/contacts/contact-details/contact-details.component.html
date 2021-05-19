@@ -1,36 +1,79 @@
-<app-modal-header [data]="modalHeader" (onAction)="close($event)"></app-modal-header>
+<app-modal-header
+  [data]="modalHeader"
+  (onAction)="close($event)"
+></app-modal-header>
 <!-- Container-fluid starts-->
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm-12">
       <div class="card tab2-card">
         <div class="card-body">
-          <div class="tab-pane fade active show" id="account" role="tabpanel" aria-labelledby="account-tab">
-            <form [formGroup]="pageContentForm" class="needs-validation user-add" novalidate="">
+          <div
+            class="tab-pane fade active show"
+            id="account"
+            role="tabpanel"
+            aria-labelledby="account-tab"
+          >
+            <form
+              [formGroup]="pageContentForm"
+              class="needs-validation user-add"
+              novalidate=""
+            >
               <h4>Contact Details</h4>
               <div class="form-group row">
                 <label class="col-xl-3 col-md-4"> First Name</label>
-                <input class="form-control col-xl-9 col-md-8" type="text" formControlName="firstName" readonly/>
+                <input
+                  class="form-control col-xl-9 col-md-8"
+                  type="text"
+                  formControlName="firstName"
+                />
               </div>
               <div class="form-group row">
                 <label class="col-xl-3 col-md-4"> Last Name</label>
-                <input class="form-control col-xl-9 col-md-8" type="text" formControlName="lastName" readonly/>
+                <input
+                  class="form-control col-xl-9 col-md-8"
+                  type="text"
+                  formControlName="lastName"
+                />
               </div>
               <div class="form-group row">
                 <label class="col-xl-3 col-md-4"> Email</label>
-                <input class="form-control col-xl-9 col-md-8" type="text" formControlName="email" readonly />
+                <input
+                  class="form-control col-xl-9 col-md-8"
+                  type="text"
+                  formControlName="email"
+                />
               </div>
               <div class="form-group row">
                 <label class="col-xl-3 col-md-4"> Phone Number</label>
-                <input class="form-control col-xl-9 col-md-8" type="text" formControlName="phoneNumber" readonly/>
+                <input
+                  class="form-control col-xl-9 col-md-8"
+                  type="text"
+                  formControlName="phoneNumber"
+                />
               </div>
               <div class="form-group row">
                 <label class="col-xl-3 col-md-4"> Message</label>
-                <textarea class="form-control col-xl-9 col-md-8" rows="4" formControlName="message" readonly></textarea>
+                <textarea
+                  class="form-control col-xl-9 col-md-8"
+                  rows="4"
+                  formControlName="message"
+                ></textarea>
               </div>
-              <div class="form-group row">
+              <div class="form-group row" *ngIf="this.item">
                 <label class="col-xl-3 col-md-4"> Status</label>
-                <input class="form-control col-xl-9 col-md-8" type="text"  formControlName="status" readonly/>
+                <select
+                  class="form-control col-xl-9 col-md-8"
+                  type="text"
+                  formControlName="status"
+                >
+                  <option value="Waiting for delivery" selected>
+                    Waiting for delivery
+                  </option>
+                  <option value="Shipping">Shipping</option>
+                  <option value="Arrived">Arrived</option>
+                  <option value="Cancel">Cancel</option>
+                </select>
               </div>
             </form>
           </div>

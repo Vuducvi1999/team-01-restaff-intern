@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { HeaderModel, Menu } from "src/app/lib/data/models/header/header.model";
 import { HeaderService } from "src/app/lib/data/services";
@@ -18,6 +18,7 @@ export class MenuComponent implements OnInit {
   };
   public categoriesChildren: Menu[] = [];
   public blogsChildren: Menu[] = [];
+  @ViewChild("Containermenu") Containermenu: ElementRef;
 
   constructor(public headerService: HeaderService, private router: Router) {}
 
@@ -56,7 +57,10 @@ export class MenuComponent implements OnInit {
 
     this.headerModel.blogs.forEach((item) => {
       this.blogsChildren.push({
-        title: item.title,
+        title:
+          item.title.length <= 25
+            ? item.title
+            : item.title.slice(0, 25) + "...",
         path: `/blog/${item.id}`,
         type: "link",
       });
