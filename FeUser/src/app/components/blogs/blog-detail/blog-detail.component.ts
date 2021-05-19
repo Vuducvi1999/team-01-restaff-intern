@@ -87,7 +87,6 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     this.initDataComment();
     this.getBlog();
   }
-
   getBlog() {
     this.activatedRoute.paramMap.subscribe((params) => {
       this.id = params.get("id");

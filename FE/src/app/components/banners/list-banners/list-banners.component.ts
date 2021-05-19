@@ -66,6 +66,7 @@ export class ListBannersComponent implements OnInit {
       .then((res: ReturnMessage<PageModel<BannerModel>>) => {
         if (!res.hasError) {
           this.banners = res.data.results;
+          console.log(res.data);
         }
       })
       .catch((er) => {
@@ -83,7 +84,10 @@ export class ListBannersComponent implements OnInit {
       size: 'lg',
     });
     modalRef.componentInstance.item = event?.data;
-    modalRef.result.then((close) => this.getBanners(),(dismiss)=>{});
+    modalRef.result.then(
+      (close) => this.getBanners(),
+      (dismiss) => {}
+    );
   }
 
   delete(event: any) {

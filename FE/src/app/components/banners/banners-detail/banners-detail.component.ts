@@ -108,7 +108,9 @@ export class BannersDetailComponent implements OnInit {
               })
               .catch((er) => {
                 this.messageService.alert(
-                  er.error.message ?? JSON.stringify(er.error.error) ?? "Server Disconnected",
+                  er.error.message ??
+                    JSON.stringify(er.error.error) ??
+                    'Server Disconnected',
                   TypeSweetAlertIcon.ERROR
                 );
               });
@@ -145,5 +147,6 @@ export class BannersDetailComponent implements OnInit {
     }
 
     this.bannersForm.controls.imageUrl.setValue(this.fileURL.join(','));
+    console.log(this.fileURL);
   }
 }

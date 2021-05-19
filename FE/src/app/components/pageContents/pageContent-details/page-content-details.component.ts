@@ -72,11 +72,6 @@ export class PageContentDetailComponent implements OnInit {
   }
 
   save() {
-    if (this.pageContentForm.invalid) {
-      // console.log(this.pageContentForm);
-      return;
-    }
-
     this.submitted = true;
 
     this.pageContent = {
@@ -105,9 +100,6 @@ export class PageContentDetailComponent implements OnInit {
             'Server Disconnected',
           TypeSweetAlertIcon.ERROR
         );
-        // if (er.error.hasError) {
-        //   console.log(er.error.message);
-        // }
       });
   }
 
