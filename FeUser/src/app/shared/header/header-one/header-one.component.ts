@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
-import { HeaderModel, InfoHeaderModel } from "src/app/lib/data/models";
+import { HeaderModel, InfoHeaderModel, ReturnMessage } from "src/app/lib/data/models";
 import {
   AuthService,
   FileService,
@@ -37,17 +37,8 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
   @ViewChild("headerRef") headerRef: ElementRef;
   offsetHeight: number = 0;
 
-  public headerModel: InfoHeaderModel = {
-    informationWeb: {
-      address: "",
-      phone: "",
-      email: "",
-      fax: "",
-      logo: "",
-      title: "",
-      description: "",
-    },
-  };
+  public headerModel: HeaderModel;
+
   public stick: boolean = false;
   loadUrlNavaigate(url: string) {
     this.router.navigateByUrl(url);
@@ -96,8 +87,8 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
     this.loadUrlNavaigate("/auth/login");
   }
   async loadHeaderModel() {
-    await this.headerService.getInformationWeb(null).then((res: any) => {
-      this.headerModel.informationWeb = res.data;
+    await this.headerService.getHeader().then((res: ReturnMessage<HeaderModel>) => {
+      this.headerModel = res.data;
     });
   }
 

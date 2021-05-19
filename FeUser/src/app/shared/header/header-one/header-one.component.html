@@ -4,12 +4,12 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6">
-          <div class="header-contact" *ngIf="headerModel.informationWeb">
+          <div class="header-contact" *ngIf="headerModel?.informationWeb">
             <ul>
-              <li>{{ headerModel.informationWeb.title }}</li>
+              <li>{{ headerModel?.informationWeb?.title }}</li>
               <li>
                 <i class="fa fa-phone" aria-hidden="true"></i>Call Us:
-                {{ headerModel.informationWeb.phone }}
+                {{ headerModel?.informationWeb?.phone }}
               </li>
             </ul>
           </div>
@@ -24,9 +24,9 @@
             <li class="onhover-dropdown mobile-account">
               <i class="fa fa-user" aria-hidden="true"></i>
               {{
-                user
-                  ? "Hello " + user.firstName + " " + user.lastName
-                  : "Hello Guest"
+              user
+              ? "Hello " + user.firstName + " " + user.lastName
+              : "Hello Guest"
               }}
               <ul class="onhover-show-div">
                 <ng-container *ngIf="!user">
@@ -59,22 +59,21 @@
       <div class="col-sm-12">
         <div class="main-menu">
           <div class="menu-left">
-            <app-left-menu></app-left-menu>
+            <app-left-menu [headerModel]="headerModel"></app-left-menu>
             <div class="brand-logo">
               <a routerLink="/home" id="headerlogo">
-                <app-image-wrapper
-                  *ngIf="headerModel.informationWeb.logo"
-                  [data]="{
-                    url: headerModel.informationWeb.logo,
+                <app-image-wrapper *ngIf="headerModel?.informationWeb?.logo" [data]="{
+                    url: headerModel?.informationWeb?.logo,
                     typeClass: typeDisplayImage.LOGO_IMAGE
-                  }"
-                ></app-image-wrapper>
+                  }"></app-image-wrapper>
               </a>
             </div>
           </div>
           <div class="menu-right pull-right">
             <div>
-              <app-menu></app-menu>
+              <app-menu [headerModel]="headerModel">
+
+              </app-menu>
             </div>
             <div>
               <app-settings></app-settings>

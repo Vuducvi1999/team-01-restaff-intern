@@ -1,5 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { CategoryModel } from "src/app/lib/data/models";
+import { BlogModel } from "src/app/lib/data/models/blogs/blog.model";
 import { HeaderModel, Menu } from "src/app/lib/data/models/header/header.model";
 import { HeaderService } from "src/app/lib/data/services";
 
@@ -9,17 +11,16 @@ import { HeaderService } from "src/app/lib/data/services";
   styleUrls: ["./menu.component.scss"],
 })
 export class MenuComponent implements OnInit {
+
   public menuItems: Menu[] = [];
   public mainMenu: boolean = false;
 
-  public headerModel: HeaderModel = {
-    categories: [],
-    blogs: [],
-  };
+  @Input() public headerModel: HeaderModel;
   public categoriesChildren: Menu[] = [];
   public blogsChildren: Menu[] = [];
 
-  constructor(public headerService: HeaderService, private router: Router) {}
+  constructor(public headerService: HeaderService, private router: Router) {
+  }
 
   ngOnInit() {
     this.loadMenu();
@@ -34,19 +35,19 @@ export class MenuComponent implements OnInit {
     item.active = !item.active;
   }
 
-  async loadHeaderModel() {
-    await this.headerService.getBlogs(null).then((res: any) => {
-      this.headerModel.blogs = res.data;
-    });
-    await this.headerService.getCategories(null).then((res: any) => {
-      this.headerModel.categories = res.data;
-    });
-  }
+  // async loadHeaderModel() {
+  //   await this.headerService.getBlogs(null).then((res: any) => {
+  //     this.headerModel.blogs = res.data;
+  //   });
+  //   await this.headerService.getCategories(null).then((res: any) => {
+  //     this.headerModel.categories = res.data;
+  //   });
+  // }
 
   async loadMenu() {
-    await this.loadHeaderModel();
+    // await this.loadHeaderModel();
 
-    this.headerModel.categories.forEach((item) => {
+    this.headerModel?.categories.forEach((item) => {
       this.categoriesChildren.push({
         title: item.name,
         path: `/product?search.categoryName=${item.name}`,
@@ -54,7 +55,7 @@ export class MenuComponent implements OnInit {
       });
     });
 
-    this.headerModel.blogs.forEach((item) => {
+    this.headerModel?.blogs.forEach((item) => {
       this.blogsChildren.push({
         title: item.title,
         path: `/blog/${item.id}`,

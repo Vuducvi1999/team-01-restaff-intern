@@ -19,13 +19,7 @@ export class HeaderService {
   }
   constructor(private httpClient: HttpClientService) {
   }
-   getCategories(request: any) {
-    return  this.httpClient.getObservable(this.url + "/categories", request).toPromise();
-  }
-   getBlogs(request: any) {
-    return  this.httpClient.getObservable(this.url + "/blogs", request).toPromise();
-  }
-  getInformationWeb(request: any){
-    return  this.httpClient.getObservable(this.urlInfo, request).toPromise();
+  getHeader(request: any = null){
+    return  this.httpClient.getObservable(this.url, request).toPromise();
   }
 }
