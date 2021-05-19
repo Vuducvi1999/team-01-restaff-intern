@@ -1,15 +1,10 @@
 import { HttpParams } from "@angular/common/http";
-import { Component, OnDestroy, OnInit, Sanitizer } from "@angular/core";
-import { Component, OnDestroy, OnInit, ɵConsole } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
-import { ActivatedRoute, Params } from "@angular/router";
 import { Subscription } from "rxjs";
 import { ReturnMessage, TypeSweetAlertIcon } from "src/app/lib/data/models";
-import {
-  PageContentInfoModel,
-  PageContentModel,
-} from "src/app/lib/data/models/pageContent/pageContent.model";
+import { PageContentInfoModel } from "src/app/lib/data/models/pageContent/pageContent.model";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
 import { AuthService, MessageService } from "src/app/lib/data/services";
 import { ContactService } from "src/app/lib/data/services/contacts/contact.service";
@@ -26,14 +21,15 @@ export class PageContentInfoComponent implements OnInit, OnDestroy {
   contactForm: FormGroup;
   userInfo: UserDataReturnDTOModel;
   subDataUser: Subscription;
-  src = this.sanitizer.bypassSecurityTrustResourceUrl('');
+  submitted = false;
+  src = this.sanitizer.bypassSecurityTrustResourceUrl("");
   constructor(
     private pageContentService: PageContentService,
     private contactService: ContactService,
     private messageService: MessageService,
     private authservice: AuthService,
     private fb: FormBuilder,
-    private sanitizer: DomSanitizer,
+    private sanitizer: DomSanitizer
   ) {}
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
@@ -49,6 +45,8 @@ export class PageContentInfoComponent implements OnInit, OnDestroy {
   }
 
   initForm() {
+    this.submitted = false;
+
     this.contactForm = this.fb.group({
       firstName: [
         this.userInfo ? this.userInfo.firstName : "",
@@ -76,13 +74,16 @@ export class PageContentInfoComponent implements OnInit, OnDestroy {
       .then((data: ReturnMessage<PageContentInfoModel>) => {
         this.pageContentInfo = data.data;
         var params = new HttpParams();
-        params = params.set("q",data.data.address);
-        this.src = this.sanitizer.bypassSecurityTrustResourceUrl(`https://maps.google.com/maps?${params.toString()}&t=&z=13&ie=UTF8&iwloc=&output=embed`);
+        params = params.set("q", data.data.address);
+        this.src = this.sanitizer.bypassSecurityTrustResourceUrl(
+          `https://maps.google.com/maps?${params.toString()}&t=&z=13&ie=UTF8&iwloc=&output=embed`
+        );
       });
   }
 
   Submit() {
-    console.log(this.contactForm);
+    this.submitted = true;
+
     if (this.contactForm.invalid) {
       return;
     }
