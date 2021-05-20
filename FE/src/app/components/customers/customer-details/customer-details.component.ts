@@ -103,7 +103,7 @@ export class CustomerDetailsComponent implements OnInit {
       .save(this.user)
       .then(() => {
         this.messageService.notification(
-          this.item ? 'Upload Success' : 'Create Success',
+          this.item ? 'Profile has been updated' : 'Profile has been created',
           TypeSweetAlertIcon.SUCCESS
         );
         this.ngbActiveModal.close();

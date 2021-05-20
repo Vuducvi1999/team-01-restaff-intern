@@ -73,32 +73,29 @@ export class SocialMediaDetailComponent implements OnInit {
     };
 
     this.submitted = true;
+    console.log(this.item);
 
-    if (this.socialMediaForm.valid) {
-      this.messageService
-        .confirm(`Do you want to edit the Social Media?`, 'Yes')
-        .then((res) => {
-          if (res.isConfirmed) {
-            this.socialService
-              .save(this.socialMedia)
-              .then((res) => {
-                this.messageService.notification(
-                  'Social Media has been edited',
-                  TypeSweetAlertIcon.SUCCESS
-                );
-                this.socialMediaForm.reset();
-                this.submitted = false;
-                this.ngbActiveModal.close();
-              })
-              .catch((er) => {
-                this.messageService.alert(
-                  er.error.message ?? JSON.stringify(er.error),
-                  TypeSweetAlertIcon.ERROR
-                );
-              });
-          }
-        });
+    if (this.socialMediaForm.invalid) {
+      return;
     }
+
+    this.socialService
+      .save(this.socialMedia)
+      .then((res) => {
+        this.messageService.notification(
+          this.item ? 'Social Media has been edited' : 'Social Media has been created',
+          TypeSweetAlertIcon.SUCCESS
+        );
+
+        this.submitted = false;
+        this.ngbActiveModal.close();
+      })
+      .catch((er) => {
+        this.messageService.alert(
+          er.error.message ?? JSON.stringify(er.error),
+          TypeSweetAlertIcon.ERROR
+        );
+      });
   }
   get SocialMediaFormControl() {
     return this.socialMediaForm.controls;

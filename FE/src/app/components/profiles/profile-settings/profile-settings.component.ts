@@ -64,7 +64,6 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // console.log(this.route.parent.parent.parent.snapshot.data);
     this.entrySub = this.authService.callUserInfo.subscribe((it) => {
       this.userInfo = it;
       this.loadFormItem();
@@ -122,36 +121,32 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
       files: this.modalFile.listFile,
     };
 
-    this.messageService
-      .confirm('Do you want to edit your profile?', 'Yes')
-      .then((result) => {
-        if (result.isConfirmed) {
-          this.profileService
-            .update(this.updateProfile)
-            .then((resp: ReturnMessage<UserDataReturnDTOModel>) => {
-              this.authService.changeUserInfo(resp.data);
-              this.route.snapshot.data.user = resp.data;
-              if (!resp.hasError) {
-                this.messageService.notification(
-                  'Profile has been updated',
-                  TypeSweetAlertIcon.SUCCESS
-                );
-                this.updateSwitch();
-              }
-            })
-            .catch((er) => {
-              this.messageService.alert(
-                er.error.message ??
-                  JSON.stringify(er.error.error) ??
-                  'Server Disconnecter',
-                TypeSweetAlertIcon.ERROR
-              );
-            });
+
+    this.profileService
+      .update(this.updateProfile)
+      .then((resp: ReturnMessage<UserDataReturnDTOModel>) => {
+        this.authService.changeUserInfo(resp.data);
+        this.route.snapshot.data.user = resp.data;
+        if (!resp.hasError) {
+          this.messageService.notification(
+            'Profile has been updated',
+            TypeSweetAlertIcon.SUCCESS
+          );
+          this.updateSwitch();
         }
+      })
+      .catch((er) => {
+        this.messageService.alert(
+          er.error.message ??
+          JSON.stringify(er.error.error) ??
+          'Server Disconnecter',
+          TypeSweetAlertIcon.ERROR
+        );
       });
   }
   changePassword() {
     if (this.passwordForm.invalid) {
+      this.submitted = true;
       return;
     }
     this.passwordProfile = {
@@ -160,27 +155,22 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
       confirmNewPassword: this.passwordForm.controls.confirmNewPassword.value,
       userName: this.userInfo.username,
     };
-    this.messageService
-      .confirm('Do you want to edit your password?', 'Yes')
-      .then((result) => {
-        if (result.isConfirmed) {
-          this.profileService
-            .changePassword(this.passwordProfile)
-            .then((resp) => {
-              this.passwordForm.reset();
-              this.messageService.notification(
-                'Password has been changed',
-                TypeSweetAlertIcon.SUCCESS
-              );
-            })
-            .catch((er) => {
-              this.messageService.notification(
-                er.error.message ??
-                  JSON.stringify(er.error.error) ??
-                  'Server Disconnected'
-              );
-            });
-        }
+    this.profileService
+      .changePassword(this.passwordProfile)
+      .then((resp) => {
+        this.passwordForm.reset();
+        this.messageService.notification(
+          'Password has been changed',
+          TypeSweetAlertIcon.SUCCESS
+        );
+        this.submitted=false;
+      })
+      .catch((er) => {
+        this.messageService.notification(
+          er.error.message ??
+          JSON.stringify(er.error.error) ??
+          'Server Disconnected'
+        );
       });
   }
 

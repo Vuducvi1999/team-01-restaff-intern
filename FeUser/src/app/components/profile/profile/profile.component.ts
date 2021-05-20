@@ -186,14 +186,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .then((res: ReturnMessage<UserDataReturnDTOModel>) => {
         this.authService.changeUserInfo(res.data);
         this.messageService.notification(
-          "Upload Profile Success",
+          "Update Profile Success",
           TypeSweetAlertIcon.SUCCESS
         );
         this.profileSwith();
       })
       .catch((er) => {
         this.messageService.alert(
-          "Upload Profile Fail",
+          "Update Profile Fail",
           TypeSweetAlertIcon.ERROR,
           er.error.message ??
             JSON.stringify(er.error.error) ??
