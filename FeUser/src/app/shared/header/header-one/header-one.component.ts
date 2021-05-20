@@ -10,10 +10,7 @@ import {
 import { Router } from "@angular/router";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
 import { HeaderModel, ReturnMessage } from "src/app/lib/data/models";
-import {
-  AuthService,
-  HeaderService,
-} from "src/app/lib/data/services";
+import { AuthService, HeaderService } from "src/app/lib/data/services";
 import { TypeDisplayImage } from "../../data";
 import { Subscription } from "rxjs";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -83,18 +80,21 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
   onLogout() {
     this.authService.changeUserInfo(null);
     localStorage.removeItem("token");
-    this.loadUrlNavaigate("/auth/login");
   }
   async loadHeaderModel() {
-    await this.headerService.getHeader().then((res: ReturnMessage<HeaderModel>) => {
-      this.headerModel = res.data;
-      this.headerService.changeHeaderModel(res.data);
-    });
+    await this.headerService
+      .getHeader()
+      .then((res: ReturnMessage<HeaderModel>) => {
+        this.headerModel = res.data;
+        this.headerService.changeHeaderModel(res.data);
+      });
   }
 
   GotoWishList() {
     if (!this.user) {
-      const modalRef = this.modalService.open(LoginModalComponent);
+      const modalRef = this.modalService.open(LoginModalComponent, {
+        size: "lg",
+      });
       return;
     }
     this.loadUrlNavaigate("wishlist");

@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Subscription } from "rxjs";
 import {
   AuthLoginModel,
   ReturnMessage,
@@ -15,9 +16,11 @@ import Swal from "sweetalert2";
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.scss"],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   public loginForm: FormGroup;
   submitted = false;
+  subDataUser: Subscription;
+  userInfo: UserDataReturnDTOModel;
 
   constructor(
     private authService: AuthService,
@@ -27,12 +30,20 @@ export class LoginComponent implements OnInit {
     private sweetalertService: MessageService
   ) {
     this.createLoginForm();
-    if (localStorage.getItem("token")) {
-      this.backUrl();
-    }
+  }
+  ngOnDestroy(): void {
+    this.subDataUser.unsubscribe();
+    this.subDataUser = null;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subDataUser = this.authService.callUserInfo.subscribe((res) => {
+      this.userInfo = res;
+      if (this.userInfo) {
+        this.backUrl();
+      }
+    });
+  }
 
   createLoginForm() {
     this.loginForm = this.formBuilder.group({
@@ -46,7 +57,7 @@ export class LoginComponent implements OnInit {
   }
 
   backUrl() {
-    var returnUrl = this.activedRoute.snapshot.queryParams["returnUrl"] || "/";
+    var returnUrl = decodeURIComponent(this.activedRoute.snapshot.queryParams["returnUrl"] || "/");
     this.callUrl(returnUrl);
   }
 
@@ -72,13 +83,15 @@ export class LoginComponent implements OnInit {
         );
         localStorage.setItem("token", data.data.token);
         this.authService.changeUserInfo(data.data);
-        this.backUrl();
+        // this.backUrl();
       })
       .catch((er) => {
         this.sweetalertService.alert(
           "Login Fail",
           TypeSweetAlertIcon.ERROR,
-          er.error.message ?? JSON.stringify(er.error.error) ?? 'Server Disconnected'
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            "Server Disconnected"
         );
       });
   }
