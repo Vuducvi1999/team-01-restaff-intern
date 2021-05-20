@@ -1,14 +1,8 @@
 import {
-  AfterContentChecked,
   AfterContentInit,
-  AfterViewChecked,
-  AfterViewInit,
   Component,
-  Inject,
   Input,
   OnDestroy,
-  OnInit,
-  ViewChild,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -46,7 +40,6 @@ export class LoginModalComponent
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private router: Router,
-    private activedRoute: ActivatedRoute,
     public activeModal: NgbActiveModal
   ) {
     this.createLoginForm();
@@ -138,11 +131,6 @@ export class LoginModalComponent
     });
   }
 
-  // backUrl() {
-  //   var returnUrl = this.activedRoute.snapshot.queryParams["returnUrl"] || "/";
-  //   this.callUrl(returnUrl);
-  // }
-
   callUrl(url: string) {
     this.router.navigateByUrl(url);
   }
@@ -173,7 +161,4 @@ export class LoginModalComponent
         );
       });
   }
-}
-function MAT_DIALOG_DATA(MAT_DIALOG_DATA: any) {
-  throw new Error("Function not implemented.");
 }
