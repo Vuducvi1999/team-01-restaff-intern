@@ -110,7 +110,7 @@ export class UpdateOrderComponent implements OnInit {
     this.modalFooter.buttons = [
       {
         color: 'btn btn-primary',
-        title: 'back',
+        title: 'close',
         onAction: (event: any) => {
           this.ngbActiveModal.close();
         },
@@ -118,13 +118,6 @@ export class UpdateOrderComponent implements OnInit {
     ];
     if (this.item.status == 'New') {
       this.modalFooter.buttons = [
-        {
-          color: 'btn btn-primary',
-          title: 'save',
-          onAction: (event: any) => {
-            this.save();
-          },
-        },
         {
           color: 'btn btn-success',
           title: 'approve',
@@ -158,38 +151,6 @@ export class UpdateOrderComponent implements OnInit {
       totalAmount: this.item.totalAmount,
       totalItem: this.item.totalItem,
     };
-  }
-  save() {
-    this.loadOrderModel();
-    this.messageService
-      .confirm(`Do you want to edit the order?`, 'Yes')
-      .then(async (result) => {
-        if (result.isConfirmed) {
-          this.submitted = true;
-          if (this.orderForm.valid) {
-            this.ordersService
-              .update(this.order)
-              .then(() => {
-                this.messageService.notification(
-                  'Banner has been updated',
-                  TypeSweetAlertIcon.SUCCESS
-                );
-                this.ngbActiveModal.close();
-              })
-              .catch((er) => {
-                this.messageService.alert(
-                  er.error.message ??
-                  JSON.stringify(er.error.error) ??
-                  'Server Disconnected',
-                  TypeSweetAlertIcon.ERROR
-                );
-                // if (er.error.hasError) {
-                //   console.log(er.error.message);
-                // }
-              });
-          }
-        }
-      });
   }
 
   approve() {

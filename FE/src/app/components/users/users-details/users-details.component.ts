@@ -107,7 +107,7 @@ export class UserDetailComponent implements OnInit {
       .save(this.user)
       .then((data: ReturnMessage<UserModel>) => {
         this.messageService.notification(
-          'Save item successfully',
+          this.item? 'Admin profile has been edited':'Admin profile has been created',
           TypeSweetAlertIcon.SUCCESS
         );
         this.ngbActiveModal.close();
