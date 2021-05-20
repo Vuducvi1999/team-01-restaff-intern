@@ -32,7 +32,7 @@
                 >
                   <h6>
                     <i class="fa fa-check"></i>Item
-                    <span>{{ product.name | titlecase }}</span>
+                    <span>{{ product.name }}</span>
                     <span> successfully added to your Cart</span>
                   </h6>
                 </a>
@@ -81,7 +81,7 @@
                           <a
                             [routerLink]="['/product-details']"
                             [queryParams]="{ id: product.id }"
-                            ><span>{{ product.name | titlecase }}</span></a
+                            ><span>{{ product.name }}</span></a
                           >
                         </h6>
                         <h4>
