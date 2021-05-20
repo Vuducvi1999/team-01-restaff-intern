@@ -108,4 +108,18 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
       return;
     }
   }
+
+  OpenLoginModal() {
+    const modalRef = this.modalService.open(LoginModalComponent, {
+      size: "lg",
+    });
+    modalRef.componentInstance.isLogin = true;
+  }
+
+  OpenRegisterModal() {
+    const modalRef = this.modalService.open(LoginModalComponent, {
+      size: "lg",
+    });
+    modalRef.componentInstance.isRegister = true;
+  }
 }

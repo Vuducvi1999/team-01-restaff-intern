@@ -2,8 +2,24 @@
   <!-- <h3 class="text-center mb-4" style="font-weight: bold; color: black">
     Please login to go to wish list
   </h3> -->
-  <ngb-tabset [justify]="'center'" [type]="'pills'" class="tabs tab-title">
-    <ngb-tab class="m-0">
+
+  <ngb-tabset
+    #tabSet="ngbTabset"
+    [justify]="'center'"
+    [type]="'pills'"
+    class="tabs tab-title"
+  >
+    <ngb-tab class="text-center" *ngIf="!chooseTab">
+      <ng-template ngbTabTitle></ng-template>
+      <ng-template ngbTabContent>
+        <div class="text-center">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </ng-template></ngb-tab
+    >
+    <ngb-tab id="tab-login">
       <ng-template ngbTabTitle class="m-0">Login</ng-template>
       <ng-template ngbTabContent
         ><form class="theme-form" [formGroup]="loginForm">
@@ -53,7 +69,7 @@
         </form>
       </ng-template>
     </ngb-tab>
-    <ngb-tab>
+    <ngb-tab id="tab-register">
       <ng-template ngbTabTitle>Register</ng-template>
       <ng-template ngbTabContent
         ><form class="theme-form" [formGroup]="registForm">
@@ -133,7 +149,7 @@
               </div>
             </div>
             <div class="col-md-6 form-group">
-              <label for="email">email</label>
+              <label for="email">Email</label>
               <input
                 type="email"
                 class="form-control"

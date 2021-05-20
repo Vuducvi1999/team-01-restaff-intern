@@ -1,4 +1,11 @@
-import { Component } from "@angular/core";
+import {
+  AfterContentInit,
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
@@ -17,10 +24,14 @@ import { AuthService } from "src/app/lib/data/services/auth/auth.service";
   templateUrl: "./login-modal.component.html",
   styleUrls: ["./login-modal.component.scss"],
 })
-export class LoginModalComponent {
+export class LoginModalComponent implements AfterViewInit {
   public loginForm: FormGroup;
   submitted = false;
   registForm: FormGroup;
+  @Input() isLogin = false;
+  @Input() isRegister = false;
+  @ViewChild("tabSet") tabSet;
+  chooseTab = false;
 
   constructor(
     private authService: AuthService,
@@ -35,6 +46,16 @@ export class LoginModalComponent {
     if (localStorage.getItem("token")) {
       this.backUrl();
     }
+  }
+
+  ngAfterViewInit() {
+    this.chooseTab = true;
+    this.selectTab();
+  }
+
+  selectTab() {
+    if (this.isLogin) this.tabSet.select("tab-login");
+    if (this.isRegister) this.tabSet.select("tab-register");
   }
 
   createRegistForm() {

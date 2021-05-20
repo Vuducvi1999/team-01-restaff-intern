@@ -51,8 +51,8 @@ img.customer-comment-image {
   border-radius: 100%;
 }
 .product-details {
-  height: 270px ;
-  width: 150px ;
+  height: 270px;
+  width: 150px;
   display: inline-block;
 }
 .product-details-main {
@@ -98,3 +98,11 @@ img.customer-comment-image {
   width: 100px;
   height: 100px;
 }
+
+.wishlist-tab ul {
+  margin-bottom: 10px !important;
+}
+
+// .wishlist-tab .tab-content:first-child {
+//   text-align: center;
+// }
