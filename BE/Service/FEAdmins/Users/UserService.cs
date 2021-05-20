@@ -138,7 +138,7 @@ namespace Service.Users
                 )
                 , search.PageSize
                 , search.PageIndex
-                , t => t.Username
+                , t => t.CreateByDate
             );
             var data = _mapper.Map<PaginatedList<User>, PaginatedList<UserDTO>>(resultEntity);
             var result = new ReturnMessage<PaginatedList<UserDTO>>(false, data, MessageConstants.GetPaginationSuccess);

@@ -139,7 +139,7 @@ namespace Service.Orders
                 )
                 , search.PageSize
                 , search.PageIndex * search.PageSize
-                , t => t.FullName
+                , t => t.CreateByDate
             );
             var data = _mapper.Map<PaginatedList<Order>, PaginatedList<OrderDTO>>(resultEntity);
             var result = new ReturnMessage<PaginatedList<OrderDTO>>(false, data, MessageConstants.GetPaginationSuccess);
@@ -191,7 +191,7 @@ namespace Service.Orders
         {
             try
             {
-                var list = _orderRepository.Queryable().Where(t => t.Status == status).ToList();
+                var list = _orderRepository.Queryable().Where(t => t.Status == status).OrderByDescending(it => it.CreateByDate).ToList();
                 if (list.IsNotNullOrEmpty())
                 {
                     var result = _mapper.Map<List<OrderDTO>>(list);

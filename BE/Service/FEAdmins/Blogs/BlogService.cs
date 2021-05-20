@@ -8,6 +8,7 @@ using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
 using System;
 using Common.StringEx;
+using System.Linq;
 
 namespace Service.Blogs
 {
@@ -124,7 +125,7 @@ namespace Service.Blogs
                 ) && !it.IsDeleted
                 , search.PageSize
                 , search.PageIndex * search.PageSize
-                , t => t.CreateByDate
+                , t => t.Title
             );
             var data = _mapper.Map<PaginatedList<Blog>, PaginatedList<BlogDTO>>(resultEntity);
             var result = new ReturnMessage<PaginatedList<BlogDTO>>(false, data, MessageConstants.GetPaginationSuccess);

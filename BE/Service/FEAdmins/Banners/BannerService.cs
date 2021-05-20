@@ -128,7 +128,7 @@ namespace Service.Banners
                 )
                 , search.PageSize
                 , search.PageIndex
-                , t => t.Title
+                , t => -t.DisplayOrder
             );
             var data = _mapper.Map<PaginatedList<Banner>, PaginatedList<BannerDTO>>(resultEntity);
             var result = new ReturnMessage<PaginatedList<BannerDTO>>(false, data, MessageConstants.GetPaginationSuccess);

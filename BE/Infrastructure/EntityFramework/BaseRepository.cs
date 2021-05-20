@@ -304,8 +304,5 @@ namespace Infrastructure.EntityFramework
             var result = new PaginatedList<TEntity>(query, skip, take);
             return result;
         }
-
-
-
     }
 }

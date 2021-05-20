@@ -113,7 +113,7 @@ namespace Service.SocialMedias
                 ) && !it.IsDeleted
                 , search.PageSize
                 , search.PageIndex * search.PageSize
-                , t => t.Title
+                , t => -t.DisplayOrder
             );
             var data = _mapper.Map<PaginatedList<SocialMedia>, PaginatedList<SocialMediaDTO>>(resultEntity);
             var result = new ReturnMessage<PaginatedList<SocialMediaDTO>>(false, data, MessageConstants.GetPaginationSuccess);
