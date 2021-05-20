@@ -94,7 +94,7 @@ namespace Service.Files
                 {
                     foreach (var formFile in saveFile.Files)
                     {
-                        var ext = Path.GetExtension(formFile.FileName);
+                        var ext = Path.GetExtension(formFile.FileName).ToLower();
                         if (!DataType.CheckTypeAccept(saveFile.EntityType, ext))
                         {
                             continue;
