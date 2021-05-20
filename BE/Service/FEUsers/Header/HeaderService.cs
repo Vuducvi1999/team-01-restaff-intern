@@ -31,7 +31,7 @@ namespace Service.Header
         public ReturnMessage<HeaderDTO> GetHeader()
         {
             HeaderDTO headerDTO = new HeaderDTO();
-            var blogQueries = _blogRepository.Queryable().Where(it => !it.IsDeleted).OrderBy(it => it.Title).ThenBy(it => it.Title.Length);
+            var blogQueries = _blogRepository.Queryable().Where(it => !it.IsDeleted).OrderByDescending(it => it.CreateByDate).ThenBy(it => it.Title).ThenBy(it => it.Title.Length).Take(5);
             var blog = _mapper.Map<List<BlogDTO>>(blogQueries);
 
             var categoryQueries = _categoryRepository.Queryable().Where(it => !it.IsDeleted).OrderBy(it => it.Name).ThenBy(it => it.Name.Length);
