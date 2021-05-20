@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -6,6 +6,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Subscription } from "rxjs";
 import {
   AuthRegistModel,
   ReturnMessage,
@@ -20,9 +21,11 @@ import Swal from "sweetalert2";
   templateUrl: "./register.component.html",
   styleUrls: ["./register.component.scss"],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   registForm: FormGroup;
   submitted = false;
+  subDataUser: Subscription;
+  userInfo: UserDataReturnDTOModel;
 
   constructor(
     private authService: AuthService,
@@ -32,12 +35,20 @@ export class RegisterComponent implements OnInit {
     private sweetalertService: MessageService
   ) {
     this.createRegistForm();
-    if (localStorage.getItem("token")) {
-      this.backUrl();
-    }
+  }
+  ngOnDestroy(): void {
+    this.subDataUser.unsubscribe();
+    this.subDataUser = null;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subDataUser = this.authService.callUserInfo.subscribe((res) => {
+      this.userInfo = res;
+      if (this.userInfo) {
+        this.backUrl();
+      }
+    });
+  }
   createRegistForm() {
     this.registForm = this.formBuilder.group(
       {
@@ -94,8 +105,8 @@ export class RegisterComponent implements OnInit {
           `Wecome ${data.data.firstName}!`
         );
         localStorage.setItem("token", data.data.token);
-        localStorage.setItem("user", JSON.stringify(data.data));
-        this.backUrl();
+        this.authService.changeUserInfo(data.data);
+        // this.backUrl();
       })
       .catch((er) => {
         this.sweetalertService.alert(

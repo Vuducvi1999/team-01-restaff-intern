@@ -83,7 +83,6 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
   onLogout() {
     this.authService.changeUserInfo(null);
     localStorage.removeItem("token");
-    this.loadUrlNavaigate("/auth/login");
   }
   async loadHeaderModel() {
     await this.headerService.getHeader().then((res: ReturnMessage<HeaderModel>) => {

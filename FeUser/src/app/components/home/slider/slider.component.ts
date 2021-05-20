@@ -28,6 +28,15 @@ export class SliderComponent implements OnInit {
   }
 
   BannerClick(slider: BannerModel) {
-    if (slider.link) window.open(slider.link, "_blank");
+    if (slider?.link && slider?.link.search("www") > -1) {
+      window.open(slider.link, "_blank").focus();
+      return;
+    }
+    if(slider?.link)
+    {
+      this.route.navigateByUrl(slider.link);
+      return;
+    }
+    this.route.navigateByUrl('/product');
   }
 }
