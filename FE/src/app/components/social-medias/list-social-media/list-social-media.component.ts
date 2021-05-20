@@ -61,6 +61,10 @@ export class ListSocialMediaComponent implements OnInit {
       },
       link: {
         title: 'Link',
+        type: 'html',
+        valuePrepareFunction: (value) => {
+          return `<a href='${value}' target="_blank">${value}</a>`
+        },
       },
       displayOrder: {
         title: 'Display Order',

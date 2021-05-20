@@ -110,7 +110,7 @@ export class ProductDetailsComponent implements OnInit {
       .save(this.product)
       .then(() => {
         this.messageService.notification(
-          this.item ? 'Update Success' : 'Create Success',
+          this.item ? 'Product has been updated' : 'Product has been created',
           TypeSweetAlertIcon.SUCCESS
         );
         this.ngbActiveModal.close();

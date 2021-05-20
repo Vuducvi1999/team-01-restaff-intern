@@ -53,6 +53,13 @@ export class ListBannersComponent implements OnInit {
       description: {
         title: 'Description',
       },
+      link:{
+        title: 'Link',
+        type: 'html',
+        valuePrepareFunction: (value) => {
+          return `<a href='${value}' target="_blank">${value}</a>`
+        },
+      },
       displayOrder: {
         title: 'Display Order',
         value: 'displayOrder',

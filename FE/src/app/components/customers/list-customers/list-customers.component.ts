@@ -32,7 +32,7 @@ export class ListCustomersComponent implements OnInit {
   ) {
     this.getList();
   }
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   public settings = {
     mode: 'external',
@@ -75,9 +75,8 @@ export class ListCustomersComponent implements OnInit {
           .delete(category)
           .then((it: CustomerModel) => {
             this.messageService.notification(
-              `Delete Success`,
+              `Customer has been deleted`,
               TypeSweetAlertIcon.SUCCESS,
-              `Item ${it.id}`
             );
             this.getList();
           })
@@ -86,8 +85,8 @@ export class ListCustomersComponent implements OnInit {
               `Delete Fail`,
               TypeSweetAlertIcon.ERROR,
               er.error.message ??
-                JSON.stringify(er.error.error) ??
-                'Server Disconnected'
+              JSON.stringify(er.error.error) ??
+              'Server Disconnected'
             );
           });
       }
@@ -104,13 +103,13 @@ export class ListCustomersComponent implements OnInit {
       (close) => {
         this.getList();
       },
-      (dismiss) => {}
+      (dismiss) => { }
     );
   }
 
   getList() {
     this.customerService
-      .get({params: this.params})
+      .get({ params: this.params })
       .then((res: ReturnMessage<PageModel<CustomerModel>>) => {
         if (!res.hasError) {
           this.customers = res.data.results;
@@ -120,8 +119,8 @@ export class ListCustomersComponent implements OnInit {
       .catch((er) => {
         this.messageService.alert(
           er.error.message ??
-            JSON.stringify(er.error.error) ??
-            'Server Disconnected',
+          JSON.stringify(er.error.error) ??
+          'Server Disconnected',
           TypeSweetAlertIcon.ERROR
         );
       });

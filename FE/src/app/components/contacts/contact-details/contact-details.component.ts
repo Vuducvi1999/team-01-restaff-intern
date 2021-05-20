@@ -41,7 +41,7 @@ export class ContactDetailComponent implements OnInit {
     this.modalFooter.buttons = [
       {
         color: 'btn btn-primary',
-        title: 'back',
+        title: 'close',
         onAction: (event: any) => {
           this.ngbActiveModal.dismiss();
         },

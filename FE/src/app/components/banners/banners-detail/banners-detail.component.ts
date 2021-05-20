@@ -95,12 +95,10 @@ export class BannersDetailComponent implements OnInit {
       this.bannersService
         .save(this.banner)
         .then((res) => {
-          if (this.item) {
-            this.messageService.notification(
-              'Banner has been edited',
-              TypeSweetAlertIcon.SUCCESS
-            )
-          }
+          this.messageService.notification(
+           this.item? 'Banner has been edited':'Banner has been created',
+            TypeSweetAlertIcon.SUCCESS
+          )
           this.bannersForm.reset();
           this.submitted = false;
           this.ngbActiveModal.close();
@@ -134,7 +132,7 @@ export class BannersDetailComponent implements OnInit {
         if (e.includes(event.remove)) {
           this.fileURL.splice(i, 1);
         }
-    });
+      });
     }
 
     if (event.removeAll) {

@@ -99,11 +99,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     await this.authService
       .register(data)
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
-        this.sweetalertService.notification(
-          "Register Success",
-          TypeSweetAlertIcon.SUCCESS,
-          `Wecome ${data.data.firstName}!`
-        );
         localStorage.setItem("token", data.data.token);
         this.authService.changeUserInfo(data.data);
         // this.backUrl();
