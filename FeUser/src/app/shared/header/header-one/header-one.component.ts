@@ -93,7 +93,6 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
   GotoWishList() {
     if (!this.user) {
       const modalRef = this.modalService.open(LoginModalComponent, {
-        size: "lg",
       });
       return;
     }
@@ -103,7 +102,6 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
   loadModal() {
     if (!this.user) {
       const modalRef = this.modalService.open(LoginModalComponent, {
-        size: "lg",
       });
       return;
     }
@@ -111,14 +109,11 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
 
   OpenLoginModal() {
     const modalRef = this.modalService.open(LoginModalComponent, {
-      size: "lg",
     });
-    modalRef.componentInstance.isLogin = true;
   }
 
   OpenRegisterModal() {
     const modalRef = this.modalService.open(LoginModalComponent, {
-      size: "lg",
     });
     modalRef.componentInstance.isRegister = true;
   }

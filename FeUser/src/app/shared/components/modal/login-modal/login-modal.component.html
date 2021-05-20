@@ -4,21 +4,11 @@
   </h3> -->
 
   <ngb-tabset
-    #tabSet="ngbTabset"
+    [activeId]="activeIdString"
     [justify]="'center'"
     [type]="'pills'"
     class="tabs tab-title"
   >
-    <ngb-tab class="text-center" *ngIf="!chooseTab">
-      <ng-template ngbTabTitle></ng-template>
-      <ng-template ngbTabContent>
-        <div class="text-center">
-          <div class="spinner-border" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-        </div>
-      </ng-template></ngb-tab
-    >
     <ngb-tab id="tab-login">
       <ng-template ngbTabTitle class="m-0">Login</ng-template>
       <ng-template ngbTabContent
@@ -187,7 +177,7 @@
                 formControlName="password"
                 id="password"
                 autocomplete="new-password"
-                placeholder="Enter your password"
+                placeholder="Password"
                 required=""
                 [ngClass]="{
                   'is-invalid': submitted && registerF.password.errors
@@ -210,7 +200,7 @@
                 formControlName="confirmpassword"
                 id="confirmpassword"
                 autocomplete="new-password"
-                placeholder="Enter your confirm password"
+                placeholder="Confirm password"
                 required=""
                 [ngClass]="{
                   'is-invalid': submitted && registerF.confirmpassword.errors

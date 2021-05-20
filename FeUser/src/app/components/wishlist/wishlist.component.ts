@@ -40,7 +40,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getList();
     this.subscription = this.authService.callUserInfo.subscribe((value) => {
-      console.log(value);
+      // console.log(value);
       if (!value) this.router.navigate([""]);
     });
   }
