@@ -68,8 +68,7 @@ export class CommentComponent implements OnInit {
       });
   }
 
-  returnLogin()
-  {
+  returnLogin() {
     this.routerHelper.redirectToLogin();
   }
 }
