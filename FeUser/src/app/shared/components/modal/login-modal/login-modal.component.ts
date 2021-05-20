@@ -87,11 +87,6 @@ export class LoginModalComponent {
     await this.authService
       .register(data)
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
-        this.messageService.notification(
-          "Register Success",
-          TypeSweetAlertIcon.SUCCESS,
-          `Wecome ${data.data.firstName}!`
-        );
         localStorage.setItem("token", data.data.token);
         localStorage.setItem("user", JSON.stringify(data.data));
         this.backUrl();
@@ -138,11 +133,6 @@ export class LoginModalComponent {
     await this.authService
       .login(data)
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
-        this.messageService.notification(
-          "Login Success",
-          TypeSweetAlertIcon.SUCCESS,
-          `Wecome ${data.data.firstName}!`
-        );
         localStorage.setItem("token", data.data.token);
         this.authService.changeUserInfo(data.data);
         this.backUrl();

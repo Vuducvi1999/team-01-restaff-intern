@@ -99,4 +99,13 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
     }
     this.loadUrlNavaigate("wishlist");
   }
+
+  loadModal() {
+    if (!this.user) {
+      const modalRef = this.modalService.open(LoginModalComponent, {
+        size: "lg",
+      });
+      return;
+    }
+  }
 }

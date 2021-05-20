@@ -31,13 +31,16 @@
               <ul class="onhover-show-div">
                 <ng-container *ngIf="!user">
                   <li>
+                    <a (click)="loadModal()"> Login/Register</a>
+                  </li>
+                  <!-- <li>
                     <a (click)="loadUrlNavaigate('/auth/login')"> Login </a>
                   </li>
                   <li>
                     <a (click)="loadUrlNavaigate('/auth/register')">
                       Register
                     </a>
-                  </li>
+                  </li> -->
                 </ng-container>
                 <ng-container *ngIf="user">
                   <li>
