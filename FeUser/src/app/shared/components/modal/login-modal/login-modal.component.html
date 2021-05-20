@@ -17,10 +17,12 @@
               autocomplete="username"
               placeholder="Username"
               required=""
-              [ngClass]="{ 'is-invalid': submitted && loginF.username.errors }"
+              [ngClass]="{
+                'is-invalid': loginSubmitted && loginF.username.errors
+              }"
             />
             <div
-              *ngIf="submitted && loginF.username.errors"
+              *ngIf="loginSubmitted && loginF.username.errors"
               class="invalid-feedback"
             >
               <div *ngIf="loginF.username.errors.required">
@@ -38,10 +40,12 @@
               autocomplete="new-password"
               placeholder="Enter your password"
               required=""
-              [ngClass]="{ 'is-invalid': submitted && loginF.password.errors }"
+              [ngClass]="{
+                'is-invalid': loginSubmitted && loginF.password.errors
+              }"
             />
             <div
-              *ngIf="submitted && loginF.password.errors"
+              *ngIf="loginSubmitted && loginF.password.errors"
               class="invalid-feedback"
             >
               <div *ngIf="loginF.password.errors.required">
@@ -69,11 +73,11 @@
                 placeholder="First Name"
                 required=""
                 [ngClass]="{
-                  'is-invalid': submitted && registerF.firstName.errors
+                  'is-invalid': registerSubmitted && registerF.firstName.errors
                 }"
               />
               <div
-                *ngIf="submitted && registerF.firstName.errors"
+                *ngIf="registerSubmitted && registerF.firstName.errors"
                 class="invalid-feedback"
               >
                 <div *ngIf="registerF.firstName.errors.required">
@@ -92,11 +96,11 @@
                 placeholder="Last Name"
                 required=""
                 [ngClass]="{
-                  'is-invalid': submitted && registerF.lastName.errors
+                  'is-invalid': registerSubmitted && registerF.lastName.errors
                 }"
               />
               <div
-                *ngIf="submitted && registerF.lastName.errors"
+                *ngIf="registerSubmitted && registerF.lastName.errors"
                 class="invalid-feedback"
               >
                 <div *ngIf="registerF.lastName.errors.required">
@@ -117,11 +121,11 @@
                 placeholder="Username"
                 required=""
                 [ngClass]="{
-                  'is-invalid': submitted && registerF.username.errors
+                  'is-invalid': registerSubmitted && registerF.username.errors
                 }"
               />
               <div
-                *ngIf="submitted && registerF.username.errors"
+                *ngIf="registerSubmitted && registerF.username.errors"
                 class="invalid-feedback"
               >
                 <div *ngIf="registerF.username.errors?.required">
@@ -133,7 +137,7 @@
               </div>
             </div>
             <div class="col-md-6 form-group">
-              <label for="email">email</label>
+              <label for="email">Email</label>
               <input
                 type="email"
                 class="form-control"
@@ -143,11 +147,11 @@
                 placeholder="Email"
                 required=""
                 [ngClass]="{
-                  'is-invalid': submitted && registerF.email.errors
+                  'is-invalid': registerSubmitted && registerF.email.errors
                 }"
               />
               <div
-                *ngIf="submitted && registerF.email.errors"
+                *ngIf="registerSubmitted && registerF.email.errors"
                 class="invalid-feedback"
               >
                 <div *ngIf="registerF.email.errors?.required">
@@ -174,11 +178,11 @@
                 placeholder="Enter your password"
                 required=""
                 [ngClass]="{
-                  'is-invalid': submitted && registerF.password.errors
+                  'is-invalid': registerSubmitted && registerF.password.errors
                 }"
               />
               <div
-                *ngIf="submitted && registerF.password.errors"
+                *ngIf="registerSubmitted && registerF.password.errors"
                 class="invalid-feedback"
               >
                 <div *ngIf="registerF.password.errors.required">
@@ -197,11 +201,12 @@
                 placeholder="Enter your confirm password"
                 required=""
                 [ngClass]="{
-                  'is-invalid': submitted && registerF.confirmpassword.errors
+                  'is-invalid':
+                    registerSubmitted && registerF.confirmpassword.errors
                 }"
               />
               <div
-                *ngIf="submitted && registerF.confirmpassword.errors"
+                *ngIf="registerSubmitted && registerF.confirmpassword.errors"
                 class="invalid-feedback"
               >
                 <div *ngIf="registerF.confirmpassword.errors.required">
