@@ -85,6 +85,7 @@ export class ProductDetailsComponent implements OnInit {
         'Invalid Form make sure you input valid value !',
         TypeSweetAlertIcon.ERROR
       );
+      this.submitted = true;
       return;
     }
     this.submitted = true;
