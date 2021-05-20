@@ -16,11 +16,13 @@ namespace Service.UserBlogs
     {
         private readonly IRepository<Blog> _blogRepository;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UserBlogService(IRepository<Blog> blogRepository, IMapper mapper)
+        public UserBlogService(IRepository<Blog> blogRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _blogRepository = blogRepository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
         }
 
         public ReturnMessage<BlogDTO> GetBlog(Guid id)
@@ -28,7 +30,9 @@ namespace Service.UserBlogs
             try
             {
                 var entity = _blogRepository.Find(id);
-                return new ReturnMessage<BlogDTO>(false, _mapper.Map<Blog, BlogDTO>(entity), MessageConstants.DeleteSuccess);
+                entity.Update();
+                _unitOfWork.SaveChanges();
+                return new ReturnMessage<BlogDTO>(false, _mapper.Map<Blog, BlogDTO>(entity), MessageConstants.GetSuccess);
             }
             catch (Exception ex)
             {
@@ -42,7 +46,7 @@ namespace Service.UserBlogs
             {
                 return new ReturnMessage<List<BlogDTO>>(false, null, MessageConstants.DeleteSuccess);
             }
-            var resultRecent = _blogRepository.Queryable().OrderBy(p => p.CreateByDate).Take(5).ToList();
+            var resultRecent = _blogRepository.Queryable().OrderByDescending(p => p.UpdateByDate).Take(5).ToList();
             var data = _mapper.Map<List<Blog>, List<BlogDTO>>(resultRecent);
             var result = new ReturnMessage<List<BlogDTO>>(false, data, MessageConstants.SearchSuccess);
             return result;
@@ -88,7 +92,10 @@ namespace Service.UserBlogs
         }
         private ReturnMessage<List<BlogDTO>> TakeBlog(int number)
         {
-            var resultTop = _blogRepository.Queryable().OrderBy(p => p.Title).Take(number).ToList();
+            var resultTop = _blogRepository.Queryable().
+                OrderByDescending(it => it.RatingScore).ThenBy(p => p.Title).
+                ThenBy(it => it.Title.Length)
+                .Take(number).ToList();
             var data = _mapper.Map<List<Blog>, List<BlogDTO>>(resultTop);
             var result = new ReturnMessage<List<BlogDTO>>(false, data, MessageConstants.SearchSuccess);
             return result;
