@@ -79,11 +79,6 @@ export class LoginComponent implements OnInit {
     await this.authService
       .login(data)
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
-        this.messageService.notification(
-          'Login Success',
-          TypeSweetAlertIcon.SUCCESS,
-          `Wecome ${data.data.firstName}!`,
-        );
         localStorage.setItem('token', data.data.token);
         localStorage.setItem('user', JSON.stringify(data.data));
         this.backUrl();

@@ -144,27 +144,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
     var data: ChangePasswordProfileModel = this.changePasswordForm.value;
 
-    await this.messageService
-      .confirm("Do you want to save the changes?", "Save")
-      .then((res) => {
-        if (res.isConfirmed) {
-          this.profileService
-            .changePassword(data)
-            .then((res: ReturnMessage<null>) => {
-              this.messageService.notification(
-                "Change Password Success",
-                TypeSweetAlertIcon.SUCCESS
-              );
-              this.passwordSwith();
-            })
-            .catch((er) => {
-              this.messageService.alert(
-                "Change Password Fail",
-                TypeSweetAlertIcon.ERROR,
-                er.error.message ?? er.error.error ?? "Server Disconnected"
-              );
-            });
-        }
+    await this.profileService
+      .changePassword(data)
+      .then((res: ReturnMessage<null>) => {
+        this.messageService.notification(
+          "Change Password Success",
+          TypeSweetAlertIcon.SUCCESS
+        );
+        this.passwordSwith();
+      })
+      .catch((er) => {
+        this.messageService.alert(
+          "Change Password Fail",
+          TypeSweetAlertIcon.ERROR,
+          er.error.message ?? er.error.error ?? "Server Disconnected"
+        );
       });
   }
 
@@ -187,30 +181,24 @@ export class ProfileComponent implements OnInit, OnDestroy {
       phone: dataProfileForm.phone,
     };
 
-    await this.messageService
-      .confirm("Do you want to save the changes?", "Save")
-      .then((result) => {
-        if (result.isConfirmed) {
-          this.profileService
-            .update(data)
-            .then((res: ReturnMessage<UserDataReturnDTOModel>) => {
-              this.authService.changeUserInfo(res.data);
-              this.messageService.notification(
-                "Upload Profile Success",
-                TypeSweetAlertIcon.SUCCESS
-              );
-              this.profileSwith();
-            })
-            .catch((er) => {
-              this.messageService.alert(
-                "Upload Profile Fail",
-                TypeSweetAlertIcon.ERROR,
-                er.error.message ??
-                  JSON.stringify(er.error.error) ??
-                  "Server Disconnected"
-              );
-            });
-        }
+    await this.profileService
+      .update(data)
+      .then((res: ReturnMessage<UserDataReturnDTOModel>) => {
+        this.authService.changeUserInfo(res.data);
+        this.messageService.notification(
+          "Upload Profile Success",
+          TypeSweetAlertIcon.SUCCESS
+        );
+        this.profileSwith();
+      })
+      .catch((er) => {
+        this.messageService.alert(
+          "Upload Profile Fail",
+          TypeSweetAlertIcon.ERROR,
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            "Server Disconnected"
+        );
       });
   }
 

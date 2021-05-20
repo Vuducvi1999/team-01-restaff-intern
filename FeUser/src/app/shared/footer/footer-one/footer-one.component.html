@@ -56,23 +56,22 @@
                   [data]="{
                     url: footerModel?.informationWeb?.logo,
                     typeClass: typeDisplayImage.LOGO_IMAGE_FOOTER
-                  }"></app-image-wrapper>
+                  }"
+                ></app-image-wrapper>
               </a>
             </div>
             <p>{{ footerModel?.informationWeb?.description }}</p>
             <div class="footer-social">
               <ul *ngIf="footerModel?.socialMedias">
                 <li *ngFor="let item of footerModel?.socialMedias">
-                  <a href="{{item.link}}">
-                  <img
-                    appUiImageLoader
-                    src="{{ item.iconUrl }}"
-                    width="30"
-                    height="30"
-                    class="img-30 rounded-circle"
-                    
-                  />
-                </a>
+                  <a href="{{ item.link }}" target="_blank">
+                    <app-image-wrapper
+                      [data]="{
+                        url: item.iconUrl,
+                        typeClass: typeDisplayImage.ICON_IMAGE_FOOTER
+                      }"
+                    ></app-image-wrapper>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -88,7 +87,7 @@
                 <li *ngFor="let item of footerModel?.categories | slice: 0:5">
                   <a href="/product?search.categoryName={{ item.name }}">{{
                     item.name
-                    }}</a>
+                  }}</a>
                 </li>
               </ul>
             </div>
@@ -104,7 +103,7 @@
                 <li *ngFor="let pageContent of footerModel?.pageContents">
                   <a [routerLink]="['/page-info', pageContent.id]">{{
                     pageContent.title
-                    }}</a>
+                  }}</a>
                 </li>
               </ul>
             </div>
