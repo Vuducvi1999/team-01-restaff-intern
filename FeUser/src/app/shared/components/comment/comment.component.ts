@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 import { CreateCommentModel } from "src/app/lib/data/models/comments/comment.model";
 import { MessageService } from "src/app/lib/data/services";
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
+import { RouterHelperService } from "src/app/lib/helpers";
 
 @Component({
   selector: "app-comment",
@@ -37,7 +39,8 @@ export class CommentComponent implements OnInit {
   constructor(
     private commentService: CommentService,
     private fb: FormBuilder,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private routerHelper: RouterHelperService
   ) {}
 
   ngOnInit() {
@@ -63,5 +66,10 @@ export class CommentComponent implements OnInit {
       .catch((e) => {
         this.messageService.alert(e.error.message);
       });
+  }
+
+  returnLogin()
+  {
+    this.routerHelper.redirectToLogin();
   }
 }
