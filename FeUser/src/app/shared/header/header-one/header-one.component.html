@@ -17,7 +17,7 @@
         <div class="col-lg-6 text-right">
           <ul class="header-dropdown">
             <li class="m-0 p-0"></li>
-            <li class="mobile-wishlist" (click)="GotoWishList()">
+            <li class="mobile-wishlist" (click)="GotoWishList()" *ngIf="user">
               <!-- <a [routerLink]="['/wishlist']" -->
               <i class="fa fa-heart" aria-hidden="true"></i>Wishlist
             </li>
