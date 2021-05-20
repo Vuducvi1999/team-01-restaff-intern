@@ -19,7 +19,6 @@ import { CommentService } from "src/app/lib/data/services/comments/comment.servi
       }
       .checkLogin {
         font-size: 1rem;
-        font-style: italic;
         margin: 0;
       }
       .review {
