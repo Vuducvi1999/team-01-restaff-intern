@@ -76,11 +76,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     await this.authService
       .login(data)
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
-        this.sweetalertService.notification(
-          "Login Success",
-          TypeSweetAlertIcon.SUCCESS,
-          `Wecome ${data.data.firstName}!`
-        );
         localStorage.setItem("token", data.data.token);
         this.authService.changeUserInfo(data.data);
         // this.backUrl();
