@@ -103,6 +103,16 @@ img.customer-comment-image {
   margin-bottom: 10px !important;
 }
 
-// .wishlist-tab .tab-content:first-child {
-//   text-align: center;
-// }
+.main-menu .menu-left .navbar {
+  display: inline-block;
+  /* padding: 40px 45px 40px 0; */
+  padding: 0 40px 0 0;
+}
+
+header .main-navbar .nav-menu > li > a {
+  padding: 20px 45px 20px 0;
+}
+
+.onhover-div {
+  padding: 20px 0 20px 0;
+}
