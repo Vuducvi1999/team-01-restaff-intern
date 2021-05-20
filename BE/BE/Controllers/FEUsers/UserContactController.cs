@@ -1,28 +1,27 @@
-﻿using BE.Controllers;
-using Common.Constants;
+﻿using Common.Constants;
 using Domain.DTOs.Contact;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Contacts;
 using Service.Files;
-using Service.Home;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace BE.FeUserControllers.FEUsers
+namespace BE.Controllers.FEUsers
 {
-    [Route(UrlConstants.BaseContact)]
+    [Route(UrlConstants.BaseUserContact)]
     [ApiController]
-    public class ContactController : BaseController
+    public class UserContactController : BaseController
     {
         private readonly IContactService _contactService;
 
-        public ContactController(IContactService contactService, IAuthService authService, IUserManager userManager, IFileService fileService) : base(authService, userManager, fileService)
+        public UserContactController(IContactService contactService, IAuthService authService, IUserManager userManager, IFileService fileService) : base(authService, userManager, fileService)
         {
             _contactService = contactService;
         }
-
-
         [HttpPost]
         public IActionResult Post([FromBody] CreateContactDTO model)
         {

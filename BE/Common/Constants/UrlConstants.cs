@@ -91,12 +91,22 @@ namespace Common.Constants
         public const string GetUserBlog = BaseBlog + "/user";
 
         public const string BaseInformationWebsite = BaseApi + "/info-website";
+        public const string BaseUserInformationWebsite = BaseUser + "/info-website";
 
         // Page Content
         public const string BasePageContent = BaseApi + "/page-content";
         public const string GetPageContent = BaseApi + "/page-content/{id}";
+
+        //User Page Content
+        public const string BaseUserPageContent = BaseUser + "/page-content";
+        public const string GetPageContentUser = BaseUser + "/page-content/{id}";
+
         // Contact
         public const string BaseContact = BaseApi + "/contact";
+
+        //User Contact
+        public const string BaseUserContact = BaseUser + "/contact";
+
         // Comment
         public const string BaseComment = BaseApi + "/comment";
         public const string GetCommentBlog = BaseComment + "/blog";

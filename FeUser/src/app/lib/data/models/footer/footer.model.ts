@@ -1,5 +1,11 @@
+import { CategoryModel } from "../categories/category.model";
+import { InformationWebModel } from "../informationweb/informationweb.model";
+import { PageContentModel } from "../pageContent/pageContent.model";
+import { SocialMediaModel } from "../social-medias/social-media.model";
+
 export interface FooterModel {
-    categories:any[];
-    socialMedias:any[];
-    informationWeb: {address:string, phone:string , email: string, fax: string, logo: string, title: string, description: string};
+    categories: CategoryModel[];
+    socialMedias: SocialMediaModel[];
+    pageContents : PageContentModel[];
+    informationWeb: InformationWebModel;
 }

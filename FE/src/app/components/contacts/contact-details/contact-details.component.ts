@@ -43,7 +43,7 @@ export class ContactDetailComponent implements OnInit {
         color: 'btn btn-primary',
         title: 'back',
         onAction: (event: any) => {
-          this.ngbActiveModal.close();
+          this.ngbActiveModal.dismiss();
         },
       },
     ];

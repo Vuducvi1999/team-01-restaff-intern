@@ -1,9 +1,10 @@
+import { BlogModel, CategoryModel } from "..";
+import { InformationWebModel } from "../informationweb/informationweb.model";
+
 export interface HeaderModel {
-    categories:any[];
-    blogs:any[];
-}
-export interface InfoHeaderModel {
-	informationWeb: {address:string, phone: string, email: string, fax: string, logo: string, title: string, description: string};
+	categories: CategoryModel[],
+	blogs: BlogModel[],
+	informationWeb: InformationWebModel;
 }
 export interface Menu {
 	path?: string;

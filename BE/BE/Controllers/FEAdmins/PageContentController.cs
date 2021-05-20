@@ -11,9 +11,10 @@ using System;
 
 namespace BE.ControllersFeUser.FEAdmins
 {
+    [Authorize]
     [Route(UrlConstants.BasePageContent)]
     [ApiController]
-    public class PageContentController: BaseController
+    public class PageContentController : BaseController
     {
         private readonly IPageContentService _pageContentService;
 
@@ -37,7 +38,6 @@ namespace BE.ControllersFeUser.FEAdmins
             return CommonResponse(result);
         }
 
-        [Authorize]
         [HttpPut]
         public IActionResult Put([FromBody] UpdatePageContentDTO model)
         {
