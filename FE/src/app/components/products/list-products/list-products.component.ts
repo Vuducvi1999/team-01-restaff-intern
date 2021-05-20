@@ -48,7 +48,6 @@ export class ListProductsComponent implements OnInit {
       },
       name: {
         title: 'Name',
-        filter: false,
         type: 'custom',
         renderComponent: CustomViewCellStringComponent,
       },
