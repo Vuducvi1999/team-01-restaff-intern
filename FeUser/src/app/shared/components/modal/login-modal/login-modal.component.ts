@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import {
   AuthLoginModel,
+  AuthRegistModel,
   ReturnMessage,
   TypeSweetAlertIcon,
 } from "src/app/lib/data/models";
@@ -19,6 +20,7 @@ import { AuthService } from "src/app/lib/data/services/auth/auth.service";
 export class LoginModalComponent {
   public loginForm: FormGroup;
   submitted = false;
+  registForm: FormGroup;
 
   constructor(
     private authService: AuthService,
@@ -29,6 +31,80 @@ export class LoginModalComponent {
     public activeModal: NgbActiveModal
   ) {
     this.createLoginForm();
+    this.createRegistForm();
+    if (localStorage.getItem("token")) {
+      this.backUrl();
+    }
+  }
+
+  createRegistForm() {
+    this.registForm = this.formBuilder.group(
+      {
+        firstName: [null, [Validators.required]],
+        lastName: [null, [Validators.required]],
+        username: [null, [Validators.required]],
+        email: [
+          null,
+          [
+            Validators.required,
+            Validators.pattern(
+              "[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}"
+            ),
+          ],
+        ],
+        password: [null, [Validators.required]],
+        confirmpassword: [null, [Validators.required]],
+      },
+      { validators: this.checkValidators }
+    );
+  }
+
+  get registerF() {
+    return this.registForm.controls;
+  }
+
+  checkValidators(group: FormGroup) {
+    const pass = group.get("password");
+    const confirmpass = group.get("confirmpassword");
+    if (pass.value !== confirmpass.value) {
+      confirmpass.setErrors({ mustMatch: true });
+    }
+  }
+
+  async onRegist() {
+    this.submitted = true;
+
+    if (this.registForm.invalid) {
+      return;
+    }
+
+    var data: AuthRegistModel = this.registForm.value;
+    data.username = data.username.trim();
+    data.lastName = data.lastName.trim();
+    data.firstName = data.firstName.trim();
+    data.email = data.email.trim();
+    data.confirmpassword = undefined;
+    await this.authService
+      .register(data)
+      .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
+        this.messageService.notification(
+          "Register Success",
+          TypeSweetAlertIcon.SUCCESS,
+          `Wecome ${data.data.firstName}!`
+        );
+        localStorage.setItem("token", data.data.token);
+        localStorage.setItem("user", JSON.stringify(data.data));
+        this.backUrl();
+      })
+      .catch((er) => {
+        this.messageService.alert(
+          "Register Fail",
+          TypeSweetAlertIcon.ERROR,
+          er.error.message ??
+            JSON.stringify(er.error.error) ??
+            "Server Disconnected"
+        );
+      });
   }
 
   createLoginForm() {
@@ -47,7 +123,7 @@ export class LoginModalComponent {
     this.router.navigateByUrl(url);
   }
 
-  get f() {
+  get loginF() {
     return this.loginForm.controls;
   }
 

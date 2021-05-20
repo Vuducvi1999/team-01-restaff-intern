@@ -85,6 +85,7 @@ export class ProductDetailsComponent implements OnInit {
         'Invalid Form make sure you input valid value !',
         TypeSweetAlertIcon.ERROR
       );
+      this.submitted = true;
       return;
     }
     this.submitted = true;
@@ -168,7 +169,7 @@ export class ProductDetailsComponent implements OnInit {
     });
 
     this.modalHeader = new ModalHeaderModel();
-    this.modalHeader.title = this.item ? `Update ${this.item.name}` : `Add`;
+    this.modalHeader.title = this.item ? `Update ${this.item.name}` : `Add New Product`;
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
   }
