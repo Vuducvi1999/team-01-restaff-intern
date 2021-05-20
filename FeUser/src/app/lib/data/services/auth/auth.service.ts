@@ -33,7 +33,7 @@ export class AuthService {
   }
 
   private static userInfo = new BehaviorSubject<UserDataReturnDTOModel>(
-    JSON.parse(localStorage["user"] || 'null')
+    JSON.parse(localStorage["user"] || "null")
   );
   callUserInfo = AuthService.userInfo.asObservable();
 

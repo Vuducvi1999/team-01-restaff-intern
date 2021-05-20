@@ -51,8 +51,8 @@ img.customer-comment-image {
   border-radius: 100%;
 }
 .product-details {
-  height: 270px ;
-  width: 150px ;
+  height: 270px;
+  width: 150px;
   display: inline-block;
 }
 .product-details-main {
@@ -97,4 +97,22 @@ img.customer-comment-image {
 .logo-page-content {
   width: 100px;
   height: 100px;
+}
+
+.wishlist-tab ul {
+  margin-bottom: 10px !important;
+}
+
+.main-menu .menu-left .navbar {
+  display: inline-block;
+  /* padding: 40px 45px 40px 0; */
+  padding: 0 40px 0 0;
+}
+
+header .main-navbar .nav-menu > li > a {
+  padding: 25px 45px 25px 0;
+}
+
+.onhover-div {
+  padding: 25px 0 25px 0;
 }

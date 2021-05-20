@@ -1,7 +1,13 @@
-import { Component } from "@angular/core";
+import {
+  AfterContentInit,
+  Component,
+  Input,
+  OnDestroy,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbActiveModal, NgbTabset } from "@ng-bootstrap/ng-bootstrap";
+import { Subscription } from "rxjs";
 import {
   AuthLoginModel,
   AuthRegistModel,
@@ -17,24 +23,41 @@ import { AuthService } from "src/app/lib/data/services/auth/auth.service";
   templateUrl: "./login-modal.component.html",
   styleUrls: ["./login-modal.component.scss"],
 })
-export class LoginModalComponent {
+export class LoginModalComponent
+  implements AfterContentInit, OnDestroy
+{
   public loginForm: FormGroup;
   submitted = false;
   registForm: FormGroup;
+  @Input() isRegister;
+  activeIdString = "tab-login";
+
+  subDataUser: Subscription;
+  userInfo: UserDataReturnDTOModel;
 
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private router: Router,
-    private activedRoute: ActivatedRoute,
     public activeModal: NgbActiveModal
   ) {
     this.createLoginForm();
     this.createRegistForm();
-    if (localStorage.getItem("token")) {
-      this.backUrl();
-    }
+  }
+
+  ngAfterContentInit() {
+    this.subDataUser = this.authService.callUserInfo.subscribe((res) => {
+      this.userInfo = res;
+      if (this.userInfo) {
+        this.activeModal.dismiss();
+      }
+    });
+    if (this.isRegister) this.activeIdString = "tab-register";
+  }
+  ngOnDestroy(): void {
+    this.subDataUser.unsubscribe();
+    this.subDataUser = null;
   }
 
   createRegistForm() {
@@ -80,21 +103,15 @@ export class LoginModalComponent {
 
     var data: AuthRegistModel = this.registForm.value;
     data.username = data.username.trim();
-    data.lastName = data.lastName.trim();
+    data.lastName = data.lastName;
     data.firstName = data.firstName.trim();
     data.email = data.email.trim();
     data.confirmpassword = undefined;
     await this.authService
       .register(data)
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
-        this.messageService.notification(
-          "Register Success",
-          TypeSweetAlertIcon.SUCCESS,
-          `Wecome ${data.data.firstName}!`
-        );
         localStorage.setItem("token", data.data.token);
-        localStorage.setItem("user", JSON.stringify(data.data));
-        this.backUrl();
+        this.authService.changeUserInfo(data.data);
       })
       .catch((er) => {
         this.messageService.alert(
@@ -112,11 +129,6 @@ export class LoginModalComponent {
       username: [null, [Validators.required]],
       password: [null, [Validators.required]],
     });
-  }
-
-  backUrl() {
-    var returnUrl = this.activedRoute.snapshot.queryParams["returnUrl"] || "/";
-    this.callUrl(returnUrl);
   }
 
   callUrl(url: string) {
@@ -138,15 +150,8 @@ export class LoginModalComponent {
     await this.authService
       .login(data)
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
-        this.messageService.notification(
-          "Login Success",
-          TypeSweetAlertIcon.SUCCESS,
-          `Wecome ${data.data.firstName}!`
-        );
         localStorage.setItem("token", data.data.token);
         this.authService.changeUserInfo(data.data);
-        this.backUrl();
-        this.activeModal.dismiss();
       })
       .catch((er) => {
         this.messageService.alert(
