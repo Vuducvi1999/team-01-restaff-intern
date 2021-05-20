@@ -19,7 +19,8 @@ import { AuthService } from "src/app/lib/data/services/auth/auth.service";
 })
 export class LoginModalComponent {
   public loginForm: FormGroup;
-  submitted = false;
+  loginSubmitted = false;
+  registerSubmitted = false;
   registForm: FormGroup;
 
   constructor(
@@ -72,7 +73,7 @@ export class LoginModalComponent {
   }
 
   async onRegist() {
-    this.submitted = true;
+    this.registerSubmitted = true;
 
     if (this.registForm.invalid) {
       return;
@@ -95,6 +96,7 @@ export class LoginModalComponent {
         localStorage.setItem("token", data.data.token);
         localStorage.setItem("user", JSON.stringify(data.data));
         this.backUrl();
+        this.activeModal.dismiss();
       })
       .catch((er) => {
         this.messageService.alert(
@@ -128,7 +130,7 @@ export class LoginModalComponent {
   }
 
   async onLogin() {
-    this.submitted = true;
+    this.loginSubmitted = true;
     if (this.loginForm.invalid) {
       return;
     }
