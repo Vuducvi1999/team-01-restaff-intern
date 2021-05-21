@@ -16,7 +16,7 @@ namespace Domain.DTOs.Products
         public string ContentHTML { get; set; }
 
         public bool HasDisplayHomePage { get; set; }
-
+        public decimal RatingScore { get; set; }
         public int DisplayOrder { get; set; }
         public Guid CategoryId { get; set; }
         public string CategoryName { get; set; }
@@ -25,6 +25,6 @@ namespace Domain.DTOs.Products
         public int SaleCount { get; set; }
         public bool IsInWishList { get; set; }
         public List<CustomerWishListDTO> CustomerWishLists { get; set; }
-        //public decimal RatingScore { get; set; } = 0;
+        
     }
 }

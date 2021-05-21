@@ -10,6 +10,7 @@ export interface ProductModel extends BaseModel {
   categoryName: string;
   price: number;
   isImportant: boolean;
+  ratingScore: number;
   quantity?: number;
   saleCount: number;
   isInWishList?: boolean;

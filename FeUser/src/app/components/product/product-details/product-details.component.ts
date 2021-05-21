@@ -121,7 +121,7 @@ export class ProductDetailsComponent implements OnInit {
     this.dataComment = {
       entityId: this.activatedRoute.snapshot.queryParamMap.get("id"),
       entityType: "Product",
-      rating: 0,
+      rating: 5,
     };
   }
 
