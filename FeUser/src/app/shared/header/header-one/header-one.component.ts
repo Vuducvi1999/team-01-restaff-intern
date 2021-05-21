@@ -93,10 +93,28 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
   GotoWishList() {
     if (!this.user) {
       const modalRef = this.modalService.open(LoginModalComponent, {
-        size: "lg",
       });
       return;
     }
     this.loadUrlNavaigate("wishlist");
+  }
+
+  loadModal() {
+    if (!this.user) {
+      const modalRef = this.modalService.open(LoginModalComponent, {
+      });
+      return;
+    }
+  }
+
+  OpenLoginModal() {
+    const modalRef = this.modalService.open(LoginModalComponent, {
+    });
+  }
+
+  OpenRegisterModal() {
+    const modalRef = this.modalService.open(LoginModalComponent, {
+    });
+    modalRef.componentInstance.isRegister = true;
   }
 }

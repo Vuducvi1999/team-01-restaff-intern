@@ -1,5 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-import { FileService, MessageService } from "src/app/lib/data/services";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import {
+  AuthService,
+  FileService,
+  MessageService,
+} from "src/app/lib/data/services";
 import {
   PageModel,
   ProductModel,
@@ -10,6 +14,9 @@ import { UserModel } from "src/app/lib/data/models/users/user.model";
 import { TypeDisplayImage } from "src/app/shared/data";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { SaveCustomerWishListModel } from "src/app/lib/data/models/customerWishList/customerWishList.model";
+import { UserMangermentService } from "src/app/lib/data/services/users/user-mangerment.service";
+import { Router } from "@angular/router";
+import { Subscriber, Subscription } from "rxjs";
 
 @Component({
   selector: "app-wishlist",
@@ -17,18 +24,30 @@ import { SaveCustomerWishListModel } from "src/app/lib/data/models/customerWishL
   styleUrls: ["./wishlist.component.scss"],
   providers: [CustomerWishListService, CartService],
 })
-export class WishlistComponent implements OnInit {
+export class WishlistComponent implements OnInit, OnDestroy {
   products: ProductModel[] = [];
   typeDisplayImage = TypeDisplayImage;
+  subscription: Subscription;
 
   constructor(
     private wishListService: CustomerWishListService,
     public cartService: CartService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.getList();
+    this.subscription = this.authService.callUserInfo.subscribe((value) => {
+      // console.log(value);
+      if (!value) this.router.navigate([""]);
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+    this.subscription = null;
   }
 
   addToCart(product: any) {

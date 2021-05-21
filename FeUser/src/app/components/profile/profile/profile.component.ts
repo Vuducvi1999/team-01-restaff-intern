@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
+import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import {
   ChangePasswordProfileModel,
@@ -45,7 +46,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private profileService: ProfileService,
     private authService: AuthService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) {
     // this.user = JSON.parse(localStorage.getItem("user"));
     // if (this.user) {
@@ -66,6 +68,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.subDataUser = this.authService.callUserInfo.subscribe((it) => {
       this.user = it;
       this.createProfileForm();
+      if (!it) this.router.navigate([""]);
     });
     this.createChangePasswordForm();
   }

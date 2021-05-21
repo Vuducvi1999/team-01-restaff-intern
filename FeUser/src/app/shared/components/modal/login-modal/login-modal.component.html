@@ -1,9 +1,15 @@
 <div class="modal-body wishlist-tab theme-tab">
-  <h3 class="text-center mb-4" style="font-weight: bold; color: black">
+  <!-- <h3 class="text-center mb-4" style="font-weight: bold; color: black">
     Please login to go to wish list
-  </h3>
-  <ngb-tabset [justify]="'center'" [type]="'pills'" class="tabs tab-title">
-    <ngb-tab class="m-0">
+  </h3> -->
+
+  <ngb-tabset
+    [activeId]="activeIdString"
+    [justify]="'center'"
+    [type]="'pills'"
+    class="tabs tab-title"
+  >
+    <ngb-tab id="tab-login">
       <ng-template ngbTabTitle class="m-0">Login</ng-template>
       <ng-template ngbTabContent
         ><form class="theme-form" [formGroup]="loginForm">
@@ -53,7 +59,7 @@
         </form>
       </ng-template>
     </ngb-tab>
-    <ngb-tab>
+    <ngb-tab id="tab-register">
       <ng-template ngbTabTitle>Register</ng-template>
       <ng-template ngbTabContent
         ><form class="theme-form" [formGroup]="registForm">
@@ -133,7 +139,7 @@
               </div>
             </div>
             <div class="col-md-6 form-group">
-              <label for="email">email</label>
+              <label for="email">Email</label>
               <input
                 type="email"
                 class="form-control"
@@ -171,7 +177,7 @@
                 formControlName="password"
                 id="password"
                 autocomplete="new-password"
-                placeholder="Enter your password"
+                placeholder="Password"
                 required=""
                 [ngClass]="{
                   'is-invalid': submitted && registerF.password.errors
@@ -194,7 +200,7 @@
                 formControlName="confirmpassword"
                 id="confirmpassword"
                 autocomplete="new-password"
-                placeholder="Enter your confirm password"
+                placeholder="Confirm password"
                 required=""
                 [ngClass]="{
                   'is-invalid': submitted && registerF.confirmpassword.errors
