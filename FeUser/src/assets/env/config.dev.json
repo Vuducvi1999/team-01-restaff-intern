@@ -1,6 +1,6 @@
 {
   "domain_login": null,
-  "API_URL": "https://shopclothing-team01-be-user.herokuapp.com",
+  "API_URL": "https://localhost:44309",
   "CDN_URL": null,
   "App_Name": null,
   "Data": "",

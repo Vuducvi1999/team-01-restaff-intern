@@ -120,7 +120,7 @@ namespace Service.Home
                                     .Include(t => t.Category)
                                     .Include(t => t.CustomerWishLists)
                                     .Where(i => i.IsDeleted == false)
-                                    .Where(i => i.IsImportant == true)
+                                    .Where(i => i.IsFeatured == true)
                                     .OrderByDescending(i => i.UpdateByDate)
                                     .Take(12)
                                     .ToList();

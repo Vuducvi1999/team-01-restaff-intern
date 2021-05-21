@@ -11,7 +11,7 @@ namespace Domain.DTOs.Products
 
         public string Description { get; set; }
 
-        public bool IsImportant { get; set; }
+        public bool IsFeatured { get; set; }
 
         public string ContentHTML { get; set; }
 

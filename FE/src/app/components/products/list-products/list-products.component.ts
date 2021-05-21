@@ -59,8 +59,8 @@ export class ListProductsComponent implements OnInit {
         title: 'Category Name',
         filter: false,
       },
-      isImportant: {
-        title: 'Is Important',
+      isFeatured: {
+        title: 'Is Featured',
         filter: false,
       },
       price: {
