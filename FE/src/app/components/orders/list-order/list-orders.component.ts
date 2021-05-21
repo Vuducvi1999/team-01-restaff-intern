@@ -2,7 +2,11 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { CheckboxControlValueAccessor } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PageModel, ReturnMessage, TypeSweetAlertIcon } from 'src/app/lib/data/models';
+import {
+  PageModel,
+  ReturnMessage,
+  TypeSweetAlertIcon,
+} from 'src/app/lib/data/models';
 import {
   OrderDetailModel,
   OrderModel,
@@ -50,13 +54,12 @@ export class ListOrdersComponent implements OnInit {
       },
       createByDate: {
         filter: false,
-        title: 'Created by Date',
+        title: 'Created Date',
         valuePrepareFunction: (date) => {
-          var raw = new Date(date);
-
-          var formatted = this.datePipe.transform(raw, 'dd MMM yyyy HH:mm:ss');
-          return formatted;
+          return this.datePipe.transform(new Date(date), 'dd/MM/yyyy');
         },
+        type: 'custom',
+        renderComponent: CustomViewCellComponent,
       },
       fullName: {
         title: 'Full Name',
@@ -125,7 +128,10 @@ export class ListOrdersComponent implements OnInit {
       size: 'lg',
     });
     modalRef.componentInstance.item = event?.data;
-    modalRef.result.then(() => this.getOrders(),(dismiss)=>{});
+    modalRef.result.then(
+      () => this.getOrders(),
+      (dismiss) => {}
+    );
   }
 
   statusFilter(status: string) {
