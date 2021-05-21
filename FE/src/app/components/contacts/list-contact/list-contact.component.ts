@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageModel, TypeSweetAlertIcon } from 'src/app/lib/data/models';
@@ -15,7 +16,7 @@ import { ContactDetailComponent } from '../contact-details/contact-details.compo
   selector: 'app-list-page-content',
   templateUrl: './list-contact.component.html',
   styleUrls: ['./list-contact.component.scss'],
-  providers: [ContactService],
+  providers: [ContactService, DatePipe],
 })
 export class ListContactComponent {
   public contacts: ContactModel[];
@@ -25,7 +26,8 @@ export class ListContactComponent {
   constructor(
     private modalService: NgbModal,
     private contactService: ContactService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private datePipe: DatePipe
   ) {
     this.getList();
   }
@@ -39,7 +41,7 @@ export class ListContactComponent {
     actions: {
       position: 'right',
       add: false,
-      delete:false,
+      delete: false,
     },
     columns: {
       firstName: {
@@ -59,6 +61,14 @@ export class ListContactComponent {
       },
       email: { title: 'Email' },
       status: { title: 'Status' },
+      createByDate: {
+        title: 'Create Date',
+        valuePrepareFunction: (date) => {
+          return this.datePipe.transform(new Date(date), 'dd/MM/yyyy');
+        },
+        type: 'custom',
+        renderComponent: CustomViewCellComponent,
+      },
     },
   };
 

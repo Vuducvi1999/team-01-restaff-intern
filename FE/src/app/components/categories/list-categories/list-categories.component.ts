@@ -45,13 +45,13 @@ export class ListCategoriesComponent implements OnInit {
       // },
       name: {
         title: 'Name',
-        filter: false,
         type: 'custom',
         renderComponent: CustomViewCellStringComponent,
       },
       description: {
         title: 'Description',
-        filter: false,
+        type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
       },
     },
   };
@@ -100,7 +100,7 @@ export class ListCategoriesComponent implements OnInit {
 
   fetch() {
     this.categoryService
-      .get({params: this.params})
+      .get({ params: this.params })
       .then((res: ReturnMessage<PageModel<CategoryModel>>) => {
         if (!res.hasError) {
           this.categories = res.data.results;

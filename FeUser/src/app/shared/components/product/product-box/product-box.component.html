@@ -59,7 +59,7 @@
       >
         <i class="ti-shopping-cart"></i>
       </a>
-      <a
+      <a *ngIf="userInfo"
         href="javascript:void(0)"
         title="Add to Wishlist"
         (click)="addToWishlist(product)"

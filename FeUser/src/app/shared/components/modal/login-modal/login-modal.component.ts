@@ -112,6 +112,7 @@ export class LoginModalComponent
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
         localStorage.setItem("token", data.data.token);
         this.authService.changeUserInfo(data.data);
+        window.location.reload();
       })
       .catch((er) => {
         this.messageService.alert(
@@ -152,6 +153,7 @@ export class LoginModalComponent
       .then((data: ReturnMessage<UserDataReturnDTOModel>) => {
         localStorage.setItem("token", data.data.token);
         this.authService.changeUserInfo(data.data);
+        window.location.reload();
       })
       .catch((er) => {
         this.messageService.alert(

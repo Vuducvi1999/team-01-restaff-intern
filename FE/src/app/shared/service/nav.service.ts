@@ -59,7 +59,7 @@ export class NavService {
       ],
     },
     {
-      title: 'Admins and Customers',
+      title: 'Admins & Customers',
       icon: 'users',
       type: 'sub',
       active: false,

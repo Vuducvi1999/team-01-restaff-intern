@@ -41,6 +41,7 @@ export class ListBannersComponent implements OnInit {
     },
     columns: {
       imageUrl: {
+        filter: false,
         title: 'Image',
         type: 'custom',
         renderComponent: ViewImageCellComponent,

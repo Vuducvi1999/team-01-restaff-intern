@@ -41,25 +41,23 @@ export class ListCustomersComponent implements OnInit {
     },
     columns: {
       username: {
-        filter: false,
         title: 'Username',
         type: 'custom',
         renderComponent: CustomViewCellStringComponent,
       },
       firstName: {
-        filter: false,
-        title: 'First Name',
+        title: 'First Name',type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
       },
       lastName: {
-        filter: false,
-        title: 'Last Name',
+        title: 'Last Name',type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
       },
       email: {
-        filter: false,
-        title: 'Email',
+        title: 'Email',type: 'custom',
+        renderComponent: CustomViewCellStringComponent,
       },
       phone: {
-        filter: false,
         title: 'Phone',
         type: 'custom',
         renderComponent: CustomViewCellComponent,
