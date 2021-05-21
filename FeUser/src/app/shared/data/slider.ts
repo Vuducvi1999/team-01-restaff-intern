@@ -22,8 +22,8 @@ export let HomeSlider: any = {
     940: {
       items: 1,
     },
-  };
-
+  },
+};
 // Blog Slider
 export let BlogSlider: any = {
   loop: true,
