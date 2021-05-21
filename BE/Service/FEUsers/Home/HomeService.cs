@@ -140,7 +140,7 @@ namespace Service.Home
         {
             try
             {
-                var resultEntity = _blogRepository.Queryable().OrderByDescending(it => it.UpdateByDate).Take(12).ToList();
+                var resultEntity = _blogRepository.Queryable().Where(i => i.IsDeleted == false).OrderByDescending(it => it.UpdateByDate).Take(12).ToList();
                 var data = _mapper.Map<List<Blog>, List<BlogDTO>>(resultEntity);
                 var result = new ReturnMessage<List<BlogDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;
@@ -155,7 +155,7 @@ namespace Service.Home
         {
             try
             {
-                var resultEntity = _bannerRepository.Queryable().Take(12).OrderBy(it => it.DisplayOrder).ToList();
+                var resultEntity = _bannerRepository.Queryable().Where(i => i.IsDeleted == false).Take(12).OrderBy(it => it.DisplayOrder).ToList();
                 var data = _mapper.Map<List<Banner>, List<BannerDTO>>(resultEntity);
                 var result = new ReturnMessage<List<BannerDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;
