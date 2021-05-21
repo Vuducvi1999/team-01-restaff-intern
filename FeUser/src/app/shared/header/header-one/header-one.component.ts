@@ -15,6 +15,7 @@ import { TypeDisplayImage } from "../../data";
 import { Subscription } from "rxjs";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { LoginModalComponent } from "../../components/modal/login-modal/login-modal.component";
+import { Title } from "@angular/platform-browser";
 
 @Component({
   selector: "app-header-one",
@@ -44,7 +45,8 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
     private router: Router,
     public headerService: HeaderService,
     private authService: AuthService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private titleService: Title
   ) {}
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
@@ -87,6 +89,7 @@ export class HeaderOneComponent implements OnInit, OnDestroy {
       .then((res: ReturnMessage<HeaderModel>) => {
         this.headerModel = res.data;
         this.headerService.changeHeaderModel(res.data);
+        this.titleService.setTitle(res.data.informationWeb.title);
       });
   }
 

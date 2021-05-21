@@ -10,6 +10,7 @@ using Domain.DTOs.Users;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
+using Microsoft.EntityFrameworkCore;
 using Service.Auth;
 using System;
 using System.Collections.Generic;
@@ -211,24 +212,23 @@ namespace Service.Customers
                 return new ReturnMessage<PaginatedList<CustomerDTO>>(false, null, MessageConstants.GetPaginationFail);
             }
 
-            var resultEntity = _userRepository.GetPaginatedList(it => it.Type == UserType.Customer && it.IsDeleted == false &&
-                (search.Search == null ||
-                    (
+            var query = _userRepository.Queryable().Include(it => it.Customer).Where(it => it.Type == UserType.Customer && it.IsDeleted == false &&
+                    (search.Search == null ||
                         (
-                            (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
-                            it.Username.Contains(search.Search.Username) ||
-                            it.Email.Contains(search.Search.Email) ||
-                            it.FirstName.Contains(search.Search.FirstName) ||
-                            it.LastName.Contains(search.Search.LastName) ||
-                            it.ImageUrl.Contains(search.Search.ImageUrl)
+                            (
+                                (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
+                                it.Username.Contains(search.Search.Username) ||
+                                it.Email.Contains(search.Search.Email) ||
+                                it.FirstName.Contains(search.Search.FirstName) ||
+                                it.LastName.Contains(search.Search.LastName) ||
+                                it.ImageUrl.Contains(search.Search.ImageUrl)
+                            )
                         )
                     )
                 )
-                , search.PageSize
-                , search.PageIndex * search.PageSize
-                , t => t.Username
-                , nameof(Customer)
-            );
+                .OrderBy(it => it.Username)
+                .ThenBy(it => it.Username.Length);
+            var resultEntity = new PaginatedList<User>(query, search.PageIndex * search.PageSize, search.PageSize);
             var data = _mapper.Map<PaginatedList<User>, PaginatedList<CustomerDTO>>(resultEntity);
             var result = new ReturnMessage<PaginatedList<CustomerDTO>>(false, data, MessageConstants.GetPaginationSuccess);
 

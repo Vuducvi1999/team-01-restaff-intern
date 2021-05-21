@@ -62,17 +62,16 @@ namespace Service.OrderDetails
                 return new ReturnMessage<PaginatedList<OrderDetailDTO>>(false, null, MessageConstants.GetPaginationFail);
             }
 
-            var resultEntity = _orderDetailRepository.GetPaginatedList(it => search.Search == null ||
-                (
+            var query = _orderDetailRepository.Queryable().Include(it => it.Product).Where(it => search.Search == null ||
                     (
-                        (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) 
+                        (
+                            (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id)
+                        )
                     )
                 )
-                , search.PageSize
-                , search.PageIndex
-                ,t=>t.Product
-                ,nameof(Product)
-            );
+                .OrderBy(it => it.Product.Name)
+                .ThenBy(it => it.Product.Name.Length);
+            var resultEntity = new PaginatedList<OrderDetail>(query, search.PageIndex * search.PageSize, search.PageSize);
             var data = _mapper.Map<PaginatedList<OrderDetail>, PaginatedList<OrderDetailDTO>>(resultEntity);
             var result = new ReturnMessage<PaginatedList<OrderDetailDTO>>(false, data, MessageConstants.GetPaginationSuccess);
 

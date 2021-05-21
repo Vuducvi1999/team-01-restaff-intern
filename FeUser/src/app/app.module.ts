@@ -1,4 +1,4 @@
-import { BrowserModule } from "@angular/platform-browser";
+import { BrowserModule, Title } from "@angular/platform-browser";
 import { APP_INITIALIZER, NgModule } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
@@ -54,6 +54,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [
     { provide: "BASE_URL", useValue: environment.host },
     AppConfig,
+    Title,
     {
       provide: APP_INITIALIZER,
       multi: true,

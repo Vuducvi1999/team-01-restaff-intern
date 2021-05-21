@@ -67,9 +67,9 @@ export class ListCouponComponent implements OnInit {
         title: 'Value',
         type: 'custom',
         renderComponent: CustomViewCellComponent,
-        filter: false,
       },
       startDate: {
+        filter: false,
         title: 'Start Date',
         valuePrepareFunction: (created) => {
           return this.datePipe.transform(new Date(created), 'dd/MM/yyyy');
@@ -78,6 +78,7 @@ export class ListCouponComponent implements OnInit {
         renderComponent: CustomViewCellComponent,
       },
       endDate: {
+        filter: false,
         title: 'End Date',
         valuePrepareFunction: (created) => {
           return this.datePipe.transform(new Date(created), 'dd/MM/yyyy');

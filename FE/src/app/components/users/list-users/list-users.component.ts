@@ -44,6 +44,7 @@ export class ListUsersComponent {
     },
     columns: {
       imageUrl: {
+        filter: false,
         title: 'Image',
         type: 'custom',
         renderComponent: ViewImageCellComponent,

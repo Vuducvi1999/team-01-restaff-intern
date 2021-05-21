@@ -12,6 +12,7 @@ using Domain.DTOs.Users;
 using Common.Enums;
 using System.Linq;
 using Common.StringEx;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service.Users
 {
@@ -122,24 +123,23 @@ namespace Service.Users
             {
                 return new ReturnMessage<PaginatedList<UserDTO>>(false, null, MessageConstants.GetPaginationFail);
             }
-
-            var resultEntity = _userRepository.GetPaginatedList(it => it.Type == UserType.Admin &&
-                (search.Search == null ||
-                    (
+            var query = _userRepository.Queryable().Where(it => it.Type == UserType.Admin &&
+                    (search.Search == null ||
                         (
-                            (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
-                            it.Username.Contains(search.Search.Username) ||
-                            it.Email.Contains(search.Search.Email) ||
-                            it.FirstName.Contains(search.Search.FirstName) ||
-                            it.LastName.Contains(search.Search.LastName) ||
-                            it.ImageUrl.Contains(search.Search.ImageUrl)
+                            (
+                                (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
+                                it.Username.Contains(search.Search.Username) ||
+                                it.Email.Contains(search.Search.Email) ||
+                                it.FirstName.Contains(search.Search.FirstName) ||
+                                it.LastName.Contains(search.Search.LastName) ||
+                                it.ImageUrl.Contains(search.Search.ImageUrl)
+                            )
                         )
                     )
                 )
-                , search.PageSize
-                , search.PageIndex
-                , t => t.CreateByDate
-            );
+                .OrderBy(it => it.Username)
+                .ThenBy(it => it.Username.Length);
+            var resultEntity = new PaginatedList<User>(query, search.PageIndex * search.PageSize, search.PageSize);
             var data = _mapper.Map<PaginatedList<User>, PaginatedList<UserDTO>>(resultEntity);
             var result = new ReturnMessage<PaginatedList<UserDTO>>(false, data, MessageConstants.GetPaginationSuccess);
 

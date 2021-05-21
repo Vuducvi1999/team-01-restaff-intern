@@ -104,21 +104,19 @@ namespace Service.Products
             {
                 return new ReturnMessage<PaginatedList<ProductDTO>>(false, null, MessageConstants.Error);
             }
-            var resultEntity = _productRepository.GetPaginatedList(it => (search.Search == null ||
-                (
+            var query = _productRepository.Queryable().Include(it => it.Category).Where(it => (search.Search == null ||
                     (
-                        (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
-                        it.Name.Contains(search.Search.Name) ||
-                        it.Description.Contains(search.Search.Description)
+                        (
+                            (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
+                            it.Name.Contains(search.Search.Name) ||
+                            it.Description.Contains(search.Search.Description)
 
-                    )
-                )) && !it.IsDeleted
-                , search.PageSize
-                , search.PageIndex * search.PageSize
-                , t => t.Name
-                , nameof(Category)
-            );
-
+                        )
+                    )) && !it.IsDeleted
+                )
+                .OrderBy(it => it.Name)
+                .ThenBy(it => it.Name.Length);
+            var resultEntity = new PaginatedList<Product>(query, search.PageIndex * search.PageSize, search.PageSize);
             var data = _mapper.Map<PaginatedList<Product>, PaginatedList<ProductDTO>>(resultEntity);
             var result = new ReturnMessage<PaginatedList<ProductDTO>>(false, data, MessageConstants.ListSuccess);
 

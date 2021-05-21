@@ -49,6 +49,7 @@ export class ListOrdersComponent implements OnInit {
         title: 'Code',
       },
       createByDate: {
+        filter: false,
         title: 'Created by Date',
         valuePrepareFunction: (date) => {
           var raw = new Date(date);
@@ -72,18 +73,22 @@ export class ListOrdersComponent implements OnInit {
         title: 'Email',
       },
       status: {
+        filter: false,
         title: 'Status',
       },
       note: {
+        filter: false,
         title: 'Note',
       },
       hasCoupon: {
+        filter: false,
         title: 'Coupon Applied',
         valuePrepareFunction: (cell, row) => {
           return cell ? row.couponName : '';
         },
       },
       totalAmount: {
+        filter: false,
         title: 'Total Amount',
         value: 'totalAmount',
         type: 'custom',
