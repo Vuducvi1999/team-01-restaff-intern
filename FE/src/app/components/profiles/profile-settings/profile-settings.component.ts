@@ -121,7 +121,6 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
       files: this.modalFile.listFile,
     };
 
-
     this.profileService
       .update(this.updateProfile)
       .then((resp: ReturnMessage<UserDataReturnDTOModel>) => {
@@ -138,14 +137,18 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
       .catch((er) => {
         this.messageService.alert(
           er.error.message ??
-          JSON.stringify(er.error.error) ??
-          'Server Disconnecter',
+            JSON.stringify(er.error.error) ??
+            'Server Disconnecter',
           TypeSweetAlertIcon.ERROR
         );
       });
   }
   changePassword() {
-    if (this.passwordForm.invalid) {
+    if (
+      this.passwordForm.invalid ||
+      this.passwordFormControl.confirmNewPassword.value !==
+        this.passwordFormControl.newPassword.value
+    ) {
       this.submitted = true;
       return;
     }
@@ -163,13 +166,14 @@ export class ProfileSettingsComponent implements OnInit, OnDestroy {
           'Password has been changed',
           TypeSweetAlertIcon.SUCCESS
         );
-        this.submitted=false;
+        this.submitted = false;
       })
       .catch((er) => {
         this.messageService.notification(
           er.error.message ??
-          JSON.stringify(er.error.error) ??
-          'Server Disconnected'
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
+          TypeSweetAlertIcon.ERROR
         );
       });
   }

@@ -252,9 +252,9 @@
                       formControlName="newPassword"
                       [ngClass]="{
                         'is-invalid':
-                          (passwordFormControl.newPassword.touched ||
+                          ((passwordFormControl.newPassword.touched ||
                             submitted) &&
-                          passwordFormControl.newPassword.errors?.required
+                            passwordFormControl.newPassword.errors?.required)
                       }"
                     />
                     <div class="invalid-feedback col-md-3 offset-md-4">
@@ -283,10 +283,12 @@
                       formControlName="confirmNewPassword"
                       [ngClass]="{
                         'is-invalid':
-                          (passwordFormControl.confirmNewPassword.touched ||
+                          ((passwordFormControl.confirmNewPassword.touched ||
                             submitted) &&
-                          passwordFormControl.confirmNewPassword.errors
-                            ?.required
+                            passwordFormControl.confirmNewPassword.errors
+                              ?.required) ||
+                          (passwordFormControl.confirmNewPassword.value !==
+                            passwordFormControl.newPassword.value) && passwordFormControl.confirmNewPassword.value.length > 0
                       }"
                     />
                     <div class="invalid-feedback col-md-7 offset-md-4">
@@ -301,6 +303,8 @@
                       >
                         This field is required
                       </span>
+                    </div>
+                    <div class="invalid-feedback col-md-7 offset-md-4 d-block">
                       <span
                         class="text-danger"
                         *ngIf="
