@@ -30,25 +30,32 @@
                   type="text"
                   required=""
                   formControlName="name"
+                  [ngClass]="{
+                    'is-invalid':
+                      (categoryFormsControl.name.touched || submitted) &&
+                      categoryFormsControl.name.errors?.required
+                  }"
                 />
-                <span
-                  class="text-danger"
-                  *ngIf="
-                    (categoryFormsControl.name.touched || submitted) &&
-                    categoryFormsControl.name.errors?.required
-                  "
-                  >Required</span
-                >
-                <span
-                  class="text-danger"
-                  *ngIf="categoryFormsControl.name.hasError('maxlength')"
-                  >Max: 50 characters</span
-                >
-                <span
-                  class="text-danger"
-                  *ngIf="categoryFormsControl.name.hasError('minlength')"
-                  >Min: 3 characters</span
-                >
+                <div class="invalid-feedback col-md-5 offset-md-3">
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (categoryFormsControl.name.touched || submitted) &&
+                      categoryFormsControl.name.errors?.required
+                    "
+                    >Required</span
+                  >
+                  <span
+                    class="text-danger"
+                    *ngIf="categoryFormsControl.name.hasError('maxlength')"
+                    >Max: 50 characters</span
+                  >
+                  <span
+                    class="text-danger"
+                    *ngIf="categoryFormsControl.name.hasError('minlength')"
+                    >Min: 3 characters</span
+                  >
+                </div>
               </div>
               <div class="form-group row">
                 <label for="validationCustom0" class="col-xl-3 col-md-4"
@@ -60,25 +67,36 @@
                   type="text"
                   required=""
                   formControlName="description"
+                  [ngClass]="{
+                    'is-invalid':
+                      (categoryFormsControl.description.touched || submitted) &&
+                      categoryFormsControl.description.errors?.required
+                  }"
                 />
-                <span
-                  class="text-danger"
-                  *ngIf="
-                    (categoryFormsControl.description.touched || submitted) &&
-                    categoryFormsControl.description.errors?.required
-                  "
-                  >Required</span
-                >
-                <span
-                  class="text-danger"
-                  *ngIf="categoryFormsControl.description.hasError('maxlength')"
-                  >Max: 100 characters</span
-                >
-                <span
-                  class="text-danger"
-                  *ngIf="categoryFormsControl.description.hasError('minlength')"
-                  >Min: 3 characters</span
-                >
+                <div class="invalid-feedback col-md-5 offset-md-3">
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      (categoryFormsControl.description.touched || submitted) &&
+                      categoryFormsControl.description.errors?.required
+                    "
+                    >Required</span
+                  >
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      categoryFormsControl.description.hasError('maxlength')
+                    "
+                    >Max: 100 characters</span
+                  >
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      categoryFormsControl.description.hasError('minlength')
+                    "
+                    >Min: 3 characters</span
+                  >
+                </div>
               </div>
               <div class="form-group row">
                 <label for="validationCustom2" class="col-xl-3 col-md-4"
