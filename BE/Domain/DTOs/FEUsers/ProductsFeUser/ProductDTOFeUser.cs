@@ -23,5 +23,6 @@ namespace Domain.DTOs.ProductsFeUser
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
         public decimal RatingScore { get; set; }
+        public bool IsInWishList { get; set; }
     }
 }

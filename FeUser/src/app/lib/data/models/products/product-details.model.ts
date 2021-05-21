@@ -12,4 +12,5 @@ export interface ProductDetailsModel extends BaseModel {
   price: number;
   isImportant: boolean;
   ratingScore: number;
+  isInWishList:boolean
 }

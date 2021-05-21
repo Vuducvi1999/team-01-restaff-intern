@@ -4,10 +4,12 @@ using Common.Http;
 using Common.Pagination;
 using Domain.DTOs.Categories;
 using Domain.DTOs.Products;
+using Domain.DTOs.Users;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
 using Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Service.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +23,16 @@ namespace Service.UserProductList
         private readonly IRepository<Category> _categoryRepository;
         private readonly IRepository<Product> _productRepository;
         private readonly IMapper _mapper;
+        private UserInformationDTO _userInformationDto;
+        private readonly IUserManager _userManager;
 
-        public UserProductListService(IRepository<Category> categoryRepository, IRepository<Product> productRepository, IMapper mapper)
+        public UserProductListService(IRepository<Category> categoryRepository, IRepository<Product> productRepository, IMapper mapper, IUserManager userManager)
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
             _mapper = mapper;
+            _userManager = userManager;
+            _userInformationDto = _userManager.GetInformationUser();
         }
 
         public ReturnMessage<List<ProductDTO>> GetByCategory(Guid id)
@@ -74,7 +80,11 @@ namespace Service.UserProductList
                     return new ReturnMessage<PaginatedList<ProductDTO>>(false, null, MessageConstants.Error);
                 }
 
-                var query = _productRepository.Queryable().Where(it => !it.IsDeleted);
+                var query = _productRepository
+                    .Queryable()
+                    .Include(t => t.Category)
+                    .Include(t => t.CustomerWishLists)
+                    .Where(it => !it.IsDeleted);
 
                 if (search.MaxPrice > 0)
                 {
@@ -115,6 +125,8 @@ namespace Service.UserProductList
 
                 var entityPage = new PaginatedList<Product>(query, search.PageSize * search.PageIndex, search.PageSize);
                 var data = _mapper.Map<PaginatedList<Product>, PaginatedList<ProductDTO>>(entityPage);
+
+                data.Results.ForEach(t => t.IsInWishList = t.CustomerWishLists.IsNotNullOrEmpty() && t.CustomerWishLists.Any(k => k.CustomerId == _userInformationDto.CustomerId));
                 var result = new ReturnMessage<PaginatedList<ProductDTO>>(false, data, MessageConstants.ListSuccess);
 
                 return result;
