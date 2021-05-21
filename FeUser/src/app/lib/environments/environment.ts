@@ -6,5 +6,5 @@ export const environment = {
   name: 'dev',
   production: false,
   iswithCredentials: true,
-  host: 'https://shopclothing-team01-be-user.herokuapp.com',
+  host: 'https://localhost:44309',
 };
