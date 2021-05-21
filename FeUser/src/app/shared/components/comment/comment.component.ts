@@ -1,15 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { BehaviorSubject, Subscriber, Subscription } from "rxjs";
 import { CreateCommentModel } from "src/app/lib/data/models/comments/comment.model";
-import { MessageService } from "src/app/lib/data/services";
+import { AuthService, MessageService } from "src/app/lib/data/services";
 import { CommentService } from "src/app/lib/data/services/comments/comment.service";
 import { RouterHelperService } from "src/app/lib/helpers";
 
 @Component({
   selector: "app-comment",
   templateUrl: "./comment.component.html",
-  providers: [CommentService],
+  providers: [CommentService, AuthService],
   styles: [
     `
       .star {
@@ -32,19 +33,24 @@ import { RouterHelperService } from "src/app/lib/helpers";
 export class CommentComponent implements OnInit {
   commentForm: FormGroup;
   @Input() dataComment: CreateCommentModel;
-  @Input() isLoading: boolean;
+  isLoading: boolean;
   @Output() action = new EventEmitter();
   currentRate = 1;
+  subDataUser: Subscription;
 
   constructor(
     private commentService: CommentService,
     private fb: FormBuilder,
     private messageService: MessageService,
-    private routerHelper: RouterHelperService
+    private routerHelper: RouterHelperService,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
-    this.initForm();
+    this.subDataUser = this.authService.callUserInfo.subscribe((it) => {
+      this.isLoading = Boolean(it);
+      this.initForm();
+    });
   }
 
   initForm() {

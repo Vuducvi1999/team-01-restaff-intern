@@ -27,13 +27,14 @@
     </div>
   </form>
   <ng-template #checkLoginToComment>
-    <div class="row mt-3 m-0 p-0">
-      <a
-        class="checkLogin btn btn-solid"
-        (click)="returnLogin()"
-        style="cursor: pointer"
-        >Login to leave review
-      </a>
+    <div class="row mt-3">
+      <span
+        >Please
+        <span (click)="returnLogin()" style="cursor: pointer; color: #0089ff"
+          >Login
+        </span>
+        to comment</span
+      >
     </div>
   </ng-template>
 </div>
