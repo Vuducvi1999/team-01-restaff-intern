@@ -116,7 +116,8 @@ export class UserDetailComponent implements OnInit {
         this.messageService.alert(
           er.error.message ??
             JSON.stringify(er.error.error) ??
-            'Server Disconnected'
+            'Server Disconnected',
+            TypeSweetAlertIcon.ERROR
         );
         if (er.error.message) this.messageFail = er.error.message;
         // console.log(e);
