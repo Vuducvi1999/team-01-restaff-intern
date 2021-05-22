@@ -44,7 +44,7 @@ export class UpdateOrderComponent implements OnInit {
     private ordersService: OrdersService,
     private orderDetailsService: OrderDetailsService,
     private messageService: MessageService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.loadFormItem();
@@ -98,8 +98,10 @@ export class UpdateOrderComponent implements OnInit {
       ],
       email: [{ value: this.item.email, disabled: check }, Validators.required],
       phone: [{ value: this.item.phone, disabled: check }, Validators.required],
-      status: [{ value: this.item.status, disabled: true }, Validators.required],
-
+      status: [
+        { value: this.item.status, disabled: true },
+        Validators.required,
+      ],
     });
   }
 
@@ -158,7 +160,7 @@ export class UpdateOrderComponent implements OnInit {
     this.order.status = 'Approved';
 
     this.messageService
-      .confirm(`Do you want to approve the order?`, 'Yes')
+      .confirm(`Do you want to approve the order?`, 'Yes', 'No', false)
       .then(async (result) => {
         if (result.isConfirmed) {
           this.submitted = true;
@@ -175,13 +177,10 @@ export class UpdateOrderComponent implements OnInit {
               .catch((er) => {
                 this.messageService.alert(
                   er.error.message ??
-                  JSON.stringify(er.error.error) ??
-                  'Server Disconnected',
+                    JSON.stringify(er.error.error) ??
+                    'Server Disconnected',
                   TypeSweetAlertIcon.ERROR
                 );
-                // if (er.error.hasError) {
-                //   console.log(er.error.message);
-                // }
               });
           }
         }
@@ -216,8 +215,8 @@ export class UpdateOrderComponent implements OnInit {
             .catch((er) => {
               this.messageService.alert(
                 er.error.message ??
-                JSON.stringify(er.error.error) ??
-                'Server Disconnected',
+                  JSON.stringify(er.error.error) ??
+                  'Server Disconnected',
                 TypeSweetAlertIcon.ERROR
               );
               // if (er.error.hasError) {
@@ -240,8 +239,8 @@ export class UpdateOrderComponent implements OnInit {
       .catch((er) => {
         this.messageService.alert(
           er.error.message ??
-          JSON.stringify(er.error.error) ??
-          'Server Disconnected',
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
           TypeSweetAlertIcon.ERROR
         );
         // if (er.error.hasError) {

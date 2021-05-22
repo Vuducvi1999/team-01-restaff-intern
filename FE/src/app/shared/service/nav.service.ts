@@ -88,8 +88,13 @@ export class NavService {
       active: false,
       children: [
         {
-          path: '/coupons/list-coupons',
-          title: 'Coupon',
+          path: '/products/list-products',
+          title: 'Products',
+          type: 'link',
+        },
+        {
+          path: '/orders/list-orders',
+          title: 'Orders',
           type: 'link',
         },
         {
@@ -98,13 +103,8 @@ export class NavService {
           type: 'link',
         },
         {
-          path: '/products/list-products',
-          title: 'Products',
-          type: 'link',
-        },
-        {
-          path: '/orders/list-orders',
-          title: 'Orders',
+          path: '/coupons/list-coupons',
+          title: 'Coupon',
           type: 'link',
         },
       ],
