@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CheckboxControlValueAccessor } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -24,6 +24,7 @@ import { UpdateOrderComponent } from '../update-order/update-order.component';
   providers: [OrdersService, DatePipe],
 })
 export class ListOrdersComponent implements OnInit {
+
   public orders: OrderModel[];
   public filter: string = '';
   params: any = {};
@@ -38,9 +39,12 @@ export class ListOrdersComponent implements OnInit {
     private messageService: MessageService
   ) {
     this.params.pageIndex = 0;
-    this.getOrders();
+    // this.getOrders();
+    this.statusFilter("New");
   }
-  ngOnInit() {}
+  ngOnInit() {
+  }
+
   public settings = {
     mode: 'external',
     actions: {
@@ -130,11 +134,12 @@ export class ListOrdersComponent implements OnInit {
     modalRef.componentInstance.item = event?.data;
     modalRef.result.then(
       () => this.getOrders(),
-      (dismiss) => {}
+      (dismiss) => { }
     );
   }
 
   statusFilter(status: string) {
+
     this.isGetOrders = true;
     if (this.filter == status || status == '') {
       this.filter = '';
@@ -156,8 +161,8 @@ export class ListOrdersComponent implements OnInit {
       .catch((er) => {
         this.messageService.alert(
           er.error.message ??
-            JSON.stringify(er.error.error) ??
-            'Server Disconnected',
+          JSON.stringify(er.error.error) ??
+          'Server Disconnected',
           TypeSweetAlertIcon.ERROR
         );
         // if (er.error.hasError) {
@@ -165,7 +170,6 @@ export class ListOrdersComponent implements OnInit {
         // }
       });
   }
-
   onPage(event) {
     this.params.pageIndex = event;
     this.getOrders();
