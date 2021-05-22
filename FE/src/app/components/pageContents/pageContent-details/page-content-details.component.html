@@ -1,4 +1,7 @@
-<app-modal-header [data]="modalHeader" (onAction)="close($event)"></app-modal-header>
+<app-modal-header
+  [data]="modalHeader"
+  (onAction)="close($event)"
+></app-modal-header>
 <!-- Container-fluid starts-->
 <div class="container-fluid">
   <div class="row">
@@ -18,7 +21,17 @@
             >
               <h4>Page Content Details</h4>
               <div class="form-group row">
-                <label class="col-xl-3 col-md-4"> Title</label>
+                <label class="col-xl-3 col-md-4 d-flex flex-column"
+                  ><div><span>*</span> Title</div>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      submitted && pageContentFormControl.title.errors?.required
+                    "
+                  >
+                    Title is required
+                  </span>
+                </label>
                 <input
                   class="form-control col-xl-9 col-md-8"
                   type="text"
@@ -26,7 +39,9 @@
                 />
               </div>
               <div class="form-group row">
-                <label class="col-xl-3 col-md-4"> Short Description</label>
+                <label class="col-xl-3 col-md-4"
+                  ><div>Short Description</div>
+                </label>
                 <textarea
                   class="form-control col-xl-9 col-md-8"
                   rows="4"
@@ -46,8 +61,8 @@
                     "
                   >
                     Image is required
-                  </span></label
-                >
+                  </span>
+                </label>
                 <input
                   class="form-control col-xl-8 col-md-7"
                   id="validationCustom2"
@@ -65,12 +80,24 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-11 pb-2"> Description</label>
+                <label class="col-11 pb-2 d-flex flex-column"
+                  ><div><span>*</span> Description</div>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      submitted &&
+                      pageContentFormControl.description.errors?.required
+                    "
+                  >
+                    Description is required
+                  </span>
+                </label>
                 <ckeditor
                   [editor]="editor"
                   class="col-12 p-0"
                   type="text"
                   formControlName="description"
+                  [config]="editorConfig"
                 ></ckeditor>
               </div>
             </form>
