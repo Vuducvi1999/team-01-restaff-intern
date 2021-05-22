@@ -13,11 +13,11 @@
               <div class="row">
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                   <div class="field-label" for="firstName">First Name</div>
-                  <input type="text" id="firstName" required name="firstName" #firstName="ngModel"
+                  <input type="text" id="firstName" required name="firstName" #firstName="ngModel" placeholder="First Name"
                     [(ngModel)]="order.firstName">
 
                   <div *ngIf="!firstName?.valid && (firstName?.dirty || firstName?.touched)" class="error">
-                    <div *ngIf="firstName.errors.required">
+                    <div *ngIf="firstName.errors.required" style="color: red;">
                       First Name is required
                     </div>
                   </div>
@@ -25,10 +25,10 @@
 
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                   <div class="field-label">Last Name </div>
-                  <input type="text" id="lastName" required name="lastName" #lastName="ngModel"
+                  <input type="text" id="lastName" required name="lastName" #lastName="ngModel"placeholder="Last Name"
                     [(ngModel)]="order.lastName">
                   <div *ngIf="!lastName?.valid && (lastName?.dirty || lastName?.touched)" class="error">
-                    <div *ngIf="lastName.errors.required">
+                    <div *ngIf="lastName.errors.required" style="color: red;">
                       Last Name is required
                     </div>
                   </div>
@@ -37,9 +37,9 @@
                 </div>
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                   <div class="field-label">Phone</div>
-                  <input type="text" id="phone" required name="phone" #phone="ngModel" [(ngModel)]="order.phone">
+                  <input type="text" id="phone" required name="phone" #phone="ngModel" [(ngModel)]="order.phone" placeholder="Phone">
                   <div *ngIf="!phone?.valid && (phone?.dirty || phone?.touched)" class="error">
-                    <div *ngIf="phone.errors.required">
+                    <div *ngIf="phone.errors.required" style="color: red;">
                       Phone is required
                     </div>
                   </div>
@@ -47,12 +47,12 @@
                 </div>
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                   <div class="field-label">Email Address</div>
-                  <input type="text" id="email" required email name="email" #email="ngModel" [(ngModel)]="order.email">
+                  <input type="text" id="email" required email name="email" #email="ngModel" [(ngModel)]="order.email" placeholder="Email">
                   <div *ngIf="!email?.valid && (email?.dirty || email?.touched)" class="error">
-                    <div *ngIf="email.errors.required">
+                    <div *ngIf="email.errors.required" style="color: red;">
                       Email is required
                     </div>
-                    <div *ngIf="email.errors.email">
+                    <div *ngIf="email.errors.email" style="color: red;">
                       Invalid Email Address
                     </div>
                   </div>
@@ -64,7 +64,7 @@
                     placeholder="Street address" [(ngModel)]="order.address">
 
                   <div *ngIf="!address?.valid && (address?.dirty || address?.touched)" class="error">
-                    <div *ngIf="address.errors.required">
+                    <div *ngIf="address.errors.required" style="color: red;">
                       Adress is required
                     </div>
                   </div>

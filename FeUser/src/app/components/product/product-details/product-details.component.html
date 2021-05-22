@@ -65,10 +65,10 @@
         </div>
         <div class="col-lg-4">
           <div class="product-right product-description-box">
-            <h2>{{ product?.name | titlecase }}</h2>
+            <h2>{{ product?.name }}</h2>
             <div class="border-product">
               <h4 class="product-title">product code</h4>
-              <p>{{ product?.description.substring(0, 200)}}</p>
+              <p>{{ product?.description.substring(0, 200) }}</p>
             </div>
             <div>
               <h3>
@@ -90,15 +90,24 @@
             <hr />
           </div>
           <br />
-          <div class="addeffect-section product-description border-product">
-            <a class="btn btn-solid" (click)="addToCart(product)"
-              >add to cart
-            </a>
+          <div class="d-flex">
+            <div
+              class="addeffect-section product-description border-product mr-2"
+            >
+              <a class="btn btn-solid" (click)="addToCart(product)"
+                >add to cart
+              </a>
+            </div>
+            <div class="addeffect-section product-description border-product" *ngIf="user">
+              <a class="btn btn-solid" (click)="addToWishList(product)"
+                >{{product?.isInWishList ? 'remove from wishlist' : 'add to wishlist'}}
+              </a>
+            </div>
           </div>
           <br />
           <div class="addeffect-section product-description border-product">
             <div *ngIf="product?.contentHTML != ''">
-              <h3 style="color: black;">Description</h3>
+              <h3 style="color: black">Description</h3>
               <div [innerHTML]="product?.contentHTML"></div>
             </div>
             <br />

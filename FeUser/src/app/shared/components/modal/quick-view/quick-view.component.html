@@ -1,31 +1,53 @@
 <ng-template class="theme-modal" #quickView let-modal>
-    <div class="modal-content quick-view-modal">
-        <div class="modal-body">
-            <button type="button" class="close" (click)="modal.dismiss('Cross click')">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <div class="row">
-                <div class="col-lg-6  col-xs-12">
-                    <div class="quick-view-img">
-                        <img appUiImageLoader [src]="ImageSrc ? ImageSrc : product.imageUrl.split(',')[0]" [alt]="product.categoryName" class="img-fluid">
-                    </div>
-                </div>
-                <div class="col-lg-6 rtl-text">
-                    <div class="product-right">
-                        <h2>{{ product.name  }}</h2>
-                        <h3>{{ product.price | vndFormat}}
-                            <!-- <del *ngIf="product?.discount"><span class="money">{{ product.price * currency?.price | currency:currency?.currency:'symbol' }}</span></del> -->
-                        </h3>
-                        <!-- <ul class="color-variant" *ngIf="Color(product.variants).length">
+  <div class="modal-content quick-view-modal">
+    <div class="modal-body">
+      <button
+        type="button"
+        class="close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <div class="row">
+        <div class="col-lg-6 col-xs-12">
+          <div class="quick-view-img">
+            <img
+              appUiImageLoader
+              [src]="ImageSrc ? ImageSrc : product.imageUrl.split(',')[0]"
+              [alt]="product.categoryName"
+              class="img-fluid"
+            />
+          </div>
+        </div>
+        <div class="col-lg-6 rtl-text">
+          <div class="product-right">
+            <h2>{{ product.name }}</h2>
+            <h3>
+              {{ product.price | vndFormat }}
+              <!-- <del *ngIf="product?.discount"><span class="money">{{ product.price * currency?.price | currency:currency?.currency:'symbol' }}</span></del> -->
+            </h3>
+            <ng-template #t let-fill="fill">
+              <span class="star" [class.full]="fill === 100">
+                <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+              </span>
+            </ng-template>
+
+            <ngb-rating
+              [rate]="product?.ratingScore"
+              [starTemplate]="t"
+              [readonly]="true"
+              [max]="5"
+            ></ngb-rating>
+            <!-- <ul class="color-variant" *ngIf="Color(product.variants).length">
                             <li [class]="color" *ngFor="let color of Color(product.variants)"
                                 [ngStyle]="{'background-color': color}" (click)="ChangeVariants(color, product)">
                             </li>
                         </ul> -->
-                        <div class="border-product">
-                            <h6 class="product-title">product details</h6>
-                            <p>{{ product.description.substring(0, 200)+'...' }}</p>
-                        </div>
-                        <!-- <div class="product-description border-product">
+            <div class="border-product">
+              <h6 class="product-title">product details</h6>
+              <p>{{ product.description.substring(0, 200) + "..." }}</p>
+            </div>
+            <!-- <div class="product-description border-product">
                             <div class="size-box" *ngIf="Size(product.variants).length">
                                 <ul>
                                     <li *ngFor="let size of Size(product.variants)">
@@ -52,16 +74,18 @@
                                 </div>
                             </div>
                         </div> -->
-                        <div class="product-buttons">
-                            <!-- <a href="javascript:void(0)" class="btn btn-solid" [class.disabled]="counter > product.stock" (click)="addToCart(product)">add to cart</a> -->
-                            <a [routerLink]="['/product-details']"
-                            [queryParams]="{ id: product?.id }" 
-                            class="btn btn-solid">view detail</a>
-                            
-                        </div>
-                    </div>
-                </div>
+            <div class="product-buttons">
+              <!-- <a href="javascript:void(0)" class="btn btn-solid" [class.disabled]="counter > product.stock" (click)="addToCart(product)">add to cart</a> -->
+              <a
+                [routerLink]="['/product-details']"
+                [queryParams]="{ id: product?.id }"
+                class="btn btn-solid"
+                >view detail</a
+              >
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </ng-template>

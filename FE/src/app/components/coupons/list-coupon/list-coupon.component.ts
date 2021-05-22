@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatPercent } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -9,6 +9,7 @@ import {
 import { CouponModel } from 'src/app/lib/data/models/coupons/coupon.model';
 import { CouponService } from 'src/app/lib/data/services/coupons/coupon.service';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
+import { VndFormatPipe } from 'src/app/lib/data/services/pipe/vnd-format.pipe';
 import { CustomViewCellStringComponent } from 'src/app/shared/components/custom-view-cell-string/custom-view-cell-string.component';
 import { CustomViewCellComponent } from 'src/app/shared/components/customViewCell/customViewCell.component';
 import { CouponDetailComponent } from '../coupon-detail/coupon-detail.component';
@@ -17,6 +18,7 @@ import { CouponDetailComponent } from '../coupon-detail/coupon-detail.component'
   selector: 'app-list-coupon',
   templateUrl: './list-coupon.component.html',
   styleUrls: ['./list-coupon.component.scss'],
+  providers: [VndFormatPipe],
 })
 export class ListCouponComponent implements OnInit {
   public coupons: CouponModel[];
@@ -26,7 +28,8 @@ export class ListCouponComponent implements OnInit {
     private modalService: NgbModal,
     private couponService: CouponService,
     private datePipe: DatePipe,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private vndFormatPipe: VndFormatPipe
   ) {}
 
   getCoupons() {
@@ -66,10 +69,16 @@ export class ListCouponComponent implements OnInit {
       value: {
         title: 'Value',
         type: 'custom',
+        valuePrepareFunction: (created) => {
+          if (created < 100) {
+            return formatPercent(created / 100, 'en-us', '1.0-0');
+          }
+          return this.vndFormatPipe.transform(created);
+        },
         renderComponent: CustomViewCellComponent,
-        filter: false,
       },
       startDate: {
+        filter: false,
         title: 'Start Date',
         valuePrepareFunction: (created) => {
           return this.datePipe.transform(new Date(created), 'dd/MM/yyyy');
@@ -78,6 +87,7 @@ export class ListCouponComponent implements OnInit {
         renderComponent: CustomViewCellComponent,
       },
       endDate: {
+        filter: false,
         title: 'End Date',
         valuePrepareFunction: (created) => {
           return this.datePipe.transform(new Date(created), 'dd/MM/yyyy');
@@ -95,7 +105,10 @@ export class ListCouponComponent implements OnInit {
     if (event) {
       modalRef.componentInstance.item = event?.data;
     }
-    modalRef.result.then(() => this.getCoupons(),(dismiss)=>{});
+    modalRef.result.then(
+      () => this.getCoupons(),
+      (dismiss) => {}
+    );
   }
 
   delete(event: any) {

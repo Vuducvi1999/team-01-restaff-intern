@@ -50,6 +50,7 @@ export class ListSocialMediaComponent implements OnInit {
     },
     columns: {
       iconUrl: {
+        filter: false,
         title: 'Image',
         type: 'custom',
         renderComponent: ViewImageCellComponent,
@@ -70,7 +71,6 @@ export class ListSocialMediaComponent implements OnInit {
         title: 'Display Order',
         type: 'custom',
         renderComponent: CustomViewCellComponent,
-        filter: false,
       },
     },
   };

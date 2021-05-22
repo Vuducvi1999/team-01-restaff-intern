@@ -148,6 +148,7 @@ export class CartService {
   public removeWishlistItem(product: ProductModel): any {
     const index = state.wishlist.indexOf(product);
     state.wishlist.splice(index, 1);
+    this.toastrService.success("Product has been removed from wishlist.");
     localStorage.setItem("wishlistItems", JSON.stringify(state.wishlist));
     return true;
   }

@@ -36,30 +36,53 @@ export class NavService {
 
   MENUITEMS: Menu[] = [
     {
-      title: 'Settings',
-      icon: 'settings',
+      title: 'Page',
+      icon: 'clipboard',
       type: 'sub',
       active: false,
       children: [
         {
-          path: '/banners/list-banners',
-          title: 'Banners',
+          path: '/blogs/list-blogs',
+          title: 'Blog List',
           type: 'link',
         },
         {
-          path: '/social-medias/list-social-medias',
-          title: 'Social Media',
-          type: 'link',
-        },
-        {
-          path: '/information-website/list-information-website',
-          title: 'Website Information',
+          path: '/page-content/list-page-content',
+          title: 'Page Content',
           type: 'link',
         },
       ],
     },
     {
-      title: 'Admins and Customers',
+      title: 'Product',
+      icon: 'package',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/products/list-products',
+          title: 'Products',
+          type: 'link',
+        },
+        {
+          path: '/orders/list-orders',
+          title: 'Orders',
+          type: 'link',
+        },
+        {
+          path: '/categories/list-categories',
+          title: 'Category',
+          type: 'link',
+        },
+        {
+          path: '/coupons/list-coupons',
+          title: 'Coupon',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      title: 'Admins & Customers',
       icon: 'users',
       type: 'sub',
       active: false,
@@ -82,47 +105,24 @@ export class NavService {
       ],
     },
     {
-      title: 'Product',
-      icon: 'package',
+      title: 'Settings',
+      icon: 'settings',
       type: 'sub',
       active: false,
       children: [
         {
-          path: '/coupons/list-coupons',
-          title: 'Coupon',
+          path: '/banners/list-banners',
+          title: 'Banners',
           type: 'link',
         },
         {
-          path: '/categories/list-categories',
-          title: 'Category',
+          path: '/social-medias/list-social-medias',
+          title: 'Social Media',
           type: 'link',
         },
         {
-          path: '/products/list-products',
-          title: 'Products',
-          type: 'link',
-        },
-        {
-          path: '/orders/list-orders',
-          title: 'Orders',
-          type: 'link',
-        },
-      ],
-    },
-    {
-      title: 'Page',
-      icon: 'clipboard',
-      type: 'sub',
-      active: false,
-      children: [
-        {
-          path: '/blogs/list-blogs',
-          title: 'Blog List',
-          type: 'link',
-        },
-        {
-          path: '/page-content/list-page-content',
-          title: 'Page Content',
+          path: '/information-website/list-information-website',
+          title: 'Website Information',
           type: 'link',
         },
       ],

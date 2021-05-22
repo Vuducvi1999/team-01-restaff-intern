@@ -6,7 +6,11 @@ import {
 } from "src/app/lib/data/models/comments/comment.model";
 import { ProductDetailsModel } from "src/app/lib/data/models/products/product-details.model";
 import { UserDataReturnDTOModel } from "src/app/lib/data/models/users/user.model";
-import { AuthService, FileService } from "src/app/lib/data/services";
+import {
+  AuthService,
+  FileService,
+  MessageService,
+} from "src/app/lib/data/services";
 import { ProductDetailsService } from "src/app/lib/data/services/products/product-details.service";
 import { SizeModalComponent } from "src/app/shared/components/modal/size-modal/size-modal.component";
 import {
@@ -20,12 +24,19 @@ import { CommentService } from "src/app/lib/data/services/comments/comment.servi
 import { Subscription } from "rxjs";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { ToastrService } from "ngx-toastr";
+import { SaveCustomerWishListModel } from "src/app/lib/data/models/customerWishList/customerWishList.model";
+import { CustomerWishListService } from "src/app/lib/data/services/customerWishLists/customerWishList.service";
 
 @Component({
   selector: "app-product-details",
   templateUrl: "./product-details.component.html",
   styleUrls: ["./product-details.component.scss"],
-  providers: [ProductDetailsService, CommentService, CartService],
+  providers: [
+    ProductDetailsService,
+    CommentService,
+    CartService,
+    CustomerWishListService,
+  ],
   styles: [
     `
       .star {
@@ -75,10 +86,10 @@ export class ProductDetailsComponent implements OnInit {
     private commentService: CommentService,
     private cartService: CartService,
     private toastrService: ToastrService,
-    private authService: AuthService
-  ) {
-    
-  }
+    private authService: AuthService,
+    private wishListService: CustomerWishListService,
+    private sweetService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.token = localStorage.getItem("token");
@@ -110,7 +121,7 @@ export class ProductDetailsComponent implements OnInit {
     this.dataComment = {
       entityId: this.activatedRoute.snapshot.queryParamMap.get("id"),
       entityType: "Product",
-      rating: 0,
+      rating: 5,
     };
   }
 
@@ -140,5 +151,27 @@ export class ProductDetailsComponent implements OnInit {
   addToCart(product: any) {
     this.cartService.addToCart(product);
     this.toastrService.success(`${product?.name}` + " has been added to cart.");
+  }
+
+  addToWishList(product) {
+    const model: SaveCustomerWishListModel = {
+      productId: product.id,
+    };
+    if (this.product.isInWishList) {
+      return this.sweetService
+        .confirm("Remove in wish list?", "Remove")
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.wishListService.createOrDelete(model).then(() => {
+              this.product.isInWishList = false;
+              this.cartService.removeWishlistItem(product);
+            });
+          }
+        });
+    }
+    this.wishListService.createOrDelete(model).then(() => {
+      this.product.isInWishList = true;
+      this.cartService.addToWishlist(product);
+    });
   }
 }

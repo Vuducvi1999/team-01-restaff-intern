@@ -28,6 +28,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
   products: ProductModel[] = [];
   typeDisplayImage = TypeDisplayImage;
   subscription: Subscription;
+  isEmpty: boolean;
 
   constructor(
     private wishListService: CustomerWishListService,
@@ -58,7 +59,11 @@ export class WishlistComponent implements OnInit, OnDestroy {
     this.wishListService
       .getByCustomer()
       .then((data: ReturnMessage<ProductModel[]>) => {
+        this.isEmpty = true;
         this.products = data.data;
+        if (data.data.length > 0) {
+          this.isEmpty = false;
+        }
       });
   }
 

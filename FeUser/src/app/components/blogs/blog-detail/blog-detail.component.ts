@@ -146,7 +146,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     this.dataComment = {
       entityId: this.activatedRoute.snapshot.paramMap.get("id"),
       entityType: "Blog",
-      rating: this.item ? this.item.rating : 1,
+      rating: this.item ? this.item.rating : 5,
     };
   }
 }

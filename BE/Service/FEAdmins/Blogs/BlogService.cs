@@ -22,14 +22,14 @@ namespace Service.Blogs
             _blogRepository = blogRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-         }
+        }
 
         public ReturnMessage<BlogDTO> Create(CreateBlogDTO model)
         {
             model.Title = StringExtension.CleanString(model.Title);
             model.ShortDes = StringExtension.CleanString(model.ShortDes);
             model.ContentHTML = StringExtension.CleanString(model.ContentHTML);
-            if(model.Title == null ||
+            if (model.Title == null ||
                model.ShortDes == null ||
                model.ContentHTML == null)
             {
@@ -45,7 +45,7 @@ namespace Service.Blogs
                 _blogRepository.Insert(entity);
                 _unitOfWork.SaveChanges();
                 var result = new ReturnMessage<BlogDTO>(false, _mapper.Map<Blog, BlogDTO>(entity), MessageConstants.CreateSuccess);
-                return result; 
+                return result;
             }
             catch (Exception ex)
             {
@@ -113,7 +113,8 @@ namespace Service.Blogs
                 return new ReturnMessage<PaginatedList<BlogDTO>>(false, null, MessageConstants.GetPaginationFail);
             }
 
-            var resultEntity = _blogRepository.GetPaginatedList(it => search.Search == null ||
+
+            var query = _blogRepository.Queryable().Where(it => search.Search == null ||
                 (
                     (
                         (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
@@ -122,11 +123,8 @@ namespace Service.Blogs
                         it.ContentHTML.Contains(search.Search.ContentHTML) ||
                         it.ImageUrl.Contains(search.Search.ImageUrl)
                     )
-                ) && !it.IsDeleted
-                , search.PageSize
-                , search.PageIndex * search.PageSize
-                , t => t.Title
-            );
+                ) && !it.IsDeleted).OrderBy(it => it.Title).ThenBy(it => it.Title.Length);
+            var resultEntity = new PaginatedList<Blog>(query, search.PageIndex * search.PageSize, search.PageSize);
             var data = _mapper.Map<PaginatedList<Blog>, PaginatedList<BlogDTO>>(resultEntity);
             var result = new ReturnMessage<PaginatedList<BlogDTO>>(false, data, MessageConstants.GetPaginationSuccess);
             return result;

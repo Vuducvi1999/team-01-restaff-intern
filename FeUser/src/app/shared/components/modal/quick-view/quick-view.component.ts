@@ -1,22 +1,47 @@
 import {
-  Component, OnInit, OnDestroy, ViewChild, TemplateRef, Input,
-  Injectable, PLATFORM_ID, Inject
-} from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
-import { FileService } from 'src/app/lib/data/services';
-import { ProductModel } from 'src/app/lib/data/models';
-import { HomeService } from 'src/app/lib/data/services/home/home.service';
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  TemplateRef,
+  Input,
+  Injectable,
+  PLATFORM_ID,
+  Inject,
+} from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
+import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
+import { Router } from "@angular/router";
+import { FileService } from "src/app/lib/data/services";
+import { ProductModel } from "src/app/lib/data/models";
+import { HomeService } from "src/app/lib/data/services/home/home.service";
 
 @Component({
-  selector: 'app-quick-view',
-  templateUrl: './quick-view.component.html',
-  styleUrls: ['./quick-view.component.scss'],
+  selector: "app-quick-view",
+  templateUrl: "./quick-view.component.html",
+  styleUrls: ["./quick-view.component.scss"],
   providers: [],
+  styles: [
+    `
+      .star {
+        position: relative;
+        display: inline-block;
+        font-size: 2.5rem;
+        color: #d3d3d3;
+      }
+      .full {
+        color: #ffa200;
+      }
+      .half {
+        position: absolute;
+        display: inline-block;
+        overflow: hidden;
+        color: #ffa200;
+      }
+    `,
+  ],
 })
 export class QuickViewComponent implements OnInit, OnDestroy {
-
   @Input() product: ProductModel;
   @Input() currency: any;
   @ViewChild("quickView", { static: false }) QuickView: TemplateRef<any>;
@@ -26,34 +51,44 @@ export class QuickViewComponent implements OnInit, OnDestroy {
   public counter: number = 1;
   public modalOpen: boolean = false;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,
-    private router: Router, private modalService: NgbModal,
-    private homeService: HomeService) { }
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private router: Router,
+    private modalService: NgbModal,
+    private homeService: HomeService
+  ) {}
 
   ngOnInit(): void {
+    // console.log(this.product);
   }
 
   openModal() {
     this.modalOpen = true;
-    if (isPlatformBrowser(this.platformId)) { // For SSR 
-      this.modalService.open(this.QuickView, {
-        size: 'lg',
-        ariaLabelledBy: 'modal-basic-title',
-        centered: true,
-        windowClass: 'Quickview'
-      }).result.then((result) => {
-        `Result ${result}`
-      }, (reason) => {
-        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      });
+    if (isPlatformBrowser(this.platformId)) {
+      // For SSR
+      this.modalService
+        .open(this.QuickView, {
+          size: "lg",
+          ariaLabelledBy: "modal-basic-title",
+          centered: true,
+          windowClass: "Quickview",
+        })
+        .result.then(
+          (result) => {
+            `Result ${result}`;
+          },
+          (reason) => {
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+          }
+        );
     }
   }
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
+      return "by pressing ESC";
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
+      return "by clicking on a backdrop";
     } else {
       return `with: ${reason}`;
     }
@@ -61,24 +96,24 @@ export class QuickViewComponent implements OnInit, OnDestroy {
 
   // Get Product Color
   Color(variants) {
-    const uniqColor = []
+    const uniqColor = [];
     for (let i = 0; i < Object.keys(variants).length; i++) {
       if (uniqColor.indexOf(variants[i].color) === -1 && variants[i].color) {
-        uniqColor.push(variants[i].color)
+        uniqColor.push(variants[i].color);
       }
     }
-    return uniqColor
+    return uniqColor;
   }
 
   // Get Product Size
   Size(variants) {
-    const uniqSize = []
+    const uniqSize = [];
     for (let i = 0; i < Object.keys(variants).length; i++) {
       if (uniqSize.indexOf(variants[i].size) === -1 && variants[i].size) {
-        uniqSize.push(variants[i].size)
+        uniqSize.push(variants[i].size);
       }
     }
-    return uniqSize
+    return uniqSize;
   }
 
   // Change Variants
@@ -87,11 +122,11 @@ export class QuickViewComponent implements OnInit, OnDestroy {
       if (item.color === color) {
         product.images.map((img) => {
           if (img.image_id === item.image_id) {
-            this.ImageSrc = img.src
+            this.ImageSrc = img.src;
           }
-        })
+        });
       }
-    })
+    });
   }
 
   // Increament
@@ -108,8 +143,7 @@ export class QuickViewComponent implements OnInit, OnDestroy {
   async addToCart(product: any) {
     product.quantity = this.counter || 1;
     const status = await this.homeService.addToCart(product);
-    if (status)
-      this.router.navigate(['/shop/cart']);
+    if (status) this.router.navigate(["/shop/cart"]);
   }
 
   ngOnDestroy() {

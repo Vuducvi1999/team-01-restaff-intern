@@ -11,7 +11,7 @@ namespace Domain.DTOs.ProductsFeUser
 
         public string Description { get; set; }
 
-        public bool IsImportant { get; set; }
+        public bool IsFeatured { get; set; }
 
         public string ContentHTML { get; set; }
 
@@ -23,5 +23,6 @@ namespace Domain.DTOs.ProductsFeUser
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
         public decimal RatingScore { get; set; }
+        public bool IsInWishList { get; set; }
     }
 }

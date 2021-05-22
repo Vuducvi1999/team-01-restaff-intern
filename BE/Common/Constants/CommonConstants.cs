@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,6 +18,14 @@ namespace Common.Constants
 
     }
     public struct CommonConstantsUser
+    {
+        public static Guid UserAdminId = Guid.Parse("10000000-0000-0000-0000-000000000000");
+        public static string UsernameAdmin = "admin";
+        public static string PasswordAdmin = MD5.MD5Helper.ToMD5Hash("123456");
+        public static UserType TypeAdmin = UserType.Admin;
+    }
+
+    public struct CommonConstantsProduct
     {
         public static string Name = "Product ";
         public static string Description = "Description for Product ";

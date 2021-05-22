@@ -123,7 +123,7 @@ namespace Service.Coupons
                 ) && !it.IsDeleted
                 , search.PageSize
                 , search.PageIndex * search.PageSize
-                , t => t.Name
+                , t => t.StartDate
             );
             var data = _mapper.Map<PaginatedList<Coupon>, PaginatedList<CouponDTO>>(resultEntity);
             var result = new ReturnMessage<PaginatedList<CouponDTO>>(false, data, MessageConstants.GetPaginationSuccess);

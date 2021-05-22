@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-xl-12">
-      <div class="card tab2-card">
+      <div class="card tab2-card mb-4">
         <div class="card-body">
           <div
             class="tab-pane fade show active"
@@ -9,11 +9,19 @@
             role="tabpanel"
             aria-labelledby="top-profile-tab"
           >
-            <h5 class="f-w-600">Website Information</h5>
-            <div class="pull-right" *ngIf="!update">
-              <button (click)="updateSwitch()" class="btn btn-primary">
-                Update Information
-              </button>
+            <div class="row">
+              <div class="col-11">
+                <div
+                  class="d-flex justify-content-between align-items-baseline"
+                >
+                  <h5 class="f-w-600">Website Information</h5>
+                  <div *ngIf="!update">
+                    <button (click)="updateSwitch()" class="btn btn-primary">
+                      Update Information
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="table-responsive profile-table" *ngIf="!update">
               <table class="table table-responsive">
@@ -203,19 +211,21 @@
                   ><span>*</span> Logo</label
                 >
                 <input
-                  class="form-control col-xl-8 col-md-7"
+                  class="form-control"
                   id="validationCustom4"
                   type="text"
                   required=""
                   formControlName="logo"
                   hidden
                 />
-                <app-upload-file
-                  [data]="modalFile"
-                  [fileURL]="fileURL"
-                  styleFile="width: 200px; height: auto;"
-                  (onChange)="onChangeData($event)"
-                ></app-upload-file>
+                <div class="col-xl-8 col-md-7 p-0">
+                  <app-upload-file
+                    [data]="modalFile"
+                    [fileURL]="fileURL"
+                    styleFile="width: 100%; height: auto;"
+                    (onChange)="onChangeData($event)"
+                  ></app-upload-file>
+                </div>
                 <span
                   class="text-danger"
                   *ngIf="
@@ -226,21 +236,25 @@
                   This field is required
                 </span>
               </div>
-              <div class="pull-right">
-                <div class="form-group">
-                  <button
-                    type="button"
-                    class="btn btn-primary"
-                    (click)="updateDetails()"
-                  >
-                    SAVE
-                  </button>
+              <div class="row">
+                <div class="col-11">
+                  <div class="row float-right">
+                    <button
+                      (click)="updateSwitch()"
+                      class="btn btn-default"
+                      *ngIf="update"
+                    >
+                      CANCEL
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      (click)="updateDetails()"
+                    >
+                      SAVE
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div class="pull-right" *ngIf="update">
-                <button (click)="updateSwitch()" class="btn btn-default">
-                  CANCEL
-                </button>
               </div>
             </form>
           </div>

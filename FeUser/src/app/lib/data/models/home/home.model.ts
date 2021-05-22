@@ -8,9 +8,10 @@ export interface HomeProductModel extends BaseModel {
   displayOrder: number;
   categoryId: number;
   price: number;
-  isImportant: boolean;
+  isFeatured: boolean;
   categoryName: string;
   hasDisplayHomePage: boolean;
+  ratingScore: number;
 }
 
 export interface HomeBlogModel extends BaseModel {

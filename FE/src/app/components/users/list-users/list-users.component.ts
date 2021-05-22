@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
 import {
   PageModel,
   ReturnMessage,
   TypeSweetAlertIcon,
+  UserDataReturnDTOModel,
 } from 'src/app/lib/data/models';
 import { CategoryModel } from 'src/app/lib/data/models/categories/category.model';
 import { UserModel } from 'src/app/lib/data/models/users/user.model';
-import { FileService } from 'src/app/lib/data/services';
+import { AuthService, FileService } from 'src/app/lib/data/services';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { CustomViewCellStringComponent } from 'src/app/shared/components/custom-view-cell-string/custom-view-cell-string.component';
 import { ViewImageCellComponent } from 'src/app/shared/components/viewimagecell/viewimagecell.component';
@@ -20,30 +22,43 @@ import { UserService } from './../../../lib/data/services/users/user.service';
   styleUrls: ['./list-users.component.scss'],
   providers: [UserService],
 })
-export class ListUsersComponent {
+export class ListUsersComponent implements OnInit, OnDestroy {
   public users: UserModel[];
   closeResult = '';
   public data: PageModel<UserModel>;
   params: any = {};
+  userInfo: UserDataReturnDTOModel;
+  subUser: Subscription;
   constructor(
     private modalService: NgbModal,
     private userService: UserService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private authService: AuthService
   ) {
     this.getList();
+  }
+  ngOnDestroy(): void {
+    this.subUser.unsubscribe();
+    this.subUser = null;
+  }
+  ngOnInit(): void {
+    this.subUser = this.authService.callUserInfo.subscribe(
+      (res) => (this.userInfo = res)
+    );
   }
 
   public settings = {
     mode: 'external',
     pager: {
       display: true,
-      perPage: 5,
+      perPage: 10,
     },
     actions: {
       position: 'right',
     },
     columns: {
       imageUrl: {
+        filter: false,
         title: 'Image',
         type: 'custom',
         renderComponent: ViewImageCellComponent,
@@ -66,6 +81,10 @@ export class ListUsersComponent {
   };
 
   delete(event: any) {
+    if (event.data.id == '10000000-0000-0000-0000-000000000000' ||
+    event.data.id == this.userInfo.id) {
+      return;
+    }
     this.messageService
       .confirm(`Do you want to delete the user?`, 'Yes')
       .then((res) => {
@@ -93,6 +112,9 @@ export class ListUsersComponent {
   }
 
   openPopup(item: any) {
+    if ('10000000-0000-0000-0000-000000000000' != this.userInfo.id && item?.data.id == '10000000-0000-0000-0000-000000000000') {
+      return;
+    }
     var modalRef = this.modalService.open(UserDetailComponent, {
       size: 'lg',
     });
@@ -108,7 +130,7 @@ export class ListUsersComponent {
 
   getList() {
     this.userService
-      .get({params: this.params})
+      .get({ params: this.params })
       .then((res: ReturnMessage<PageModel<UserModel>>) => {
         if (!res.hasError) {
           this.users = res.data.results;

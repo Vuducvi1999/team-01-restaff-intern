@@ -68,6 +68,7 @@ export class ListBlogsComponent implements OnInit {
         title: 'Short Description',
       },
       createByDate: {
+        filter: false,
         title: 'Date Create',
         valuePrepareFunction: (created) => {
           return this.datePipe.transform(new Date(created), 'dd/MM/yyyy');
