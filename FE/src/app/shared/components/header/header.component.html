@@ -28,6 +28,9 @@
     <div class="nav-right col">
       <ul class="nav-menus" [ngClass]="{ open: openNav }">
         <li>
+          <button type="button" class="btn btn-primary" (click)="openClient()">client</button>
+        </li>
+        <li>
           <a href="javascript:void(0)" class="text-dark" toggleFullscreen>
             <app-feather-icons [icon]="'maximize-2'"></app-feather-icons>
           </a>
