@@ -136,7 +136,10 @@ export class ListOrdersComponent implements OnInit {
 
   statusFilter(button: HTMLElement) {
     this.isGetOrders = true;
-    let status = button.innerText !== 'All' ? button.innerText : '';
+    let status =
+      button.innerText.toUpperCase() !== 'All'.toUpperCase()
+        ? button.innerText
+        : '';
     if (this.filter == status || status == '') {
       this.filter = '';
       this.params.pageIndex = 0;
@@ -155,7 +158,7 @@ export class ListOrdersComponent implements OnInit {
     this.ordersService
       .getByStatus(null, status)
       .then((response) => {
-        this.orders = response.data;
+        this.orders = response.data ? response.data : [];
         this.orders.forEach((order) => {
           order.hasCoupon = false;
           if (order.couponCode) {
