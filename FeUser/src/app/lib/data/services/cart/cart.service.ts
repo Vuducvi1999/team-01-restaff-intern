@@ -15,7 +15,7 @@ const state = {
 export class CartService {
   public OpenCart: boolean = false;
 
-  constructor(private toastrService: ToastrService) {}
+  constructor(private toastrService: ToastrService) { }
 
   public get cartData(): Observable<any> {
     const itemsStream = new Observable((observer) => {
@@ -48,7 +48,9 @@ export class CartService {
     if (!stock) return false;
 
     if (cartItem) {
-      cartItem.quantity += qty;
+      if (cartItem.quantity < 10) {
+        cartItem.quantity += qty;
+      }
     } else {
       state.cart.cartDetails.push({
         ...product,
@@ -68,11 +70,7 @@ export class CartService {
     return state.cart.cartDetails.find((items, index) => {
       if (items.id === product.id) {
         const qty = state.cart.cartDetails[index].quantity + quantity;
-        const stock = this.calculateStockCounts(
-          state.cart.cartDetails[index],
-          quantity
-        );
-        if (qty !== 0 && stock) {
+        if (qty > 0 && qty < 11) {
           state.cart.cartDetails[index].quantity = qty;
         }
         state.cart = this.processCart(state.cart);
@@ -89,8 +87,8 @@ export class CartService {
     if (stock < qty || stock == 0) {
       this.toastrService.error(
         "You can not add more items than available. In stock " +
-          stock +
-          " items."
+        stock +
+        " items."
       );
       return false;
     }

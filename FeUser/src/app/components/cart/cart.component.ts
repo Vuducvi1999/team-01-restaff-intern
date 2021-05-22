@@ -1,7 +1,7 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from "@angular/core";
-import { ProductModel } from "src/app/lib/data/models";
+import { ProductModel, TypeSweetAlertIcon } from "src/app/lib/data/models";
 import { CartModel } from "src/app/lib/data/models/cart/cart.model";
-import { FileService } from "src/app/lib/data/services";
+import { FileService, MessageService } from "src/app/lib/data/services";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { registerLocaleData } from "@angular/common";
 import localeFr from "@angular/common/locales/fr";
@@ -14,11 +14,15 @@ registerLocaleData(localeFr, "fr");
   providers: [CartService],
 })
 export class CartComponent implements OnInit, OnChanges {
+  public exceed: any = false;
   public products: ProductModel[] = [];
   public cart: CartModel;
   typeDisplayImage = TypeDisplayImage;
-  constructor(public cartService: CartService) {}
-  ngOnChanges(changes: SimpleChanges): void {}
+  constructor(
+    public cartService: CartService,
+    private messageService: MessageService
+  ) { }
+  ngOnChanges(changes: SimpleChanges): void { }
 
   ngOnInit(): void {
     this.loadCart();
@@ -31,10 +35,25 @@ export class CartComponent implements OnInit, OnChanges {
     });
   }
   removeItem(product: any) {
-    this.cartService.removeCartItem(product);
+    this.messageService
+      .confirm(`Do you want to remove the item?`, 'Yes','No')
+      .then((res) => {
+        if (res.isConfirmed) {
+          this.cartService.removeCartItem(product);
+        }
+      });
   }
 
   adjustQuantity(product: any, number: any) {
+    this.exceed = false;
+    if (product.quantity == 1 && number == -1) {
+      return this.removeItem(product);
+    }
+    if (product.quantity == 10 && number == 1) {
+      this.exceed = true;
+      this.messageService.notification("Quantity can't exceed 10", TypeSweetAlertIcon.WARNING)
+      return
+    }
     this.cartService.updateCartQuantity(product, number);
   }
 
