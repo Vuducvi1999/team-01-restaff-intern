@@ -88,12 +88,12 @@ namespace Service.UserProductList
 
                 if (search.MaxPrice > 0)
                 {
-                    query = query.Where(it => it.Price < search.MaxPrice);
+                    query = query.Where(it => it.Price <= search.MaxPrice);
                 }
 
                 if (search.MinPrice > 0)
                 {
-                    query = query.Where(it => it.Price > search.MinPrice);
+                    query = query.Where(it => it.Price >= search.MinPrice);
                 }
 
                 if (search.Search.IsNotNullOrEmpty() && search.Search.CategoryName.IsNotNullOrEmpty())
