@@ -49,9 +49,9 @@ namespace Service.Comments
                 if (beforeComment.IsNotNullOrEmpty())
                 {
                     var SubtractionTime = (DateTime.Now - beforeComment.CreateByDate);
-                    if (SubtractionTime.TotalMinutes < 15)
+                    if (SubtractionTime.TotalMinutes < CommonConstantsComment.LimitTime)
                     {
-                        var NextTimeToComment = Convert.ToInt32((beforeComment.CreateByDate.AddMinutes(15) - DateTime.Now).TotalMinutes).ToString();
+                        var NextTimeToComment = Convert.ToInt32((beforeComment.CreateByDate.AddMinutes(CommonConstantsComment.LimitTime) - DateTime.Now).TotalMinutes).ToString();
                         return new ReturnMessage<CommentDTO>(true, null, MessageConstants.CommentAfterATime + NextTimeToComment + CommonConstantsComment.Minutes);
                     }
                 }
