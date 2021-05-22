@@ -12,6 +12,6 @@ export interface ProductModel extends BaseModel, baseDTO{
     categoryName: string,
     categoryId: string,
     price: number,
-    isImportant: boolean,
+    isFeatured: boolean,
     files: FileDtoModel[],
 }

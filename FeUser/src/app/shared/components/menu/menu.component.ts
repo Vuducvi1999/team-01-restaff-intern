@@ -1,4 +1,11 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { CategoryModel } from "src/app/lib/data/models";
@@ -56,7 +63,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.categoriesChildren = [];
     // await this.loadHeaderModel();
 
-    this.headerModel?.categories.forEach((item) => {
+    this.headerModel?.categories.slice(0, 5).forEach((item) => {
       this.categoriesChildren.push({
         title: item.name,
         path: `/product?search.categoryName=${item.name}`,

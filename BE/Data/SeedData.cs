@@ -94,7 +94,7 @@ namespace Data
                             CategoryId = category.Id,
                             Price = CommonConstantsProduct.Price,
                             DisplayOrder = CommonConstantsProduct.DisplayOrder,
-                            IsImportant = false,
+                            IsFeatured = false,
                             IsDeleted = false,
                             CreateByDate = DateTime.Now,
                             IsActive = true,
