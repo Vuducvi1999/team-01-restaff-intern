@@ -39,6 +39,9 @@ export class ListOrdersComponent implements OnInit {
     private messageService: MessageService
   ) {
     this.params.pageIndex = 0;
+    // this.getOrders();
+  }
+  ngOnInit() {
     this.actionFilter('New');
   }
 
