@@ -65,13 +65,31 @@
         </div>
         <div class="col-lg-4">
           <div class="product-right product-description-box">
-            <h2>{{ product?.name }}</h2>
+            <div class="d-flex align-items-baseline">
+              <a
+                *ngIf="user"
+                href="javascript:void(0)"
+                title="Add to Wishlist"
+                (click)="addToWishList(product)"
+              >
+                <i
+                  [ngClass]="[
+                    'lead mr-2',
+                    product.isInWishList
+                      ? 'fa fa-heart text-danger'
+                      : 'ti-heart'
+                  ]"
+                  aria-hidden="true"
+                ></i
+              ></a>
+              <h2>{{ product?.name }}</h2>
+            </div>
             <div class="border-product">
               <h4 class="product-title">product code</h4>
               <p>{{ product?.description.substring(0, 200) }}</p>
             </div>
             <div>
-              <h3>
+              <h3 class="m-0">
                 {{ product?.price | vndFormat }}
               </h3>
             </div>
@@ -87,7 +105,7 @@
               [readonly]="true"
               [max]="5"
             ></ngb-rating>
-            <hr />
+            <hr class="m-0" />
           </div>
           <br />
           <div class="d-flex">
@@ -96,11 +114,6 @@
             >
               <a class="btn btn-solid" (click)="addToCart(product)"
                 >add to cart
-              </a>
-            </div>
-            <div class="addeffect-section product-description border-product" *ngIf="user">
-              <a class="btn btn-solid" (click)="addToWishList(product)"
-                >{{product?.isInWishList ? 'remove from wishlist' : 'add to wishlist'}}
               </a>
             </div>
           </div>
