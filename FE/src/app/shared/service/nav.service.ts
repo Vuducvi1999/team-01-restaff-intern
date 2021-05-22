@@ -36,47 +36,19 @@ export class NavService {
 
   MENUITEMS: Menu[] = [
     {
-      title: 'Settings',
-      icon: 'settings',
+      title: 'Page',
+      icon: 'clipboard',
       type: 'sub',
       active: false,
       children: [
         {
-          path: '/banners/list-banners',
-          title: 'Banners',
+          path: '/blogs/list-blogs',
+          title: 'Blog List',
           type: 'link',
         },
         {
-          path: '/social-medias/list-social-medias',
-          title: 'Social Media',
-          type: 'link',
-        },
-        {
-          path: '/information-website/list-information-website',
-          title: 'Website Information',
-          type: 'link',
-        },
-      ],
-    },
-    {
-      title: 'Admins & Customers',
-      icon: 'users',
-      type: 'sub',
-      active: false,
-      children: [
-        {
-          path: '/users/list-users',
-          title: 'Admins',
-          type: 'link',
-        },
-        {
-          path: '/customers/list-customers',
-          title: 'Customers ',
-          type: 'link',
-        },
-        {
-          path: '/contact/list-contact',
-          title: 'Contact',
+          path: '/page-content/list-page-content',
+          title: 'Page Content',
           type: 'link',
         },
       ],
@@ -110,19 +82,47 @@ export class NavService {
       ],
     },
     {
-      title: 'Page',
-      icon: 'clipboard',
+      title: 'Admins & Customers',
+      icon: 'users',
       type: 'sub',
       active: false,
       children: [
         {
-          path: '/blogs/list-blogs',
-          title: 'Blog List',
+          path: '/users/list-users',
+          title: 'Admins',
           type: 'link',
         },
         {
-          path: '/page-content/list-page-content',
-          title: 'Page Content',
+          path: '/customers/list-customers',
+          title: 'Customers ',
+          type: 'link',
+        },
+        {
+          path: '/contact/list-contact',
+          title: 'Contact',
+          type: 'link',
+        },
+      ],
+    },
+    {
+      title: 'Settings',
+      icon: 'settings',
+      type: 'sub',
+      active: false,
+      children: [
+        {
+          path: '/banners/list-banners',
+          title: 'Banners',
+          type: 'link',
+        },
+        {
+          path: '/social-medias/list-social-medias',
+          title: 'Social Media',
+          type: 'link',
+        },
+        {
+          path: '/information-website/list-information-website',
+          title: 'Website Information',
           type: 'link',
         },
       ],
