@@ -56,4 +56,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     localStorage.removeItem('user');
     this.router.navigateByUrl('/login');
   }
+
+  openClient()
+  {
+    window.open(environment.client,'_blank').focus();
+  }
 }
