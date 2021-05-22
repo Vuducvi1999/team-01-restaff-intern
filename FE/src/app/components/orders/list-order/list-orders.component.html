@@ -8,29 +8,65 @@
       <h6><strong>Order Status</strong></h6>
       <div class="btn-group">
         <button
+          #allButton
           type="button"
-          (click)="statusFilter('')"
+          (click)="
+            removeAllAction(
+              allButton,
+              newButton,
+              approvedButton,
+              rejectedButton
+            );
+            statusFilter(allButton)
+          "
           class="btn btn-primary btn-xs mr-2"
         >
           All
         </button>
         <button
+          #newButton
           type="button"
-          (click)="statusFilter('New')"
-          class="btn btn-primary btn-xs mr-2"
+          (click)="
+            removeAllAction(
+              allButton,
+              newButton,
+              approvedButton,
+              rejectedButton
+            );
+            statusFilter(newButton)
+          "
+          class="btn btn-primary btn-xs mr-2 active"
         >
           New
         </button>
         <button
+          #approvedButton
           type="button"
-          (click)="statusFilter('Approved')"
+          (click)="
+            removeAllAction(
+              allButton,
+              newButton,
+              approvedButton,
+              rejectedButton
+            );
+            statusFilter(approvedButton)
+          "
           class="btn btn-primary btn-xs mr-2"
         >
           Approved
         </button>
         <button
+          #rejectedButton
           type="button"
-          (click)="statusFilter('Rejected')"
+          (click)="
+            removeAllAction(
+              allButton,
+              newButton,
+              approvedButton,
+              rejectedButton
+            );
+            statusFilter(rejectedButton)
+          "
           class="btn btn-primary btn-xs mr-2"
         >
           Rejected
@@ -48,7 +84,7 @@
           </ng2-smart-table>
         </div>
       </div>
-      <app-paging-server-view 
+      <app-paging-server-view
         *ngIf="!isGetOrders && data?.totalPage > 1"
         [data]="data"
         (page)="onPage($event)"
