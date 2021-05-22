@@ -18,12 +18,10 @@
           <tbody>
             <tr *ngFor="let product of products">
               <td>
-                <app-image-wrapper
-                [data]="{
+                <app-image-wrapper [data]="{
                   url: product.imageUrl.split(',')[0],
                   typeClass: typeDisplayImage.CART_IMAGE_PRODUCT
-                }"
-              ></app-image-wrapper>
+                }"></app-image-wrapper>
               </td>
               <td>
                 <a>{{ product.name }}</a>
@@ -59,7 +57,7 @@
                     <input type="text" name="quantity" class="form-control input-number" disabled
                       value="{{ product.quantity }}" />
                     <span class="input-group-prepend">
-                      <button type="button" class="btn quantity-right-plus" data-type="plus"
+                      <button type="button" class="btn quantity-right-plus" data-type="plus" [disabled]="exceed"
                         (click)="adjustQuantity(product, 1)">
                         <i class="ti-angle-right"></i>
                       </button>
@@ -68,11 +66,8 @@
                 </div>
               </td>
               <td>
-                <a class="icon">
-                  <i class="ti-close" [swal]="{
-                      title: 'Do you want to remove product',
-                      showCancelButton: true
-                    }" (confirm)="removeItem(product)"></i>
+                <a class="icon" style="cursor:pointer;">
+                  <i class="ti-close" (click)="removeItem(product)"></i>
                 </a>
               </td>
               <td>
