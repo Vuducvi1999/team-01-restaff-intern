@@ -133,7 +133,7 @@ export class ContactDetailComponent implements OnInit {
     }
 
     this.loadModel();
-    this.contact.status = "Done";
+    this.contact.status = "Completed";
     this.callServiceToSave();
   }
 
