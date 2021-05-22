@@ -74,28 +74,29 @@
               <a [routerLink]="['/product-details']" [queryParams]="{ id: product?.id }">
                 <h4>{{ product?.name }}</h4>
               </a>
-              <div class="qty-box">
-                <div class="input-group">
-                  <span class="input-group-prepend">
-                    <button type="button" class="btn quantity-left-minus" data-type="minus"
-                      (click)="adjustQuantity(product, -1)">
-                      <i class="ti-angle-left"></i>
-                    </button>
-                  </span>
-                  <span class="input-group-prepend">
-                    <button type="button" class="btn quantity-right-plus" data-type="plus" [disabled]="exceed"
-                      (click)="adjustQuantity(product, 1)">
-                      <i class="ti-angle-right"></i>
-                    </button>
-                  </span>
-                </div>
-              </div>
+
               <h4>
                 <span>
                   {{ product?.quantity }} x
                   {{ product?.price | vndFormat }}
                 </span>
               </h4>
+              <div class="qty-box">
+                <div class="input-group" style="justify-content: left;">
+                  <span class="input-group-prepend">
+                    <button type="button" class="btn quantity-left-minus" data-type="minus"
+                      (click)="adjustQuantity(product, -1)">
+                      <i class="ti-angle-left d-block"></i>
+                    </button>
+                  </span>
+                  <span class="input-group-prepend">
+                    <button type="button" class="btn quantity-right-plus" data-type="plus" [disabled]="exceed"
+                      (click)="adjustQuantity(product, 1)">
+                      <i class="ti-angle-right d-block"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
           <div class="close-circle" (click)="removeItem(product)">
