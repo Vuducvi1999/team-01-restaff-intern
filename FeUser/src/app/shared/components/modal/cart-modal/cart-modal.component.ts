@@ -18,7 +18,7 @@ import {
 } from "@ng-bootstrap/ng-bootstrap";
 import { ProductModel } from "src/app/lib/data/models/products/product.model";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
-import { FileService, ProductListService } from "src/app/lib/data/services";
+import { FileService, MessageService, ProductListService } from "src/app/lib/data/services";
 import { TypeDisplayImage } from "src/app/shared/data";
 
 @Component({
@@ -42,7 +42,8 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     private modalService: NgbModal,
     private productListService: ProductListService,
-    private cartService: CartService
+    private cartService: CartService,
+    private messageService: MessageService,
   ) {}
 
   ngOnInit(): void {}
@@ -96,5 +97,10 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   getImage(image) {
     return FileService.getLinkFile(image);
+  }
+
+  async addToCart(product: any) {
+    this.cartService.addToCart(product);
+    this.messageService.notification("Product has been added to cart", "success");
   }
 }

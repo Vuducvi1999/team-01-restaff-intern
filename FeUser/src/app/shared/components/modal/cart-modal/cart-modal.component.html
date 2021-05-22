@@ -76,7 +76,7 @@
                           ></app-image-wrapper>
                         </a>
                       </div>
-                      <div class="product-detail">
+                      <div class="product-name">
                         <h6 class="mt-0">
                           <a
                             [routerLink]="['/product-details']"
@@ -84,6 +84,8 @@
                             ><span>{{ product.name }}</span></a
                           >
                         </h6>
+                      </div>
+                      <div class="product-detail">
                         <h4>
                           <span>{{
                             product.price * currency?.price
@@ -92,6 +94,12 @@
                           }}</span>
                         </h4>
                       </div>
+                      <div class="button-add-to-cart">
+                        <a (click)="addToCart(product)"
+                        class="view-cart btn btn-solid"
+                       >add to cart
+                       </a>
+                    </div>
                     </div>
                   </div>
                 </ng-container>
