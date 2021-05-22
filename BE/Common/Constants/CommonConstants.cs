@@ -50,5 +50,6 @@ namespace Common.Constants
     {
         public static string Minutes = " minutes";
         public static string Product = "Product";
+        public static int LimitTime = 15;
     }
 }

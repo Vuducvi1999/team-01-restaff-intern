@@ -19,6 +19,7 @@ export class OrderSuccessComponent implements OnInit {
   public blockTop = false;
   public blockBottom = false;
   public bottomMargin = 0;
+  public widthElementFixed = 0;
 
   constructor(private route: Router, private dataRoute: ActivatedRoute) {
     this.checkOutOrders = this.route.getCurrentNavigation().extras?.state?.data;
@@ -28,6 +29,9 @@ export class OrderSuccessComponent implements OnInit {
   ngOnInit(): void {
     this.offsetHeightHeader =
       document.getElementById("header-one").offsetHeight + 10;
+    this.widthElementFixed =
+      document.getElementById("ElementFixed").offsetParent.clientWidth;
+    console.log(this.widthElementFixed);
   }
 
   @HostListener("document:scroll")

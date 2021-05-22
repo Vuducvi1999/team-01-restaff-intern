@@ -64,21 +64,21 @@
             </div>
           </div>
         </div>
-        <div
-          class="col-lg-6"
-          id="ElementFixed"
-          [ngStyle]="
-            blockBottom || blockTop
-              ? {
-                  position: 'fixed',
-                  right: 0,
-                  top: blockTop ? offsetHeightHeader + 'px' : '',
-                  bottom: blockBottom ? bottomMargin + 'px' : ''
-                }
-              : ''
-          "
-        >
-          <div class="row order-success-sec">
+        <div class="col-lg-6">
+          <div
+            class="row order-success-sec"
+            id="ElementFixed"
+            [ngStyle]="
+              blockBottom || blockTop
+                ? {
+                    position: 'fixed',
+                    width: widthElementFixed + 'px',
+                    top: blockTop ? offsetHeightHeader + 'px' : '',
+                    bottom: blockBottom ? bottomMargin + 'px' : ''
+                  }
+                : ''
+            "
+          >
             <div class="col-sm-6">
               <h4>summary</h4>
               <ul class="order-detail">

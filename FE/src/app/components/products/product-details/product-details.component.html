@@ -152,10 +152,7 @@
                                   productFormsControl.imageUrl.errors?.required
                               }"
                               />
-                              <div class="invalid-feedback col-md-3 offset-md-3">
-                                <span class="text-danger"
-                                *ngIf="(productFormsControl.imageUrl.touched || submitted) && productFormsControl.imageUrl.errors?.required">Required</span>
-                              </div>
+
                               <app-upload-file 
                                 styleFile="width: 350px; height: 300px;"
                                 [data]="modalFile"
@@ -163,6 +160,10 @@
                                 sizeImage = "650 x 700" 
                                 (onChange)="onChangeData($event)">
                               </app-upload-file>
+                              <div class="invalid-feedback col-md-3 offset-md-3">
+                                <span class="text-danger"
+                                *ngIf="(productFormsControl.imageUrl.touched || submitted) && productFormsControl.imageUrl.errors?.required">Required</span>
+                              </div>
                             </div>
                           </div>
                         </div>
