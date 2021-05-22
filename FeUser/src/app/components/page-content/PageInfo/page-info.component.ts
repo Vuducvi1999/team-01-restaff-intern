@@ -76,7 +76,7 @@ export class PageContentInfoComponent implements OnInit, OnDestroy {
         var params = new HttpParams();
         params = params.set("q", data.data.address);
         this.src = this.sanitizer.bypassSecurityTrustResourceUrl(
-          `https://maps.google.com/maps?${params.toString()}&t=&z=13&ie=UTF8&iwloc=&output=embed`
+          `https://maps.google.com/maps?${params.toString()}&t=&z=20&ie=UTF8&iwloc=&output=embed`
         );
       });
   }
