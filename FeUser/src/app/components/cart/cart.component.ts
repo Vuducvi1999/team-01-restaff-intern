@@ -36,7 +36,7 @@ export class CartComponent implements OnInit, OnChanges {
   }
   removeItem(product: any) {
     this.messageService
-      .confirm(`Do you want to remove the item?`, 'Yes')
+      .confirm(`Do you want to remove the item?`, 'Yes','No')
       .then((res) => {
         if (res.isConfirmed) {
           this.cartService.removeCartItem(product);

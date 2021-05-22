@@ -1,8 +1,8 @@
 import { Component, OnInit, PLATFORM_ID, Inject } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
 import { TranslateService } from "@ngx-translate/core";
-import { FileService } from "src/app/lib/data/services";
-import { ProductModel, ReturnMessage } from "src/app/lib/data/models";
+import { FileService, MessageService } from "src/app/lib/data/services";
+import { ProductModel, ReturnMessage, TypeSweetAlertIcon } from "src/app/lib/data/models";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SearchService } from "src/app/lib/data/services/search/search.service";
@@ -36,14 +36,15 @@ export class SettingsComponent implements OnInit {
   public id: string;
   public cart: CartModel;
   public typeDisPlayImage = TypeDisplayImage;
-
+  public exceed: boolean = false;
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private translate: TranslateService,
     public cartService: CartService,
     public router: Router,
     private activatedRoute: ActivatedRoute,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private messageService: MessageService
   ) {
     this.cartService.cartData.subscribe((response: CartModel) => {
       this.products = response.cartDetails;
@@ -62,9 +63,16 @@ export class SettingsComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       this.translate.use(code);
     }
-  }
+  }   
+  
   removeItem(product: any) {
-    this.cartService.removeCartItem(product);
+    this.messageService
+      .confirm(`Do you want to remove the item?`, 'Yes','No', false)
+      .then((res) => {
+        if (res.isConfirmed) {
+          this.cartService.removeCartItem(product);
+        }
+      });
   }
 
   getImage(fileName: string) {
@@ -106,5 +114,17 @@ export class SettingsComponent implements OnInit {
 
     this.router.navigateByUrl(url);
     this.searchToggle();
+  }
+  adjustQuantity(product: any, number: any) {
+    this.exceed = false;
+    if (product.quantity == 1 && number == -1) {
+      return this.removeItem(product);
+    }
+    if (product.quantity == 10 && number == 1) {
+      this.exceed = true;
+      this.messageService.notification("Quantity can't exceed 10", TypeSweetAlertIcon.WARNING)
+      return
+    }
+    this.cartService.updateCartQuantity(product, number);
   }
 }
