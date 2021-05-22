@@ -13,7 +13,7 @@ namespace Domain.Entities
         public string ImageUrl { get; set; }
         public decimal Price { get; set; }
 
-        public bool IsImportant { get; set; }
+        public bool IsFeatured { get; set; }
 
         public string ContentHTML { get; set; }
 
@@ -42,7 +42,7 @@ namespace Domain.Entities
             base.Update();
             Name = model.Name;
             Description = model.Description;
-            IsImportant = model.IsImportant;
+            IsFeatured = model.IsFeatured;
             ContentHTML = model.ContentHTML;
             HasDisplayHomePage = model.HasDisplayHomePage;
             DisplayOrder = model.DisplayOrder;

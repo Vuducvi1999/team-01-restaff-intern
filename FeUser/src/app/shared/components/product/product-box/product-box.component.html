@@ -38,7 +38,11 @@
           href="javascript:void(0)"
           (click)="ChangeVariantsImage(getImage(image))"
         >
-          <img appUiImageLoader [src]="image" />
+          <img
+            appUiImageLoader
+            [src]="image"
+            style="width: 2.7rem; height: 3rem; margin: 5px 0"
+          />
         </a>
       </li>
     </ul>
@@ -59,7 +63,8 @@
       >
         <i class="ti-shopping-cart"></i>
       </a>
-      <a *ngIf="userInfo"
+      <a
+        *ngIf="userInfo"
         href="javascript:void(0)"
         title="Add to Wishlist"
         (click)="addToWishlist(product)"
