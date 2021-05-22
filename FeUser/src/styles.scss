@@ -109,8 +109,10 @@ img.customer-comment-image {
   padding: 0 40px 0 0;
 }
 
-header .main-navbar .nav-menu > li > a {
-  padding: 25px 45px 25px 0;
+@media (min-width: 1200px) {
+  header .main-navbar .nav-menu > li > a {
+    padding: 25px 45px 25px 0;
+  }
 }
 
 .onhover-div {
