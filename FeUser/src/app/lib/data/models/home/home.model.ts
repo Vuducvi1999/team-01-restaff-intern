@@ -11,6 +11,7 @@ export interface HomeProductModel extends BaseModel {
   isFeatured: boolean;
   categoryName: string;
   hasDisplayHomePage: boolean;
+  ratingScore: number;
 }
 
 export interface HomeBlogModel extends BaseModel {

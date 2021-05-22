@@ -1,5 +1,11 @@
 import { ViewportScroller } from "@angular/common";
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from "@angular/core";
+import {
+  Component,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { SpinnerVisibilityService } from "ng-http-loader";
 import { Subscription } from "rxjs";
@@ -115,6 +121,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.products.length == 0
           ? (this.isEmptyProduct = true)
           : (this.isEmptyProduct = false);
+        console.log(this.products);
       })
       .catch((res) =>
         this.sweetalertService.alert(
