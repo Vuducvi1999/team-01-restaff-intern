@@ -13,6 +13,7 @@ using Common.Enums;
 using System.Linq;
 using Common.StringEx;
 using Microsoft.EntityFrameworkCore;
+using Service.Auth;
 
 namespace Service.Users
 {
@@ -21,12 +22,14 @@ namespace Service.Users
         private readonly IRepository<User> _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IUserManager _userManager;
 
-        public UserService(IRepository<User> userRepository, IUnitOfWork unitOfWork, IMapper mapper)
+        public UserService(IRepository<User> userRepository, IUnitOfWork unitOfWork, IMapper mapper, IUserManager userManager)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public ReturnMessage<UserDTO> Create(CreateUserDTO model)
@@ -71,6 +74,10 @@ namespace Service.Users
         {
             try
             {
+                if(model.Id == CommonConstantsUser.UserAdminId || model.Id == _userManager.AuthorizedUserId)
+                {
+                    return new ReturnMessage<UserDTO>(true, null, MessageConstants.Error);
+                }
                 var entity = _userRepository.Find(model.Id);
                 if (entity.IsNotNullOrEmpty())
                 {
@@ -90,6 +97,10 @@ namespace Service.Users
 
         public ReturnMessage<UserDTO> Update(UpdateUserDTO model)
         {
+            if (model.Id != _userManager.AuthorizedUserId && model.Id == CommonConstantsUser.UserAdminId)
+            {
+                return new ReturnMessage<UserDTO>(true, null, MessageConstants.Error);
+            }
             model.Username = StringExtension.CleanString(model.Username);
             model.Password = StringExtension.CleanString(model.Password);
             if (model.Username == null || model.Password == null)

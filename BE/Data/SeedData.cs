@@ -22,13 +22,14 @@ namespace Data
                     throw new ArgumentNullException(nameof(ctx));
                 if (!await ctx.Users.AnyAsync())
                 {
-                    ctx.Users.Add(new Domain.Entities.User()
+                    ctx.Users.Add(new User()
                     {
-                        Id = Guid.NewGuid(),
-                        Username = "admin",
-                        Password = Common.MD5.MD5Helper.ToMD5Hash("123456"),
-                        Type = Common.Enums.UserType.Admin,
+                        Id = CommonConstantsUser.UserAdminId,
+                        Username = CommonConstantsUser.UsernameAdmin,
+                        Password = CommonConstantsUser.PasswordAdmin,
+                        Type = CommonConstantsUser.TypeAdmin,
                         CreateByDate = DateTime.Now,
+                        CreatedByName = CommonConstantsUser.UsernameAdmin,
                         IsActive = true,
                         ObjectState = Infrastructure.EntityFramework.ObjectState.Added
                     });
@@ -87,18 +88,18 @@ namespace Data
                         var category = ctx.Categories.Skip(new Random().Next(0, ctx.Categories.Count())).First();
                         ctx.Products.Add(new Product()
                         {
-                            Name = CommonConstantsUser.Name + i,
-                            Description = CommonConstantsUser.Description + i,
-                            ContentHTML = CommonConstantsUser.ContentHTML + i,
+                            Name = CommonConstantsProduct.Name + i,
+                            Description = CommonConstantsProduct.Description + i,
+                            ContentHTML = CommonConstantsProduct.ContentHTML + i,
                             CategoryId = category.Id,
-                            Price = CommonConstantsUser.Price,
-                            DisplayOrder = CommonConstantsUser.DisplayOrder,
+                            Price = CommonConstantsProduct.Price,
+                            DisplayOrder = CommonConstantsProduct.DisplayOrder,
                             IsImportant = false,
                             IsDeleted = false,
                             CreateByDate = DateTime.Now,
                             IsActive = true,
                             HasDisplayHomePage = false,
-                            ImageUrl = CommonConstantsUser.ImageUrl,
+                            ImageUrl = CommonConstantsProduct.ImageUrl,
                             ObjectState = Infrastructure.EntityFramework.ObjectState.Added
                         });;
                         ctx.SaveChanges();

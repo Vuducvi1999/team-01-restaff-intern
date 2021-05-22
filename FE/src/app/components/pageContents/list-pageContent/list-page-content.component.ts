@@ -38,7 +38,7 @@ export class ListPageContentComponent {
     hideSubHeader: true,
     pager: {
       display: true,
-      perPage: 5,
+      perPage: 10,
     },
     actions: {
       position: 'right',
