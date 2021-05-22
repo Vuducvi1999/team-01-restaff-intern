@@ -1,8 +1,8 @@
 <!-- Container-fluid starts-->
 <div class="container-fluid">
   <div class="row" style="justify-content: center">
-    <div class="col-xl-7">
-      <div class="card tab2-card">
+    <div class="col-xl-12">
+      <div class="card tab2-card mb-4">
         <div class="card-body">
           <ngb-tabset class="tab-coupon profile-tabs">
             <ngb-tab>
@@ -17,7 +17,28 @@
                   role="tabpanel"
                   aria-labelledby="top-profile-tab"
                 >
-                  <h5 class="f-w-600">Profile</h5>
+                  <div class="row">
+                    <div class="col-11">
+                      <div
+                        class="
+                          d-flex
+                          justify-content-between
+                          align-items-baseline
+                          mb-2
+                        "
+                      >
+                        <h5 class="f-w-600">Profile</h5>
+                        <div class="pull-right" *ngIf="!update">
+                          <button
+                            (click)="updateSwitch()"
+                            class="btn btn-primary"
+                          >
+                            Update Profile
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
                   <div class="table-responsive profile-table" *ngIf="!update">
                     <table class="table table-responsive">
@@ -46,11 +67,6 @@
                       </tbody>
                     </table>
                   </div>
-                  <div class="pull-right" *ngIf="!update">
-                    <button (click)="updateSwitch()" class="btn btn-primary">
-                      Update Profile
-                    </button>
-                  </div>
                 </div>
                 <div *ngIf="update">
                   <form
@@ -63,7 +79,7 @@
                         ><span>*</span> First name</label
                       >
                       <input
-                        class="form-control col-xl-4 col-md-7"
+                        class="form-control col-xl-8 col-md-7"
                         id="validationCustom0"
                         type="text"
                         required
@@ -93,7 +109,7 @@
                         ><span>*</span> Last name</label
                       >
                       <input
-                        class="form-control col-xl-4 col-md-7"
+                        class="form-control col-xl-8 col-md-7"
                         id=""
                         type="text"
                         formControlName="lastName"
@@ -122,7 +138,7 @@
                         ><span>*</span> Email</label
                       >
                       <input
-                        class="form-control col-xl-4 col-md-7"
+                        class="form-control col-xl-8 col-md-7"
                         id="validationCustom1"
                         type="text"
                         required=""
@@ -150,7 +166,7 @@
                         ><span>*</span> Avatar</label
                       >
                       <input
-                        class="form-control col-xl-8 col-md-7"
+                        class="form-control"
                         id="validationCustom2"
                         type="text"
                         required=""
@@ -163,12 +179,14 @@
                             profileFormControl.imageUrl.errors?.required
                         }"
                       />
-                      <app-upload-file
-                        [data]="modalFile"
-                        [fileURL]="fileURL"
-                        styleFile="width: 200px; height: auto;"
-                        (onChange)="onChangeData($event)"
-                      ></app-upload-file>
+                      <div class="col-xl-8 col-md-7 p-0">
+                        <app-upload-file
+                          [data]="modalFile"
+                          [fileURL]="fileURL"
+                          styleFile="width: 100% height: auto;"
+                          (onChange)="onChangeData($event)"
+                        ></app-upload-file>
+                      </div>
                       <div class="invalid-feedback col-md-3 offset-md-3">
                         <span
                           class="text-danger"
@@ -182,21 +200,25 @@
                         </span>
                       </div>
                     </div>
-                    <div class="pull-right">
-                      <div class="form-group">
-                        <button
-                          type="button"
-                          class="btn btn-primary"
-                          (click)="updateDetails()"
-                        >
-                          SAVE
-                        </button>
+                    <div class="row">
+                      <div class="col-11">
+                        <div class="row justify-content-between float-right">
+                          <button
+                            *ngIf="update"
+                            (click)="updateSwitch()"
+                            class="btn btn-default"
+                          >
+                            CANCEL
+                          </button>
+                          <button
+                            type="button"
+                            class="btn btn-primary"
+                            (click)="updateDetails()"
+                          >
+                            SAVE
+                          </button>
+                        </div>
                       </div>
-                    </div>
-                    <div class="pull-right" *ngIf="update">
-                      <button (click)="updateSwitch()" class="btn btn-default">
-                        CANCEL
-                      </button>
                     </div>
                   </form>
                 </div>
@@ -214,11 +236,11 @@
                 >
                   <h5 class="f-w-600">Change Password</h5>
                   <div class="form-group row">
-                    <label for="" class="col-xl-4 col-md-4"
+                    <label for="" class="col-xl-3 col-md-4"
                       ><span>*</span> Password</label
                     >
                     <input
-                      class="form-control col-xl-4 col-md-7"
+                      class="form-control col-xl-8 col-md-7"
                       id=""
                       type="password"
                       formControlName="password"
@@ -241,20 +263,20 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="validationCustom1" class="col-xl-4 col-md-4"
+                    <label for="validationCustom1" class="col-xl-3 col-md-4"
                       ><span>*</span> New Password</label
                     >
                     <input
-                      class="form-control col-xl-4 col-md-7"
+                      class="form-control col-xl-8 col-md-7"
                       id="validationCustom1"
                       type="password"
                       required=""
                       formControlName="newPassword"
                       [ngClass]="{
                         'is-invalid':
-                          ((passwordFormControl.newPassword.touched ||
+                          (passwordFormControl.newPassword.touched ||
                             submitted) &&
-                            passwordFormControl.newPassword.errors?.required)
+                          passwordFormControl.newPassword.errors?.required
                       }"
                     />
                     <div class="invalid-feedback col-md-3 offset-md-4">
@@ -272,11 +294,11 @@
                   </div>
 
                   <div class="form-group row">
-                    <label for="validationCustom2" class="col-xl-4 col-md-4"
+                    <label for="validationCustom2" class="col-xl-3 col-md-4"
                       ><span>*</span> Confirm New Password</label
                     >
                     <input
-                      class="form-control col-xl-4 col-md-7"
+                      class="form-control col-xl-8 col-md-7"
                       id="validationCustom2"
                       type="password"
                       required=""
@@ -288,7 +310,9 @@
                             passwordFormControl.confirmNewPassword.errors
                               ?.required) ||
                           (passwordFormControl.confirmNewPassword.value !==
-                            passwordFormControl.newPassword.value) && passwordFormControl.confirmNewPassword.value.length > 0
+                            passwordFormControl.newPassword.value &&
+                            passwordFormControl.confirmNewPassword.value
+                              .length > 0)
                       }"
                     />
                     <div class="invalid-feedback col-md-7 offset-md-4">
@@ -317,15 +341,17 @@
                       </span>
                     </div>
                   </div>
-                  <div class="pull-right">
-                    <div class="form-group">
-                      <button
-                        type="button"
-                        class="btn btn-primary"
-                        (click)="changePassword()"
-                      >
-                        CHANGE PASSWORD
-                      </button>
+                  <div class="row">
+                    <div class="col-11">
+                      <div class="row float-right">
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          (click)="changePassword()"
+                        >
+                          CHANGE PASSWORD
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </form>

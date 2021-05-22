@@ -101,7 +101,7 @@ export class ProductDetailsComponent implements OnInit {
       categoryId: this.productsForm.value.category,
       displayOrder: this.productsForm.value.displayOrder,
       hasDisplayHomePage: this.productsForm.value.hasDisplayHomePage,
-      isImportant: this.productsForm.value.isImportant,
+      isFeatured: this.productsForm.value.isFeatured,
       id: this.item ? this.item.id : '',
       files: this.modalFile.listFile,
     };
@@ -165,7 +165,7 @@ export class ProductDetailsComponent implements OnInit {
         ],
       ],
       hasDisplayHomePage: [this.item ? this.item.hasDisplayHomePage : false],
-      isImportant: [this.item ? this.item.isImportant : false],
+      isFeatured: [this.item ? this.item.isFeatured : false],
     });
 
     this.modalHeader = new ModalHeaderModel();
