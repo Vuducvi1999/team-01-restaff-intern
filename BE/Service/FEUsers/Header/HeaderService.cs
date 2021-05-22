@@ -34,7 +34,7 @@ namespace Service.Header
             var blogQueries = _blogRepository.Queryable().Where(it => !it.IsDeleted).OrderByDescending(it => it.CreateByDate).ThenBy(it => it.Title).ThenBy(it => it.Title.Length).Take(5);
             var blog = _mapper.Map<List<BlogDTO>>(blogQueries);
 
-            var categoryQueries = _categoryRepository.Queryable().Where(it => !it.IsDeleted).OrderBy(it => it.Name).ThenBy(it => it.Name.Length).Take(5);
+            var categoryQueries = _categoryRepository.Queryable().Where(it => !it.IsDeleted).OrderBy(it => it.Name).ThenBy(it => it.Name.Length);
             var category = _mapper.Map<List<CategoryDTO>>(categoryQueries);
 
             var webInfoQueries = _webInfoRepository.Find(CommonConstants.WebSiteInformationId);
