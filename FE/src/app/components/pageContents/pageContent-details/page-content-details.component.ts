@@ -13,6 +13,7 @@ import {
 } from 'src/app/shared/components/modals/models/modal.model';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
+import Base64UploaderPlugin from 'src/app/lib/@ckeditor/Base64Upload';
 @Component({
   selector: 'app-page-content-details',
   templateUrl: './page-content-details.component.html',
@@ -30,6 +31,7 @@ export class PageContentDetailComponent implements OnInit {
   @Input() item;
 
   public editor = ClassicEditor;
+  public editorConfig = { extraPlugins: [Base64UploaderPlugin] };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -55,10 +57,13 @@ export class PageContentDetailComponent implements OnInit {
 
   loadItem() {
     this.pageContentForm = this.formBuilder.group({
-      title: [this.item ? this.item.title : ''],
+      title: [this.item ? this.item.title : '', Validators.required],
       shortDes: [this.item ? this.item.shortDes : ''],
       imageUrl: [this.item ? this.item.imageUrl : '', Validators.required],
-      description: [this.item ? this.item.description : ''],
+      description: [
+        this.item ? this.item.description : '',
+        Validators.required,
+      ],
     });
 
     this.modalHeader = new ModalHeaderModel();
@@ -73,6 +78,9 @@ export class PageContentDetailComponent implements OnInit {
 
   save() {
     this.submitted = true;
+    if (this.pageContentForm.invalid) {
+      return;
+    }
 
     this.pageContent = {
       id: this.item ? this.item.id : '',
@@ -102,8 +110,8 @@ export class PageContentDetailComponent implements OnInit {
       .catch((er) => {
         this.messageService.alert(
           er.error.message ??
-          JSON.stringify(er.error.error) ??
-          'Server Disconnected',
+            JSON.stringify(er.error.error) ??
+            'Server Disconnected',
           TypeSweetAlertIcon.ERROR
         );
       });
