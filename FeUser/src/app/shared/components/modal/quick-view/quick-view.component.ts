@@ -12,9 +12,14 @@ import {
 import { isPlatformBrowser } from "@angular/common";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { Router } from "@angular/router";
-import { FileService } from "src/app/lib/data/services";
-import { ProductModel } from "src/app/lib/data/models";
+import { AuthService, FileService, MessageService } from "src/app/lib/data/services";
+import { ProductModel, UserDataReturnDTOModel } from "src/app/lib/data/models";
 import { HomeService } from "src/app/lib/data/services/home/home.service";
+import { ETypeSizeImage, TypeDisplayImage } from "src/app/shared/data";
+import { CartService } from "src/app/lib/data/services/cart/cart.service";
+import { SaveCustomerWishListModel } from "src/app/lib/data/models/customerWishList/customerWishList.model";
+import { CustomerWishListService } from "src/app/lib/data/services/customerWishLists/customerWishList.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-quick-view",
@@ -50,16 +55,32 @@ export class QuickViewComponent implements OnInit, OnDestroy {
   public ImageSrc: string;
   public counter: number = 1;
   public modalOpen: boolean = false;
+  public thumbnail: boolean = true;
+  public onHowerChangeImage: boolean = true;
+  public typeSizeImage = ETypeSizeImage;
+
+  userInfo: UserDataReturnDTOModel;
+  subDataUser: Subscription;
+  typeDisplayImage = TypeDisplayImage;
+
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private router: Router,
     private modalService: NgbModal,
-    private homeService: HomeService
+    private homeService: HomeService,
+    private cartService: CartService,
+    private messageService: MessageService,
+    private authService: AuthService,
+    private wishListService: CustomerWishListService,
   ) {}
 
   ngOnInit(): void {
     // console.log(this.product);
+    this.ImageSrc = this.product.imageUrl.split(",")[0];
+    this.subDataUser = this.authService.callUserInfo.subscribe((it) => {
+      this.userInfo = it;
+    });
   }
 
   openModal() {
@@ -83,7 +104,9 @@ export class QuickViewComponent implements OnInit, OnDestroy {
         );
     }
   }
-
+  ChangeVariantsImage(src) {
+    this.ImageSrc = src;
+  }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return "by pressing ESC";
@@ -141,18 +164,41 @@ export class QuickViewComponent implements OnInit, OnDestroy {
 
   // Add to cart
   async addToCart(product: any) {
-    product.quantity = this.counter || 1;
-    const status = await this.homeService.addToCart(product);
-    if (status) this.router.navigate(["/shop/cart"]);
+    this.cartService.addToCart(product);
+    this.messageService.notification("Product has been added to cart", "success");
   }
 
   ngOnDestroy() {
     if (this.modalOpen) {
       this.modalService.dismissAll();
     }
+    this.subDataUser.unsubscribe();
+    this.subDataUser = null;
   }
 
   getImage(fileName: string) {
     return FileService.getLinkFile(fileName);
+  }
+
+  addToWishlist(product: any) {
+    const model: SaveCustomerWishListModel = {
+      productId: product.id,
+    };
+    if (this.product.isInWishList) {
+      return this.messageService
+        .confirm("Remove in wish list?", "Remove")
+        .then((result) => {
+          if (result.isConfirmed) {
+            this.wishListService.createOrDelete(model).then(() => {
+              this.product.isInWishList = false;
+              this.cartService.removeWishlistItem(product);
+            });
+          }
+        });
+    }
+    this.wishListService.createOrDelete(model).then(() => {
+      this.product.isInWishList = true;
+      this.cartService.addToWishlist(product);
+    });
   }
 }

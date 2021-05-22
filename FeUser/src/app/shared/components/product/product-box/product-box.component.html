@@ -28,7 +28,7 @@
         />
       </a>
     </div>
-    <ul class="product-thumb-list" *ngIf="thumbnail">
+    <ul class="product-thumb-list" *ngIf="thumbnail && product.imageUrl.split(',').length >= 2">
       <li
         class="grid_thumb_img"
         [class.active]="ImageSrc == getImage(image)"
