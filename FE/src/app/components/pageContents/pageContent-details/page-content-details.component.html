@@ -98,6 +98,7 @@
                   type="text"
                   formControlName="description"
                   [config]="editorConfig"
+                  (ready)="onReady($event)"
                 ></ckeditor>
               </div>
             </form>

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageContentModel } from 'src/app/lib/data/models/pageContent/pageContent.model';
 import { PageContentService } from 'src/app/lib/data/services/pageContents/pageContent.service';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import {
   EntityType,
   ModalFile,
@@ -30,8 +30,19 @@ export class PageContentDetailComponent implements OnInit {
   submitted = false;
   @Input() item;
 
-  public editor = ClassicEditor;
-  public editorConfig = { extraPlugins: [Base64UploaderPlugin] };
+  public editor = DecoupledEditor;
+  public editorConfig = {
+    extraPlugins: [Base64UploaderPlugin],
+  };
+
+  public onReady(editor) {
+    editor.ui
+      .getEditableElement()
+      .parentElement.insertBefore(
+        editor.ui.view.toolbar.element,
+        editor.ui.getEditableElement()
+      );
+  }
 
   constructor(
     private formBuilder: FormBuilder,

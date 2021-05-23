@@ -120,14 +120,15 @@
                   class="col-xl-8 col-md-7 p-0"
                   id="validationCustom1"
                   type="text"
-                  required=""
                   formControlName="contentHTML"
                   [ngClass]="{
                     'is-invalid ':
                       (blogFormControl.shortDes.touched || submitted) &&
                       blogFormControl.shortDes.errors?.required
                   }"
-                ></ckeditor>
+                  [config]="editorConfig"
+                  (ready)="onReady($event)"
+                  ></ckeditor>
                 <div class="invalid-feedback col-md-5 offset-md-3">
                   <span
                     class="text-danger"

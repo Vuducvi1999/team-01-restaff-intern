@@ -17,7 +17,8 @@ import {
   ModalHeaderModel,
   TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import Base64UploaderPlugin from 'src/app/lib/@ckeditor/Base64Upload';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 @Component({
   selector: 'app-product-details',
@@ -38,7 +39,19 @@ export class ProductDetailsComponent implements OnInit {
   public fileURL: (String | ArrayBuffer)[];
   submitted = false;
 
-  public editor = ClassicEditor;
+  public editor = DecoupledEditor;
+  public editorConfig = {
+    extraPlugins: [Base64UploaderPlugin],
+  };
+  public onReady(editor) {
+    editor.ui
+      .getEditableElement()
+      .parentElement.insertBefore(
+        editor.ui.view.toolbar.element,
+        editor.ui.getEditableElement()
+      );
+  }
+
   ngOnChanges(changes: SimpleChanges): void {}
   constructor(
     private formBuilder: FormBuilder,

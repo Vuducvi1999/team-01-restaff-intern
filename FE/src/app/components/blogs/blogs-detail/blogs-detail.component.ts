@@ -11,9 +11,10 @@ import {
   TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
 
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
+import Base64UploaderPlugin from 'src/app/lib/@ckeditor/Base64Upload';
 
 @Component({
   selector: 'app-blogs-detail',
@@ -27,10 +28,21 @@ export class BlogsDetailComponent implements OnInit {
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   submitted = false;
-  public editor = ClassicEditor;
-
+  public editor = DecoupledEditor;
+  public editorConfig = {
+    extraPlugins: [Base64UploaderPlugin],
+  };
   public modalFile: ModalFile;
   public fileURL: (string | ArrayBuffer)[];
+
+  public onReady(editor) {
+    editor.ui
+      .getEditableElement()
+      .parentElement.insertBefore(
+        editor.ui.view.toolbar.element,
+        editor.ui.getEditableElement()
+      );
+  }
 
   constructor(
     private formBuilder: FormBuilder,
