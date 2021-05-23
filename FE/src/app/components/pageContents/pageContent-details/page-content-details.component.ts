@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { PageContentModel } from 'src/app/lib/data/models/pageContent/pageContent.model';
 import { PageContentService } from 'src/app/lib/data/services/pageContents/pageContent.service';
-import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+// import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import {
   EntityType,
   ModalFile,
@@ -13,7 +13,10 @@ import {
 } from 'src/app/shared/components/modals/models/modal.model';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
+import * as ClassicEditor from 'src/app/lib/customCkeditor/ckeditor5-build-classic';
+// import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Base64UploaderPlugin from 'src/app/lib/@ckeditor/Base64Upload';
+
 @Component({
   selector: 'app-page-content-details',
   templateUrl: './page-content-details.component.html',
@@ -30,7 +33,7 @@ export class PageContentDetailComponent implements OnInit {
   submitted = false;
   @Input() item;
 
-  public editor = DecoupledEditor;
+  public editor = ClassicEditor;
   public editorConfig = {
     extraPlugins: [Base64UploaderPlugin],
   };

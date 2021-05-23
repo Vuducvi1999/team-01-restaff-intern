@@ -17,7 +17,8 @@ import {
   ModalHeaderModel,
   TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
-import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+// import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import * as ClassicEditor from 'src/app/lib/customCkeditor/ckeditor5-build-classic';
 import Base64UploaderPlugin from 'src/app/lib/@ckeditor/Base64Upload';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 @Component({
@@ -39,7 +40,7 @@ export class ProductDetailsComponent implements OnInit {
   public fileURL: (String | ArrayBuffer)[];
   submitted = false;
 
-  public editor = DecoupledEditor;
+  public editor = ClassicEditor;
   public editorConfig = {
     extraPlugins: [Base64UploaderPlugin],
   };
@@ -182,7 +183,9 @@ export class ProductDetailsComponent implements OnInit {
     });
 
     this.modalHeader = new ModalHeaderModel();
-    this.modalHeader.title = this.item ? `Update ${this.item.name}` : `Add New Product`;
+    this.modalHeader.title = this.item
+      ? `Update ${this.item.name}`
+      : `Add New Product`;
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
   }

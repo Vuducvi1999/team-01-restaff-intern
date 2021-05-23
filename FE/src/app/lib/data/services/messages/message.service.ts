@@ -26,13 +26,17 @@ export class MessageService {
     });
   }
 
-  notification(title: string, type: SweetAlertIcon = null, detail: string = null) {
+  notification(
+    title: string,
+    type: SweetAlertIcon = null,
+    detail: string = null
+  ) {
     return Swal.fire({
       icon: type,
       title: title,
       html: detail,
       showConfirmButton: false,
-      timer: 1500
-    })
+      timer: 1500,
+    });
   }
 }

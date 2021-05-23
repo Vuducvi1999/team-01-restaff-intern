@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import {
   CommentModel,
@@ -85,9 +85,10 @@ export class ProductDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private commentService: CommentService,
     private cartService: CartService,
+    private toastrService: ToastrService,
     private authService: AuthService,
     private wishListService: CustomerWishListService,
-    private messageService: MessageService
+    private sweetService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -149,7 +150,7 @@ export class ProductDetailsComponent implements OnInit {
   }
   addToCart(product: any) {
     this.cartService.addToCart(product);
-    this.messageService.notification("Product has been added to cart", "success");
+    this.toastrService.success(`${product?.name}` + " has been added to cart.");
   }
 
   addToWishList(product) {
@@ -157,7 +158,7 @@ export class ProductDetailsComponent implements OnInit {
       productId: product.id,
     };
     if (this.product.isInWishList) {
-      return this.messageService
+      return this.sweetService
         .confirm("Remove in wish list?", "Remove")
         .then((result) => {
           if (result.isConfirmed) {
