@@ -32,6 +32,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Service.UserBlogs;
 using Service.Gmails;
+using Service.UserPageContents;
 
 namespace Service
 {
@@ -110,6 +111,9 @@ namespace Service
 
             //Gmail
             services.AddScoped<IGmailService, GmailService>();
+
+            // User page content
+            services.AddScoped<IUserPageContentService, UserPageContentService>();
         }
     }
 }

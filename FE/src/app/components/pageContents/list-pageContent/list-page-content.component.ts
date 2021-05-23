@@ -35,7 +35,6 @@ export class ListPageContentComponent {
 
   public settings = {
     mode: 'external',
-    hideSubHeader: true,
     pager: {
       display: true,
       perPage: 10,
@@ -56,7 +55,7 @@ export class ListPageContentComponent {
         renderComponent: CustomViewCellStringComponent,
       },
       order: {
-        title: 'Order',
+        title: 'Display Order',
         value: 'order',
         type: 'custom',
         renderComponent: CustomViewCellComponent,

@@ -47,7 +47,7 @@ export class PageContentDetailComponent implements OnInit {
 
   ngOnInit() {
     this.loadItem();
-    if (this.item.imageUrl) {
+    if (this.item?.imageUrl) {
       this.fileURL = [];
       this.item.imageUrl.split(',').forEach((it) => {
         this.fileURL.push(it);
@@ -59,7 +59,8 @@ export class PageContentDetailComponent implements OnInit {
     this.pageContentForm = this.formBuilder.group({
       title: [this.item ? this.item.title : '', Validators.required],
       shortDes: [this.item ? this.item.shortDes : ''],
-      imageUrl: [this.item ? this.item.imageUrl : '', Validators.required],
+      imageUrl: [this.item ? this.item.imageUrl : ''],
+      order: [this.item ? this.item.order : 0, Validators.required],
       description: [
         this.item ? this.item.description : '',
         Validators.required,
@@ -88,6 +89,7 @@ export class PageContentDetailComponent implements OnInit {
       description: this.pageContentForm.value.description,
       imageUrl: this.pageContentForm.controls.imageUrl.value,
       shortDes: this.pageContentForm.value.shortDes.trim(),
+      order: this.pageContentForm.value.order,
       files: this.modalFile.listFile,
     };
 
@@ -96,14 +98,12 @@ export class PageContentDetailComponent implements OnInit {
 
   callServiceToSave() {
     this.pageContentService
-      .update(this.pageContent)
+      .saveChange(this.pageContent)
       .then(() => {
-        if (this.item) {
-          this.messageService.notification(
-            'Page content has been edited',
-            TypeSweetAlertIcon.SUCCESS
-          );
-        }
+        this.messageService.notification(
+          this.item ? 'Update Success' : 'Create Success',
+          TypeSweetAlertIcon.SUCCESS
+        );
         this.ngbActiveModal.close();
         this.submitted = false;
       })
