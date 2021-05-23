@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { ReturnMessage } from "src/app/lib/data/models";
 import {
@@ -6,15 +6,22 @@ import {
   PageContentModel,
 } from "src/app/lib/data/models/pageContent/pageContent.model";
 import { PageContentService } from "src/app/lib/data/services/pageContent/pageContent.service";
+import * as DecoupledEditor from "@ckeditor/ckeditor5-build-decoupled-document";
 
 @Component({
   selector: "app-page-content",
   templateUrl: "./page-content.component.html",
+  styleUrls: ["./page-content.component.scss"],
   providers: [PageContentService],
+  encapsulation: ViewEncapsulation.None,
 })
 export class PageContentComponent implements OnInit {
   pageContent: PageContentModel;
   isContactUs: boolean;
+  editor = DecoupledEditor;
+  config = {
+    isReadOnly: true,
+  };
 
   constructor(
     public pageContentService: PageContentService,
@@ -25,7 +32,6 @@ export class PageContentComponent implements OnInit {
     this.activeRoute.params.subscribe(() => {
       this.getCurrentPageContent();
     });
-    this.getCurrentPageContent();
   }
 
   getCurrentPageContent() {

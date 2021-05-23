@@ -126,6 +126,7 @@
                       submitted &&
                       pageContentFormControl.description.errors?.required
                   }"
+                  (ready)="onReady($event)"
                 ></ckeditor>
               </div>
             </form>

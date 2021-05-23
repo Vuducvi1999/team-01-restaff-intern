@@ -1,9 +1,11 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   SimpleChanges,
   ViewChild,
 } from "@angular/core";
@@ -34,6 +36,7 @@ import { FileService } from "src/app/lib/data/services/files/file.service";
 import { Subscription } from "rxjs";
 import { AuthService, MessageService } from "src/app/lib/data/services";
 import Swal from "sweetalert2";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 registerLocaleData(localeFr, "fr");
 
 @Component({
@@ -56,6 +59,8 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild("quickView") QuickView: QuickViewComponent;
   @ViewChild("cartModal") CartModal: CartModalComponent;
 
+  @Output() isCloseModal: EventEmitter<any> = new EventEmitter<any>();
+
   public ImageSrc: string;
   typeDisplayImage = TypeDisplayImage;
 
@@ -66,7 +71,8 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
     private cartService: CartService,
     private wishListService: CustomerWishListService,
     private authService: AuthService,
-    private sweetService: MessageService
+    private sweetService: MessageService,
+    private modalService: NgbModal,
   ) {}
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
@@ -143,6 +149,7 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
 
   addToCart(product: any) {
     this.cartService.addToCart(product);
+    this.isCloseModal.emit(true);
   }
 
   addToWishlist(product: any) {
@@ -173,5 +180,16 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
 
   getImage(fileName: string) {
     return FileService.getLinkFile(fileName);
+  }
+
+  openModalQuickView()
+  {
+    this.QuickView.openModal()
+  }
+
+  openModelCart(product: ProductModel)
+  {
+    this.CartModal.openModal(product)
+    this.isCloseModal.emit(true);
   }
 }

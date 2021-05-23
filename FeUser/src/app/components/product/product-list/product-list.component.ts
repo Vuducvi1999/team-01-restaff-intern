@@ -121,7 +121,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
         this.products.length == 0
           ? (this.isEmptyProduct = true)
           : (this.isEmptyProduct = false);
-        console.log(this.products);
+        // console.log(this.products);
       })
       .catch((res) =>
         this.sweetalertService.alert(
