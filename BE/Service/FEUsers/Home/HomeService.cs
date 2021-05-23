@@ -121,7 +121,8 @@ namespace Service.Home
                                     .Include(t => t.CustomerWishLists)
                                     .Where(i => i.IsDeleted == false)
                                     .Where(i => i.IsFeatured == true)
-                                    .OrderByDescending(i => i.UpdateByDate)
+                                    .OrderByDescending(i => i.DisplayOrder)
+                                    .ThenByDescending(i => i.UpdateByDate)
                                     .Take(12)
                                     .ToList();
                 var data = _mapper.Map<List<Product>, List<ProductDTO>>(resultEntity);

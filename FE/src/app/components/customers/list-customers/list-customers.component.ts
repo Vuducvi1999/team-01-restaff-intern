@@ -67,7 +67,7 @@ export class ListCustomersComponent implements OnInit {
 
   delete(event: any) {
     let category = event.data as CustomerModel;
-    this.messageService.confirm('Are you sure?', 'Yes').then((it) => {
+      this.messageService.confirm(`Do you want to delete the customer?`, 'Yes').then((it) => {
       if (it.isConfirmed) {
         this.customerService
           .delete(category)
