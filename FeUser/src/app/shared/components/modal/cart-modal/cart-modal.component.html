@@ -81,8 +81,17 @@
                           <a
                             [routerLink]="['/product-details']"
                             [queryParams]="{ id: product.id }"
-                            ><span>{{ product.name }}</span></a
+                            style="color: black;"
+                            *ngIf= 'product?.name.length > 19'
+                            ><span>{{ product?.name.substring(0,19)+'...'}}</span></a
                           >
+                          <a
+                          [routerLink]="['/product-details']"
+                          [queryParams]="{ id: product.id }"
+                          style="color: black;"
+                          *ngIf= 'product?.name.length < 19'
+                          ><span>{{ product?.name.substring(0,19)}}</span></a
+                        >
                         </h6>
                       </div>
                       <div class="product-detail">
@@ -94,12 +103,6 @@
                           }}</span>
                         </h4>
                       </div>
-                      <div class="button-add-to-cart">
-                        <a (click)="addToCart(product)"
-                        class="view-cart btn btn-solid"
-                       >add to cart
-                       </a>
-                    </div>
                     </div>
                   </div>
                 </ng-container>

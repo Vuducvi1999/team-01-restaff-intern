@@ -145,7 +145,9 @@ export class ProductDetailsComponent implements OnInit {
         ],
       ],
       contentHTML: [this.item ? this.item.contentHTML : ''],
-      imageUrl: [this.item ? this.item.imageUrl : ''],
+      imageUrl: [this.item ? this.item.imageUrl : '',
+         [Validators.required],
+      ], 
       price: [
         this.item ? this.item.price : this.item,
         [
