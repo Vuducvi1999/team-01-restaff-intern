@@ -81,8 +81,14 @@ export class ListUsersComponent implements OnInit, OnDestroy {
   };
 
   delete(event: any) {
-    if (event.data.id == '10000000-0000-0000-0000-000000000000' ||
-    event.data.id == this.userInfo.id) {
+    if (
+      event.data.id == '10000000-0000-0000-0000-000000000000' ||
+      event.data.id == this.userInfo.id
+    ) {
+      this.messageService.alert(
+        'Your access permissions may be inadequate to perform the requested operation on this resource.',
+        TypeSweetAlertIcon.INFO
+      );
       return;
     }
     this.messageService
@@ -112,7 +118,14 @@ export class ListUsersComponent implements OnInit, OnDestroy {
   }
 
   openPopup(item: any) {
-    if ('10000000-0000-0000-0000-000000000000' != this.userInfo.id && item?.data.id == '10000000-0000-0000-0000-000000000000') {
+    if (
+      '10000000-0000-0000-0000-000000000000' != this.userInfo.id &&
+      item?.data.id == '10000000-0000-0000-0000-000000000000'
+    ) {
+      this.messageService.alert(
+        'Your access permissions may be inadequate to perform the requested operation on this resource.',
+        TypeSweetAlertIcon.INFO
+      );
       return;
     }
     var modalRef = this.modalService.open(UserDetailComponent, {

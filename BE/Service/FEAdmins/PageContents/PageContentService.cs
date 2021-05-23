@@ -2,6 +2,7 @@
 using Common.Constants;
 using Common.Http;
 using Common.StringEx;
+using Domain.Constants;
 using Domain.DTOs.PageContent;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
@@ -47,6 +48,7 @@ namespace Service.PageContents
             try
             {
                 var resultEntity = _pageContentRepository.Queryable()
+                                    .Where(i => !i.IsDeleted)
                                     .OrderBy(i => i.Order)
                                     .ToList();
                 var data = _mapper.Map<List<PageContent>, List<PageContentDTO>>(resultEntity);
@@ -79,7 +81,7 @@ namespace Service.PageContents
         {
             model.Title = StringExtension.CleanString(model.Title);
             model.Description = StringExtension.CleanString(model.Description);
-            if(model.Title == null || model.Description == null)
+            if (model.Title == null || model.Description == null)
             {
                 return new ReturnMessage<PageContentDTO>(true, null, MessageConstants.InvalidString);
             }
@@ -94,6 +96,30 @@ namespace Service.PageContents
 
                 var data = _mapper.Map<PageContent, PageContentDTO>(entity);
                 var result = new ReturnMessage<PageContentDTO>(false, data, MessageConstants.ListSuccess);
+                return result;
+            }
+            catch
+            {
+                return new ReturnMessage<PageContentDTO>(true, null, MessageConstants.Error);
+            }
+        }
+
+        public ReturnMessage<PageContentDTO> Delete(DeletePageContentDTO model)
+        {
+            try
+            {
+                if (model.Id.IsNullOrEmpty() ||
+                    model.Id == PageContentConstants.Shipping ||
+                    model.Id == PageContentConstants.AboutUs ||
+                    model.Id == PageContentConstants.ContactUs)
+                {
+                    return new ReturnMessage<PageContentDTO>(true, null, MessageConstants.Error);
+                }
+                var entity = _pageContentRepository.Find(model.Id);
+                entity.Delete();
+                _pageContentRepository.Update(entity);
+                _unitOfWork.SaveChanges();
+                var result = new ReturnMessage<PageContentDTO>(false, null, MessageConstants.DeleteSuccess);
                 return result;
             }
             catch

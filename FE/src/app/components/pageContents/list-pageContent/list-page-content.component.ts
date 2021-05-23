@@ -41,7 +41,6 @@ export class ListPageContentComponent {
     },
     actions: {
       position: 'right',
-      delete: false,
     },
     columns: {
       title: {
@@ -97,6 +96,44 @@ export class ListPageContentComponent {
         // if (er.error.hasError) {
         //   // console.log(er.error.message);
         // }
+      });
+  }
+
+  delete(event: any) {
+    if (
+      event.data.id == '00000000-0000-0000-0000-000000000001' ||
+      event.data.id == '00000000-0000-0000-0000-000000000002' ||
+      event.data.id == '00000000-0000-0000-0000-000000000003'
+    ) {
+      this.messageService.alert(
+        'Your access permissions may be inadequate to perform the requested operation on this resource.',
+        TypeSweetAlertIcon.INFO
+      );
+      return;
+    }
+    this.messageService
+      .confirm(`Do you want to delete the page content?`)
+      .then((res) => {
+        if (res.isConfirmed) {
+          let id = event.data.id;
+          this.service
+            .delete(id)
+            .then(() => {
+              this.messageService.notification(
+                'Page content has been deleted',
+                TypeSweetAlertIcon.SUCCESS
+              );
+              this.getList();
+            })
+            .catch((er) => {
+              this.messageService.alert(
+                er.error.message ??
+                  JSON.stringify(er.error.error) ??
+                  'Server Disconnected',
+                TypeSweetAlertIcon.ERROR
+              );
+            });
+        }
       });
   }
 }
