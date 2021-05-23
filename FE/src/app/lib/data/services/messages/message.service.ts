@@ -13,9 +13,9 @@ export class MessageService {
 
   confirm(
     title: string,
-    confirmButtonText: string,
-    denyButtonText: string = null,
-    isCancelButton: boolean = true
+    confirmButtonText: string = 'Yes',
+    denyButtonText: string = 'No',
+    isCancelButton: boolean = false
   ) {
     return Swal.fire({
       title: title,
