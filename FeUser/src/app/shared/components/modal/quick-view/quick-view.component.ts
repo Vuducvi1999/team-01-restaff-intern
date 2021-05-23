@@ -169,7 +169,8 @@ export class QuickViewComponent implements OnInit, OnDestroy {
 
   // Add to cart
   async addToCart(product: any) {
-    this.cartService.addToCart(product);
+    this.openModelCart(product);
+    this.modalService.dismissAll();
   }
 
   ngOnDestroy() {

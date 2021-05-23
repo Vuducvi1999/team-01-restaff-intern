@@ -17,7 +17,6 @@ import * as ClassicEditor from 'src/app/lib/customCkeditor/ckeditor5-build-class
 import Base64UploaderPlugin from 'src/app/lib/@ckeditor/Base64Upload';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
-import Base64UploaderPlugin from 'src/app/lib/@ckeditor/Base64Upload';
 
 @Component({
   selector: 'app-blogs-detail',
