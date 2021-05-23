@@ -18,7 +18,8 @@ const routes: Routes = [
     component: ContentLayoutComponent,
     children: content,
     canActivate: [AuthGuardsAdminService],
-  }
+  },
+  {path: '**', redirectTo: '/error'}
 ];
 
 @NgModule({

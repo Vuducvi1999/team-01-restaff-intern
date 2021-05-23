@@ -20,8 +20,8 @@ const routes: Routes = [
       import("./components/auth/auth.module").then((m) => m.AuthModule),
   },
   {
-    path: "**", // Navigate to Home Page if not found any page
-    redirectTo: "",
+    path: "**",
+    redirectTo: "error",
   },
 ];
 
