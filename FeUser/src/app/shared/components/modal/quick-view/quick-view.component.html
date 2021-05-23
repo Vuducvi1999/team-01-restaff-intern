@@ -15,12 +15,13 @@
         <div class="col-lg-6 rtl-text">
           <div class="product-right">
             <h2>
+              {{ product.name }}
               <a *ngIf="userInfo" href="javascript:void(0)" title="Add to Wishlist" (click)="addToWishlist(product)"
                 style="color: red;">
                 <i [ngClass]="[
-                  product.isInWishList ? 'fa fa-heart color-red' : 'ti-heart'
-                ]" aria-hidden="true"></i>
-              </a> {{ product.name }}
+                product.isInWishList ? 'fa fa-heart color-red' : 'ti-heart'
+              ]" aria-hidden="true"></i>
+              </a>
             </h2>
 
             <h3>
