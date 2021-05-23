@@ -144,8 +144,10 @@
 <app-skeleton-product-box *ngIf="loader"></app-skeleton-product-box>
 <app-quick-view
   #quickView
+  #cartModalQuickView
   [product]="product"
   [currency]="currency"
+  [cartModal]="true"
 ></app-quick-view>
 <app-cart-modal
   #cartModal

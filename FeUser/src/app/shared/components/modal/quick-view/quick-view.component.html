@@ -72,7 +72,8 @@
                             </div>
                         </div> -->
             <div class="product-buttons">
-              <a href="javascript:void(0)" title="Add to cart" (click)="addToCart(product)" class="btn btn-solid">
+              <a href="javascript:void(0)" title="Add to cart" (click)="addToCart(product);"
+                class="btn btn-solid">
                 add to cart
               </a>
               <!-- <a href="javascript:void(0)" class="btn btn-solid" [class.disabled]="counter > product.stock" (click)="addToCart(product)">add to cart</a> -->
@@ -103,3 +104,9 @@
     </div>
   </div>
 </ng-template>
+<app-cart-modal
+  #cartModalQuickView
+  [product]="product"
+  [currency]="currency"
+  *ngIf="cartModal"
+></app-cart-modal>

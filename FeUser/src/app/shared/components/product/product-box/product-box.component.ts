@@ -72,7 +72,7 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
     private wishListService: CustomerWishListService,
     private authService: AuthService,
     private sweetService: MessageService,
-    private modalService: NgbModal,
+    private modalService: NgbModal
   ) {}
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
@@ -182,14 +182,13 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
     return FileService.getLinkFile(fileName);
   }
 
-  openModalQuickView()
-  {
-    this.QuickView.openModal()
+  openModalQuickView() {
+    this.QuickView.openModal();
+    this.isCloseModal.emit(true);
   }
 
-  openModelCart(product: ProductModel)
-  {
-    this.CartModal.openModal(product)
+  openModelCart(product: ProductModel) {
+    this.CartModal.openModal(product);
     this.isCloseModal.emit(true);
   }
 }
