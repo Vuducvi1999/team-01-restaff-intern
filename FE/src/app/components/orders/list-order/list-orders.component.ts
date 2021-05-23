@@ -140,7 +140,6 @@ export class ListOrdersComponent implements OnInit {
       button.innerText.toUpperCase() !== 'All'.toUpperCase()
         ? button.innerText
         : '';
-    this.filter = status;
     button.classList.add('active');
 
     if (this.filter == status || status == '') {
@@ -148,6 +147,7 @@ export class ListOrdersComponent implements OnInit {
       this.params.pageIndex = 0;
       return this.getOrders();
     }
+    this.filter = status;
 
     return this.actionFilter(status);
   }
