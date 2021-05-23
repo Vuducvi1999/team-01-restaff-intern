@@ -50,11 +50,11 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
     private productListService: ProductListService,
     private cartService: CartService,
     private messageService: MessageService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void { }
 
   async openModal(product) {
     const getData = await this.productListService.getByCategory(
@@ -78,9 +78,7 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
             (result) => {
               `Result ${result}`;
             },
-            (reason) => {
-              this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-            }
+            (dismiss) => { }
           );
       }
     }

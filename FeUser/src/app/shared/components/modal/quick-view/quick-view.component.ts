@@ -54,7 +54,7 @@ export class QuickViewComponent implements OnInit, OnDestroy {
   @Input() currency: any;
   @Input() cartModal: boolean = false; // Default False
   @ViewChild("quickView", { static: false }) QuickView: TemplateRef<any>;
-  @ViewChild("cartModal") CartModal: CartModalComponent;
+  @ViewChild("cartModalQuickView") CartModal: CartModalComponent;
   @Output() isCloseModal: EventEmitter<any> = new EventEmitter<any>();
 
   public closeResult: string;
@@ -104,8 +104,7 @@ export class QuickViewComponent implements OnInit, OnDestroy {
           (result) => {
             `Result ${result}`;
           },
-          (reason) => {
-            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+          (dismiss) => {
           }
         );
     }
@@ -171,7 +170,6 @@ export class QuickViewComponent implements OnInit, OnDestroy {
   // Add to cart
   async addToCart(product: any) {
     this.cartService.addToCart(product);
-    this.messageService.notification("Product has been added to cart", "success");
   }
 
   ngOnDestroy() {
