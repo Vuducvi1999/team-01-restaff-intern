@@ -71,6 +71,29 @@
                         (isCloseModal)="onCloseModal($event, modal)"
                       >
                       </app-product-box>
+                      <!-- <div class="front">
+                        <a
+                          [routerLink]="['/product-details']"
+                          [queryParams]="{ id: product.id }"
+                        >
+                          <app-image-wrapper
+                            [data]="{
+                              url: product.imageUrl.split(',')[0],
+                              typeClass: typeDisplayImage.CART_MODAL_IMAGE,
+                              class: 'img-fluid mb-1'
+                            }"
+                          ></app-image-wrapper>
+                        </a>
+                      </div> -->
+                      <!-- <div class="product-detail">
+                        <h4>
+                          <span>{{
+                            product.price * currency?.price
+                              | discount: product
+                              | vndFormat
+                          }}</span>
+                        </h4>
+                      </div> -->
                     </div>
                   </div>
                 </ng-container>

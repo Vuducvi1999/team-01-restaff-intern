@@ -102,13 +102,30 @@
       </ng-template></ngb-rating>
       <br />
       <br />
-      <a
+      <!-- <a
         [routerLink]="['/product-details']"
         [queryParams]="{ id: product?.id }"
       >
         <h6>{{ product?.name }}</h6>
-        <!-- <h6>{{ product?.name | titlecase }}</h6> -->
-      </a>
+      </a> -->
+      <div class="product-name">
+        <h6>
+          <a
+            [routerLink]="['/product-details']"
+            [queryParams]="{ id: product.id }"
+            style="color: black;"
+            *ngIf= 'product?.name.length > 19'
+            ><span>{{ product?.name.substring(0,18)+'...'}}</span></a
+          >
+          <a
+          [routerLink]="['/product-details']"
+          [queryParams]="{ id: product.id }"
+          style="color: black;"
+          *ngIf= 'product?.name.length <= 19'
+          ><span>{{ product?.name.substring(0,19)}}</span></a
+        >
+        </h6>
+      </div>
       <p>
         {{ product?.description }}
       </p>
