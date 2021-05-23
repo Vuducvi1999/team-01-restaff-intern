@@ -9,6 +9,7 @@
         <div class="table-responsive">
           <ng2-smart-table
             [settings]="settings"
+            (create)="openPopup(null)"
             (edit)="openPopup($event)"
             [(source)]="pageContents"
           ></ng2-smart-table>

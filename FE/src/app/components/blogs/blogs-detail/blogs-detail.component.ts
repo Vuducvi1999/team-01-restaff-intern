@@ -88,12 +88,10 @@ export class BlogsDetailComponent implements OnInit {
       this.blogService
         .save(this.blog)
         .then(() => {
-          if (this.item) {
-            this.messageService.notification(
-              'Blog has been edited',
-              TypeSweetAlertIcon.SUCCESS
-            );
-          }
+          this.messageService.notification(
+            this.item ? 'Update Success' : 'Create Success',
+            TypeSweetAlertIcon.SUCCESS
+          );
           this.blogForm.reset();
           this.submitted = false;
           this.ngbActiveModal.close();
