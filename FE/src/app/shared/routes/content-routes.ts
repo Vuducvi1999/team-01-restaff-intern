@@ -132,4 +132,11 @@ export const content: Routes = [
       breadcrumb: 'Contact',
     },
   },
+  {
+    path: 'error',
+    loadChildren: () =>
+      import('../../components/error/error.module').then(
+        (m) => m.ErrorModule
+      ),
+  }
 ];

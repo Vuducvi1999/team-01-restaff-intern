@@ -32,6 +32,7 @@ import { PageContentInfoComponent } from "./page-content/PageInfo/page-info.comp
 import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { WishlistComponent } from "./wishlist/wishlist.component";
   import { CKEditorModule } from '@ckeditor/ckeditor5-angular'
+import { ErrorComponent } from "./error/error.component";
   @NgModule({
   declarations: [
     HomeComponent,
@@ -59,6 +60,7 @@ import { WishlistComponent } from "./wishlist/wishlist.component";
     ProfileComponent,
     PageContentInfoComponent,
     WishlistComponent,
+    ErrorComponent,
   ],
   imports: [
     CommonModule,

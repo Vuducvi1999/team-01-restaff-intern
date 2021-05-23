@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-4 service-block" *ngFor="let pageContent of pageContents">
+  <div [class]="pageContents.length == 3 ? 'col-md-4 service-block' : 'col-md-6 service-block'" *ngFor="let pageContent of pageContents">
     <div class="media">
       <a class="link-page-content" [routerLink]="['/page-info', pageContent.id]"
         ><app-image-wrapper

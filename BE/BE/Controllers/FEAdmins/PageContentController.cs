@@ -45,5 +45,13 @@ namespace BE.ControllersFeUser.FEAdmins
             var result = _pageContentService.Update(model);
             return CommonResponse(result);
         }
+
+        [Authorize]
+        [HttpDelete]
+        public IActionResult Delete([FromQuery] DeletePageContentDTO model)
+        {
+            var result = _pageContentService.Delete(model);
+            return CommonResponse(result);
+        }
     }
 }

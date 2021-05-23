@@ -11,6 +11,7 @@
             [settings]="settings"
             (create)="openPopup(null)"
             (edit)="openPopup($event)"
+            (delete)="delete($event)"
             [(source)]="pageContents"
           ></ng2-smart-table>
         </div>

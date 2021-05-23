@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd, PRIMARY_OUTLET } from '@angular/router';
 
 import { filter } from 'rxjs/operators';
@@ -11,8 +11,8 @@ import { map } from 'rxjs/internal/operators';
 })
 export class BreadcrumbComponent implements OnInit {
 
-  public breadcrumbs;
-  public title: string
+  @Input() public breadcrumbs;
+  @Input() public title: string
 
   constructor(private activatedRoute: ActivatedRoute,
     private router: Router) {
