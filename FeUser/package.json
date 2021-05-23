@@ -27,6 +27,8 @@
     "@angular/platform-browser-dynamic": "~11.0.2",
     "@angular/platform-server": "~11.0.2",
     "@angular/router": "~11.0.2",
+    "@ckeditor/ckeditor5-angular": "^2.0.1",
+    "@ckeditor/ckeditor5-build-decoupled-document": "^27.1.0",
     "@ks89/angular-modal-gallery": "^7.2.5",
     "@ng-bootstrap/ng-bootstrap": "^6.0.0",
     "@ngneat/content-loader": "^4.1.0",
