@@ -6,13 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Service.PageContents
+namespace Service.UserPageContents
 {
-    public interface IPageContentService
+    public interface IUserPageContentService
     {
         public ReturnMessage<List<PageContentDTO>> GetList();
         public ReturnMessage<PageContentDTO> GetById(Guid id);
-        public ReturnMessage<PageContentDTO> Update(UpdatePageContentDTO dataUpdate);
-        public ReturnMessage<PageContentDTO> Create(CreatePageContentDTO data);
     }
 }

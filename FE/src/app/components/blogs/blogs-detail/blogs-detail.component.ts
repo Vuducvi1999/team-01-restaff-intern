@@ -12,6 +12,7 @@ import {
 } from 'src/app/shared/components/modals/models/modal.model';
 
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import Base64UploaderPlugin from 'src/app/lib/@ckeditor/Base64Upload';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
 
@@ -28,7 +29,7 @@ export class BlogsDetailComponent implements OnInit {
   public modalFooter: ModalFooterModel;
   submitted = false;
   public editor = ClassicEditor;
-
+  public editorConfig = { extraPlugins: [Base64UploaderPlugin] };
   public modalFile: ModalFile;
   public fileURL: (string | ArrayBuffer)[];
 
@@ -88,12 +89,10 @@ export class BlogsDetailComponent implements OnInit {
       this.blogService
         .save(this.blog)
         .then(() => {
-          if (this.item) {
-            this.messageService.notification(
-              'Blog has been edited',
-              TypeSweetAlertIcon.SUCCESS
-            );
-          }
+          this.messageService.notification(
+            this.item ? 'Update Success' : 'Create Success',
+            TypeSweetAlertIcon.SUCCESS
+          );
           this.blogForm.reset();
           this.submitted = false;
           this.ngbActiveModal.close();
