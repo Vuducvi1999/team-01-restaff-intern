@@ -71,7 +71,7 @@
                         (isCloseModal)="onCloseModal($event, modal)"
                       >
                       </app-product-box>
-                      <div class="front">
+                      <!-- <div class="front">
                         <a
                           [routerLink]="['/product-details']"
                           [queryParams]="{ id: product.id }"
@@ -84,26 +84,8 @@
                             }"
                           ></app-image-wrapper>
                         </a>
-                      </div>
-                      <div class="product-name">
-                        <h6 class="mt-0">
-                          <a
-                            [routerLink]="['/product-details']"
-                            [queryParams]="{ id: product.id }"
-                            style="color: black;"
-                            *ngIf= 'product?.name.length > 19'
-                            ><span>{{ product?.name.substring(0,19)+'...'}}</span></a
-                          >
-                          <a
-                          [routerLink]="['/product-details']"
-                          [queryParams]="{ id: product.id }"
-                          style="color: black;"
-                          *ngIf= 'product?.name.length < 19'
-                          ><span>{{ product?.name.substring(0,19)}}</span></a
-                        >
-                        </h6>
-                      </div>
-                      <div class="product-detail">
+                      </div> -->
+                      <!-- <div class="product-detail">
                         <h4>
                           <span>{{
                             product.price * currency?.price
@@ -111,7 +93,7 @@
                               | vndFormat
                           }}</span>
                         </h4>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </ng-container>
