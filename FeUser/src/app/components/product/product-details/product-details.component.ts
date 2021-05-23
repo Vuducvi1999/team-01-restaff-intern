@@ -150,7 +150,11 @@ export class ProductDetailsComponent implements OnInit {
   }
   addToCart(product: any) {
     this.cartService.addToCart(product);
-    this.toastrService.success(`${product?.name}` + " has been added to cart.");
+    //this.toastrService.success(`${product?.name}` + " has been added to cart.");
+    this.sweetService.notification(
+      "Product has been added to cart",
+      "success"
+    );
   }
 
   addToWishList(product) {
