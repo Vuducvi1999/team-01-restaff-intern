@@ -8,6 +8,8 @@ import {
   Injectable,
   PLATFORM_ID,
   Inject,
+  Output,
+  EventEmitter,
 } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
@@ -20,6 +22,7 @@ import { CartService } from "src/app/lib/data/services/cart/cart.service";
 import { SaveCustomerWishListModel } from "src/app/lib/data/models/customerWishList/customerWishList.model";
 import { CustomerWishListService } from "src/app/lib/data/services/customerWishLists/customerWishList.service";
 import { Subscription } from "rxjs";
+import { CartModalComponent } from "../../modal/cart-modal/cart-modal.component";
 
 @Component({
   selector: "app-quick-view",
@@ -49,7 +52,10 @@ import { Subscription } from "rxjs";
 export class QuickViewComponent implements OnInit, OnDestroy {
   @Input() product: ProductModel;
   @Input() currency: any;
+  @Input() cartModal: boolean = false; // Default False
   @ViewChild("quickView", { static: false }) QuickView: TemplateRef<any>;
+  @ViewChild("cartModal") CartModal: CartModalComponent;
+  @Output() isCloseModal: EventEmitter<any> = new EventEmitter<any>();
 
   public closeResult: string;
   public ImageSrc: string;
@@ -73,7 +79,7 @@ export class QuickViewComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private authService: AuthService,
     private wishListService: CustomerWishListService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // console.log(this.product);
@@ -200,5 +206,10 @@ export class QuickViewComponent implements OnInit, OnDestroy {
       this.product.isInWishList = true;
       this.cartService.addToWishlist(product);
     });
+  }
+
+  openModelCart(product: ProductModel) {
+    this.CartModal.openModal(product)
+    this.isCloseModal.emit(true);
   }
 }
