@@ -11,10 +11,8 @@ import {
   TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
 
-import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+// import * as DecoupledEditor from 'src/app/lib/customCkeditor/ckeditor5-build-decoupled-document';
 import * as ClassicEditor from 'src/app/lib/customCkeditor/ckeditor5-build-classic';
-// import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import Base64UploaderPlugin from 'src/app/lib/@ckeditor/Base64Upload';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 import { TypeSweetAlertIcon } from 'src/app/lib/data/models';
 
@@ -30,7 +28,7 @@ export class BlogsDetailComponent implements OnInit {
   public modalHeader: ModalHeaderModel;
   public modalFooter: ModalFooterModel;
   submitted = false;
-  public editor = DecoupledEditor;
+  public editor = ClassicEditor;
   public editorConfig = {
     extraPlugins: [Base64UploaderPlugin],
   };

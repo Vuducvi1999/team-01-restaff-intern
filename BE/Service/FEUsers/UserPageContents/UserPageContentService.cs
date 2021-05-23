@@ -28,8 +28,7 @@ namespace Service.UserPageContents
             try
             {
                 var resultEntity = _pageContentRepository.Queryable()
-                                    .Where(i => i.Order >= 0)
-                                    .OrderBy(i => i.Order)
+                                    .OrderBy(i => i.Id).Take(3).Where(i => i.Order >= 0).OrderBy(i => i.Order)
                                     .ToList();
                 var data = _mapper.Map<List<PageContent>, List<PageContentDTO>>(resultEntity);
                 var result = new ReturnMessage<List<PageContentDTO>>(false, data, MessageConstants.ListSuccess);
@@ -46,7 +45,7 @@ namespace Service.UserPageContents
         {
             try
             {
-                var resultEntity = _pageContentRepository.Find(id);
+                var resultEntity = _pageContentRepository.Queryable().Where(i => i.Id == id && !i.IsDeleted && i.Order >= 0).FirstOrDefault();
                 var data = _mapper.Map<PageContent, PageContentDTO>(resultEntity);
                 var result = new ReturnMessage<PageContentDTO>(false, data, MessageConstants.ListSuccess);
                 return result;

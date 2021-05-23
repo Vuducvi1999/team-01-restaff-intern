@@ -20,6 +20,12 @@ export class PageContentService {
     return this.httpClient.postObservable(this.url, model).toPromise();
   }
 
+  delete(id: string)
+  {
+    const url = `${this.url}/?id=${id}`;
+    return this.httpClient.deleteObservable(url).toPromise();
+  }
+
   saveChange(model: PageContentModel) {
     if (model.id) return this.update(model);
     return this.create(model);
