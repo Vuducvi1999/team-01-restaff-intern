@@ -70,7 +70,8 @@ namespace Service.Home
                                     .Include(t => t.Category)
                                     .Include(t => t.CustomerWishLists)
                                     .Where(i => i.IsDeleted == false)
-                                    .OrderByDescending(i => i.UpdateByDate)
+                                    .OrderByDescending(i => i.HasDisplayHomePage)
+                                    .ThenByDescending(i => i.CreateByDate)
                                     .Take(12)
                                     .ToList();
                 var data = _mapper.Map<List<Product>, List<ProductDTO>>(resultEntity);
