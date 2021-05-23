@@ -13,5 +13,6 @@ namespace Service.PageContents
         public ReturnMessage<List<PageContentDTO>> GetList();
         public ReturnMessage<PageContentDTO> GetById(Guid id);
         public ReturnMessage<PageContentDTO> Update(UpdatePageContentDTO dataUpdate);
+        public ReturnMessage<PageContentDTO> Create(CreatePageContentDTO data);
     }
 }

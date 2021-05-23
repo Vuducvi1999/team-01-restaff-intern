@@ -152,13 +152,13 @@ namespace Service.Orders
             try
             {
                 var entity = _orderRepository.Queryable().AsNoTracking().Include(t => t.OrderDetails).FirstOrDefault(t=> t.Id == model.Id);
-                if (entity.Status != CodeConstants.NewOrder)
+                if (entity.Status == CodeConstants.RejectedOrder)
                 {
                     return new ReturnMessage<OrderDTO>(true, null, MessageConstants.UpdateFail);
                 }
                 if (entity.IsNotNullOrEmpty())
                 {
-                    if (model.Status == CodeConstants.ApprovedOrder)
+                    if (model.Status == CodeConstants.ApprovedOrder && entity.Status== CodeConstants.NewOrder)
                     {
                         entity.Status = model.Status;
                         model = _mapper.Map<UpdateOrderDTO>(entity);

@@ -30,14 +30,15 @@ namespace BE.ControllersFeUser.FEAdmins
             return CommonResponse(result);
         }
 
-        [Route(UrlConstants.GetPageContent)]
-        [HttpGet]
-        public IActionResult GetById(Guid id)
+        [Authorize]
+        [HttpPost]
+        public IActionResult Create([FromBody] CreatePageContentDTO model)
         {
-            var result = _pageContentService.GetById(id);
+            var result = _pageContentService.Create(model);
             return CommonResponse(result);
         }
 
+        [Authorize]
         [HttpPut]
         public IActionResult Put([FromBody] UpdatePageContentDTO model)
         {

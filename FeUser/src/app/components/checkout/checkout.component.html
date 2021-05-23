@@ -13,23 +13,13 @@
               <div class="row">
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                   <div class="field-label" for="firstName">First Name</div>
-                  <input
-                    type="text"
-                    id="firstName"
-                    required
-                    name="firstName"
-                    #firstName="ngModel"
-                    placeholder="First Name"
-                    [(ngModel)]="order.firstName"
-                  />
+                  <input type="text" id="firstName" required name="firstName" #firstName="ngModel"
+                    placeholder="First Name" [(ngModel)]="order.firstName" />
 
-                  <div
-                    *ngIf="
+                  <div *ngIf="
                       !firstName?.valid &&
                       (firstName?.dirty || firstName?.touched)
-                    "
-                    class="error"
-                  >
+                    " class="error">
                     <div *ngIf="firstName.errors.required" style="color: red">
                       First Name is required
                     </div>
@@ -38,21 +28,11 @@
 
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                   <div class="field-label">Last Name</div>
-                  <input
-                    type="text"
-                    id="lastName"
-                    required
-                    name="lastName"
-                    #lastName="ngModel"
-                    placeholder="Last Name"
-                    [(ngModel)]="order.lastName"
-                  />
-                  <div
-                    *ngIf="
+                  <input type="text" id="lastName" required name="lastName" #lastName="ngModel" placeholder="Last Name"
+                    [(ngModel)]="order.lastName" />
+                  <div *ngIf="
                       !lastName?.valid && (lastName?.dirty || lastName?.touched)
-                    "
-                    class="error"
-                  >
+                    " class="error">
                     <div *ngIf="lastName.errors.required" style="color: red">
                       Last Name is required
                     </div>
@@ -60,19 +40,9 @@
                 </div>
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                   <div class="field-label">Phone</div>
-                  <input
-                    type="text"
-                    id="phone"
-                    required
-                    name="phone"
-                    #phone="ngModel"
-                    [(ngModel)]="order.phone"
-                    placeholder="Phone"
-                  />
-                  <div
-                    *ngIf="!phone?.valid && (phone?.dirty || phone?.touched)"
-                    class="error"
-                  >
+                  <input type="text" id="phone" required name="phone" #phone="ngModel" [(ngModel)]="order.phone"
+                    placeholder="Phone" />
+                  <div *ngIf="!phone?.valid && (phone?.dirty || phone?.touched)" class="error">
                     <div *ngIf="phone.errors.required" style="color: red">
                       Phone is required
                     </div>
@@ -80,20 +50,9 @@
                 </div>
                 <div class="form-group col-md-6 col-sm-6 col-xs-12">
                   <div class="field-label">Email Address</div>
-                  <input
-                    type="text"
-                    id="email"
-                    required
-                    email
-                    name="email"
-                    #email="ngModel"
-                    [(ngModel)]="order.email"
-                    placeholder="Email"
-                  />
-                  <div
-                    *ngIf="!email?.valid && (email?.dirty || email?.touched)"
-                    class="error"
-                  >
+                  <input type="text" id="email" required email name="email" #email="ngModel" [(ngModel)]="order.email"
+                    placeholder="Email" />
+                  <div *ngIf="!email?.valid && (email?.dirty || email?.touched)" class="error">
                     <div *ngIf="email.errors.required" style="color: red">
                       Email is required
                     </div>
@@ -105,22 +64,12 @@
 
                 <div class="form-group col-md-12 col-sm-12 col-xs-12">
                   <div class="field-label">Address</div>
-                  <input
-                    type="text"
-                    id="address"
-                    required
-                    name="address"
-                    #address="ngModel"
-                    placeholder="Street address"
-                    [(ngModel)]="order.address"
-                  />
+                  <input type="text" id="address" required name="address" #address="ngModel"
+                    placeholder="Street address" [(ngModel)]="order.address" />
 
-                  <div
-                    *ngIf="
+                  <div *ngIf="
                       !address?.valid && (address?.dirty || address?.touched)
-                    "
-                    class="error"
-                  >
+                    " class="error">
                     <div *ngIf="address.errors.required" style="color: red">
                       Adress is required
                     </div>
@@ -137,8 +86,7 @@
                   <ul class="qty" *ngFor="let product of products">
                     <li>
                       {{ product.name }} x {{ product.quantity }}
-                      <span
-                        >{{ product.quantity * product.price | vndFormat }}
+                      <span>{{ product.quantity * product.price | vndFormat }}
                       </span>
                     </li>
                   </ul>
@@ -147,16 +95,14 @@
                       Subtotal
                       <span class="count text-body">{{
                         cart.totalAmount | vndFormat
-                      }}</span>
+                        }}</span>
                     </li>
                   </ul>
                   <ul class="qty sub-total" *ngIf="couponDisplay">
                     <li>
                       Coupon
-                      <span
-                        >-{{ couponValue | vndFormat }} <br /><br />
-                        {{ couponPercent }}</span
-                      >
+                      <span>-{{ couponValue | vndFormat }} <br /><br />
+                        {{ couponPercent }}</span>
                       <br />
                       ({{ couponName }})
                     </li>
@@ -168,7 +114,7 @@
                       Total
                       <span class="count text-success">{{
                         cart.totalAmount - couponValue | vndFormat
-                      }}</span>
+                        }}</span>
                     </li>
                   </ul>
                 </div>
@@ -177,37 +123,24 @@
                     <div class="col-lg-12 col-sm-6 col-xs-12">
                       <div class="row">
                         <div class="col-lg-7 col-sm-12 col-xs-12">
-                          <input
-                            placeholder="Coupon Code"
-                            type="text"
-                            id="couponCode"
-                            name="couponCode"
-                            #ctrl="ngModel"
-                            [(ngModel)]="couponCode"
-                          />
+                          <input placeholder="Coupon Code" type="text" id="couponCode" name="couponCode" #ctrl="ngModel"
+                            [(ngModel)]="couponCode" />
                           <div *ngIf="couponInvalid">
-                            <span class="text-danger"
-                              ><strong>INVALID COUPON</strong></span
-                            >
+                            <span class="text-danger"><strong>INVALID COUPON</strong></span>
                           </div>
                         </div>
 
                         <div class="col-lg-5 col-sm-12 col-xs-12">
-                          <div class="btn-group">
-                            <button
-                              type="button"
-                              (click)="applyCoupon()"
-                              class="btn-solid btn btn-sm"
-                            >
-                              Apply
-                            </button>
-                            <button
-                              type="button"
-                              (click)="removeCoupon()"
-                              class="ml-1 btn-solid btn btn-sm"
-                            >
-                              Remove
-                            </button>
+                          <div class="row">
+                            <div class="btn-group col-lg-6">
+                              <button type="button" (click)="applyCoupon()" class="btn-solid btn btn-sm">
+                                Apply
+                              </button>
+                              <button *ngIf="couponDisplay || couponInvalid" type="button" (click)="removeCoupon()"
+                                class="ml-1 btn-solid btn btn-sm">
+                                Remove
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -215,11 +148,7 @@
                   </div>
                   <br />
                   <div class="text-right">
-                    <button
-                      [disabled]="!checkoutForm.valid"
-                      type="submit"
-                      class="btn-solid btn"
-                    >
+                    <button [disabled]="!checkoutForm.valid" type="submit" class="btn-solid btn">
                       Place Order
                     </button>
                   </div>

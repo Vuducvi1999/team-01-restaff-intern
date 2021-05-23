@@ -101,7 +101,7 @@
             <div class="footer-contant">
               <ul *ngIf="footerModel?.pageContents">
                 <li *ngFor="let pageContent of footerModel?.pageContents">
-                  <a [routerLink]="['/page-info', pageContent.id]">{{
+                  <a href="/page-info/{{ pageContent.id }}">{{
                     pageContent.title
                   }}</a>
                 </li>

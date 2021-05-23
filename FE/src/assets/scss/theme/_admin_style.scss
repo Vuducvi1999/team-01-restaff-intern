@@ -1764,8 +1764,8 @@ div{
   .btn-air-#{$btn-name}{
     box-shadow: 0 5px 10px 2px rgba(88,103,221,.19)!important;
     &:hover,&:active,&:not([disabled]):not(.disabled):active{
-      background-color: darken( $btn-color, 10% );
-      border-color: darken( $btn-color, 10% );
+      background-color: darken( $btn-color, 90% );
+      border-color: darken( $btn-color, 90% );
     }
   }
 }

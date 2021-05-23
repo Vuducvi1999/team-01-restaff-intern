@@ -86,7 +86,7 @@ export class UpdateOrderComponent implements OnInit {
   };
 
   loadFormItem() {
-    var check = this.item.status != 'New';
+    var check = this.item.status == 'Rejected';
     this.orderForm = this.formBuilder.group({
       fullName: [
         { value: this.item.fullName, disabled: check },
@@ -114,12 +114,19 @@ export class UpdateOrderComponent implements OnInit {
         color: 'btn btn-primary',
         title: 'close',
         onAction: (event: any) => {
-          this.ngbActiveModal.close();
+          this.ngbActiveModal.dismiss();
         },
       },
     ];
     if (this.item.status == 'New') {
       this.modalFooter.buttons = [
+        {
+          color: 'btn btn-info',
+          title: 'save',
+          onAction: (event: any) => {
+            this.save();
+          },
+        },
         {
           color: 'btn btn-success',
           title: 'approve',
@@ -128,10 +135,29 @@ export class UpdateOrderComponent implements OnInit {
           },
         },
         {
-          color: 'btn btn-danger',
+          color: 'btn btn-primary',
           title: 'reject',
           onAction: (event: any) => {
             this.reject();
+          },
+        },
+      ];
+    }
+
+    if (this.item.status == 'Approved') {
+      this.modalFooter.buttons = [
+        {
+          color: 'btn btn-info',
+          title: 'save',
+          onAction: (event: any) => {
+            this.save();
+          },
+        },
+        {
+          color: 'btn btn-primary',
+          title: 'close',
+          onAction: (event: any) => {
+            this.ngbActiveModal.dismiss();
           },
         },
       ];
@@ -153,6 +179,30 @@ export class UpdateOrderComponent implements OnInit {
       totalAmount: this.item.totalAmount,
       totalItem: this.item.totalItem,
     };
+  }
+
+  save() {
+    this.loadOrderModel();
+
+    this.submitted = true;
+    if (this.orderForm.valid) {
+      this.ordersService
+        .update(this.order)
+        .then(() => {
+          this.messageService.notification(
+            'Order has been edited',
+            TypeSweetAlertIcon.SUCCESS
+          );
+        })
+        .catch((er) => {
+          this.messageService.alert(
+            er.error.message ??
+              JSON.stringify(er.error.error) ??
+              'Server Disconnected',
+            TypeSweetAlertIcon.ERROR
+          );
+        });
+    }
   }
 
   approve() {

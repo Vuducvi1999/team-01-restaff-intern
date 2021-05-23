@@ -44,7 +44,7 @@ namespace Service.Contacts
             try
             {
                 var entity = _repository.Find(model.Id); 
-                if (entity.IsNotNullOrEmpty() && entity.Status != "Done" )
+                if (entity.IsNotNullOrEmpty() && entity.Status != "Completed" )
                 {
                     entity.Update(model);
                     _repository.Update(entity);

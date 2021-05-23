@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Service.Auth;
 using Service.Files;
 using Service.PageContents;
+using Service.UserPageContents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,9 @@ namespace BE.Controllers.FEUsers
     [ApiController]
     public class UserPageContentController : BaseController
     {
-        private readonly IPageContentService _pageContentService;
+        private readonly IUserPageContentService _pageContentService;
 
-        public UserPageContentController(IPageContentService pageContentService, IAuthService authService, IUserManager userManager, IFileService fileService) : base(authService, userManager, fileService)
+        public UserPageContentController(IUserPageContentService pageContentService, IAuthService authService, IUserManager userManager, IFileService fileService) : base(authService, userManager, fileService)
         {
             _pageContentService = pageContentService;
         }

@@ -17,7 +17,9 @@ import {
   ModalHeaderModel,
   TypeFile,
 } from 'src/app/shared/components/modals/models/modal.model';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+// import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import * as ClassicEditor from 'src/app/lib/customCkeditor/ckeditor5-build-classic';
+import Base64UploaderPlugin from 'src/app/lib/@ckeditor/Base64Upload';
 import { MessageService } from 'src/app/lib/data/services/messages/message.service';
 @Component({
   selector: 'app-product-details',
@@ -39,6 +41,18 @@ export class ProductDetailsComponent implements OnInit {
   submitted = false;
 
   public editor = ClassicEditor;
+  public editorConfig = {
+    extraPlugins: [Base64UploaderPlugin],
+  };
+  public onReady(editor) {
+    editor.ui
+      .getEditableElement()
+      .parentElement.insertBefore(
+        editor.ui.view.toolbar.element,
+        editor.ui.getEditableElement()
+      );
+  }
+
   ngOnChanges(changes: SimpleChanges): void {}
   constructor(
     private formBuilder: FormBuilder,
@@ -171,7 +185,9 @@ export class ProductDetailsComponent implements OnInit {
     });
 
     this.modalHeader = new ModalHeaderModel();
-    this.modalHeader.title = this.item ? `Update ${this.item.name}` : `Add New Product`;
+    this.modalHeader.title = this.item
+      ? `Update ${this.item.name}`
+      : `Add New Product`;
     this.modalFooter = new ModalFooterModel();
     this.modalFooter.title = 'Save';
   }
