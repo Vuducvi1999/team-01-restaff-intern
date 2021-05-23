@@ -62,44 +62,15 @@
                 <ng-container *ngFor="let product of products | slice: 0:4">
                   <div class="product-box col-sm-3 col-6">
                     <div class="img-wrapper">
-                      <div class="front">
-                        <a
-                          [routerLink]="['/product-details']"
-                          [queryParams]="{ id: product.id }"
-                        >
-                          <app-image-wrapper
-                            [data]="{
-                              url: product.imageUrl.split(',')[0],
-                              typeClass: typeDisplayImage.CART_MODAL_IMAGE,
-                              class: 'img-fluid mb-1'
-                            }"
-                          ></app-image-wrapper>
-                        </a>
-                      </div>
-                      <div class="product-name">
-                        <h6 class="mt-0">
-                          <a
-                            [routerLink]="['/product-details']"
-                            [queryParams]="{ id: product.id }"
-                            ><span>{{ product.name }}</span></a
-                          >
-                        </h6>
-                      </div>
-                      <div class="product-detail">
-                        <h4>
-                          <span>{{
-                            product.price * currency?.price
-                              | discount: product
-                              | vndFormat
-                          }}</span>
-                        </h4>
-                      </div>
-                      <div class="button-add-to-cart">
-                        <a (click)="addToCart(product)"
-                        class="view-cart btn btn-solid"
-                       >add to cart
-                       </a>
-                    </div>
+                      <app-product-box
+                        style="width: 100%"
+                        [product]="product"
+                        [thumbnail]="false"
+                        [cartModal]="true"
+                        [typeGridLayout]="grid"
+                        (isCloseModal)="onCloseModal($event, modal)"
+                      >
+                      </app-product-box>
                     </div>
                   </div>
                 </ng-container>

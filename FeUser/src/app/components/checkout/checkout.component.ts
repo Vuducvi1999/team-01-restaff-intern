@@ -139,6 +139,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         // console.log(er);
         this.couponInvalid = true;
         this.removeCoupon();
+        this.couponInvalid = true;
+
       });
   }
   removeCoupon() {
@@ -146,7 +148,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.couponPercent = `0`;
     this.couponName = null;
     this.couponCode = "";
-    
+
     delete this.order.couponValue;
     delete this.order.couponPercent;
     delete this.order.couponName;
@@ -154,5 +156,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     delete this.order.couponId;
 
     this.couponDisplay = false;
+    this.couponInvalid = false;
+
   }
 }
