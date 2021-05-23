@@ -171,6 +171,7 @@ namespace Domain
             // PageContent
             CreateMap<PageContent, PageContentDTO>().ReverseMap();
             CreateMap<PageContent, UpdatePageContentDTO>().ReverseMap();
+            CreateMap<PageContent, CreatePageContentDTO>().ReverseMap();
 
             // Page Content Contact
             CreateMap<Contact, ContactDTO>().ReverseMap();

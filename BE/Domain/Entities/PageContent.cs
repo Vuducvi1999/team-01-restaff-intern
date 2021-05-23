@@ -13,12 +13,18 @@ namespace Domain.Entities
         public int Order { get; set; }
         public string ImageUrl { get; set; }
 
+        public override void Insert()
+        {
+            base.Insert();
+        }
+
         public void Update(UpdatePageContentDTO model)
         {
             base.Update();
             Title = model.Title;
             ShortDes = model.ShortDes;
             Description = model.Description;
+            Order = model.Order;
             ImageUrl = model.ImageUrl;
         }
     }

@@ -15,4 +15,13 @@ export class PageContentService {
   update(model: PageContentModel) {
     return this.httpClient.putObservable(this.url, model).toPromise();
   }
+
+  create(model: PageContentModel) {
+    return this.httpClient.postObservable(this.url, model).toPromise();
+  }
+
+  saveChange(model: PageContentModel) {
+    if (model.id) return this.update(model);
+    return this.create(model);
+  }
 }

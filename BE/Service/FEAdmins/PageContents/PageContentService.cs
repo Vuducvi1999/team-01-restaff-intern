@@ -23,12 +23,32 @@ namespace Service.PageContents
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-        public ReturnMessage<List<PageContentDTO>> GetList()
-        
+
+
+        public ReturnMessage<PageContentDTO> Create(CreatePageContentDTO model)
         {
             try
             {
-                var resultEntity = _pageContentRepository.Queryable().OrderBy(i=>i.Order).Take(12).ToList();
+                var entity = _mapper.Map<CreatePageContentDTO, PageContent>(model);
+                entity.Insert();
+                _pageContentRepository.Insert(entity);
+                _unitOfWork.SaveChanges();
+                var data = _mapper.Map<PageContent, PageContentDTO>(entity);
+                return new ReturnMessage<PageContentDTO>(false, data, MessageConstants.CreateSuccess);
+            }
+            catch (Exception Ex)
+            {
+                return new ReturnMessage<PageContentDTO>(true, null, MessageConstants.Error);
+            }
+        }
+
+        public ReturnMessage<List<PageContentDTO>> GetList()
+        {
+            try
+            {
+                var resultEntity = _pageContentRepository.Queryable()
+                                    .OrderBy(i => i.Order)
+                                    .ToList();
                 var data = _mapper.Map<List<PageContent>, List<PageContentDTO>>(resultEntity);
                 var result = new ReturnMessage<List<PageContentDTO>>(false, data, MessageConstants.ListSuccess);
                 return result;
@@ -68,8 +88,6 @@ namespace Service.PageContents
                 var entity = _pageContentRepository.Find(model.Id);
                 if (!entity.IsNotNullOrEmpty())
                     return new ReturnMessage<PageContentDTO>(true, null, MessageConstants.Error);
-                if(String.IsNullOrEmpty(model.ImageUrl))
-                    return new ReturnMessage<PageContentDTO>(true, null, MessageConstants.ImageRequired);
                 entity.Update(model);
                 _pageContentRepository.Update(entity);
                 _unitOfWork.SaveChanges();
