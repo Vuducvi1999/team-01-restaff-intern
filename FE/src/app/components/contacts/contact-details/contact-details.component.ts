@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as ClassicEditor from 'src/app/lib/customCkeditor/ckeditor5-build-classic';
+import Base64UploaderPlugin from 'src/app/lib/@ckeditor/Base64Upload';
 import {
   ModalFooterModel,
   ModalHeaderModel,
@@ -22,6 +23,17 @@ export class ContactDetailComponent implements OnInit {
   @Input() item;
 
   public editor = ClassicEditor;
+  public editorConfig = {
+    extraPlugins: [Base64UploaderPlugin],
+  };
+  public onReady(editor) {
+    editor.ui
+      .getEditableElement()
+      .parentElement.insertBefore(
+        editor.ui.view.toolbar.element,
+        editor.ui.getEditableElement()
+      );
+  }
 
   constructor(
     private formBuilder: FormBuilder,

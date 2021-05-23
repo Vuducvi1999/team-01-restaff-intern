@@ -66,6 +66,7 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
 
   userInfo: UserDataReturnDTOModel;
   subDataUser: Subscription;
+  titleLength: number = 19;
 
   constructor(
     private cartService: CartService,
@@ -99,22 +100,27 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
     if (this.typeGridLayout == ETypeGridLayout.VERYSMALL) {
       //ListViewLayout
       this.typeSizeImage = ETypeSizeImage.NORMAL;
+      this.titleLength = 19;
     }
 
     if (this.typeGridLayout == ETypeGridLayout.SMALL) {
       this.typeSizeImage = ETypeSizeImage.SMALL;
+      this.titleLength = 12
     }
 
     if (this.typeGridLayout == ETypeGridLayout.NORMAL) {
       this.typeSizeImage = ETypeSizeImage.NORMAL;
+      this.titleLength = 19;
     }
 
     if (this.typeGridLayout == ETypeGridLayout.MEDIUM) {
       this.typeSizeImage = ETypeSizeImage.MEDIUM;
+      this.titleLength = 26;
     }
 
     if (this.typeGridLayout == ETypeGridLayout.LARGE) {
       this.typeSizeImage = ETypeSizeImage.LARGE;
+      this.titleLength = 33;
     }
   }
 

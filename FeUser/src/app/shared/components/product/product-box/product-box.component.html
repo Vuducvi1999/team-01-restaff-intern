@@ -28,7 +28,10 @@
         />
       </a>
     </div>
-    <ul class="product-thumb-list" *ngIf="thumbnail && product.imageUrl.split(',').length >= 2">
+    <ul
+      class="product-thumb-list"
+      *ngIf="thumbnail && product.imageUrl.split(',').length >= 2"
+    >
       <li
         class="grid_thumb_img"
         [class.active]="ImageSrc == getImage(image)"
@@ -46,7 +49,7 @@
         </a>
       </li>
     </ul>
-    <div [class]="typePositionCart" style="background-color: white">
+    <div [class]="typePositionCart" style="background-color: white;">
       <a
         href="javascript:void(0)"
         title="Add to cart"
@@ -95,11 +98,18 @@
   </div>
   <div [class]="typePositionInformation">
     <div>
-      <ngb-rating *ngIf="product?.ratingScore > 0" [rate]="product?.ratingScore" [starTemplate]="t" [readonly]="true" [max]="5"><ng-template #t let-fill="fill">
-        <span class="star" [class.full]="fill === 100">
-          <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
-        </span>
-      </ng-template></ngb-rating>
+      <ngb-rating
+        *ngIf="product?.ratingScore > 0"
+        [rate]="product?.ratingScore"
+        [starTemplate]="t"
+        [readonly]="true"
+        [max]="5"
+        ><ng-template #t let-fill="fill">
+          <span class="star" [class.full]="fill === 100">
+            <span class="half" [style.width.%]="fill">&#9733;</span>&#9733;
+          </span>
+        </ng-template></ngb-rating
+      >
       <br />
       <br />
       <!-- <a
@@ -113,17 +123,19 @@
           <a
             [routerLink]="['/product-details']"
             [queryParams]="{ id: product.id }"
-            style="color: black;"
-            *ngIf= 'product?.name.length > 19'
-            ><span>{{ product?.name.substring(0,18)+'...'}}</span></a
+            style="color: black"
+            *ngIf="product?.name.length > titleLength"
+            ><span>{{
+              product?.name.substring(0, titleLength - 1) + "..."
+            }}</span></a
           >
           <a
-          [routerLink]="['/product-details']"
-          [queryParams]="{ id: product.id }"
-          style="color: black;"
-          *ngIf= 'product?.name.length <= 19'
-          ><span>{{ product?.name.substring(0,19)}}</span></a
-        >
+            [routerLink]="['/product-details']"
+            [queryParams]="{ id: product.id }"
+            style="color: black"
+            *ngIf="product?.name.length <= titleLength"
+            ><span>{{ product?.name.substring(0, titleLength) }}</span></a
+          >
         </h6>
       </div>
       <p>
