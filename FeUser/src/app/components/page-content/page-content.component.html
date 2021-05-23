@@ -10,10 +10,15 @@
     ></ng-container>
     <div class="row" *ngIf="!isContactUs">
       <div class="col-sm-12">
-        <span
-          id="convert-to-html"
-          [innerHTML]="pageContent?.description"
-        ></span>
+        <ckeditor
+          *ngIf="pageContent?.description"
+          [editor]="editor"
+          class="col-12 p-0"
+          type="text"
+          [data]="pageContent.description"
+          disabled="true"
+          [config]="config"
+        ></ckeditor>
       </div>
     </div>
   </div>

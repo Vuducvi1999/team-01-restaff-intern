@@ -9,6 +9,7 @@ import {
   Injectable,
   PLATFORM_ID,
   Inject,
+  Pipe,
 } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
 import {
@@ -18,18 +19,23 @@ import {
 } from "@ng-bootstrap/ng-bootstrap";
 import { ProductModel } from "src/app/lib/data/models/products/product.model";
 import { CartService } from "src/app/lib/data/services/cart/cart.service";
-import { FileService, MessageService, ProductListService } from "src/app/lib/data/services";
-import { TypeDisplayImage } from "src/app/shared/data";
+import {
+  FileService,
+  MessageService,
+  ProductListService,
+} from "src/app/lib/data/services";
+import { ETypeGridLayout, TypeDisplayImage } from "src/app/shared/data";
 
 @Component({
   selector: "app-cart-modal",
   templateUrl: "./cart-modal.component.html",
   styleUrls: ["./cart-modal.component.scss"],
-  providers: [CartService, ProductListService],
+  providers: [CartService, ProductListService, Pipe],
 })
 export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() product: ProductModel;
   @Input() currency: any;
+  public grid: string = ETypeGridLayout.NORMAL;
 
   @ViewChild("cartModal", { static: false }) CartModal: TemplateRef<any>;
 
@@ -43,7 +49,7 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
     private modalService: NgbModal,
     private productListService: ProductListService,
     private cartService: CartService,
-    private messageService: MessageService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {}
@@ -101,6 +107,15 @@ export class CartModalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   async addToCart(product: any) {
     this.cartService.addToCart(product);
-    this.messageService.notification("Product has been added to cart", "success");
+    this.messageService.notification(
+      "Product has been added to cart",
+      "success"
+    );
+  }
+
+  onCloseModal(event: boolean, modal) {
+    if (event) {
+      modal.dismiss("Cross click");
+    }
   }
 }

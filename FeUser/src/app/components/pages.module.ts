@@ -31,7 +31,8 @@ import { ProfileComponent } from "./profile/profile/profile.component";
 import { PageContentInfoComponent } from "./page-content/PageInfo/page-info.component";
 import { FormBuilder, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { WishlistComponent } from "./wishlist/wishlist.component";
-@NgModule({
+  import { CKEditorModule } from '@ckeditor/ckeditor5-angular'
+  @NgModule({
   declarations: [
     HomeComponent,
     // Widgest Components
@@ -66,6 +67,7 @@ import { WishlistComponent } from "./wishlist/wishlist.component";
     PagesRoutingModule,
     InfiniteScrollModule,
     Ng5SliderModule,
+    CKEditorModule,
     ReactiveFormsModule,
   ],
   providers: [],
