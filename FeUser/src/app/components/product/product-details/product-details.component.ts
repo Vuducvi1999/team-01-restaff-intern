@@ -163,7 +163,7 @@ export class ProductDetailsComponent implements OnInit {
     };
     if (this.product.isInWishList) {
       return this.sweetService
-        .confirm("Remove in wish list?", "Remove")
+        .confirm("Remove in wish list?")
         .then((result) => {
           if (result.isConfirmed) {
             this.wishListService.createOrDelete(model).then(() => {

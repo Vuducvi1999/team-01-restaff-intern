@@ -30,6 +30,7 @@ namespace Domain.Entities
 
         public override void Insert()
         {
+            RatingScore = 5;
             base.Insert();
         }
         public override void Delete()
