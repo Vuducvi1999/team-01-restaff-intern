@@ -63,7 +63,7 @@ export class QuickViewComponent implements OnInit, OnDestroy {
   public modalOpen: boolean = false;
   public thumbnail: boolean = true;
   public onHowerChangeImage: boolean = true;
-  public typeSizeImage = ETypeSizeImage;
+  public typeSizeImage = ETypeSizeImage.MEDIUM;
 
   userInfo: UserDataReturnDTOModel;
   subDataUser: Subscription;
@@ -191,7 +191,7 @@ export class QuickViewComponent implements OnInit, OnDestroy {
     };
     if (this.product.isInWishList) {
       return this.messageService
-        .confirm("Remove in wish list?", "Remove")
+        .confirm("Remove in wish list?")
         .then((result) => {
           if (result.isConfirmed) {
             this.wishListService.createOrDelete(model).then(() => {

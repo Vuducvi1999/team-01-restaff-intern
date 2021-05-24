@@ -100,7 +100,7 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
     if (this.typeGridLayout == ETypeGridLayout.VERYSMALL) {
       //ListViewLayout
       this.typeSizeImage = ETypeSizeImage.NORMAL;
-      this.titleLength = 19;
+      this.titleLength = 18;
     }
 
     if (this.typeGridLayout == ETypeGridLayout.SMALL) {
@@ -110,17 +110,17 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
 
     if (this.typeGridLayout == ETypeGridLayout.NORMAL) {
       this.typeSizeImage = ETypeSizeImage.NORMAL;
-      this.titleLength = 19;
+      this.titleLength = 18;
     }
 
     if (this.typeGridLayout == ETypeGridLayout.MEDIUM) {
       this.typeSizeImage = ETypeSizeImage.MEDIUM;
-      this.titleLength = 26;
+      this.titleLength = 24;
     }
 
     if (this.typeGridLayout == ETypeGridLayout.LARGE) {
       this.typeSizeImage = ETypeSizeImage.LARGE;
-      this.titleLength = 33;
+      this.titleLength = 30;
     }
   }
 
@@ -164,7 +164,7 @@ export class ProductBoxComponent implements OnInit, OnChanges, OnDestroy {
     };
     if (this.product.isInWishList) {
       return this.sweetService
-        .confirm("Remove in wish list?", "Remove")
+        .confirm("Remove in wish list?")
         .then((result) => {
           if (result.isConfirmed) {
             this.wishListService.createOrDelete(model).then(() => {

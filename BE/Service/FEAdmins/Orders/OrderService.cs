@@ -46,6 +46,10 @@ namespace Service.Orders
 
             try
             {
+                if(model.OrderDetails.IsNullOrEmpty())
+                {
+                    return new ReturnMessage<OrderDTO>(true, null, MessageConstants.Error);
+                }
                 var coupon = _couponRepository.Queryable().FirstOrDefault(t => t.Id == model.CouponId);
                 if ((coupon.IsNotNullOrEmpty() && _couponService.GetByCode(coupon.Code).HasError == false) || model.CouponCode == null)
                 {

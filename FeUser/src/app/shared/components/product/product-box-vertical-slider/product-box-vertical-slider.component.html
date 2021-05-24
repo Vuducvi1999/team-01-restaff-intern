@@ -5,10 +5,10 @@
     <ng-container *ngFor="let products of result">
       <ng-template carouselSlide>
         <div>
-          <div  class="media" *ngFor="let product of products">
+          <div class="media" *ngFor="let product of products">
             <a
-            [routerLink]="['/product-details']"
-            [queryParams]="{ id: product?.id }"
+              [routerLink]="['/product-details']"
+              [queryParams]="{ id: product?.id }"
             >
               <img
                 appUiImageLoader
@@ -19,17 +19,29 @@
               />
             </a>
             <div class="media-body align-self-center">
-              <!-- <bar-rating [rate]="5" [readOnly]="true"></bar-rating> -->
+              <ngb-rating
+                *ngIf="product?.ratingScore > 0"
+                [rate]="product?.ratingScore"
+                [starTemplate]="t"
+                [readonly]="true"
+                [max]="5"
+                ><ng-template #t let-fill="fill">
+                  <span class="star" [class.full]="fill === 100">
+                    <span class="half" [style.width.%]="fill">&#9733;</span
+                    >&#9733;
+                  </span>
+                </ng-template></ngb-rating
+              >
+              <br>
+              <br>
               <a
-              [routerLink]="['/product-details']"
-              [queryParams]="{ id: product?.id }"
+                [routerLink]="['/product-details']"
+                [queryParams]="{ id: product?.id }"
               >
                 <h6>{{ product.name }}</h6></a
               >
               <h4>
-                {{
-                  product?.price | vndFormat
-                }}
+                {{ product?.price | vndFormat }}
                 <!-- <del *ngIf="product?.discount">
                   <span class="money">
                     {{

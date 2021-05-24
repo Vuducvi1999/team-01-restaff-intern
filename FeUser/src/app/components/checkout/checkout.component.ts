@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { Route, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import {
   OrderDetailModel,
@@ -41,7 +41,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     public orderService: OrdersService,
     public couponService: CouponService,
     public routerService: Router,
-    public authService: AuthService
+    public authService: AuthService,
   ) { }
   ngOnDestroy(): void {
     this.subDataUser.unsubscribe();
@@ -68,6 +68,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    if(this.products.length == 0)
+    {
+      return;
+    }
     this.loadModel();
     // console.log(this.order);
     this.orderService
