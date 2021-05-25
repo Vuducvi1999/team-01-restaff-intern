@@ -39,7 +39,7 @@ namespace Service.Users
 
             model.Username = StringExtension.CleanString(model.Username);
             model.Password = StringExtension.CleanString(model.Password);
-            if(model.Username == null || model.Password == null)
+            if (model.Username == null || model.Password == null)
             {
                 return new ReturnMessage<UserDTO>(true, null, MessageConstants.InvalidString);
             }
@@ -49,7 +49,7 @@ namespace Service.Users
                 return new ReturnMessage<UserDTO>(true, null, "0", MessageConstants.ExistUsername);
             }
 
-            if (_userRepository.Queryable().Any(it => it.Email == model.Email && it.Type == UserType.Admin))
+            if (_userRepository.Queryable().Any(it => it.Email.IsNotNullOrEmpty() && it.Email == model.Email && it.Type == UserType.Admin))
             {
                 return new ReturnMessage<UserDTO>(true, null, "1", MessageConstants.ExistEmail);
             }
@@ -74,7 +74,7 @@ namespace Service.Users
         {
             try
             {
-                if(model.Id == CommonConstantsUser.UserAdminId || model.Id == _userManager.AuthorizedUserId)
+                if (model.Id == CommonConstantsUser.UserAdminId || model.Id == _userManager.AuthorizedUserId)
                 {
                     return new ReturnMessage<UserDTO>(true, null, MessageConstants.Error);
                 }
@@ -134,7 +134,7 @@ namespace Service.Users
             {
                 return new ReturnMessage<PaginatedList<UserDTO>>(false, null, MessageConstants.GetPaginationFail);
             }
-            var query = _userRepository.Queryable().Where(it => it.Type == UserType.Admin &&
+            var query = _userRepository.Queryable().Where(it => !it.IsDeleted && (it.Type == UserType.Admin &&
                     (search.Search == null ||
                         (
                             (
@@ -146,6 +146,7 @@ namespace Service.Users
                                 it.ImageUrl.Contains(search.Search.ImageUrl)
                             )
                         )
+                    )
                     )
                 )
                 .OrderBy(it => it.Username)

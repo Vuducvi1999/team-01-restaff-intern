@@ -81,6 +81,7 @@ namespace Domain.Entities
         {
             UpdateByDate = DateTime.Now;
             IsActive = true;
+            IsDeleted = true;
             DeletedBy = dto.UserId;
             DeletedByName = dto.Username;
             ObjectState = Infrastructure.EntityFramework.ObjectState.Modified;

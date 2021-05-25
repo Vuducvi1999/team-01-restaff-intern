@@ -42,7 +42,7 @@ namespace Service.Footer
                 var querySocialMedias = _socialMediaRepository.Queryable().Where(it => !it.IsDeleted).OrderBy(it => it.DisplayOrder).ToList();
                 var socialmedias = _mapper.Map<List<SocialMediaDTO>>(querySocialMedias);
 
-                var queryPageContent = _pageRepository.Queryable().Where(it => !it.IsDeleted && it.Order >= -1).ToList();
+                var queryPageContent = _pageRepository.Queryable().Where(it => !it.IsDeleted && it.Order >= -1).OrderBy(it => it.Order).Take(5).ToList();
                 var pagecontents = _mapper.Map<List<PageContentDTO>>(queryPageContent);
 
                 var queryInformationWeb = _informationRepository.Find(CommonConstants.WebSiteInformationId);

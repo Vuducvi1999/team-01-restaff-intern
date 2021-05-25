@@ -61,7 +61,7 @@ namespace Service.Blogs
                 if (entity.IsNotNullOrEmpty())
                 {
                     entity.Delete();
-                    _blogRepository.Delete(entity);
+                    _blogRepository.Update(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<BlogDTO>(false, _mapper.Map<Blog, BlogDTO>(entity), MessageConstants.DeleteSuccess);
                     return result;

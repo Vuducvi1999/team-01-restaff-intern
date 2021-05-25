@@ -5,6 +5,7 @@ using Common.Pagination;
 using Domain.DTOs.Blogs;
 using Domain.Entities;
 using Infrastructure.EntityFramework;
+using Infrastructure.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +30,11 @@ namespace Service.UserBlogs
         {
             try
             {
-                var entity = _blogRepository.Find(id);
+                var entity = _blogRepository.Queryable().Where(it => !it.IsDeleted && it.Id == id).FirstOrDefault();
+                if(entity.IsNullOrEmpty())
+                {
+                    return new ReturnMessage<BlogDTO>(true, null, MessageConstants.Error);
+                }
                 entity.Update();
                 _unitOfWork.SaveChanges();
                 return new ReturnMessage<BlogDTO>(false, _mapper.Map<Blog, BlogDTO>(entity), MessageConstants.GetSuccess);
@@ -46,7 +51,7 @@ namespace Service.UserBlogs
             {
                 return new ReturnMessage<List<BlogDTO>>(false, null, MessageConstants.DeleteSuccess);
             }
-            var resultRecent = _blogRepository.Queryable().OrderByDescending(p => p.UpdateByDate).Take(5).ToList();
+            var resultRecent = _blogRepository.Queryable().Where(it => !it.IsDeleted).OrderByDescending(p => p.UpdateByDate).Take(5).ToList();
             var data = _mapper.Map<List<Blog>, List<BlogDTO>>(resultRecent);
             var result = new ReturnMessage<List<BlogDTO>>(false, data, MessageConstants.SearchSuccess);
             return result;
@@ -72,14 +77,15 @@ namespace Service.UserBlogs
                 return new ReturnMessage<PaginatedList<BlogDTO>>(false, null, MessageConstants.GetPaginationFail);
             }
 
-            var resultEntity = _blogRepository.GetPaginatedList(it => search.Search == null ||
-                (
+            var resultEntity = _blogRepository.GetPaginatedList(it => !it.IsDeleted && (search.Search == null ||
                     (
-                        (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
-                        it.Title.Contains(search.Search.Title) ||
-                        it.ShortDes.Contains(search.Search.ShortDes) ||
-                        it.ContentHTML.Contains(search.Search.ContentHTML) ||
-                        it.ImageUrl.Contains(search.Search.ImageUrl)
+                        (
+                            (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
+                            it.Title.Contains(search.Search.Title) ||
+                            it.ShortDes.Contains(search.Search.ShortDes) ||
+                            it.ContentHTML.Contains(search.Search.ContentHTML) ||
+                            it.ImageUrl.Contains(search.Search.ImageUrl)
+                        )
                     )
                 )
                 , search.PageSize
@@ -92,8 +98,8 @@ namespace Service.UserBlogs
         }
         private ReturnMessage<List<BlogDTO>> TakeBlog(int number)
         {
-            var resultTop = _blogRepository.Queryable().
-                OrderByDescending(it => it.RatingScore).ThenBy(p => p.Title).
+            var resultTop = _blogRepository.Queryable().Where(it => !it.IsDeleted)
+                .OrderByDescending(it => it.RatingScore).ThenBy(p => p.Title).
                 ThenBy(it => it.Title.Length)
                 .Take(number).ToList();
             var data = _mapper.Map<List<Blog>, List<BlogDTO>>(resultTop);
