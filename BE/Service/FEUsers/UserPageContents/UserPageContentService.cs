@@ -28,7 +28,7 @@ namespace Service.UserPageContents
             try
             {
                 var resultEntity = _pageContentRepository.Queryable()
-                                    .OrderBy(i => i.Id).Take(3).Where(i => i.Order >= 0).OrderBy(i => i.Order)
+                                    .OrderBy(i => i.Id).Take(3).Where(i => i.Order >= 0 && !i.IsDeleted).OrderBy(i => i.Order)
                                     .ToList();
                 var data = _mapper.Map<List<PageContent>, List<PageContentDTO>>(resultEntity);
                 var result = new ReturnMessage<List<PageContentDTO>>(false, data, MessageConstants.ListSuccess);

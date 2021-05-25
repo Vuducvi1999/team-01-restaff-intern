@@ -68,7 +68,7 @@ namespace Service.Banners
                 if (entity.IsNotNullOrEmpty())
                 {
                     entity.Delete(userInfo);
-                    _bannerRepository.Delete(entity);
+                    _bannerRepository.Update(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<BannerDTO>(false, _mapper.Map<Banner, BannerDTO>(entity), MessageConstants.DeleteSuccess);
                     return result;
@@ -118,12 +118,13 @@ namespace Service.Banners
                 return new ReturnMessage<PaginatedList<BannerDTO>>(false, null, MessageConstants.DeleteSuccess);
             }
 
-            var resultEntity = _bannerRepository.GetPaginatedList(it => search.Search == null ||
-                (
+            var resultEntity = _bannerRepository.GetPaginatedList(it => !it.IsDeleted && ( search.Search == null ||
                     (
-                        (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
-                        it.Title.Contains(search.Search.Title) ||
-                        it.Description.Contains(search.Search.Description)
+                        (
+                            (search.Search.Id == Guid.Empty ? false : it.Id == search.Search.Id) ||
+                            it.Title.Contains(search.Search.Title) ||
+                            it.Description.Contains(search.Search.Description)
+                        )
                     )
                 )
                 , search.PageSize

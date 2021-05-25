@@ -64,7 +64,7 @@ namespace Service.Coupons
                 if (entity.IsNotNullOrEmpty())
                 {
                     entity.Delete();
-                    _couponRepository.Delete(entity);
+                    _couponRepository.Update(entity);
                     _unitOfWork.SaveChanges();
                     var result = new ReturnMessage<CouponDTO>(false, _mapper.Map<Coupon, CouponDTO>(entity), MessageConstants.DeleteSuccess);
                     return result;

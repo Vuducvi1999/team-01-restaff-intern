@@ -40,7 +40,7 @@ namespace Service.Customers
         {
             model.Username = StringExtension.CleanString(model.Username);
             model.Password = StringExtension.CleanString(model.Password);
-            if(model.Username == null || model.Password == null)
+            if (model.Username == null || model.Password == null)
             {
                 var entity = _mapper.Map<CreateCustomerDTO, Customer>(model);
                 return new ReturnMessage<CustomerDTO>(true, _mapper.Map<Customer, CustomerDTO>(entity), MessageConstants.InvalidString);
@@ -55,17 +55,17 @@ namespace Service.Customers
                 if (model.Username.Trim() == "")
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
 
-                if(_userRepository.Queryable().Any(it => it.Type == UserType.Customer && it.Username.CompareTo(model.Username) == 0))
+                if (_userRepository.Queryable().Any(it => it.Type == UserType.Customer && it.Username.CompareTo(model.Username) == 0))
                 {
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.ExistUsername);
                 }
 
-                if(_userRepository.Queryable().Any(it =>it.Type == UserType.Customer && it.Email.CompareTo(model.Email) == 0))
+                if (_userRepository.Queryable().Any(it => it.Type == UserType.Customer && it.Email.CompareTo(model.Email) == 0))
                 {
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.ExistEmail);
                 }
 
-                if(_customerRepository.Queryable().Any(it => model.Phone.IsNotNullOrEmpty() && it.Phone.CompareTo(model.Phone) == 0))
+                if (_customerRepository.Queryable().Any(it => model.Phone.IsNotNullOrEmpty() && it.Phone.CompareTo(model.Phone) == 0))
                 {
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.ExistPhone);
                 }
@@ -117,13 +117,14 @@ namespace Service.Customers
                     return new ReturnMessage<CustomerDTO>(true, null, MessageConstants.Error);
                 }
 
-                user.Delete(userInfo);
 
                 var customer = _customerRepository.Find(user.CustomerId);
 
+                user.Delete(userInfo);
                 _unitOfWork.BeginTransaction();
                 _userRepository.Update(user);
-                if(customer.IsNotNullOrEmpty())
+                _unitOfWork.SaveChanges();
+                if (customer.IsNotNullOrEmpty())
                 {
                     customer.Delete(userInfo);
                     _customerRepository.Update(customer);
@@ -212,7 +213,7 @@ namespace Service.Customers
                 return new ReturnMessage<PaginatedList<CustomerDTO>>(false, null, MessageConstants.GetPaginationFail);
             }
 
-            var query = _userRepository.Queryable().Include(it => it.Customer).Where(it => it.Type == UserType.Customer && it.IsDeleted == false &&
+            var query = _userRepository.Queryable().Include(it => it.Customer).Where(it => !it.IsDeleted && (it.Type == UserType.Customer && it.IsDeleted == false &&
                     (search.Search == null ||
                         (
                             (
@@ -224,6 +225,7 @@ namespace Service.Customers
                                 it.ImageUrl.Contains(search.Search.ImageUrl)
                             )
                         )
+                    )
                     )
                 )
                 .OrderBy(it => it.Username)
